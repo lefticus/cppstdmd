@@ -9,7 +9,7 @@ are *special member functions*.
 functions for some class types when the program does not explicitly
 declare them. The implementation will implicitly define them if they are
 odr-used ( [[basic.def.odr]]). See  [[class.ctor]], [[class.dtor]] and 
-[[class.copy]]. — *end note*\]
+[[class.copy]]. — *end note*]
 
 An implicitly-declared special member function is declared at the
 closing `}` of the *class-specifier*. Programs shall not define
@@ -34,19 +34,19 @@ B& B::operator=(const B& s) {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Note 2*: The special member functions affect the way objects of class
 type are created, copied, moved, and destroyed, and how values can be
 converted to values of other types. Often such special member functions
-are called implicitly. — *end note*\]
+are called implicitly. — *end note*]
 
 Special member functions obey the usual access rules (Clause 
 [[class.access]]).
 
 [*Example 2*: Declaring a constructor `protected` ensures that only
 derived classes and friends can create objects using
-it. — *end example*\]
+it. — *end example*]
 
 For a class, its non-static data members, its non-virtual direct base
 classes, and, if the class is not abstract ( [[class.abstract]]), its
@@ -93,7 +93,7 @@ struct S {
 S::S() { }          // defines the constructor
 ```
 
-— *end example*\]
+— *end example*]
 
 A constructor is used to initialize objects of its class type. Because
 constructors do not have names, they are never found during name lookup;
@@ -102,7 +102,7 @@ however an explicit type conversion using the functional notation (
 an object.
 
 [*Note 1*: For initialization of objects of class type see 
-[[class.init]]. — *end note*\]
+[[class.init]]. — *end note*]
 
 A constructor can be invoked for a `const`, `volatile` or `const`
 `volatile` object. `const` and `volatile` semantics ( [[dcl.type.cv]])
@@ -178,7 +178,7 @@ implicitly defined.
 [*Note 2*: An implicitly-declared default constructor has an exception
 specification ( [[except.spec]]). An explicitly-defaulted definition
 might have an implicit exception specification, see 
-[[dcl.fct.def]]. — *end note*\]
+[[dcl.fct.def]]. — *end note*]
 
 Default constructors are called implicitly to create class objects of
 static, thread, or automatic storage duration ( [[basic.stc.static]],
@@ -194,7 +194,7 @@ accessible (Clause  [[class.access]]).
 [*Note 3*:  [[class.base.init]] describes the order in which
 constructors for base classes and non-static data members are called and
 describes how arguments can be specified for the calls to these
-constructors. — *end note*\]
+constructors. — *end note*]
 
 A `return` statement in the body of a constructor shall not specify a
 return value. The address of a constructor shall not be taken.
@@ -203,7 +203,7 @@ A functional notation type conversion ( [[expr.type.conv]]) can be used
 to create new objects of its type.
 
 [*Note 4*: The syntax looks like an explicit call of the
-constructor. — *end note*\]
+constructor. — *end note*]
 
 [*Example 2*:
 
@@ -212,19 +212,19 @@ complex zz = complex(1,2.3);
 cprint( complex(7.8,1.2) );
 ```
 
-— *end example*\]
+— *end example*]
 
 An object created in this way is unnamed.
 
 [*Note 5*:  [[class.temporary]] describes the lifetime of temporary
-objects. — *end note*\]
+objects. — *end note*]
 
 [*Note 6*: Explicit constructor calls do not yield lvalues, see 
-[[basic.lval]]. — *end note*\]
+[[basic.lval]]. — *end note*]
 
 [*Note 7*:  Some language constructs have special semantics when used
 during construction; see  [[class.base.init]] and 
-[[class.cdtor]]. — *end note*\]
+[[class.cdtor]]. — *end note*]
 
 During the construction of an object, if the value of the object or any
 of its subobjects is accessed through a glvalue that is not obtained,
@@ -259,7 +259,7 @@ struct D {
 D d = D(1);                     // value of d.b is unspecified
 ```
 
-— *end example*\]
+— *end example*]
 
 ## Temporary objects <a id="class.temporary">[[class.temporary]]</a>
 
@@ -271,7 +271,7 @@ Temporary objects are created
   trivially-copyable type (see below), and
 - when throwing an exception ( [[except.throw]]). \[*Note 1*: The
   lifetime of exception objects is described in 
-  [[except.throw]]. — *end note*\]
+  [[except.throw]]. — *end note*]
 
 Even when the creation of the temporary object is unevaluated (Clause 
 [[expr]]), all the semantic restrictions shall be respected as if the
@@ -281,7 +281,7 @@ temporary object had been created and later destroyed.
 whether it is deleted, for the constructor selected and for the
 destructor. However, in the special case of the operand of a
 *decltype-specifier* ( [[expr.call]]), no temporary is introduced, so
-the foregoing does not apply to such a prvalue. — *end note*\]
+the foregoing does not apply to such a prvalue. — *end note*]
 
 The materialization of a temporary object is generally delayed as long
 as possible in order to avoid creating unnecessary temporary objects.
@@ -304,7 +304,7 @@ Temporary objects are materialized:
 - when a prvalue appears as a discarded-value expression (Clause 
   [[expr]]).
 
-— *end note*\]
+— *end note*]
 
 [*Example 1*:
 
@@ -345,7 +345,7 @@ result is constructed directly in `c`. On the other hand, the expression
 materialized so that the reference parameter of `A::operator=(const A&)`
 can bind to it.
 
-— *end example*\]
+— *end example*]
 
 When an object of class type `X` is passed to or returned from a
 function, if each copy constructor, move constructor, and destructor of
@@ -360,7 +360,7 @@ selected by overload resolution to perform a copy or move of the
 object).
 
 [*Note 3*: This latitude is granted to allow objects of class type to
-be passed to or returned from functions in registers. — *end note*\]
+be passed to or returned from functions in registers. — *end note*]
 
 When an implementation introduces a temporary object of a class that has
 a non-trivial constructor ( [[class.ctor]], [[class.copy]]), it shall
@@ -406,10 +406,10 @@ for the lifetime of the reference except:
   S* p = new S{ 1, {2,3} };   // Creates dangling reference
   ```
 
-  — *end example*\]
+  — *end example*]
   \[*Note 2*: This may introduce a dangling reference, and
   implementations are encouraged to issue a warning in such a
-  case. — *end note*\]
+  case. — *end note*]
 
 The destruction of a temporary whose lifetime is not extended by being
 bound to a reference is sequenced before the destruction of every
@@ -459,7 +459,7 @@ order of other objects with static storage duration. That is, because
 `obj2`, `obj2` shall be destroyed before `T3`, and `T3` shall be
 destroyed before `obj1`.
 
-— *end example*\]
+— *end example*]
 
 ## Conversions <a id="class.conv">[[class.conv]]</a>
 
@@ -475,7 +475,7 @@ access control rules (Clause  [[class.access]]). Access control is
 applied after ambiguity resolution ( [[basic.lookup]]).
 
 [*Note 1*: See  [[over.match]] for a discussion of the use of
-conversions in function calls as well as examples below. — *end note*\]
+conversions in function calls as well as examples below. — *end note*]
 
 At most one user-defined conversion (constructor or conversion function)
 is implicitly applied to a single value.
@@ -496,7 +496,7 @@ int b = a;          // error, a.operator X().operator int() not tried
 int c = X(a);       // OK: a.operator X().operator int()
 ```
 
-— *end example*\]
+— *end example*]
 
 User-defined conversions are used implicitly only if they are
 unambiguous. A conversion function in a derived class does not hide a
@@ -521,7 +521,7 @@ void f(Y& a) {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 ### Conversion by constructor <a id="class.conv.ctor">[[class.conv.ctor]]</a>
 
@@ -548,7 +548,7 @@ void f(X arg) {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Note 1*:
 
@@ -580,16 +580,16 @@ Z a5 = static_cast<Z>(1);       // OK: explicit cast used
 Z a6 = { 3, 4 };                // error: no implicit conversion
 ```
 
-— *end example*\]
+— *end example*]
 
-— *end note*\]
+— *end note*]
 
 A non-explicit copy/move constructor ( [[class.copy]]) is a converting
 constructor.
 
 [*Note 2*: An implicitly-declared copy/move constructor is not an
 explicit constructor; it may be called for implicit type
-conversions. — *end note*\]
+conversions. — *end note*]
 
 ### Conversion functions <a id="class.conv.fct">[[class.conv.fct]]</a>
 
@@ -640,7 +640,7 @@ void f(X a) {
 In all three cases the value assigned will be converted by
 `X::operator int()`.
 
-— *end example*\]
+— *end example*]
 
 A conversion function may be explicit ( [[dcl.fct.spec]]), in which case
 it is only considered as a user-defined conversion for
@@ -670,7 +670,7 @@ void g(X a, X b) {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 The *conversion-type-id* shall not represent a function type nor an
 array type. The *conversion-type-id* in a *conversion-function-id* is
@@ -692,7 +692,7 @@ expression counterparts.
 
 The `*` is the pointer declarator and not the multiplication operator.
 
-— *end example*\]
+— *end example*]
 
 This rule also prevents ambiguities for attributes.
 
@@ -702,9 +702,9 @@ This rule also prevents ambiguities for attributes.
 operator int [[noreturn]] ();   // error: noreturn attribute applied to a type
 ```
 
-— *end example*\]
+— *end example*]
 
-— *end note*\]
+— *end note*]
 
 Conversion functions are inherited.
 
@@ -723,7 +723,7 @@ struct S {
 };
 ```
 
-— *end example*\]
+— *end example*]
 
 ## Destructors <a id="class.dtor">[[class.dtor]]</a>
 
@@ -766,7 +766,7 @@ derived object ( [[intro.object]]) starts.
 
 [*Note 1*: A declaration of a destructor that does not have a
 *noexcept-specifier* has the same exception specification as if had been
-implicitly declared ( [[except.spec]]). — *end note*\]
+implicitly declared ( [[except.spec]]). — *end note*]
 
 If a class has no user-declared destructor, a destructor is implicitly
 declared as defaulted ( [[dcl.fct.def]]). An implicitly-declared
@@ -824,7 +824,7 @@ defined. If a class has a base class with a virtual destructor, its
 destructor (whether user- or implicitly-declared) is virtual.
 
 [*Note 2*:  Some language constructs have special semantics when used
-during destruction; see  [[class.cdtor]]. — *end note*\]
+during destruction; see  [[class.cdtor]]. — *end note*]
 
 A destructor is invoked implicitly
 
@@ -845,7 +845,7 @@ constructed object allocated by a *new-expression* ( [[expr.new]]); the
 context of the invocation is the *delete-expression*.
 
 [*Note 3*: An array of class type contains several subobjects for each
-of which the destructor is invoked. — *end note*\]
+of which the destructor is invoked. — *end note*]
 
 A destructor can also be invoked explicitly. A destructor is
 *potentially invoked* if it is invoked or as specified in  [[expr.new]],
@@ -862,7 +862,7 @@ has a deleted definition ( [[dcl.fct.def]]), the program is ill-formed.
 
 [*Note 4*: This assures that a deallocation function corresponding to
 the dynamic type of an object is available for the *delete-expression* (
-[[class.free]]). — *end note*\]
+[[class.free]]). — *end note*]
 
 In an explicit destructor call, the destructor is specified by a `~`
 followed by a *type-name* or *decltype-specifier* that denotes the
@@ -873,7 +873,7 @@ from the destructor’s class type (including when the destructor is
 invoked via a null pointer value), the program has undefined behavior.
 
 [*Note 5*: Invoking `delete` on a null pointer does not call the
-destructor; see [[expr.delete]]. — *end note*\]
+destructor; see [[expr.delete]]. — *end note*]
 
 [*Example 1*:
 
@@ -898,13 +898,13 @@ void f() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Note 6*: An explicit destructor call must always be written using a
 member access operator ( [[expr.ref]]) or a *qualified-id* (
 [[expr.prim]]); in particular, the *unary-expression* `~X()` in a member
 function is not an explicit destructor call (
-[[expr.unary.op]]). — *end note*\]
+[[expr.unary.op]]). — *end note*]
 
 [*Note 7*:
 
@@ -930,7 +930,7 @@ void g() {                      // rare, specialized use:
 }
 ```
 
-— *end note*\]
+— *end note*]
 
 Once a destructor is invoked for an object, the object no longer exists;
 the behavior is undefined if the destructor is invoked for an object
@@ -939,7 +939,7 @@ whose lifetime has ended ( [[basic.life]]).
 [*Example 2*: If the destructor for an automatic object is explicitly
 invoked, and the block is subsequently left in a manner that would
 ordinarily invoke implicit destruction of the object, the behavior is
-undefined. — *end example*\]
+undefined. — *end example*]
 
 [*Note 8*:
 
@@ -954,7 +954,7 @@ I* p;
 p->I::~I();
 ```
 
-— *end note*\]
+— *end note*]
 
 ## Free store <a id="class.free">[[class.free]]</a>
 
@@ -979,7 +979,7 @@ void foo(int i) {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 When an object is deleted with a *delete-expression* ( [[expr.delete]]),
 a deallocation function (`operator delete()` for non-array objects or
@@ -1017,7 +1017,7 @@ class Y {
 };
 ```
 
-— *end example*\]
+— *end example*]
 
 Since member allocation and deallocation functions are `static` they
 cannot be virtual.
@@ -1049,7 +1049,7 @@ void f() {
 Here, storage for the non-array object of class `D` is deallocated by
 `D::operator delete()`, due to the virtual destructor.
 
-— *end note*\]
+— *end note*]
 
 [*Note 2*:
 
@@ -1075,7 +1075,7 @@ void f(int i) {
 }
 ```
 
-— *end note*\]
+— *end note*]
 
 Access to the deallocation function is checked statically. Hence, even
 though a different one might actually be executed, the statically
@@ -1083,11 +1083,11 @@ visible deallocation function is required to be accessible.
 
 [*Example 3*: For the call on line “// 1” above, if
 `B::operator delete()` had been `private`, the delete expression would
-have been ill-formed. — *end example*\]
+have been ill-formed. — *end example*]
 
 [*Note 3*: If a deallocation function has no explicit
 *noexcept-specifier*, it has a non-throwing exception specification (
-[[except.spec]]). — *end note*\]
+[[except.spec]]). — *end note*]
 
 ## Initialization <a id="class.init">[[class.init]]</a>
 
@@ -1104,7 +1104,7 @@ constructor shall be called for each element of the array, following the
 subscript order; see  [[dcl.array]].
 
 [*Note 1*: Destructors for the array elements are called in reverse
-order of their construction. — *end note*\]
+order of their construction. — *end note*]
 
 ### Explicit initialization <a id="class.expl.init">[[class.expl.init]]</a>
 
@@ -1137,10 +1137,10 @@ complex f = 3;                  // construct complex(3) using complex(double), c
 complex g = { 1, 2 };           // initialize by a call of complex(double, double)
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Note 1*:  Overloading of the assignment operator ( [[over.ass]]) has
-no effect on initialization. — *end note*\]
+no effect on initialization. — *end note*]
 
 An object of class type can also be initialized by a *braced-init-list*.
 List-initialization semantics apply; see  [[dcl.init]] and 
@@ -1168,20 +1168,20 @@ struct X {
 Here, `x.i` is initialized with 99, `x.f` is initialized with 88.8, and
 `complex::complex(double)` is called for the initialization of `x.c`.
 
-— *end example*\]
+— *end example*]
 
 [*Note 2*: Braces can be elided in the *initializer-list* for any
 aggregate, even if the aggregate has members of a class type with
-user-defined type conversions; see  [[dcl.init.aggr]]. — *end note*\]
+user-defined type conversions; see  [[dcl.init.aggr]]. — *end note*]
 
 [*Note 3*: If `T` is a class type with no default constructor, any
 declaration of an object of type `T` (or array thereof) is ill-formed if
 no *initializer* is explicitly specified (see  [[class.init]] and 
-[[dcl.init]]). — *end note*\]
+[[dcl.init]]). — *end note*]
 
 [*Note 4*:  The order in which objects with static or thread storage
 duration are initialized is described in  [[basic.start.dynamic]] and 
-[[stmt.dcl]]. — *end note*\]
+[[stmt.dcl]]. — *end note*]
 
 ### Initializing bases and members <a id="class.base.init">[[class.base.init]]</a>
 
@@ -1222,7 +1222,7 @@ name as a direct or virtual base class of the class, a
 *mem-initializer-id* naming the member or base class and composed of a
 single identifier refers to the class member. A *mem-initializer-id* for
 the hidden base class may be specified using a qualified
-name. — *end note*\]
+name. — *end note*]
 
 Unless the *mem-initializer-id* names the constructor’s class, a
 non-static data member of the constructor’s class, or a direct or
@@ -1241,7 +1241,7 @@ struct C: public A, public B { C(); };
 C::C(): global_A() { }          // mem-initializer for base A
 ```
 
-— *end example*\]
+— *end example*]
 
 If a *mem-initializer-id* is ambiguous because it designates both a
 direct non-virtual base class and an inherited virtual base class, the
@@ -1256,7 +1256,7 @@ struct C: public A, public B { C(); };
 C::C(): A() { }                 // ill-formed: which A?
 ```
 
-— *end example*\]
+— *end example*]
 
 A *ctor-initializer* may initialize a variant member of the
 constructor’s class. If a *ctor-initializer* specifies more than one
@@ -1285,7 +1285,7 @@ struct C {
 };
 ```
 
-— *end example*\]
+— *end example*]
 
 The *expression-list* or *braced-init-list* in a *mem-initializer* is
 used to initialize the designated subobject (or, in the case of a
@@ -1307,12 +1307,12 @@ D::D(int a) : B2(a+1), B1(a+2), c(a+3), b(a+4) { ... }
 D d(10);
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Note 2*: The initialization performed by each *mem-initializer*
 constitutes a full-expression ( [[intro.execution]]). Any expression in
 a *mem-initializer* is evaluated as part of the full-expression that
-performs the initialization. — *end note*\]
+performs the initialization. — *end note*]
 
 A *mem-initializer* where the *mem-initializer-id* denotes a virtual
 base class is ignored during execution of a constructor of any class
@@ -1330,7 +1330,7 @@ struct A {
 };
 ```
 
-— *end example*\]
+— *end example*]
 
 In a non-delegating constructor, if a given potentially constructed
 subobject is not designated by a *mem-initializer-id* (including the
@@ -1355,7 +1355,7 @@ has no *ctor-initializer*), then
 [*Note 3*: An abstract class ( [[class.abstract]]) is never a most
 derived class, thus its constructors never initialize virtual base
 classes, therefore the corresponding *mem-initializer*s may be
-omitted. — *end note*\]
+omitted. — *end note*]
 
 An attempt to initialize more than one non-static data member of a union
 renders the program ill-formed.
@@ -1365,7 +1365,7 @@ with automatic or dynamic storage duration has completed, if the
 constructor was not invoked as part of value-initialization and a member
 of `X` is neither initialized nor given a value during execution of the
 *compound-statement* of the body of the constructor, the member has an
-indeterminate value. — *end note*\]
+indeterminate value. — *end note*]
 
 [*Example 6*:
 
@@ -1387,7 +1387,7 @@ struct C {
 };
 ```
 
-— *end example*\]
+— *end example*]
 
 If a given non-static data member has both a default member initializer
 and a *mem-initializer*, the initialization specified by the
@@ -1410,7 +1410,7 @@ the `A(int)` constructor will simply initialize `i` to the value of
 `arg`, and the side effects in `i`’s default member initializer will not
 take place.
 
-— *end example*\]
+— *end example*]
 
 A temporary expression bound to a reference member from a default member
 initializer is ill-formed.
@@ -1427,7 +1427,7 @@ A a1;                   // error: ill-formed binding of temporary to reference
 A a2(1);                // OK, unfortunately
 ```
 
-— *end example*\]
+— *end example*]
 
 In a non-delegating constructor, the destructor for each potentially
 constructed subobject of class type is potentially invoked (
@@ -1435,7 +1435,7 @@ constructed subobject of class type is potentially invoked (
 
 [*Note 5*: This provision ensures that destructors can be called for
 fully-constructed subobjects in case an exception is thrown (
-[[except.ctor]]). — *end note*\]
+[[except.ctor]]). — *end note*]
 
 In a non-delegating constructor, initialization proceeds in the
 following order:
@@ -1456,7 +1456,7 @@ following order:
 
 [*Note 6*: The declaration order is mandated to ensure that base and
 member subobjects are destroyed in the reverse order of
-initialization. — *end note*\]
+initialization. — *end note*]
 
 [*Example 9*:
 
@@ -1491,7 +1491,7 @@ B b(3);             // use V()
 C c(4);             // use V()
 ```
 
-— *end example*\]
+— *end example*]
 
 Names in the *expression-list* or *braced-init-list* of a
 *mem-initializer* are evaluated in the scope of the constructor for
@@ -1516,12 +1516,12 @@ of the constructor parameter `i`, initializes `X::i` with the value of
 the constructor parameter `i`, and initializes `X::j` with the value of
 `X::i`; this takes place each time an object of class `X` is created.
 
-— *end example*\]
+— *end example*]
 
 [*Note 7*: Because the *mem-initializer* are evaluated in the scope of
 the constructor, the `this` pointer can be used in the *expression-list*
 of a *mem-initializer* to refer to the object being
-initialized. — *end note*\]
+initialized. — *end note*]
 
 Member functions (including virtual member functions, [[class.virtual]])
 can be called for an object under construction. Similarly, an object
@@ -1561,12 +1561,12 @@ public:
 };
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Note 8*:  [[class.cdtor]] describes the result of virtual function
 calls, `typeid` and `dynamic_cast`s during construction for the
 well-defined cases; that is, describes the *polymorphic behavior* of an
-object under construction. — *end note*\]
+object under construction. — *end note*]
 
 A *mem-initializer* followed by an ellipsis is a pack expansion (
 [[temp.variadic]]) that initializes the base classes specified by a pack
@@ -1582,7 +1582,7 @@ public:
 };
 ```
 
-— *end example*\]
+— *end example*]
 
 ### Initialization by inherited constructor <a id="class.inhctor.init">[[class.inhctor.init]]</a>
 
@@ -1646,7 +1646,7 @@ Class template `Log` wraps any class and forwards all of its
 constructors, while writing a message to the standard log whenever an
 object of class `Log` is destroyed.
 
-— *end example*\]
+— *end example*]
 
 If the constructor was inherited from multiple base class subobjects of
 type `B`, the program is ill-formed.
@@ -1685,7 +1685,7 @@ P p(0);             // OK: use M(0) to initialize N's base class,
                     // use M() to initialize O's base class
 ```
 
-— *end example*\]
+— *end example*]
 
 When an object is initialized by an inherited constructor,
 initialization of the object is complete when the initialization of all
@@ -1734,7 +1734,7 @@ struct Y {
 };
 ```
 
-— *end example*\]
+— *end example*]
 
 To explicitly or implicitly convert a pointer (a glvalue) referring to
 an object of class `X` to a pointer (reference) to a direct or indirect
@@ -1768,7 +1768,7 @@ struct E : C, D, X {
 };
 ```
 
-— *end example*\]
+— *end example*]
 
 Member functions, including virtual functions ( [[class.virtual]]), can
 be called during construction or destruction ( [[class.base.init]]).
@@ -1814,7 +1814,7 @@ B::B(V* v, A* a) {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 The `typeid` operator ( [[expr.typeid]]) can be used during construction
 or destruction ( [[class.base.init]]). When `typeid` is used in a
@@ -1868,7 +1868,7 @@ B::B(V* v, A* a) {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 ## Copying and moving class objects <a id="class.copy">[[class.copy]]</a>
 
@@ -1885,7 +1885,7 @@ member function is not accessible (Clause  [[class.access]]).
 
 [*Note 1*: Copying/moving one object into another using the copy/move
 constructor or the copy/move assignment operator does not change the
-layout or size of either object. — *end note*\]
+layout or size of either object. — *end note*]
 
 ### Copy/move constructors <a id="class.copy.ctor">[[class.copy.ctor]]</a>
 
@@ -1910,7 +1910,7 @@ X b(a, 0);          // calls X(const X&, int);
 X c = b;            // calls X(const X&, int);
 ```
 
-— *end example*\]
+— *end example*]
 
 A non-template constructor for class `X` is a move constructor if its
 first parameter is of type `X&&`, `const X&&`, `volatile X&&`, or
@@ -1931,7 +1931,7 @@ Y d(f(1));          // calls Y(Y&&)
 Y e = d;            // calls Y(const Y&)
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Note 1*:
 
@@ -1948,9 +1948,9 @@ struct X {
 };
 ```
 
-— *end example*\]
+— *end example*]
 
-— *end note*\]
+— *end note*]
 
 [*Note 2*:
 
@@ -1969,9 +1969,9 @@ const X cx;
 X x = cx;           // error: X::X(X&) cannot copy cx into x
 ```
 
-— *end example*\]
+— *end example*]
 
-— *end note*\]
+— *end note*]
 
 A declaration of a constructor for a class `X` is ill-formed if its
 first parameter is of type (optionally cv-qualified) `X` and either
@@ -1995,7 +1995,7 @@ void h() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 If the class definition does not explicitly declare a copy constructor,
 a non-explicit one is declared *implicitly*. If the class definition
@@ -2032,7 +2032,7 @@ if and only if
 
 [*Note 3*: When the move constructor is not implicitly declared or
 explicitly supplied, expressions that otherwise would have invoked the
-move constructor may instead invoke a copy constructor. — *end note*\]
+move constructor may instead invoke a copy constructor. — *end note*]
 
 The implicitly-declared move constructor for class `X` will have the
 form
@@ -2062,7 +2062,7 @@ overload resolution ( [[over.match]], [[over.over]]).
 
 [*Note 4*: A deleted move constructor would otherwise interfere with
 initialization from an rvalue which can use the copy constructor
-instead. — *end note*\]
+instead. — *end note*]
 
 A copy/move constructor for class `X` is trivial if it is not
 user-provided and if:
@@ -2083,7 +2083,7 @@ is explicitly defaulted after its first declaration.
 
 [*Note 5*: The copy/move constructor is implicitly defined even if the
 implementation elided its odr-use ( [[basic.def.odr]],
-[[class.temporary]]). — *end note*\]
+[[class.temporary]]). — *end note*]
 
 If the implicitly-defined constructor would satisfy the requirements of
 a constexpr constructor ( [[dcl.constexpr]]), the implicitly-defined
@@ -2094,13 +2094,13 @@ defined, all non-user-provided copy/move constructors for its
 potentially constructed subobjects shall have been implicitly defined.
 
 [*Note 6*: An implicitly-declared copy/move constructor has an implied
-exception specification ( [[except.spec]]). — *end note*\]
+exception specification ( [[except.spec]]). — *end note*]
 
 The implicitly-defined copy/move constructor for a non-union class `X`
 performs a memberwise copy/move of its bases and members.
 
 [*Note 7*: Default member initializers of non-static data members are
-ignored. See also the example in  [[class.base.init]]. — *end note*\]
+ignored. See also the example in  [[class.base.init]]. — *end note*]
 
 The order of initialization is the same as the order of initialization
 of bases and members in a user-defined constructor (see 
@@ -2130,10 +2130,10 @@ parameter of type `X`, `X&`, `const` `X&`, `volatile` `X&` or `const`
 `volatile` `X&`.[^5]
 
 [*Note 1*: An overloaded assignment operator must be declared to have
-only one parameter; see  [[over.ass]]. — *end note*\]
+only one parameter; see  [[over.ass]]. — *end note*]
 
 [*Note 2*: More than one form of copy assignment operator may be
-declared for a class. — *end note*\]
+declared for a class. — *end note*]
 
 [*Note 3*:
 
@@ -2155,9 +2155,9 @@ void f() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
-— *end note*\]
+— *end note*]
 
 If the class definition does not explicitly declare a copy assignment
 operator, one is declared *implicitly*. If the class definition declares
@@ -2193,10 +2193,10 @@ non-template member function of class `X` with exactly one parameter of
 type `X&&`, `const X&&`, `volatile X&&`, or `const volatile X&&`.
 
 [*Note 4*: An overloaded assignment operator must be declared to have
-only one parameter; see  [[over.ass]]. — *end note*\]
+only one parameter; see  [[over.ass]]. — *end note*]
 
 [*Note 5*: More than one form of move assignment operator may be
-declared for a class. — *end note*\]
+declared for a class. — *end note*]
 
 If the definition of a class `X` does not explicitly declare a move
 assignment operator, one will be implicitly declared as defaulted if and
@@ -2230,7 +2230,7 @@ struct S {
 };
 ```
 
-— *end example*\]
+— *end example*]
 
 The implicitly-declared move assignment operator for a class `X` will
 have the form
@@ -2308,7 +2308,7 @@ for its direct base classes and its non-static data members shall have
 been implicitly defined.
 
 [*Note 6*: An implicitly-declared copy/move assignment operator has an
-implied exception specification ( [[except.spec]]). — *end note*\]
+implied exception specification ( [[except.spec]]). — *end note*]
 
 The implicitly-defined copy/move assignment operator for a non-union
 class `X` performs memberwise copy/move assignment of its subobjects.
@@ -2347,7 +2347,7 @@ It is unspecified whether the virtual base class subobject `V` is
 assigned twice by the implicitly-defined copy/move assignment operator
 for `C`.
 
-— *end example*\]
+— *end example*]
 
 The implicitly-defined copy assignment operator for a union `X` copies
 the object representation ( [[basic.types]]) of `X`.
@@ -2390,14 +2390,14 @@ combined to eliminate multiple copies):
   will be unchanged except for the execution of constructors and
   destructors for the object declared by the *exception-declaration*.
   \[*Note 3*: There cannot be a move from the exception object because
-  it is always an lvalue. — *end note*\]
+  it is always an lvalue. — *end note*]
 
 Copy elision is required where an expression is evaluated in a context
 requiring a constant expression ( [[expr.const]]) and in constant
 initialization ( [[basic.start.static]]).
 
 [*Note 1*: Copy elision might not be performed if the same expression
-is evaluated in another context. — *end note*\]
+is evaluated in another context. — *end note*]
 
 [*Example 1*:
 
@@ -2443,7 +2443,7 @@ Adding a move constructor to `Thing` has the same effect, but it is the
 move construction from the local automatic object to `t2` that is
 elided.
 
-— *end example*\]
+— *end example*]
 
 In the following copy-initialization contexts, a move operation might be
 used instead of a copy operation:
@@ -2469,7 +2469,7 @@ performed again, considering the object as an lvalue.
 regardless of whether copy elision will occur. It determines the
 constructor to be called if elision is not performed, and the selected
 constructor must be accessible even if the call is
-elided. — *end note*\]
+elided. — *end note*]
 
 [*Example 2*:
 
@@ -2503,7 +2503,7 @@ Weird g() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 <!-- Section link definitions -->
 [class.base.init]: #class.base.init

@@ -90,7 +90,7 @@ satisfied before it can continue execution past the blocking operation
 program construct that an implementation is not required to support  
 
 [*Note 1*: Each implementation documents all conditionally-supported
-constructs that it does not support. — *end note*\]
+constructs that it does not support. — *end note*]
 
 message belonging to an *implementation-defined* subset of the
 implementation’s output messages
@@ -102,7 +102,7 @@ refers
 “pointer to class `B`” is pointing to an object of class `D`, derived
 from `B` (Clause  [[class.derived]]), the dynamic type of the expression
 `*p` is “`D`”. References ( [[dcl.ref]]) are treated
-similarly. — *end example*\]
+similarly. — *end example*]
 
 static type of the prvalue expression
 
@@ -120,7 +120,7 @@ sequence of one or more bytes representing a member of the extended
 character set of either the source or the execution environment  
 
 [*Note 2*: The extended character set is a superset of the basic
-character set ( [[lex.charset]]). — *end note*\]
+character set ( [[lex.charset]]). — *end note*]
 
 object or reference declared as part of a function declaration or
 definition or in the catch clause of an exception handler that acquires
@@ -135,7 +135,7 @@ name, parameter type list ( [[dcl.fct]]), and enclosing namespace (if
 any)  
 
 [*Note 3*: Signatures are used as a basis for name mangling and
-linking. — *end note*\]
+linking. — *end note*]
 
 name, parameter type list ( [[dcl.fct]]), enclosing namespace (if any),
 return type, and template parameter list
@@ -159,7 +159,7 @@ program without considering execution semantics
 
 [*Note 4*: The static type of an expression depends only on the form of
 the program in which the expression appears, and does not change while
-the program is executing. — *end note*\]
+the program is executing. — *end note*]
 
 satisfy a condition that one or more blocked threads of execution are
 waiting for
@@ -177,14 +177,14 @@ translation or execution (with the issuance of a diagnostic message).
 Many erroneous program constructs do not engender undefined behavior;
 they are required to be diagnosed. Evaluation of a constant expression
 never exhibits behavior explicitly specified as undefined (
-[[expr.const]]). — *end note*\]
+[[expr.const]]). — *end note*]
 
 behavior, for a well-formed program construct and correct data, that
 depends on the implementation  
 
 [*Note 6*: The implementation is not required to document which
 behavior occurs. The range of possible behaviors is usually delineated
-by this International Standard. — *end note*\]
+by this International Standard. — *end note*]
 
 C++program constructed according to the syntax rules, diagnosable
 semantic rules, and the one-definition rule ( [[basic.def.odr]]).
@@ -217,7 +217,7 @@ execution of programs. Such requirements have the following meaning:
 
 [*Note 1*: During template argument deduction and substitution, certain
 constructs that in other contexts require a diagnostic are treated
-differently; see  [[temp.deduct]]. — *end note*\]
+differently; see  [[temp.deduct]]. — *end note*]
 
 For classes and class templates, the library Clauses specify partial
 definitions. Private members (Clause  [[class.access]]) are not
@@ -323,7 +323,7 @@ a C++program consists of one or more sequences of contiguous bytes.
 Every byte has a unique address.
 
 [*Note 1*: The representation of types is described in 
-[[basic.types]]. — *end note*\]
+[[basic.types]]. — *end note*]
 
 A *memory location* is either an object of scalar type or a maximal
 sequence of adjacent bit-fields all having nonzero width.
@@ -331,7 +331,7 @@ sequence of adjacent bit-fields all having nonzero width.
 [*Note 2*: Various features of the language, such as references and
 virtual functions, might involve additional memory locations that are
 not accessible to programs but are managed by the
-implementation. — *end note*\]
+implementation. — *end note*]
 
 Two or more threads of execution ( [[intro.multithread]]) can access
 separate memory locations without interfering with each other.
@@ -344,7 +344,7 @@ the other is not, or if the two are separated by a zero-length bit-field
 declaration, or if they are separated by a non-bit-field declaration. It
 is not safe to concurrently update two bit-fields in the same struct if
 all fields between them are also bit-fields of nonzero
-width. — *end note*\]
+width. — *end note*]
 
 [*Example 1*:
 
@@ -368,7 +368,7 @@ concurrently without interfering with each other. The bit-fields `b` and
 and `c` cannot be concurrently modified, but `b` and `a`, for example,
 can be.
 
-— *end example*\]
+— *end example*]
 
 ## The C++object model <a id="intro.object">[[intro.object]]</a>
 
@@ -382,7 +382,7 @@ object occupies a region of storage in its period of construction (
 period of destruction ( [[class.cdtor]]).
 
 [*Note 1*: A function is not an object, regardless of whether or not it
-occupies storage in the way that objects do. — *end note*\]
+occupies storage in the way that objects do. — *end note*]
 
 The properties of an object are determined when the object is created.
 An object can have a name (Clause  [[basic]]). An object has a storage
@@ -409,7 +409,7 @@ object is a subobject of *e*’s containing object if:
 
 [*Note 2*: If the subobject contains a reference member or a `const`
 subobject, the name of the original subobject cannot be used to access
-the new object ( [[basic.life]]). — *end note*\]
+the new object ( [[basic.life]]). — *end note*]
 
 [*Example 1*:
 
@@ -426,7 +426,7 @@ void tong() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 If a complete object is created ( [[expr.new]]) in storage associated
 with another object *e* of type “array of N `unsigned char`” or of type
@@ -439,7 +439,7 @@ storage* for the created object if:
 
 [*Note 3*: If that portion of the array previously provided storage for
 another object, the lifetime of that object ends because its storage was
-reused ( [[basic.life]]). — *end note*\]
+reused ( [[basic.life]]). — *end note*]
 
 [*Example 2*:
 
@@ -465,7 +465,7 @@ int *p = new (b->b + 4) int; // b->b provides storage for *p
                              // but *p is nested within a (see below)
 ```
 
-— *end example*\]
+— *end example*]
 
 An object *a* is *nested within* another object *b* if:
 
@@ -509,11 +509,11 @@ static const char test2 = 'x';
 const bool b = &test1 != &test2;      // always true
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Note 4*: C++provides a variety of fundamental types and several ways
 of composing new types from existing types (
-[[basic.types]]). — *end note*\]
+[[basic.types]]). — *end note*]
 
 ## Program execution <a id="intro.execution">[[intro.execution]]</a>
 
@@ -547,7 +547,7 @@ undefined (for example, the effect of attempting to modify a `const`
 object).
 
 [*Note 1*: This International Standard imposes no requirements on the
-behavior of programs that contain undefined behavior. — *end note*\]
+behavior of programs that contain undefined behavior. — *end note*]
 
 A conforming implementation executing a well-formed program shall
 produce the same observable behavior as one of the possible executions
@@ -579,7 +579,7 @@ These collectively are referred to as the *observable behavior* of the
 program.
 
 [*Note 2*: More stringent correspondences between abstract and actual
-semantics may be defined by each implementation. — *end note*\]
+semantics may be defined by each implementation. — *end note*]
 
 [*Note 3*:
 
@@ -630,7 +630,7 @@ exception and in which the results of overflows are reversible, the
 above expression statement can be rewritten by the implementation in any
 of the above ways because the same result will occur.
 
-— *end note*\]
+— *end note*]
 
 A *constituent expression* is defined as follows:
 
@@ -653,7 +653,7 @@ B b = { 5, { 1+1 } };
 The constituent expressions of the *initializer* used for the
 initialization of `b` are `5` and `1+1`.
 
-— *end example*\]
+— *end example*]
 
 The *immediate subexpressions* of an expression `e` are
 
@@ -674,7 +674,7 @@ A *subexpression* of an expression `e` is an immediate subexpression of
 
 [*Note 4*: Expressions appearing in the *compound-statement* of a
 *lambda-expression* are not subexpressions of the
-*lambda-expression*. — *end note*\]
+*lambda-expression*. — *end note*]
 
 A *full-expression* is
 
@@ -727,14 +727,14 @@ struct B {
                            // including the destruction of temporaries
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Note 5*: The evaluation of a full-expression can include the
 evaluation of subexpressions that are not lexically part of the
 full-expression. For example, subexpressions involved in evaluating
 default arguments ( [[dcl.fct.default]]) are considered to be created in
 the expression that calls the function, not the expression that defines
-the default argument. — *end note*\]
+the default argument. — *end note*]
 
 Reading an object designated by a `volatile` glvalue ( [[basic.lval]]),
 modifying an object, calling a library I/O function, or calling a
@@ -759,14 +759,14 @@ sequenced before *B* and *B* is not sequenced before *A*, then *A* and
 *B* are *unsequenced*.
 
 [*Note 6*: The execution of unsequenced evaluations can
-overlap. — *end note*\]
+overlap. — *end note*]
 
 Evaluations *A* and *B* are *indeterminately sequenced* when either *A*
 is sequenced before *B* or *B* is sequenced before *A*, but it is
 unspecified which.
 
 [*Note 7*: Indeterminately sequenced evaluations cannot overlap, but
-either could be executed first. — *end note*\]
+either could be executed first. — *end note*]
 
 An expression *X* is said to be sequenced before an expression *Y* if
 every value computation and every side effect associated with the
@@ -783,7 +783,7 @@ of subexpressions of individual expressions are unsequenced.
 [*Note 8*: In an expression that is evaluated more than once during the
 execution of a program, unsequenced and indeterminately sequenced
 evaluations of its subexpressions need not be performed consistently in
-different evaluations. — *end note*\]
+different evaluations. — *end note*]
 
 The value computations of the operands of an operator are sequenced
 before the value computation of the result of the operator. If a side
@@ -794,7 +794,7 @@ and they are not potentially concurrent ( [[intro.multithread]]), the
 behavior is undefined.
 
 [*Note 9*: The next section imposes similar, but more complex
-restrictions on potentially concurrent computations. — *end note*\]
+restrictions on potentially concurrent computations. — *end note*]
 
 [*Example 3*:
 
@@ -808,7 +808,7 @@ void g(int i) {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 When calling a function (whether or not the function is inline), every
 value computation and side effect associated with any argument
@@ -821,7 +821,7 @@ as part of the same signal handler (if any), either *A* is sequenced
 before *B* or *B* is sequenced before *A*.[^10]
 
 [*Note 10*: If *A* and *B* would not otherwise be sequenced then they
-are indeterminately sequenced. — *end note*\]
+are indeterminately sequenced. — *end note*]
 
 Several contexts in C++cause evaluation of a function call, even though
 no corresponding function call syntax appears in the translation unit.
@@ -830,7 +830,7 @@ no corresponding function call syntax appears in the translation unit.
 allocation and constructor functions; see  [[expr.new]]. For another
 example, invocation of a conversion function ( [[class.conv.fct]]) can
 arise in contexts in which no function call syntax
-appears. — *end example*\]
+appears. — *end example*]
 
 The sequencing constraints on the execution of the called function (as
 described above) are features of the function calls as evaluated,
@@ -842,7 +842,7 @@ after the invocation of the `std::raise` function and before its return.
 
 [*Note 11*: When a signal is received for another reason, the execution
 of the signal handler is usually unsequenced with respect to the rest of
-the program. — *end note*\]
+the program. — *end note*]
 
 ## Multi-threaded executions and data races <a id="intro.multithread">[[intro.multithread]]</a>
 
@@ -853,7 +853,7 @@ subsequently executed by the thread.
 
 [*Note 1*: When one thread creates another, the initial call to the
 top-level function of the new thread is executed by the new thread, not
-by the creating thread. — *end note*\]
+by the creating thread. — *end note*]
 
 Every thread in a program can potentially access every object and
 function in a program.[^11] Under a hosted implementation, a C++program
@@ -865,7 +865,7 @@ of all of its threads.
 [*Note 2*: Usually the execution can be viewed as an interleaving of
 all its threads. However, some kinds of atomic operations, for example,
 allow executions inconsistent with a simple interleaving, as described
-below. — *end note*\]
+below. — *end note*]
 
 Under a freestanding implementation, it is *implementation-defined*
 whether a program can have more than one thread of execution.
@@ -885,7 +885,7 @@ rules below.
 of this section is motivated by the desire to support atomic operations
 with explicit and detailed visibility constraints. However, it also
 implicitly supports a simpler view for more restricted
-programs. — *end note*\]
+programs. — *end note*]
 
 Two expression evaluations *conflict* if one of them modifies a memory
 location ( [[intro.memory]]) and the other one reads or modifies the
@@ -912,7 +912,7 @@ release operation on *A* forces prior side effects on other memory
 locations to become visible to other threads that later perform a
 consume or an acquire operation on *A*. “Relaxed” atomic operations are
 not synchronization operations even though, like synchronization
-operations, they cannot contribute to data races. — *end note*\]
+operations, they cannot contribute to data races. — *end note*]
 
 All modifications to a particular atomic object *M* occur in some
 particular total order, called the *modification order* of *M*.
@@ -921,7 +921,7 @@ particular total order, called the *modification order* of *M*.
 no requirement that these can be combined into a single total order for
 all objects. In general this will be impossible since different threads
 may observe modifications to different objects in inconsistent
-orders. — *end note*\]
+orders. — *end note*]
 
 A *release sequence* headed by a release operation *A* on an atomic
 object *M* is a maximal contiguous sub-sequence of side effects in the
@@ -938,13 +938,13 @@ with a load-acquire that takes its value from the store (
 
 [*Note 4*: Except in the specified cases, reading a later value does
 not necessarily ensure visibility as described below. Such a requirement
-would sometimes interfere with efficient implementation. — *end note*\]
+would sometimes interfere with efficient implementation. — *end note*]
 
 [*Note 5*: The specifications of the synchronization operations define
 when one reads the value written by another. For atomic objects, the
 definition is clear. All operations on a given mutex occur in a single
 total order. Each mutex acquisition “reads the value written” by the
-last mutex release. — *end note*\]
+last mutex release. — *end note*]
 
 An evaluation *A* *carries a dependency* to an evaluation *B* if
 
@@ -966,7 +966,7 @@ An evaluation *A* *carries a dependency* to an evaluation *B* if
   carries a dependency to *B*.
 
 [*Note 6*: “Carries a dependency to” is a subset of “is sequenced
-before”, and is similarly strictly intra-thread. — *end note*\]
+before”, and is similarly strictly intra-thread. — *end note*]
 
 An evaluation *A* is *dependency-ordered before* an evaluation *B* if
 
@@ -979,7 +979,7 @@ An evaluation *A* is *dependency-ordered before* an evaluation *B* if
 
 [*Note 7*: The relation “is dependency-ordered before” is analogous to
 “synchronizes with”, but uses release/consume in place of
-release/acquire. — *end note*\]
+release/acquire. — *end note*]
 
 An evaluation *A* *inter-thread happens before* an evaluation *B* if
 
@@ -1007,7 +1007,7 @@ exception is that a concatenation is not permitted to consist entirely
 of “sequenced before”. The reasons for this limitation are (1) to permit
 “inter-thread happens before” to be transitively closed and (2) the
 “happens before” relation, defined below, provides for relationships
-consisting entirely of “sequenced before”. — *end note*\]
+consisting entirely of “sequenced before”. — *end note*]
 
 An evaluation *A* *happens before* an evaluation *B* (or, equivalently,
 *B* *happens after* *A*) if:
@@ -1019,7 +1019,7 @@ The implementation shall ensure that no program execution demonstrates a
 cycle in the “happens before” relation.
 
 [*Note 9*: This cycle would otherwise be possible only through the use
-of consume operations. — *end note*\]
+of consume operations. — *end note*]
 
 An evaluation *A* *strongly happens before* an evaluation *B* if either
 
@@ -1029,7 +1029,7 @@ An evaluation *A* *strongly happens before* an evaluation *B* if either
 
 [*Note 10*: In the absence of consume operations, the happens before
 and strongly happens before relations are identical. Strongly happens
-before essentially excludes consume operations. — *end note*\]
+before essentially excludes consume operations. — *end note*]
 
 A *visible side effect* *A* on a scalar object or bit-field *M* with
 respect to a value computation *B* of *M* satisfies the conditions:
@@ -1044,14 +1044,14 @@ by evaluation *B*, shall be the value stored by the visible side effect
 
 [*Note 11*: If there is ambiguity about which side effect to a
 non-atomic object or bit-field is visible, then the behavior is either
-unspecified or undefined. — *end note*\]
+unspecified or undefined. — *end note*]
 
 [*Note 12*: This states that operations on ordinary objects are not
 visibly reordered. This is not actually detectable without data races,
 but it is necessary to ensure that data races, as defined below, and
 with suitable restrictions on the use of atomics, correspond to data
 races in a simple interleaved (sequentially consistent)
-execution. — *end note*\]
+execution. — *end note*]
 
 The value of an atomic object *M*, as determined by evaluation *B*,
 shall be the value stored by some side effect *A* that modifies *M*,
@@ -1059,14 +1059,14 @@ where *B* does not happen before *A*.
 
 [*Note 13*: The set of such side effects is also restricted by the rest
 of the rules described here, and in particular, by the coherence
-requirements below. — *end note*\]
+requirements below. — *end note*]
 
 If an operation *A* that modifies an atomic object *M* happens before an
 operation *B* that modifies *M*, then *A* shall be earlier than *B* in
 the modification order of *M*.
 
 [*Note 14*: This requirement is known as write-write
-coherence. — *end note*\]
+coherence. — *end note*]
 
 If a value computation *A* of an atomic object *M* happens before a
 value computation *B* of *M*, and *A* takes its value from a side effect
@@ -1075,7 +1075,7 @@ stored by *X* or the value stored by a side effect *Y* on *M*, where *Y*
 follows *X* in the modification order of *M*.
 
 [*Note 15*: This requirement is known as read-read
-coherence. — *end note*\]
+coherence. — *end note*]
 
 If a value computation *A* of an atomic object *M* happens before an
 operation *B* that modifies *M*, then *A* shall take its value from a
@@ -1083,7 +1083,7 @@ side effect *X* on *M*, where *X* precedes *B* in the modification order
 of *M*.
 
 [*Note 16*: This requirement is known as read-write
-coherence. — *end note*\]
+coherence. — *end note*]
 
 If a side effect *X* on an atomic object *M* happens before a value
 computation *B* of *M*, then the evaluation *B* shall take its value
@@ -1091,13 +1091,13 @@ from *X* or from a side effect *Y* that follows *X* in the modification
 order of *M*.
 
 [*Note 17*: This requirement is known as write-read
-coherence. — *end note*\]
+coherence. — *end note*]
 
 [*Note 18*: The four preceding coherence requirements effectively
 disallow compiler reordering of atomic operations to a single object,
 even if both operations are relaxed loads. This effectively makes the
 cache coherence guarantee provided by most hardware available to
-C++atomic operations. — *end note*\]
+C++atomic operations. — *end note*]
 
 [*Note 19*: The value observed by a load of an atomic depends on the
 “happens before” relation, which depends on the values observed by loads
@@ -1105,7 +1105,7 @@ of atomics. The intended reading is that there must exist an association
 of atomic loads with modifications they observe that, together with
 suitably chosen modification orders and the “happens before” relation
 derived as described above, satisfy the resulting constraints as imposed
-here. — *end note*\]
+here. — *end note*]
 
 Two actions are *potentially concurrent* if
 
@@ -1130,7 +1130,7 @@ data-race-free programs cannot observe most program transformations that
 do not change single-threaded program semantics. In fact, most
 single-threaded program transformations continue to be allowed, since
 any program that behaves differently as a result must perform an
-undefined operation. — *end note*\]
+undefined operation. — *end note*]
 
 Two accesses to the same object of type `volatile std::sig_atomic_t` do
 not result in a data race if both occur in the same thread, even if one
@@ -1152,7 +1152,7 @@ not have encountered a data race. This includes implementations of data
 member assignment that overwrite adjacent members in separate memory
 locations. Reordering of atomic loads in cases in which the atomics in
 question may alias is also generally precluded, since this may violate
-the coherence rules. — *end note*\]
+the coherence rules. — *end note*]
 
 [*Note 22*: Transformations that introduce a speculative read of a
 potentially shared memory location may not preserve the semantics of the
@@ -1161,7 +1161,7 @@ potentially introduce a data race. However, they are typically valid in
 the context of an optimizing compiler that targets a specific machine
 with well-defined semantics for data races. They would be invalid for a
 hypothetical machine that is not tolerant of races or provides hardware
-race detection. — *end note*\]
+race detection. — *end note*]
 
 ### Forward progress <a id="intro.progress">[[intro.progress]]</a>
 
@@ -1175,7 +1175,7 @@ the following:
 
 [*Note 1*: This is intended to allow compiler transformations such as
 removal of empty loops, even when termination cannot be
-proven. — *end note*\]
+proven. — *end note*]
 
 Executions of atomic functions that are either defined to be lock-free (
 [[atomics.flag]]) or indicated as lock-free ( [[atomics.lockfree]]) are
@@ -1186,7 +1186,7 @@ Executions of atomic functions that are either defined to be lock-free (
   shall complete. \[*Note 1*: Concurrently executing threads may prevent
   progress of a lock-free execution. For example, this situation can
   occur with load-locked store-conditional implementations. This
-  property is sometimes termed obstruction-free. — *end note*\]
+  property is sometimes termed obstruction-free. — *end note*]
 - When one or more lock-free executions run concurrently, at least one
   should complete. \[*Note 2*: It is difficult for some implementations
   to provide absolute guarantees to this effect, since repeated and
@@ -1197,7 +1197,7 @@ Executions of atomic functions that are either defined to be lock-free (
   indefinitely delay progress under expected operating conditions, and
   that such anomalies can therefore safely be ignored by programmers.
   Outside this document, this property is sometimes termed
-  lock-free. — *end note*\]
+  lock-free. — *end note*]
 
 During the execution of a thread of execution, each of the following is
 termed an *execution step*:
@@ -1215,12 +1215,12 @@ while waiting for the condition that it blocks on to be satisfied.
 operation is complete can be considered to continuously check whether
 the operation is complete. Each such check might consist of one or more
 execution steps, for example using observable behavior of the abstract
-machine. — *end example*\]
+machine. — *end example*]
 
 [*Note 2*: Because of this and the preceding requirement regarding what
 threads of execution have to perform eventually, it follows that no
 thread of execution can execute forever without an execution step
-occurring. — *end note*\]
+occurring. — *end note*]
 
 A thread of execution *makes progress* when an execution step occurs or
 a lock-free execution does not complete because there are other
@@ -1234,7 +1234,7 @@ make progress for as long as it has not terminated.
 [*Note 3*: This is required regardless of whether or not other threads
 of executions (if any) have been or are making progress. To eventually
 fulfill this requirement means that this will happen in an unspecified
-but finite amount of time. — *end note*\]
+but finite amount of time. — *end note*]
 
 It is *implementation-defined* whether the implementation-created thread
 of execution that executes `main` ( [[basic.start.main]]) and the
@@ -1242,7 +1242,7 @@ threads of execution created by `std::thread` ( [[thread.thread.class]])
 provide concurrent forward progress guarantees.
 
 [*Note 4*: General-purpose implementations are encouraged to provide
-these guarantees. — *end note*\]
+these guarantees. — *end note*]
 
 For a thread of execution providing *parallel forward progress
 guarantees*, the implementation is not required to ensure that the
@@ -1256,7 +1256,7 @@ that creates this thread of execution. For example, a thread of
 execution that provides concurrent forward progress guarantees and
 executes tasks from a set of tasks in an arbitrary order, one after the
 other, satisfies the requirements of parallel forward progress for these
-tasks. — *end note*\]
+tasks. — *end note*]
 
 For a thread of execution providing *weakly parallel forward progress
 guarantees*, the implementation does not ensure that the thread will
@@ -1267,7 +1267,7 @@ progress guarantees cannot be expected to make progress regardless of
 whether other threads make progress or not; however, blocking with
 forward progress guarantee delegation, as defined below, can be used to
 ensure that such threads of execution make progress
-eventually. — *end note*\]
+eventually. — *end note*]
 
 Concurrent forward progress guarantees are stronger than parallel
 forward progress guarantees, which in turn are stronger than weakly
@@ -1276,7 +1276,7 @@ parallel forward progress guarantees.
 [*Note 7*: For example, some kinds of synchronization between threads
 of execution may only make progress if the respective threads of
 execution provide parallel forward progress guarantees, but will fail to
-make progress under weakly parallel guarantees. — *end note*\]
+make progress under weakly parallel guarantees. — *end note*]
 
 When a thread of execution *P* is specified to *block with forward
 progress guarantee delegation* on the completion of a set *S* of threads
@@ -1290,7 +1290,7 @@ least as strong as *P*’s forward progress guarantees.
 strengthening is not permanent and not necessarily in place for the rest
 of the lifetime of the affected thread of execution. As long as *P* is
 blocked, the implementation has to eventually select and potentially
-strengthen a thread of execution in *S*. — *end note*\]
+strengthen a thread of execution in *S*. — *end note*]
 
 Once a thread of execution in *S* terminates, it is removed from *S*.
 Once *S* is empty, *P* is unblocked.
@@ -1300,19 +1300,19 @@ effectively stronger forward progress guarantee for a certain amount of
 time, due to a second thread of execution *A* being blocked on it with
 forward progress guarantee delegation. In turn, if *B* then blocks with
 forward progress guarantee delegation on *C*, this may also temporarily
-provide a stronger forward progress guarantee to *C*. — *end note*\]
+provide a stronger forward progress guarantee to *C*. — *end note*]
 
 [*Note 10*: If all threads of execution in *S* finish executing (e.g.,
 they terminate and do not use blocking synchronization incorrectly),
 then *P*’s execution of the operation that blocks with forward progress
 guarantee delegation will not result in *P*’s progress guarantee being
-effectively weakened. — *end note*\]
+effectively weakened. — *end note*]
 
 [*Note 11*: This does not remove any constraints regarding blocking
 synchronization for threads of execution providing parallel or weakly
 parallel forward progress guarantees because the implementation is not
 required to strengthen a particular thread of execution whose too-weak
-progress guarantee is preventing overall progress. — *end note*\]
+progress guarantee is preventing overall progress. — *end note*]
 
 An implementation should ensure that the last value (in modification
 order) assigned by an atomic or synchronization operation will become

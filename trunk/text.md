@@ -102,7 +102,7 @@ radix point (if present) and parsing the representation using the
 corresponding `from_chars` function recovers `value` exactly.
 
 [*Note 1*: This guarantee applies only if `to_chars` and `from_chars`
-are executed on the same implementation. — *end note*\]
+are executed on the same implementation. — *end note*]
 
 If there are several such representations, the representation with the
 smallest difference from the floating-point argument value is chosen,
@@ -175,7 +175,7 @@ If no characters match the pattern, `value` is unmodified, the member
 
 [*Note 1*: If the pattern allows for an optional sign, but the string
 has no digit characters following the sign, no characters match the
-pattern. — *end note*\]
+pattern. — *end note*]
 
 Otherwise, the characters matching the pattern are interpreted as a
 representation of a value of the type of `value`. The member `ptr` of
@@ -222,7 +222,7 @@ the `"C"` locale, as described for `strtod`, except that
   appear; and
 - if `fmt` is `chars_format::hex`, the prefix `"0x"` or `"0X"` is
   assumed. \[*Example 1*: The string `0x123` is parsed to have the value
-  `0` with remaining characters `x123`. — *end example*\]
+  `0` with remaining characters `x123`. — *end example*]
 
 In any case, the resulting `value` is one of at most two floating-point
 values closest to the value of the string matching the pattern.
@@ -417,7 +417,7 @@ operator<< (basic_ostream<charT, traits>& s, Date d) {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 In the call to `use_facet<Facet>(loc)`, the type argument chooses a
 facet, making available all members of the named type. If `Facet` is not
@@ -443,7 +443,7 @@ except that:
   object `loc` a C++ program can call `isspace(c, loc)`. (This eases
   upgrading existing extractors [[istream.formatted]].)
 
-— *end note*\]
+— *end note*]
 
 Once a facet reference is obtained from a locale object by calling
 `use_facet<>`, that reference remains usable, and the results from
@@ -645,7 +645,7 @@ programmed static initialization. One initialization strategy is for
 `locale` to initialize each facet’s `id` member the first time an
 instance of the facet is installed into a locale. This depends only on
 static storage being zero before constructors run
-[[basic.start.static]]. — *end note*\]
+[[basic.start.static]]. — *end note*]
 
 ##### Constructors and destructor <a id="locale.cons">[[locale.cons]]</a>
 
@@ -660,7 +660,7 @@ facets have virtual function semantics identical to those of
 
 [*Note 1*: This constructor yields a copy of the current global locale.
 It is commonly used as a default argument for function parameters of
-type `const locale&`. — *end note*\]
+type `const locale&`. — *end note*]
 
 ``` cpp
 explicit locale(const char* std_name);
@@ -808,7 +808,7 @@ locale `loc` simply by [[alg.sort,vector]]:
 std::sort(v.begin(), v.end(), loc);
 ```
 
-— *end example*\]
+— *end example*]
 
 ##### Static members <a id="locale.statics">[[locale.statics]]</a>
 
@@ -833,7 +833,7 @@ otherwise, the effect on the C locale, if any, is
 value returned by `locale()`.
 
 [*Note 2*: See  [[c.locales]] for data race considerations when
-`setlocale` is invoked. — *end note*\]
+`setlocale` is invoked. — *end note*]
 
 ``` cpp
 static const locale& classic();
@@ -1582,7 +1582,7 @@ shall also return `ok`.[^8]
 
 [*Note 1*: As a result of operations on `state`, it can return `ok` or
 `partial` and set `from_next == from` and
-`to_next != to`. — *end note*\]
+`to_next != to`. — *end note*]
 
 *Returns:* An enumeration value, as summarized in
 [[locale.codecvt.inout]].
@@ -1606,7 +1606,7 @@ before another destination element can be produced.
 
 [*Note 2*: This argument can be used, for example, to maintain shift
 state, to specify conversion options (such as count only), or to
-identify a cache of seek offsets. — *end note*\]
+identify a cache of seek offsets. — *end note*]
 
 ``` cpp
 result do_unshift(stateT& state, externT* to, externT* to_end, externT*& to_next) const;
@@ -1871,7 +1871,7 @@ Given an input sequence of `"0x1a.bp+07p"`,
 
 In all cases, the remainder is left in the input.
 
-— *end example*\]
+— *end example*]
 
 Digit grouping is checked. That is, the positions of discarded
 separators are examined for consistency with
@@ -1917,7 +1917,7 @@ sequence `"abc"` yields `err = str.failbit`, with `in` ending at the
 `’c’` element. For targets `true`: `"1"` and `false`: `"0"`, the input
 sequence `"1"` yields `val == true` and `err == str.goodbit`. For empty
 targets `("")`, any input sequence yields
-`err == str.failbit`. — *end example*\]
+`err == str.failbit`. — *end example*]
 
 *Returns:* `in`.
 
@@ -2663,7 +2663,7 @@ the first of the following conditions holds:
 `f`’s locale to determine valid whitespace characters. It is unspecified
 by what means the function performs case-insensitive comparison or
 whether multi-character sequences are considered while doing
-so. — *end note*\]
+so. — *end note*]
 
 *Returns:* `s`.
 
@@ -2862,7 +2862,7 @@ The second form calls `do_put(s, str, fill, t, format, modifier)`.
 
 [*Note 2*: The `fill` argument can be used in the
 implementation-defined formats or by derivations. A space character is a
-reasonable default for this argument. — *end note*\]
+reasonable default for this argument. — *end note*]
 
 *Returns:* An iterator pointing immediately after the last character
 produced.
@@ -2883,14 +2883,14 @@ for those specifiers that are described as depending on the C locale are
 instead *implementation-defined*.
 
 [*Note 3*: Interpretation of the `modifier` argument is
-implementation-defined. — *end note*\]
+implementation-defined. — *end note*]
 
 *Returns:* An iterator pointing immediately after the last character
 produced.
 
 [*Note 4*: The `fill` argument can be used in the
 implementation-defined formats or by derivations. A space character is a
-reasonable default for this argument. — *end note*\]
+reasonable default for this argument. — *end note*]
 
 *Recommended practice:* Interpretation of the `modifier` should follow
 POSIX conventions. Implementations should refer to other standards such
@@ -3001,7 +3001,7 @@ stored in `digits`.
 
 [*Example 1*: The sequence `$1,056.23` in a common United States locale
 would yield, for `units`, `105623`, or, for `digits`,
-`"105623"`. — *end example*\]
+`"105623"`. — *end example*]
 
 If `mp.grouping()` indicates that no thousands separators are permitted,
 any such characters are not read, and parsing is terminated at the point
@@ -3028,7 +3028,7 @@ the string are required after all the other format components.
 [*Example 2*: If `showbase` is off, then for a `neg` value of `"()"`
 and a currency symbol of `"L"`, in `"(100 L)"` the `"L"` is consumed;
 but if `neg` is `"-"`, the `"L"` in `"-100 L"` is not
-consumed. — *end example*\]
+consumed. — *end example*]
 
 If `pos` or `neg` is empty, the sign component is optional, and if no
 sign is detected, the result is given the sign that corresponds to the
@@ -3151,7 +3151,7 @@ before the other characters.
 
 [*Note 1*: It is possible, with some combinations of format patterns
 and flag values, to produce output that cannot be parsed using
-`num_get<>::get`. — *end note*\]
+`num_get<>::get`. — *end note*]
 
 ##### Class template `moneypunct` <a id="locale.moneypunct">[[locale.moneypunct]]</a>
 
@@ -3320,7 +3320,7 @@ string_type do_curr_symbol() const;
 
 [*Note 2*: For specializations where the second template parameter is
 `true`, this is typically four characters long: a three-letter code as
-specified by ISO 4217 followed by a space. — *end note*\]
+specified by ISO 4217 followed by a space. — *end note*]
 
 ``` cpp
 string_type do_positive_sign() const;
@@ -3612,7 +3612,7 @@ A *registered character encoding* is a character encoding scheme in the
 IANA Character Sets registry.
 
 [*Note 1*: The IANA Character Sets registry uses the term “character
-sets” to refer to character encodings. — *end note*\]
+sets” to refer to character encodings. — *end note*]
 
 The primary name of a registered character encoding is the name of that
 encoding specified in the IANA Character Sets registry.
@@ -3650,11 +3650,11 @@ invariants:
 
 - Implementations should not consider registered encodings to be
   interchangeable. \[*Example 2*: Shift_JIS and Windows-31J denote
-  different encodings. — *end example*\]
+  different encodings. — *end example*]
 - Implementations should not use the name of a registered encoding to
   describe another similar yet different non-registered encoding unless
   there is a precedent on that implementation.
-  \[*Example 3*: Big5 — *end example*\]
+  \[*Example 3*: Big5 — *end example*]
 
 #### Members <a id="text.encoding.members">[[text.encoding.members]]</a>
 
@@ -3726,7 +3726,7 @@ character set.
 
 *Returns:* `r`.
 
-[*Note 1*: The order of aliases in `r` is unspecified. — *end note*\]
+[*Note 1*: The order of aliases in `r` is unspecified. — *end note*]
 
 ``` cpp
 static consteval text_encoding literal() noexcept;
@@ -3749,7 +3749,7 @@ On a POSIX implementation, this is the encoding scheme associated with
 the POSIX locale denoted by the empty string `""`.
 
 [*Note 2*: This function is not affected by calls to
-`setlocale`. — *end note*\]
+`setlocale`. — *end note*]
 
 *Recommended practice:* Implementations should return a value that is
 not affected by calls to the POSIX function `setenv` and other functions
@@ -3781,7 +3781,7 @@ literal encoding are equal, ignoring, from left-to-right,
 and `false` otherwise.
 
 [*Note 3*: This comparison is identical to the “Charset Alias Matching”
-algorithm described in the Unicode Technical Standard 22. — *end note*\]
+algorithm described in the Unicode Technical Standard 22. — *end note*]
 
 [*Example 1*:
 
@@ -3792,7 +3792,7 @@ static_assert(comp-name("ut8", "utf8") == false);
 static_assert(comp-name("utf-80", "utf8") == false);
 ```
 
-— *end example*\]
+— *end example*]
 
 #### Comparison functions <a id="text.encoding.cmp">[[text.encoding.cmp]]</a>
 
@@ -3826,7 +3826,7 @@ struct text_encoding::aliases_view : ranges::view_interface<text_encoding::alias
 `ranges::random_access_range`, and `ranges::borrowed_range`.
 
 [*Note 1*: `text_encoding::aliases_view` is not required to satisfy
-`ranges::``common_range`, nor `default_initializable`. — *end note*\]
+`ranges::``common_range`, nor `default_initializable`. — *end note*]
 
 Both `ranges::range_value_t<text_encoding::aliases_view>` and
 `ranges::range_reference_t<text_encoding::aliases_view>` denote
@@ -4113,7 +4113,7 @@ corresponding enumerator is derived from the alias beginning with
 - `csIBBM904` is mapped to `text_encoding::id::IBM904`, and
 - the “`cs`” prefix is removed from other names.
 
-— *end note*\]
+— *end note*]
 
 #### Hash support <a id="text.encoding.hash">[[text.encoding.hash]]</a>
 
@@ -4373,7 +4373,7 @@ replacement value.
 string s = format("{0}-{{", 8);         // value of s is "8-{"
 ```
 
-— *end example*\]
+— *end example*]
 
 If all *arg-id*s in a format string are omitted (including those in the
 *format-spec*, as interpreted by the corresponding `formatter`
@@ -4382,7 +4382,7 @@ in that order. If some *arg-id*s are omitted and some are present, the
 string is not a format string.
 
 [*Note 1*: A format string cannot contain a mixture of automatic and
-manual indexing. — *end note*\]
+manual indexing. — *end note*]
 
 [*Example 2*:
 
@@ -4395,7 +4395,7 @@ string s3 = format("{} to {1}",  "a", "b"); // not a format string (mixing autom
                                             // ill-formed
 ```
 
-— *end example*\]
+— *end example*]
 
 The *format-spec* field contains *format specifications* that define how
 the value should be presented. Each type can define its own
@@ -4414,7 +4414,7 @@ by *arg-id*, the string is not a format string for `args`.
   `parse` member function determines how the *format-spec* is
   interpreted.
 
-— *end example*\]
+— *end example*]
 
 #### Standard format specifiers <a id="format.string.std">[[format.string.std]]</a>
 
@@ -4425,7 +4425,7 @@ for fundamental and string types interprets *format-spec* as a
 [*Note 1*: The format specification can be used to specify such details
 as minimum field width, alignment, padding, and decimal precision. Some
 of the formatting options are only supported for arithmetic
-types. — *end note*\]
+types. — *end note*]
 
 The syntax of format specifications is as follows:
 
@@ -4484,7 +4484,7 @@ width.
 
 [*Note 2*: The POSIX `wcswidth` function is an example of a function
 that, given a string, returns the number of column positions required by
-a terminal to display the string. — *end note*\]
+a terminal to display the string. — *end note*]
 
 The *fill character* is the character denoted by the *fill* option or,
 if the *fill* option is absent, the space character. For a format
@@ -4495,7 +4495,7 @@ corresponds to a single Unicode scalar value.
 following it, which must be one of the alignment options. If the second
 character of *std-format-spec* is not a valid alignment option, then it
 is assumed that the *fill* and *align* options are both
-absent. — *end note*\]
+absent. — *end note*]
 
 The *align* option applies to all argument types. The meaning of the
 various alignment options is as specified in [[format.align]].
@@ -4519,7 +4519,7 @@ string sB = format("{:\importexample[-2pt]{example_05}\kern0.75pt^6}", "x");    
 string sC = format("{:*^6}", "\importexample[-2pt]{example_05}\kern0.75pt\importexample[-2pt]{example_05}\kern0.75pt\importexample[-2pt]{example_05}\kern0.75pt");     // value of sC is "\importexample[-2pt]{example_05\importexample[-2pt]{example_05}\importexample[-2pt]{example_05}"}
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Note 4*: The *fill*, *align*, and `0` options have no effect when the
 minimum field width is not greater than the estimated field width
@@ -4529,7 +4529,7 @@ different field width can produce misaligned output. The
 (U+1f921 (clown face)) character has a field width of `2`. The examples
 above that include that character illustrate the effect of the field
 width when that character is used as a fill character as opposed to when
-it is used as a formatting argument. — *end note*\]
+it is used as a formatting argument. — *end note*]
 
 **Table: Meaning of align options**
 
@@ -4566,7 +4566,7 @@ string s2 = format("{0:},{0:+},{0:-},{0: }", inf);      // value of s2 is "inf,+
 string s3 = format("{0:},{0:+},{0:-},{0: }", nan);      // value of s3 is "nan,+nan,nan, nan"
 ```
 
-— *end example*\]
+— *end example*]
 
 The `#` option causes the *alternate form* to be used for the
 conversion. This option is valid for arithmetic types other than `charT`
@@ -4599,7 +4599,7 @@ string s3 = format("{:<06}", -42);      // value of s3 is "-42\ \ \ " (0 has no 
 string s4 = format("{:06}", inf);       // value of s4 is "\ \ \ inf" (0 has no effect)
 ```
 
-— *end example*\]
+— *end example*]
 
 The *width* option specifies the minimum field width. If the *width*
 option is absent, the minimum field width is `0`.
@@ -4627,7 +4627,7 @@ This is the case for Windows\textregistered-based
 
 and many POSIX-based operating systems.
 
-— *end note*\]
+— *end note*]
 
 For a sequence of characters in UTF-8, UTF-16, or UTF-32, an
 implementation should use as its field width the sum of the field widths
@@ -4694,7 +4694,7 @@ format context.
 
 [*Note 6*: Additional padding and adjustments are performed prior to
 copying the output through the output iterator as specified by the
-format specifiers. — *end note*\]
+format specifiers. — *end note*]
 
 The available integer presentation types for integral types other than
 `bool` and `charT` are specified in [[format.type.int]].
@@ -4709,7 +4709,7 @@ string s3 = format("{:L}", 1234);                       // value of s3 can be "1
                                                         // (depending on the locale)
 ```
 
-— *end example*\]
+— *end example*]
 
 **Table: Meaning of type options for integer types**
 
@@ -4756,7 +4756,7 @@ presentation types, infinity and NaN are formatted as `INF` and `NAN`,
 respectively.
 
 [*Note 7*: In either case, a sign is included if indicated by the
-*sign* option. — *end note*\]
+*sign* option. — *end note*]
 
 **Table: Meaning of type options for floating-point types**
 
@@ -4776,7 +4776,7 @@ The available pointer presentation types and their mapping to `to_chars`
 are specified in [[format.type.ptr]].
 
 [*Note 8*: Pointer presentation types also apply to
-`nullptr_t`. — *end note*\]
+`nullptr_t`. — *end note*]
 
 **Table: Meaning of type options for pointer types**
 
@@ -5060,7 +5060,7 @@ string. If *format-spec* is not present or empty then either
 `pc.begin() == pc.end()` or `*pc.begin() == '}'`.
 
 [*Note 1*: This allows formatters to emit meaningful error
-messages. — *end note*\]
+messages. — *end note*]
 
 **Table: \newoldconcept{Formatter} requirements**
 
@@ -5166,7 +5166,7 @@ template<> inline constexpr bool enable_nonlocking_formatter_optimization<T> = t
 
 [*Note 1*: Specializations such as `formatter<wchar_t, char>` that
 would require implicit multibyte / wide string or character conversion
-are disabled. — *end note*\]
+are disabled. — *end note*]
 
 The header `<format>` provides the following disabled specializations:
 
@@ -5224,7 +5224,7 @@ std::string s2 = std::format("{}", red);        // OK, user-provided formatter
 std::string s3 = std::format("{}", err{});      // error: disabled formatter
 ```
 
-— *end example*\]
+— *end example*]
 
 #### Formatting escaped characters and strings <a id="format.string.escaped">[[format.string.escaped]]</a>
 
@@ -5312,7 +5312,7 @@ string s8 = format("[{:?}]", "\\\u0301");           // s8 has value: ["\ \ \ u{3
 string s9 = format("[{:?}]", "e\u0301\u0323");      // s9 has value: ["\importexample[-2pt]{example_06"]}
 ```
 
-— *end example*\]
+— *end example*]
 
 #### Class template `basic_format_parse_context` <a id="format.parse.ctx">[[format.parse.ctx]]</a>
 
@@ -5372,7 +5372,7 @@ constexpr explicit basic_format_parse_context(basic_string_view<charT> fmt) noex
 [*Note 1*: Any call to `next_arg_id`, `check_arg_id`, or
 `check_dynamic_spec` on an instance of `basic_format_parse_context`
 initialized using this constructor is not a core constant
-expression. — *end note*\]
+expression. — *end note*]
 
 ``` cpp
 constexpr const_iterator begin() const noexcept;
@@ -5409,7 +5409,7 @@ return next_arg_id_++;
 *Throws:* `format_error` if `indexing_ == manual` is `true`.
 
 [*Note 2*: This indicates mixing of automatic and manual argument
-indexing. — *end note*\]
+indexing. — *end note*]
 
 *Remarks:* Let *`cur-arg-id`* be the value of `next_arg_id_` prior to
 this call. Call expressions where *`cur-arg-id`*` >= num_args_` is
@@ -5429,7 +5429,7 @@ if (indexing_ == unknown)
 *Throws:* `format_error` if `indexing_ == automatic` is `true`.
 
 [*Note 3*: This indicates mixing of automatic and manual argument
-indexing. — *end note*\]
+indexing. — *end note*]
 
 *Remarks:* A call to this function is a core constant
 expression [[expr.const]] only if `id < num_args_` is `true`.
@@ -5584,7 +5584,7 @@ template<> struct std::formatter<S> {
 std::string s = std::format("{0:{1}}", S{42}, 10);  // value of s is "xxxxxxxx42"
 ```
 
-— *end example*\]
+— *end example*]
 
 ### Formatting of ranges <a id="format.range">[[format.range]]</a>
 
@@ -5605,7 +5605,7 @@ For a type `R`, `format_kind<R>` is defined as follows:
   `true`, `format_kind<R>` is `range_format::disabled`. \[*Note 1*: This
   prevents constraint recursion for ranges whose reference type is the
   same range type. For example, `std::filesystem::path` is a range of
-  `std::filesystem::path`. — *end note*\]
+  `std::filesystem::path`. — *end note*]
 - Otherwise, if the *qualified-id* `R::key_type` is valid and denotes a
   type:
   - If the *qualified-id* `R::mapped_type` is valid and denotes a type,
@@ -5698,7 +5698,7 @@ The `n` option causes the range to be formatted without the opening and
 closing brackets.
 
 [*Note 1*: This is equivalent to invoking
-`set_brackets({}, {})`. — *end note*\]
+`set_brackets({}, {})`. — *end note*]
 
 The *range-type* specifier changes the way a range is formatted, with
 certain options only valid with certain argument types. The meaning of
@@ -6090,7 +6090,7 @@ template<class T> explicit basic_format_arg(T& v) noexcept;
 
 [*Note 1*: Constructing `basic_format_arg` from a pointer to a member
 is ill-formed unless the user provides an enabled specialization of
-`formatter` for that pointer to member type. — *end note*\]
+`formatter` for that pointer to member type. — *end note*]
 
 ``` cpp
 explicit operator bool() const noexcept;
@@ -6223,7 +6223,7 @@ arguments. Implementations should optimize the representation of
 `basic_format_args` for a small number of formatting arguments.
 
 [*Note 1*: For example, by storing indices of type alternatives
-separately from values and packing the former. — *end note*\]
+separately from values and packing the former. — *end note*]
 
 ``` cpp
 template<class... Args>
@@ -6443,7 +6443,7 @@ This subclause defines requirements on classes representing regular
 expression traits.
 
 [*Note 1*: The class template `regex_traits`, defined in [[re.traits]],
-meets these requirements. — *end note*\]
+meets these requirements. — *end note*]
 
 The class template `basic_regex`, defined in [[re.regex]], needs a set
 of related types and functions to complete the definition of its
@@ -6601,7 +6601,7 @@ v.value(c, I)
 *Returns:* Returns the value represented by the digit *c* in base *I* if
 the character *c* is a valid digit in base *I*; otherwise returns `-1`.
 
-[*Note 1*: The value of *I* will only be 8, 10, or 16. — *end note*\]
+[*Note 1*: The value of *I* will only be 8, 10, or 16. — *end note*]
 
 ``` cpp
 u.imbue(loc)
@@ -6623,7 +6623,7 @@ v.getloc()
 [*Note 2*: Class template `regex_traits` meets the requirements for a
 regular expression traits class when it is specialized for `char` or
 `wchar_t`. This class template is described in the header `<regex>`, and
-is described in [[re.traits]]. — *end note*\]
+is described in [[re.traits]]. — *end note*]
 
 ### Header `<regex>` synopsis <a id="re.syn">[[re.syn]]</a>
 
@@ -7206,7 +7206,7 @@ f |= t.lookup_classname(u.begin(), u.end());
 ctype_base::mask m = convert<char>(f);  // m == ctype_base::digit | ctype_base::upper
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Example 2*:
 
@@ -7220,7 +7220,7 @@ t.isctype('_', f);  // returns true
 t.isctype(' ', f);  // returns false
 ```
 
-— *end example*\]
+— *end example*]
 
 ``` cpp
 int value(charT ch, int radix) const;
@@ -7240,7 +7240,7 @@ locale_type imbue(locale_type loc);
 
 [*Note 1*: Calling `imbue` with a different locale than the one
 currently in use invalidates all cached data held by
-`*this`. — *end note*\]
+`*this`. — *end note*]
 
 *Ensures:* `getloc() == loc`.
 
@@ -7295,7 +7295,7 @@ nor how it is accessed by algorithms that operate on regular
 expressions.
 
 [*Note 1*: Implementations will typically declare some function
-templates as friends of `basic_regex` to achieve this. — *end note*\]
+templates as friends of `basic_regex` to achieve this. — *end note*]
 
 The functions described in [[re.regex]] report errors by throwing
 exceptions of type `regex_error`.
@@ -7847,7 +7847,7 @@ which formed that match. Otherwise `matched` is `false`, and members
 
 [*Note 1*: The `sub_match` objects representing different
 sub-expressions that did not participate in a regular expression match
-need not be distinct. — *end note*\]
+need not be distinct. — *end note*]
 
 ``` cpp
 namespace std {
@@ -8014,7 +8014,7 @@ successful match. Otherwise returns `0`.
 [*Note 1*: The state of a `match_results` object can be modified only
 by passing that object to `regex_match` or `regex_search`.
 Subclauses  [[re.alg.match]] and  [[re.alg.search]] specify the effects
-of those algorithms on their `match_results` arguments. — *end note*\]
+of those algorithms on their `match_results` arguments. — *end note*]
 
 ``` cpp
 size_type max_size() const;
@@ -8229,7 +8229,7 @@ returns `true` only if
   - `m1.suffix() == m2.suffix()`.
 
 [*Note 1*: The algorithm `equal` is defined in
-[[algorithms]]. — *end note*\]
+[[algorithms]]. — *end note*]
 
 ### Regular expression algorithms <a id="re.alg">[[re.alg]]</a>
 
@@ -8266,7 +8266,7 @@ regex_search("GetValues", m, re);       // returns true, and m[0] contains "Get"
 regex_match ("GetValues", m, re);       // returns false
 ```
 
-— *end example*\]
+— *end example*]
 
 *Ensures:* `m.ready() == true` in all cases. If the function returns
 `false`, then the effect on parameter `m` is unspecified except that
@@ -8605,7 +8605,7 @@ iterator holds a *zero-length match* if `match[0].matched == true` and
 
 [*Note 1*: For example, this can occur when the part of the regular
 expression that matched consists only of an assertion (such as `'^'`,
-`'$'`, `'\backslashb'`, `'\backslashB'`). — *end note*\]
+`'$'`, `'\backslashb'`, `'\backslashB'`). — *end note*]
 
 ##### Constructors <a id="re.regiter.cnstr">[[re.regiter.cnstr]]</a>
 
@@ -8698,13 +8698,13 @@ In all cases in which the call to `regex_search` returns `true`,
 [*Note 1*: This means that `match.position(i)` gives the offset from
 the beginning of the target sequence, which is often not the same as the
 offset from the sequence passed in the call to
-`regex_search`. — *end note*\]
+`regex_search`. — *end note*]
 
 It is unspecified how the implementation makes these adjustments.
 
 [*Note 2*: This means that an implementation can call an
 implementation-specific search function, in which case a program-defined
-specialization of `regex_search` will not be called. — *end note*\]
+specialization of `regex_search` will not be called. — *end note*]
 
 ``` cpp
 regex_iterator operator++(int);
@@ -8853,7 +8853,7 @@ suffix iterator the member `result` holds a pointer to the data member
 
 [*Note 1*: For a suffix iterator, data member `suffix.first` is the
 same as the end of the last match found, and `suffix.second` is the same
-as the end of the target sequence. — *end note*\]
+as the end of the target sequence. — *end note*]
 
 The *current match* is `(*position).prefix()` if `subs[N] == -1`, or
 `(*position)[subs[N]]` for any other value of `subs[N]`.
@@ -9080,7 +9080,7 @@ value that can be held in an object of type `charT` the translator shall
 throw an exception object of type `regex_error`.
 
 [*Note 1*: This means that values of the form `"\uxxxx"` that do not
-fit in a character are invalid. — *end note*\]
+fit in a character are invalid. — *end note*]
 
 Where the regular expression grammar requires the conversion of a
 sequence of characters to an integral value, this is accomplished by
@@ -9291,7 +9291,7 @@ type `wchar_t`.
 
 [*Note 1*: The functions `wcschr`, `wcspbrk`, `wcsrchr`, `wcsstr`, and
 `wmemchr` have different signatures in this document, but they have the
-same behavior as in the C standard library [[library.c]]. — *end note*\]
+same behavior as in the C standard library [[library.c]]. — *end note*]
 
 ### Header `<cuchar>` synopsis <a id="cuchar.syn">[[cuchar.syn]]</a>
 
@@ -9318,7 +9318,7 @@ types `char8_t`, `char16_t`, or `char32_t`.
 ### Multibyte / wide string and character conversion functions <a id="c.mb.wcs">[[c.mb.wcs]]</a>
 
 [*Note 1*: The headers `<cstdlib>`, `<cuchar>`, and `<cwchar>` declare
-the functions described in this subclause. — *end note*\]
+the functions described in this subclause. — *end note*]
 
 ``` cpp
 int mbsinit(const mbstate_t* ps);

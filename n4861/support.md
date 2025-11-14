@@ -176,7 +176,7 @@ the type `wchar_t`, and except as noted in [[support.types.nullptr]],
 
 [*Note 1*: Several functions have additional overloads in this
 document, but they have the same behavior as in the C standard library
-[[library.c]]. — *end note*\]
+[[library.c]]. — *end note*]
 
 ### Null pointers <a id="support.types.nullptr">[[support.types.nullptr]]</a>
 
@@ -186,7 +186,7 @@ expression, and it has the characteristics described in 
 
 [*Note 1*: Although `nullptr`’s address cannot be taken, the address of
 another `nullptr_t` object that is an lvalue can be
-taken. — *end note*\]
+taken. — *end note*]
 
 The macro `NULL` is an *implementation-defined* null pointer constant.
 [^1]
@@ -216,7 +216,7 @@ that is large enough to contain the size in bytes of any object
 [*Note 1*: It is recommended that implementations choose types for
 `ptrdiff_t` and `size_t` whose integer conversion ranks [[conv.rank]]
 are no greater than that of `signed long int` unless a larger size is
-necessary to contain all the possible values. — *end note*\]
+necessary to contain all the possible values. — *end note*]
 
 The type `max_align_t` is a trivial standard-layout type whose alignment
 requirement is at least as great as that of every scalar type, and whose
@@ -357,7 +357,7 @@ inclusion of any member of the set of library headers indicated in the
 corresponding comment in this synopsis.
 
 [*Note 1*: Future versions of this International Standard might replace
-the values of these macros with greater values. — *end note*\]
+the values of these macros with greater values. — *end note*]
 
 ``` cpp
 #define __cpp_lib_addressof_constexpr               201603L // also in <memory>
@@ -913,7 +913,7 @@ static constexpr bool is_bounded;
 
 [*Note 1*: All fundamental types [[basic.fundamental]] are bounded.
 This member would be `false` for arbitrary precision
-types. — *end note*\]
+types. — *end note*]
 
 Meaningful for all specializations.
 
@@ -930,7 +930,7 @@ differs from the true value by an integer multiple of
 [*Example 1*: `is_modulo` is `false` for signed integer
 types [[basic.fundamental]] unless an implementation, as an extension to
 this document, defines signed integer overflow to
-wrap. — *end example*\]
+wrap. — *end example*]
 
 Meaningful for all specializations.
 
@@ -1018,7 +1018,7 @@ namespace std {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 The specialization for `bool` shall be provided as follows:
 
@@ -1097,7 +1097,7 @@ library header `<limits.h>`.
 
 [*Note 1*: The types of the constants defined by macros in `<climits>`
 are not required to match the types to which the macros
-refer. — *end note*\]
+refer. — *end note*]
 
 ### Header `<cfloat>` synopsis <a id="cfloat.syn">[[cfloat.syn]]</a>
 
@@ -1214,7 +1214,7 @@ library header `<stdint.h>`.
 ## Startup and termination <a id="support.start.term">[[support.start.term]]</a>
 
 [*Note 1*: The header `<cstdlib>` declares the functions described in
-this subclause. — *end note*\]
+this subclause. — *end note*]
 
 ``` cpp
 [[noreturn]] void _Exit(int status) noexcept;
@@ -1251,7 +1251,7 @@ unspecified whether a call to `atexit()` that does not happen
 before [[intro.multithread]] a call to `exit()` will succeed.
 
 [*Note 1*: The `atexit()` functions do not introduce a data
-race [[res.on.data.races]]. — *end note*\]
+race [[res.on.data.races]]. — *end note*]
 
 *Implementation limits:* The implementation shall support the
 registration of at least 32 functions.
@@ -1296,14 +1296,14 @@ is unspecified whether a call to `at_quick_exit()` that does not happen
 before [[intro.multithread]] all calls to `quick_exit` will succeed.
 
 [*Note 2*: The `at_quick_exit()` functions do not introduce a data
-race [[res.on.data.races]]. — *end note*\]
+race [[res.on.data.races]]. — *end note*]
 
 [*Note 3*: The order of registration may be indeterminate if
-`at_quick_exit` was called from more than one thread. — *end note*\]
+`at_quick_exit` was called from more than one thread. — *end note*]
 
 [*Note 4*: The `at_quick_exit` registrations are distinct from the
 `atexit` registrations, and applications may need to call both
-registration functions with the same argument. — *end note*\]
+registration functions with the same argument. — *end note*]
 
 *Implementation limits:* The implementation shall support the
 registration of at least 32 functions.
@@ -1326,7 +1326,7 @@ shall be called.
 [*Note 5*: A function registered via `at_quick_exit` is invoked by the
 thread that calls `quick_exit`, which can be a different thread than the
 one that registered it, so registered functions should not rely on the
-identity of objects with thread storage duration. — *end note*\]
+identity of objects with thread storage duration. — *end note*]
 
 After calling registered functions, `quick_exit` shall call
 `_Exit(status)`.
@@ -1486,7 +1486,7 @@ T* p1 = new T;                  // throws bad_alloc if it fails
 T* p2 = new(nothrow) T;         // returns nullptr if it fails
 ```
 
-— *end example*\]
+— *end example*]
 
 ``` cpp
 void operator delete(void* ptr) noexcept;
@@ -1510,7 +1510,7 @@ define the corresponding version without the `size` parameter.
 
 [*Note 1*: The default behavior below may change in the future, which
 will require replacing both deallocation functions when replacing the
-allocation function. — *end note*\]
+allocation function. — *end note*]
 
 *Preconditions:* `ptr` is a null pointer or its value represents the
 address of a block of memory allocated by an earlier call to a (possibly
@@ -1536,14 +1536,14 @@ allocation.
 
 [*Note 2*: A conforming implementation is for
 `operator delete(void* ptr, std::size_t size)` to simply call
-`operator delete(ptr)`. — *end note*\]
+`operator delete(ptr)`. — *end note*]
 
 *Default behavior:* The functions that have a `size` parameter forward
 their other parameters to the corresponding function without a `size`
 parameter.
 
 [*Note 3*: See the note in the above *Replaceable:*
-paragraph. — *end note*\]
+paragraph. — *end note*]
 
 *Default behavior:* If `ptr` is null, does nothing. Otherwise, reclaims
 the storage allocated by the earlier call to `operator new`.
@@ -1656,7 +1656,7 @@ define the corresponding version without the `size` parameter.
 
 [*Note 1*: The default behavior below may change in the future, which
 will require replacing both deallocation functions when replacing the
-allocation function. — *end note*\]
+allocation function. — *end note*]
 
 *Preconditions:* `ptr` is a null pointer or its value represents the
 address of a block of memory allocated by an earlier call to a (possibly
@@ -1682,7 +1682,7 @@ allocation.
 
 [*Note 2*: A conforming implementation is for
 `operator delete[](void* ptr, std::size_t size)` to simply call
-`operator delete[](ptr)`. — *end note*\]
+`operator delete[](ptr)`. — *end note*]
 
 *Default behavior:* The functions that have a `size` parameter forward
 their other parameters to the corresponding function without a `size`
@@ -1746,7 +1746,7 @@ void* place = operator new(sizeof(Something));
 Something* p = new (place) Something();
 ```
 
-— *end example*\]
+— *end example*]
 
 ``` cpp
 [[nodiscard]] void* operator new[](std::size_t size, void* ptr) noexcept;
@@ -1881,7 +1881,7 @@ new_handler get_new_handler() noexcept;
 
 *Returns:* The current `new_handler`.
 
-[*Note 1*: This may be a null pointer value. — *end note*\]
+[*Note 1*: This may be a null pointer value. — *end note*]
 
 ### Pointer optimization barrier <a id="ptr.launder">[[ptr.launder]]</a>
 
@@ -1912,7 +1912,7 @@ existing object of the same type, a pointer to the original object can
 be used to refer to the new object unless its complete object is a const
 object or it is a base class subobject; in the latter cases, this
 function can be used to obtain a usable pointer to the new object.
-See  [[basic.life]]. — *end note*\]
+See  [[basic.life]]. — *end note*]
 
 [*Example 1*:
 
@@ -1925,7 +1925,7 @@ const int b = p->n;                 // undefined behavior
 const int c = std::launder(p)->n;   // OK
 ```
 
-— *end example*\]
+— *end example*]
 
 ### Hardware interference size <a id="hardware.interference">[[hardware.interference]]</a>
 
@@ -1947,7 +1947,7 @@ struct keep_apart {
 };
 ```
 
-— *end example*\]
+— *end example*]
 
 ``` cpp
 inline constexpr size_t hardware_constructive_interference_size = implementation-defined{};
@@ -1972,7 +1972,7 @@ struct kennel {
 static_assert(sizeof(together) <= hardware_constructive_interference_size);
 ```
 
-— *end example*\]
+— *end example*]
 
 ## Type identification <a id="support.rtti">[[support.rtti]]</a>
 
@@ -2147,7 +2147,7 @@ following conditions are `true`:
 [*Note 1*: The intent of `source_location` is to have a small size and
 efficient copying. It is unspecified whether the copy/move constructors
 and the copy/move assignment operators are trivial and/or
-constexpr. — *end note*\]
+constexpr. — *end note*]
 
 The data members `file_name_` and `function_name_` always each refer to
 an NTBS.
@@ -2217,7 +2217,7 @@ void g() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 ``` cpp
 constexpr source_location() noexcept;
@@ -2405,7 +2405,7 @@ terminate_handler get_terminate() noexcept;
 
 *Returns:* The current `terminate_handler`.
 
-[*Note 1*: This may be a null pointer value. — *end note*\]
+[*Note 1*: This may be a null pointer value. — *end note*]
 
 #### `terminate` <a id="terminate">[[terminate]]</a>
 
@@ -2423,7 +2423,7 @@ during a call to `set_terminate`. Otherwise calls the current
 `terminate_handler` function.
 
 [*Note 1*: A default `terminate_handler` is always considered a
-callable handler in this context. — *end note*\]
+callable handler in this context. — *end note*]
 
 ### `uncaught_exceptions` <a id="uncaught.exceptions">[[uncaught.exceptions]]</a>
 
@@ -2457,7 +2457,7 @@ the type.
 enumeration, or pointer type.
 
 [*Note 1*: An implementation might use a reference-counted smart
-pointer as `exception_ptr`. — *end note*\]
+pointer as `exception_ptr`. — *end note*]
 
 For purposes of determining the presence of a data race, operations on
 `exception_ptr` objects shall access and modify only the `exception_ptr`
@@ -2469,7 +2469,7 @@ exception object shall not introduce a data race.
 (rather than a copy), concurrent access to that rethrown exception
 object may introduce a data race. Changes in the number of
 `exception_ptr` objects that refer to a particular exception do not
-introduce a data race. — *end note*\]
+introduce a data race. — *end note*]
 
 ``` cpp
 exception_ptr current_exception() noexcept;
@@ -2486,7 +2486,7 @@ unspecified whether the return values of two successive calls to
 `current_exception` refer to the same exception object.
 
 [*Note 3*: That is, it is unspecified whether `current_exception`
-creates a new copy each time it is called. — *end note*\]
+creates a new copy each time it is called. — *end note*]
 
 If the attempt to copy the current exception object throws an exception,
 the function returns an `exception_ptr` object that refers to the thrown
@@ -2495,7 +2495,7 @@ exception or, if this is not possible, to an instance of
 
 [*Note 4*: The copy constructor of the thrown exception may also fail,
 so the implementation is allowed to substitute a `bad_exception` object
-to avoid infinite recursion. — *end note*\]
+to avoid infinite recursion. — *end note*]
 
 ``` cpp
 [[noreturn]] void rethrow_exception(exception_ptr p);
@@ -2521,7 +2521,7 @@ try {
 ```
 
 [*Note 5*: This function is provided for convenience and efficiency
-reasons. — *end note*\]
+reasons. — *end note*]
 
 ### `nested_exception` <a id="except.nested">[[except.nested]]</a>
 
@@ -2550,7 +2550,7 @@ stores it for later use.
 
 [*Note 1*: `nested_exception` has a virtual destructor to make it a
 polymorphic class. Its presence can be tested for with
-`dynamic_cast`. — *end note*\]
+`dynamic_cast`. — *end note*]
 
 ``` cpp
 nested_exception() noexcept;
@@ -2642,7 +2642,7 @@ objects of type `const E`.
 obvious representations for `initializer_list`. `initializer_list` is
 used to implement initializer lists as specified in  [[dcl.init.list]].
 Copying an initializer list does not copy the underlying
-elements. — *end note*\]
+elements. — *end note*]
 
 If an explicit specialization or partial specialization of
 `initializer_list` is declared, the program is ill-formed.
@@ -2769,7 +2769,7 @@ enum class ncmp { unordered = -127 };                       // exposition only
 ```
 
 [*Note 1*: The type `strong_ordering` corresponds to the term total
-ordering in mathematics. — *end note*\]
+ordering in mathematics. — *end note*]
 
 The relational and equality operators for the comparison category types
 are specified with an anonymous parameter of unspecified type. This type
@@ -2782,7 +2782,7 @@ accept literal `0` as a corresponding argument.
 
 meets this requirement.
 
-— *end example*\]
+— *end example*]
 
 In this context, the behavior of a program that supplies an argument
 other than a literal `0` is undefined.
@@ -3081,7 +3081,7 @@ be converted.
 
 [*Note 1*: A comparison category type is stronger than another if they
 are distinct types and an instance of the former can be converted to an
-instance of the latter. — *end note*\]
+instance of the latter. — *end note*]
 
 ``` cpp
 template<class... Ts>
@@ -3096,7 +3096,7 @@ pack, or `void` if any element of `Ts` is not a comparison category
 type.
 
 [*Note 1*: This is `std::strong_ordering` if the expansion is
-empty. — *end note*\]
+empty. — *end note*]
 
 ### Concept `three_way_comparable` <a id="cmp.concept">[[cmp.concept]]</a>
 
@@ -3222,7 +3222,7 @@ expression `strong_order(E, F)` is expression-equivalent
   well-formed expression.
 - Otherwise, `strong_order(E, F)` is ill-formed. \[*Note 1*: This case
   can result in substitution failure when `strong_order(E, F)` appears
-  in the immediate context of a template instantiation. — *end note*\]
+  in the immediate context of a template instantiation. — *end note*]
 
 The name `weak_order` denotes a customization point object
 [[customization.point.object]]. Given subexpressions `E` and `F`, the
@@ -3255,7 +3255,7 @@ expression `weak_order(E, F)` is expression-equivalent
   expression.
 - Otherwise, `weak_order(E, F)` is ill-formed. \[*Note 2*: This case can
   result in substitution failure when `std::weak_order(E, F)` appears in
-  the immediate context of a template instantiation. — *end note*\]
+  the immediate context of a template instantiation. — *end note*]
 
 The name `partial_order` denotes a customization point object
 [[customization.point.object]]. Given subexpressions `E` and `F`, the
@@ -3274,7 +3274,7 @@ expression `partial_order(E, F)` is expression-equivalent
 - Otherwise, `partial_order(E, F)` is ill-formed. \[*Note 3*: This case
   can result in substitution failure when `std::partial_order(E, F)`
   appears in the immediate context of a template
-  instantiation. — *end note*\]
+  instantiation. — *end note*]
 
 The name `compare_strong_order_fallback` denotes a customization point
 object [[customization.point.object]]. Given subexpressions `E` and F,
@@ -3523,10 +3523,10 @@ executes `main`.
 
 [*Note 1*: A coroutine that is resumed on a different execution agent
 should avoid relying on consistent thread identity throughout, such as
-holding a mutex object across a suspend point. — *end note*\]
+holding a mutex object across a suspend point. — *end note*]
 
 [*Note 2*: A concurrent resumption of the coroutine may result in a
-data race. — *end note*\]
+data race. — *end note*]
 
 ``` cpp
 void operator()() const;
@@ -3696,7 +3696,7 @@ namespace std {
 
 [*Note 1*: The types `suspend_never` and `suspend_always` can be used
 to indicate that an *await-expression* should either never suspend or
-always suspend, and in either case not produce a value. — *end note*\]
+always suspend, and in either case not produce a value. — *end note*]
 
 ## Other runtime support <a id="support.runtime">[[support.runtime]]</a>
 
@@ -3709,7 +3709,7 @@ data race [[res.on.data.races]] provided that nothing modifies the
 environment.
 
 [*Note 1*: Calls to the POSIX functions `setenv` and `putenv` modify
-the environment. — *end note*\]
+the environment. — *end note*]
 
 A call to the `setlocale` function [[c.locales]] may introduce a data
 race with other calls to the `setlocale` function or with calls to
@@ -3813,7 +3813,7 @@ An evaluation is *signal-safe* unless it includes one of the following:
   atomic operations and functions explicitly identified as signal-safe;
   \[*Note 4*: This implicitly excludes the use of `new` and `delete`
   expressions that rely on a library-provided memory
-  allocator. — *end note*\]
+  allocator. — *end note*]
 - an access to an object with thread storage duration;
 - a `dynamic_cast` expression;
 - throwing of an exception;

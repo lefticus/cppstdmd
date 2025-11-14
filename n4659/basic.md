@@ -7,11 +7,11 @@ concepts of a declaration and a definition and presents C++’s notion of
 type, scope, linkage, and storage duration. The mechanisms for starting
 and terminating a program are discussed. Finally, this Clause presents
 the fundamental types of the language and lists the ways of constructing
-compound types from these. — *end note*\]
+compound types from these. — *end note*]
 
 [*Note 2*: This Clause does not cover concepts that affect only a
 single part of the language. Such concepts are discussed in the relevant
-Clauses. — *end note*\]
+Clauses. — *end note*]
 
 An *entity* is a value, object, reference, function, enumerator, type,
 class member, bit-field, template, template specialization, namespace,
@@ -128,13 +128,13 @@ extern X anotherX;              // declares anotherX
 using N::d;                     // declares d
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Note 1*:  In some circumstances, C++implementations implicitly define
 the default constructor ( [[class.ctor]]), copy constructor (
 [[class.copy]]), move constructor ( [[class.copy]]), copy assignment
 operator ( [[class.copy]]), move assignment operator ( [[class.copy]]),
-or destructor ( [[class.dtor]]) member functions. — *end note*\]
+or destructor ( [[class.dtor]]) member functions. — *end note*]
 
 [*Example 2*:
 
@@ -171,10 +171,10 @@ struct C {
 };
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Note 2*: A class name can also be implicitly declared by an
-*elaborated-type-specifier* ( [[dcl.type.elab]]). — *end note*\]
+*elaborated-type-specifier* ( [[dcl.type.elab]]). — *end note*]
 
 A program is ill-formed if the definition of any object gives the object
 an incomplete type ( [[basic.types]]).
@@ -224,9 +224,9 @@ int n = b ? (1, S::x)  // S::x is not odr-used here
           : f(S::x);   // S::x is odr-used here, so a definition is required
 ```
 
-— *end example*\]
+— *end example*]
 
-— *end note*\]
+— *end note*]
 
 A variable `x` whose name appears as a potentially-evaluated expression
 `ex` is *odr-used* by `ex` unless applying the lvalue-to-rvalue
@@ -252,7 +252,7 @@ operator overloading (Clause  [[over]]), user-defined conversions (
 *new-expression*s ( [[expr.new]]), as well as non-default
 initialization ( [[dcl.init]]). A constructor selected to copy or move
 an object of class type is odr-used even if the call is actually elided
-by the implementation ( [[class.copy]]). — *end note*\]
+by the implementation ( [[class.copy]]). — *end note*]
 
 An allocation or deallocation function for a class is odr-used by a
 *new-expression* appearing in a potentially-evaluated expression as
@@ -295,7 +295,7 @@ struct X* x1;                   // use X in pointer formation
 X* x2;                          // use X in pointer formation
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Note 3*:
 
@@ -331,7 +331,7 @@ complete class types are required. A class type `T` must be complete if:
 - an *exception-declaration* has type `T`, reference to `T`, or pointer
   to `T` ( [[except.handle]]).
 
-— *end note*\]
+— *end note*]
 
 There can be more than one definition of a class type (Clause 
 [[class]]), enumeration type ( [[dcl.enum]]), inline function with
@@ -409,7 +409,7 @@ unit, then
                                   // D()'s implicit definition violates the ODR
   ```
 
-  — *end example*\]
+  — *end example*]
 
 If `D` is a template and is defined in more than one translation unit,
 then the preceding requirements shall apply both to names from the
@@ -459,7 +459,7 @@ all the text between `{` and `}`, but its potential scope excludes the
 declaration of `i`. The scope of the second declaration of `j` is the
 same as its potential scope.
 
-— *end example*\]
+— *end example*]
 
 The names declared by a declaration are introduced into the scope in
 which the declaration occurs, except that the presence of a `friend`
@@ -479,7 +479,7 @@ which specifies the same unqualified name,
   or enumeration name is hidden ( [[basic.scope.hiding]]). \[*Note 1*: A
   namespace name or a class template name must be unique in its
   declarative region ( [[namespace.alias]], Clause 
-  [[temp]]). — *end note*\]
+  [[temp]]). — *end note*]
 
 [*Note 1*: These restrictions apply to the declarative region into
 which a name is introduced, which is not necessarily the same as the
@@ -490,10 +490,10 @@ name into an enclosing namespace; these restrictions apply to that
 region. Local extern declarations ( [[basic.link]]) may introduce a name
 into the declarative region where the declaration appears and also
 introduce a (possibly not visible) name into an enclosing namespace;
-these restrictions apply to both regions. — *end note*\]
+these restrictions apply to both regions. — *end note*]
 
 [*Note 2*: The name lookup rules are summarized in 
-[[basic.lookup]]. — *end note*\]
+[[basic.lookup]]. — *end note*]
 
 ### Point of declaration <a id="basic.scope.pdecl">[[basic.scope.pdecl]]</a>
 
@@ -510,7 +510,7 @@ unsigned char x = 12;
 
 Here the second `x` is initialized with its own (indeterminate) value.
 
-— *end example*\]
+— *end example*]
 
 [*Note 1*:
 
@@ -526,9 +526,9 @@ const int  i = 2;
 
 declares a block-scope array of two integers.
 
-— *end example*\]
+— *end example*]
 
-— *end note*\]
+— *end note*]
 
 The point of declaration for a class or class template first declared by
 a *class-specifier* is immediately after the *identifier* or
@@ -556,7 +556,7 @@ const int x = 12;
 Here, the enumerator `x` is initialized with the value of the constant
 `x`, namely 12.
 
-— *end example*\]
+— *end example*]
 
 After the point of declaration of a class member, the member name can be
 looked up in the scope of its class.
@@ -572,7 +572,7 @@ struct X {
 };
 ```
 
-— *end note*\]
+— *end note*]
 
 The point of declaration of a class first declared in an
 *elaborated-type-specifier* is as follows:
@@ -586,10 +586,10 @@ The point of declaration of a class first declared in an
   that contains the declaration; otherwise, except as a friend
   declaration, the *identifier* is declared in the smallest namespace or
   block scope that contains the declaration. \[*Note 2*: These rules
-  also apply within templates. — *end note*\] \[*Note 3*: Other forms of
+  also apply within templates. — *end note*] \[*Note 3*: Other forms of
   *elaborated-type-specifier* do not declare a new name, and therefore
   must refer to an existing *type-name*. See  [[basic.lookup.elab]] and 
-  [[dcl.type.elab]]. — *end note*\]
+  [[dcl.type.elab]]. — *end note*]
 
 The point of declaration for an *injected-class-name* (Clause 
 [[class]]) is immediately following the opening brace of the class
@@ -612,7 +612,7 @@ template<class T
     N = 0> struct A { };
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Note 3*: Friend declarations refer to functions or classes that are
 members of the nearest enclosing namespace, but they do not introduce
@@ -620,10 +620,10 @@ new names into that namespace ( [[namespace.memdef]]). Function
 declarations at block scope and variable declarations with the `extern`
 specifier at block scope refer to declarations that are members of an
 enclosing namespace, but they do not introduce new names into that
-scope. — *end note*\]
+scope. — *end note*]
 
 [*Note 4*: For point of instantiation of a template, see 
-[[temp.point]]. — *end note*\]
+[[temp.point]]. — *end note*]
 
 ### Block scope <a id="basic.scope.block">[[basic.scope.block]]</a>
 
@@ -709,7 +709,7 @@ namespace N {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 A namespace member can also be referred to after the `::` scope
 resolution operator ( [[expr.prim]]) applied to the name of its
@@ -775,7 +775,7 @@ class D {
 };
 ```
 
-— *end example*\]
+— *end example*]
 
 The name of a class member shall only be used as follows:
 
@@ -827,7 +827,7 @@ region — namely, the *namespace-body* of `N`. (`g` is still considered
 to belong to this declarative region in spite of its being hidden during
 qualified and unqualified name lookup.)
 
-— *end example*\]
+— *end example*]
 
 The potential scope of a template parameter name begins at its point of
 declaration ( [[basic.scope.pdecl]]) and ends at the end of its
@@ -857,7 +857,7 @@ The use of a template parameter as a base class implies that a class
 used as a template argument must be defined and not just declared when
 the class template is instantiated.
 
-— *end note*\]
+— *end note*]
 
 The declarative region of the name of a template parameter is nested
 within the immediately-enclosing declarative region.
@@ -878,15 +878,15 @@ Here, `X` is a non-type template parameter of type `int` and `Y` is a
 non-type template parameter of the same type as the second template
 parameter of `A`.
 
-— *end example*\]
+— *end example*]
 
-— *end note*\]
+— *end note*]
 
 [*Note 3*: Because the name of a template parameter cannot be
 redeclared within its potential scope ( [[temp.local]]), a template
 parameter’s scope is often its potential scope. However, it is still
 possible for a template parameter name to be hidden; see 
-[[temp.local]]. — *end note*\]
+[[temp.local]]. — *end note*]
 
 ### Name hiding <a id="basic.scope.hiding">[[basic.scope.hiding]]</a>
 
@@ -941,7 +941,7 @@ and lookup.
 
 [*Note 1*:  [[basic.link]] discusses linkage issues. The notions of
 scope, point of declaration and name hiding are discussed in 
-[[basic.scope]]. — *end note*\]
+[[basic.scope]]. — *end note*]
 
 ### Unqualified name lookup <a id="basic.lookup.unqual">[[basic.lookup.unqual]]</a>
 
@@ -984,7 +984,7 @@ Because the expression is not a function call, the argument-dependent
 name lookup ( [[basic.lookup.argdep]]) does not apply and the friend
 function `f` is not found.
 
-— *end note*\]
+— *end note*]
 
 A name used in global scope, outside of any function, class or
 user-declared namespace, shall be declared before its use in global
@@ -1019,7 +1019,7 @@ void A::N::f() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 A name used in the definition of a class `X` outside of a member
 function body, default argument, *noexcept-specifier*,
@@ -1066,18 +1066,18 @@ namespace N {
 // 5) global scope, before the definition of N
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Note 2*: When looking for a prior declaration of a class or function
 introduced by a `friend` declaration, scopes outside of the innermost
 enclosing namespace scope are not considered; see 
-[[namespace.memdef]]. — *end note*\]
+[[namespace.memdef]]. — *end note*]
 
 [*Note 3*:  [[basic.scope.class]] further describes the restrictions on
 the use of names in a class definition. [[class.nest]] further describes
 the restrictions on the use of names in nested class definitions.
 [[class.local]] further describes the restrictions on the use of names
-in local class definitions. — *end note*\]
+in local class definitions. — *end note*]
 
 For the members of a class `X`, a name used in a member function body,
 in a default argument, in a *noexcept-specifier*, in the
@@ -1126,14 +1126,14 @@ void M::N::X::f() {
 // 6) global scope, before the definition of M::N::X::f
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Note 4*:  [[class.mfct]] and  [[class.static]] further describe the
 restrictions on the use of names in member function definitions.
 [[class.nest]] further describes the restrictions on the use of names in
 the scope of nested classes. [[class.local]] further describes the
 restrictions on the use of names in local class
-definitions. — *end note*\]
+definitions. — *end note*]
 
 Name lookup for a name used in the definition of a `friend` function (
 [[class.friend]]) defined inline in the class granting friendship shall
@@ -1168,7 +1168,7 @@ struct B {
 };
 ```
 
-— *end example*\]
+— *end example*]
 
 During the lookup for a name used as a default argument (
 [[dcl.fct.default]]) in a function *parameter-declaration-clause* or
@@ -1180,7 +1180,7 @@ containing the function declaration.
 [*Note 5*:  [[dcl.fct.default]] further describes the restrictions on
 the use of names in default arguments. [[class.base.init]] further
 describes the restrictions on the use of names in a
-*ctor-initializer*. — *end note*\]
+*ctor-initializer*. — *end note*]
 
 During the lookup of a name used in the *constant-expression* of an
 *enumerator-definition*, previously declared *enumerator*s of the
@@ -1193,7 +1193,7 @@ is looked up as if the name was used in a member function of `X`.
 
 [*Note 6*:  [[class.static.data]] further describes the restrictions on
 the use of names in the definition of a `static` data
-member. — *end note*\]
+member. — *end note*]
 
 If a variable member of a namespace is defined outside of the scope of
 its namespace then any name that appears in the definition of the member
@@ -1213,7 +1213,7 @@ int i = 2;
 int N::j = i;       // N::j == 4
 ```
 
-— *end example*\]
+— *end example*]
 
 A name used in the handler for a *function-try-block* (Clause 
 [[except]]) is looked up as if the name was used in the outermost block
@@ -1223,10 +1223,10 @@ outermost block of a handler for the *function-try-block*. Names
 declared in the outermost block of the function definition are not found
 when looked up in the scope of a handler for the *function-try-block*.
 
-[*Note 7*: But function parameter names are found. — *end note*\]
+[*Note 7*: But function parameter names are found. — *end note*]
 
 [*Note 8*: The rules for name lookup in template definitions are
-described in  [[temp.res]]. — *end note*\]
+described in  [[temp.res]]. — *end note*]
 
 ### Argument-dependent name lookup <a id="basic.lookup.argdep">[[basic.lookup.argdep]]</a>
 
@@ -1254,7 +1254,7 @@ void g() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 For each argument type `T` in the function call, there is a set of zero
 or more *associated namespaces* and a set of zero or more
@@ -1278,7 +1278,7 @@ way:
   which any template template arguments are members; and the classes of
   which any member templates used as template template arguments are
   members. \[*Note 4*: Non-type template arguments do not contribute to
-  the set of associated namespaces. — *end note*\]
+  the set of associated namespaces. — *end note*]
 - If `T` is an enumeration type, its associated namespace is the
   innermost enclosing namespace of its declaration. If it is a class
   member, its associated class is the member’s class; else it has no
@@ -1324,7 +1324,7 @@ and *Y*.
 
 [*Note 1*: The namespaces and classes associated with the argument
 types can include namespaces and classes already considered by the
-ordinary unqualified lookup. — *end note*\]
+ordinary unqualified lookup. — *end note*]
 
 [*Example 2*:
 
@@ -1343,7 +1343,7 @@ int main() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 When considering an associated namespace, the lookup is the same as the
 lookup performed when the associated namespace is used as a qualifier (
@@ -1383,11 +1383,11 @@ int main() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Note 1*: Multiply qualified names, such as `N1::N2::N3::n`, can be
 used to refer to members of nested classes ( [[class.nest]]) or members
-of nested namespaces. — *end note*\]
+of nested namespaces. — *end note*]
 
 In a declaration in which the *declarator-id* is a *qualified-id*, names
 used before the *qualified-id* being declared are looked up in the
@@ -1408,7 +1408,7 @@ X C::arr[number];   // ill-formed:
                     // and not to C::X C::arr[C::number];
 ```
 
-— *end example*\]
+— *end example*]
 
 A name prefixed by the unary scope operator `::` ( [[expr.prim]]) is
 looked up in global scope, in the translation unit where it is used. The
@@ -1454,10 +1454,10 @@ int main() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Note 2*:  [[basic.lookup.classref]] describes how name lookup
-proceeds after the `.` and `->` operators. — *end note*\]
+proceeds after the `.` and `->` operators. — *end note*]
 
 #### Class members <a id="class.qual">[[class.qual]]</a>
 
@@ -1469,7 +1469,7 @@ or of one of its base classes (Clause  [[class.derived]]).
 
 [*Note 1*: A class member can be referred to using a *qualified-id* at
 any point in its potential scope (
-[[basic.scope.class]]). — *end note*\]
+[[basic.scope.class]]). — *end note*]
 
 The exceptions to the name lookup rule above are the following:
 
@@ -1498,7 +1498,7 @@ the name is instead considered to name the constructor of class `C`.
 
 [*Note 2*: For example, the constructor is not an acceptable lookup
 result in an *elaborated-type-specifier* so the constructor would not be
-used in place of the injected-class-name. — *end note*\]
+used in place of the injected-class-name. — *end note*]
 
 Such a constructor name shall be used only in the *declarator-id* of a
 declaration that names a constructor or in a *using-declaration*.
@@ -1517,7 +1517,7 @@ A::A a;             // error, A::A is not a type name
 struct A::A a2;     // object of type A
 ```
 
-— *end example*\]
+— *end example*]
 
 A class member name hidden by a name in a nested declarative region or
 by the name of a derived class member can still be found if qualified by
@@ -1601,7 +1601,7 @@ void h()
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Note 1*:
 
@@ -1648,9 +1648,9 @@ void g()
 }
 ```
 
-— *end example*\]
+— *end example*]
 
-— *end note*\]
+— *end note*]
 
 [*Example 3*:
 
@@ -1680,7 +1680,7 @@ void f()
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 During the lookup of a qualified namespace member name, if the lookup
 finds more than one declaration of the member, and if one declaration
@@ -1711,7 +1711,7 @@ namespace C {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 In a declaration for a namespace member in which the *declarator-id* is
 a *qualified-id*, given that the *qualified-id* for the namespace member
@@ -1737,7 +1737,7 @@ namespace A {
 void A::f1(int){ }  // ill-formed, f1 is not a member of A
 ```
 
-— *end example*\]
+— *end example*]
 
 However, in such namespace member declarations, the
 *nested-name-specifier* may rely on *using-directive*s to implicitly
@@ -1763,7 +1763,7 @@ using namespace C::D;
 void B::f1(int){ }  // OK, defines A::B::f1(int)
 ```
 
-— *end example*\]
+— *end example*]
 
 ### Elaborated type specifiers <a id="basic.lookup.elab">[[basic.lookup.elab]]</a>
 
@@ -1834,7 +1834,7 @@ struct Base::Datum;             // error: Datum undefined
 struct Base::Data* pBase;       // OK: refers to nested Data
 ```
 
-— *end example*\]
+— *end example*]
 
 ### Class member access <a id="basic.lookup.classref">[[basic.lookup.classref]]</a>
 
@@ -1874,7 +1874,7 @@ void B::f(::A* a) {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 If the *id-expression* in a class member access is a *qualified-id* of
 the form
@@ -1890,7 +1890,7 @@ found, is used. Otherwise it is looked up in the context of the entire
 
 [*Note 1*: See  [[basic.lookup.qual]], which describes the lookup of a
 name before `::`, which will only find a type or namespace
-name. — *end note*\]
+name. — *end note*]
 
 If the *qualified-id* has the form
 
@@ -1929,7 +1929,7 @@ int main() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 ### Using-directives and namespace aliases <a id="basic.lookup.udir">[[basic.lookup.udir]]</a>
 
@@ -2024,7 +2024,7 @@ link with the declaration at line \#1. Because the declaration with
 internal linkage is hidden, however, \#3 is given external linkage,
 making the program ill-formed.
 
-— *end example*\]
+— *end example*]
 
 When a block scope declaration of an entity with linkage is not found to
 refer to some other declaration, then that entity is a member of the
@@ -2050,7 +2050,7 @@ namespace X {
 void q() { ... }          // some other, unrelated q
 ```
 
-— *end example*\]
+— *end example*]
 
 Names not covered by these rules have no linkage. Moreover, except as
 noted, a name declared at block scope ( [[basic.scope.block]]) has no
@@ -2083,7 +2083,7 @@ any other entity in another translation unit of the program and thus
 must be defined in the translation unit if it is odr-used. Also note
 that classes with linkage may contain members whose types do not have
 linkage, and that typedef names are ignored in the determination of
-whether a type has linkage. — *end note*\]
+whether a type has linkage. — *end note*]
 
 [*Example 3*:
 
@@ -2104,7 +2104,7 @@ void f() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 Two names that are the same (Clause  [[basic]]) and that are declared in
 different scopes shall denote the same variable, function, type,
@@ -2128,7 +2128,7 @@ bound ( [[dcl.array]]). A violation of this rule on type identity does
 not require a diagnostic.
 
 [*Note 2*: Linkage to non-C++declarations can be achieved using a
-*linkage-specification* ( [[dcl.link]]). — *end note*\]
+*linkage-specification* ( [[dcl.link]]). — *end note*]
 
 ## Start and termination <a id="basic.start">[[basic.start]]</a>
 
@@ -2146,7 +2146,7 @@ is required to define a `main` function.
 *implementation-defined*; start-up contains the execution of
 constructors for objects of namespace scope with static storage
 duration; termination contains the execution of destructors for objects
-with static storage duration. — *end note*\]
+with static storage duration. — *end note*]
 
 An implementation shall not predefine the `main` function. This function
 shall not be overloaded. Its type shall have C++language linkage and it
@@ -2169,7 +2169,7 @@ or `""`. The value of `argc` shall be non-negative. The value of
 `argv[argc]` shall be 0.
 
 [*Note 2*: It is recommended that any further (optional) parameters be
-added after `argv`. — *end note*\]
+added after `argv`. — *end note*]
 
 The function `main` shall not be used within a program. The linkage (
 [[basic.link]]) of `main` is *implementation-defined*. A program that
@@ -2181,7 +2181,7 @@ declares a variable `main` at global scope or that declares the name
 name `main` is not otherwise reserved.
 
 [*Example 1*: Member functions, classes, and enumerations can be called
-`main`, as can entities in other namespaces. — *end example*\]
+`main`, as can entities in other namespaces. — *end example*]
 
 Terminating the program without leaving the current block (e.g., by
 calling the function `std::exit(int)` ( [[support.start.term]])) does
@@ -2210,7 +2210,7 @@ constructors for `o` and its subobjects even if those objects are of
 non-literal class types.
 
 [*Note 1*: Such a class may have a non-trivial
-destructor. — *end note*\]
+destructor. — *end note*]
 
 *Constant initialization* is performed if a variable or temporary object
 with static or thread storage duration is initialized by a constant
@@ -2224,7 +2224,7 @@ initialization*. All static initialization strongly happens before (
 
 [*Note 2*: The dynamic initialization of non-local variables is
 described in  [[basic.start.dynamic]]; that of local static variables is
-described in  [[stmt.dcl]]. — *end note*\]
+described in  [[stmt.dcl]]. — *end note*]
 
 An implementation is permitted to perform the initialization of a
 variable with static or thread storage duration as a static
@@ -2258,7 +2258,7 @@ double d2 = d1;     // unspecified:
 double d1 = fd();   // may be initialized statically or dynamically to 1.0
 ```
 
-— *end note*\]
+— *end note*]
 
 ### Dynamic initialization of non-local variables <a id="basic.start.dynamic">[[basic.start.dynamic]]</a>
 
@@ -2270,7 +2270,7 @@ specialization, and otherwise is ordered.
 
 [*Note 1*: An explicitly specialized non-inline static data member or
 variable template specialization has ordered
-initialization. — *end note*\]
+initialization. — *end note*]
 
 Dynamic initialization of non-local variables `V` and `W` with static
 storage duration are ordered as follows:
@@ -2294,7 +2294,7 @@ storage duration are ordered as follows:
   sequenced.
 
 [*Note 2*: This definition permits initialization of a sequence of
-ordered variables concurrently with another sequence. — *end note*\]
+ordered variables concurrently with another sequence. — *end note*]
 
 A *non-initialization odr-use* is an odr-use ( [[basic.def.odr]]) not
 caused directly or indirectly by the initialization of a non-local
@@ -2310,7 +2310,7 @@ translation unit as the variable to be initialized. [^11] It is
 program such deferred dynamic initialization occurs.
 
 [*Note 3*: Such points should be chosen in a way that allows the
-programmer to avoid deadlocks. — *end note*\]
+programmer to avoid deadlocks. — *end note*]
 
 [*Example 1*:
 
@@ -2348,7 +2348,7 @@ is, before `A::A` is called. If, however, `a` is initialized at some
 point after the first statement of `main`, `b` will be initialized prior
 to its use in `A::A`.
 
-— *end example*\]
+— *end example*]
 
 It is *implementation-defined* whether the dynamic initialization of a
 non-local inline variable with static storage duration is sequenced
@@ -2381,7 +2381,7 @@ part of a call to `std::exit` ( [[support.start.term]]). The call to
 the registered functions.
 
 [*Note 1*: Returning from `main` invokes `std::exit` (
-[[basic.start.main]]). — *end note*\]
+[[basic.start.main]]). — *end note*]
 
 Destructors for initialized objects with thread storage duration within
 a given thread are called as a result of returning from the initial
@@ -2439,7 +2439,7 @@ that does not happen before the object’s destruction, the program has
 undefined behavior. Terminating every thread before a call to
 `std::exit` or the exit from `main` is sufficient, but not necessary, to
 satisfy these requirements. These requirements permit thread managers as
-static-storage-duration objects. — *end note*\]
+static-storage-duration objects. — *end note*]
 
 Calling the function `std::abort()` declared in `<cstdlib>` terminates
 the program without executing any destructors and without calling the
@@ -2490,7 +2490,7 @@ storage duration.
 
 [*Note 1*:  [[stmt.dcl]] describes the initialization of local `static`
 variables; [[basic.start.term]] describes the destruction of local
-`static` variables. — *end note*\]
+`static` variables. — *end note*]
 
 The keyword `static` applied to a class data member in a class
 definition gives the data member static storage duration.
@@ -2514,7 +2514,7 @@ or `extern` have *automatic storage duration*. The storage for these
 entities lasts until the block in which they are created exits.
 
 [*Note 1*: These variables are initialized and destroyed as described
-in  [[stmt.dcl]]. — *end note*\]
+in  [[stmt.dcl]]. — *end note*]
 
 If a variable with automatic storage duration has initialization or a
 destructor with side effects, an implementation shall not destroy it
@@ -2534,7 +2534,7 @@ delete` and `operator delete[]`.
 
 [*Note 1*: The non-allocating forms described in
 [[new.delete.placement]] do not perform allocation or
-deallocation. — *end note*\]
+deallocation. — *end note*]
 
 The library provides default definitions for the global allocation and
 deallocation functions. Some global allocation and deallocation
@@ -2575,7 +2575,7 @@ uses to declare these names. Thus, a *new-expression*,
 functions without including the header `<new>` is well-formed. However,
 referring to `std` or `std::size_t` or `std::align_val_t` is ill-formed
 unless the name has been declared by including the appropriate
-header. — *end note*\]
+header. — *end note*]
 
 Allocation and/or deallocation functions may also be declared and
 defined for any class ( [[class.free]]).
@@ -2627,7 +2627,7 @@ currently installed new-handler function ( [[new.handler]]), if any.
 
 [*Note 1*:  A program-supplied allocation function can obtain the
 address of the currently installed `new_handler` using the
-`std::get_new_handler` function ( [[set.new.handler]]). — *end note*\]
+`std::get_new_handler` function ( [[set.new.handler]]). — *end note*]
 
 If an allocation function that has a non-throwing exception
 specification ( [[except.spec]]) fails to allocate storage, it shall
@@ -2646,7 +2646,7 @@ allocate storage for objects with static storage duration (
 [[basic.stc.static]]), for objects or references with thread storage
 duration ( [[basic.stc.thread]]), for objects of type `std::type_info` (
 [[expr.typeid]]), or for an exception object (
-[[except.throw]]). — *end note*\]
+[[except.throw]]). — *end note*]
 
 #### Deallocation functions <a id="basic.stc.dynamic.deallocation">[[basic.stc.dynamic.deallocation]]</a>
 
@@ -2672,7 +2672,7 @@ template parameter.
 
 [*Note 1*: That is, a deallocation function template shall have a first
 parameter of type `void*` and a return type of `void` (as specified
-above). — *end note*\]
+above). — *end note*]
 
 A deallocation function template shall have two or more function
 parameters. A template instance is never a usual deallocation function,
@@ -2749,7 +2749,7 @@ object has previously been declared reachable (
 passing it to a deallocation function) is undefined, see 
 [[basic.stc.dynamic.deallocation]]. This is true even if the
 unsafely-derived pointer value might compare equal to some
-safely-derived pointer value. — *end note*\]
+safely-derived pointer value. — *end note*]
 
 It is *implementation-defined* whether an implementation has relaxed or
 strict pointer safety.
@@ -2768,7 +2768,7 @@ it or one of its subobjects is initialized by a constructor other than a
 trivial default constructor.
 
 [*Note 1*: Initialization by a trivial copy/move constructor is
-non-vacuous initialization. — *end note*\]
+non-vacuous initialization. — *end note*]
 
 The lifetime of an object of type `T` begins when:
 
@@ -2791,7 +2791,7 @@ The lifetime of a reference begins when its initialization is complete.
 The lifetime of a reference ends as if it were a scalar object.
 
 [*Note 2*:  [[class.base.init]] describes the lifetime of base and
-member subobjects. — *end note*\]
+member subobjects. — *end note*]
 
 The properties ascribed to objects and references throughout this
 International Standard apply for a given object or reference only during
@@ -2804,7 +2804,7 @@ the object, as described below, in  [[class.base.init]] and in 
 destruction might not be the same as the behavior of an object whose
 lifetime has started and not ended. [[class.base.init]] and 
 [[class.cdtor]] describe the behavior of objects during the construction
-and destruction phases. — *end note*\]
+and destruction phases. — *end note*]
 
 A program may end the lifetime of any object by reusing the storage
 which the object occupies or by explicitly calling the destructor for an
@@ -2875,7 +2875,7 @@ void g() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 Similarly, before the lifetime of an object has started but after the
 storage which the object will occupy has been allocated or, after the
@@ -2939,11 +2939,11 @@ c1 = c2;                        // well-defined
 c1.f();                         // well-defined; c1 refers to a new object of type C
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Note 4*: If these conditions are not met, a pointer to the new object
 can be obtained from a pointer that represents the address of its
-storage by calling `std::launder` ( [[support.dynamic]]). — *end note*\]
+storage by calling `std::launder` ( [[support.dynamic]]). — *end note*]
 
 If a program ends the lifetime of an object of type `T` with static (
 [[basic.stc.static]]), thread ( [[basic.stc.thread]]), or automatic (
@@ -2967,7 +2967,7 @@ void h() {
 }                               // undefined behavior at block exit
 ```
 
-— *end example*\]
+— *end example*]
 
 Creating a new object within the storage that a `const` complete object
 with static, thread, or automatic storage duration occupies, or within
@@ -2990,14 +2990,14 @@ void h() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 In this section, “before” and “after” refer to the “happens before”
 relation ( [[intro.multithread]]).
 
 [*Note 5*: Therefore, undefined behavior results if an object that is
 being constructed in one thread is referenced from another thread
-without adequate synchronization. — *end note*\]
+without adequate synchronization. — *end note*]
 
 ## Types <a id="basic.types">[[basic.types]]</a>
 
@@ -3005,7 +3005,7 @@ without adequate synchronization. — *end note*\]
 requirements on implementations regarding the representation of types.
 There are two kinds of types: fundamental types and compound types.
 Types describe objects ( [[intro.object]]), references ( [[dcl.ref]]),
-or functions ( [[dcl.fct]]). — *end note*\]
+or functions ( [[dcl.fct]]). — *end note*]
 
 For any object (other than a base-class subobject) of trivially copyable
 type `T`, whether or not the object holds a valid value of type `T`, the
@@ -3024,7 +3024,7 @@ std::memcpy(buf, &obj, N);      // between these two calls to std::memcpy, obj m
 std::memcpy(&obj, buf, N);      // at this point, each subobject of obj of scalar type holds its original value
 ```
 
-— *end example*\]
+— *end example*]
 
 For any trivially copyable type `T`, if two pointers to `T` point to
 distinct `T` objects `obj1` and `obj2`, where neither `obj1` nor `obj2`
@@ -3043,7 +3043,7 @@ std::memcpy(t1p, t2p, sizeof(T));
     // the same value as the corresponding subobject in *t2p
 ```
 
-— *end example*\]
+— *end example*]
 
 The *object representation* of an object of type `T` is the sequence of
 *N* `unsigned char` objects taken up by the object of type `T`, where
@@ -3102,10 +3102,10 @@ void bar() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Note 2*: The rules for declarations and expressions describe in which
-contexts incomplete types are prohibited. — *end note*\]
+contexts incomplete types are prohibited. — *end note*]
 
 An *object type* is a (possibly cv-qualified) type that is not a
 function type, not a reference type, and not cv `void`.
@@ -3148,7 +3148,7 @@ A type is a *literal type* if it is:
 create an object within a constant expression. It is not a guarantee
 that it is possible to create such an object, nor is it a guarantee that
 any object of that type will usable in a constant
-expression. — *end note*\]
+expression. — *end note*]
 
 Two types cv-qualifiercv1 `T1` and cv-qualifiercv2 `T2` are
 *layout-compatible* types if `T1` and `T2` are the same type,
@@ -3173,7 +3173,7 @@ object representation participate in the value representation.
 
 [*Note 1*: A bit-field of narrow character type whose length is larger
 than the number of bits in the object representation of that type has
-padding bits; see  [[class.bit]]. — *end note*\]
+padding bits; see  [[class.bit]]. — *end note*]
 
 For unsigned narrow character types, each possible bit pattern of the
 value representation represents a distinct number. These requirements do
@@ -3235,7 +3235,7 @@ respectively, in `<cstdint>`, called the underlying types.
 Values of type `bool` are either `true` or `false`.[^25]
 
 [*Note 2*: There are no `signed`, `unsigned`, `short`, or `long bool`
-types or values. — *end note*\]
+types or values. — *end note*]
 
 Values of type `bool` participate in integral promotions (
 [[conv.prom]]).
@@ -3248,7 +3248,7 @@ binary numeration system.[^27]
 
 [*Example 1*: This International Standard permits two’s complement,
 ones’ complement and signed magnitude representations for integral
-types. — *end example*\]
+types. — *end example*]
 
 There are three *floating-point* types: `float`, `double`, and
 `long double`. The type `double` provides at least as much precision as
@@ -3261,7 +3261,7 @@ value representation of floating-point types is
 
 [*Note 3*: This International Standard imposes no requirements on the
 accuracy of floating-point operations; see also 
-[[support.limits]]. — *end note*\]
+[[support.limits]]. — *end note*]
 
 Integral and floating types are collectively called *arithmetic* types.
 Specializations of the standard library template `std::numeric_limits` (
@@ -3287,7 +3287,7 @@ member conversions ( [[conv.ptr]], [[conv.mem]]).
 
 [*Note 4*: Even if the implementation defines two or more basic types
 to have the same value representation, they are nevertheless different
-types. — *end note*\]
+types. — *end note*]
 
 ### Compound types <a id="basic.compound">[[basic.compound]]</a>
 
@@ -3325,7 +3325,7 @@ The type of a pointer to cv `void` or a pointer to an object type is
 called an *object pointer type*.
 
 [*Note 1*: A pointer to `void` does not have a pointer-to-object type,
-however, because `void` is not an object type. — *end note*\]
+however, because `void` is not an object type. — *end note*]
 
 The type of a pointer that can designate a function is called a
 *function pointer type*. A pointer to objects of type `T` is referred to
@@ -3333,7 +3333,7 @@ as a “pointer to `T`”.
 
 [*Example 1*: A pointer to an object of type `int` is referred to as
 “pointer to `int`” and a pointer to an object of class `X` is called a
-“pointer to `X`”. — *end example*\]
+“pointer to `X`”. — *end example*]
 
 Except for pointers to static members, text referring to “pointers” does
 not apply to pointers to members. Pointers to incomplete types are
@@ -3356,7 +3356,7 @@ respectively.
 considered to point to an unrelated object of the object’s type that
 might be located at that address. A pointer value becomes invalid when
 the storage it denotes reaches the end of its storage duration; see
-[[basic.stc]]. — *end note*\]
+[[basic.stc]]. — *end note*]
 
 For purposes of pointer arithmetic ( [[expr.add]]) and comparison (
 [[expr.rel]], [[expr.eq]]), a pointer past the end of the last element
@@ -3368,7 +3368,7 @@ requirements ( [[basic.align]]).
 
 [*Note 3*: Pointers to over-aligned types ( [[basic.align]]) have no
 special representation, but their range of valid values is restricted by
-the extended alignment requirement. — *end note*\]
+the extended alignment requirement. — *end note*]
 
 Two objects *a* and *b* are *pointer-interconvertible* if:
 
@@ -3389,7 +3389,7 @@ the other via a `reinterpret_cast` ( [[expr.reinterpret.cast]]).
 
 [*Note 4*: An array object and its first element are not
 pointer-interconvertible, even though they have the same
-address. — *end note*\]
+address. — *end note*]
 
 A pointer to cv-qualified ( [[basic.type.qualifier]]) or cv-unqualified
 `void` can be used to point to objects of unknown type. Such a pointer
@@ -3458,7 +3458,7 @@ no top-level cv-qualifiers. The type corresponding to the *type-id*
 `volatile int * const` has the top-level cv-qualifier `const`. For a
 class type `C`, the type corresponding to the *type-id*
 `void (C::* volatile)(int) const` has the top-level cv-qualifier
-`volatile`. — *end example*\]
+`volatile`. — *end example*]
 
 Cv-qualifiers applied to an array type attach to the underlying element
 type, so the notation “cv `T`”, where `T` is an array type, refers to an
@@ -3478,7 +3478,7 @@ const CA arr2 = { 0 };
 The type of both `arr1` and `arr2` is “array of 5 `const char`”, and the
 array type is considered to be const-qualified.
 
-— *end example*\]
+— *end example*]
 
 ## Lvalues and rvalues <a id="basic.lval">[[basic.lval]]</a>
 
@@ -3492,7 +3492,7 @@ array type is considered to be const-qualified.
   lifetime). \[*Example 2*: Certain kinds of expressions involving
   rvalue references ( [[dcl.ref]]) yield xvalues, such as a call to a
   function whose return type is an rvalue reference or a cast to an
-  rvalue reference type. — *end example*\]
+  rvalue reference type. — *end example*]
 - An *lvalue* is a glvalue that is not an xvalue.
 - An *rvalue* is a prvalue or an xvalue.
 
@@ -3501,7 +3501,7 @@ they could appear on the left- and right-hand side of an assignment
 (although this is no longer generally true); glvalues are “generalized”
 lvalues, prvalues are “pure” rvalues, and xvalues are “eXpiring”
 lvalues. Despite their names, these terms classify expressions, not
-values. — *end note*\]
+values. — *end note*]
 
 Every expression belongs to exactly one of the fundamental
 classifications in this taxonomy: lvalue, xvalue, or prvalue. This
@@ -3513,7 +3513,7 @@ of the operands it expects. For example, the built-in assignment
 operators expect that the left operand is an lvalue and that the right
 operand is a prvalue and yield an lvalue as the result. User-defined
 operators are functions, and the categories of values they expect and
-yield are determined by their parameter and return types. — *end note*\]
+yield are determined by their parameter and return types. — *end note*]
 
 The *result* of a prvalue is the value that the expression stores into
 its context. A prvalue whose result is the value *V* is sometimes said
@@ -3525,7 +3525,7 @@ result object.
 [*Note 3*: Except when the prvalue is the operand of a
 *decltype-specifier*, a prvalue of class or array type always has a
 result object. For a discarded prvalue, a temporary object is
-materialized; see Clause  [[expr]]. — *end note*\]
+materialized; see Clause  [[expr]]. — *end note*]
 
 The *result* of a glvalue is the entity denoted by the expression.
 
@@ -3533,15 +3533,15 @@ The *result* of a glvalue is the entity denoted by the expression.
 expected, the glvalue is converted to a prvalue; see  [[conv.lval]],
 [[conv.array]], and  [[conv.func]]. An attempt to bind an rvalue
 reference to an lvalue is not such a context; see 
-[[dcl.init.ref]]. — *end note*\]
+[[dcl.init.ref]]. — *end note*]
 
 [*Note 5*: There are no prvalue bit-fields; if a bit-field is converted
 to a prvalue ( [[conv.lval]]), a prvalue of the type of the bit-field is
-created, which might then be promoted ( [[conv.prom]]). — *end note*\]
+created, which might then be promoted ( [[conv.prom]]). — *end note*]
 
 [*Note 6*: Whenever a prvalue appears in a context where a glvalue is
 expected, the prvalue is converted to an xvalue; see 
-[[conv.rval]]. — *end note*\]
+[[conv.rval]]. — *end note*]
 
 The discussion of reference initialization in  [[dcl.init.ref]] and of
 temporaries in  [[class.temporary]] indicates the behavior of lvalues
@@ -3553,7 +3553,7 @@ cv `void`.
 
 [*Note 7*: A glvalue may have complete or incomplete non-`void` type.
 Class and array prvalues can have cv-qualified types; other prvalues
-always have cv-unqualified types. See Clause  [[expr]]. — *end note*\]
+always have cv-unqualified types. See Clause  [[expr]]. — *end note*]
 
 An lvalue is *modifiable* unless its type is const-qualified or is a
 function type.
@@ -3561,7 +3561,7 @@ function type.
 [*Note 8*: A program that attempts to modify an object through a
 nonmodifiable lvalue expression or through an rvalue expression is
 ill-formed ( [[expr.ass]], [[expr.post.incr]],
-[[expr.pre.incr]]). — *end note*\]
+[[expr.pre.incr]]). — *end note*]
 
 If a program attempts to access the stored value of an object through a
 glvalue of other than one of the following types the behavior is
@@ -3614,7 +3614,7 @@ type `B`, so it must be aligned appropriately for a `long double`. If
 virtual base class, the `B` subobject might be part of a different
 subobject, reducing the alignment requirements on the `D` subobject.
 
-— *end example*\]
+— *end example*]
 
 The result of the `alignof` operator reflects the alignment requirement
 of the type in the complete-object case.
@@ -3627,7 +3627,7 @@ requirement is an *over-aligned type*.
 
 [*Note 1*: Every over-aligned type is or contains a class type to which
 extended alignment applies (possibly through a non-static data
-member). — *end note*\]
+member). — *end note*]
 
 A *new-extended alignment* is represented by an alignment greater than
 `__STDCPP_DEFAULT_NEW_ALIGNMENT__` ( [[cpp.predefined]]).
@@ -3650,7 +3650,7 @@ alignment requirement.
 
 [*Note 2*: This enables the narrow character types to be used as the
 underlying type for an aligned memory area (
-[[dcl.align]]). — *end note*\]
+[[dcl.align]]). — *end note*]
 
 Comparing alignments is meaningful and provides the obvious results:
 
@@ -3662,7 +3662,7 @@ Comparing alignments is meaningful and provides the obvious results:
 [*Note 3*: The runtime pointer alignment function ( [[ptr.align]]) can
 be used to obtain an aligned pointer within a buffer; the
 aligned-storage templates in the library ( [[meta.trans.other]]) can be
-used to obtain aligned storage. — *end note*\]
+used to obtain aligned storage. — *end note*]
 
 If a request for a specific extended alignment in a specific context is
 not supported by an implementation, the program is ill-formed.

@@ -52,7 +52,7 @@ rules.
 
 [*Note 1*: Module partitions can be imported only by other module units
 in the same module. The division of a module into module units is not
-visible outside the module. — *end note*\]
+visible outside the module. — *end note*]
 
 [*Example 1*:
 
@@ -99,7 +99,7 @@ Module `A` contains four translation units:
   `baz`, which cannot be imported because it does not have a partition
   name.
 
-— *end example*\]
+— *end example*]
 
 A *module unit purview* is the sequence of *token*s starting at the
 *module-declaration* and extending to the end of the translation unit.
@@ -112,7 +112,7 @@ appearing in such a context are said to be in the *purview* of the
 global module.
 
 [*Note 2*: The global module has no name, no module interface unit, and
-is not introduced by any *module-declaration*. — *end note*\]
+is not introduced by any *module-declaration*. — *end note*]
 
 A *module* is either a named module or the global module. A declaration
 is *attached* to a module as follows:
@@ -170,7 +170,7 @@ module B;                       // implicitly imports B
 int &c = n;                     // OK
 ```
 
-— *end example*\]
+— *end example*]
 
 ## Export declaration <a id="module.interface">[[module.interface]]</a>
 
@@ -230,7 +230,7 @@ export namespace N { }          // OK
 export using namespace N;       // error: does not declare a name
 ```
 
-— *end example*\]
+— *end example*]
 
 If the declaration is a *using-declaration* [[namespace.udecl]] and is
 not within a header unit, all entities to which all of the
@@ -276,7 +276,7 @@ namespace N {
 export using N::h;              // error: #1 has internal linkage
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Note 1*:
 
@@ -291,9 +291,9 @@ struct S;
 export using T = S;             // OK, exports name T denoting type S
 ```
 
-— *end example*\]
+— *end example*]
 
-— *end note*\]
+— *end note*]
 
 A redeclaration of an exported declaration of an entity is implicitly
 exported. An exported redeclaration of a non-exported declaration of an
@@ -309,7 +309,7 @@ export typedef S S;             // OK, does not redeclare an entity
 export struct S;                // error: exported declaration follows non-exported declaration
 ```
 
-— *end example*\]
+— *end example*]
 
 A name is *exported* by a module if it is introduced or redeclared by an
 exported declaration in the purview of that module.
@@ -319,7 +319,7 @@ see [[basic.link]]. Namespace-scope names exported by a module are
 visible to name lookup in any translation unit importing that module;
 see [[basic.scope.namespace]]. Class and enumeration member names are
 visible to name lookup in any context in which a definition of the type
-is reachable. — *end note*\]
+is reachable. — *end note*]
 
 [*Example 5*:
 
@@ -369,7 +369,7 @@ int main() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Note 3*:
 
@@ -394,9 +394,9 @@ namespace {
 export int N::x;                // error: #3 gives internal linkage
 ```
 
-— *end example*\]
+— *end example*]
 
-— *end note*\]
+— *end note*]
 
 [*Note 4*:
 
@@ -414,9 +414,9 @@ export namespace N {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
-— *end note*\]
+— *end note*]
 
 ## Import declaration <a id="module.import">[[module.import]]</a>
 
@@ -442,7 +442,7 @@ determined as described below.
 units become visible [[basic.scope.namespace]] in the importing
 translation unit and declarations within the imported translation units
 become reachable [[module.reach]] in the importing translation unit
-after the import declaration. — *end note*\]
+after the import declaration. — *end note*]
 
 A *module-import-declaration* that specifies a *module-name* `M` imports
 all module interface units of `M`.
@@ -460,7 +460,7 @@ or header nominated by `H`, which shall not contain a
 
 [*Note 2*: All declarations within a header unit are implicitly
 exported [[module.interface]], and are attached to the global module
-[[module.unit]]. — *end note*\]
+[[module.unit]]. — *end note*]
 
 An *importable header* is a member of an *implementation-defined* set of
 headers that includes all importable C++ library headers [[headers]].
@@ -474,19 +474,19 @@ headers that includes all importable C++ library headers [[headers]].
 - otherwise, it is unspecified whether they import the same header unit.
   \[*Note 1*: It is therefore possible that multiple copies exist of
   entities declared with internal linkage in an importable
-  header. — *end note*\]
+  header. — *end note*]
 
 [*Note 3*: A *module-import-declaration* nominating a *header-name* is
 also recognized by the preprocessor, and results in macros defined at
 the end of phase 4 of translation of the header unit being made visible
-as described in [[cpp.import]]. — *end note*\]
+as described in [[cpp.import]]. — *end note*]
 
 A declaration of a name with internal linkage is permitted within a
 header unit despite all declarations being implicitly exported
 [[module.interface]].
 
 [*Note 4*: A definition that appears in multiple translation units
-cannot in general refer to such names [[basic.def.odr]]. — *end note*\]
+cannot in general refer to such names [[basic.def.odr]]. — *end note*]
 
 A header unit shall not contain a definition of a non-inline function or
 variable whose name has external linkage.
@@ -517,7 +517,7 @@ export module M;
 export import :Part;    // error: exported partition :Part is an implementation unit
 ```
 
-— *end example*\]
+— *end example*]
 
 A module implementation unit of a module `M` that is not a module
 partition shall not contain a *module-import-declaration* nominating
@@ -530,7 +530,7 @@ module M;
 import M;               // error: cannot import M in its own unit
 ```
 
-— *end example*\]
+— *end example*]
 
 A translation unit has an *interface dependency* on a translation unit
 `U` if it contains a declaration (possibly a *module-declaration*) that
@@ -561,7 +561,7 @@ export module M3;
 import M1;              // error: cyclic interface dependency M3 → M1 → M2 → M3
 ```
 
-— *end example*\]
+— *end example*]
 
 ## Global module fragment <a id="module.global.frag">[[module.global.frag]]</a>
 
@@ -572,7 +572,7 @@ global-module-fragment:
 
 [*Note 1*: Prior to phase 4 of translation, only preprocessing
 directives can appear in the *declaration-seq*
-[[cpp.pre]]. — *end note*\]
+[[cpp.pre]]. — *end note*]
 
 A *global-module-fragment* specifies the contents of the *global module
 fragment* for a module unit. The global module fragment can be used to
@@ -635,7 +635,7 @@ A declaration `D` in a global module fragment of a module unit is
 name lookup outside the module unit, nor in template instantiations
 whose points of instantiation [[temp.point]] are outside the module
 unit, even when the instantiation context [[module.context]] includes
-the module unit. — *end note*\]
+the module unit. — *end note*]
 
 [*Example 1*:
 
@@ -656,7 +656,7 @@ template<int N>
 void h() noexcept(g(N) == N);   // g and :: are decl-reachable from h
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Example 2*:
 
@@ -713,7 +713,7 @@ int b = use_g<int>();           // error: no viable function for call to g;
 int c = use_h<int>();           // OK
 ```
 
-— *end example*\]
+— *end example*]
 
 ## Private module fragment <a id="module.private.frag">[[module.private.frag]]</a>
 
@@ -748,7 +748,7 @@ affects:
   [[module.context]], and
 - the reachability of declarations within it [[module.reach]].
 
-— *end note*\]
+— *end note*]
 
 [*Example 1*:
 
@@ -775,7 +775,7 @@ void fn_m() {}
 void fn_s() {}
 ```
 
-— *end example*\]
+— *end example*]
 
 ## Instantiation context <a id="module.context">[[module.context]]</a>
 
@@ -876,7 +876,7 @@ context of `bar<int, X>` comprises
 so the definition of `X` need not be reachable, as described in
 [[module.reach]].
 
-— *end example*\]
+— *end example*]
 
 ## Reachability <a id="module.reach">[[module.reach]]</a>
 
@@ -888,7 +888,7 @@ either case prior to P ( [[module.import]]).
 [*Note 1*: While module interface units are reachable even when they
 are only transitively imported via a non-exported import declaration,
 namespace-scope names from such module interface units are not visible
-to name lookup [[basic.scope.namespace]]. — *end note*\]
+to name lookup [[basic.scope.namespace]]. — *end note*]
 
 All translation units that are necessarily reachable are *reachable*. It
 is unspecified whether additional translation units on which the point
@@ -897,7 +897,7 @@ and under what circumstances. [^3]
 
 [*Note 2*: It is advisable to avoid depending on the reachability of
 any additional translation units in programs intending to be
-portable. — *end note*\]
+portable. — *end note*]
 
 A declaration D is *reachable* if, for any point P in the instantiation
 context [[module.context]],
@@ -908,7 +908,7 @@ context [[module.context]],
   *private-module-fragment*.
 
 [*Note 3*: Whether a declaration is exported has no bearing on whether
-it is reachable. — *end note*\]
+it is reachable. — *end note*]
 
 The accumulated properties of all reachable declarations of an entity
 within a context determine the behavior of the entity within that
@@ -968,12 +968,12 @@ B b3;                           // error: no reachable definition of struct B
 void g() { f(); }               // error: no reachable definition of struct B
 ```
 
-— *end example*\]
+— *end example*]
 
-— *end note*\]
+— *end note*]
 
 [*Note 5*: An entity can have reachable declarations even if it is not
-visible to name lookup. — *end note*\]
+visible to name lookup. — *end note*]
 
 [*Example 2*:
 
@@ -994,7 +994,7 @@ Y y;                // OK, definition of X is reachable
 X x;                // error: X not visible to unqualified lookup
 ```
 
-— *end example*\]
+— *end example*]
 
 <!-- Section link definitions -->
 [module]: #module

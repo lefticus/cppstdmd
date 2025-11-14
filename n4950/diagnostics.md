@@ -336,7 +336,7 @@ The contents of the header `<cerrno>` are the same as the POSIX header
 `<errno.h>`, except that `errno` shall be defined as a macro.
 
 [*Note 1*: The intent is to remain in close alignment with the POSIX
-standard. — *end note*\]
+standard. — *end note*]
 
 A separate `errno` value is provided for each thread.
 
@@ -591,7 +591,7 @@ behave as specified in subclause  [[syserr.errcat]].
 such objects are equal if they have the same address. If there is more
 than a single object of a custom `error_category` type, such equality
 comparisons can evaluate to `false` even for objects holding the same
-value. — *end note*\]
+value. — *end note*]
 
 ``` cpp
 namespace std {
@@ -663,7 +663,7 @@ strong_ordering operator<=>(const error_category& rhs) const noexcept;
 *Returns:* `compare_three_way()(this, &rhs)`.
 
 [*Note 1*: `compare_three_way`[[comparisons.three.way]] provides a
-total ordering for pointers. — *end note*\]
+total ordering for pointers. — *end note*]
 
 #### Program-defined classes derived from `error_category` <a id="syserr.errcat.derived">[[syserr.errcat.derived]]</a>
 
@@ -731,7 +731,7 @@ correspondence for any given operating system is unspecified.
 [*Note 1*: The number of potential system error codes is large and
 unbounded, and some might not correspond to any POSIX `errno` value.
 Thus implementations are given latitude in determining
-correspondence. — *end note*\]
+correspondence. — *end note*]
 
 ### Class `error_code` <a id="syserr.errcode">[[syserr.errcode]]</a>
 
@@ -742,7 +742,7 @@ values, such as those originating from the operating system or other
 low-level application program interfaces.
 
 [*Note 1*: Class `error_code` is an adjunct to error reporting by
-exception. — *end note*\]
+exception. — *end note*]
 
 ``` cpp
 namespace std {
@@ -897,7 +897,7 @@ identifying error conditions.
 
 [*Note 1*: `error_condition` values are portable abstractions, while
 `error_code` values [[syserr.errcode]] are implementation
-specific. — *end note*\]
+specific. — *end note*]
 
 ``` cpp
 namespace std {
@@ -1097,7 +1097,7 @@ low-level application program interfaces.
 
 [*Note 1*: If an error represents an out-of-memory condition,
 implementations are encouraged to throw an exception object of type
-`bad_alloc` [[bad.alloc]] rather than `system_error`. — *end note*\]
+`bad_alloc` [[bad.alloc]] rather than `system_error`. — *end note*]
 
 ``` cpp
 namespace std {
@@ -1176,7 +1176,7 @@ const char* what() const noexcept override;
 constructor.
 
 [*Note 1*: The returned NTBS might be the contents of
-`what_arg + ": " + code.message()`. — *end note*\]
+`what_arg + ": " + code.message()`. — *end note*]
 
 ## Stacktrace <a id="stacktrace">[[stacktrace]]</a>
 
@@ -1309,7 +1309,7 @@ constexpr explicit operator bool() const noexcept;
 
 [*Note 1*: All the `stacktrace_entry` query functions treat errors
 other than memory allocation errors as “no information available” and do
-not throw in that case. — *end note*\]
+not throw in that case. — *end note*]
 
 ``` cpp
 string description() const;
@@ -1460,7 +1460,7 @@ failed. `alloc` is passed to the constructor of the `frames_` object.
 `frames_.front()` is the `stacktrace_entry` representing approximately
 the current evaluation, and `frames_.back()` is the `stacktrace_entry`
 representing approximately the initial function of the current thread of
-execution. — *end note*\]
+execution. — *end note*]
 
 ``` cpp
 static basic_stacktrace current(size_type skip,
@@ -1656,7 +1656,7 @@ string to_string(const basic_stacktrace<Allocator>& st);
 *Returns:* A string with a description of `st`.
 
 [*Note 1*: The number of lines is not guaranteed to be equal to
-`st.size()`. — *end note*\]
+`st.size()`. — *end note*]
 
 ``` cpp
 ostream& operator<<(ostream& os, const stacktrace_entry& f);
@@ -1687,7 +1687,7 @@ as follows:
 ```
 
 [*Note 1*: The productions *fill-and-align* and *width* are described
-in [[format.string.std]]. — *end note*\]
+in [[format.string.std]]. — *end note*]
 
 A `stacktrace_entry` object `se` is formatted as if by copying
 `to_string(se)` through the output iterator of the context with

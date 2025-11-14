@@ -37,13 +37,13 @@ largest subexpressions that include only:
   `std::forward`, and `std::declval` [[forward]], [[declval]].
 
 [*Example 1*: The operands of the expression `a = std::move(b)` are `a`
-and `std::move(b)`. — *end example*\]
+and `std::move(b)`. — *end example*]
 
 Not all input values need be valid for a given expression.
 
 [*Example 2*: For integers `a` and `b`, the expression `a / b` is not
 well-defined when `b` is `0`. This does not preclude the expression
-`a / b` being equality-preserving. — *end example*\]
+`a / b` being equality-preserving. — *end example*]
 
 The *domain* of an expression is the set of input values for which the
 expression is required to be well-defined.
@@ -61,7 +61,7 @@ thread of execution, changes to an object as side effects of
 non-modifying expressions, and changes to an object as side effects of
 modifying a distinct object if those changes could be observable to a
 library function via an equality-preserving expression that is required
-to be valid for that object. — *end note*\]
+to be valid for that object. — *end note*]
 
 Expressions declared in a *requires-expression* in the library clauses
 are required to be equality-preserving, except for those annotated with
@@ -126,7 +126,7 @@ For the above example:
   second operand, since expression \#2 already specifies exactly such an
   expression explicitly.
 
-— *end example*\]
+— *end example*]
 
 [*Example 4*:
 
@@ -146,7 +146,7 @@ does not model `C`. Since implementations are not required to validate
 the syntax of implicit requirements, it is unspecified whether an
 implementation diagnoses as ill-formed a program that requires `C<T>`.
 
-— *end example*\]
+— *end example*]
 
 ## Header `<concepts>` synopsis <a id="concepts.syn">[[concepts.syn]]</a>
 
@@ -288,7 +288,7 @@ template<class T, class U>
 ```
 
 [*Note 1*: `same_as<T, U>` subsumes `same_as<U, T>` and vice
-versa. — *end note*\]
+versa. — *end note*]
 
 ### Concept  <a id="concept.derived">[[concept.derived]]</a>
 
@@ -302,7 +302,7 @@ template<class Derived, class Base>
 [*Note 1*: `derived_from<Derived, Base>` is satisfied if and only if
 `Derived` is publicly and unambiguously derived from `Base`, or
 `Derived` and `Base` are the same class type ignoring
-cv-qualifiers. — *end note*\]
+cv-qualifiers. — *end note*]
 
 ### Concept  <a id="concept.convertible">[[concept.convertible]]</a>
 
@@ -351,7 +351,7 @@ and denotes a type `C` such that both `convertible_to<T, C>` and
 reference type*, `C`.
 
 [*Note 1*: `C` can be the same as `T` or `U`, or can be a different
-type. `C` can be a reference type. — *end note*\]
+type. `C` can be a reference type. — *end note*]
 
 ``` cpp
 template<class T, class U>
@@ -373,7 +373,7 @@ equality-preserving expressions [[concepts.equality]] such that
 
 [*Note 1*: Users can customize the behavior of `common_reference_with`
 by specializing the `basic_common_reference` class
-template [[meta.trans.other]]. — *end note*\]
+template [[meta.trans.other]]. — *end note*]
 
 ### Concept  <a id="concept.common">[[concept.common]]</a>
 
@@ -381,7 +381,7 @@ If `T` and `U` can both be explicitly converted to some third type, `C`,
 then `T` and `U` share a *common type*, `C`.
 
 [*Note 1*: `C` can be the same as `T` or `U`, or can be a different
-type. `C` is not necessarily unique. — *end note*\]
+type. `C` is not necessarily unique. — *end note*]
 
 ``` cpp
 template<class T, class U>
@@ -413,7 +413,7 @@ only if
 
 [*Note 1*: Users can customize the behavior of `common_with` by
 specializing the `common_type` class
-template [[meta.trans.other]]. — *end note*\]
+template [[meta.trans.other]]. — *end note*]
 
 ### Arithmetic concepts <a id="concepts.arithmetic">[[concepts.arithmetic]]</a>
 
@@ -430,11 +430,11 @@ template<class T>
 
 [*Note 1*: `signed_integral` can be modeled even by types that are not
 signed integer types [[basic.fundamental]]; for example,
-`char`. — *end note*\]
+`char`. — *end note*]
 
 [*Note 2*: `unsigned_integral` can be modeled even by types that are
 not unsigned integer types [[basic.fundamental]]; for example,
-`bool`. — *end note*\]
+`bool`. — *end note*]
 
 ### Concept  <a id="concept.assignable">[[concept.assignable]]</a>
 
@@ -469,7 +469,7 @@ Let:
 [*Note 1*: Assignment need not be a total
 function [[structure.requirements]]; in particular, if assignment to an
 object `x` can result in a modification of some other object `y`, then
-`x = y` is likely not in the domain of `=`. — *end note*\]
+`x = y` is likely not in the domain of `=`. — *end note*]
 
 ### Concept  <a id="concept.swappable">[[concept.swappable]]</a>
 
@@ -478,7 +478,7 @@ distinct equal objects of type `T`, and let `u1` and `u2` similarly
 denote distinct equal objects of type `U`.
 
 [*Note 1*: `t1` and `u1` can denote distinct objects, or the same
-object. — *end note*\]
+object. — *end note*]
 
 An operation *exchanges the values* denoted by `t1` and `u1` if and only
 if the operation modifies neither `t2` nor `u2` and:
@@ -511,7 +511,7 @@ expression `S` determined as follows:
   \[*Note 1*: This precludes calling unconstrained program-defined
   overloads of `swap`. When the deleted overload is viable,
   program-defined overloads need to be more specialized
-  [[temp.func.order]] to be selected. — *end note*\]
+  [[temp.func.order]] to be selected. — *end note*]
 - Otherwise, if `E1` and `E2` are lvalues of array types
   [[basic.compound]] with equal extent and `ranges::swap(*E1, *E2)` is a
   valid expression, `S` is `(void)ranges::swap_ranges(E1, E2)`, except
@@ -535,11 +535,11 @@ expression `S` determined as follows:
   `is_nothrow_move_constructible_v<T> && is_nothrow_move_assignable_v<T>`.
 - Otherwise, `ranges::swap(E1, E2)` is ill-formed. \[*Note 2*: This case
   can result in substitution failure when `ranges::swap(E1, E2)` appears
-  in the immediate context of a template instantiation. — *end note*\]
+  in the immediate context of a template instantiation. — *end note*]
 
 [*Note 2*: Whenever `ranges::swap(E1, E2)` is a valid expression, it
 exchanges the values denoted by `E1` and `E2` and has type
-`void`. — *end note*\]
+`void`. — *end note*]
 
 ``` cpp
 template<class T>
@@ -560,7 +560,7 @@ template<class T, class U>
 
 [*Note 3*: The semantics of the `swappable` and `swappable_with`
 concepts are fully defined by the `ranges::swap` customization point
-object. — *end note*\]
+object. — *end note*]
 
 [*Example 1*:
 
@@ -607,7 +607,7 @@ int main() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 ### Concept  <a id="concept.destructible">[[concept.destructible]]</a>
 
@@ -623,7 +623,7 @@ template<class T>
 [*Note 1*: Unlike the *Cpp17Destructible*
 requirements ( [[cpp17.destructible]]), this concept forbids destructors
 that are potentially throwing, even if a particular invocation of the
-destructor does not actually throw. — *end note*\]
+destructor does not actually throw. — *end note*]
 
 ### Concept  <a id="concept.constructible">[[concept.constructible]]</a>
 
@@ -767,7 +767,7 @@ namespace Z {
 the declaration of `Z::operator&&` contains one key parameter, `C<T> x`,
 and the declaration of `Z::operator||` contains no key parameters.
 
-— *end example*\]
+— *end example*]
 
 A *disqualifying declaration* is
 
@@ -784,7 +784,7 @@ A *disqualifying declaration* is
 `T2` that each model `boolean-testable-impl`, the `&&` and `||`
 operators within the expressions `declval<T1>() && declval<T2>()` and
 `declval<T1>() || declval<T2>()` resolve to the corresponding built-in
-operators. — *end note*\]
+operators. — *end note*]
 
 ``` cpp
 template<class T>
@@ -799,7 +799,7 @@ Let `e` be an expression such that `decltype((e))` is `T`. `T` models
 
 [*Example 2*: The types `bool`, `true_type` [[meta.type.synop]],
 `int*`, and `bitset<N>::reference` [[template.bitset]] model
-`boolean-testable`. — *end example*\]
+`boolean-testable`. — *end example*]
 
 ### Comparison common types <a id="concept.comparisoncommontype">[[concept.comparisoncommontype]]</a>
 
@@ -864,7 +864,7 @@ only if `bool(a == b)` is `true` when `a` is equal to
 
 [*Note 1*: The requirement that the expression `a == b` is
 equality-preserving implies that `==` is transitive and
-symmetric. — *end note*\]
+symmetric. — *end note*]
 
 ``` cpp
 template<class T, class U>
@@ -964,11 +964,11 @@ template<class T>
 
 [*Note 1*: The `semiregular` concept is modeled by types that behave
 similarly to fundamental types like `int`, except that they need not be
-comparable with `==`. — *end note*\]
+comparable with `==`. — *end note*]
 
 [*Note 2*: The `regular` concept is modeled by types that behave
 similarly to fundamental types like `int` and that are comparable with
-`==`. — *end note*\]
+`==`. — *end note*]
 
 ## Callable concepts <a id="concepts.callable">[[concepts.callable]]</a>
 
@@ -992,7 +992,7 @@ template<class F, class... Args>
 
 [*Example 1*: A function that generates random numbers can model
 `invocable`, since the `invoke` function call expression is not required
-to be equality-preserving [[concepts.equality]]. — *end example*\]
+to be equality-preserving [[concepts.equality]]. — *end example*]
 
 ### Concept  <a id="concept.regularinvocable">[[concept.regularinvocable]]</a>
 
@@ -1007,13 +1007,13 @@ function object or the arguments.
 
 [*Note 1*: This requirement supersedes the “not required to be
 equality-preserving” comment in the definition of
-`invocable`. — *end note*\]
+`invocable`. — *end note*]
 
 [*Example 1*: A random number generator does not model
-`regular_invocable`. — *end example*\]
+`regular_invocable`. — *end example*]
 
 [*Note 2*: The distinction between `invocable` and `regular_invocable`
-is purely semantic. — *end note*\]
+is purely semantic. — *end note*]
 
 ### Concept  <a id="concept.predicate">[[concept.predicate]]</a>
 
@@ -1071,7 +1071,7 @@ Under these conditions, it can be shown that
   determined by `equiv`, and
 - the induced relation is a strict total ordering.
 
-— *end note*\]
+— *end note*]
 
 <!-- Section link definitions -->
 [concept.assignable]: #concept.assignable

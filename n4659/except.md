@@ -41,7 +41,7 @@ appertains to the parameter of the catch clause ( [[except.handle]]).
 A *try-block* is a *statement* (Clause  [[stmt.stmt]]).
 
 [*Note 1*: Within this Clause “try block” is taken to mean both
-*try-block* and *function-try-block*. — *end note*\]
+*try-block* and *function-try-block*. — *end note*]
 
 A `goto` or `switch` statement shall not be used to transfer control
 into a try block or into a handler.
@@ -64,7 +64,7 @@ void f() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 A `goto`, `break`, `return`, or `continue` statement can be used to
 transfer control out of a try block or handler. When this happens, each
@@ -89,7 +89,7 @@ the *condition* does not declare a variable. Any exception thrown while
 destroying `t2` will result in executing `handler 2`; any exception
 thrown while destroying `t1` will result in executing `handler 1`.
 
-— *end example*\]
+— *end example*]
 
 A *function-try-block* associates a *handler-seq* with the
 *ctor-initializer*, if present, and the *compound-statement*. An
@@ -119,7 +119,7 @@ try : i(f(ii)), d(id) {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 In this section, “before” and “after” refer to the “sequenced before”
 relation ( [[intro.execution]]).
@@ -133,7 +133,7 @@ contexts: *throw-expression*s ( [[expr.throw]]), allocation functions (
 [[basic.stc.dynamic.allocation]]), `dynamic_cast` (
 [[expr.dynamic.cast]]), `typeid` ( [[expr.typeid]]), *new-expression*s (
 [[expr.new]]), and standard library functions (
-[[structure.specifications]]). — *end note*\]
+[[structure.specifications]]). — *end note*]
 
 An object is passed and the type of that object determines which
 handlers can catch it.
@@ -177,7 +177,7 @@ try {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 When an exception is thrown, control is transferred to the nearest
 handler with a matching type ( [[except.handle]]); “nearest” means the
@@ -211,14 +211,14 @@ destroyed. All other points happen before that last one (
 [[intro.races]]).
 
 [*Note 2*: No other thread synchronization is implied in exception
-handling. — *end note*\]
+handling. — *end note*]
 
 The implementation may then deallocate the memory for the exception
 object; any such deallocation is done in an unspecified way.
 
 [*Note 3*: A thrown exception does not propagate to other threads
 unless caught, stored, and rethrown using appropriate library functions;
-see  [[propagation]] and  [[futures]]. — *end note*\]
+see  [[propagation]] and  [[futures]]. — *end note*]
 
 When the thrown object is a class object, the constructor selected for
 the copy-initialization as well as the constructor selected for a
@@ -231,7 +231,7 @@ An exception is considered caught when a handler for that exception
 becomes active ( [[except.handle]]).
 
 [*Note 4*: An exception can have active handlers and still be
-considered uncaught if it is rethrown. — *end note*\]
+considered uncaught if it is rethrown. — *end note*]
 
 If the exception handling mechanism handling an uncaught exception (
 [[except.uncaught]]) directly invokes a function that exits via an
@@ -257,10 +257,10 @@ int main() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Note 5*: Consequently, destructors should generally catch exceptions
-and not let them propagate. — *end note*\]
+and not let them propagate. — *end note*]
 
 ## Constructors and destructors <a id="except.ctor">[[except.ctor]]</a>
 
@@ -300,7 +300,7 @@ is destroyed, causing stack unwinding, resulting in the destruction of
 the returned object, followed by the destruction of the local variable
 `a`. Finally, the returned object is constructed again at \#2.
 
-— *end example*\]
+— *end example*]
 
 If the initialization or destruction of an object other than by
 delegating constructor is terminated by an exception, the destructor is
@@ -322,7 +322,7 @@ object, if any.
 [*Note 1*: If the object was allocated by a *new-expression* (
 [[expr.new]]), the matching deallocation function (
 [[basic.stc.dynamic.deallocation]]), if any, is called to free the
-storage occupied by the object. — *end note*\]
+storage occupied by the object. — *end note*]
 
 ## Handling an exception <a id="except.handle">[[except.handle]]</a>
 
@@ -356,7 +356,7 @@ A *handler* is a match for an exception object of type `E` if
 [*Note 1*: A *throw-expression* whose operand is an integer literal
 with value zero does not match a handler of pointer or pointer to member
 type. A handler of reference to array or function type is never a match
-for any exception object ( [[expr.throw]]). — *end note*\]
+for any exception object ( [[expr.throw]]). — *end note*]
 
 [*Example 1*:
 
@@ -382,14 +382,14 @@ and the `Matherr` handler will catch exceptions of type `Matherr` and of
 all types publicly derived from `Matherr` including exceptions of type
 `Underflow` and `Zerodivide`.
 
-— *end example*\]
+— *end example*]
 
 The handlers for a try block are tried in order of appearance.
 
 [*Note 2*: This makes it possible to write handlers that can never be
 executed, for example by placing a handler for a final derived class
 after a handler for a corresponding unambiguous public base
-class. — *end note*\]
+class. — *end note*]
 
 A `...` in a handler’s *exception-declaration* functions similarly to
 `...` in a function parameter declaration; it specifies a match for any
@@ -404,7 +404,7 @@ A handler is considered active when initialization is complete for the
 parameter (if any) of the catch clause.
 
 [*Note 3*: The stack will have been unwound at that
-point. — *end note*\]
+point. — *end note*]
 
 Also, an implicit handler is considered active when `std::terminate()`
 is entered due to a throw. A handler is no longer considered active when
@@ -528,7 +528,7 @@ The declaration of `D::f` is ill-formed because it has a
 potentially-throwing exception specification, whereas `B::f` has a
 non-throwing exception specification.
 
-— *end example*\]
+— *end example*]
 
 Whenever an exception is thrown and the search for a handler (
 [[except.handle]]) encounters the outermost block of a function with a
@@ -537,7 +537,7 @@ called ( [[except.terminate]]).
 
 [*Note 1*: An implementation shall not reject an expression merely
 because, when executed, it throws or might throw an exception from a
-function with a non-throwing exception specification. — *end note*\]
+function with a non-throwing exception specification. — *end note*]
 
 [*Example 2*:
 
@@ -553,7 +553,7 @@ void g() noexcept {
 The call to `f` is well-formed even though, when called, `f` might throw
 an exception.
 
-— *end example*\]
+— *end example*]
 
 An expression `e` is *potentially-throwing* if
 
@@ -591,7 +591,7 @@ constructor ( [[except.ctor]]), their exception specifications do not
 contribute to the exception specification of the constructor, because an
 exception thrown from such a destructor would call `std::terminate`
 rather than escape the constructor ( [[except.throw]],
-[[except.terminate]]). — *end note*\]
+[[except.terminate]]). — *end note*]
 
 The exception specification for an implicitly-declared destructor, or a
 destructor without a *noexcept-specifier*, is potentially-throwing if
@@ -638,7 +638,7 @@ since a function that overrides a virtual function from a base class
 shall not have a potentially-throwing exception specification if the
 base class function has a non-throwing exception specification.
 
-— *end example*\]
+— *end example*]
 
 An exception specification is considered to be *needed* when:
 
@@ -657,7 +657,7 @@ An exception specification is considered to be *needed* when:
   to be evaluated until the implicit exception specification of the
   derived function is needed, but an explicit *noexcept-specifier* needs
   the implicit exception specification to compare
-  against. — *end note*\]
+  against. — *end note*]
 
 The exception specification of a defaulted special member function is
 evaluated as described above only when needed; similarly, the
@@ -719,7 +719,7 @@ These situations are:
   a condition variable ( [[thread.condition.condvar]], 
   [[thread.condition.condvarany]]) fails to meet a postcondition.
 
-— *end note*\]
+— *end note*]
 
 In such cases, `std::terminate()` is called ( [[exception.terminate]]).
 In the situation where no matching handler is found, it is

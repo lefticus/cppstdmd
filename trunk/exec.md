@@ -123,7 +123,7 @@ it uses to execute parallel work on behalf of callers.
 
 [*Example 1*: The currently active thread, a system-provided thread
 pool, and uses of an API associated with an external hardware
-accelerator are all examples of execution resources. — *end example*\]
+accelerator are all examples of execution resources. — *end example*]
 
 Execution resources execute asynchronous operations. An execution
 resource is either valid or invalid.
@@ -154,7 +154,7 @@ An *asynchronous operation* is a distinct unit of program execution that
 
 [*Note 1*: An asynchronous operation can execute synchronously; that
 is, it can complete during the execution of its start operation on the
-thread of execution that started it. — *end note*\]
+thread of execution that started it. — *end note*]
 
 An asynchronous operation has associated state known as its
 *operation state*.
@@ -760,7 +760,7 @@ The value of `get_env(o)` shall be valid while `o` is valid.
 
 [*Note 1*: When passed a sender object, `get_env` returns the sender’s
 associated attributes. When passed a receiver, `get_env` returns the
-receiver’s associated execution environment. — *end note*\]
+receiver’s associated execution environment. — *end note*]
 
 ### `execution::get_domain` <a id="exec.get.domain">[[exec.get.domain]]</a>
 
@@ -949,7 +949,7 @@ receivers connected to the sender objects returned from `schedule`.
 
 [*Note 1*: The ability to wait for completion of submitted function
 objects can be provided by the associated execution resource of the
-scheduler. — *end note*\]
+scheduler. — *end note*]
 
 ## Receivers <a id="exec.recv">[[exec.recv]]</a>
 
@@ -1007,7 +1007,7 @@ duration of the asynchronous operation’s lifetime [[exec.async.ops]].
 provided by the type of `rcvr`, the implementation of `op_state` cannot
 use `token` after it executes a completion operation. This also implies
 that any stop callbacks registered on token must be destroyed before the
-invocation of the completion operation. — *end note*\]
+invocation of the completion operation. — *end note*]
 
 ### `execution::set_value` <a id="exec.set.value">[[exec.set.value]]</a>
 
@@ -1058,7 +1058,7 @@ asynchronous operation [[exec.async.ops]], the behavior is undefined.
 [*Note 1*: The `operation_state` concept does not impose requirements
 on any operations other than destruction and `start`, including copy and
 move operations. Invoking any such operation on an object whose type
-models `operation_state` can lead to undefined behavior. — *end note*\]
+models `operation_state` can lead to undefined behavior. — *end note*]
 
 The program is ill-formed if it performs a copy or move construction or
 assignment operation on an operation state object created by connecting
@@ -1249,7 +1249,7 @@ template<class Sndr, class Env>
   ignores the domain of the predecessor and uses the domain of the
   destination scheduler to select a customization, a property that is
   unique to `continues_on`. That is why it is given special treatment
-  here. — *end note*\]
+  here. — *end note*]
 - Otherwise,
   ``` cpp
   return Domain();
@@ -1281,7 +1281,7 @@ struct emplace-from {
 ```
 
 [*Note 1*: *emplace-from* is used to emplace non-movable types into
-`tuple`, `optional`, `variant`, and similar types. — *end note*\]
+`tuple`, `optional`, `variant`, and similar types. — *end note*]
 
 ``` cpp
 struct on-stop-request {
@@ -1311,11 +1311,11 @@ struct product-type {       // exposition only
 sake of exposition. It can be approximated in standard C++ with a
 tuple-like implementation that takes care to keep the type an aggregate
 that can be used as the initializer of a structured binding
-declaration. — *end note*\]
+declaration. — *end note*]
 
 [*Note 3*: An expression of type *product-type* is usable as the
 initializer of a structured binding declaration
-[[dcl.struct.bind]]. — *end note*\]
+[[dcl.struct.bind]]. — *end note*]
 
 ``` cpp
 template<size_t I, class Self>
@@ -1649,7 +1649,7 @@ the following is `true`:
 When `e` is a core constant expression, the pack `S, E...` uniquely
 determines a set of completion signatures.
 
-— *end note*\]
+— *end note*]
 
 ``` cpp
 template<class Tag, class Data, class... Child>
@@ -1900,7 +1900,7 @@ lvalue referring to the coroutine’s promise, which has type `Promise`.
 [*Note 1*: This includes the invocation of the promise type’s
 `await_transform` member if any, the invocation of the
 `operator co_await` picked by overload resolution if any, and any
-necessary implicit conversions and materializations. — *end note*\]
+necessary implicit conversions and materializations. — *end note*]
 
 Let `GET-AWAITER(c)` be expression-equivalent to `GET-AWAITER(c, q)`
 where `q` is an lvalue of an unspecified empty class type `none-such`
@@ -1990,7 +1990,7 @@ namespace std::execution {
 
 [*Note 2*: Specializations of *env-promise* are used only for the
 purpose of type computation; its members need not be
-defined. — *end note*\]
+defined. — *end note*]
 
 ### `execution::default_domain` <a id="exec.domain.default">[[exec.domain.default]]</a>
 
@@ -2727,7 +2727,7 @@ return schedule_from(std::move(data), std::move(child));
 
 [*Note 1*: This causes the `continues_on(sndr, sch)` sender to become
 `schedule_from(sch, sndr)` when it is connected with a receiver whose
-execution domain does not customize `continues_on`. — *end note*\]
+execution domain does not customize `continues_on`. — *end note*]
 
 Let `out_sndr` be a subexpression denoting a sender returned from
 `continues_on(sndr, sch)` or one equal to such, and let `OutSndr` be the
@@ -2747,7 +2747,7 @@ executed on an unspecified execution agent.
 onto a scheduler’s associated execution resource.
 
 [*Note 1*: `schedule_from` is not meant to be used in user code; it is
-used in the implementation of `continues_on`. — *end note*\]
+used in the implementation of `continues_on`. — *end note*]
 
 The name `schedule_from` denotes a customization point object. For some
 subexpressions `sch` and `sndr`, let `Sch` be `decltype((sch))` and
@@ -3425,7 +3425,7 @@ return bulk_chunked(std::move(child), policy, shape, std::move(new_f));
 [*Note 1*: This causes the `bulk(sndr, policy, shape, f)` sender to be
 expressed in terms of `bulk_chunked(sndr, policy, shape, f)` when it is
 connected to a receiver whose execution domain does not customize
-`bulk`. — *end note*\]
+`bulk`. — *end note*]
 
 The exposition-only class template *impls-for* [[exec.snd.expos]] is
 specialized for `bulk_chunked_t` as follows:
@@ -3567,7 +3567,7 @@ asynchronous operation [[exec.async.ops]] that, when started:
 [*Note 2*: The asynchronous operation corresponding to
 `bulk-algo(sndr, policy, shape, f)` can complete with `set_stopped` if
 cancellation is requested or ignore cancellation
-requests. — *end note*\]
+requests. — *end note*]
 
 #### `execution::when_all` <a id="exec.when.all">[[exec.when.all]]</a>
 
@@ -3879,7 +3879,7 @@ return when_all(into_variant(std::forward_like<decltype((sndr))>(child))...);
 [*Note 1*: This causes the `when_all_with_variant(sndrs...)` sender to
 become `when_all(into_variant(sndrs)...)` when it is connected with a
 receiver whose execution domain does not customize
-`when_all_with_variant`. — *end note*\]
+`when_all_with_variant`. — *end note*]
 
 #### `execution::into_variant` <a id="exec.into.variant">[[exec.into.variant]]</a>
 
@@ -4722,7 +4722,7 @@ The behavior of `this_thread::sync_wait(sndr)` is undefined unless:
   `sync_wait` achieves forward progress guarantee delegation by
   providing a `run_loop` scheduler via the `get_delegation_scheduler`
   query on the *sync-wait-receiver*’s environment. The `run_loop` is
-  driven by the current thread of execution. — *end note*\]
+  driven by the current thread of execution. — *end note*]
 - It returns the specified sender’s async results as follows:
   - For a value completion, the result datums are returned in a `tuple`
     in an engaged `optional` object.
@@ -4768,7 +4768,7 @@ unless:
   sender completes. \[*Note 3*: The default implementation of
   `sync_wait_with_variant` achieves forward progress guarantee
   delegation by relying on the forward progress guarantee delegation
-  provided by `sync_wait`. — *end note*\]
+  provided by `sync_wait`. — *end note*]
 - It returns the specified sender’s async results as follows:
   - For a value completion, the result datums are returned in an engaged
     `optional` object that contains a `variant` of `tuple`s.
@@ -4944,7 +4944,7 @@ the following for a receiver expression `rcvr`:
 - `set_error(rcvr, error_code\{...\})`
 - `set_stopped(rcvr)`
 
-— *end example*\]
+— *end example*]
 
 This subclause makes use of the following exposition-only entities:
 
@@ -5001,7 +5001,7 @@ typename indirect-meta-apply<always-true<As...>>::template meta-apply<T, As...>
 
 [*Note 1*: The purpose of *META-APPLY* is to make it valid to use
 non-variadic templates as `Variant` and `Tuple` arguments to
-*gather-signatures*. — *end note*\]
+*gather-signatures*. — *end note*]
 
 ``` cpp
 namespace std::execution {
@@ -5091,7 +5091,7 @@ sender auto parameterize_work(Sndr sndr) {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 Specializations of `prop` are not assignable.
 
@@ -5142,7 +5142,7 @@ sender auto parameterize_work(Sndr sndr) {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 ``` cpp
 template<class QueryTag>
@@ -5556,7 +5556,7 @@ as if an uncatchable "stopped" exception were thrown from the
 *await-expression*.
 
 [*Note 1*: The coroutine is never resumed, and the `unhandled_stopped`
-of the coroutine caller’s promise type is called. — *end note*\]
+of the coroutine caller’s promise type is called. — *end note*]
 
 ``` cpp
 namespace std::execution {
@@ -6551,7 +6551,7 @@ to *joined* and calls *`complete`*`()` on all objects registered with
 `*this`.
 
 [*Note 1*: Calling *`complete`*`()` on any registered object can cause
-`*this` to be destroyed. — *end note*\]
+`*this` to be destroyed. — *end note*]
 
 ``` cpp
 template<class State>
@@ -6714,7 +6714,7 @@ called on `r`.
 
 [*Note 1*: The storage referenced by `s` can be used as temporary
 storage for operations launched via calls to
-`parallel_scheduler_backend`. — *end note*\]
+`parallel_scheduler_backend`. — *end note*]
 
 A *bulk chunked proxy for `rcvr`
 with callable `f` and arguments `args`* is a proxy `r` for `rcvr` with
@@ -6753,7 +6753,7 @@ and the resulting operation state is started, then:
 - All other completion operations are forwarded unchanged.
 
 [*Note 2*: Customizing the behavior of `bulk_chunked` affects the
-default implementation of `bulk`. — *end note*\]
+default implementation of `bulk`. — *end note*]
 
 `parallel_scheduler` provides a customized implementation of the
 `bulk_unchunked` algorithm [[exec.bulk]]. If a receiver `rcvr` is

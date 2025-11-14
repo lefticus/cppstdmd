@@ -23,7 +23,7 @@ struct A {
 constexpr int A::n;  // redundant declaration (definition in C++14)
 ```
 
-— *end example*\]
+— *end example*]
 
 ## Implicit declaration of copy functions <a id="depr.impldec">[[depr.impldec]]</a>
 
@@ -94,7 +94,7 @@ The header `<ctgmath>` simply includes the headers `<complex>` (
 
 [*Note 1*: The overloads provided in C by type-generic macros are
 already provided in `<complex>` and `<cmath>` by “sufficient” additional
-overloads. — *end note*\]
+overloads. — *end note*]
 
 ## C standard library headers <a id="depr.c.headers">[[depr.c.headers]]</a>
 
@@ -133,7 +133,7 @@ declarations and definitions within the namespace `std`. It may also
 provide these names within the global namespace. The header `<stdlib.h>`
 assuredly provides the same declarations and definitions within the
 global namespace, much as in the C Standard. It may also provide these
-names within the namespace `std`. — *end example*\]
+names within the namespace `std`. — *end example*]
 
 ## `char*` streams <a id="depr.str.strstreams">[[depr.str.strstreams]]</a>
 
@@ -211,7 +211,7 @@ are:
 - `frozen`, set when the program has requested that the array object not
   be altered, reallocated, or freed.
 
-— *end note*\]
+— *end note*]
 
 [*Note 2*:
 
@@ -225,7 +225,7 @@ For the sake of exposition, the maintained data is presented here as:
 - `void (*pfree)(void*)`, points to the function to call to free a
   dynamic array object.
 
-— *end note*\]
+— *end note*]
 
 Each object of class `strstreambuf` has a *seekable area*, delimited by
 the pointers `seeklow` and `seekhigh`. If `gnext` is a null pointer, the
@@ -1309,7 +1309,7 @@ N` == 0`).
 
 [*Note 1*: The request is non-binding to allow latitude for
 implementation-specific optimizations of its memory
-management. — *end note*\]
+management. — *end note*]
 
 *Returns:* If `n <= 0` or if no storage could be obtained, returns a
 pair `P` such that `P.first` is a null pointer value and
@@ -1387,7 +1387,7 @@ definition of required types for new iterators.
 
 [*Note 1*: If the new iterator type is a class template, then these
 aliases will not be visible from within the iterator class’s template
-definition, but only to callers of that class. — *end note*\]
+definition, but only to callers of that class. — *end note*]
 
 [*Example 1*:
 
@@ -1402,7 +1402,7 @@ class MyIterator :
 };
 ```
 
-— *end example*\]
+— *end example*]
 
 ## Deprecated `shared_ptr` observers <a id="depr.util.smartptr.shared.obs">[[depr.util.smartptr.shared.obs]]</a>
 
@@ -1548,7 +1548,7 @@ std::string mbstring = myconv.to_bytes(L"Hello\n");
 std::cout << mbstring;
 ```
 
-— *end example*\]
+— *end example*]
 
 ``` cpp
 namespace std {

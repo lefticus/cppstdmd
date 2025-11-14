@@ -54,7 +54,7 @@ The ECMAScript Language Specification described in Standard Ecma-262 is
 hereinafter called *ECMA-262*.
 
 [*Note 1*: References to ISO/IEC 10646-1:1993 are used only to support
-deprecated features [[depr.locale.stdcvt]]. — *end note*\]
+deprecated features [[depr.locale.stdcvt]]. — *end note*]
 
 # Terms and definitions <a id="intro.defs">[[intro.defs]]</a>
 
@@ -83,7 +83,7 @@ where they are used and italicized where they are defined.
 Attempts to read or modify an object of class type typically invoke a
 constructor [[class.ctor]] or assignment operator [[class.copy.assign]];
 such invocations do not themselves constitute accesses, although they
-may involve accesses of scalar subobjects. — *end note*\]
+may involve accesses of scalar subobjects. — *end note*]
 
 #### 2 argument <a id="defns.argument">[defns.argument]</a>
 
@@ -121,7 +121,7 @@ program construct that an implementation is not required to support
 
 [*Note 1 to entry*: Each implementation documents all
 conditionally-supported constructs that it does not
-support. — *end note*\]
+support. — *end note*]
 
 #### 9 diagnostic message <a id="defns.diagnostic">[defns.diagnostic]</a>
 
@@ -136,7 +136,7 @@ glvalue refers
 [*Example 1*: If a pointer [[dcl.ptr]] `p` whose static type is
 “pointer to class `B`” is pointing to an object of class `D`, derived
 from `B` [[class.derived]], the dynamic type of the expression `*p` is
-“`D`”. References [[dcl.ref]] are treated similarly. — *end example*\]
+“`D`”. References [[dcl.ref]] are treated similarly. — *end example*]
 
 #### 11 dynamic type <a id="defns.dynamic.type.prvalue">[defns.dynamic.type.prvalue]</a>
 
@@ -166,7 +166,7 @@ sequence of one or more bytes representing a member of the extended
 character set of either the source or the execution environment
 
 [*Note 1 to entry*: The extended character set is a superset of the
-basic character set [[lex.charset]]. — *end note*\]
+basic character set [[lex.charset]]. — *end note*]
 
 #### 17 parameter <a id="defns.parameter">[defns.parameter]</a>
 
@@ -190,7 +190,7 @@ by the parentheses immediately following the macro name
 namespace (if any)
 
 [*Note 1 to entry*: Signatures are used as a basis for name mangling
-and linking. — *end note*\]
+and linking. — *end note*]
 
 #### 21 signature <a id="defns.signature.friend">[defns.signature.friend]</a>
 
@@ -242,7 +242,7 @@ program without considering execution semantics
 
 [*Note 1 to entry*: The static type of an expression depends only on
 the form of the program in which the expression appears, and does not
-change while the program is executing. — *end note*\]
+change while the program is executing. — *end note*]
 
 #### 29 unblock <a id="defns.unblock">[defns.unblock]</a>
 
@@ -264,7 +264,7 @@ translation or execution (with the issuance of a diagnostic message).
 Many erroneous program constructs do not engender undefined behavior;
 they are required to be diagnosed. Evaluation of a constant expression
 never exhibits behavior explicitly specified as undefined in [[intro]]
-through [[cpp]] of this document [[expr.const]]. — *end note*\]
+through [[cpp]] of this document [[expr.const]]. — *end note*]
 
 #### 31 unspecified behavior <a id="defns.unspecified">[defns.unspecified]</a>
 
@@ -273,7 +273,7 @@ depends on the implementation
 
 [*Note 1 to entry*: The implementation is not required to document
 which behavior occurs. The range of possible behaviors is usually
-delineated by this document. — *end note*\]
+delineated by this document. — *end note*]
 
 #### 32 well-formed program <a id="defns.well.formed">[defns.well.formed]</a>
 
@@ -308,7 +308,7 @@ Such requirements have the following meaning:
 
 [*Note 1*: During template argument deduction and substitution, certain
 constructs that in other contexts require a diagnostic are treated
-differently; see  [[temp.deduct]]. — *end note*\]
+differently; see  [[temp.deduct]]. — *end note*]
 
 For classes and class templates, the library Clauses specify partial
 definitions. Private members [[class.access]] are not specified, but
@@ -377,7 +377,7 @@ Certain other operations are described in this document as undefined
 (for example, the effect of attempting to modify a const object).
 
 [*Note 1*: This document imposes no requirements on the behavior of
-programs that contain undefined behavior. — *end note*\]
+programs that contain undefined behavior. — *end note*]
 
 A conforming implementation executing a well-formed program shall
 produce the same observable behavior as one of the possible executions
@@ -403,7 +403,7 @@ These collectively are referred to as the *observable behavior* of the
 program.
 
 [*Note 2*: More stringent correspondences between abstract and actual
-semantics may be defined by each implementation. — *end note*\]
+semantics may be defined by each implementation. — *end note*]
 
 ## Structure of this document <a id="intro.structure">[[intro.structure]]</a>
 

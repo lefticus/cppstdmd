@@ -381,7 +381,7 @@ forwarded to `A`’s constructor as an rvalue. In the second call to
 constructor as an lvalue. In both cases, `A2` is deduced as `double`, so
 1.414 is forwarded to `A`’s constructor as an rvalue.
 
-— *end example*\]
+— *end example*]
 
 ``` cpp
 template <class T> constexpr remove_reference_t<T>&& move(T&& t) noexcept;
@@ -417,7 +417,7 @@ forwarded as a non-const lvalue. This binds to the constructor
 so `a` is forwarded as an rvalue. This binds to the constructor
 `A(A&&)`, which moves the value from `a`.
 
-— *end example*\]
+— *end example*]
 
 ``` cpp
 template <class T> constexpr conditional_t<
@@ -462,7 +462,7 @@ overloading if the type `From` can be explicitly converted to type `To`.
 For another example see class template `common_type` (
 [[meta.trans.other]]).
 
-— *end example*\]
+— *end example*]
 
 ### Primitive numeric output conversion <a id="utility.to.chars">[[utility.to.chars]]</a>
 
@@ -483,7 +483,7 @@ radix point (if present) and parsing the representation using the
 corresponding `from_chars` function recovers `value` exactly.
 
 [*Note 1*: This guarantee applies only if `to_chars` and `from_chars`
-are executed on the same implementation. — *end note*\]
+are executed on the same implementation. — *end note*]
 
 The functions taking a `chars_format` parameter determine the conversion
 specifier for `printf` as follows: The conversion specifier is `f` if
@@ -613,7 +613,7 @@ the `"C"` locale, as described for `strtod`, except that
   appear; and
 - if `fmt` is `chars_format::hex`, the prefix `"0x"` or `"0X"` is
   assumed. \[*Example 1*: The string `0x123` is parsed to have the value
-  `0` with remaining characters `x123`. — *end example*\]
+  `0` with remaining characters `x123`. — *end example*]
 
 In any case, the resulting `value` is one of at most two floating-point
 values closest to the value of the string matching the pattern.
@@ -632,7 +632,7 @@ pack defining the sequence can be deduced and used in a pack expansion.
 
 [*Note 1*: The `index_sequence` alias template is provided for the
 common case of an integer sequence of type `size_t`; see also
-[[tuple.apply]]. — *end note*\]
+[[tuple.apply]]. — *end note*]
 
 ### Class template `integer_sequence` <a id="intseq.intseq">[[intseq.intseq]]</a>
 
@@ -662,7 +662,7 @@ with `N` template non-type arguments. The type
 `integer_sequence<T, 0, 1, ..., N-1>`.
 
 [*Note 1*: `make_integer_sequence<int, 0>` denotes the type
-`integer_sequence<int>` — *end note*\]
+`integer_sequence<int>` — *end note*]
 
 ## Pairs <a id="pairs">[[pairs]]</a>
 
@@ -732,14 +732,14 @@ unless `is_default_constructible_v<first_type>` is `true` and
 `is_default_constructible_v<second_type>` is `true`.
 
 [*Note 1*: This behavior can be implemented by a constructor template
-with default template arguments. — *end note*\]
+with default template arguments. — *end note*]
 
 The constructor is explicit if and only if either `first_type` or
 `second_type` is not implicitly default-constructible.
 
 [*Note 2*: This behavior can be implemented with a trait that checks
 whether a `const first_type&` or a `const second_type&` can be
-initialized with `{}`. — *end note*\]
+initialized with `{}`. — *end note*]
 
 ``` cpp
 \EXPLICIT constexpr pair(const T1& x, const T2& y);
@@ -964,7 +964,7 @@ a C++program may contain:
   return make_pair(5, 3.1415926);           // types are deduced
 ```
 
-— *end example*\]
+— *end example*]
 
 ### Tuple-like access to pair <a id="pair.astuple">[[pair.astuple]]</a>
 
@@ -1260,13 +1260,13 @@ where indexing is zero-based.
 unless `is_default_constructible_v<``Tᵢ``>` is `true` for all i.
 
 [*Note 1*: This behavior can be implemented by a constructor template
-with default template arguments. — *end note*\]
+with default template arguments. — *end note*]
 
 The constructor is explicit if and only if `Tᵢ` is not implicitly
 default-constructible for at least one i.
 
 [*Note 2*: This behavior can be implemented with a trait that checks
-whether a `const ``Tᵢ``&` can be initialized with `{}`. — *end note*\]
+whether a `const ``Tᵢ``&` can be initialized with `{}`. — *end note*]
 
 ``` cpp
 \EXPLICIT constexpr tuple(const Types&...);
@@ -1560,7 +1560,7 @@ make_tuple(1, ref(i), cref(j))
 
 creates a tuple of type `tuple<int, int&, const float&>`.
 
-— *end example*\]
+— *end example*]
 
 ``` cpp
 template<class... TTypes>
@@ -1596,7 +1596,7 @@ tie(i, ignore, s) = make_tuple(42, 3.14, "C++");
 // i == 42, s == "C++"
 ```
 
-— *end example*\]
+— *end example*]
 
 ``` cpp
 template <class... Tuples>
@@ -1634,7 +1634,7 @@ for each valid kᵢ and each group `eᵢ` in order.
 
 [*Note 1*: An implementation may support additional types in the
 parameter pack `Tuples` that support the `tuple`-like protocol, such as
-`pair` and `array`. — *end note*\]
+`pair` and `array`. — *end note*]
 
 #### Calling a function with a `tuple` of arguments <a id="tuple.apply">[[tuple.apply]]</a>
 
@@ -1683,7 +1683,7 @@ return make_from_tuple_impl<T>(forward<Tuple>(t),
 
 [*Note 1*: The type of `T` must be supplied as an explicit template
 parameter, as it cannot be deduced from the argument
-list. — *end note*\]
+list. — *end note*]
 
 #### Tuple helper classes <a id="tuple.helper">[[tuple.helper]]</a>
 
@@ -1740,7 +1740,7 @@ considered.
 such as the instantiation of class template specializations and function
 template specializations, the generation of implicitly-defined
 functions, and so on. Such side effects are not in the “immediate
-context” and can result in the program being ill-formed. — *end note*\]
+context” and can result in the program being ill-formed. — *end note*]
 
 In addition to being available via inclusion of the `<tuple>` header,
 the three templates are available when either of the headers `<array>`
@@ -1789,13 +1789,13 @@ zero-based.
 
 [*Note 1*: \[Note A\]If a `T` in `Types` is some reference type `X&`,
 the return type is `X&`, not `X&&`. However, if the element type is a
-non-reference type `T`, the return type is `T&&`. — *end note*\]
+non-reference type `T`, the return type is `T&&`. — *end note*]
 
 [*Note 2*: \[Note B\]Constness is shallow. If a `T` in `Types` is some
 reference type `X&`, the return type is `X&`, not `const X&`. However,
 if the element type is a non-reference type `T`, the return type is
 `const T&`. This is consistent with how constness is defined to work for
-member variables of reference type. — *end note*\]
+member variables of reference type. — *end note*]
 
 ``` cpp
 template <class T, class... Types>
@@ -1823,12 +1823,12 @@ const tuple<int, const int, double, double> t(1, 2, 3.4, 5.6);
   const double& d = get<double>(t);   // ERROR. ill-formed
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Note 1*: The reason `get` is a non-member function is that if this
 functionality had been provided as a member function, code where the
 type depended on a template parameter would have required using the
-`template` keyword. — *end note*\]
+`template` keyword. — *end note*]
 
 #### Relational operators <a id="tuple.rel">[[tuple.rel]]</a>
 
@@ -1899,7 +1899,7 @@ require `t_{tail}` (or `u_{tail}`) to be constructed. It may not even be
 possible, as `t` and `u` are not required to be copy constructible.
 Also, all comparison functions are short circuited; they do not perform
 element accesses beyond what is required to determine the result of the
-comparison. — *end note*\]
+comparison. — *end note*]
 
 #### Tuple traits <a id="tuple.traits">[[tuple.traits]]</a>
 
@@ -1913,7 +1913,7 @@ template <class... Types, class Alloc>
 
 [*Note 1*: Specialization of this trait informs other library
 components that `tuple` can be constructed with an allocator, even
-though it does not have a nested `allocator_type`. — *end note*\]
+though it does not have a nested `allocator_type`. — *end note*]
 
 #### Tuple specialized algorithms <a id="tuple.special">[[tuple.special]]</a>
 
@@ -2193,7 +2193,7 @@ constructor.
 [*Note 1*: The following constructors are conditionally specified as
 explicit. This is typically implemented by declaring two such
 constructors, of which at most one participates in overload
-resolution. — *end note*\]
+resolution. — *end note*]
 
 ``` cpp
 template <class U = T> \EXPLICIT constexpr optional(U&& v);
@@ -2706,7 +2706,7 @@ template <class T, class U> constexpr bool operator==(const optional<T>& x, cons
 *Requires:* The expression `*x == *y` shall be well-formed and its
 result shall be convertible to `bool`.
 
-[*Note 1*: `T` need not be `EqualityComparable`. — *end note*\]
+[*Note 1*: `T` need not be `EqualityComparable`. — *end note*]
 
 *Returns:* If `bool(x) != bool(y)`, `false`; otherwise if
 `bool(x) == false`, `true`; otherwise `*x == *y`.
@@ -2852,7 +2852,7 @@ template <class T, class U> constexpr bool operator==(const optional<T>& x, cons
 *Requires:* The expression `*x == v` shall be well-formed and its result
 shall be convertible to `bool`.
 
-[*Note 1*: `T` need not be `EqualityComparable`. — *end note*\]
+[*Note 1*: `T` need not be `EqualityComparable`. — *end note*]
 
 *Effects:* Equivalent to: `return bool(x) ? *x == v : false;`
 
@@ -3241,7 +3241,7 @@ is equivalent to `is_nothrow_default_constructible_v<``T₀``>`. This
 function shall not participate in overload resolution unless
 `is_default_constructible_v<``T₀``>` is `true`.
 
-[*Note 1*: See also class `monostate`. — *end note*\]
+[*Note 1*: See also class `monostate`. — *end note*]
 
 ``` cpp
 variant(const variant& w);
@@ -3309,7 +3309,7 @@ variant<string, string> v("abc");
 is ill-formed, as both alternative types have an equally viable
 constructor for the argument.
 
-— *end note*\]
+— *end note*]
 
 The expression inside `noexcept` is equivalent to
 `is_nothrow_constructible_v<``Tⱼ``, T>`. If `Tⱼ`’s selected constructor
@@ -3540,7 +3540,7 @@ v = "abc";
 is ill-formed, as both alternative types have an equally viable
 constructor for the argument.
 
-— *end note*\]
+— *end note*]
 
 The expression inside `noexcept` is equivalent to:
 
@@ -3653,7 +3653,7 @@ variant<float, int> v{12.f};
 v.emplace<1>(S());
 ```
 
-— *end note*\]
+— *end note*]
 
 ``` cpp
 constexpr size_t index() const noexcept;
@@ -3946,7 +3946,7 @@ constexpr bool operator!=(monostate, monostate) noexcept { return false; }
 ```
 
 [*Note 1*: `monostate` objects have only a single state; they thus
-always compare equal. — *end note*\]
+always compare equal. — *end note*]
 
 ### Specialized algorithms <a id="variant.specalg">[[variant.specalg]]</a>
 
@@ -4015,7 +4015,7 @@ template <class... Types, class Alloc>
 
 [*Note 1*: Specialization of this trait informs other library
 components that variant can be constructed with an allocator, even
-though it does not have a nested `allocator_type`. — *end note*\]
+though it does not have a nested `allocator_type`. — *end note*]
 
 ## Storage for any type <a id="any">[[any]]</a>
 
@@ -4027,7 +4027,7 @@ but does not attempt conversion between them, i.e. `5` is held strictly
 as an `int` and is not implicitly convertible either to `"5"` or to
 `5.0`. This indifference to interpretation but awareness of type
 effectively allows safe, generic containers of single values, with no
-scope for surprises from ambiguous conversions. — *end note*\]
+scope for surprises from ambiguous conversions. — *end note*]
 
 ### Header `<any>` synopsis <a id="any.synop">[[any.synop]]</a>
 
@@ -4137,7 +4137,7 @@ Implementations should avoid the use of dynamically allocated memory for
 a small contained value.
 
 [*Example 1*: where the object constructed is holding only an
-`int`. — *end example*\]
+`int`. — *end example*]
 
 Such small-object optimization shall only be applied to types `T` for
 which `is_nothrow_move_constructible_v<T>` is `true`.
@@ -4370,7 +4370,7 @@ const type_info& type() const noexcept;
 otherwise `typeid(void)`.
 
 [*Note 1*: Useful for querying against types known either at compile
-time or only at runtime. — *end note*\]
+time or only at runtime. — *end note*]
 
 ### Non-member functions <a id="any.nonmembers">[[any.nonmembers]]</a>
 
@@ -4448,7 +4448,7 @@ any_cast<string&>(y);                       // error; cannot
                                             // any_cast away const
 ```
 
-— *end example*\]
+— *end example*]
 
 ``` cpp
 template<class T>
@@ -4468,7 +4468,7 @@ bool is_string(const any& operand) {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 ## Bitsets <a id="bitset">[[bitset]]</a>
 
@@ -5420,7 +5420,7 @@ live ( [[basic.life]]) from the time of the call until the last
 consume a small amount of memory in addition to that occupied by the
 referenced object until the matching call to `undeclare_reachable(p)` is
 encountered. Long running programs should arrange that calls are
-matched. — *end note*\]
+matched. — *end note*]
 
 ``` cpp
 void declare_no_pointers(char* p, size_t n);
@@ -5434,7 +5434,7 @@ call.
 
 [*Note 2*: In a garbage-collecting implementation, the fact that a
 region in an object is registered with `declare_no_pointers()` should
-not prevent the object from being collected. — *end note*\]
+not prevent the object from being collected. — *end note*]
 
 *Effects:* The `n` bytes starting at `p` no longer contain traceable
 pointer locations, independent of their type. Hence indirection through
@@ -5442,13 +5442,13 @@ a pointer located there is undefined if the object it points to was
 created by global `operator new` and not previously declared reachable.
 
 [*Note 3*: This may be used to inform a garbage collector or leak
-detector that this region of memory need not be traced. — *end note*\]
+detector that this region of memory need not be traced. — *end note*]
 
 *Throws:* Nothing.
 
 [*Note 4*: Under some conditions implementations may need to allocate
 memory. However, the request can be ignored if memory allocation
-fails. — *end note*\]
+fails. — *end note*]
 
 ``` cpp
 void undeclare_no_pointers(char* p, size_t n);
@@ -5496,7 +5496,7 @@ into the available space, otherwise the adjusted value of `ptr`.
 
 [*Note 1*: The function updates its `ptr` and `space` arguments so that
 it can be called repeatedly with possibly different `alignment` and
-`size` arguments for the same buffer. — *end note*\]
+`size` arguments for the same buffer. — *end note*]
 
 ### Allocator argument tag <a id="allocator.tag">[[allocator.tag]]</a>
 
@@ -5559,7 +5559,7 @@ allocator `alloc` of type `Alloc`, according to the following rules:
   \[*Note 1*: An error will result if `uses_allocator_v<T, Alloc>` is
   `true` but the specific constructor does not take an allocator. This
   definition prevents a silent failure to pass the allocator to an
-  element. — *end note*\]
+  element. — *end note*]
 
 ### Allocator traits <a id="allocator.traits">[[allocator.traits]]</a>
 
@@ -5568,7 +5568,7 @@ all allocator types. An allocator cannot be a non-class type, however,
 even if `allocator_traits` supplies the entire required interface.
 
 [*Note 1*: Thus, it is always possible to create a derived class from
-an allocator. — *end note*\]
+an allocator. — *end note*]
 
 ``` cpp
 namespace std {
@@ -6066,7 +6066,7 @@ return first;
 ### C library memory allocation <a id="c.malloc">[[c.malloc]]</a>
 
 [*Note 1*: The header `<cstdlib>` ( [[cstdlib.syn]]) declares the
-functions described in this subclause. — *end note*\]
+functions described in this subclause. — *end note*]
 
 ``` cpp
 void* aligned_alloc(size_t alignment, size_t size);
@@ -6095,7 +6095,7 @@ implemented with a separate allocation arena, bypassing the normal
 intentionally be used as a replacement for `declare_reachable()`, and
 newly written code is strongly encouraged to treat memory allocated with
 these functions as though it were allocated with
-`operator new`. — *end note*\]
+`operator new`. — *end note*]
 
 ``` cpp
 void free(void* ptr);
@@ -6143,7 +6143,7 @@ pre-transfer owned object via the pre-transfer associated deleter before
 the ownership transfer is considered complete.
 
 [*Note 1*: A deleter’s state need never be copied, only moved or
-swapped as ownership is transferred. — *end note*\]
+swapped as ownership is transferred. — *end note*]
 
 Each object of a type `U` instantiated from the `unique_ptr` template
 specified in this subclause has the strict ownership semantics,
@@ -6155,7 +6155,7 @@ parameter `T` of `unique_ptr` may be an incomplete type.
 [*Note 2*: The uses of `unique_ptr` include providing exception safety
 for dynamically allocated memory, passing ownership of dynamically
 allocated memory to a function, and returning dynamically allocated
-memory from a function. — *end note*\]
+memory from a function. — *end note*]
 
 ``` cpp
 namespace std {
@@ -6355,7 +6355,7 @@ D>::pointer` shall satisfy the requirements of `NullablePointer` (
 and letting `A` be a synonym for `allocator_traits<X>`, the types
 `A::pointer`, `A::const_pointer`, `A::void_pointer`, and
 `A::const_void_pointer` may be used as
-`unique_ptr<T, D>::pointer`. — *end example*\]
+`unique_ptr<T, D>::pointer`. — *end example*]
 
 ##### `unique_ptr` constructors <a id="unique.ptr.single.ctor">[[unique.ptr.single.ctor]]</a>
 
@@ -6454,7 +6454,7 @@ unique_ptr<int, const D&> p4(new int, D()); // error: rvalue deleter object comb
                                             // with reference deleter type
 ```
 
-— *end example*\]
+— *end example*]
 
 ``` cpp
 unique_ptr(unique_ptr&& u) noexcept;
@@ -6471,7 +6471,7 @@ from `u`’s deleter; otherwise, this deleter is move constructed from
 `u`’s deleter.
 
 [*Note 1*: The deleter constructor can be implemented with
-`std::forward<D>`. — *end note*\]
+`std::forward<D>`. — *end note*]
 
 *Postconditions:* `get()` yields the value `u.get()` yielded before the
 construction. `get_deleter()` returns a reference to the stored deleter
@@ -6503,7 +6503,7 @@ from `u`’s deleter; otherwise, this deleter is move constructed from
 `u`’s deleter.
 
 [*Note 2*: The deleter constructor can be implemented with
-`std::forward<E>`. — *end note*\]
+`std::forward<E>`. — *end note*]
 
 *Postconditions:* `get()` yields the value `u.get()` yielded before the
 construction. `get_deleter()` returns a reference to the stored deleter
@@ -6519,7 +6519,7 @@ that was constructed from `u.get_deleter()`.
 shall have well-defined behavior, and shall not throw exceptions.
 
 [*Note 3*: The use of `default_delete` requires `T` to be a complete
-type. — *end note*\]
+type. — *end note*]
 
 *Effects:* If `get() == nullptr` there are no effects. Otherwise
 `get_deleter()(get())`.
@@ -6596,7 +6596,7 @@ pointer operator->() const noexcept;
 *Returns:* `get()`.
 
 [*Note 4*: The use of this function typically requires that `T` be a
-complete type. — *end note*\]
+complete type. — *end note*]
 
 ``` cpp
 pointer get() const noexcept;
@@ -6639,13 +6639,13 @@ the old value of the stored pointer, `old_p`, was not equal to
 `nullptr`, calls `get_deleter()(old_p)`.
 
 [*Note 5*: The order of these operations is significant because the
-call to `get_deleter()` may destroy `*this`. — *end note*\]
+call to `get_deleter()` may destroy `*this`. — *end note*]
 
 *Postconditions:* `get() == p`.
 
 [*Note 6*: The postcondition does not hold if the call to
 `get_deleter()` destroys `*this` since `this->get()` is no longer a
-valid expression. — *end note*\]
+valid expression. — *end note*]
 
 ``` cpp
 void swap(unique_ptr& u) noexcept;
@@ -6771,7 +6771,7 @@ following conditions hold, where `UP` is `unique_ptr<U, E>`:
   is not a reference type and `E` is implicitly convertible to `D`.
 
 [*Note 1*: This replaces the overload-resolution specification of the
-primary template — *end note*\]
+primary template — *end note*]
 
 ##### `unique_ptr` assignment <a id="unique.ptr.runtime.asgn">[[unique.ptr.runtime.asgn]]</a>
 
@@ -6791,7 +6791,7 @@ following conditions hold, where `UP` is `unique_ptr<U, E>`:
 - `is_assignable_v<D&, E&&>` is `true`.
 
 [*Note 2*: This replaces the overload-resolution specification of the
-primary template — *end note*\]
+primary template — *end note*]
 
 ##### `unique_ptr` observers <a id="unique.ptr.runtime.observers">[[unique.ptr.runtime.observers]]</a>
 
@@ -7151,7 +7151,7 @@ if (shared_ptr<X> px = dynamic_pointer_cast<X>(py)) {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 For purposes of determining the presence of a data race, member
 functions shall access and modify only the `shared_ptr` and `weak_ptr`
@@ -7260,10 +7260,10 @@ ownership with `r`.
 
 [*Note 1*: To avoid the possibility of a dangling pointer, the user of
 this constructor must ensure that `p` remains valid at least until the
-ownership group of `r` is destroyed. — *end note*\]
+ownership group of `r` is destroyed. — *end note*]
 
 [*Note 2*: This constructor allows creation of an empty `shared_ptr`
-instance with a non-null stored pointer. — *end note*\]
+instance with a non-null stored pointer. — *end note*]
 
 ``` cpp
 shared_ptr(const shared_ptr& r) noexcept;
@@ -7339,7 +7339,7 @@ thrown, the constructor has no effect.
 instances that share ownership with `*this` by one, after `*this` has
 been destroyed all `shared_ptr` instances that shared ownership with
 `*this` will report a `use_count()` that is one less than its previous
-value. — *end note*\]
+value. — *end note*]
 
 ##### `shared_ptr` assignment <a id="util.smartptr.shared.assign">[[util.smartptr.shared.assign]]</a>
 
@@ -7368,7 +7368,7 @@ q = p;
 
 both assignments may be no-ops.
 
-— *end note*\]
+— *end note*]
 
 ``` cpp
 shared_ptr& operator=(shared_ptr&& r) noexcept;
@@ -7479,16 +7479,16 @@ share ownership with `*this`, or `0` when `*this` is empty.
 *Synchronization:* None.
 
 [*Note 4*: `get() == nullptr` does not imply a specific return value of
-`use_count()`. — *end note*\]
+`use_count()`. — *end note*]
 
 [*Note 5*: `weak_ptr<T>::lock()` can affect the return value of
-`use_count()`. — *end note*\]
+`use_count()`. — *end note*]
 
 [*Note 6*: When multiple threads can affect the return value of
 `use_count()`, the result should be treated as approximate. In
 particular, `use_count() == 1` does not imply that accesses through a
 previously destroyed `shared_ptr` have in any sense
-completed. — *end note*\]
+completed. — *end note*]
 
 ``` cpp
 explicit operator bool() const noexcept;
@@ -7545,11 +7545,11 @@ type `T`. Implementations should perform no more than one memory
 allocation.
 
 [*Note 7*: This provides efficiency equivalent to an intrusive smart
-pointer. — *end note*\]
+pointer. — *end note*]
 
 [*Note 8*: These functions will typically allocate more memory than
 `sizeof(T)` to allow for internal bookkeeping structures such as the
-reference counts. — *end note*\]
+reference counts. — *end note*]
 
 ##### `shared_ptr` comparison <a id="util.smartptr.shared.cmp">[[util.smartptr.shared.cmp]]</a>
 
@@ -7568,7 +7568,7 @@ template<class T, class U>
 *Returns:* `less<>()(a.get(), b.get())`.
 
 [*Note 9*: Defining a comparison function allows `shared_ptr` objects
-to be used as keys in associative containers. — *end note*\]
+to be used as keys in associative containers. — *end note*]
 
 ``` cpp
 template <class T>
@@ -7658,7 +7658,7 @@ shared_ptr<T>(r, static_cast<typename shared_ptr<T>::element_type*>(r.get()))
 [*Note 10*: The seemingly equivalent expression
 `shared_ptr<T>(static_cast<T*>(r.get()))` will eventually result in
 undefined behavior, attempting to delete the same object
-twice. — *end note*\]
+twice. — *end note*]
 
 ``` cpp
 template<class T, class U>
@@ -7677,7 +7677,7 @@ formed and shall have well defined behavior.
 [*Note 11*: The seemingly equivalent expression
 `shared_ptr<T>(dynamic_cast<T*>(r.get()))` will eventually result in
 undefined behavior, attempting to delete the same object
-twice. — *end note*\]
+twice. — *end note*]
 
 ``` cpp
 template<class T, class U>
@@ -7695,7 +7695,7 @@ shared_ptr<T>(r, const_cast<typename shared_ptr<T>::element_type*>(r.get()))
 [*Note 12*: The seemingly equivalent expression
 `shared_ptr<T>(const_cast<T*>(r.get()))` will eventually result in
 undefined behavior, attempting to delete the same object
-twice. — *end note*\]
+twice. — *end note*]
 
 ``` cpp
 template<class T, class U>
@@ -7714,7 +7714,7 @@ shared_ptr<T>(r, reinterpret_cast<typename shared_ptr<T>::element_type*>(r.get()
 [*Note 13*: The seemingly equivalent expression
 `shared_ptr<T>(reinterpret_cast<T*>(r.get()))` will eventually result in
 undefined behavior, attempting to delete the same object
-twice. — *end note*\]
+twice. — *end note*]
 
 ##### `get_deleter` <a id="util.smartptr.getdeleter">[[util.smartptr.getdeleter]]</a>
 
@@ -7731,7 +7731,7 @@ remains valid as long as there exists a `shared_ptr` instance that owns
 [*Note 14*: It is unspecified whether the pointer remains valid longer
 than that. This can happen if the implementation doesn’t destroy the
 deleter until all `weak_ptr` instances that share ownership with `p`
-have been destroyed. — *end note*\]
+have been destroyed. — *end note*]
 
 ##### `shared_ptr` I/O <a id="util.smartptr.shared.io">[[util.smartptr.shared.io]]</a>
 
@@ -7977,7 +7977,7 @@ Note that
   `weak_ptr` instances are equivalent if and only if they share
   ownership or are both empty.
 
-— *end note*\]
+— *end note*]
 
 #### Class template `enable_shared_from_this` <a id="util.smartptr.enab">[[util.smartptr.enab]]</a>
 
@@ -7998,7 +7998,7 @@ int main() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 ``` cpp
 namespace std {
@@ -8035,7 +8035,7 @@ enable_shared_from_this<T>& operator=(const enable_shared_from_this<T>&) noexcep
 
 *Returns:* `*this`.
 
-[*Note 1*: `weak_this` is not changed. — *end note*\]
+[*Note 1*: `weak_this` is not changed. — *end note*]
 
 ``` cpp
 shared_ptr<T>       shared_from_this();
@@ -8351,7 +8351,7 @@ and vice-versa, otherwise `false`.
 [*Note 1*: The most-derived type of `other` might not match the type of
 `this`. For a derived class `D`, a typical implementation of this
 function will immediately return `false` if
-`dynamic_cast<const D*>(&other) == nullptr`. — *end note*\]
+`dynamic_cast<const D*>(&other) == nullptr`. — *end note*]
 
 #### `memory_resource` equality <a id="mem.res.eq">[[mem.res.eq]]</a>
 
@@ -8445,7 +8445,7 @@ polymorphic_allocator(memory_resource* r);
 *Throws:* Nothing.
 
 [*Note 1*: This constructor provides an implicit conversion from
-`memory_resource*`. — *end note*\]
+`memory_resource*`. — *end note*]
 
 ``` cpp
 template <class U>
@@ -8488,7 +8488,7 @@ template <class T, class... Args>
 arguments `std::forward<Args>(args)...` is well-formed.
 
 [*Note 1*: Uses-allocator construction is always well formed for types
-that do not use allocators. — *end note*\]
+that do not use allocators. — *end note*]
 
 *Effects:* Construct a `T` object in the storage whose address is
 represented by `p` by uses-allocator construction with allocator
@@ -8504,7 +8504,7 @@ template <class T1, class T2, class... Args1, class... Args2>
 
 [*Note 2*: This method and the `construct` methods that follow are
 overloads for piecewise construction of
-pairs ( [[pairs.pair]]). — *end note*\]
+pairs ( [[pairs.pair]]). — *end note*]
 
 *Effects:* Let `xprime` be a `tuple` constructed from `x` according to
 the appropriate rule from the following list.
@@ -8514,7 +8514,7 @@ a `pair<T1, T2>` object in the storage whose address is represented by
 `p`, as if by separate uses-allocator construction with allocator
 `resource()` ( [[allocator.uses.construction]]) of `p->first` using the
 elements of `x` and `p->second` using the elements of
-`y`. — *end note*\]
+`y`. — *end note*]
 
 - If `uses_allocator_v<T1,memory_resource*>` is `false`  
   and `is_constructible_v<T1,Args1...>` is `true`,  
@@ -8612,7 +8612,7 @@ polymorphic_allocator select_on_container_copy_construction() const;
 
 *Returns:* `polymorphic_allocator()`.
 
-[*Note 4*: The memory resource is not propagated. — *end note*\]
+[*Note 4*: The memory resource is not propagated. — *end note*]
 
 ``` cpp
 memory_resource* resource() const;
@@ -8710,7 +8710,7 @@ general-purpose memory resources having the following qualities:
   pool. With each successive replenishment, the chunk size obtained
   increases geometrically. \[*Note 2*: By allocating memory in chunks,
   the pooling strategy increases the chance that consecutive allocations
-  will be close together in memory. — *end note*\]
+  will be close together in memory. — *end note*]
 - Allocation requests that exceed the largest block size of any pool are
   fulfilled directly from the upstream allocator.
 - A `pool_options` struct may be passed to the pool resource
@@ -8834,7 +8834,7 @@ hold a copy of `upstream`, but will not own the resource to which
 
 [*Note 1*: The intention is that calls to `upstream->allocate()` will
 be substantially fewer than calls to `this->allocate()` in most
-cases. — *end note*\]
+cases. — *end note*]
 
 The behavior of the pooling mechanism is tuned according to the value of
 the `opts` argument.
@@ -8861,7 +8861,7 @@ release all allocated memory.
 
 [*Note 1*: The memory is released back to `upstream_resource()` even if
 `deallocate` has not been called for some of the allocated
-blocks. — *end note*\]
+blocks. — *end note*]
 
 ``` cpp
 memory_resource* upstream_resource() const;
@@ -9025,7 +9025,7 @@ all allocated memory.
 
 [*Note 1*: The memory is released back to `upstream_rsrc` even if some
 blocks that were allocated from `this` have not been deallocated from
-`this`. — *end note*\]
+`this`. — *end note*]
 
 ``` cpp
 memory_resource* upstream_resource() const;
@@ -9108,7 +9108,7 @@ recursions.
 
 [*Note 1*: The `scoped_allocator_adaptor` is derived from the outer
 allocator type so it can be substituted for the outer allocator type in
-most expressions. — *end note*\]
+most expressions. — *end note*]
 
 ``` cpp
 namespace std {
@@ -9319,7 +9319,7 @@ is `allocator_traits<decltype(OUTERMOST(x))>`.
 [*Note 1*: `OUTERMOST(x)` and `OUTERMOST_ALLOC_TRAITS(x)` are recursive
 operations. It is incumbent upon the definition of `outer_allocator()`
 to ensure that the recursion terminates. It will terminate for all
-instantiations of `scoped_allocator_adaptor`. — *end note*\]
+instantiations of `scoped_allocator_adaptor`. — *end note*]
 
 ``` cpp
 inner_allocator_type& inner_allocator() noexcept;
@@ -9400,7 +9400,7 @@ template <class T, class... Args>
 - Otherwise, the program is ill-formed. \[*Note 3*: An error will result
   if `uses_allocator` evaluates to `true` but the specific constructor
   does not take an allocator. This definition prevents a silent failure
-  to pass an inner allocator to a contained element. — *end note*\]
+  to pass an inner allocator to a contained element. — *end note*]
 
 ``` cpp
 template <class T1, class T2, class... Args1, class... Args2>
@@ -9717,7 +9717,7 @@ and `b` containing `double` and put the result into `a`, it can do:
 transform(a.begin(), a.end(), b.begin(), a.begin(), plus<double>());
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Example 2*:
 
@@ -9727,7 +9727,7 @@ To negate every element of `a`:
 transform(a.begin(), a.end(), a.begin(), negate<double>());
 ```
 
-— *end example*\]
+— *end example*]
 
 ### Definitions <a id="func.def">[[func.def]]</a>
 
@@ -9792,7 +9792,7 @@ template<class... UnBoundArgs>
 R operator()(UnBoundArgs&&... unbound_args) cv-qual;
 ```
 
-— *end note*\]
+— *end note*]
 
 ### Function template `invoke` <a id="func.invoke">[[func.invoke]]</a>
 
@@ -10115,7 +10115,7 @@ partial order imposed by the built-in operators `<`, `>`, `<=`, `>=`.
 
 [*Note 1*: When `a < b` is well-defined for pointers `a` and `b` of
 type `P`, this implies `(a < b) == less<P>(a, b)`,
-`(a > b) == greater<P>(a, b)`, and so forth. — *end note*\]
+`(a > b) == greater<P>(a, b)`, and so forth. — *end note*]
 
 For template specializations `less<void>`, `greater<void>`,
 `less_equal<void>`, and `greater_equal<void>`, if the call operator
@@ -10704,7 +10704,7 @@ of `CopyConstructible`, then the return type shall satisfy the
 requirements of `CopyConstructible`.
 
 [*Note 1*: This implies that all of `FD` and `TDᵢ` are
-`MoveConstructible`. — *end note*\]
+`MoveConstructible`. — *end note*]
 
 ``` cpp
 template<class R, class F, class... BoundArgs>
@@ -10740,7 +10740,7 @@ of `CopyConstructible`, then the return type shall satisfy the
 requirements of `CopyConstructible`.
 
 [*Note 2*: This implies that all of `FD` and `TDᵢ` are
-`MoveConstructible`. — *end note*\]
+`MoveConstructible`. — *end note*]
 
 The values of the `v₁`, `v₂`, …, `v_N` and their corresponding types
 `V₁`, `V₂`, …, `V_N` depend on the types `TDᵢ` derived from the call to
@@ -10911,7 +10911,7 @@ The `function` class template is a call wrapper ( [[func.def]]) whose
 call signature ( [[func.def]]) is `R(ArgTypes...)`.
 
 [*Note 1*: The types deduced by the deduction guides for `function` may
-change in future versions of this International Standard. — *end note*\]
+change in future versions of this International Standard. — *end note*]
 
 ##### `function` construct/copy/destroy <a id="func.wrap.func.con">[[func.wrap.func.con]]</a>
 
@@ -10942,7 +10942,7 @@ stored callable object.
 [*Note 1*: Implementations are encouraged to avoid the use of
 dynamically allocated memory for small callable objects, for example,
 where `f`’s target is an object holding only a pointer or reference to
-an object and a member function pointer. — *end note*\]
+an object and a member function pointer. — *end note*]
 
 ``` cpp
 function(function&& f);
@@ -10960,7 +10960,7 @@ the stored callable object.
 [*Note 2*: Implementations are encouraged to avoid the use of
 dynamically allocated memory for small callable objects, for example,
 where `f`’s target is an object holding only a pointer or reference to
-an object and a member function pointer. — *end note*\]
+an object and a member function pointer. — *end note*]
 
 ``` cpp
 template<class F> function(F f);
@@ -10984,7 +10984,7 @@ Otherwise, `*this` targets a copy of `f` initialized with
 [*Note 3*: Implementations are encouraged to avoid the use of
 dynamically allocated memory for small callable objects, for example,
 where `f` is an object holding only a pointer or reference to an object
-and a member function pointer. — *end note*\]
+and a member function pointer. — *end note*]
 
 *Throws:* shall not throw exceptions when `f` is a function pointer or a
 `reference_wrapper<T>` for some `T`. Otherwise, may throw `bad_alloc` or
@@ -11009,7 +11009,7 @@ void f() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 ``` cpp
 function& operator=(const function& f);
@@ -11377,7 +11377,7 @@ Each specialization of `hash` is either enabled or disabled, as
 described below.
 
 [*Note 1*: Enabled specializations meet the requirements of `Hash`, and
-disabled specializations do not. — *end note*\]
+disabled specializations do not. — *end note*]
 
 Each header that declares the template `hash` provides enabled
 specializations of `hash` for `nullptr_t` and all cv-unqualified
@@ -11396,7 +11396,7 @@ If `H` is a disabled specialization of `hash`, these values are `false`:
 function object types ( [[function.objects]]).
 
 [*Note 2*: This means that the specialization of `hash` exists, but any
-attempts to use it as a `Hash` will be ill-formed. — *end note*\]
+attempts to use it as a `Hash` will be ill-formed. — *end note*]
 
 An enabled specialization `hash<Key>` will:
 
@@ -11879,7 +11879,7 @@ For any given type `T`, the result of applying one of these templates to
 `T` and to cv `T` shall yield the same result.
 
 [*Note 1*: For any given type `T`, exactly one of the primary type
-categories has a `value` member that evaluates to `true`. — *end note*\]
+categories has a `value` member that evaluates to `true`. — *end note*]
 
 #### Composite type traits <a id="meta.unary.comp">[[meta.unary.comp]]</a>
 
@@ -11912,7 +11912,7 @@ corresponding definition notwithstanding the restrictions of 
 [[declval]].
 
 [*Note 1*: A union is a class type that can be marked with
-`final`. — *end note*\]
+`final`. — *end note*]
 
 [*Example 1*:
 
@@ -11924,7 +11924,7 @@ is_const_v<int[3]>                 // false
 is_const_v<const int[3]>           // true
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Example 2*:
 
@@ -11935,7 +11935,7 @@ remove_const_t<const int&>          // const int&
 remove_const_t<const int[3]>        // int[3]
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Example 3*:
 
@@ -11952,7 +11952,7 @@ static_assert(!is_final_v<U1>);
 static_assert(is_final_v<U2>);
 ```
 
-— *end example*\]
+— *end example*]
 
 The predicate condition for a template specialization
 `is_constructible<T, Args...>` shall be satisfied if and only if the
@@ -11964,7 +11964,7 @@ T t(declval<Args>()...);
 ```
 
 [*Note 2*: These tokens are never interpreted as a function
-declaration. — *end note*\]
+declaration. — *end note*]
 
 Access checking is performed as if in a context unrelated to `T` and any
 of the `Args`. Only the validity of the immediate context of the
@@ -11974,7 +11974,7 @@ variable initialization is considered.
 effects such as the instantiation of class template specializations and
 function template specializations, the generation of implicitly-defined
 functions, and so on. Such side effects are not in the “immediate
-context” and can result in the program being ill-formed. — *end note*\]
+context” and can result in the program being ill-formed. — *end note*]
 
 The predicate condition for a template specialization
 `has_unique_object_representations<T>` shall be satisfied if and only
@@ -11993,7 +11993,7 @@ The set of scalar types for which this condition holds is
 
 [*Note 4*: If a type has padding bits, the condition does not hold;
 otherwise, the condition holds true for unsigned integral
-types. — *end note*\]
+types. — *end note*]
 
 ### Type property queries <a id="meta.unary.prop.query">[[meta.unary.prop.query]]</a>
 
@@ -12012,7 +12012,7 @@ assert(rank_v<int[2]> == 1);
 assert(rank_v<int[][4]> == 2);
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Example 2*:
 
@@ -12028,7 +12028,7 @@ assert((extent_v<int[2][4], 1>) == 4);
 assert((extent_v<int[][4], 1>) == 4);
 ```
 
-— *end example*\]
+— *end example*]
 
 ### Relationships between types <a id="meta.rel">[[meta.rel]]</a>
 
@@ -12040,7 +12040,7 @@ with a base characteristic of `true_type` if the corresponding condition
 is true, otherwise `false_type`.
 
 [*Note 1*: Base classes that are private, protected, or ambiguous are,
-nonetheless, base classes. — *end note*\]
+nonetheless, base classes. — *end note*]
 
 For the purpose of defining the templates in this subclause, a function
 call expression `declval<T>()` for any type `T` is considered to be a
@@ -12067,7 +12067,7 @@ is_base_of_v<B[3], D[3]>   // false
 is_base_of_v<int, int>     // false
 ```
 
-— *end example*\]
+— *end example*]
 
 The predicate condition for a template specialization
 `is_convertible<From, To>` shall be satisfied if and only if the return
@@ -12081,7 +12081,7 @@ To test() {
 ```
 
 [*Note 2*: This requirement gives well defined results for reference
-types, void types, array types, and function types. — *end note*\]
+types, void types, array types, and function types. — *end note*]
 
 Access checking is performed in a context unrelated to `To` and `From`.
 Only the validity of the immediate context of the *expression* of the
@@ -12092,7 +12092,7 @@ reference) is considered.
 instantiation of class template specializations and function template
 specializations, the generation of implicitly-defined functions, and so
 on. Such side effects are not in the “immediate context” and can result
-in the program being ill-formed. — *end note*\]
+in the program being ill-formed. — *end note*]
 
 ### Transformations between types <a id="meta.trans">[[meta.trans]]</a>
 
@@ -12103,12 +12103,12 @@ Each of the templates in this subclause shall be a
 
 [*Example 1*: `remove_const_t<const volatile int>` evaluates to
 `volatile int`, whereas `remove_const_t<const int*>` evaluates to
-`const int*`. — *end example*\]
+`const int*`. — *end example*]
 
 #### Reference modifications <a id="meta.trans.ref">[[meta.trans.ref]]</a>
 
 [*Note 1*: This rule reflects the semantics of reference collapsing (
-[[dcl.ref]]). — *end note*\]
+[[dcl.ref]]). — *end note*]
 
 #### Sign modifications <a id="meta.trans.sign">[[meta.trans.sign]]</a>
 
@@ -12116,7 +12116,7 @@ Each of the templates in this subclause shall be a
 
 [*Note 1*: For multidimensional arrays, only the first array dimension
 is removed. For a type “array of `const U`”, the resulting type is
-`const U`. — *end note*\]
+`const U`. — *end note*]
 
 [*Example 1*:
 
@@ -12128,7 +12128,7 @@ assert((is_same_v<remove_extent_t<int[2][3]>, int[3]>));
 assert((is_same_v<remove_extent_t<int[][3]>, int[3]>));
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Example 2*:
 
@@ -12140,7 +12140,7 @@ assert((is_same_v<remove_all_extents_t<int[2][3]>, int>));
 assert((is_same_v<remove_all_extents_t<int[][3]>, int>));
 ```
 
-— *end example*\]
+— *end example*]
 
 #### Pointer modifications <a id="meta.trans.ptr">[[meta.trans.ptr]]</a>
 
@@ -12151,7 +12151,7 @@ assert((is_same_v<remove_all_extents_t<int[][3]>, int>));
 function-to-pointer ( [[conv.func]]) conversions applied when an lvalue
 expression is used as an rvalue, but also strips cv-qualifiers from
 class types in order to more closely model by-value argument
-passing. — *end note*\]
+passing. — *end note*]
 
 [*Note 2*:
 
@@ -12166,7 +12166,7 @@ struct aligned_storage {
 };
 ```
 
-— *end note*\]
+— *end note*]
 
 It is *implementation-defined* whether any extended alignment is
 supported ( [[basic.align]]).
@@ -12192,7 +12192,7 @@ follows:
     ```
 
     \[*Note 4*: This will not apply if there is a specialization
-    `common_type<D1, D2>`. — *end note*\]
+    `common_type<D1, D2>`. — *end note*]
 
   In either case, the member *typedef-name* `type` shall denote the same
   type, if any, as `C`. Otherwise, there shall be no member `type`.
@@ -12210,7 +12210,7 @@ pursuant to [[namespace.std]], a program may specialize
 `true`.
 
 [*Note 3*: Such specializations are needed when only explicit
-conversions are desired between the template arguments. — *end note*\]
+conversions are desired between the template arguments. — *end note*]
 
 Such a specialization need not have a member named `type`, but if it
 does, that member shall be a *typedef-name* for an accessible and
@@ -12250,7 +12250,7 @@ static_assert(is_same_v<invoke_result_t<PMD, S>, char&&>);
 static_assert(is_same_v<invoke_result_t<PMD, const S*>, const char&>);
 ```
 
-— *end example*\]
+— *end example*]
 
 ### Logical operator traits <a id="meta.logical">[[meta.logical]]</a>
 
@@ -12270,7 +12270,7 @@ instantiating `conjunction<B1, ..., BN>::value` does not require the
 instantiation of `Bj::value` for `j > i`.
 
 [*Note 1*: This is analogous to the short-circuiting behavior of the
-built-in operator `&&`. — *end note*\]
+built-in operator `&&`. — *end note*]
 
 Every template type argument for which `Bi::value` is instantiated shall
 be usable as a base class and shall have a member `value` which is
@@ -12286,7 +12286,7 @@ unambiguous base that is either
 
 [*Note 2*: This means a specialization of `conjunction` does not
 necessarily inherit from either `true_type` or
-`false_type`. — *end note*\]
+`false_type`. — *end note*]
 
 The member names of the base class, other than `conjunction` and
 `operator=`, shall not be hidden and shall be unambiguously available in
@@ -12305,7 +12305,7 @@ instantiating `disjunction<B1, ..., BN>::value` does not require the
 instantiation of `Bj::value` for `j > i`.
 
 [*Note 3*: This is analogous to the short-circuiting behavior of the
-built-in operator `||`. — *end note*\]
+built-in operator `||`. — *end note*]
 
 Every template type argument for which `Bi::value` is instantiated shall
 be usable as a base class and shall have a member `value` which is
@@ -12321,7 +12321,7 @@ unambiguous base that is either
 
 [*Note 4*: This means a specialization of `disjunction` does not
 necessarily inherit from either `true_type` or
-`false_type`. — *end note*\]
+`false_type`. — *end note*]
 
 The member names of the base class, other than `disjunction` and
 `operator=`, shall not be hidden and shall be unambiguously available in
@@ -12428,7 +12428,7 @@ the template arguments `N` and `D` is not representable by type
 [*Note 1*: These rules ensure that infinite ratios are avoided and that
 for any negative input, there exists a representable value of its
 absolute value which is positive. In a two’s complement representation,
-this excludes the most negative value. — *end note*\]
+this excludes the most negative value. — *end note*]
 
 The static data members `num` and `den` shall have the following values,
 where `gcd` represents the greatest common divisor of the absolute
@@ -12484,7 +12484,7 @@ static_assert(ratio_multiply<ratio<1, INT_MAX>, ratio<INT_MAX, 2>>::den == 2,
   "1/MAX * MAX/2 == 1/2");
 ```
 
-— *end example*\]
+— *end example*]
 
 ### Comparison of `ratio`s <a id="ratio.comparison">[[ratio.comparison]]</a>
 
@@ -12734,11 +12734,11 @@ happens before ( [[intro.multithread]]) the call returning `t2` and both
 of these calls occur before `C1::time_point::max()`.
 
 [*Note 1*: This means `C1` did not wrap around between `t1` and
-`t2`. — *end note*\]
+`t2`. — *end note*]
 
 [*Note 2*: The relative difference in durations between those reported
 by a given clock and the SI definition is a measure of the quality of
-implementation. — *end note*\]
+implementation. — *end note*]
 
 A type `TC` meets the `TrivialClock` requirements if:
 
@@ -12752,7 +12752,7 @@ A type `TC` meets the `TrivialClock` requirements if:
   [[tab:copyassignable]]), `Destructible` (Table  [[tab:destructible]]),
   and the requirements of numeric types ( [[numeric.requirements]]).
   \[*Note 5*: This means, in particular, that operations on these types
-  will not throw exceptions. — *end note*\]
+  will not throw exceptions. — *end note*]
 - lvalues of the types `TC::rep`, `TC::duration`, and `TC::time_point`
   are swappable ( [[swappable.requirements]]),
 - the function `TC::now()` does not throw exceptions, and
@@ -12780,7 +12780,7 @@ class behaves like a floating-point type, and thus allows division of
 one value by another with acceptable loss of precision. If
 `treat_as_floating_point_v<Rep>` is `false`, `Rep` will be treated as if
 it behaved like an integral type for the purpose of these
-conversions. — *end note*\]
+conversions. — *end note*]
 
 #### `duration_values` <a id="time.traits.duration_values">[[time.traits.duration_values]]</a>
 
@@ -12808,7 +12808,7 @@ static constexpr Rep zero();
 *Returns:* `Rep(0)`.
 
 [*Note 1*: `Rep(0)` is specified instead of `Rep()` because `Rep()` may
-have some other meaning, such as an uninitialized value. — *end note*\]
+have some other meaning, such as an uninitialized value. — *end note*]
 
 *Remarks:* The value returned shall be the additive identity.
 
@@ -12844,14 +12844,14 @@ The `period` of the `duration` indicated by this specialization of
 
 [*Note 1*: This can be computed by forming a ratio of the greatest
 common divisor of `Period1::num` and `Period2::num` and the least common
-multiple of `Period1::den` and `Period2::den`. — *end note*\]
+multiple of `Period1::den` and `Period2::den`. — *end note*]
 
 [*Note 2*: The `typedef` name `type` is a synonym for the `duration`
 with the largest tick `period` possible where both `duration` arguments
 will convert to it without requiring a division operation. The
 representation of this type is intended to be able to hold any value
 resulting from this conversion with no truncation error, although
-floating-point durations may have round-off errors. — *end note*\]
+floating-point durations may have round-off errors. — *end note*]
 
 ``` cpp
 template <class Clock, class Duration1, class Duration2>
@@ -12941,7 +12941,7 @@ duration<double, ratio<1, 30>>  d2; // holds a count with a tick period of $\fra
                                     // (30 Hz) using a double
 ```
 
-— *end example*\]
+— *end example*]
 
 #### `duration` constructors <a id="time.duration.cons">[[time.duration.cons]]</a>
 
@@ -12963,7 +12963,7 @@ duration<int, milli> d(3);          // OK
 duration<int, milli> d(3.5);        // error
 ```
 
-— *end example*\]
+— *end example*]
 
 *Effects:* Constructs an object of type `duration`.
 
@@ -12983,7 +12983,7 @@ unless no overflow is induced in the conversion and
 [*Note 1*: This requirement prevents implicit truncation error when
 converting between integral-based `duration` types. Such a construction
 could easily lead to confusion about the value of the
-`duration`. — *end note*\]
+`duration`. — *end note*]
 
 [*Example 2*:
 
@@ -12993,7 +12993,7 @@ duration<int, micro> us = ms;       // OK
 duration<int, milli> ms2 = us;      // error
 ```
 
-— *end example*\]
+— *end example*]
 
 *Effects:* Constructs an object of type `duration`, constructing `rep_`
 from  
@@ -13293,7 +13293,7 @@ conversions are done with `static_cast`. It avoids multiplications and
 divisions when it is known at compile time that one or more arguments
 is 1. Intermediate computations are carried out in the widest
 representation and only converted to the destination representation at
-the final step. — *end note*\]
+the final step. — *end note*]
 
 ``` cpp
 template <class ToDuration, class Rep, class Period>
@@ -13357,7 +13357,7 @@ auto constexpr lesson=45min;
 auto constexpr halfanhour=0.5h;
 ```
 
-— *end example*\]
+— *end example*]
 
 ``` cpp
 constexpr chrono::hours                                 operator""h(unsigned long long hours);
@@ -13382,7 +13382,7 @@ constexpr chrono::duration<unspecified> operator""s(long double sec);
 
 [*Note 1*: The same suffix `s` is used for `basic_string` but there is
 no conflict, since duration suffixes apply to numbers and string literal
-suffixes apply to character array literals. — *end note*\]
+suffixes apply to character array literals. — *end note*]
 
 ``` cpp
 constexpr chrono::milliseconds                 operator""ms(unsigned long long msec);
@@ -13698,7 +13698,7 @@ using system_clock::rep = unspecified;
 `system_clock::duration::min() < system_clock::duration::zero()` shall
 be `true`.  
 
-[*Note 1*: This implies that `rep` is a signed type. — *end note*\]
+[*Note 1*: This implies that `rep` is a signed type. — *end note*]
 
 ``` cpp
 static time_t to_time_t(const time_point& t) noexcept;
@@ -13927,12 +13927,12 @@ sort(execution::par, v.begin(), v.end());
 sort(execution::par_unseq, v.begin(), v.end());
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Note 1*: Because different parallel architectures may require
 idiosyncratic parameters for efficient execution, implementations may
 provide additional execution policies to those described in this
-standard as extensions. — *end note*\]
+standard as extensions. — *end note*]
 
 ### Header `<execution>` synopsis <a id="execution.syn">[[execution.syn]]</a>
 
@@ -13976,7 +13976,7 @@ characteristic of `true_type` if `T` is the type of a standard or
 
 [*Note 1*: This provision reserves the privilege of creating
 non-standard execution policies to the library
-implementation. — *end note*\]
+implementation. — *end note*]
 
 The behavior of a program that adds specializations for
 `is_execution_policy` is undefined.

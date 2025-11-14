@@ -23,7 +23,7 @@ import j1;          // was variable declaration; now import-declaration
 ::import j2;        // variable declaration
 ```
 
-— *end example*\]
+— *end example*]
 
 **Change:** *header-name* tokens are formed in more contexts.
 **Rationale:** Required for new features. **Effect on original
@@ -38,7 +38,7 @@ import<int> f();                // ill-formed; previously well-formed
 ::import<int> g();              // OK
 ```
 
-— *end example*\]
+— *end example*]
 
 **Change:** New keywords. **Rationale:** Required for new features.
 
@@ -119,7 +119,7 @@ int f() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 **Change:** Except for the initial release operation, a release sequence
 consists solely of atomic read-modify-write operations. **Rationale:**
@@ -354,7 +354,7 @@ meaning since C++17.
 [*Note 1*: There is no way to write a function declaration that is
 non-throwing in this International Standard and is also non-throwing in
 C++03 except by using the preprocessor to generate a different token
-sequence in each case. — *end note*\]
+sequence in each case. — *end note*]
 
 ###  [[library]]: library introduction <a id="diff.cpp17.library">[[diff.cpp17.library]]</a>
 

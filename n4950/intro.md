@@ -57,7 +57,7 @@ modifications of scalar objects are described in [[expr.ass]],
 object of class type typically invoke a constructor [[class.ctor]] or
 assignment operator [[class.copy.assign]]; such invocations do not
 themselves constitute accesses, although they may involve accesses of
-scalar subobjects. — *end note*\]
+scalar subobjects. — *end note*]
 
 #### 2 arbitrary-positional stream <a id="defns.arbitrary.stream">[defns.arbitrary.stream]</a>
 
@@ -65,7 +65,7 @@ scalar subobjects. — *end note*\]
 length of the stream
 
 [*Note 1 to entry*: Every arbitrary-positional stream is also a
-repositional stream [[defns.repositional.stream]]. — *end note*\]
+repositional stream [[defns.repositional.stream]]. — *end note*]
 
 #### 3 argument <a id="defns.argument">[defns.argument]</a>
 
@@ -105,7 +105,7 @@ satisfied before continuing execution past the blocking operation
 `char16_t`, `char32_t`, and `wchar_t` objects [[basic.fundamental]], but
 any value that can be represented by a type that provides the
 definitions specified in [[strings]], [[localization]],
-[[input.output]], or  [[re]]. — *end note*\]
+[[input.output]], or  [[re]]. — *end note*]
 
 #### 10 character container type <a id="defns.character.container">[defns.character.container]</a>
 
@@ -113,7 +113,7 @@ definitions specified in [[strings]], [[localization]],
 
 [*Note 1 to entry*: It is used for one of the template parameters of
 the string, iostream, and regular expression class
-templates. — *end note*\]
+templates. — *end note*]
 
 #### 11 collating element <a id="defns.regex.collating.element">[defns.regex.collating.element]</a>
 
@@ -127,7 +127,7 @@ parameters, or return types
 
 [*Note 1 to entry*: For example, the class template `basic_string` and
 the non-member function templates that operate on strings are referred
-to as the *string component*. — *end note*\]
+to as the *string component*. — *end note*]
 
 #### 13 conditionally-supported <a id="defns.cond.supp">[defns.cond.supp]</a>
 
@@ -135,7 +135,7 @@ program construct that an implementation is not required to support
 
 [*Note 1 to entry*: Each implementation documents all
 conditionally-supported constructs that it does not
-support. — *end note*\]
+support. — *end note*]
 
 #### 14 constant subexpression <a id="defns.const.subexpr">[defns.const.subexpr]</a>
 
@@ -170,7 +170,7 @@ direct-initialization that is not list-initialization
 [*Example 1*: If a pointer [[dcl.ptr]] `p` whose static type is
 “pointer to class `B`” is pointing to an object of class `D`, derived
 from `B` [[class.derived]], the dynamic type of the expression `*p` is
-“`D`”. References [[dcl.ref]] are treated similarly. — *end example*\]
+“`D`”. References [[dcl.ref]] are treated similarly. — *end example*]
 
 #### 20 dynamic type <a id="defns.dynamic.type.prvalue">[defns.dynamic.type.prvalue]</a>
 
@@ -184,7 +184,7 @@ all constant subexpressions or are all not constant subexpressions
 
 [*Example 1*: For a value `x` of type `int` and a function `f` that
 accepts integer arguments, the expressions `f(x + 2)`, `f(2 + x)`, and
-`f(1 + x + 1)` are expression-equivalent. — *end example*\]
+`f(1 + x + 1)` are expression-equivalent. — *end example*]
 
 #### 22 finite state machine <a id="defns.regex.finite.state.machine">[defns.regex.finite.state.machine]</a>
 
@@ -205,7 +205,7 @@ C++ program
 [*Note 1 to entry*: A C++ program may designate a handler function at
 various points in its execution by supplying a pointer to the function
 when calling any of the library functions that install handler functions
-[[support]]. — *end note*\]
+[[support]]. — *end note*]
 
 #### 25 ill-formed program <a id="defns.ill.formed">[defns.ill.formed]</a>
 
@@ -235,7 +235,7 @@ template arguments
 argument `charT` is a character container class, and the argument
 `traits` is a class which defines additional characteristics and
 functions of the character type represented by `charT` necessary to
-implement the iostream class templates. — *end note*\]
+implement the iostream class templates. — *end note*]
 
 #### 30 locale-specific behavior <a id="defns.locale.specific">[defns.locale.specific]</a>
 
@@ -278,7 +278,7 @@ terminating null character type value `charT()`
 the class but does not alter that state
 
 [*Note 1 to entry*: Observer functions are specified as `const` member
-functions. — *end note*\]
+functions. — *end note*]
 
 #### 38 parameter <a id="defns.parameter">[defns.parameter]</a>
 
@@ -317,7 +317,7 @@ instantiation of a program-defined specialization
 
 [*Note 1 to entry*: Types defined by the implementation include
 extensions [[intro.compliance]] and internal types used by the
-library. — *end note*\]
+library. — *end note*]
 
 #### 44 projection <a id="defns.projection">[defns.projection]</a>
 
@@ -337,7 +337,7 @@ sorts the pairs in increasing order of their `first` members:
 {{0, "baz"}, {1, "bar"}, {2, "foo"}}
 ```
 
-— *end example*\]
+— *end example*]
 
 #### 45 referenceable type <a id="defns.referenceable">[defns.referenceable]</a>
 
@@ -345,7 +345,7 @@ type that is either an object type, a function type that does not have
 cv-qualifiers or a *ref-qualifier*, or a reference type
 
 [*Note 1 to entry*: The term describes a type to which a reference can
-be created, including reference types. — *end note*\]
+be created, including reference types. — *end note*]
 
 #### 46 regular expression <a id="defns.regex.regular.expression">[defns.regex.regular.expression]</a>
 
@@ -359,7 +359,7 @@ program
 [*Note 1 to entry*: Only one definition for such a function is in
 effect for the duration of the program’s execution, as the result of
 creating the program [[lex.phases]] and resolving the definitions of all
-translation units [[basic.link]]. — *end note*\]
+translation units [[basic.link]]. — *end note*]
 
 #### 48 repositional stream <a id="defns.repositional.stream">[defns.repositional.stream]</a>
 
@@ -374,7 +374,7 @@ and the behavior of any such function definition in the program
 
 [*Note 1 to entry*: If such a function defined in a C++ program fails
 to meet the required behavior when it executes, the behavior is
-undefined.  — *end note*\]
+undefined.  — *end note*]
 
 #### 50 reserved function <a id="defns.reserved.function">[defns.reserved.function]</a>
 
@@ -382,14 +382,14 @@ undefined.  — *end note*\]
 is defined by the implementation
 
 [*Note 1 to entry*: If a C++ program provides a definition for any
-reserved function, the results are undefined.  — *end note*\]
+reserved function, the results are undefined.  — *end note*]
 
 #### 51 signature <a id="defns.signature">[defns.signature]</a>
 
 ⟨function⟩ name, parameter-type-list, and enclosing namespace
 
 [*Note 1 to entry*: Signatures are used as a basis for name mangling
-and linking. — *end note*\]
+and linking. — *end note*]
 
 #### 52 signature <a id="defns.signature.friend">[defns.signature.friend]</a>
 
@@ -445,7 +445,7 @@ parameter names and default arguments, and *requires-clause* (if any)
 algorithm, the order of elements
 
 [*Note 1 to entry*: Requirements for stable algorithms are given in
-[[algorithm.stable]]. — *end note*\]
+[[algorithm.stable]]. — *end note*]
 
 #### 61 static type <a id="defns.static.type">[defns.static.type]</a>
 
@@ -454,7 +454,7 @@ considering execution semantics
 
 [*Note 1 to entry*: The static type of an expression depends only on
 the form of the program in which the expression appears, and does not
-change while the program is executing. — *end note*\]
+change while the program is executing. — *end note*]
 
 #### 62 sub-expression <a id="defns.regex.subexpression">[defns.regex.subexpression]</a>
 
@@ -487,7 +487,7 @@ translation or execution (with the issuance of a diagnostic message).
 Many erroneous program constructs do not engender undefined behavior;
 they are required to be diagnosed. Evaluation of a constant expression
 [[expr.const]] never exhibits behavior explicitly specified as undefined
-in [[intro]] through [[cpp]]. — *end note*\]
+in [[intro]] through [[cpp]]. — *end note*]
 
 #### 66 unspecified behavior <a id="defns.unspecified">[defns.unspecified]</a>
 
@@ -496,7 +496,7 @@ depends on the implementation
 
 [*Note 1 to entry*: The implementation is not required to document
 which behavior occurs. The range of possible behaviors is usually
-delineated by this document. — *end note*\]
+delineated by this document. — *end note*]
 
 #### 67 valid but unspecified state <a id="defns.valid">[defns.valid]</a>
 
@@ -507,7 +507,7 @@ specified for its type
 [*Example 1*: If an object `x` of type `std::vector<int>` is in a valid
 but unspecified state, `x.empty()` can be called unconditionally, and
 `x.front()` can be called only if `x.empty()` returns
-`false`. — *end example*\]
+`false`. — *end example*]
 
 #### 68 well-formed program <a id="defns.well.formed">[defns.well.formed]</a>
 
@@ -544,7 +544,7 @@ Such requirements have the following meaning:
 
 [*Note 1*: During template argument deduction and substitution, certain
 constructs that in other contexts require a diagnostic are treated
-differently; see  [[temp.deduct]]. — *end note*\]
+differently; see  [[temp.deduct]]. — *end note*]
 
 Furthermore, a conforming implementation
 
@@ -624,7 +624,7 @@ Certain other operations are described in this document as undefined
 (for example, the effect of attempting to modify a const object).
 
 [*Note 1*: This document imposes no requirements on the behavior of
-programs that contain undefined behavior. — *end note*\]
+programs that contain undefined behavior. — *end note*]
 
 A conforming implementation executing a well-formed program shall
 produce the same observable behavior as one of the possible executions
@@ -650,7 +650,7 @@ These collectively are referred to as the *observable behavior* of the
 program.
 
 [*Note 2*: More stringent correspondences between abstract and actual
-semantics can be defined by each implementation. — *end note*\]
+semantics can be defined by each implementation. — *end note*]
 
 ## Structure of this document <a id="intro.structure">[[intro.structure]]</a>
 

@@ -72,7 +72,7 @@ the iterator type.
 
 [*Note 1*: Either the iterator type must provide the *typedef-name*s
 directly (in which case `iterator_traits` pick them up automatically),
-or an `iterator_traits` specialization must provide them. — *end note*\]
+or an `iterator_traits` specialization must provide them. — *end note*]
 
 Iterators that further satisfy the requirement that, for integral values
 `n` and dereferenceable iterator values `a` and `(a + n)`, `*(a + n)` is
@@ -82,7 +82,7 @@ equivalent to `*(addressof(*a) + n)`, are called *contiguous iterators*.
 iterator, but `reverse_iterator<int *>` is not. For a valid iterator
 range [`a`,`b`) with dereferenceable `a`, the corresponding range
 denoted by pointers is [`addressof(*a)`,`addressof(*a) + (b - a)`); `b`
-might not be dereferenceable. — *end note*\]
+might not be dereferenceable. — *end note*]
 
 Just as a regular pointer to an array guarantees that there is a pointer
 value pointing past the last element of the array, so for any iterator
@@ -95,7 +95,7 @@ are not associated with any sequence.
 
 [*Example 1*: After the declaration of an uninitialized pointer `x` (as
 with `int* x;`), `x` must always be assumed to have a singular value of
-a pointer. — *end example*\]
+a pointer. — *end example*]
 
 Results of most expressions are undefined for singular values; the only
 exceptions are destroying an iterator that holds a singular value, the
@@ -107,7 +107,7 @@ or move operation.
 [*Note 3*: This guarantee is not offered for default-initialization,
 although the distinction only matters for types with trivial default
 constructors such as pointers or aggregates holding
-pointers. — *end note*\]
+pointers. — *end note*]
 
 In these cases the singular value is overwritten the same way as any
 other value. Dereferenceable values are always non-singular.
@@ -145,7 +145,7 @@ value of `X&`, `t` denotes a value of value type `T`, `o` denotes a
 value of some type that is writable to the output iterator.
 
 [*Note 4*: For an iterator type `X` there must be an instantiation of
-`iterator_traits<X>` ( [[iterator.traits]]). — *end note*\]
+`iterator_traits<X>` ( [[iterator.traits]]). — *end note*]
 
 ### Iterator <a id="iterator.iterators">[[iterator.iterators]]</a>
 
@@ -185,7 +185,7 @@ algorithm makes of `==` and `!=`.
 [*Example 1*: The call `find(a,b,x)` is defined only if the value of
 `a` has the property *p* defined as follows: `b` has property *p* and a
 value `i` has property *p* if (`*i==x`) or if (`*i!=x` and `++i` has
-property *p*). — *end example*\]
+property *p*). — *end example*]
 
 [*Note 1*: For input iterators, `a == b` does not imply `++a == ++b`.
 (Equality does not guarantee the substitution property or referential
@@ -194,7 +194,7 @@ pass through the same iterator twice. They should be *single pass*
 algorithms. Value type `T` is not required to be a `CopyAssignable` type
 (Table  [[tab:copyassignable]]). These algorithms can be used with
 istreams as the source of the input data through the `istream_iterator`
-class template. — *end note*\]
+class template. — *end note*]
 
 ### Output iterators <a id="output.iterators">[[output.iterators]]</a>
 
@@ -211,7 +211,7 @@ attempt to pass through the same iterator twice. They should be *single
 pass* algorithms. Equality and inequality might not be defined.
 Algorithms that take output iterators can be used with ostreams as the
 destination for placing data through the `ostream_iterator` class as
-well as with insert iterators and insert pointers. — *end note*\]
+well as with insert iterators and insert pointers. — *end note*]
 
 ### Forward iterators <a id="forward.iterators">[[forward.iterators]]</a>
 
@@ -234,7 +234,7 @@ compared and shall compare equal to other value-initialized iterators of
 the same type.
 
 [*Note 1*: Value-initialized iterators behave as if they refer past the
-end of the same empty sequence. — *end note*\]
+end of the same empty sequence. — *end note*]
 
 Two dereferenceable iterators `a` and `b` of type `X` offer the
 *multi-pass guarantee* if:
@@ -247,7 +247,7 @@ Two dereferenceable iterators `a` and `b` of type `X` offer the
 not true for input and output iterators) and the removal of the
 restrictions on the number of the assignments through a mutable iterator
 (which applies to output iterators) allows the use of multi-pass
-one-directional algorithms with forward iterators. — *end note*\]
+one-directional algorithms with forward iterators. — *end note*]
 
 If `a` and `b` are equal, then either `a` and `b` are both
 dereferenceable or else neither is dereferenceable.
@@ -263,7 +263,7 @@ for forward iterators, the following expressions are valid as shown in
 Table  [[tab:iterator.bidirectional.requirements]].
 
 [*Note 1*: Bidirectional iterators allow algorithms to move iterators
-backward as well as forward. — *end note*\]
+backward as well as forward. — *end note*]
 
 ### Random access iterators <a id="random.access.iterators">[[random.access.iterators]]</a>
 
@@ -548,7 +548,7 @@ void reverse(BidirectionalIterator first, BidirectionalIterator last) {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 ### Standard iterator tags <a id="std.iterator.tags">[[std.iterator.tags]]</a>
 
@@ -589,7 +589,7 @@ template<class T> struct iterator_traits<BinaryTreeIterator<T>> {
 };
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Example 2*:
 
@@ -618,7 +618,7 @@ void evolve(RandomAccessIterator first, RandomAccessIterator last,
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 ### Iterator operations <a id="iterator.operations">[[iterator.operations]]</a>
 
@@ -1339,7 +1339,7 @@ vector<string> v2(make_move_iterator(s.begin()),
                   make_move_iterator(s.end())); // moves strings into v2
 ```
 
-— *end example*\]
+— *end example*]
 
 #### Class template `move_iterator` <a id="move.iterator">[[move.iterator]]</a>
 
@@ -1663,7 +1663,7 @@ partial_sum(istream_iterator<double, char>(cin),
 reads a file containing floating-point numbers from `cin`, and prints
 the partial sums onto `cout`.
 
-— *end example*\]
+— *end example*]
 
 ### Class template `istream_iterator` <a id="istream.iterator">[[istream.iterator]]</a>
 

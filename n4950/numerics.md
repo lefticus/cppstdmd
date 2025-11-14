@@ -43,7 +43,7 @@ or related function.
 [*Example 1*: It is valid to instantiate `valarray<complex>`, but
 `operator>()` will not be successfully instantiated for
 `valarray<complex>` operands, since `complex` does not have any ordering
-operators. — *end example*\]
+operators. — *end example*]
 
 ## The floating-point environment <a id="cfenv">[[cfenv]]</a>
 
@@ -97,7 +97,7 @@ floating-point status flags, set floating-point control modes, or run
 under non-default mode settings. If the pragma is used to enable control
 over the floating-point environment, this document does not specify the
 effect on floating-point evaluation in constant
-expressions. — *end note*\]
+expressions. — *end note*]
 
 ### Threads <a id="cfenv.thread">[[cfenv.thread]]</a>
 
@@ -109,7 +109,7 @@ that constructs the corresponding `thread` object
 the time it constructed the object.
 
 [*Note 1*: That is, the child thread gets the floating-point state of
-the parent thread at the time of the child’s creation. — *end note*\]
+the parent thread at the time of the child’s creation. — *end note*]
 
 A separate floating-point environment is maintained for each thread.
 Each function accesses the environment corresponding to its calling
@@ -486,7 +486,7 @@ return o << s.str();
 character, the use of comma as a field separator can be ambiguous.
 Inserting `showpoint` into the output stream forces all outputs to show
 an explicit decimal point character; as a result, all inserted sequences
-of complex numbers can be extracted unambiguously. — *end note*\]
+of complex numbers can be extracted unambiguously. — *end note*]
 
 ### Value operations <a id="complex.value.ops">[[complex.value.ops]]</a>
 
@@ -619,7 +619,7 @@ template<class T> complex<T> log(const complex<T>& x);
 `imag(log(x))` lies in the interval \[-π, π\].
 
 [*Note 1*: The semantics of this function are intended to be the same
-in C++ as they are for `clog` in C. — *end note*\]
+in C++ as they are for `clog` in C. — *end note*]
 
 *Remarks:* The branch cuts are along the negative real axis.
 
@@ -664,7 +664,7 @@ template<class T> complex<T> sqrt(const complex<T>& x);
 half-plane.
 
 [*Note 2*: The semantics of this function are intended to be the same
-in C++ as they are for `csqrt` in C. — *end note*\]
+in C++ as they are for `csqrt` in C. — *end note*]
 
 *Remarks:* The branch cuts are along the negative real axis.
 
@@ -752,7 +752,7 @@ to templates producing such types when instantiated.
 binding of any uniform random bit generator object `e` as the argument
 to any random number distribution object `d`, thus producing a
 zero-argument function object such as given by
-`bind(d,e)`. — *end note*\]
+`bind(d,e)`. — *end note*]
 
 Each of the entities specified in [[rand]] has an associated arithmetic
 type [[basic.fundamental]] identified as `result_type`. With `T` as the
@@ -966,7 +966,7 @@ values i, $0 \le i < 2^{32}$, based on the consumed data.
 [*Note 1*: Such an object provides a mechanism to avoid replication of
 streams of random variates. This can be useful, for example, in
 applications requiring large numbers of random number
-engines. — *end note*\]
+engines. — *end note*]
 
 A class `S` meets the requirements of a seed sequence if the expressions
 shown in [[rand.req.seedseq]] are valid and have the indicated
@@ -991,7 +991,7 @@ returning unsigned integer values such that each value in the range of
 possible results has (ideally) equal probability of being returned.
 
 [*Note 1*: The degree to which `g`’s results approximate the ideal is
-often determined statistically. — *end note*\]
+often determined statistically. — *end note*]
 
 ``` cpp
 template<class G>
@@ -1321,7 +1321,7 @@ subclause  [[rand.eng.lcong]] is `numeric_limits<result_type>::max()`
 plus 1.
 
 [*Note 1*: m need not be representable as a value of type
-`result_type`. — *end note*\]
+`result_type`. — *end note*]
 
 If the template parameter `m` is not 0, the following relations shall
 hold: `a < m` and `c < m`.
@@ -1488,7 +1488,7 @@ The state transition is performed as follows:
 [*Note 1*: This algorithm corresponds to a modular linear function of
 the form $\mathsf{TA}(\state{x}{i}) = (a \cdot \state{x}{i}) \bmod b$,
 where b is of the form mʳ - mˢ + 1 and
-a = b - (b - 1) / m. — *end note*\]
+a = b - (b - 1) / m. — *end note*]
 
 The generation algorithm is given by $\mathsf{GA}(\state{x}{i}) = y$,
 where y is the value produced as a result of advancing the engine’s
@@ -1701,7 +1701,7 @@ following integral constants:
   Otherwise let $n = 1 + \left\lceil w / m \right\rceil$.
 
 [*Note 1*: The relation w = n₀ w₀ + (n - n₀)(w₀ + 1) always
-holds. — *end note*\]
+holds. — *end note*]
 
 The transition algorithm is carried out by invoking `e()` as often as
 needed to obtain n₀ values less than y_0 + `e.min()` and n - n₀ values
@@ -1949,7 +1949,7 @@ provide at least acceptable engine behavior for relatively casual,
 inexpert, and/or lightweight use. Because different implementations can
 select different underlying engine types, code that uses this `typedef`
 need not generate identical sequences across
-implementations. — *end note*\]
+implementations. — *end note*]
 
 ### Class `random_device` <a id="rand.device">[[rand.device]]</a>
 
@@ -2193,7 +2193,7 @@ $$S = \sum_{i=0}^{k-1} (g_i - \texttt{g.min()})
 
 *Returns:* S / Rᵏ.
 
-[*Note 1*: 0 ≤ S / Rᵏ < 1. — *end note*\]
+[*Note 1*: 0 ≤ S / Rᵏ < 1. — *end note*]
 
 *Throws:* What and when `g` throws.
 
@@ -2209,7 +2209,7 @@ the instantiation’s results are distributed as uniformly as possible.
 Obtaining a value in this way can be a useful step in the process of
 transforming a value generated by a uniform random bit generator into a
 value that can be delivered by a random number
-distribution. — *end note*\]
+distribution. — *end note*]
 
 ### Random number distribution class templates <a id="rand.dist">[[rand.dist]]</a>
 
@@ -2314,7 +2314,7 @@ numbers x, a ≤ x < b, distributed according to the constant probability
 density function $$p(x\,|\,a,b) = 1 / (b - a) \text{ .}$$
 
 [*Note 1*: This implies that p(x | a,b) is undefined when
-`a == b`. — *end note*\]
+`a == b`. — *end note*]
 
 ``` cpp
 namespace std {
@@ -2594,7 +2594,7 @@ function
 $$P(i\,|\,k,p) = \binom{k+i-1}{i} \cdot p^k \cdot (1-p)^i \text{ .}$$
 
 [*Note 1*: This implies that P(i | k,p) is undefined when
-`p == 1`. — *end note*\]
+`p == 1`. — *end note*]
 
 ``` cpp
 namespace std {
@@ -3519,7 +3519,7 @@ discrete_distribution();
 p₀ = 1.
 
 [*Note 1*: Such an object will always deliver the value
-0. — *end note*\]
+0. — *end note*]
 
 ``` cpp
 template<class InputIterator>
@@ -3867,7 +3867,7 @@ k = 0, …, n.
 ### Low-quality random number generation <a id="c.math.rand">[[c.math.rand]]</a>
 
 [*Note 1*: The header `<cstdlib>` declares the functions described in
-this subclause. — *end note*\]
+this subclause. — *end note*]
 
 ``` cpp
 int rand();
@@ -3885,7 +3885,7 @@ functions may call `rand`. It is *implementation-defined* whether the
 document [[rand]] are often preferable to `rand`, because `rand`’s
 underlying algorithm is unspecified. Use of `rand` therefore continues
 to be non-portable, with unpredictable and oft-questionable quality and
-performance. — *end note*\]
+performance. — *end note*]
 
 ## Numeric arrays <a id="numarray">[[numarray]]</a>
 
@@ -4325,7 +4325,7 @@ T& operator[](size_t n);
 [*Note 1*: The expression `(a[i] = q, a[i]) == q` evaluates to `true`
 for any non-constant `valarray<T> a`, any `T q`, and for any `size_t i`
 such that the value of `i` is less than the length of
-`a`. — *end note*\]
+`a`. — *end note*]
 
 *Remarks:* The expression `addressof(a[i+j]) == addressof(a[i]) + j`
 evaluates to `true` for all `size_t i` and `size_t j` such that
@@ -4339,7 +4339,7 @@ such that `i < a.size()` and `j < b.size()`.
 used to advantage by optimizing compilers. Compilers can take advantage
 of inlining, constant propagation, loop fusion, tracking of pointers
 obtained from `operator new`, and other techniques to generate efficient
-`valarray`s. — *end note*\]
+`valarray`s. — *end note*]
 
 The reference returned by the subscript operator for an array shall be
 valid until the member function `resize(size_t, T)`[[valarray.members]]
@@ -4372,7 +4372,7 @@ const valarray<char> v0("abcdefghijklmnop", 16);
 // v0[slice(2, 5, 3)] returns valarray<char>("cfilo", 5)
 ```
 
-— *end example*\]
+— *end example*]
 
 ``` cpp
 slice_array<T> operator[](slice slicearr);
@@ -4390,7 +4390,7 @@ v0[slice(2, 5, 3)] = v1;
 // v0 == valarray<char>("abAdeBghCjkDmnEp", 16);
 ```
 
-— *end example*\]
+— *end example*]
 
 ``` cpp
 valarray operator[](const gslice& gslicearr) const;
@@ -4410,7 +4410,7 @@ const valarray<size_t> len(lv, 2), str(dv, 2);
 // valarray<char>("dfhkmo", 6)
 ```
 
-— *end example*\]
+— *end example*]
 
 ``` cpp
 gslice_array<T> operator[](const gslice& gslicearr);
@@ -4431,7 +4431,7 @@ v0[gslice(3, len, str)] = v1;
 // v0 == valarray<char>("abcAeBgCijDlEnFp", 16)
 ```
 
-— *end example*\]
+— *end example*]
 
 ``` cpp
 valarray operator[](const valarray<bool>& boolarr) const;
@@ -4449,7 +4449,7 @@ const bool vb[] = { false, false, true, true, false, true };
 // valarray<char>("cdf", 3)
 ```
 
-— *end example*\]
+— *end example*]
 
 ``` cpp
 mask_array<T> operator[](const valarray<bool>& boolarr);
@@ -4468,7 +4468,7 @@ v0[valarray<bool>(vb, 6)] = v1;
 // v0 == valarray<char>("abABeCghijklmnop", 16)
 ```
 
-— *end example*\]
+— *end example*]
 
 ``` cpp
 valarray operator[](const valarray<size_t>& indarr) const;
@@ -4486,7 +4486,7 @@ const size_t vi[] = { 7, 5, 2, 3, 8 };
 // valarray<char>("hfcdi", 5)
 ```
 
-— *end example*\]
+— *end example*]
 
 ``` cpp
 indirect_array<T> operator[](const valarray<size_t>& indarr);
@@ -4505,7 +4505,7 @@ v0[valarray<size_t>(vi, 5)] = v1;
 // v0 == valarray<char>("abCDeBgAEjklmnop", 16)
 ```
 
-— *end example*\]
+— *end example*]
 
 #### Unary operators <a id="valarray.unary">[[valarray.unary]]</a>
 
@@ -4648,12 +4648,12 @@ is `(*this)[`*`I`*` + n]` if *`I`*` + n` is non-negative and less than
 
 [*Note 1*: If element zero is taken as the leftmost element, a positive
 value of `n` shifts the elements left `n` places, with zero
-fill. — *end note*\]
+fill. — *end note*]
 
 [*Example 1*: If the argument has the value -2, the first two elements
 of the result will be value-initialized [[dcl.init]]; the third element
 of the result will be assigned the value of the first element of
-`*this`; etc. — *end example*\]
+`*this`; etc. — *end example*]
 
 ``` cpp
 valarray cshift(int n) const;
@@ -4908,7 +4908,7 @@ slices. The constructor with arguments for a slice takes a start,
 length, and stride parameter.
 
 [*Example 1*: `slice(3, 8, 2)` constructs a slice which selects
-elements 3, 5, 7, …, 17 from an array. — *end example*\]
+elements 3, 5, 7, …, 17 from an array. — *end example*]
 
 #### Access functions <a id="slice.access">[[slice.access]]</a>
 
@@ -4979,7 +4979,7 @@ It has reference semantics to a subset of an array specified by a
 [*Example 1*: The expression `a[slice(1, 5, 3)] = b;` has the effect of
 assigning the elements of `b` to a slice of the elements in `a`. For the
 slice shown, the elements selected from `a` are
-1, 4, …, 13. — *end example*\]
+1, 4, …, 13. — *end example*]
 
 #### Assignment <a id="slice.arr.assign">[[slice.arr.assign]]</a>
 
@@ -5069,7 +5069,7 @@ which are ordered as shown in the following table:
 
 That is, the highest-ordered index turns fastest.
 
-— *end example*\]
+— *end example*]
 
 It is possible to have degenerate generalized slices in which an address
 is repeated.
@@ -5079,7 +5079,7 @@ is repeated.
 If the stride parameters in the previous example are changed to {1, 1,
 1}, the first few elements of the resulting sequence of indices will be
 
-— *end example*\]
+— *end example*]
 
 If a degenerate slice is used as the argument to the non-`const` version
 of `operator[](const gslice&)`, the behavior is undefined.
@@ -5354,7 +5354,7 @@ a[indirect] = b;
 results in undefined behavior since element 4 is specified twice in the
 indirection.
 
-— *end example*\]
+— *end example*]
 
 #### Compound assignment <a id="indirect.array.comp.assign">[[indirect.array.comp.assign]]</a>
 
@@ -5830,7 +5830,7 @@ functions described in [[sf.cmath]].
 
 [*Note 1*: Several functions have additional overloads in this
 document, but they have the same behavior as in the C standard library
-[[library.c]]. — *end note*\]
+[[library.c]]. — *end note*]
 
 For each function with at least one parameter of type
 *floating-point-type*, the implementation provides an overload for each
@@ -5858,7 +5858,7 @@ floating-point type.
 ### Absolute values <a id="c.math.abs">[[c.math.abs]]</a>
 
 [*Note 1*: The headers `<cstdlib>` and `<cmath>` declare the functions
-described in this subclause. — *end note*\]
+described in this subclause. — *end note*]
 
 ``` cpp
 constexpr int abs(int j);
@@ -5875,7 +5875,7 @@ respectively.
 integral promotion [[conv.prom]], the program is ill-formed.
 
 [*Note 1*: Arguments that can be promoted to `int` are permitted for
-compatibility with C. — *end note*\]
+compatibility with C. — *end note*]
 
 ``` cpp
 constexpr floating-point-type abs(floating-point-type x);

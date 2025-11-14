@@ -44,7 +44,7 @@ class-key:
 A *class-specifier* whose *class-head* omits the *class-head-name*
 defines an unnamed class.
 
-[*Note 1*: An unnamed class thus can’t be `final`. — *end note*\]
+[*Note 1*: An unnamed class thus can’t be `final`. — *end note*]
 
 A *class-name* is inserted into the scope in which it is declared
 immediately after the *class-name* is seen. The *class-name* is also
@@ -78,7 +78,7 @@ struct X {
 };
 ```
 
-— *end example*\]
+— *end example*]
 
 Complete objects and member subobjects of class type shall have nonzero
 size.[^1]
@@ -87,13 +87,13 @@ size.[^1]
 functions, and returned by functions (except objects of classes for
 which copying or moving has been restricted; see  [[class.copy]]). Other
 plausible operators, such as equality comparison, can be defined by the
-user; see  [[over.oper]]. — *end note*\]
+user; see  [[over.oper]]. — *end note*]
 
 A *union* is a class defined with the *class-key* `union`; it holds at
 most one data member at a time ( [[class.union]]).
 
 [*Note 3*: Aggregates of class type are described in 
-[[dcl.init.aggr]]. — *end note*\]
+[[dcl.init.aggr]]. — *end note*]
 
 A *trivially copyable class* is a class:
 
@@ -109,7 +109,7 @@ more default constructors ( [[class.ctor]]), all of which are either
 trivial or deleted and at least one of which is not deleted.
 
 [*Note 4*: In particular, a trivially copyable or trivial class does
-not have virtual functions or virtual base classes. — *end note*\]
+not have virtual functions or virtual base classes. — *end note*]
 
 A class `S` is a *standard-layout class* if it:
 
@@ -142,7 +142,7 @@ M(X) is defined as follows:
 
 [*Note 5*: M(X) is the set of the types of all non-base-class
 subobjects that are guaranteed in a standard-layout class to be at a
-zero offset in `X`. — *end note*\]
+zero offset in `X`. — *end note*]
 
 [*Example 2*:
 
@@ -158,7 +158,7 @@ zero offset in `X`. — *end note*\]
    struct U : S, T { };         // not a standard-layout class
 ```
 
-— *end example*\]
+— *end example*]
 
 A *standard-layout struct* is a standard-layout class defined with the
 *class-key* `struct` or the *class-key* `class`. A *standard-layout
@@ -166,7 +166,7 @@ union* is a standard-layout class defined with the *class-key* `union`.
 
 [*Note 6*: Standard-layout classes are useful for communicating with
 code written in other programming languages. Their layout is specified
-in  [[class.mem]]. — *end note*\]
+in  [[class.mem]]. — *end note*]
 
 A *POD struct*[^3] is a non-union class that is both a trivial class and
 a standard-layout class, and has no non-static data members of type
@@ -203,7 +203,7 @@ struct POD {        // both trivial and standard-layout
 };
 ```
 
-— *end example*\]
+— *end example*]
 
 If a *class-head-name* contains a *nested-name-specifier*, the
 *class-specifier* shall refer to a class that was previously declared
@@ -253,7 +253,7 @@ struct S { int a; };            // error, double definition
 
 is ill-formed because it defines `S` twice.
 
-— *end example*\]
+— *end example*]
 
 A class declaration introduces the class name into the scope where it is
 declared and hides any class, variable, function, or other declaration
@@ -280,7 +280,7 @@ void f() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 A *declaration* consisting solely of *class-key* *identifier*`;` is
 either a redeclaration of the name in the current scope or a forward
@@ -300,7 +300,7 @@ void g() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Note 1*:
 
@@ -325,14 +325,14 @@ class Vector {
 Declaration of `friend`s is described in  [[class.friend]], operator
 functions in  [[over.oper]].
 
-— *end example*\]
+— *end example*]
 
-— *end note*\]
+— *end note*]
 
 [*Note 2*: An *elaborated-type-specifier* ( [[dcl.type.elab]]) can also
 be used as a *type-specifier* as part of a declaration. It differs from
 a class declaration in that if a class of the elaborated name is in
-scope the elaborated name will refer to it. — *end note*\]
+scope the elaborated name will refer to it. — *end note*]
 
 [*Example 5*:
 
@@ -345,7 +345,7 @@ void g(int s) {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Note 3*:
 
@@ -362,7 +362,7 @@ the name of a pointer to an object of that class. This means that the
 elaborated form `class` `A` must be used to refer to the class. Such
 artistry with names can be confusing and is best avoided.
 
-— *end note*\]
+— *end note*]
 
 A *typedef-name* ( [[dcl.typedef]]) that names a class type, or a
 cv-qualified version thereof, is also a *class-name*. If a
@@ -434,7 +434,7 @@ thereof.
 [*Note 1*: A specialization of a static data member template is a
 static data member. A specialization of a member function template is a
 member function. A specialization of a member class template is a nested
-class. — *end note*\]
+class. — *end note*]
 
 A *member-declaration* does not declare new members of the class if it
 is
@@ -466,7 +466,7 @@ class. Any other data member or member function is a *non-static member*
 [[class.mfct.non-static]]), respectively).
 
 [*Note 2*: A non-static data member of non-reference type is a member
-subobject of a class object ( [[intro.object]]). — *end note*\]
+subobject of a class object ( [[intro.object]]). — *end note*]
 
 A member shall not be declared twice in the *member-specification*,
 except that
@@ -478,7 +478,7 @@ except that
 
 [*Note 3*: A single name can denote several member functions provided
 their types are sufficiently different (Clause 
-[[over]]). — *end note*\]
+[[over]]). — *end note*]
 
 A class is considered a completely-defined object type (
 [[basic.types]]) (or complete type) at the closing `}` of the
@@ -503,7 +503,7 @@ struct S {
 };
 ```
 
-— *end example*\]
+— *end example*]
 
 A *brace-or-equal-initializer* shall appear only in the declaration of a
 data member. (For static data members, see  [[class.static.data]]; for
@@ -541,12 +541,12 @@ a class `C` shall not contain a non-static member of class `C`, but it
 can contain a pointer or reference to an object of class `C`.
 
 [*Note 4*: See  [[expr.prim]] for restrictions on the use of non-static
-data members and non-static member functions. — *end note*\]
+data members and non-static member functions. — *end note*]
 
 [*Note 5*: The type of a non-static member function is an ordinary
 function type, and the type of a non-static data member is an ordinary
 object type. There are no special member function types or data member
-types. — *end note*\]
+types. — *end note*]
 
 [*Example 2*:
 
@@ -575,7 +575,7 @@ object to which `sp` points; `s.left` refers to the `left` subtree
 pointer of the object `s`; and `s.right->tword[0]` refers to the initial
 character of the `tword` member of the `right` subtree of `s`.
 
-— *end example*\]
+— *end example*]
 
 Non-static data members of a (non-union) class with the same access
 control (Clause  [[class.access]]) are allocated so that later members
@@ -592,7 +592,7 @@ name different from `T`:
 - every static data member of class `T`;
 - every member function of class `T` \[*Note 1*: This restriction does
   not apply to constructors, which do not have names (
-  [[class.ctor]]) — *end note*\] ;
+  [[class.ctor]]) — *end note*] ;
 - every member of class `T` that is itself a type;
 - every member template of class `T`;
 - every enumerator of every member of class `T` that is an unscoped
@@ -625,7 +625,7 @@ either class. The common initial sequence of `A` and `C` and of `A` and
 `D` comprises the first member in each case. The common initial sequence
 of `A` and `E` is empty.
 
-— *end example*\]
+— *end example*]
 
 Two standard-layout struct (Clause  [[class]]) types are
 *layout-compatible classes* if their common initial sequence comprises
@@ -653,10 +653,10 @@ int f() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Note 6*: Reading a volatile object through a non-volatile glvalue has
-undefined behavior ( [[dcl.type.cv]]). — *end note*\]
+undefined behavior ( [[dcl.type.cv]]). — *end note*]
 
 If a standard-layout class object has any non-static data members, its
 address is the same as the address of its first non-static data member.
@@ -665,11 +665,11 @@ class subobject (if any).
 
 [*Note 7*: There might therefore be unnamed padding within a
 standard-layout struct object, but not at its beginning, as necessary to
-achieve appropriate alignment. — *end note*\]
+achieve appropriate alignment. — *end note*]
 
 [*Note 8*: The object and its first subobject are
 pointer-interconvertible ( [[basic.compound]],
-[[expr.static.cast]]). — *end note*\]
+[[expr.static.cast]]). — *end note*]
 
 ### Member functions <a id="class.mfct">[[class.mfct]]</a>
 
@@ -692,12 +692,12 @@ definition declares the function as `inline` or `constexpr`.
 
 [*Note 1*: Member functions of a class in namespace scope have the
 linkage of that class. Member functions of a local class (
-[[class.local]]) have no linkage. See  [[basic.link]]. — *end note*\]
+[[class.local]]) have no linkage. See  [[basic.link]]. — *end note*]
 
 [*Note 2*: There can be at most one definition of a non-inline member
 function in a program. There may be more than one `inline` member
 function definition in a program. See  [[basic.def.odr]] and 
-[[dcl.inline]]. — *end note*\]
+[[dcl.inline]]. — *end note*]
 
 If the definition of a member function is lexically outside its class
 definition, the member function name shall be qualified by its class
@@ -706,7 +706,7 @@ name using the `::` operator.
 [*Note 3*: A name used in a member function definition (that is, in the
 *parameter-declaration-clause* including the default arguments (
 [[dcl.fct.default]]) or in the member function body) is looked up as
-described in  [[basic.lookup]]. — *end note*\]
+described in  [[basic.lookup]]. — *end note*]
 
 [*Example 1*:
 
@@ -726,11 +726,11 @@ type `T` refers to the typedef member `T` declared in class `X` and the
 default argument `count` refers to the static data member `count`
 declared in class `X`.
 
-— *end example*\]
+— *end example*]
 
 [*Note 4*: A `static` local variable or local type in a member function
 always refers to the same entity, whether or not the member function is
-`inline`. — *end note*\]
+`inline`. — *end note*]
 
 Previously declared member functions may be mentioned in `friend`
 declarations.
@@ -760,7 +760,7 @@ fvc S::* pmfv3 = &S::memfunc3;
 
 Also see  [[temp.arg]].
 
-— *end note*\]
+— *end note*]
 
 ### Non-static member functions <a id="class.mfct.non-static">[[class.mfct.non-static]]</a>
 
@@ -788,7 +788,7 @@ expression ( [[expr.ref]]) using `(*this)` ( [[class.this]]) as the
 *postfix-expression* to the left of the `.` operator.
 
 [*Note 1*: If `C` is not `X` or a base class of `X`, the class member
-access expression is ill-formed. — *end note*\]
+access expression is ill-formed. — *end note*]
 
 Similarly during name lookup, when an *unqualified-id* ( [[expr.prim]])
 used in the definition of a member function for class `X` resolves to a
@@ -831,7 +831,7 @@ which the function is called. Thus, in the call `n1.set("abc",&n2,0)`,
 refers to `n2.tword`. The functions `strlen`, `perror`, and `strcpy` are
 not members of the class `tnode` and should be declared elsewhere.[^4]
 
-— *end example*\]
+— *end example*]
 
 A non-static member function may be declared `const`, `volatile`, or
 `const` `volatile`. These *cv-qualifier*s affect the type of the `this`
@@ -853,7 +853,7 @@ struct X {
 `X::g` is a `const` member function and `X::h` is a `const` `volatile`
 member function.
 
-— *end example*\]
+— *end example*]
 
 A non-static member function may be declared with a *ref-qualifier* (
 [[dcl.fct]]); see  [[over.match.funcs]].
@@ -874,7 +874,7 @@ member function is declared `const` `volatile`, the type of `this` is
 
 [*Note 1*: Thus in a `const` member function, the object for which the
 function is called is accessed through a `const` access
-path. — *end note*\]
+path. — *end note*]
 
 [*Example 1*:
 
@@ -894,7 +894,7 @@ The `a++` in the body of `s::h` is ill-formed because it tries to modify
 in a `const` member function because `this` is a pointer to `const`;
 that is, `*this` has `const` type.
 
-— *end example*\]
+— *end example*]
 
 Similarly, `volatile` semantics ( [[dcl.type.cv]]) apply in `volatile`
 member functions when accessing the object and its non-static data
@@ -919,14 +919,14 @@ The call `y.g()` is ill-formed because `y` is `const` and `s::g()` is a
 non-`const` member function, that is, `s::g()` is less-qualified than
 the object-expression `y`.
 
-— *end example*\]
+— *end example*]
 
 Constructors ( [[class.ctor]]) and destructors ( [[class.dtor]]) shall
 not be declared `const`, `volatile` or `const` `volatile`.
 
 [*Note 2*: However, these functions can be invoked to create and
 destroy objects with cv-qualified types, see  [[class.ctor]] and 
-[[class.dtor]]. — *end note*\]
+[[class.dtor]]. — *end note*]
 
 ### Static members <a id="class.static">[[class.static]]</a>
 
@@ -950,7 +950,7 @@ void f() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 A static member may be referred to directly in the scope of its class or
 in the scope of a class derived (Clause  [[class.derived]]) from its
@@ -972,7 +972,7 @@ struct Y : X {
 int Y::i = g();                 // equivalent to Y::g();
 ```
 
-— *end example*\]
+— *end example*]
 
 If an *unqualified-id* ( [[expr.prim]]) is used in the definition of a
 static member following the member’s *declarator-id*, and name lookup (
@@ -983,7 +983,7 @@ into a *qualified-id* expression in which the *nested-name-specifier*
 names the class scope from which the member is referenced.
 
 [*Note 1*: See  [[expr.prim]] for restrictions on the use of non-static
-data members and non-static member functions. — *end note*\]
+data members and non-static member functions. — *end note*]
 
 Static members obey the usual class member access rules (Clause 
 [[class.access]]). When used in the declaration of a class member, the
@@ -991,15 +991,15 @@ Static members obey the usual class member access rules (Clause 
 appear within the *member-specification* of the class definition.
 
 [*Note 2*: It cannot be specified in member declarations that appear in
-namespace scope. — *end note*\]
+namespace scope. — *end note*]
 
 #### Static member functions <a id="class.static.mfct">[[class.static.mfct]]</a>
 
 [*Note 1*: The rules described in  [[class.mfct]] apply to static
-member functions. — *end note*\]
+member functions. — *end note*]
 
 [*Note 2*: A static member function does not have a `this` pointer (
-[[class.this]]). — *end note*\]
+[[class.this]]). — *end note*]
 
 A static member function shall not be `virtual`. There shall not be a
 static and a non-static member function with the same name and the same
@@ -1043,7 +1043,7 @@ class `process`. In the static data member definition, the *initializer*
 expression refers to the static data member `running` of class
 `process`.
 
-— *end example*\]
+— *end example*]
 
 [*Note 1*:
 
@@ -1055,9 +1055,9 @@ objects of its class have been created.
 In the example above, `run_chain` and `running` exist even if no objects
 of class `process` are created by the program.
 
-— *end example*\]
+— *end example*]
 
-— *end note*\]
+— *end note*]
 
 If a non-volatile non-inline `const` static data member is of integral
 or enumeration type, its declaration in the class definition can specify
@@ -1075,14 +1075,14 @@ Declarations of other static data members shall not specify a
 
 [*Note 2*: There shall be exactly one definition of a static data
 member that is odr-used ( [[basic.def.odr]]) in a program; no diagnostic
-is required. — *end note*\]
+is required. — *end note*]
 
 Unnamed classes and classes contained directly or indirectly within
 unnamed classes shall not contain static data members.
 
 [*Note 3*: Static data members of a class in namespace scope have the
 linkage of that class ( [[basic.link]]). A local class cannot have
-static data members ( [[class.local]]). — *end note*\]
+static data members ( [[class.local]]). — *end note*]
 
 Static data members are initialized and destroyed exactly like non-local
 variables ( [[basic.start.static]], [[basic.start.dynamic]],
@@ -1110,14 +1110,14 @@ allocation unit.
 
 [*Note 1*: Bit-fields straddle allocation units on some machines and
 not on others. Bit-fields are assigned right-to-left on some machines,
-left-to-right on others. — *end note*\]
+left-to-right on others. — *end note*]
 
 A declaration for a bit-field that omits the *identifier* declares an
 *unnamed bit-field*. Unnamed bit-fields are not members and cannot be
 initialized.
 
 [*Note 2*: An unnamed bit-field is useful for padding to conform to
-externally-imposed layouts. — *end note*\]
+externally-imposed layouts. — *end note*]
 
 As a special case, an unnamed bit-field with a width of zero specifies
 alignment of the next bit-field at an allocation unit boundary. Only
@@ -1135,7 +1135,7 @@ to a bit-field ( [[dcl.init.ref]]).
 an lvalue that refers to a bit-field, the reference is bound to a
 temporary initialized to hold the value of the bit-field; the reference
 is not bound to the bit-field directly. See 
-[[dcl.init.ref]]. — *end note*\]
+[[dcl.init.ref]]. — *end note*]
 
 If the value `true` or `false` is stored into a bit-field of type `bool`
 of any size (including a one bit bit-field), the original `bool` value
@@ -1160,7 +1160,7 @@ void f() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 ### Nested class declarations <a id="class.nest">[[class.nest]]</a>
 
@@ -1170,7 +1170,7 @@ to its enclosing class. The nested class is in the scope of its
 enclosing class.
 
 [*Note 1*: See  [[expr.prim]] for restrictions on the use of non-static
-data members and non-static member functions. — *end note*\]
+data members and non-static member functions. — *end note*]
 
 [*Example 1*:
 
@@ -1199,7 +1199,7 @@ struct enclose {
 inner* p = 0;                   // error: inner not in scope
 ```
 
-— *end example*\]
+— *end example*]
 
 Member functions and static data members of a nested class can be
 defined in a namespace scope enclosing the definition of their class.
@@ -1219,7 +1219,7 @@ int enclose::inner::x = 1;
 void enclose::inner::f(int i) { ... }
 ```
 
-— *end example*\]
+— *end example*]
 
 If class `X` is defined in a namespace scope, a nested class `Y` may be
 declared in class `X` and later defined in the definition of class `X`
@@ -1237,7 +1237,7 @@ class E {
 class E::I2 { };                // definition of nested class
 ```
 
-— *end example*\]
+— *end example*]
 
 Like a member function, a friend function ( [[class.friend]]) defined
 within a nested class is in the lexical scope of that class; it obeys
@@ -1266,7 +1266,7 @@ X::Y d;                         // OK
 X::I e;                         // OK
 ```
 
-— *end example*\]
+— *end example*]
 
 ## Unions <a id="class.union">[[class.union]]</a>
 
@@ -1282,7 +1282,7 @@ structs that share a common initial sequence ( [[class.mem]]), and if a
 non-static data member of an object of this standard-layout union type
 is active and is one of the standard-layout structs, it is permitted to
 inspect the common initial sequence of any of the standard-layout struct
-members; see  [[class.mem]]. — *end note*\]
+members; see  [[class.mem]]. — *end note*]
 
 The size of a union is sufficient to contain the largest of its
 non-static data members. Each non-static data member is allocated as if
@@ -1291,7 +1291,7 @@ it were the sole member of a struct.
 [*Note 2*: A union object and its non-static data members are
 pointer-interconvertible ( [[basic.compound]], [[expr.static.cast]]). As
 a consequence, all non-static data members of a union object have the
-same address. — *end note*\]
+same address. — *end note*]
 
 A union can have member functions (including constructors and
 destructors), but it shall not have virtual ( [[class.virtual]])
@@ -1306,7 +1306,7 @@ constructor ( [[class.copy]]), copy assignment operator (
 [[class.copy]]), move assignment operator ( [[class.copy]]), or
 destructor ( [[class.dtor]]), the corresponding member function of the
 union must be user-provided or it will be implicitly deleted (
-[[dcl.fct.def.delete]]) for the union. — *end note*\]
+[[dcl.fct.def.delete]]) for the union. — *end note*]
 
 [*Example 1*:
 
@@ -1326,7 +1326,7 @@ deleted default constructor, copy/move constructor, copy/move assignment
 operator, and destructor. To use `U`, some or all of these member
 functions must be user-provided.
 
-— *end example*\]
+— *end example*]
 
 When the left operand of an assignment operator involves a member access
 expression ( [[expr.ref]]) that nominates a union member, it may begin
@@ -1352,7 +1352,7 @@ lifetime is sequenced after the value computation of the left and right
 operands and before the assignment.
 
 [*Note 4*: This ends the lifetime of the previously-active member of
-the union, if any ( [[basic.life]]). — *end note*\]
+the union, if any ( [[basic.life]]). — *end note*]
 
 [*Example 2*:
 
@@ -1379,11 +1379,11 @@ void g() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Note 5*: In general, one must use explicit destructor calls and
 placement *new-expression* to change the active member of a
-union. — *end note*\]
+union. — *end note*]
 
 [*Example 3*:
 
@@ -1399,7 +1399,7 @@ u.m.~M();
 new (&u.n) N;
 ```
 
-— *end example*\]
+— *end example*]
 
 ### Anonymous unions <a id="class.union.anon">[[class.union.anon]]</a>
 
@@ -1412,7 +1412,7 @@ shall either define a non-static data member or be a
 *static_assert-declaration*.
 
 [*Note 1*: Nested types, anonymous unions, and functions cannot be
-declared within an anonymous union. — *end note*\]
+declared within an anonymous union. — *end note*]
 
 The names of the members of an anonymous union shall be distinct from
 the names of any other entity in the scope in which the anonymous union
@@ -1433,7 +1433,7 @@ void f() {
 Here `a` and `p` are used like ordinary (non-member) variables, but
 since they are union members they have the same address.
 
-— *end example*\]
+— *end example*]
 
 Anonymous unions declared in a named namespace or in the global
 namespace shall be declared `static`. Anonymous unions declared at block
@@ -1460,10 +1460,10 @@ The assignment to plain `aa` is ill-formed since the member name is not
 visible outside the union, and even if it were visible, it is not
 associated with any particular object.
 
-— *end example*\]
+— *end example*]
 
 [*Note 2*: Initialization of unions with no user-declared constructors
-is described in  [[dcl.init.aggr]]. — *end note*\]
+is described in  [[dcl.init.aggr]]. — *end note*]
 
 A *union-like class* is a union or a class that has an anonymous union
 as a direct member. A union-like class `X` has a set of
@@ -1488,7 +1488,7 @@ union U {
 };
 ```
 
-— *end example*\]
+— *end example*]
 
 ## Local class declarations <a id="class.local">[[class.local]]</a>
 
@@ -1523,7 +1523,7 @@ void f() {
 local* p = 0;                   // error: local not in scope
 ```
 
-— *end example*\]
+— *end example*]
 
 An enclosing function has no special access to members of the local
 class; it obeys the usual access rules (Clause  [[class.access]]).
@@ -1590,7 +1590,7 @@ A class is said to be (directly or indirectly) *derived* from its
 (direct or indirect) base classes.
 
 [*Note 1*: See Clause  [[class.access]] for the meaning of
-*access-specifier*. — *end note*\]
+*access-specifier*. — *end note*]
 
 Unless redeclared in the derived class, members of a base class are also
 considered to be members of the derived class. Members of a base class
@@ -1608,7 +1608,7 @@ control; see  [[class.access.base]]. A pointer to a derived class can be
 implicitly converted to a pointer to an accessible unambiguous base
 class ( [[conv.ptr]]). An lvalue of a derived class type can be bound to
 a reference to an accessible unambiguous base class (
-[[dcl.init.ref]]). — *end note*\]
+[[dcl.init.ref]]). — *end note*]
 
 The *base-specifier-list* specifies the type of the *base class
 subobjects* contained in an object of the derived class type.
@@ -1636,7 +1636,7 @@ struct Derived2 : Derived {
 Here, an object of class `Derived2` will have a subobject of class
 `Derived` which in turn will have a subobject of class `Base`.
 
-— *end example*\]
+— *end example*]
 
 A *base-specifier* followed by an ellipsis is a pack expansion (
 [[temp.variadic]]).
@@ -1651,10 +1651,10 @@ directed acyclic graph (DAG) where an arrow means “directly derived
 from”. An arrow need not have a physical representation in memory. A DAG
 of subobjects is often referred to as a “subobject lattice”.
 
-— *end note*\]
+— *end note*]
 
 [*Note 4*: Initialization of objects representing base classes can be
-specified in constructors; see  [[class.base.init]]. — *end note*\]
+specified in constructors; see  [[class.base.init]]. — *end note*]
 
 [*Note 5*: A base class subobject might have a layout ( [[basic.stc]])
 different from the layout of a most derived object of the same type. A
@@ -1663,14 +1663,14 @@ base class subobject might have a polymorphic behavior (
 derived object of the same type. A base class subobject may be of zero
 size (Clause  [[class]]); however, two subobjects that have the same
 class type and that belong to the same most derived object must not be
-allocated at the same address ( [[expr.eq]]). — *end note*\]
+allocated at the same address ( [[expr.eq]]). — *end note*]
 
 ## Multiple base classes <a id="class.mi">[[class.mi]]</a>
 
 A class can be derived from any number of base classes.
 
 [*Note 1*: The use of more than one direct base class is often called
-multiple inheritance. — *end note*\]
+multiple inheritance. — *end note*]
 
 [*Example 1*:
 
@@ -1681,12 +1681,12 @@ class C { ... };
 class D : public A, public B, public C { ... };
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Note 2*: The order of derivation is not significant except as
 specified by the semantics of initialization by constructor (
 [[class.base.init]]), cleanup ( [[class.dtor]]), and storage layout (
-[[class.mem]],  [[class.access.spec]]). — *end note*\]
+[[class.mem]],  [[class.access.spec]]). — *end note*]
 
 A class shall not be specified as a direct base class of a derived class
 more than once.
@@ -1696,7 +1696,7 @@ be a direct and an indirect base class. There are limited things that
 can be done with such a class. The non-static data members and member
 functions of the direct base class cannot be referred to in the scope of
 the derived class. However, the static members, enumerations and types
-can be unambiguously referred to. — *end note*\]
+can be unambiguously referred to. — *end note*]
 
 [*Example 2*:
 
@@ -1713,7 +1713,7 @@ class C : public A, public B { void f(); ... };   // well-formed
 class D : public A, public L { void f(); ... };   // well-formed
 ```
 
-— *end example*\]
+— *end example*]
 
 A base class specifier that does not contain the keyword `virtual`
 specifies a *non-virtual base class*. A base class specifier that
@@ -1744,7 +1744,7 @@ void C::f() { A::next = B::next; }      // well-formed
 Without the `A::` or `B::` qualifiers, the definition of `C::f` above
 would be ill-formed because of ambiguity ( [[class.member.lookup]]).
 
-— *end note*\]
+— *end note*]
 
 [*Note 5*:
 
@@ -1763,7 +1763,7 @@ class of type `V`. Given the class `C` defined above, an object of class
 `C` will have one subobject of class `V`, as shown in Figure 
 [[fig:virt]].
 
-— *end note*\]
+— *end note*]
 
 [*Note 6*:
 
@@ -1787,7 +1787,7 @@ a distinct `B` subobject within the object of type `AA`. Given the class
 `B` and the virtual `B` shared by `X` and `Y`, as shown in Figure 
 [[fig:virtnonvirt]].
 
-— *end note*\]
+— *end note*]
 
 ## Member name lookup <a id="class.member.lookup">[[class.member.lookup]]</a>
 
@@ -1823,7 +1823,7 @@ in a *nested-name-specifier* ( [[basic.lookup.qual]]) ignores function,
 variable, and enumerator declarations. As another example, looking up a
 name in a *using-declaration* ( [[namespace.udecl]]) includes the
 declaration of a class or enumeration that would ordinarily be hidden by
-another declaration of that name in the same scope. — *end note*\]
+another declaration of that name in the same scope. — *end note*]
 
 If the resulting declaration set is not empty, the subobject set
 contains `C` itself, and calculation is complete.
@@ -1873,7 +1873,7 @@ S(x,F) is unambiguous because the `A` and `B` base class subobjects of
 `D` are also base class subobjects of `E`, so S(x,D) is discarded in the
 first merge step.
 
-— *end example*\]
+— *end example*]
 
 If the name of an overloaded function is unambiguously found, overload
 resolution ( [[over.match]]) also takes place before access control.
@@ -1900,13 +1900,13 @@ struct C : A, B {
 };
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Note 2*: A static member, a nested type or an enumerator defined in a
 base class `T` can unambiguously be found even if an object has more
 than one base class subobject of type `T`. Two base class subobjects
 share the non-static member subobjects of their common virtual base
-classes. — *end note*\]
+classes. — *end note*]
 
 [*Example 3*:
 
@@ -1931,14 +1931,14 @@ void f(D* pd) {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Note 3*:  When virtual base classes are used, a hidden declaration
 can be reached along a path through the subobject lattice that does not
 pass through the hiding declaration. This is not an ambiguity. The
 identical use with non-virtual base classes is an ambiguity; in that
 case there is no unique instance of the name that hides all the
-others. — *end note*\]
+others. — *end note*]
 
 [*Example 4*:
 
@@ -1967,7 +1967,7 @@ void D::glorp() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 An explicit or implicit conversion from a pointer to or an expression
 designating an object of a derived class to a pointer or reference to
@@ -1991,11 +1991,11 @@ void g() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Note 4*: Even if the result of name lookup is unambiguous, use of a
 name found in multiple subobjects might still be ambiguous (
-[[conv.mem]],  [[expr.ref]], [[class.access.base]]). — *end note*\]
+[[conv.mem]],  [[expr.ref]], [[class.access.base]]). — *end note*]
 
 [*Example 6*:
 
@@ -2024,12 +2024,12 @@ struct D: I1, I2, B2 {
 };
 ```
 
-— *end example*\]
+— *end example*]
 
 ## Virtual functions <a id="class.virtual">[[class.virtual]]</a>
 
 [*Note 1*: Virtual functions support dynamic binding and
-object-oriented programming. — *end note*\]
+object-oriented programming. — *end note*]
 
 A class that declares or inherits a virtual function is called a
 *polymorphic class*.
@@ -2067,7 +2067,7 @@ void foo() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Example 2*:
 
@@ -2079,7 +2079,7 @@ struct D : B, C { };  // OK: A::f and C::f are the final overriders
                       // for the B and C subobjects, respectively
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Note 2*:
 
@@ -2104,7 +2104,7 @@ its base class `B`; `D::f(int)` is not a virtual function. However,
 list as `B::f()`, and therefore is a virtual function that overrides the
 function `B::f()` even though `B::f()` is not visible in class `D2`.
 
-— *end note*\]
+— *end note*]
 
 If a virtual function `f` in some class `B` is marked with the
 *virt-specifier* `final` and in a class `D` derived from `B` a function
@@ -2122,7 +2122,7 @@ struct D : B {
 };
 ```
 
-— *end example*\]
+— *end example*]
 
 If a virtual function is marked with the *virt-specifier* `override` and
 does not override a member function of a base class, the program is
@@ -2141,7 +2141,7 @@ struct D : B {
 };
 ```
 
-— *end example*\]
+— *end example*]
 
 Even though destructors are not inherited, a destructor in a derived
 class overrides a base class destructor declared virtual; see 
@@ -2215,20 +2215,20 @@ void g() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Note 3*: The interpretation of the call of a virtual function depends
 on the type of the object for which it is called (the dynamic type),
 whereas the interpretation of a call of a non-virtual member function
 depends only on the type of the pointer or reference denoting that
-object (the static type) ( [[expr.call]]). — *end note*\]
+object (the static type) ( [[expr.call]]). — *end note*]
 
 [*Note 4*: The `virtual` specifier implies membership, so a virtual
 function cannot be a non-member ( [[dcl.fct.spec]]) function. Nor can a
 virtual function be a static member, since a virtual function call
 relies on a specific object for determining which function to invoke. A
 virtual function declared in one class can be declared a `friend` in
-another class. — *end note*\]
+another class. — *end note*]
 
 A virtual function declared in a class shall be defined, or declared
 pure ( [[class.abstract]]) in that class, or both; no diagnostic is
@@ -2270,7 +2270,7 @@ occurrences of the virtual member function `A::f`. The final overrider
 of `B1::A::f` is `B1::f` and the final overrider of `B2::A::f` is
 `B2::f`.
 
-— *end example*\]
+— *end example*]
 
 [*Example 7*:
 
@@ -2303,7 +2303,7 @@ both of them in class `Error`. This example is therefore ill-formed.
 Class `Okay` is well formed, however, because `Okay::f` is a final
 overrider.
 
-— *end example*\]
+— *end example*]
 
 [*Example 8*:
 
@@ -2322,7 +2322,7 @@ void foe() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 Explicit qualification with the scope operator ( [[expr.prim]])
 suppresses the virtual call mechanism.
@@ -2339,7 +2339,7 @@ void D::f() { ... B::f(); }
 Here, the function call in `D::f` really does call `B::f` and not
 `D::f`.
 
-— *end example*\]
+— *end example*]
 
 A function with a deleted definition ( [[dcl.fct.def]]) shall not
 override a function that does not have a deleted definition. Likewise, a
@@ -2352,7 +2352,7 @@ function with a deleted definition.
 general concept, such as a `shape`, of which only more concrete
 variants, such as `circle` and `square`, can actually be used. An
 abstract class can also be used to define an interface for which derived
-classes provide a variety of implementations. — *end note*\]
+classes provide a variety of implementations. — *end note*]
 
 An *abstract class* is a class that can be used only as a base class of
 some other class; no objects of an abstract class can be created except
@@ -2360,7 +2360,7 @@ as subobjects of a class derived from it. A class is abstract if it has
 at least one *pure virtual function*.
 
 [*Note 2*: Such a function might be inherited: see
-below. — *end note*\]
+below. — *end note*]
 
 A virtual function is specified *pure* by using a *pure-specifier* (
 [[class.mem]]) in the function declaration in the class definition. A
@@ -2381,10 +2381,10 @@ public:
 };
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Note 3*: A function declaration cannot provide both a
-*pure-specifier* and a definition — *end note*\]
+*pure-specifier* and a definition — *end note*]
 
 [*Example 2*:
 
@@ -2394,7 +2394,7 @@ struct C {
 };
 ```
 
-— *end example*\]
+— *end example*]
 
 An abstract class shall not be used as a parameter type, as a function
 return type, or as the type of an explicit conversion. Pointers and
@@ -2410,7 +2410,7 @@ void g(shape);                  // error
 shape& h(shape&);               // OK
 ```
 
-— *end example*\]
+— *end example*]
 
 A class is abstract if it contains or inherits at least one pure virtual
 function for which the final overrider is pure virtual.
@@ -2441,11 +2441,11 @@ public:
 would make class `circle` non-abstract and a definition of
 `circle::draw()` must be provided.
 
-— *end example*\]
+— *end example*]
 
 [*Note 4*: An abstract class can be derived from a class that is not
 abstract, and a pure virtual function may override a virtual function
-which is not pure. — *end note*\]
+which is not pure. — *end note*]
 
 Member functions can be called from a constructor (or destructor) of an
 abstract class; the effect of making a virtual call ( [[class.virtual]])
@@ -2485,14 +2485,14 @@ struct S {
 };
 ```
 
-— *end example*\]
+— *end example*]
 
 Access control is applied uniformly to all names, whether the names are
 referred to from declarations or expressions.
 
 [*Note 1*: Access control applies to names nominated by `friend`
 declarations ( [[class.friend]]) and *using-declaration*s (
-[[namespace.udecl]]). — *end note*\]
+[[namespace.udecl]]). — *end note*]
 
 In the case of overloaded function names, access control is applied to
 the function selected by overload resolution.
@@ -2517,7 +2517,7 @@ void f() {
 }
 ```
 
-— *end note*\]
+— *end note*]
 
 It should be noted that it is *access* to members and base classes that
 is controlled, not their *visibility*. Names of members are still
@@ -2534,7 +2534,7 @@ being declared and, if the entity is a class, the definitions of members
 of the class appearing outside the class’s *member-specification*.
 
 [*Note 3*: This access also applies to implicit references to
-constructors, conversion functions, and destructors. — *end note*\]
+constructors, conversion functions, and destructors. — *end note*]
 
 [*Example 2*:
 
@@ -2569,7 +2569,7 @@ is as the return type of a member of class `A`. Similarly, the use of
 `A`, so checking of *base-specifier*s must be deferred until the entire
 *base-specifier-list* has been seen.
 
-— *end example*\]
+— *end example*]
 
 The names in a default argument ( [[dcl.fct.default]]) are bound at the
 point of declaration, and access is checked at that point rather than at
@@ -2596,7 +2596,7 @@ class D : public U { };
 D <C<B> >* d;       // access error, C::TT is protected
 ```
 
-— *end example*\]
+— *end example*]
 
 ## Access specifiers <a id="class.access.spec">[[class.access.spec]]</a>
 
@@ -2618,7 +2618,7 @@ public:
 };
 ```
 
-— *end example*\]
+— *end example*]
 
 Any number of access specifiers is allowed and no particular order is
 required.
@@ -2637,10 +2637,10 @@ public:
 };
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Note 1*: The effect of access control on the order of allocation of
-data members is described in  [[class.mem]]. — *end note*\]
+data members is described in  [[class.mem]]. — *end note*]
 
 When a member is redeclared within its class definition, the access
 specified at its redeclaration shall be the same as at its initial
@@ -2658,13 +2658,13 @@ private:
 };
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Note 2*: In a derived class, the lookup of a base class name will
 find the injected-class-name instead of the name of the base class in
 the scope in which it was declared. The injected-class-name might be
 less accessible than the name of the base class in the scope in which it
-was declared. — *end note*\]
+was declared. — *end note*]
 
 [*Example 4*:
 
@@ -2677,7 +2677,7 @@ class C : public B {
 };
 ```
 
-— *end example*\]
+— *end example*]
 
 ## Accessibility of base classes and base class members <a id="class.access.base">[[class.access.base]]</a>
 
@@ -2715,7 +2715,7 @@ struct D8 : protected B { ... };
 Here `B` is a public base of `D2`, `D4`, and `D6`, a private base of
 `D1`, `D3`, and `D5`, and a protected base of `D7` and `D8`.
 
-— *end example*\]
+— *end example*]
 
 [*Note 1*:
 
@@ -2751,7 +2751,7 @@ void DD::f() {
 }
 ```
 
-— *end note*\]
+— *end note*]
 
 A base class `B` of `N` is *accessible* at *R*, if
 
@@ -2785,7 +2785,7 @@ class N: private S {
 };
 ```
 
-— *end example*\]
+— *end example*]
 
 If a base class is accessible, one can implicitly convert a pointer to a
 derived class to a pointer to that base class ( [[conv.ptr]],
@@ -2793,7 +2793,7 @@ derived class to a pointer to that base class ( [[conv.ptr]],
 
 [*Note 2*: It follows that members and friends of a class `X` can
 implicitly convert an `X*` to a pointer to a private or protected
-immediate base class of `X`. — *end note*\]
+immediate base class of `X`. — *end note*]
 
 The access to a member is affected by the class in which the member is
 named. This naming class is the class in which the member name was
@@ -2805,7 +2805,7 @@ used, or implicit, e.g., when a class member access operator (
 added). If both a class member access operator and a *qualified-id* are
 used to name the member (as in `p->T::m`), the class naming the member
 is the class denoted by the *nested-name-specifier* of the
-*qualified-id* (that is, `T`). — *end note*\]
+*qualified-id* (that is, `T`). — *end note*]
 
 A member `m` is accessible at the point *R* when named in class `N` if
 
@@ -2831,7 +2831,7 @@ A member `m` is accessible at the point *R* when named in class `N` if
   }
   ```
 
-  — *end example*\]
+  — *end example*]
 
 If a class member access operator, including an implicit “`this->`”, is
 used to access a non-static data member or non-static member function,
@@ -2840,7 +2840,7 @@ in the “`.`” operator case) cannot be implicitly converted to a pointer
 to the naming class of the right operand.
 
 [*Note 4*: This requirement is in addition to the requirement that the
-member be accessible as named. — *end note*\]
+member be accessible as named. — *end note*]
 
 ## Friends <a id="class.friend">[[class.friend]]</a>
 
@@ -2873,7 +2873,7 @@ void f() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 Declaring a class to be a friend implies that the names of private and
 protected members from the class granting friendship can be accessed in
@@ -2895,7 +2895,7 @@ struct X : A::B {               // OK: A::B accessible to friend
 };
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Example 3*:
 
@@ -2914,7 +2914,7 @@ class Z {
 };
 ```
 
-— *end example*\]
+— *end example*]
 
 A class shall not be defined in a friend declaration.
 
@@ -2926,7 +2926,7 @@ class A {
 };
 ```
 
-— *end example*\]
+— *end example*]
 
 A `friend` declaration that does not declare a function shall have one
 of the following forms:
@@ -2939,7 +2939,7 @@ of the following forms:
 
 [*Note 1*: A `friend` declaration may be the *declaration* in a
 *template-declaration* (Clause  [[temp]],
-[[temp.friend]]). — *end note*\]
+[[temp.friend]]). — *end note*]
 
 If the type specifier in a `friend` declaration designates a (possibly
 cv-qualified) class type, that class is declared as a friend; otherwise,
@@ -2969,7 +2969,7 @@ R<C> rc;                        // class C is a friend of R<C>
 R<int> Ri;                      // OK: "friend int;" is ignored
 ```
 
-— *end example*\]
+— *end example*]
 
 A function first declared in a friend declaration has the linkage of the
 namespace of which it is a member ( [[basic.link]]). Otherwise, the
@@ -2989,7 +2989,7 @@ class Y {
 };
 ```
 
-— *end example*\]
+— *end example*]
 
 A function can be defined in a friend declaration of a class if and only
 if the class is a non-local class ( [[class.local]]), the function name
@@ -3004,7 +3004,7 @@ class M {
 };
 ```
 
-— *end example*\]
+— *end example*]
 
 Such a function is implicitly an inline function ( [[dcl.inline]]). A
 `friend` function defined in a class is in the (lexical) scope of the
@@ -3047,7 +3047,7 @@ class D : public B  {
 };
 ```
 
-— *end example*\]
+— *end example*]
 
 If a friend declaration appears in a local class ( [[class.local]]) and
 the name specified is an unqualified name, a prior declaration is looked
@@ -3080,7 +3080,7 @@ void f() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 ## Protected member access <a id="class.protected">[[class.protected]]</a>
 
@@ -3141,7 +3141,7 @@ void g(B* pb, D1* p1, D2* p2) {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 ## Access to virtual functions <a id="class.access.virt">[[class.access.virt]]</a>
 
@@ -3172,7 +3172,7 @@ void f() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 Access is checked at the call point using the type of the expression
 used to denote the object for which the member function is called (`B*`
@@ -3198,7 +3198,7 @@ class C : public A, public B {
 Since `W::f()` is available to `C::f()` along the public path through
 `B`, access is allowed.
 
-— *end example*\]
+— *end example*]
 
 ## Nested classes <a id="class.access.nest">[[class.access.nest]]</a>
 
@@ -3228,7 +3228,7 @@ class E {
 };
 ```
 
-— *end example*\]
+— *end example*]
 
 <!-- Section link definitions -->
 [class]: #class

@@ -309,7 +309,7 @@ rest of [[string.view]], the type of the char-like objects held in a
 `std::basic_string_view<charT>` as a non-templated parameter wherever a
 sequence of characters is expected. User-defined types can define their
 own implicit conversions to `std::basic_string_view<charT>` in order to
-interoperate with these functions. — *end note*\]
+interoperate with these functions. — *end note*]
 
 ### Header `<string_view>` synopsis <a id="string.view.synop">[[string.view.synop]]</a>
 
@@ -511,7 +511,7 @@ In every specialization `basic_string_view<charT, traits>`, the type
 `traits` shall meet the character traits requirements [[char.traits]].
 
 [*Note 1*: The program is ill-formed if `traits::char_type` is not the
-same type as `charT`. — *end note*\]
+same type as `charT`. — *end note*]
 
 For a `basic_string_view str`, any operation that invalidates a pointer
 in the range
@@ -704,7 +704,7 @@ constexpr const_reference operator[](size_type pos) const;
 
 [*Note 1*: Unlike `basic_string::operator[]`,
 `basic_string_view::operator[](size())` has undefined behavior instead
-of returning `charT()`. — *end note*\]
+of returning `charT()`. — *end note*]
 
 ``` cpp
 constexpr const_reference at(size_type pos) const;
@@ -744,7 +744,7 @@ constexpr const_pointer data() const noexcept;
 `data()` can return a pointer to a buffer that is not null-terminated.
 Therefore it is typically a mistake to pass `data()` to a function that
 takes just a `const charT*` and expects a null-terminated
-string. — *end note*\]
+string. — *end note*]
 
 #### Modifiers <a id="string.view.modifiers">[[string.view.modifiers]]</a>
 
@@ -1084,7 +1084,7 @@ template<class charT, class traits>
   }
 ```
 
-— *end example*\]
+— *end example*]
 
 ``` cpp
 template<class charT, class traits>
@@ -1140,7 +1140,7 @@ The specialization is enabled [[unord.hash]].
 
 [*Note 1*: The hash value of a string view object is equal to the hash
 value of the corresponding string
-object [[basic.string.hash]]. — *end note*\]
+object [[basic.string.hash]]. — *end note*]
 
 ### Suffix for `basic_string_view` literals <a id="string.view.literals">[[string.view.literals]]</a>
 
@@ -1751,10 +1751,10 @@ the character traits requirements [[char.traits]].
 [*Note 1*: Every specialization
 `basic_string<charT, traits, Allocator>` is an allocator-aware
 container, but does not use the allocator’s `construct` and `destroy`
-member functions [[container.requirements.general]]. — *end note*\]
+member functions [[container.requirements.general]]. — *end note*]
 
 [*Note 2*: The program is ill-formed if `traits::char_type` is not the
-same type as `charT`. — *end note*\]
+same type as `charT`. — *end note*]
 
 References, pointers, and iterators referring to the elements of a
 `basic_string` sequence may be invalidated by the following uses of that
@@ -1864,7 +1864,7 @@ constexpr basic_string(const charT* s, const Allocator& a = Allocator());
 allocator [[container.requirements.general]].
 
 [*Note 1*: This affects class template argument
-deduction. — *end note*\]
+deduction. — *end note*]
 
 *Effects:* Equivalent to: `basic_string(s, traits::length(s), a)`.
 
@@ -1876,7 +1876,7 @@ constexpr basic_string(size_type n, charT c, const Allocator& a = Allocator());
 allocator [[container.requirements.general]].
 
 [*Note 2*: This affects class template argument
-deduction. — *end note*\]
+deduction. — *end note*]
 
 *Effects:* Constructs an object whose value consists of `n` copies of
 `c`.
@@ -2153,7 +2153,7 @@ constexpr void shrink_to_fit();
 `capacity()` to `size()`.
 
 [*Note 1*: The request is non-binding to allow latitude for
-implementation-specific optimizations. — *end note*\]
+implementation-specific optimizations. — *end note*]
 
 It does not increase `capacity()`, but may reduce `capacity()` by
 causing reallocation.
@@ -2166,7 +2166,7 @@ iterators referring to the elements in the sequence, as well as the
 past-the-end iterator.
 
 [*Note 2*: If no reallocation happens, they remain
-valid. — *end note*\]
+valid. — *end note*]
 
 ``` cpp
 constexpr void clear() noexcept;
@@ -2893,7 +2893,7 @@ constexpr size_type copy(charT* s, size_type n, size_type pos = 0) const;
 `return basic_string_view<charT, traits>(*this).copy(s, n, pos);`
 
 [*Note 1*: This does not terminate `s` with a null
-object. — *end note*\]
+object. — *end note*]
 
 ##### `basic_string::swap` <a id="string.swap">[[string.swap]]</a>
 
@@ -3240,7 +3240,7 @@ except that both `lhs` and `rhs` are left in valid but unspecified
 states.
 
 [*Note 1*: If `lhs` and `rhs` have equal allocators, the implementation
-can move from either. — *end note*\]
+can move from either. — *end note*]
 
 ``` cpp
 template<class charT, class traits, class Allocator>
@@ -3665,7 +3665,7 @@ constexpr wstring operator""s(const wchar_t* str, size_t len);
 [*Note 1*: The same suffix `s` is used for `chrono::duration` literals
 denoting seconds but there is no conflict, since duration suffixes apply
 to numbers and string literal suffixes apply to character array
-literals. — *end note*\]
+literals. — *end note*]
 
 ## Null-terminated sequence utilities <a id="c.strings">[[c.strings]]</a>
 
@@ -3778,7 +3778,7 @@ of characters to the destination.
 
 [*Note 1*: The functions `strchr`, `strpbrk`, `strrchr`, `strstr`, and
 `memchr`, have different signatures in this document, but they have the
-same behavior as in the C standard library [[library.c]]. — *end note*\]
+same behavior as in the C standard library [[library.c]]. — *end note*]
 
 ### Header `<cwchar>` synopsis <a id="cwchar.syn">[[cwchar.syn]]</a>
 
@@ -3870,7 +3870,7 @@ type `wchar_t`.
 
 [*Note 1*: The functions `wcschr`, `wcspbrk`, `wcsrchr`, `wcsstr`, and
 `wmemchr` have different signatures in this document, but they have the
-same behavior as in the C standard library [[library.c]]. — *end note*\]
+same behavior as in the C standard library [[library.c]]. — *end note*]
 
 ### Header `<cuchar>` synopsis <a id="cuchar.syn">[[cuchar.syn]]</a>
 
@@ -3896,7 +3896,7 @@ additional `mbrtoc8` and `c8rtomb` functions and does not declare types
 ### Multibyte / wide string and character conversion functions <a id="c.mb.wcs">[[c.mb.wcs]]</a>
 
 [*Note 1*: The headers `<cstdlib>`, `<cuchar>`, and `<cwchar>` declare
-the functions described in this subclause. — *end note*\]
+the functions described in this subclause. — *end note*]
 
 ``` cpp
 int mbsinit(const mbstate_t* ps);

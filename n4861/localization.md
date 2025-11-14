@@ -178,7 +178,7 @@ operator<< (basic_ostream<charT, traits>& s, Date d) {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 In the call to `use_facet<Facet>(loc)`, the type argument chooses a
 facet, making available all members of the named type. If `Facet` is not
@@ -201,7 +201,7 @@ except that:
   object `loc` a C++ program can call `isspace(c, loc)`. (This eases
   upgrading existing extractors [[istream.formatted]].)
 
-— *end note*\]
+— *end note*]
 
 Once a facet reference is obtained from a locale object by calling
 `use_facet<>`, that reference remains usable, and the results from
@@ -408,7 +408,7 @@ programmed static initialization. One initialization strategy is for
 `locale` to initialize each facet’s `id` member the first time an
 instance of the facet is installed into a locale. This depends only on
 static storage being zero before constructors run
-[[basic.start.static]]. — *end note*\]
+[[basic.start.static]]. — *end note*]
 
 #### Constructors and destructor <a id="locale.cons">[[locale.cons]]</a>
 
@@ -423,7 +423,7 @@ facets have virtual function semantics identical to those of
 
 [*Note 1*: This constructor yields a copy of the current global locale.
 It is commonly used as a default argument for function parameters of
-type `const locale&`. — *end note*\]
+type `const locale&`. — *end note*]
 
 ``` cpp
 explicit locale(const char* std_name);
@@ -552,7 +552,7 @@ locale `loc` simply by ( [[alg.sort]], [[vector]]):
 std::sort(v.begin(), v.end(), loc);
 ```
 
-— *end example*\]
+— *end example*]
 
 #### Static members <a id="locale.statics">[[locale.statics]]</a>
 
@@ -575,7 +575,7 @@ otherwise, the effect on the C locale, if any, is
 value returned by `locale()`.
 
 [*Note 1*: See  [[c.locales]] for data race considerations when
-`setlocale` is invoked. — *end note*\]
+`setlocale` is invoked. — *end note*]
 
 *Returns:* The previous value of `locale()`.
 
@@ -1317,13 +1317,13 @@ shall also return `ok`.[^8]
 
 [*Note 1*: As a result of operations on `state`, it can return `ok` or
 `partial` and set `from_next == from` and
-`to_next != to`. — *end note*\]
+`to_next != to`. — *end note*]
 
 *Remarks:* Its operations on `state` are unspecified.
 
 [*Note 2*: This argument can be used, for example, to maintain shift
 state, to specify conversion options (such as count only), or to
-identify a cache of seek offsets. — *end note*\]
+identify a cache of seek offsets. — *end note*]
 
 *Returns:* An enumeration value, as summarized in
 [[locale.codecvt.inout]].
@@ -1749,7 +1749,7 @@ sequence `"abc"` yields `err = str.failbit`, with `in` ending at the
 `’c’` element. For targets `true`: `"1"` and `false`: `"0"`, the input
 sequence `"1"` yields `val == true` and `err == str.goodbit`. For empty
 targets `("")`, any input sequence yields
-`err == str.failbit`. — *end example*\]
+`err == str.failbit`. — *end example*]
 
 *Returns:* `in`.
 
@@ -2297,7 +2297,7 @@ the two strings.
 
 [*Note 1*: The probability that the result equals that for another
 string which does not compare equal should be very small, approaching
-`(1.0/numeric_limits<unsigned long>::max())`. — *end note*\]
+`(1.0/numeric_limits<unsigned long>::max())`. — *end note*]
 
 #### Class template `collate_byname` <a id="locale.collate.byname">[[locale.collate.byname]]</a>
 
@@ -2486,7 +2486,7 @@ the first of the following conditions holds:
 `f`’s locale to determine valid whitespace characters. It is unspecified
 by what means the function performs case-insensitive comparison or
 whether multi-character sequences are considered while doing
-so. — *end note*\]
+so. — *end note*]
 
 *Returns:* `s`.
 
@@ -2682,7 +2682,7 @@ The second form calls `do_put(s, str, fill, t, format, modifier)`.
 
 [*Note 1*: The `fill` argument may be used in the
 implementation-defined formats or by derivations. A space character is a
-reasonable default for this argument. — *end note*\]
+reasonable default for this argument. — *end note*]
 
 *Returns:* An iterator pointing immediately after the last character
 produced.
@@ -2707,7 +2707,7 @@ produced.
 
 [*Note 2*: The `fill` argument may be used in the
 implementation-defined formats or by derivations. A space character is a
-reasonable default for this argument. — *end note*\]
+reasonable default for this argument. — *end note*]
 
 #### Class template `time_put_byname` <a id="locale.time.put.byname">[[locale.time.put.byname]]</a>
 
@@ -2809,7 +2809,7 @@ preceded by a minus sign (as produced by `ct.widen(c)` where `c` is
 
 [*Example 1*: The sequence `$1,056.23` in a common United States locale
 would yield, for `units`, `105623`, or, for `digits`,
-`"105623"`. — *end example*\]
+`"105623"`. — *end example*]
 
 If `mp.grouping()` indicates that no thousands separators are permitted,
 any such characters are not read, and parsing is terminated at the point
@@ -2836,7 +2836,7 @@ the string are required after all the other format components.
 [*Example 2*: If `showbase` is off, then for a `neg` value of `"()"`
 and a currency symbol of `"L"`, in `"(100 L)"` the `"L"` is consumed;
 but if `neg` is `"-"`, the `"L"` in `"-100 L"` is not
-consumed. — *end example*\]
+consumed. — *end example*]
 
 If `pos` or `neg` is empty, the sign component is optional, and if no
 sign is detected, the result is given the sign that corresponds to the
@@ -2954,7 +2954,7 @@ before the other characters.
 
 [*Note 1*: It is possible, with some combinations of format patterns
 and flag values, to produce output that cannot be parsed using
-`num_get<>::get`. — *end note*\]
+`num_get<>::get`. — *end note*]
 
 *Returns:* An iterator pointing immediately after the last character
 produced.
@@ -3122,7 +3122,7 @@ string_type do_curr_symbol() const;
 
 [*Note 1*: For specializations where the second template parameter is
 `true`, this is typically four characters long: a three-letter code as
-specified by ISO 4217 followed by a space. — *end note*\]
+specified by ISO 4217 followed by a space. — *end note*]
 
 ``` cpp
 string_type do_positive_sign() const;

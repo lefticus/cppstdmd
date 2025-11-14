@@ -644,7 +644,7 @@ C++17.
 [*Note 1*: There is no way to write a function declaration that is
 non-throwing in this revision of C++ and is also non-throwing in C++03
 except by using the preprocessor to generate a different token sequence
-in each case. — *end note*\]
+in each case. — *end note*]
 
 ###  [[library]]: library introduction <a id="diff.cpp17.library">[[diff.cpp17.library]]</a>
 

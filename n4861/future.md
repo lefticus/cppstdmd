@@ -15,7 +15,7 @@ other is of a different enumeration type or a floating-point type is
 deprecated.
 
 [*Note 1*: Three-way comparisons [[expr.spaceship]] between such
-operands are ill-formed. — *end note*\]
+operands are ill-formed. — *end note*]
 
 [*Example 1*:
 
@@ -27,7 +27,7 @@ int k = f - e;                  // deprecated
 auto cmp = e <=> f;             // error
 ```
 
-— *end example*\]
+— *end example*]
 
 ## Implicit capture of `*this` by reference <a id="depr.capture.this">[[depr.capture.this]]</a>
 
@@ -48,7 +48,7 @@ struct X {
 };
 ```
 
-— *end example*\]
+— *end example*]
 
 ## Comma operator in subscript expressions <a id="depr.comma.subscript">[[depr.comma.subscript]]</a>
 
@@ -57,7 +57,7 @@ A comma expression [[expr.comma]] appearing as the
 deprecated.
 
 [*Note 1*: A parenthesized comma expression is not
-deprecated. — *end note*\]
+deprecated. — *end note*]
 
 [*Example 1*:
 
@@ -68,7 +68,7 @@ void f(int *a, int b, int c) {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 ## Array comparisons <a id="depr.array.comp">[[depr.array.comp]]</a>
 
@@ -76,7 +76,7 @@ Equality and relational comparisons ( [[expr.eq]], [[expr.rel]]) between
 two operands of array type are deprecated.
 
 [*Note 1*: Three-way comparisons [[expr.spaceship]] between such
-operands are ill-formed. — *end note*\]
+operands are ill-formed. — *end note*]
 
 [*Example 1*:
 
@@ -88,7 +88,7 @@ bool same = arr1 == arr2;       // deprecated, same as &arr1[0] == &arr2[0],
 auto cmp = arr1 <=> arr2;       // error
 ```
 
-— *end example*\]
+— *end example*]
 
 ## Deprecated `volatile` types <a id="depr.volatile.type">[[depr.volatile.type]]</a>
 
@@ -103,7 +103,7 @@ volatile int velociraptor;
 ++velociraptor;                     // deprecated
 ```
 
-— *end example*\]
+— *end example*]
 
 Certain assignments where the left operand is a volatile-qualified
 non-class type are deprecated; see  [[expr.ass]].
@@ -120,7 +120,7 @@ brachiosaur += neck;                // deprecated
 brachiosaur = brachiosaur + neck;   // OK
 ```
 
-— *end example*\]
+— *end example*]
 
 A function type [[dcl.fct]] with a parameter with volatile-qualified
 type or with a volatile-qualified return type is deprecated.
@@ -133,7 +133,7 @@ void trex(volatile short left_arm, volatile short right_arm);   // deprecated
 void fly(volatile struct pterosaur* pteranodon);                // OK
 ```
 
-— *end example*\]
+— *end example*]
 
 A structured binding [[dcl.struct.bind]] of a volatile-qualified type is
 deprecated.
@@ -148,7 +148,7 @@ void park(linhenykus alvarezsauroid) {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 ## Redeclaration of `static constexpr` data members <a id="depr.static.constexpr">[[depr.static.constexpr]]</a>
 
@@ -166,7 +166,7 @@ struct A {
 constexpr int A::n;             // redundant declaration (definition in C++14{})
 ```
 
-— *end example*\]
+— *end example*]
 
 ## Non-local use of TU-local entities <a id="depr.local">[[depr.local]]</a>
 
@@ -174,7 +174,7 @@ A declaration of a non-TU-local entity that is an exposure
 [[basic.link]] is deprecated.
 
 [*Note 1*: Such a declaration in an importable module unit is
-ill-formed. — *end note*\]
+ill-formed. — *end note*]
 
 [*Example 1*:
 
@@ -188,7 +188,7 @@ A h();                          // deprecated: not internal linkage
 inline void g() {A().f();}      // deprecated: inline and not internal linkage
 ```
 
-— *end example*\]
+— *end example*]
 
 ## Implicit declaration of copy functions <a id="depr.impldec">[[depr.impldec]]</a>
 
@@ -216,7 +216,7 @@ The header `<complex.h>` behaves as if it simply includes the header
 `<complex>`.
 
 [*Note 1*: Names introduced by `<complex>` in namespace `std` are not
-placed into the global namespace scope by `<complex.h>`. — *end note*\]
+placed into the global namespace scope by `<complex.h>`. — *end note*]
 
 ### Header `<iso646.h>` synopsis <a id="depr.iso646.h.syn">[[depr.iso646.h.syn]]</a>
 
@@ -224,7 +224,7 @@ The C++ header `<iso646.h>` is empty.
 
 [*Note 1*: `and`, `and_eq`, `bitand`, `bitor`, `compl`, `not_eq`,
 `not`, `or`, `or_eq`, `xor`, and `xor_eq` are keywords in this
-International Standard [[lex.key]]. — *end note*\]
+International Standard [[lex.key]]. — *end note*]
 
 ### Header `<stdalign.h>` synopsis <a id="depr.stdalign.h.syn">[[depr.stdalign.h.syn]]</a>
 
@@ -259,11 +259,11 @@ The header `<tgmath.h>` behaves as if it simply includes the headers
 
 [*Note 1*: The overloads provided in C by type-generic macros are
 already provided in `<complex>` and `<cmath>` by “sufficient” additional
-overloads. — *end note*\]
+overloads. — *end note*]
 
 [*Note 2*: Names introduced by `<cmath>` or `<complex>` in namespace
 `std` are not placed into the global namespace scope by
-`<tgmath.h>`. — *end note*\]
+`<tgmath.h>`. — *end note*]
 
 ### Other C headers <a id="depr.c.headers.other">[[depr.c.headers.other]]</a>
 
@@ -283,7 +283,7 @@ declarations and definitions within the namespace `std`. It may also
 provide these names within the global namespace. The header `<stdlib.h>`
 assuredly provides the same declarations and definitions within the
 global namespace, much as in the C Standard. It may also provide these
-names within the namespace `std`. — *end example*\]
+names within the namespace `std`. — *end example*]
 
 ## Requires paragraph <a id="depr.res.on.required">[[depr.res.on.required]]</a>
 
@@ -435,7 +435,7 @@ are:
 - `frozen`, set when the program has requested that the array object not
   be altered, reallocated, or freed.
 
-— *end note*\]
+— *end note*]
 
 [*Note 2*:
 
@@ -449,7 +449,7 @@ For the sake of exposition, the maintained data is presented here as:
 - `void (*pfree)(void*)`, points to the function to call to free a
   dynamic array object.
 
-— *end note*\]
+— *end note*]
 
 Each object of class `strstreambuf` has a *seekable area*, delimited by
 the pointers `seeklow` and `seekhigh`. If `gnext` is a null pointer, the
@@ -1005,7 +1005,7 @@ class, an array of such a type, or a cv-qualified version of one of
 these types.
 
 [*Note 1*: It is unspecified whether a closure
-type [[expr.prim.lambda.closure]] is a POD type. — *end note*\]
+type [[expr.prim.lambda.closure]] is a POD type. — *end note*]
 
 ## Tuple <a id="depr.tuple">[[depr.tuple]]</a>
 
@@ -1120,7 +1120,7 @@ definition of required types for new iterators.
 
 [*Note 1*: If the new iterator type is a class template, then these
 aliases will not be visible from within the iterator class’s template
-definition, but only to callers of that class. — *end note*\]
+definition, but only to callers of that class. — *end note*]
 
 [*Example 1*:
 
@@ -1135,7 +1135,7 @@ class MyIterator :
 };
 ```
 
-— *end example*\]
+— *end example*]
 
 ## Deprecated `move_iterator` access <a id="depr.move.iter.elem">[[depr.move.iter.elem]]</a>
 
@@ -1364,7 +1364,7 @@ void reserve();
 *Effects:* After this call, `capacity()` has an unspecified value
 greater than or equal to `size()`.
 
-[*Note 1*: This is a non-binding shrink to fit request. — *end note*\]
+[*Note 1*: This is a non-binding shrink to fit request. — *end note*]
 
 ## Deprecated standard code conversion facets <a id="depr.locale.stdcvt">[[depr.locale.stdcvt]]</a>
 
@@ -1491,7 +1491,7 @@ std::string mbstring = myconv.to_bytes(L"Hello\n");
 std::cout << mbstring;
 ```
 
-— *end example*\]
+— *end example*]
 
 ``` cpp
 namespace std {
@@ -1851,12 +1851,12 @@ native character set representation.
 For Windows-based operating systems a conversion from UTF-8 to UTF-16
 occurs.
 
-— *end example*\]
+— *end example*]
 
 [*Note 1*: The example above is representative of a historical use of
 `filesystem::u8path`. Passing a `std::u8string` to `path`’s constructor
 is preferred for an indication of UTF-8 encoding more consistent with
-`path`’s handling of other encodings. — *end note*\]
+`path`’s handling of other encodings. — *end note*]
 
 ## Deprecated atomic operations <a id="depr.atomics">[[depr.atomics]]</a>
 
@@ -1922,7 +1922,7 @@ The macro expands to a token sequence suitable for constant
 initialization of an atomic variable of static storage duration of a
 type that is initialization-compatible with `value`.
 
-[*Note 1*: This operation may need to initialize locks. — *end note*\]
+[*Note 1*: This operation may need to initialize locks. — *end note*]
 
 Concurrent access to the variable being initialized, even via an atomic
 operation, constitutes a data race.
@@ -1933,7 +1933,7 @@ operation, constitutes a data race.
 atomic<int> v = ATOMIC_VAR_INIT(5);
 ```
 
-— *end example*\]
+— *end example*]
 
 ### Flag type and operations <a id="depr.atomics.flag">[[depr.atomics.flag]]</a>
 

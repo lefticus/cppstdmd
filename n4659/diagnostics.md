@@ -367,7 +367,7 @@ The contents of the header `<cerrno>` are the same as the POSIX header
 `<errno.h>`, except that `errno` shall be defined as a macro.
 
 [*Note 1*: The intent is to remain in close alignment with the POSIX
-standard. — *end note*\]
+standard. — *end note*]
 
 A separate `errno` value shall be provided for each thread.
 
@@ -630,7 +630,7 @@ classes shall behave as specified in this subclause.
 [*Note 1*: `error_category` objects are passed by reference, and two
 such objects are equal if they have the same address. This means that
 applications using custom `error_category` types should create a single
-object of each such type. — *end note*\]
+object of each such type. — *end note*]
 
 ``` cpp
 namespace std {
@@ -721,7 +721,7 @@ bool operator<(const error_category& rhs) const noexcept;
 *Returns:* `less<const error_category*>()(this, &rhs)`.
 
 [*Note 1*: `less` ( [[comparisons]]) provides a total ordering for
-pointers. — *end note*\]
+pointers. — *end note*]
 
 #### Program defined classes derived from `error_category` <a id="syserr.errcat.derived">[[syserr.errcat.derived]]</a>
 
@@ -788,7 +788,7 @@ correspondence for any given operating system is unspecified.
 [*Note 1*: The number of potential system error codes is large and
 unbounded, and some may not correspond to any POSIX `errno` value. Thus
 implementations are given latitude in determining
-correspondence. — *end note*\]
+correspondence. — *end note*]
 
 ### Class `error_code` <a id="syserr.errcode">[[syserr.errcode]]</a>
 
@@ -799,7 +799,7 @@ values, such as those originating from the operating system or other
 low-level application program interfaces.
 
 [*Note 1*: Class `error_code` is an adjunct to error reporting by
-exception. — *end note*\]
+exception. — *end note*]
 
 ``` cpp
 namespace std {
@@ -955,7 +955,7 @@ identifying error conditions.
 
 [*Note 1*: `error_condition` values are portable abstractions, while
 `error_code` values ( [[syserr.errcode]]) are implementation
-specific. — *end note*\]
+specific. — *end note*]
 
 ``` cpp
 namespace std {
@@ -1158,7 +1158,7 @@ low-level application program interfaces.
 
 [*Note 1*: If an error represents an out-of-memory condition,
 implementations are encouraged to throw an exception object of type
-`bad_alloc` ( [[bad.alloc]]) rather than `system_error`. — *end note*\]
+`bad_alloc` ( [[bad.alloc]]) rather than `system_error`. — *end note*]
 
 ``` cpp
 namespace std {
@@ -1249,7 +1249,7 @@ const char* what() const noexcept override;
 constructor.
 
 [*Note 1*: The returned NTBSmight be the contents of
-`what_arg + ": " + code.message()`. — *end note*\]
+`what_arg + ": " + code.message()`. — *end note*]
 
 <!-- Section link definitions -->
 [assertions]: #assertions

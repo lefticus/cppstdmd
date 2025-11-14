@@ -46,6 +46,10 @@ def unescape_wikilinks(markdown: str) -> str:
     markdown = re.sub(r"^\\\[\*", r"[*", markdown, flags=re.MULTILINE)
     markdown = re.sub(r"^\\\[\*\*", r"[**", markdown, flags=re.MULTILINE)
 
+    # Unescape closing brackets after emphasis in notes/examples: *end note*\] → *end note*]
+    # Pandoc escapes ] after emphasis to avoid ambiguity with link syntax
+    markdown = re.sub(r"\*\\\]", r"*]", markdown)
+
     return markdown
 
 

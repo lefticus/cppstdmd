@@ -40,7 +40,7 @@ terms of the number of operations on the contained objects.
 
 [*Example 1*: The copy constructor of type `vector<vector<int>>` has
 linear complexity, even though the complexity of copying each contained
-`vector<int>` is itself linear. — *end example*\]
+`vector<int>` is itself linear. — *end example*]
 
 For the components affected by this subclause that declare an
 `allocator_type`, objects stored in these components shall be
@@ -55,7 +55,7 @@ for internal types used by the container.
 
 [*Note 1*: This means, for example, that a node-based container might
 need to construct nodes containing aligned buffers and call `construct`
-to place the element into the buffer. — *end note*\]
+to place the element into the buffer. — *end note*]
 
 In Tables  [[tab:containers.container.requirements]],
 [[tab:containers.reversible.requirements]], and
@@ -68,7 +68,7 @@ Those entries marked “(Note A)” or “(Note B)” have linear complexity for
 `array` and have constant complexity for all other standard containers.
 
 [*Note 2*: The algorithm `equal()` is defined in Clause 
-[[algorithms]]. — *end note*\]
+[[algorithms]]. — *end note*]
 
 The member function `size()` returns the number of elements in the
 container. The number of elements is defined by the rules of
@@ -104,7 +104,7 @@ memory using an allocator (see  [[allocator.requirements]]).
 references to allocated elements other than through the allocator’s
 pointer type, i.e., as objects of type `P` or
 `pointer_traits<P>::template rebind<unspecified>`, where `P` is
-`allocator_traits<allocator_type>::pointer`. — *end note*\]
+`allocator_traits<allocator_type>::pointer`. — *end note*]
 
 Copy constructors for these container types obtain an allocator by
 calling
@@ -117,7 +117,7 @@ these container types take a `const allocator_type&` argument.
 
 [*Note 4*: If an invocation of a constructor uses the default value of
 an optional allocator argument, then the `Allocator` type must support
-value-initialization. — *end note*\]
+value-initialization. — *end note*]
 
 A copy of this allocator is used for any memory allocation and element
 construction performed, by these constructors and by all member
@@ -176,7 +176,7 @@ requirements:
 - no `swap()` function invalidates any references, pointers, or
   iterators referring to the elements of the containers being swapped.
   \[*Note 1*: The `end()` iterator does not refer to any element, so it
-  may be invalidated. — *end note*\]
+  may be invalidated. — *end note*]
 
 Unless otherwise specified (either explicitly or by defining a function
 in terms of other functions), invoking a container member function or
@@ -196,7 +196,7 @@ semantics described in Table  [[tab:containers.optional.operations]]
 unless otherwise stated.
 
 [*Note 5*: The algorithm `lexicographical_compare()` is defined in
-Clause  [[algorithms]]. — *end note*\]
+Clause  [[algorithms]]. — *end note*]
 
 All of the containers defined in this Clause and in  [[basic.string]]
 except `array` meet the additional requirements of an allocator-aware
@@ -236,7 +236,7 @@ user specializations of `allocator<T>` are not instantiated:
   value of `*p` is equivalent to the value of `rv` before the
   evaluation.
   \[*Note 2*: `rv` remains a valid object. Its state is
-  unspecified — *end note*\]
+  unspecified — *end note*]
 - `T` is *`CopyInsertable` into `X`* CopyInsertable into
   X@`CopyInsertable` into `X` means that, in addition to `T` being
   `MoveInsertable` into `X`, the following expression is well-formed:
@@ -263,7 +263,7 @@ user specializations of `allocator<T>` are not instantiated:
 `allocator_traits<A>::construct(m, p, args)` to construct an element at
 `p` using `args`, with `m == get_allocator()`. The default `construct`
 in `allocator` will call `::new((void*)p) T(args)`, but specialized
-allocators may choose a different definition. — *end note*\]
+allocators may choose a different definition. — *end note*]
 
 In Table  [[tab:containers.allocatoraware]], `X` denotes an
 allocator-aware container class with a `value_type` of `T` using
@@ -304,7 +304,7 @@ concurrently.
 data race, but `x[0] = 5` and `*x.begin() = 10` executed concurrently
 may result in a data race. As an exception to the general rule, for a
 `vector<bool> y`, `y[0] = true` may race with
-`y[1] = true`. — *end note*\]
+`y[1] = true`. — *end note*]
 
 ### Sequence containers <a id="sequence.reqmts">[[sequence.reqmts]]</a>
 
@@ -680,7 +680,7 @@ type.
 [*Note 1*: `iterator` and `const_iterator` have identical semantics in
 this case, and `iterator` is convertible to `const_iterator`. Users can
 avoid violating the one-definition rule by always using `const_iterator`
-in their function parameter lists. — *end note*\]
+in their function parameter lists. — *end note*]
 
 The associative containers meet all the requirements of Allocator-aware
 containers ( [[container.requirements.general]]), except that for `map`
@@ -691,7 +691,7 @@ and `mapped_type`.
 [*Note 2*: For example, in some cases `key_type` and `mapped_type` are
 required to be `CopyAssignable` even though the associated `value_type`,
 `pair<const key_type, mapped_type>`, is not
-`CopyAssignable`. — *end note*\]
+`CopyAssignable`. — *end note*]
 
 In Table  [[tab:containers.associative.requirements]], `X` denotes an
 associative container class, `a` denotes a value of type `X`, `a2`
@@ -819,7 +819,7 @@ shall return the same value for both.
 
 [*Note 1*: Thus, when an unordered associative container is
 instantiated with a non-default `Pred` parameter it usually needs a
-non-default `Hash` parameter as well. — *end note*\]
+non-default `Hash` parameter as well. — *end note*]
 
 For any two keys `k1` and `k2` in the same container, calling
 `pred(k1, k2)` shall always return the same value. For any key `k` in a
@@ -851,7 +851,7 @@ type.
 [*Note 2*: `iterator` and `const_iterator` have identical semantics in
 this case, and `iterator` is convertible to `const_iterator`. Users can
 avoid violating the one-definition rule by always using `const_iterator`
-in their function parameter lists. — *end note*\]
+in their function parameter lists. — *end note*]
 
 The elements of an unordered associative container are organized into
 *buckets*. Keys with the same hash code appear in the same bucket. The
@@ -873,7 +873,7 @@ and `mapped_type`.
 [*Note 3*: For example, `key_type` and `mapped_type` are sometimes
 required to be `CopyAssignable` even though the associated `value_type`,
 `pair<const key_type, mapped_type>`, is not
-`CopyAssignable`. — *end note*\]
+`CopyAssignable`. — *end note*]
 
 In Table  [[tab:HashRequirements]]: `X` denotes an unordered associative
 container class, `a` denotes a value of type `X`, `a2` denotes a value
@@ -1308,7 +1308,7 @@ void swap(array& y) noexcept(is_nothrow_swappable_v<T>);
 [*Note 1*: Unlike the `swap` function for other containers,
 `array::swap` takes linear time, may exit via an exception, and does not
 cause iterators to become associated with the other
-container. — *end note*\]
+container. — *end note*]
 
 #### Zero sized arrays <a id="array.zero">[[array.zero]]</a>
 
@@ -1577,7 +1577,7 @@ void shrink_to_fit();
 but does not change the size of the sequence.
 
 [*Note 1*: The request is non-binding to allow latitude for
-implementation-specific optimizations. — *end note*\]
+implementation-specific optimizations. — *end note*]
 
 If an exception is thrown other than by the move constructor of a
 non-`CopyInsertable` `T` there are no effects.
@@ -1643,7 +1643,7 @@ invalidates the past-the-end iterator and all iterators and references
 to all the elements of the deque.
 
 [*Note 1*: `pop_front` and `pop_back` are erase
-operations. — *end note*\]
+operations. — *end note*]
 
 *Complexity:* The number of calls to the destructor of `T` is the same
 as the number of elements erased, but the number of calls to the
@@ -1676,7 +1676,7 @@ access to list elements is not supported.
 
 [*Note 1*: It is intended that `forward_list` have zero space or time
 overhead relative to a hand-written C-style singly linked list. Features
-that would conflict with that goal have been omitted. — *end note*\]
+that would conflict with that goal have been omitted. — *end note*]
 
 A `forward_list` satisfies all of the requirements of a container
 (Table  [[tab:containers.container.requirements]]), except that the
@@ -1694,7 +1694,7 @@ table or for operations where there is additional semantic information.
 the first element of interest, but in a `forward_list` there is no
 constant-time way to access a preceding element. For this reason, ranges
 that are modified, such as those supplied to `erase` and `splice`, must
-be open at the beginning. — *end note*\]
+be open at the beginning. — *end note*]
 
 ``` cpp
 namespace std {
@@ -2943,7 +2943,7 @@ void shrink_to_fit();
 `capacity()` to `size()`.
 
 [*Note 1*: The request is non-binding to allow latitude for
-implementation-specific optimizations. — *end note*\]
+implementation-specific optimizations. — *end note*]
 
 It does not increase `capacity()`, but may reduce `capacity()` by
 causing reallocation. If an exception is thrown other than by the move

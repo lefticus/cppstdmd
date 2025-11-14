@@ -1254,7 +1254,7 @@ argument of `reserve`.
 [*Note 1*: Calling `reserve()` with a `res_arg` argument less than
 `capacity()` is in effect a non-binding shrink request. A call with
 `res_arg <= size()` is in effect a non-binding shrink-to-fit
-request. — *end note*\]
+request. — *end note*]
 
 *Throws:* `length_error` if `res_arg > max_size()`.[^4]
 
@@ -1266,7 +1266,7 @@ void shrink_to_fit();
 `capacity()` to `size()`.
 
 [*Note 2*: The request is non-binding to allow latitude for
-implementation-specific optimizations. — *end note*\]
+implementation-specific optimizations. — *end note*]
 
 It does not increase `capacity()`, but may reduce `capacity()` by
 causing reallocation.
@@ -1985,7 +1985,7 @@ Let `rlen` be the smaller of `n` and `size() - pos`.
 *Effects:* Equivalent to: `traits::copy(s, data() + pos, rlen)`.
 
 [*Note 1*: This does not terminate `s` with a null
-object. — *end note*\]
+object. — *end note*]
 
 *Returns:* `rlen`.
 
@@ -2473,7 +2473,7 @@ template<class charT, class traits, class Allocator>
 *Returns:* `std::move(lhs.append(rhs))`.
 
 [*Note 1*: Or equivalently,
-`std::move(rhs.insert(0, lhs))`. — *end note*\]
+`std::move(rhs.insert(0, lhs))`. — *end note*]
 
 ``` cpp
 template<class charT, class traits, class Allocator>
@@ -2995,7 +2995,7 @@ wstring operator""s(const wchar_t* str, size_t len);
 [*Note 1*: The same suffix `s` is used for `chrono::duration` literals
 denoting seconds but there is no conflict, since duration suffixes apply
 to numbers and string literal suffixes apply to character array
-literals. — *end note*\]
+literals. — *end note*]
 
 ## String view classes <a id="string.view">[[string.view]]</a>
 
@@ -3011,7 +3011,7 @@ objects held in a `basic_string_view` object is designated by `charT`.
 `std::basic_string_view<charT>` as a non-templated parameter wherever a
 sequence of characters is expected. User-defined types should define
 their own implicit conversions to `std::basic_string_view` in order to
-interoperate with these functions. — *end note*\]
+interoperate with these functions. — *end note*]
 
 The complexity of `basic_string_view` member functions is unless
 otherwise specified.
@@ -3307,7 +3307,7 @@ constexpr const_reference operator[](size_type pos) const;
 
 [*Note 1*: Unlike `basic_string::operator[]`,
 `basic_string_view::operator[](size())` has undefined behavior instead
-of returning `charT()`. — *end note*\]
+of returning `charT()`. — *end note*]
 
 ``` cpp
 constexpr const_reference at(size_type pos) const;
@@ -3346,7 +3346,7 @@ constexpr const_pointer data() const noexcept;
 [*Note 2*: Unlike `basic_string::data()` and string literals, `data()`
 may return a pointer to a buffer that is not null-terminated. Therefore
 it is typically a mistake to pass `data()` to a function that takes just
-a `const charT*` and expects a null-terminated string. — *end note*\]
+a `const charT*` and expects a null-terminated string. — *end note*]
 
 #### Modifiers <a id="string.view.modifiers">[[string.view.modifiers]]</a>
 
@@ -3647,7 +3647,7 @@ template<class charT, class traits>
   }
 ```
 
-— *end example*\]
+— *end example*]
 
 ``` cpp
 template<class charT, class traits>
@@ -3729,7 +3729,7 @@ The specialization is enabled ( [[unord.hash]]).
 
 [*Note 1*: The hash value of a string view object is equal to the hash
 value of the corresponding string object
-( [[basic.string.hash]]). — *end note*\]
+( [[basic.string.hash]]). — *end note*]
 
 ### Suffix for `basic_string_view` literals <a id="string.view.literals">[[string.view.literals]]</a>
 
@@ -3870,7 +3870,7 @@ The functions `memcpy` and `memmove` are signal-safe ( [[csignal.syn]]).
 [*Note 1*: The functions `strchr`, `strpbrk`, `strrchr`, `strstr`, and
 `memchr`, have different signatures in this International Standard, but
 they have the same behavior as in the C standard library (
-[[library.c]]). — *end note*\]
+[[library.c]]). — *end note*]
 
 ISO C 7.24.
 
@@ -3965,7 +3965,7 @@ type `wchar_t`.
 [*Note 1*: The functions `wcschr`, `wcspbrk`, `wcsrchr`, `wcsstr`, and
 `wmemchr` have different signatures in this International Standard, but
 they have the same behavior as in the C standard library (
-[[library.c]]). — *end note*\]
+[[library.c]]). — *end note*]
 
 ISO C 7.29
 
@@ -3993,7 +3993,7 @@ ISO C 7.28
 
 [*Note 1*: The headers `<cstdlib>` ( [[cstdlib.syn]]) and `<cwchar>` (
 [[cwchar.syn]]) declare the functions described in this
-subclause. — *end note*\]
+subclause. — *end note*]
 
 ``` cpp
 int mbsinit(const mbstate_t* ps);

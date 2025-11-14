@@ -19,7 +19,7 @@ int operator^(int (C::*p)(int), C);
 int i = &C::operator^^C{};              // ill-formed; previously well-formed
 ```
 
-— *end example*\]
+— *end example*]
 
 **Change:** New keywords. **Rationale:** Required for new features.
 
@@ -48,7 +48,7 @@ int  k = f - e;         // ill-formed; previously well-formed
 auto x = true ? e : f;  // ill-formed; previously well-formed
 ```
 
-— *end example*\]
+— *end example*]
 
 **Change:** Comparing two objects of array type is no longer valid.
 **Rationale:** The old behavior was confusing since it compared not the
@@ -66,7 +66,7 @@ bool idem = arr1 == +arr2;      // compare addresses
 bool less = arr1 < +arr2;       // compare addresses, unspecified result
 ```
 
-— *end example*\]
+— *end example*]
 
 **Change:** Calling `delete` on a pointer to an incomplete class is
 ill-formed. **Rationale:** Reduce undefined behavior. **Effect on
@@ -85,7 +85,7 @@ void f(S *p) {
 struct S {};
 ```
 
-— *end example*\]
+— *end example*]
 
 ###  [[dcl]]: declarations <a id="diff.cpp23.dcl.dcl">[[diff.cpp23.dcl.dcl]]</a>
 
@@ -103,7 +103,7 @@ struct C replaceable_if_eligible {};    // was well-formed (new variable replace
                                         // now ill-formed (redefines C)
 ```
 
-— *end example*\]
+— *end example*]
 
 **Change:** Pointer comparisons between `initializer_list` objects’
 backing arrays are unspecified. **Rationale:** Permit the implementation
@@ -120,7 +120,7 @@ bool ne(std::initializer_list<int> a, std::initializer_list<int> b) {
 bool b = ne({2,3}, {1,2,3});    // unspecified result; previously false
 ```
 
-— *end example*\]
+— *end example*]
 
 **Change:** Previously, `T...[n]` would declare a pack of function
 parameters. `T...[n]` is now a *pack-index-specifier*. **Rationale:**
@@ -141,7 +141,7 @@ int main() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 **Change:** New token `:]`. **Rationale:** Required for new features.
 **Effect on original feature:** Valid C++23 code that contained an
@@ -155,7 +155,7 @@ struct [[using CC:]] C;                 // ill-formed; previously well-formed
 struct [[using DD: ]] D;                // OK
 ```
 
-— *end example*\]
+— *end example*]
 
 ###  [[temp]]: templates <a id="diff.cpp23.temp">[[diff.cpp23.temp]]</a>
 
@@ -180,7 +180,7 @@ void g(A<S, S> *ap) {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 **Change:** Template argument deduction from overload sets succeeds in
 more cases. **Rationale:** Allow consideration of constraints to
@@ -211,7 +211,7 @@ There is no change to the applicable deduction rules for the individual
 `g` candidates: Type deduction from \#1 does not succeed; type
 deductions from \#2 and \#3 both succeed.
 
-— *end example*\]
+— *end example*]
 
 ###  [[library]]: library introduction <a id="diff.cpp23.library">[[diff.cpp23.library]]</a>
 
@@ -261,7 +261,7 @@ any b[10];
 int y = span<const any>{b, b + 10}.size();  // y is 2; previously 10
 ```
 
-— *end example*\]
+— *end example*]
 
 ###  [[strings]]: strings library <a id="diff.cpp23.strings">[[diff.cpp23.strings]]</a>
 
@@ -279,7 +279,7 @@ auto s = std::to_string(1e-7);  // "1e-07"
                                 // changed according to the global C locale
 ```
 
-— *end example*\]
+— *end example*]
 
 ###  [[input.output]]: input/output library <a id="diff.cpp23.io">[[diff.cpp23.io]]</a>
 
@@ -300,7 +300,7 @@ in.ignore(100, -1L);        // ambiguous overload,
                             // previously equivalent to (int)-1L
 ```
 
-— *end example*\]
+— *end example*]
 
 ###  [[depr]]: compatibility features <a id="diff.cpp23.depr">[[diff.cpp23.depr]]</a>
 
@@ -323,7 +323,7 @@ static_assert(!allocator_traits<MyAlloc<int>>::is_always_equal);        // Error
                                                                         // OK in C++26{}
 ```
 
-— *end example*\]
+— *end example*]
 
 **Change:** Removal of atomic access API for `shared_ptr` objects.
 **Rationale:** The old behavior was brittle. `shared_ptr` objects using
@@ -411,7 +411,7 @@ now ill-formed.
 auto c = L"a" U"b";             // was conditionally-supported; now ill-formed
 ```
 
-— *end example*\]
+— *end example*]
 
 ###  [[expr]]: expressions <a id="diff.cpp20.expr">[[diff.cpp20.expr]]</a>
 
@@ -428,7 +428,7 @@ decltype(auto) f(int&& x) { return (x); }       // returns int&&; previously ret
 int& g(int&& x) { return x; }                   // ill-formed; previously well-formed
 ```
 
-— *end example*\]
+— *end example*]
 
 **Change:** Change the meaning of comma in subscript expressions.
 **Rationale:** Enable repurposing a deprecated syntax to support
@@ -443,7 +443,7 @@ arr[1, 2]               // was equivalent to arr[(1, 2)],
                         // now equivalent to arr.operator[](1, 2) or ill-formed
 ```
 
-— *end example*\]
+— *end example*]
 
 ###  [[stmt]]: statements <a id="diff.cpp20.stmt">[[diff.cpp20.stmt]]</a>
 
@@ -467,7 +467,7 @@ void f() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 ###  [[dcl]]: declarations <a id="diff.cpp20.dcl">[[diff.cpp20.dcl]]</a>
 
@@ -497,7 +497,7 @@ int main() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 ###  [[temp]]: templates <a id="diff.cpp20.temp">[[diff.cpp20.temp]]</a>
 
@@ -517,7 +517,7 @@ void h() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 ###  [[library]]: library introduction <a id="diff.cpp20.library">[[diff.cpp20.library]]</a>
 
@@ -553,7 +553,7 @@ bool test(shared_ptr<int> p) {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 ###  [[mem]]: memory management library <a id="diff.cpp20.memory">[[diff.cpp20.memory]]</a>
 
@@ -581,7 +581,7 @@ auto s = std::format("{:d}", "I am not a number");      // ill-formed,
                                                         // previously threw format_error
 ```
 
-— *end example*\]
+— *end example*]
 
 **Change:** Signature changes: `format`, `format_to`, `format_to_n`,
 `formatted_size`. **Rationale:** Enable formatting of views that do not
@@ -600,7 +600,7 @@ auto t = tiny();
 std::format("{}", t.bit);       // ill-formed, previously returned "0"
 ```
 
-— *end example*\]
+— *end example*]
 
 **Change:** Restrict types of formatting arguments used as *width* or
 *precision* in a *std-format-spec*. **Rationale:** Disallow types that
@@ -616,7 +616,7 @@ std::format("{:*^{}}", "", '1');    // ill-formed, previously returned an
                                     // implementation-defined number of '*' characters
 ```
 
-— *end example*\]
+— *end example*]
 
 **Change:** Removed the `formatter` specialization:
 
@@ -649,7 +649,7 @@ std::string s3(std::move(s2), 10, 5);
 assert(s1 == s2);       // unspecified, previously guaranteed to be true
 ```
 
-— *end example*\]
+— *end example*]
 
 ###  [[containers]]: containers library <a id="diff.cpp20.containers">[[diff.cpp20.containers]]</a>
 
@@ -672,7 +672,7 @@ struct D : private B {
 };
 ```
 
-— *end example*\]
+— *end example*]
 
 ###  [[thread]]: concurrency support library <a id="diff.cpp20.thread">[[diff.cpp20.thread]]</a>
 
@@ -704,7 +704,7 @@ assert(data == 1);      // implementation-defined; previously well-defined
 b1.arrive();            // implementation-defined; previously well-defined
 ```
 
-— *end example*\]
+— *end example*]
 
 ## C++ and ISO C++17 <a id="diff.cpp17">[[diff.cpp17]]</a>
 
@@ -733,7 +733,7 @@ import j1;          // was variable declaration; now module-import-declaration
 ::import j2;        // variable declaration
 ```
 
-— *end example*\]
+— *end example*]
 
 **Change:** *header-name* tokens are formed in more contexts.
 **Rationale:** Required for new features. **Effect on original
@@ -748,7 +748,7 @@ import<int> f();                // ill-formed; previously well-formed
 ::import<int> g();              // OK
 ```
 
-— *end example*\]
+— *end example*]
 
 **Change:** New keywords. **Rationale:** Required for new features.
 
@@ -786,7 +786,7 @@ namespace N {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 **Change:** Type of UTF-8 string and character literals. **Rationale:**
 Required for new features. The changed types enable function
@@ -817,7 +817,7 @@ template<> struct ct<char> {
 ct<decltype(u8'c')>::type x;    // ill-formed; previously well-formed.
 ```
 
-— *end example*\]
+— *end example*]
 
 ###  [[basic]]: basics <a id="diff.cpp17.basic">[[diff.cpp17.basic]]</a>
 
@@ -837,7 +837,7 @@ int f() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 **Change:** Except for the initial release operation, a release sequence
 consists solely of atomic read-modify-write operations. **Rationale:**
@@ -872,7 +872,7 @@ typedef struct {
 } S;
 ```
 
-— *end example*\]
+— *end example*]
 
 **Change:** A function cannot have different default arguments in
 different translation units. **Rationale:** Required for modules
@@ -892,7 +892,7 @@ int g();
 int main() { return g(); }              // used to return 42
 ```
 
-— *end example*\]
+— *end example*]
 
 **Change:** A class that has user-declared constructors is never an
 aggregate. **Rationale:** Remove potentially error-prone aggregate
@@ -936,7 +936,7 @@ struct Y {              // not an aggregate; previously an aggregate
 Y y{X{}};               // copy constructor call; previously aggregate-initialization
 ```
 
-— *end example*\]
+— *end example*]
 
 **Change:** Boolean conversion from a pointer or pointer-to-member type
 is now a narrowing conversion. **Rationale:** Catches bugs. **Effect on
@@ -949,7 +949,7 @@ revision of C++.
 bool y[] = { "bc" };    // ill-formed; previously well-formed
 ```
 
-— *end example*\]
+— *end example*]
 
 ###  [[class]]: classes <a id="diff.cpp17.class">[[diff.cpp17.class]]</a>
 
@@ -971,7 +971,7 @@ struct S {
 };
 ```
 
-— *end example*\]
+— *end example*]
 
 **Change:** A *simple-template-id* is no longer valid as the
 *declarator-id* of a constructor or destructor. **Rationale:** Remove
@@ -989,7 +989,7 @@ struct A {
 };
 ```
 
-— *end example*\]
+— *end example*]
 
 **Change:** A function returning an implicitly movable entity may invoke
 a constructor taking an rvalue reference to a type different from that
@@ -1033,7 +1033,7 @@ void g() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 ###  [[over]]: overloading <a id="diff.cpp17.over">[[diff.cpp17.over]]</a>
 
@@ -1065,7 +1065,7 @@ int check(A x, A y) {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 **Change:** Overload resolution may change for equality operators
 [[expr.eq]]. **Rationale:** Support calling `operator==` with reversed
@@ -1091,7 +1091,7 @@ B b1;
 bool eq = (b1 == b1);           // ambiguous; previously well-formed
 ```
 
-— *end example*\]
+— *end example*]
 
 ###  [[temp]]: templates <a id="diff.cpp17.temp">[[diff.cpp17.temp]]</a>
 
@@ -1118,7 +1118,7 @@ int main() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 ###  [[except]]: exception handling <a id="diff.cpp17.except">[[diff.cpp17.except]]</a>
 
@@ -1134,7 +1134,7 @@ C++17.
 [*Note 1*: There is no way to write a function declaration that is
 non-throwing in this revision of C++ and is also non-throwing in C++03
 except by using the preprocessor to generate a different token sequence
-in each case. — *end note*\]
+in each case. — *end note*]
 
 ###  [[library]]: library introduction <a id="diff.cpp17.library">[[diff.cpp17.library]]</a>
 
@@ -1204,7 +1204,7 @@ std::cin >> std::setw(20) >> p;         // ill-formed; previously well-formed
 std::cin >> std::setw(20) >> q;         // OK
 ```
 
-— *end example*\]
+— *end example*]
 
 **Change:** Overload resolution for ostream inserters used with UTF-8
 literals. **Rationale:** Required for new features. **Effect on original
@@ -1221,7 +1221,7 @@ std::cout << u8'X';             // previously called operator<<(char) and printe
                                 // now ill-formed
 ```
 
-— *end example*\]
+— *end example*]
 
 **Change:** Overload resolution for ostream inserters used with
 `wchar_t`, `char16_t`, or `char32_t` types. **Rationale:** Removal of
@@ -1240,7 +1240,7 @@ std::cout << u'X';              // previously formatted the character as an inte
                                 // now ill-formed
 ```
 
-— *end example*\]
+— *end example*]
 
 **Change:** Return type of filesystem path format observer member
 functions. **Rationale:** Required for new features. **Effect on
@@ -1256,7 +1256,7 @@ std::string s1 = p.u8string();          // ill-formed; previously well-formed
 std::string s2 = p.generic_u8string();  // ill-formed; previously well-formed
 ```
 
-— *end example*\]
+— *end example*]
 
 ###  [[depr]]: compatibility features <a id="diff.cpp17.depr">[[diff.cpp17.depr]]</a>
 
@@ -1353,7 +1353,7 @@ in this revision of C++.
 int b0p = F(0p+0);  // ill-formed; equivalent to ``int b0p = b0p + 0;'' in C++14{}
 ```
 
-— *end example*\]
+— *end example*]
 
 ###  [[expr]]: expressions <a id="diff.cpp14.expr">[[diff.cpp14.expr]]</a>
 
@@ -1392,7 +1392,7 @@ auto x1{1};         // was std::initializer_list<int>, now int
 auto x2{1, 2};      // was std::initializer_list<int>, now ill-formed
 ```
 
-— *end example*\]
+— *end example*]
 
 **Change:** Make exception specifications be part of the type system.
 **Rationale:** Improve type-safety. **Effect on original feature:**
@@ -1408,7 +1408,7 @@ template<class T> int f(T *, T *);
 int x = f(g1, g2);              // ill-formed; previously well-formed
 ```
 
-— *end example*\]
+— *end example*]
 
 **Change:** Definition of an aggregate is extended to apply to
 user-defined types with base classes. **Rationale:** To increase
@@ -1433,7 +1433,7 @@ derived d1{};       // error; the code was well-formed in C++14{}
 derived d2;         // still OK
 ```
 
-— *end example*\]
+— *end example*]
 
 ###  [[class]]: classes <a id="diff.cpp14.class">[[diff.cpp14.class]]</a>
 
@@ -1462,7 +1462,7 @@ B b(42L);           // now calls B(int), used to call B<long>(long),
                     // in A<long>(long).
 ```
 
-— *end example*\]
+— *end example*]
 
 ###  [[temp]]: templates <a id="diff.cpp14.temp">[[diff.cpp14.temp]]</a>
 
@@ -1484,7 +1484,7 @@ void bar(A<0> *p) {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 ###  [[except]]: exception handling <a id="diff.cpp14.except">[[diff.cpp14.except]]</a>
 
@@ -1541,7 +1541,7 @@ std::unique_ptr<int[]> arr(new int[1]);
 std::shared_ptr<int> ptr(std::move(arr));   // error: int(*)[] is not compatible with int*
 ```
 
-— *end example*\]
+— *end example*]
 
 ###  [[strings]]: strings library <a id="diff.cpp14.string">[[diff.cpp14.string]]</a>
 
@@ -1561,7 +1561,7 @@ string s;
 int x = f(s.data());            // ill-formed; previously well-formed
 ```
 
-— *end example*\]
+— *end example*]
 
 ###  [[containers]]: containers library <a id="diff.cpp14.containers">[[diff.cpp14.containers]]</a>
 
@@ -1590,7 +1590,7 @@ int main() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 ###  [[depr]]: compatibility features <a id="diff.cpp14.depr">[[diff.cpp14.depr]]</a>
 
@@ -1636,7 +1636,7 @@ int x[2] = { M(1'2,3'4, 5) };
 // int x[2] = { 3'4, 5 } --- this revision of C++{}
 ```
 
-— *end example*\]
+— *end example*]
 
 ###  [[basic]]: basics <a id="diff.cpp11.basic">[[diff.cpp11.basic]]</a>
 
@@ -1692,7 +1692,7 @@ sizeof(true ? "" : throw 0)
 In C++11, the expression yields `sizeof(const char*)`. In this revision
 of C++, it yields `sizeof(const char[1])`.
 
-— *end example*\]
+— *end example*]
 
 ###  [[dcl]]: declarations <a id="diff.cpp11.dcl.dcl">[[diff.cpp11.dcl.dcl]]</a>
 
@@ -1713,7 +1713,7 @@ struct S {
 This code is valid in C++11 but invalid in this revision of C++ because
 it declares the same member function twice with different return types.
 
-— *end example*\]
+— *end example*]
 
 **Change:** Classes with default member initializers can be aggregates.
 **Rationale:** Necessary to allow default member initializers to be used
@@ -1735,7 +1735,7 @@ S b{a};             // uses copy constructor in C++11{},
                     // performs aggregate initialization in this revision of C++{}
 ```
 
-— *end example*\]
+— *end example*]
 
 ###  [[library]]: library introduction <a id="diff.cpp11.library">[[diff.cpp11.library]]</a>
 
@@ -1775,7 +1775,7 @@ be interpreted as part of the *string-literal*.
 const char* s = u8"def";        // Previously "abcdef", now "def"
 ```
 
-— *end example*\]
+— *end example*]
 
 **Change:** User-defined literal string support. **Rationale:** Required
 for new features. **Effect on original feature:** Valid C++03 code may
@@ -1793,7 +1793,7 @@ tokens and the macro `_x` would have been expanded. In this revision of
 C++, \#1 consists of a single preprocessing token, so the macro is not
 expanded.
 
-— *end example*\]
+— *end example*]
 
 **Change:** New keywords. **Rationale:** Required for new features.
 **Effect on original feature:** Added to [[lex.key]], the following
@@ -1825,7 +1825,7 @@ template<int N> void g() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 **Change:** Evaluation of operands in `typeid`. **Rationale:** Introduce
 additional expression value categories. **Effect on original feature:**
@@ -1846,7 +1846,7 @@ void f() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 **Change:** Specify rounding for results of integer `/` and `%`.
 **Rationale:** Increase portability, C99 compatibility. **Effect on
@@ -1866,7 +1866,7 @@ struct S { operator int(); };
 bool b2 = &S::operator int && false;    // previously false, now ill-formed
 ```
 
-— *end example*\]
+— *end example*]
 
 **Change:** Fewer copies in the conditional operator. **Rationale:**
 Introduce additional expression value categories. **Effect on original
@@ -1890,7 +1890,7 @@ void f() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 ###  [[dcl]]: declarations <a id="diff.cpp03.dcl.dcl">[[diff.cpp03.dcl.dcl]]</a>
 
@@ -1913,7 +1913,7 @@ int x[] = { 2.0 };
 This code is valid in C++03 but invalid in this revision of C++ because
 `double` to `int` is a narrowing conversion.
 
-— *end example*\]
+— *end example*]
 
 **Change:** Names declared in an anonymous namespace changed from
 external linkage to internal linkage; language linkage applies to names
@@ -1934,7 +1934,7 @@ int main(void) { return x; }
 This code is valid in C++03, but `#2` is not a definition for `#1` in
 this revision of C++, violating the one-definition rule.
 
-— *end example*\]
+— *end example*]
 
 ###  [[class]]: classes <a id="diff.cpp03.class">[[diff.cpp03.class]]</a>
 
@@ -1980,7 +1980,7 @@ X< Y< 1 >> 2 > > x;
 This code is valid in C++03 because “`>>`” is a right-shift operator,
 but invalid in this revision of C++ because “`>>`” closes two templates.
 
-— *end example*\]
+— *end example*]
 
 **Change:** Allow dependent calls of functions with internal linkage.
 **Rationale:** Overly constrained, simplify overload resolution rules.
@@ -2192,7 +2192,7 @@ int main() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 ## C++ and C <a id="diff.iso">[[diff.iso]]</a>
 
@@ -2228,7 +2228,7 @@ function( 'x' );
 It is preferable that this call match the second version of function
 rather than the first.
 
-— *end example*\]
+— *end example*]
 
 **Effect on original feature:** Change to semantics of well-defined
 feature. C programs which depend on
@@ -2287,7 +2287,7 @@ int i;
 
 is valid in C, invalid in C++.
 
-— *end example*\]
+— *end example*]
 
 This makes it impossible to define mutually referential file-local
 objects with static storage duration, if initializers are restricted to
@@ -2303,7 +2303,7 @@ static struct X b = { 0, &a };
 static struct X a = { 1, &b };
 ```
 
-— *end example*\]
+— *end example*]
 
 **Rationale:** This avoids having different initialization rules for
 fundamental types and user-defined types. **Effect on original
@@ -2325,7 +2325,7 @@ struct Y c;
 
 is valid in C but not in C++, which would require `X::Y c;`.
 
-— *end example*\]
+— *end example*]
 
 **Rationale:** Class scope is crucial to C++, and a struct is a class.
 **Effect on original feature:** Change to semantics of well-defined
@@ -2379,7 +2379,7 @@ void foo() {
 C accepts this usage of “pointer to `void`” being assigned to a pointer
 to object type. C++ does not.
 
-— *end example*\]
+— *end example*]
 
 **Rationale:** C++ tries harder than C to enforce compile-time type
 safety. **Effect on original feature:** Deletion of semantically
@@ -2392,7 +2392,7 @@ the C++ translator. The fix is to add a cast.
 char* c = (char*) b;
 ```
 
-— *end example*\]
+— *end example*]
 
 Common.
 
@@ -2410,7 +2410,7 @@ int k = f - e;          // valid in C; ill-formed in C++{}
 int x = 1 ? e : f;      // valid in C; ill-formed in C++{}
 ```
 
-— *end example*\]
+— *end example*]
 
 **Rationale:** Reinforcing type safety in C++. **Effect on original
 feature:** Well-formed C code will not compile with this International
@@ -2426,7 +2426,7 @@ int b = (int)e <= 3.7;
 int k = +f - e;
 ```
 
-— *end example*\]
+— *end example*]
 
 Uncommon.
 
@@ -2448,7 +2448,7 @@ p = (void*)(struct x {int i;} *)0;
 
 defines a new type, struct `x`.
 
-— *end example*\]
+— *end example*]
 
 **Rationale:** This prohibition helps to clarify the location of
 definitions in the source code. **Effect on original feature:** Deletion
@@ -2472,7 +2472,7 @@ int same = arr1 == arr2;        // valid C, ill-formed C++
 int idem = arr1 == +arr2;       // valid in both C and C++
 ```
 
-— *end example*\]
+— *end example*]
 
 Rare.
 
@@ -2493,7 +2493,7 @@ sizeof(0, arr)
 
 yields `100` in C++ and `sizeof(char*)` in C.
 
-— *end example*\]
+— *end example*]
 
 Programs must add explicit casts to the appropriate rvalue. Rare.
 
@@ -2540,7 +2540,7 @@ static struct S {               // valid C, invalid in C++{}
 };
 ```
 
-— *end example*\]
+— *end example*]
 
 **Rationale:** Storage class specifiers don’t have any meaning when
 associated with a type. In C++, class members can be declared with the
@@ -2568,7 +2568,7 @@ struct name { ... };
 typedef int name;               // valid C, invalid C++{}
 ```
 
-— *end example*\]
+— *end example*]
 
 **Rationale:** For ease of use, C++ doesn’t require that a type name be
 prefixed with the keywords `class`, `struct` or `union` when used in
@@ -2581,7 +2581,7 @@ class name { ... };
 name i;                         // i has type class name
 ```
 
-— *end example*\]
+— *end example*]
 
 **Effect on original feature:** Deletion of semantically well-defined
 feature. Semantic transformation. One of the 2 types has to be renamed.
@@ -2604,7 +2604,7 @@ void f() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 **Rationale:** Allowing the use of `auto` to deduce the type of a
 variable from its initializer results in undesired interpretations of
@@ -2623,7 +2623,7 @@ int f();            // means   int f(void) in C++{}
                     // int f( unknown ) in C
 ```
 
-— *end example*\]
+— *end example*]
 
 **Rationale:** This is to avoid function calls with the wrong number or
 type of arguments. **Effect on original feature:** Change to semantics
@@ -2644,7 +2644,7 @@ void f( struct S { int a; } arg ) {}    // valid C, invalid C++{}
 enum E { A, B, C } f() {}               // valid C, invalid C++{}
 ```
 
-— *end example*\]
+— *end example*]
 
 **Rationale:** When comparing types in different translation units, C++
 relies on name equivalence when C relies on structural equivalence.
@@ -2680,7 +2680,7 @@ struct B b = {.a.x = 0};        // valid C, invalid C++{}
 struct A c = {.x = 1, 2};       // valid C, invalid C++{}
 ```
 
-— *end example*\]
+— *end example*]
 
 **Rationale:** In C++, members are destroyed in reverse construction
 order and the elements of an initializer list are evaluated in lexical
@@ -2702,7 +2702,7 @@ large enough to contain the string-terminating `'\0'`.
 char array[4] = "abcd";         // valid C, invalid C++{}
 ```
 
-— *end example*\]
+— *end example*]
 
 **Rationale:** When these non-terminated arrays are manipulated by
 standard string functions, there is potential for major catastrophe.
@@ -2722,7 +2722,7 @@ enum color { red, blue, green };
 enum color c = 1;               // valid C, invalid C++{}
 ```
 
-— *end example*\]
+— *end example*]
 
 **Rationale:** The type-safe nature of C++. **Effect on original
 feature:** Deletion of semantically well-defined feature. Syntactic
@@ -2741,7 +2741,7 @@ sizeof(A) == sizeof(e)          // in C++{}
 /* and sizeof(int) is not necessarily equal to sizeof(e) */
 ```
 
-— *end example*\]
+— *end example*]
 
 **Rationale:** In C++, an enumeration is a distinct type. **Effect on
 original feature:** Change to semantics of well-defined feature.
@@ -2760,7 +2760,7 @@ unsigned alignas(8) int x;      // valid C, invalid C++{}
 unsigned int y alignas(8);      // valid C++{}, invalid C
 ```
 
-— *end example*\]
+— *end example*]
 
 **Rationale:** C++ requires unambiguous placement of the
 *alignment-specifier*. **Effect on original feature:** Deletion of
@@ -2785,7 +2785,7 @@ void f() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 **Rationale:** This is one of the few incompatibilities between C and
 C++ that can be attributed to the new C++ name space definition where a
@@ -2820,7 +2820,7 @@ struct X x3;
 x3 = x1;                        // also invalid C++{}
 ```
 
-— *end example*\]
+— *end example*]
 
 **Rationale:** Several alternatives were debated at length. Changing the
 parameter to `volatile` `const` `X&` would greatly complicate the
@@ -2854,7 +2854,7 @@ struct X {
 struct Y yy;                    // valid C, invalid C++{}
 ```
 
-— *end example*\]
+— *end example*]
 
 **Rationale:** C++ classes have member functions which require that
 classes establish scopes. The C rule would leave classes as an
@@ -2877,7 +2877,7 @@ struct X {
 };
 ```
 
-— *end example*\]
+— *end example*]
 
 All the definitions of C struct types enclosed in other struct
 definitions and accessed outside the scope of the enclosing struct can
@@ -2898,7 +2898,7 @@ struct S {
 };
 ```
 
-— *end example*\]
+— *end example*]
 
 **Rationale:** When classes become complicated, allowing such a
 redefinition after the type has been used can create confusion for C++

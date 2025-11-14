@@ -25,7 +25,7 @@ expansion.
 
 [*Note 1*: The `index_sequence` alias template is provided for the
 common case of an integer sequence of type `size_t`; see also
-[[tuple.apply]]. — *end note*\]
+[[tuple.apply]]. — *end note*]
 
 ### Class template `integer_sequence` <a id="intseq.intseq">[[intseq.intseq]]</a>
 
@@ -55,7 +55,7 @@ The alias template `make_integer_sequence` denotes a specialization of
 `integer_sequence<T, 0, 1, ..., N-1>`.
 
 [*Note 1*: `make_integer_sequence<int, 0>` is an alias for the type
-`integer_sequence<int>`. — *end note*\]
+`integer_sequence<int>`. — *end note*]
 
 ## Metaprogramming and type traits <a id="type.traits">[[type.traits]]</a>
 
@@ -596,7 +596,7 @@ For any given type `T`, the result of applying one of these templates to
 `T` and to cv `T` shall yield the same result.
 
 [*Note 1*: For any given type `T`, exactly one of the primary type
-categories has a `value` member that evaluates to `true`. — *end note*\]
+categories has a `value` member that evaluates to `true`. — *end note*]
 
 #### Composite type traits <a id="meta.unary.comp">[[meta.unary.comp]]</a>
 
@@ -635,7 +635,7 @@ For the purpose of defining the templates in this subclause, let
   the same type and value category as `declval<T>()`.
 - Otherwise, `VAL<T>` is a prvalue that initially has type `T`.
   \[*Note 1*: If `T` is cv-qualified, the cv-qualification is subject to
-  adjustment [[expr.type]]. — *end note*\]
+  adjustment [[expr.type]]. — *end note*]
 
 [*Example 1*:
 
@@ -647,7 +647,7 @@ is_const_v<int[3]>                  // false
 is_const_v<const int[3]>            // true
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Example 2*:
 
@@ -658,7 +658,7 @@ remove_const_t<const int&>          // const int&
 remove_const_t<const int[3]>        // int[3]
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Example 3*:
 
@@ -675,7 +675,7 @@ static_assert(!is_final_v<U1>);
 static_assert(is_final_v<U2>);
 ```
 
-— *end example*\]
+— *end example*]
 
 The predicate condition for a template specialization
 `is_constructible<T, Args...>` shall be satisfied if and only if the
@@ -687,7 +687,7 @@ T t(declval<Args>()...);
 ```
 
 [*Note 1*: These tokens are never interpreted as a function
-declaration. — *end note*\]
+declaration. — *end note*]
 
 Access checking is performed as if in a context unrelated to `T` and any
 of the `Args`. Only the validity of the immediate context of the
@@ -697,7 +697,7 @@ variable initialization is considered.
 effects such as the instantiation of class template specializations and
 function template specializations, the generation of implicitly-defined
 functions, and so on. Such side effects are not in the “immediate
-context” and can result in the program being ill-formed. — *end note*\]
+context” and can result in the program being ill-formed. — *end note*]
 
 The predicate condition for a template specialization
 `has_unique_object_representations<T>` shall be satisfied if and only
@@ -715,7 +715,7 @@ The set of scalar types for which this condition holds is
 *implementation-defined*.
 
 [*Note 3*: If a type has padding bits, the condition does not hold;
-otherwise, the condition holds true for integral types. — *end note*\]
+otherwise, the condition holds true for integral types. — *end note*]
 
 ### Type property queries <a id="meta.unary.prop.query">[[meta.unary.prop.query]]</a>
 
@@ -734,7 +734,7 @@ assert(rank_v<int[2]> == 1);
 assert(rank_v<int[][4]> == 2);
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Example 2*:
 
@@ -750,7 +750,7 @@ assert((extent_v<int[2][4], 1>) == 4);
 assert((extent_v<int[][4], 1>) == 4);
 ```
 
-— *end example*\]
+— *end example*]
 
 ### Relationships between types <a id="meta.rel">[[meta.rel]]</a>
 
@@ -786,7 +786,7 @@ is_base_of_v<B[3], D[3]>        // false
 is_base_of_v<int, int>          // false
 ```
 
-— *end example*\]
+— *end example*]
 
 The predicate condition for a template specialization
 `is_convertible<From, To>` shall be satisfied if and only if the return
@@ -800,7 +800,7 @@ To test() {
 ```
 
 [*Note 1*: This requirement gives well-defined results for reference
-types, array types, function types, and cv `void`. — *end note*\]
+types, array types, function types, and cv `void`. — *end note*]
 
 Access checking is performed in a context unrelated to `To` and `From`.
 Only the validity of the immediate context of the *expression* of the
@@ -811,7 +811,7 @@ returned object or reference) is considered.
 instantiation of class template specializations and function template
 specializations, the generation of implicitly-defined functions, and so
 on. Such side effects are not in the “immediate context” and can result
-in the program being ill-formed. — *end note*\]
+in the program being ill-formed. — *end note*]
 
 ### Transformations between types <a id="meta.trans">[[meta.trans]]</a>
 
@@ -838,7 +838,7 @@ assert((is_same_v<remove_extent_t<int[2][3]>, int[3]>));
 assert((is_same_v<remove_extent_t<int[][3]>, int[3]>));
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Example 2*:
 
@@ -850,7 +850,7 @@ assert((is_same_v<remove_all_extents_t<int[2][3]>, int>));
 assert((is_same_v<remove_all_extents_t<int[][3]>, int>));
 ```
 
-— *end example*\]
+— *end example*]
 
 #### Pointer modifications <a id="meta.trans.ptr">[[meta.trans.ptr]]</a>
 
@@ -860,7 +860,7 @@ assert((is_same_v<remove_all_extents_t<int[][3]>, int>));
 such as the instantiation of class template specializations and function
 template specializations, the generation of implicitly-defined
 functions, and so on. Such side effects are not in the “immediate
-context” and can result in the program being ill-formed. — *end note*\]
+context” and can result in the program being ill-formed. — *end note*]
 
 In addition to being available via inclusion of the `<type_traits>`
 header, the templates `unwrap_reference`, `unwrap_ref_decay`,
@@ -876,7 +876,7 @@ Let:
 - `COPYCV(FROM, TO)` be an alias for type `TO` with the addition of
   `FROM`’s top-level cv-qualifiers,
   \[*Example 1*: `COPYCV(const int, volatile short)` is an alias for
-  `const volatile short`. — *end example*\]
+  `const volatile short`. — *end example*]
 - `COND-RES(X, Y)` be
   `decltype(false ?\ declval<X(&)()>()() :\ declval<Y(&)()>()())`.
 
@@ -916,7 +916,7 @@ as follows:
   - If `is_same_v<T1, D1>` is `false` or `is_same_v<T2, D2>` is `false`,
     let `C` denote the same type, if any, as `common_type_t<D1, D2>`.
   - \[*Note 2*: None of the following will apply if there is a
-    specialization `common_type<D1, D2>`. — *end note*\]
+    specialization `common_type<D1, D2>`. — *end note*]
   - Otherwise, if
     ``` cpp
     decay_t<decltype(false ? declval<D1>() : declval<D2>())>
@@ -944,7 +944,7 @@ pursuant to [[namespace.std]], a program may specialize
 `true`.
 
 [*Note 2*: Such specializations are needed when only explicit
-conversions are desired between the template arguments. — *end note*\]
+conversions are desired between the template arguments. — *end note*]
 
 Such a specialization need not have a member named `type`, but if it
 does, the *qualified-id* `common_type<T1, T2>::type` shall denote a
@@ -992,7 +992,7 @@ that `is_same_v<T, decay_t<T>>` and `is_same_v<U, decay_t<U>>` are each
 
 [*Note 3*: Such specializations can be used to influence the result of
 `common_reference`, and are needed when only explicit conversions are
-desired between the template arguments. — *end note*\]
+desired between the template arguments. — *end note*]
 
 Such a specialization need not have a member named `type`, but if it
 does, the *qualified-id*
@@ -1033,7 +1033,7 @@ static_assert(is_same_v<invoke_result_t<PMD, S>, char&&>);
 static_assert(is_same_v<invoke_result_t<PMD, const S*>, const char&>);
 ```
 
-— *end example*\]
+— *end example*]
 
 ### Logical operator traits <a id="meta.logical">[[meta.logical]]</a>
 
@@ -1053,7 +1053,7 @@ then instantiating `conjunction<``B₁``, `…`, ``B_N``>::value` does not
 require the instantiation of `Bⱼ``::value` for j > i.
 
 [*Note 1*: This is analogous to the short-circuiting behavior of the
-built-in operator `&&`. — *end note*\]
+built-in operator `&&`. — *end note*]
 
 Every template type argument for which `Bᵢ``::value` is instantiated
 shall be usable as a base class and shall have a member `value` which is
@@ -1069,7 +1069,7 @@ unambiguous base that is either
 
 [*Note 2*: This means a specialization of `conjunction` does not
 necessarily inherit from either `true_type` or
-`false_type`. — *end note*\]
+`false_type`. — *end note*]
 
 The member names of the base class, other than `conjunction` and
 `operator=`, shall not be hidden and shall be unambiguously available in
@@ -1088,7 +1088,7 @@ then instantiating `disjunction<``B₁``, `…`, ``B_N``>::value` does not
 require the instantiation of `Bⱼ``::value` for j > i.
 
 [*Note 3*: This is analogous to the short-circuiting behavior of the
-built-in operator `||`. — *end note*\]
+built-in operator `||`. — *end note*]
 
 Every template type argument for which `Bᵢ``::value` is instantiated
 shall be usable as a base class and shall have a member `value` which is
@@ -1104,7 +1104,7 @@ unambiguous base that is either
 
 [*Note 4*: This means a specialization of `disjunction` does not
 necessarily inherit from either `true_type` or
-`false_type`. — *end note*\]
+`false_type`. — *end note*]
 
 The member names of the base class, other than `disjunction` and
 `operator=`, shall not be hidden and shall be unambiguously available in
@@ -1170,9 +1170,9 @@ static_assert( is_corresponding_member<C, C>( &C::a, &C::b ) );
   // Forces the use of class C, and fails.
 ```
 
-— *end example*\]
+— *end example*]
 
-— *end note*\]
+— *end note*]
 
 ### Constant evaluation context <a id="meta.const.eval">[[meta.const.eval]]</a>
 
@@ -1202,7 +1202,7 @@ constexpr void f(unsigned char *p, int n) {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 ## Compile-time rational arithmetic <a id="ratio">[[ratio]]</a>
 
@@ -1297,7 +1297,7 @@ the template arguments `N` and `D` is not representable by type
 [*Note 1*: These rules ensure that infinite ratios are avoided and that
 for any negative input, there exists a representable value of its
 absolute value which is positive. This excludes the most negative
-value. — *end note*\]
+value. — *end note*]
 
 The static data members `num` and `den` shall have the following values,
 where `gcd` represents the greatest common divisor of the absolute
@@ -1354,7 +1354,7 @@ static_assert(ratio_multiply<ratio<1, INT_MAX>, ratio<INT_MAX, 2>>::den == 2,
   "1/MAX * MAX/2 == 1/2");
 ```
 
-— *end example*\]
+— *end example*]
 
 ### Comparison of `ratio`s <a id="ratio.comparison">[[ratio.comparison]]</a>
 

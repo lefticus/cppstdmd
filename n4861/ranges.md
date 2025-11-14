@@ -362,10 +362,10 @@ denotes the reified object for `E`. Then:
 
 [*Note 1*: Diagnosable ill-formed cases above result in substitution
 failure when `ranges::begin(E)` appears in the immediate context of a
-template instantiation. — *end note*\]
+template instantiation. — *end note*]
 
 [*Note 2*: Whenever `ranges::begin(E)` is a valid expression, its type
-models `input_or_output_iterator`. — *end note*\]
+models `input_or_output_iterator`. — *end note*]
 
 ### `ranges::end` <a id="range.access.end">[[range.access.end]]</a>
 
@@ -400,11 +400,11 @@ denotes the reified object for `E`. Then:
 
 [*Note 1*: Diagnosable ill-formed cases above result in substitution
 failure when `ranges::end(E)` appears in the immediate context of a
-template instantiation. — *end note*\]
+template instantiation. — *end note*]
 
 [*Note 2*: Whenever `ranges::end(E)` is a valid expression, the types
 `S` and `I` of `ranges::end(E)` and `ranges::begin(E)` model
-`sentinel_for<S, I>`. — *end note*\]
+`sentinel_for<S, I>`. — *end note*]
 
 ### `ranges::cbegin` <a id="range.access.cbegin">[[range.access.cbegin]]</a>
 
@@ -412,7 +412,7 @@ template instantiation. — *end note*\]
 - Otherwise, `ranges::begin(static_cast<const T&&>(E))`.
 
 [*Note 1*: Whenever `ranges::cbegin(E)` is a valid expression, its type
-models `input_or_output_iterator`. — *end note*\]
+models `input_or_output_iterator`. — *end note*]
 
 ### `ranges::cend` <a id="range.access.cend">[[range.access.cend]]</a>
 
@@ -421,7 +421,7 @@ models `input_or_output_iterator`. — *end note*\]
 
 [*Note 1*: Whenever `ranges::cend(E)` is a valid expression, the types
 `S` and `I` of `ranges::cend(E)` and `ranges::cbegin(E)` model
-`sentinel_for<S, I>`. — *end note*\]
+`sentinel_for<S, I>`. — *end note*]
 
 ### `ranges::rbegin` <a id="range.access.rbegin">[[range.access.rbegin]]</a>
 
@@ -457,10 +457,10 @@ denotes the reified object for `E`. Then:
 
 [*Note 1*: Diagnosable ill-formed cases above result in substitution
 failure when `ranges::rbegin(E)` appears in the immediate context of a
-template instantiation. — *end note*\]
+template instantiation. — *end note*]
 
 [*Note 2*: Whenever `ranges::rbegin(E)` is a valid expression, its type
-models `input_or_output_iterator`. — *end note*\]
+models `input_or_output_iterator`. — *end note*]
 
 ### `ranges::rend` <a id="range.access.rend">[[range.access.rend]]</a>
 
@@ -497,11 +497,11 @@ denotes the reified object for `E`. Then:
 
 [*Note 1*: Diagnosable ill-formed cases above result in substitution
 failure when `ranges::rend(E)` appears in the immediate context of a
-template instantiation. — *end note*\]
+template instantiation. — *end note*]
 
 [*Note 2*: Whenever `ranges::rend(E)` is a valid expression, the types
 `S` and `I` of `ranges::rend(E)` and `ranges::rbegin(E)` model
-`sentinel_for<S, I>`. — *end note*\]
+`sentinel_for<S, I>`. — *end note*]
 
 ### `ranges::crbegin` <a id="range.access.crbegin">[[range.access.crbegin]]</a>
 
@@ -509,7 +509,7 @@ template instantiation. — *end note*\]
 - Otherwise, `ranges::rbegin(static_cast<const T&&>(E))`.
 
 [*Note 1*: Whenever `ranges::crbegin(E)` is a valid expression, its
-type models `input_or_output_iterator`. — *end note*\]
+type models `input_or_output_iterator`. — *end note*]
 
 ### `ranges::crend` <a id="range.access.crend">[[range.access.crend]]</a>
 
@@ -518,7 +518,7 @@ type models `input_or_output_iterator`. — *end note*\]
 
 [*Note 1*: Whenever `ranges::crend(E)` is a valid expression, the types
 `S` and `I` of `ranges::crend(E)` and `ranges::crbegin(E)` model
-`sentinel_for<S, I>`. — *end note*\]
+`sentinel_for<S, I>`. — *end note*]
 
 ### `ranges::size` <a id="range.prim.size">[[range.prim.size]]</a>
 
@@ -556,10 +556,10 @@ denotes the reified object for `E`. Then:
 
 [*Note 1*: Diagnosable ill-formed cases above result in substitution
 failure when `ranges::size(E)` appears in the immediate context of a
-template instantiation. — *end note*\]
+template instantiation. — *end note*]
 
 [*Note 2*: Whenever `ranges::size(E)` is a valid expression, its type
-is integer-like. — *end note*\]
+is integer-like. — *end note*]
 
 ### `ranges::ssize` <a id="range.prim.ssize">[[range.prim.ssize]]</a>
 
@@ -591,10 +591,10 @@ lvalue that denotes the reified object for `E`. Then:
 
 [*Note 1*: Diagnosable ill-formed cases above result in substitution
 failure when `ranges::empty(E)` appears in the immediate context of a
-template instantiation. — *end note*\]
+template instantiation. — *end note*]
 
 [*Note 2*: Whenever `ranges::empty(E)` is a valid expression, it has
-type `bool`. — *end note*\]
+type `bool`. — *end note*]
 
 ### `ranges::data` <a id="range.prim.data">[[range.prim.data]]</a>
 
@@ -616,10 +616,10 @@ denotes the reified object for `E`. Then:
 
 [*Note 1*: Diagnosable ill-formed cases above result in substitution
 failure when `ranges::data(E)` appears in the immediate context of a
-template instantiation. — *end note*\]
+template instantiation. — *end note*]
 
 [*Note 2*: Whenever `ranges::data(E)` is a valid expression, it has
-pointer to object type. — *end note*\]
+pointer to object type. — *end note*]
 
 ### `ranges::cdata` <a id="range.prim.cdata">[[range.prim.cdata]]</a>
 
@@ -627,7 +627,7 @@ pointer to object type. — *end note*\]
 - Otherwise, `ranges::data(static_cast<const T&&>(E))`.
 
 [*Note 1*: Whenever `ranges::cdata(E)` is a valid expression, it has
-pointer to object type. — *end note*\]
+pointer to object type. — *end note*]
 
 ## Range requirements <a id="range.req">[[range.req]]</a>
 
@@ -693,7 +693,7 @@ over the range by repeated calls to `ranges::begin` and `ranges::end`.
 Since `ranges::begin` is not required to be equality-preserving when the
 return type does not model `forward_iterator`, repeated calls might not
 return equal values or might not be well-defined; `ranges::begin` should
-be called at most once for such a range. — *end note*\]
+be called at most once for such a range. — *end note*]
 
 ``` cpp
 template<class T>
@@ -709,7 +709,7 @@ object denoted by `E` is not tied to the lifetime of that object.
 [*Note 2*: Since the validity of iterators is not tied to the lifetime
 of an object whose type models `borrowed_range`, a function can accept
 arguments of such a type by value and return iterators obtained from it
-without danger of dangling. — *end note*\]
+without danger of dangling. — *end note*]
 
 ``` cpp
 template<class>
@@ -731,7 +731,7 @@ models `borrowed_range` because
 - `S`’s iterators do not have validity tied to the lifetime of an `S`
   object because they are “borrowed” from some other range.
 
-— *end example*\]
+— *end example*]
 
 ### Sized ranges <a id="range.sized">[[range.sized]]</a>
 
@@ -757,7 +757,7 @@ Given an lvalue `t` of type `remove_reference_t<T>`, `T` models
   well-defined after evaluating `ranges::begin(t)`. For example,
   `ranges::size(t)` might be well-defined for a `sized_range` whose
   iterator type does not model `forward_iterator` only if evaluated
-  before the first call to `ranges::begin(t)`. — *end note*\]
+  before the first call to `ranges::begin(t)`. — *end note*]
 
 ``` cpp
 template<class>
@@ -771,7 +771,7 @@ and have type `const bool`.
 
 [*Note 1*: `disable_sized_range` allows use of range types with the
 library that satisfy but do not in fact model
-`sized_range`. — *end note*\]
+`sized_range`. — *end note*]
 
 ### Views <a id="range.view">[[range.view]]</a>
 
@@ -807,7 +807,7 @@ Examples of `view`s are:
 Most containers [[containers]] are not views since destruction of the
 container destroys the elements, which cannot be done in constant time.
 
-— *end example*\]
+— *end example*]
 
 Since the difference between `range` and `view` is largely semantic, the
 two are differentiated with the help of `enable_view`.
@@ -872,7 +872,7 @@ The `common_range` concept specifies requirements of a `range` type for
 which `ranges::begin` and `ranges::end` return objects of the same type.
 
 [*Example 1*: The standard containers [[containers]] model
-`common_range`. — *end example*\]
+`common_range`. — *end example*]
 
 ``` cpp
 template<class T>
@@ -1171,7 +1171,7 @@ constexpr subrange(convertible-to-non-slicing<I> auto i, S s,
 [*Note 1*: Accepting the length of the range and storing it to later
 return from `size()` enables `subrange` to model `sized_range` even when
 it stores an iterator and sentinel that do not model
-`sized_sentinel_for`. — *end note*\]
+`sized_sentinel_for`. — *end note*]
 
 ``` cpp
 template<not-same-as<subrange> R>
@@ -1348,7 +1348,7 @@ before a returned iterator is dereferenced. However, the calls at \#2
 and \#3 both return iterators since the lvalue `vec` and specializations
 of `subrange` model `borrowed_range`.
 
-— *end example*\]
+— *end example*]
 
 ## Range factories <a id="range.factories">[[range.factories]]</a>
 
@@ -1371,7 +1371,7 @@ static_assert(ranges::empty(e));
 static_assert(0 == e.size());
 ```
 
-— *end example*\]
+— *end example*]
 
 #### Class template `empty_view` <a id="range.empty.view">[[range.empty.view]]</a>
 
@@ -1410,7 +1410,7 @@ for (int i : s)
   cout << i;        // prints 4
 ```
 
-— *end example*\]
+— *end example*]
 
 #### Class template `single_view` <a id="range.single.view">[[range.single.view]]</a>
 
@@ -1507,7 +1507,7 @@ for (int i : iota_view{1, 10})
   cout << i << ' '; // prints: 1 2 3 4 5 6 7 8 9
 ```
 
-— *end example*\]
+— *end example*]
 
 #### Class template `iota_view` <a id="range.iota.view">[[range.iota.view]]</a>
 
@@ -1561,7 +1561,7 @@ Let `IOTA-DIFF-T(W)` be defined as follows:
 - Otherwise, `IOTA-DIFF-T(W)` is an unspecified signed-integer-like type
   [[iterator.concept.winc]] of width not less than the width of `W`.
   \[*Note 2*: It is unspecified whether this type satisfies
-  `weakly_incrementable`. — *end note*\]
+  `weakly_incrementable`. — *end note*]
 
 The exposition-only *decrementable* concept is equivalent to:
 
@@ -1765,7 +1765,7 @@ namespace std::ranges {
 - Otherwise, `iterator_concept` is `input_iterator_tag`.
 
 [*Note 1*: Overloads for `iter_move` and `iter_swap` are omitted
-intentionally. — *end note*\]
+intentionally. — *end note*]
 
 ``` cpp
 constexpr explicit iterator(W value);
@@ -1780,7 +1780,7 @@ constexpr W operator*() const noexcept(is_nothrow_copy_constructible_v<W>);
 *Effects:* Equivalent to: `return `*`value_`*`;`
 
 [*Note 1*: The `noexcept` clause is needed by the default `iter_move`
-implementation. — *end note*\]
+implementation. — *end note*]
 
 ``` cpp
 constexpr iterator& operator++();
@@ -2027,7 +2027,7 @@ ranges::copy(istream_view<int>(ints), ostream_iterator<int>{cout, "-"});
 // prints 0-1-2-3-4-
 ```
 
-— *end example*\]
+— *end example*]
 
 #### Class template `basic_istream_view` <a id="range.istream.view">[[range.istream.view]]</a>
 
@@ -2187,7 +2187,7 @@ for (int i : ints | views::filter(even) | views::transform(square)) {
 assert(ranges::equal(ints | views::filter(even), views::filter(ints, even)));
 ```
 
-— *end example*\]
+— *end example*]
 
 ### Range adaptor objects <a id="range.adaptor.object">[[range.adaptor.object]]</a>
 
@@ -2361,7 +2361,7 @@ for (int i : evens)
   cout << i << ' '; // prints: 0 2 4 6
 ```
 
-— *end example*\]
+— *end example*]
 
 #### Class template `filter_view` <a id="range.filter.view">[[range.filter.view]]</a>
 
@@ -2665,7 +2665,7 @@ for (int i : squares)
   cout << i << ' '; // prints: 0 1 4 9 16
 ```
 
-— *end example*\]
+— *end example*]
 
 #### Class template `transform_view` <a id="range.transform.view">[[range.transform.view]]</a>
 
@@ -3196,7 +3196,7 @@ for (int i : few)
   cout << i << ' '; // prints: 0 1 2 3 4
 ```
 
-— *end example*\]
+— *end example*]
 
 #### Class template `take_view` <a id="range.take.view">[[range.take.view]]</a>
 
@@ -3361,7 +3361,7 @@ input >> i;
 cout << i;                                      // prints 6
 ```
 
-— *end example*\]
+— *end example*]
 
 #### Class template `take_while_view` <a id="range.take.while.view">[[range.take.while.view]]</a>
 
@@ -3504,7 +3504,7 @@ for (auto i : latter_half) {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 #### Class template `drop_view` <a id="range.drop.view">[[range.drop.view]]</a>
 
@@ -3582,7 +3582,7 @@ the first overload caches the result within the `drop_view` for use on
 subsequent calls.
 
 [*Note 1*: Without this, applying a `reverse_view` over a `drop_view`
-would have quadratic iteration complexity. — *end note*\]
+would have quadratic iteration complexity. — *end note*]
 
 ### Drop while view <a id="range.drop.while">[[range.drop.while]]</a>
 
@@ -3608,7 +3608,7 @@ for (auto c : skip_ws) {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 #### Class template `drop_while_view` <a id="range.drop.while.view">[[range.drop.while.view]]</a>
 
@@ -3668,7 +3668,7 @@ required by the `range` concept when `drop_while_view` models
 
 [*Note 1*: Without this, applying a `reverse_view` over a
 `drop_while_view` would have quadratic iteration
-complexity. — *end note*\]
+complexity. — *end note*]
 
 ### Join view <a id="range.join">[[range.join]]</a>
 
@@ -3689,7 +3689,7 @@ for (char ch : greeting)
   cout << ch;                                   // prints: hello world!
 ```
 
-— *end example*\]
+— *end example*]
 
 #### Class template `join_view` <a id="range.join.view">[[range.join.view]]</a>
 
@@ -4090,7 +4090,7 @@ for (auto word : sentence) {
 // The above prints: the*quick*brown*fox*
 ```
 
-— *end example*\]
+— *end example*]
 
 #### Class template `split_view` <a id="range.split.view">[[range.split.view]]</a>
 
@@ -4494,7 +4494,7 @@ be `decay_t<decltype((E))>`, and let `D` be `iter_difference_t<T>`. If
 
 [*Note 1*: This case can result in substitution failure when
 `views::counted(E, F)` appears in the immediate context of a template
-instantiation. — *end note*\]
+instantiation. — *end note*]
 
 Otherwise, `views::counted(E, F)` is expression-equivalent to:
 
@@ -4515,7 +4515,7 @@ iterator and sentinel of the same type.
 
 [*Note 1*: `common_view` is useful for calling legacy algorithms that
 expect a range’s iterator and sentinel types to be the
-same. — *end note*\]
+same. — *end note*]
 
 The name `views::common` denotes a range adaptor object
 [[range.adaptor.object]]. Given a subexpression `E`, the expression
@@ -4540,7 +4540,7 @@ void my_algo(R&& r) {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 #### Class template `common_view` <a id="range.common.view">[[range.common.view]]</a>
 
@@ -4658,7 +4658,7 @@ for (int i : rv)
   cout << i << ' '; // prints: 4 3 2 1 0
 ```
 
-— *end example*\]
+— *end example*]
 
 #### Class template `reverse_view` <a id="range.reverse.view">[[range.reverse.view]]</a>
 
@@ -4768,7 +4768,7 @@ for (auto&& born : birth_years) {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 `keys_view` is an alias for `elements_view<views::all_t<R>, 0>`, and is
 useful for extracting keys from associative containers.
@@ -4782,7 +4782,7 @@ for (auto&& name : names) {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 `values_view` is an alias for `elements_view<views::all_t<R>, 1>`, and
 is useful for extracting values from associative containers.
@@ -4794,7 +4794,7 @@ auto is_even = [](const auto x) { return x % 2 == 0; };
 cout << ranges::count_if(values_view{historical_figures}, is_even);     // prints 2
 ```
 
-— *end example*\]
+— *end example*]
 
 #### Class template `elements_view` <a id="range.elements.view">[[range.elements.view]]</a>
 

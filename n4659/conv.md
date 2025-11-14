@@ -16,7 +16,7 @@ the following order:
 - Zero or one qualification conversion.
 
 [*Note 1*: A standard conversion sequence can be empty, i.e., it can
-consist of no conversions. — *end note*\]
+consist of no conversions. — *end note*]
 
 A standard conversion sequence will be applied to an expression if
 necessary to convert it to a required destination type.
@@ -39,7 +39,7 @@ types in several contexts:
   initialized is (generally) the destination type. See  [[dcl.init]], 
   [[dcl.init.ref]].
 
-— *end note*\]
+— *end note*]
 
 An expression `e` can be *implicitly converted* to a type `T` if and
 only if the declaration `T t=e;` is well-formed, for some invented
@@ -73,12 +73,12 @@ glvalue if and only if the initialization uses it as a glvalue.
 well; see  [[class.conv]]. In general, an implicit conversion sequence (
 [[over.best.ics]]) consists of a standard conversion sequence followed
 by a user-defined conversion followed by another standard conversion
-sequence. — *end note*\]
+sequence. — *end note*]
 
 [*Note 4*: There are some contexts where certain conversions are
 suppressed. For example, the lvalue-to-rvalue conversion is not done on
 the operand of the unary `&` operator. Specific exceptions are given in
-the descriptions of those operators and contexts. — *end note*\]
+the descriptions of those operators and contexts. — *end note*]
 
 ## Lvalue-to-rvalue conversion <a id="conv.lval">[[conv.lval]]</a>
 
@@ -112,7 +112,7 @@ int m = g(false);   // undefined behavior due to access of x.n outside its lifet
 int n = g(true);    // OK, does not access y.n
 ```
 
-— *end example*\]
+— *end example*]
 
 The result of the conversion is determined according to the following
 rules:
@@ -121,7 +121,7 @@ rules:
   [[conv.ptr]]). \[*Note 1*: Since no value is fetched from memory,
   there is no side effect for a volatile access ( [[intro.execution]]),
   and an inactive member of a union ( [[class.union]]) may be
-  accessed. — *end note*\]
+  accessed. — *end note*]
 - Otherwise, if `T` has a class type, the conversion copy-initializes
   the result object from the glvalue.
 - Otherwise, if the object to which the glvalue refers contains an
@@ -131,7 +131,7 @@ rules:
 - Otherwise, the value contained in the object indicated by the glvalue
   is the prvalue result.
 
-[*Note 1*: See also  [[basic.lval]]. — *end note*\]
+[*Note 1*: See also  [[basic.lval]]. — *end note*]
 
 ## Array-to-pointer conversion <a id="conv.array">[[conv.array]]</a>
 
@@ -146,7 +146,7 @@ An lvalue of function type `T` can be converted to a prvalue of type
 “pointer to `T`”. The result is a pointer to the function.[^3]
 
 [*Note 1*: See  [[over.over]] for additional rules for the case where
-the function is overloaded. — *end note*\]
+the function is overloaded. — *end note*]
 
 ## Temporary materialization conversion <a id="conv.rval">[[conv.rval]]</a>
 
@@ -158,7 +158,7 @@ object. `T` shall be a complete type.
 
 [*Note 1*: If `T` is a class type (or array thereof), it must have an
 accessible and non-deleted destructor; see 
-[[class.dtor]]. — *end note*\]
+[[class.dtor]]. — *end note*]
 
 [*Example 1*:
 
@@ -167,7 +167,7 @@ struct X { int n; };
 int k = X().n;      // OK, X() prvalue is converted to xvalue
 ```
 
-— *end example*\]
+— *end example*]
 
 ## Qualification conversions <a id="conv.qual">[[conv.qual]]</a>
 
@@ -183,7 +183,7 @@ array.
 
 [*Example 1*: The type denoted by the *type-id* `const int **` has two
 cv-decompositions, taking `U` as “`int`” and as “pointer to
-`const int`”. — *end example*\]
+`const int`”. — *end example*]
 
 The n-tuple of cv-qualifiers after the first one in the longest
 cv-decomposition of `T`, that is, cv₁, cv₂, …, cvₙ, is called the
@@ -220,7 +220,7 @@ int main() {
 }
 ```
 
-— *end note*\]
+— *end note*]
 
 [*Note 2*: A prvalue of type “pointer to cv-qualifiercv1 `T`” can be
 converted to a prvalue of type “pointer to cv-qualifiercv2 `T`” if
@@ -228,10 +228,10 @@ converted to a prvalue of type “pointer to cv-qualifiercv2 `T`” if
 prvalue of type “pointer to member of `X` of type cv-qualifiercv1 `T`”
 can be converted to a prvalue of type “pointer to member of `X` of type
 cv-qualifiercv2 `T`” if “cv-qualifiercv2 `T`” is more cv-qualified than
-“cv-qualifiercv1 `T`”. — *end note*\]
+“cv-qualifiercv1 `T`”. — *end note*]
 
 [*Note 3*: Function types (including those used in pointer to member
-function types) are never cv-qualified ( [[dcl.fct]]). — *end note*\]
+function types) are never cv-qualified ( [[dcl.fct]]). — *end note*]
 
 ## Integral promotions <a id="conv.prom">[[conv.prom]]</a>
 
@@ -302,7 +302,7 @@ the number of bits used to represent the unsigned type).
 
 [*Note 1*: In a two’s complement representation, this conversion is
 conceptual and there is no change in the bit pattern (if there is no
-truncation). — *end note*\]
+truncation). — *end note*]
 
 If the destination type is signed, the value is unchanged if it can be
 represented in the destination type; otherwise, the value is
@@ -336,7 +336,7 @@ discarded. The behavior is undefined if the truncated value cannot be
 represented in the destination type.
 
 [*Note 1*: If the destination type is `bool`, see 
-[[conv.bool]]. — *end note*\]
+[[conv.bool]]. — *end note*]
 
 A prvalue of an integer type or of an unscoped enumeration type can be
 converted to a prvalue of a floating-point type. The result is exact if
@@ -346,7 +346,7 @@ can be represented but the value cannot be represented exactly, it is an
 representable value.
 
 [*Note 2*: Loss of precision occurs if the integral value cannot be
-represented exactly as a value of the floating type. — *end note*\]
+represented exactly as a value of the floating type. — *end note*]
 
 If the value being converted is outside the range of values that can be
 represented, the behavior is undefined. If the source type is `bool`,
@@ -368,7 +368,7 @@ conversion ( [[conv.qual]]). A null pointer constant of integral type
 can be converted to a prvalue of type `std::nullptr_t`.
 
 [*Note 1*: The resulting prvalue is not a null pointer
-value. — *end note*\]
+value. — *end note*]
 
 A prvalue of type “pointer to cv-qualifiercv `T`”, where `T` is an
 object type, can be converted to a prvalue of type “pointer to
@@ -433,7 +433,7 @@ type function”. The result points to the member function.
   void (*q)() noexcept = S();   // error: cannot convert to pointer to noexcept function
 ```
 
-— *end example*\]
+— *end example*]
 
 ## Boolean conversions <a id="conv.bool">[[conv.bool]]</a>
 
@@ -478,7 +478,7 @@ Every integer type has an *integer conversion rank* defined as follows:
 
 [*Note 1*: The integer conversion rank is used in the definition of the
 integral promotions ( [[conv.prom]]) and the usual arithmetic
-conversions (Clause  [[expr]]). — *end note*\]
+conversions (Clause  [[expr]]). — *end note*]
 
 <!-- Section link definitions -->
 [conv]: #conv

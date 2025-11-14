@@ -3,7 +3,7 @@
 [*Note 1*: Clause  [[expr]] defines the syntax, order of evaluation,
 and meaning of expressions.[^1] An expression is a sequence of operators
 and operands that specifies a computation. An expression can result in a
-value and can cause side effects. — *end note*\]
+value and can cause side effects. — *end note*]
 
 [*Note 2*: Operators can be overloaded, that is, given meaning when
 applied to expressions of class type (Clause [[class]]) or enumeration
@@ -13,7 +13,7 @@ the rules for syntax and evaluation order specified in Clause  [[expr]],
 but the requirements of operand type and value category are replaced by
 the rules for function call. Relations between operators, such as `++a`
 meaning `a+=1`, are not guaranteed for overloaded operators (
-[[over.oper]]). — *end note*\]
+[[over.oper]]). — *end note*]
 
 Clause  [[expr]] defines the effects of operators when applied to types
 for which they have not been overloaded. Operator overloading shall not
@@ -33,7 +33,7 @@ its type, the behavior is undefined.
 
 [*Note 3*:  Treatment of division by zero, forming a remainder using a
 zero divisor, and all floating-point exceptions vary among machines, and
-is sometimes adjustable by a library function. — *end note*\]
+is sometimes adjustable by a library function. — *end note*]
 
 If an expression initially has the type “reference to `T`” (
 [[dcl.ref]],  [[dcl.init.ref]]), the type is adjusted to `T` prior to
@@ -43,7 +43,7 @@ depending on the expression.
 
 [*Note 4*: Before the lifetime of the reference has started or after it
 has ended, the behavior is undefined (see 
-[[basic.life]]). — *end note*\]
+[[basic.life]]). — *end note*]
 
 If a prvalue initially has the type “cv `T`”, where `T` is a
 cv-unqualified non-class, non-array type, the type of the expression is
@@ -66,7 +66,7 @@ treated as lvalues and unnamed rvalue references to objects are treated
 as xvalues; rvalue references to functions are treated as lvalues
 whether named or not.
 
-— *end note*\]
+— *end note*]
 
 [*Example 1*:
 
@@ -84,7 +84,7 @@ A&& ar = static_cast<A&&>(a);
 The expressions `f()`, `f().m`, `static_cast<A&&>(a)`, and `a + a` are
 xvalues. The expression `ar` is an lvalue.
 
-— *end example*\]
+— *end example*]
 
 In some contexts, *unevaluated operands* appear ( [[expr.typeid]],
 [[expr.sizeof]], [[expr.unary.noexcept]], [[dcl.type.simple]]). An
@@ -94,7 +94,7 @@ unevaluated operand is not evaluated.
 named ( [[expr.prim]]) and naming of objects or functions does not, by
 itself, require that a definition be provided ( [[basic.def.odr]]). An
 unevaluated operand is considered a full-expression (
-[[intro.execution]]). — *end note*\]
+[[intro.execution]]). — *end note*]
 
 Whenever a glvalue expression appears as an operand of an operator that
 expects a prvalue for that operand, the lvalue-to-rvalue (
@@ -106,7 +106,7 @@ convert the expression to a prvalue.
 expression of non-class type when the expression is converted to a
 prvalue, an lvalue expression of type `const int` can, for example, be
 used where a prvalue expression of type `int` is
-required. — *end note*\]
+required. — *end note*]
 
 Whenever a prvalue expression appears as an operand of an operator that
 expects a glvalue for that operand, the temporary materialization
@@ -169,14 +169,14 @@ the following:
   these expressions.
 
 [*Note 8*: Using an overloaded operator causes a function call; the
-above covers only operators with built-in meaning. — *end note*\]
+above covers only operators with built-in meaning. — *end note*]
 
 If the expression is a prvalue after this optional conversion, the
 temporary materialization conversion ( [[conv.rval]]) is applied.
 
 [*Note 9*: If the expression is an lvalue of class type, it must have a
 volatile copy constructor to initialize the temporary that is the result
-object of the lvalue-to-rvalue conversion. — *end note*\]
+object of the lvalue-to-rvalue conversion. — *end note*]
 
 The glvalue expression is evaluated and its value is discarded.
 
@@ -192,7 +192,7 @@ to `T1` whose cv-qualification signature ( [[conv.qual]]) is:
   added to every cv³ₖ for 0 < k < i.
 
 [*Note 10*: Given similar types `T1` and `T2`, this construction
-ensures that both can be converted to `T3`. — *end note*\]
+ensures that both can be converted to `T3`. — *end note*]
 
 The *composite pointer type* of two operands `p1` and `p2` having types
 `T1` and `T2`, respectively, where at least one is a pointer or pointer
@@ -236,7 +236,7 @@ The composite pointer type of `p` and `q` is “pointer to `const void`”;
 the composite pointer type of `pi` and `pci` is “pointer to `const`
 pointer to `const int`”.
 
-— *end example*\]
+— *end example*]
 
 ## Primary expressions <a id="expr.prim">[[expr.prim]]</a>
 
@@ -272,14 +272,14 @@ its type and value category are defined within a static member function
 as they are within a non-static member function).
 
 [*Note 1*: This is because declaration matching does not occur until
-the complete declarator is known. — *end note*\]
+the complete declarator is known. — *end note*]
 
 Unlike the object expression in other contexts, `*this` is not required
 to be of complete type for purposes of class member access (
 [[expr.ref]]) outside the member function body.
 
 [*Note 2*: Only class members declared prior to the declaration are
-visible. — *end note*\]
+visible. — *end note*]
 
 [*Example 1*:
 
@@ -292,7 +292,7 @@ struct A {
 template auto A::f(int t) -> decltype(t + g());
 ```
 
-— *end example*\]
+— *end example*]
 
 Otherwise, if a *member-declarator* declares a non-static data member (
 [[class.mem]]) of a class `X`, the expression `this` is a prvalue of
@@ -319,7 +319,7 @@ class Outer {
 };
 ```
 
-— *end example*\]
+— *end example*]
 
 ### Parentheses <a id="expr.prim.paren">[[expr.prim.paren]]</a>
 
@@ -340,7 +340,7 @@ id-expression:
 An *id-expression* is a restricted form of a *primary-expression*.
 
 [*Note 1*: An *id-expression* can appear after `.` and `->` operators (
-[[expr.ref]]). — *end note*\]
+[[expr.ref]]). — *end note*]
 
 An *id-expression* that denotes a non-static data member or non-static
 member function of a class can only be used:
@@ -360,7 +360,7 @@ member function of a class can only be used:
   int j = sizeof(S::m + 42);      // OK
   ```
 
-  — *end example*\]
+  — *end example*]
 
 #### Unqualified names <a id="expr.prim.id.unqual">[[expr.prim.id.unqual]]</a>
 
@@ -385,7 +385,7 @@ declared (Clause  [[dcl.dcl]]).
 denotes a destructor; see  [[class.dtor]]. Within the definition of a
 non-static member function, an *identifier* that names a non-static
 member is transformed to a class member access expression (
-[[class.mfct.non-static]]). — *end note*\]
+[[class.mfct.non-static]]). — *end note*]
 
 The type of the expression is the type of the *identifier*. The result
 is the entity denoted by the identifier. The expression is an lvalue if
@@ -424,7 +424,7 @@ member function or a data member and a prvalue otherwise.
 
 [*Note 1*: A class member can be referred to using a *qualified-id* at
 any point in its potential scope (
-[[basic.scope.class]]). — *end note*\]
+[[basic.scope.class]]). — *end note*]
 
 Where *class-name* `::~` *class-name* is used, the two *class-name*s
 shall refer to the same class; this notation names the destructor (
@@ -433,7 +433,7 @@ destructor, but it shall not be used as the *unqualified-id* in a
 *qualified-id*.
 
 [*Note 2*: A *typedef-name* that names a class is a *class-name* (
-[[class.name]]). — *end note*\]
+[[class.name]]). — *end note*]
 
 The *nested-name-specifier* `::` names the global namespace. A
 *nested-name-specifier* that names a namespace ( [[basic.namespace]]),
@@ -487,7 +487,7 @@ void abssort(float* x, unsigned N) {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 A *lambda-expression* is a prvalue whose result object is called the
 *closure object*. A *lambda-expression* shall not appear in an
@@ -497,10 +497,10 @@ a function or function template outside its function body and default
 arguments.
 
 [*Note 1*: The intention is to prevent lambdas from appearing in a
-signature. — *end note*\]
+signature. — *end note*]
 
 [*Note 2*: A closure object behaves like a function object (
-[[function.objects]]). — *end note*\]
+[[function.objects]]). — *end note*]
 
 In the *decl-specifier-seq* of the *lambda-declarator*, each
 *decl-specifier* shall either be `mutable` or `constexpr`.
@@ -520,7 +520,7 @@ int j;
 auto x3 = []()->auto&& { return j; }; // OK: return type is int&
 ```
 
-— *end example*\]
+— *end example*]
 
 #### Closure types <a id="expr.prim.lambda.closure">[[expr.prim.lambda.closure]]</a>
 
@@ -534,7 +534,7 @@ or namespace scope that contains the corresponding *lambda-expression*.
 [*Note 1*: This determines the set of namespaces and classes associated
 with the closure type ( [[basic.lookup.argdep]]). The parameter types of
 a *lambda-declarator* do not affect these associated namespaces and
-classes. — *end note*\]
+classes. — *end note*]
 
 The closure type is not an aggregate type ( [[dcl.init.aggr]]). An
 implementation may define the closure type differently from what is
@@ -588,7 +588,7 @@ auto q = p(1, 'a', 3.14);                              // OK: outputs 1a3.14
 q();                                                   // OK: outputs 1a3.14
 ```
 
-— *end example*\]
+— *end example*]
 
 The function call operator or operator template is declared `const` (
 [[class.mfct.non-static]]) if and only if the *lambda-expression*’s
@@ -604,7 +604,7 @@ is followed by `constexpr`, or it satisfies the requirements for a
 constexpr function ( [[dcl.constexpr]]).
 
 [*Note 2*: Names referenced in the *lambda-declarator* are looked up in
-the context in which the *lambda-expression* appears. — *end note*\]
+the context in which the *lambda-expression* appears. — *end note*]
 
 [*Example 2*:
 
@@ -619,7 +619,7 @@ struct NonLiteral {
 static_assert(ID(NonLiteral{3}).n == 3); // ill-formed
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Example 3*:
 
@@ -648,7 +648,7 @@ static_assert(add(one)(one)() == two()); // ill-formed: two() is not a constant 
 static_assert(add(one)(one)() == monoid(2)()); // OK
 ```
 
-— *end example*\]
+— *end example*]
 
 The closure type for a non-generic *lambda-expression* with no
 *lambda-capture* has a conversion function to pointer to function with
@@ -702,7 +702,7 @@ struct Closure {
 };
 ```
 
-— *end note*\]
+— *end note*]
 
 [*Example 4*:
 
@@ -724,7 +724,7 @@ h(glambda);   // OK: calls #3 since it is convertible from ID
 int& (*fpi)(int*) = [](auto* a) -> auto& { return *a; }; // OK
 ```
 
-— *end example*\]
+— *end example*]
 
 The value returned by any given specialization of this conversion
 function template is the address of a function `F` that, when invoked,
@@ -735,7 +735,7 @@ function if the corresponding specialization is a constexpr function.
 [*Note 4*: This will result in the implicit instantiation of the
 generic lambda’s body. The instantiated generic lambda’s return type and
 parameter types shall match the return type and parameter types of the
-pointer to function. — *end note*\]
+pointer to function. — *end note*]
 
 [*Example 5*:
 
@@ -745,7 +745,7 @@ int (*GL_int)(int) = GL;  // OK: through conversion function template
 GL_int(3);                // OK: same as GL(3)
 ```
 
-— *end example*\]
+— *end example*]
 
 The conversion function or conversion function template is public,
 constexpr, non-virtual, non-explicit, const, and has a non-throwing
@@ -764,7 +764,7 @@ auto NC = [](auto a) { static int s; return a; };
 static_assert(Fwd(NC,3) == 3); // ill-formed
 ```
 
-— *end example*\]
+— *end example*]
 
 The *lambda-expression*’s *compound-statement* yields the
 *function-body* ( [[dcl.fct.def]]) of the function call operator, but
@@ -790,7 +790,7 @@ struct S1 {
 };
 ```
 
-— *end example*\]
+— *end example*]
 
 Further, a variable `__func__` is implicitly defined at the beginning of
 the *compound-statement* of the *lambda-expression*, with semantics as
@@ -801,7 +801,7 @@ constructor and a deleted copy assignment operator. It has a defaulted
 copy constructor and a defaulted move constructor ( [[class.copy]]).
 
 [*Note 5*: These special member functions are implicitly defined as
-usual, and might therefore be defined as deleted. — *end note*\]
+usual, and might therefore be defined as deleted. — *end note*]
 
 The closure type associated with a *lambda-expression* has an
 implicitly-declared destructor ( [[class.dtor]]).
@@ -862,7 +862,7 @@ is `=`, each *simple-capture* of that *lambda-capture* shall be of the
 form “`&` *identifier*” or “`* this`”.
 
 [*Note 1*: The form `[&,this]` is redundant but accepted for
-compatibility with ISO C++14. — *end note*\]
+compatibility with ISO C++14. — *end note*]
 
 Ignoring appearances in *initializer*s of *init-capture*s, an identifier
 or `this` shall not appear more than once in a *lambda-capture*.
@@ -881,7 +881,7 @@ void S2::f(int i) {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 A *lambda-expression* whose smallest enclosing scope is a block scope (
 [[basic.scope.block]]) is a *local lambda expression*; any other
@@ -891,7 +891,7 @@ local lambda expression is the set of enclosing scopes up to and
 including the innermost enclosing function and its parameters.
 
 [*Note 2*: This reaching scope includes any intervening
-*lambda-expression*s. — *end note*\]
+*lambda-expression*s. — *end note*]
 
 The *identifier* in a *simple-capture* is looked up using the usual
 rules for unqualified name lookup ( [[basic.lookup.unqual]]); each such
@@ -914,7 +914,7 @@ void f() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 An *init-capture* behaves as if it declares and explicitly captures a
 variable of the form “`auto` *init-capture* `;`” whose declarative
@@ -930,7 +930,7 @@ region is the *lambda-expression*’s *compound-statement*, except that:
 
 [*Note 3*: This enables an *init-capture* like “`x = std::move(x)`”;
 the second “`x`” must bind to a declaration in the surrounding
-context. — *end note*\]
+context. — *end note*]
 
 [*Example 3*:
 
@@ -944,7 +944,7 @@ auto y = [&r = x, x = x+1]()->int {
 auto z = [a = 42](int a) { return 1; } // error: parameter and local variable have the same name
 ```
 
-— *end example*\]
+— *end example*]
 
 A *lambda-expression* with an associated *capture-default* that does not
 explicitly capture `*this` or a variable with automatic storage duration
@@ -979,7 +979,7 @@ void test() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 All such implicitly captured entities shall be declared within the
 reaching scope of the lambda expression.
@@ -987,7 +987,7 @@ reaching scope of the lambda expression.
 [*Note 4*: The implicit capture of an entity by a nested
 *lambda-expression* can cause its implicit capture by the containing
 *lambda-expression* (see below). Implicit odr-uses of `this` can result
-in implicit capture. — *end note*\]
+in implicit capture. — *end note*]
 
 An entity is *captured* if it is captured explicitly or implicitly. An
 entity captured by a *lambda-expression* is odr-used (
@@ -1047,7 +1047,7 @@ struct s2 {
 };
 ```
 
-— *end example*\]
+— *end example*]
 
 A *lambda-expression* appearing in a default argument shall not
 implicitly or explicitly capture any entity.
@@ -1065,7 +1065,7 @@ void f2() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 An entity is *captured by copy* if
 
@@ -1090,14 +1090,14 @@ unnamed data member of the closure type.
 [*Note 5*: An *id-expression* that is not an odr-use refers to the
 original entity, never to a member of the closure type. Furthermore,
 such an *id-expression* does not cause the implicit capture of the
-entity. — *end note*\]
+entity. — *end note*]
 
 If `*this` is captured by copy, each odr-use of `this` is transformed
 into a pointer to the corresponding unnamed data member of the closure
 type, cast ( [[expr.cast]]) to the type of `this`.
 
 [*Note 6*: The cast ensures that the transformed expression is a
-prvalue. — *end note*\]
+prvalue. — *end note*]
 
 An *id-expression* within the *compound-statement* of a
 *lambda-expression* that is an odr-use of a reference captured by
@@ -1106,7 +1106,7 @@ and not to the captured reference.
 
 [*Note 7*: The validity of such captures is determined by the lifetime
 of the object to which the reference refers, not by the lifetime of the
-reference itself. — *end note*\]
+reference itself. — *end note*]
 
 [*Example 7*:
 
@@ -1128,7 +1128,7 @@ auto h(int &r) {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 An entity is *captured by reference* if it is implicitly or explicitly
 captured but not captured by copy. It is unspecified whether additional
@@ -1143,7 +1143,7 @@ members shall be of literal type.
 static_assert([](int n) { return [&n] { return ++n; }(); }(3) == 4);
 ```
 
-— *end example*\]
+— *end example*]
 
 A bit-field or a member of an anonymous union shall not be captured by
 reference.
@@ -1177,7 +1177,7 @@ m1();
 std::cout << a << b << c;
 ```
 
-— *end example*\]
+— *end example*]
 
 Every occurrence of `decltype((x))` where `x` is a possibly
 parenthesized *id-expression* that names an entity of automatic storage
@@ -1199,7 +1199,7 @@ void f3() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 When the *lambda-expression* is evaluated, the entities that are
 captured by copy are used to direct-initialize each corresponding
@@ -1212,12 +1212,12 @@ initializations are performed in the (unspecified) order in which the
 non-static data members are declared.
 
 [*Note 8*: This ensures that the destructions will occur in the reverse
-order of the constructions. — *end note*\]
+order of the constructions. — *end note*]
 
 [*Note 9*: If a non-reference entity is implicitly or explicitly
 captured by reference, invoking the function call operator of the
 corresponding *lambda-expression* after the lifetime of the entity has
-ended is likely to result in undefined behavior. — *end note*\]
+ended is likely to result in undefined behavior. — *end note*]
 
 A *simple-capture* followed by an ellipsis is a pack expansion (
 [[temp.variadic]]). An *init-capture* followed by an ellipsis is
@@ -1233,7 +1233,7 @@ void f(Args... args) {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 ### Fold expressions <a id="expr.prim.fold">[[expr.prim.fold]]</a>
 
@@ -1286,7 +1286,7 @@ bool f(Args ...args) {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 ## Postfix expressions <a id="expr.post">[[expr.post]]</a>
 
@@ -1331,7 +1331,7 @@ pseudo-destructor-name:
 [*Note 1*: The `>` token following the *type-id* in a `dynamic_cast`,
 `static_cast`, `reinterpret_cast`, or `const_cast` may be the product of
 replacing a `>{>}` token by two consecutive `>` tokens (
-[[temp.names]]). — *end note*\]
+[[temp.names]]). — *end note*]
 
 ### Subscripting <a id="expr.sub">[[expr.sub]]</a>
 
@@ -1344,7 +1344,7 @@ type.[^5] The expression `E1[E2]` is identical (by definition) to
 `*((E1)+(E2))`
 
 [*Note 1*: see  [[expr.unary]] and  [[expr.add]] for details of `*` and
-`+` and  [[dcl.array]] for details of arrays. — *end note*\]
+`+` and  [[dcl.array]] for details of arrays. — *end note*]
 
 , except that in the case of an array operand, the result is an lvalue
 if that operand is an lvalue and an xvalue otherwise. The expression
@@ -1376,7 +1376,7 @@ In the case of an implicit class member access, the implied object is
 the one pointed to by `this`.
 
 [*Note 1*: A member function call of the form `f()` is interpreted as
-`(*this).f()` (see  [[class.mfct.non-static]]). — *end note*\]
+`(*this).f()` (see  [[class.mfct.non-static]]). — *end note*]
 
 If a function or member function name is used, the name can be
 overloaded (Clause  [[over]]), in which case the appropriate function
@@ -1390,12 +1390,12 @@ of the object expression is called; such a call is referred to as a
 [*Note 2*: The dynamic type is the type of the object referred to by
 the current value of the object expression. [[class.cdtor]] describes
 the behavior of virtual function calls when the object expression refers
-to an object under construction or destruction. — *end note*\]
+to an object under construction or destruction. — *end note*]
 
 [*Note 3*: If a function or member function name is used, and name
 lookup ( [[basic.lookup]]) does not find a declaration of that name, the
 program is ill-formed. No function is implicitly declared by such a
-call. — *end note*\]
+call. — *end note*]
 
 If the *postfix-expression* designates a destructor ( [[class.dtor]]),
 the type of the function call expression is `void`; otherwise, the type
@@ -1414,14 +1414,14 @@ an explicit type conversion ( [[expr.cast]]).
 [*Note 4*: There is no access or ambiguity checking on this conversion;
 the access checking and disambiguation are done as part of the (possibly
 implicit) class member access operator. See  [[class.member.lookup]], 
-[[class.access.base]], and  [[expr.ref]]. — *end note*\]
+[[class.access.base]], and  [[expr.ref]]. — *end note*]
 
 When a function is called, the parameters that have object type shall
 have completely-defined object type.
 
 [*Note 5*: this still allows a parameter to be a pointer or reference
 to an incomplete class type. However, it prevents a passed-by-value
-parameter to have an incomplete class type. — *end note*\]
+parameter to have an incomplete class type. — *end note*]
 
 It is *implementation-defined* whether the lifetime of a parameter ends
 when the function in which it is defined returns or at the end of the
@@ -1434,7 +1434,7 @@ constructor or destructor for a function parameter throws an exception,
 the search for a handler starts in the scope of the calling function; in
 particular, if the function called has a *function-try-block* (Clause 
 [[except]]) with a handler that could handle the exception, this handler
-is not considered. — *end example*\]
+is not considered. — *end example*]
 
 The *postfix-expression* is sequenced before each *expression* in the
 *expression-list* and any default argument. The initialization of a
@@ -1444,7 +1444,7 @@ parameter.
 
 [*Note 6*: All side effects of argument evaluations are sequenced
 before the function is entered (see 
-[[intro.execution]]). — *end note*\]
+[[intro.execution]]). — *end note*]
 
 [*Example 2*:
 
@@ -1456,11 +1456,11 @@ void f() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Note 7*: If an operator function is invoked using operator notation,
 argument evaluation is sequenced as specified for the built-in operator;
-see  [[over.match.oper]]. — *end note*\]
+see  [[over.match.oper]]. — *end note*]
 
 [*Example 3*:
 
@@ -1478,7 +1478,7 @@ After performing the initializations, the value of `i` is 2 (see 
 [[expr.shift]]), but it is unspecified whether the value of `j` is 1 or
 2.
 
-— *end example*\]
+— *end example*]
 
 The result of a function call is the result of the operand of the
 evaluated `return` statement ( [[stmt.return]]) in the called function
@@ -1496,7 +1496,7 @@ Where a parameter is of `const` reference type a temporary object is
 introduced if needed ( [[dcl.type]],  [[lex.literal]],  [[lex.string]], 
 [[dcl.array]],  [[class.temporary]]). In addition, it is possible to
 modify the values of non-constant objects through pointer
-parameters. — *end note*\]
+parameters. — *end note*]
 
 A function can be declared to accept fewer arguments (by declaring
 default arguments ( [[dcl.fct.default]])) or more arguments (by using
@@ -1505,7 +1505,7 @@ the number of parameters in the function definition ( [[dcl.fct.def]]).
 
 [*Note 9*: This implies that, except where the ellipsis (`...`) or a
 function parameter pack is used, a parameter is available for each
-argument. — *end note*\]
+argument. — *end note*]
 
 When there is no parameter for a given argument, the argument is passed
 in such a way that the receiving function can obtain the value of the
@@ -1515,7 +1515,7 @@ argument by invoking `va_arg` ( [[support.runtime]]).
 function parameter pack. Function parameter packs are expanded during
 template instantiation ( [[temp.variadic]]), thus each such argument has
 a corresponding parameter when a function template specialization is
-actually called. — *end note*\]
+actually called. — *end note*]
 
 The lvalue-to-rvalue ( [[conv.lval]]), array-to-pointer (
 [[conv.array]]), and function-to-pointer ( [[conv.func]]) standard
@@ -1603,10 +1603,10 @@ the class or of one of its base classes.
 
 [*Note 1*: Because the name of a class is inserted in its class scope
 (Clause  [[class]]), the name of a class is also considered a nested
-member of that class. — *end note*\]
+member of that class. — *end note*]
 
 [*Note 2*:  [[basic.lookup.classref]] describes how names are looked up
-after the `.` and `->` operators. — *end note*\]
+after the `.` and `->` operators. — *end note*]
 
 Abbreviating *postfix-expression.id-expression* as `E1.E2`, `E1` is
 called the *object expression*. If `E2` is a bit-field, `E1.E2` is a
@@ -1653,7 +1653,7 @@ rules applies.
     can be used only as the left-hand operand of a member function
     call ( [[class.mfct]]). \[*Note 1*: Any redundant set of parentheses
     surrounding the expression is ignored (
-    [[expr.prim]]). — *end note*\] The type of `E1.E2` is “function of
+    [[expr.prim]]). — *end note*] The type of `E1.E2` is “function of
     parameter-type-list cv-qualifiercv returning `T`”.
 - If `E2` is a nested type, the expression `E1.E2` is ill-formed.
 - If `E2` is a member enumerator and the type of `E2` is `T`, the
@@ -1666,14 +1666,14 @@ an ambiguous base ( [[class.member.lookup]]) of the naming class (
 
 [*Note 3*: The program is also ill-formed if the naming class is an
 ambiguous base of the class type of the object expression; see 
-[[class.access.base]]. — *end note*\]
+[[class.access.base]]. — *end note*]
 
 ### Increment and decrement <a id="expr.post.incr">[[expr.post.incr]]</a>
 
 The value of a postfix `++` expression is the value of its operand.
 
 [*Note 1*: The value obtained is a copy of the original
-value — *end note*\]
+value — *end note*]
 
 The operand shall be a modifiable lvalue. The type of the operand shall
 be an arithmetic type other than cv `bool`, or a pointer to a complete
@@ -1685,7 +1685,7 @@ is a single evaluation.
 
 [*Note 2*: Therefore, a function call shall not intervene between the
 lvalue-to-rvalue conversion and the side effect associated with any
-single postfix ++ operator. — *end note*\]
+single postfix ++ operator. — *end note*]
 
 The result is a prvalue. The type of the result is the cv-unqualified
 version of the type of the operand. If the operand is a bit-field that
@@ -1696,7 +1696,7 @@ The operand of postfix `\dcr` is decremented analogously to the postfix
 `++` operator.
 
 [*Note 3*: For prefix increment and decrement, see 
-[[expr.pre.incr]]. — *end note*\]
+[[expr.pre.incr]]. — *end note*]
 
 ### Dynamic cast <a id="expr.dynamic.cast">[[expr.dynamic.cast]]</a>
 
@@ -1741,7 +1741,7 @@ void foo(D* dp) {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 Otherwise, `v` shall be a pointer to or a glvalue of a polymorphic
 type ( [[class.virtual]]).
@@ -1799,10 +1799,10 @@ void h() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Note 1*:  [[class.cdtor]] describes the behavior of a `dynamic_cast`
-applied to an object under construction or destruction. — *end note*\]
+applied to an object under construction or destruction. — *end note*]
 
 ### Type identification <a id="expr.typeid">[[expr.typeid]]</a>
 
@@ -1859,13 +1859,13 @@ typeid(D)  == typeid(d2);       // yields true
 typeid(D)  == typeid(const D&); // yields true
 ```
 
-— *end example*\]
+— *end example*]
 
 If the header `<typeinfo>` ( [[type.info]]) is not included prior to a
 use of `typeid`, the program is ill-formed.
 
 [*Note 1*:  [[class.cdtor]] describes the behavior of `typeid` applied
-to an object under construction or destruction. — *end note*\]
+to an object under construction or destruction. — *end note*]
 
 ### Static cast <a id="expr.static.cast">[[expr.static.cast]]</a>
 
@@ -1901,7 +1901,7 @@ B &br = d;
 static_cast<D&>(br);            // produces lvalue to the original d object
 ```
 
-— *end example*\]
+— *end example*]
 
 An lvalue of type “cv-qualifiercv1 `T1`” can be cast to type “rvalue
 reference to cv-qualifiercv2 `T2`” if “cv-qualifiercv2 `T2`” is
@@ -1931,7 +1931,7 @@ result object is direct-initialized from `e`.
 
 [*Note 1*: The conversion is ill-formed when attempting to convert an
 expression of class type to an inaccessible or ambiguous base
-class. — *end note*\]
+class. — *end note*]
 
 Otherwise, the `static_cast` shall perform one of the conversions listed
 below. No other conversion shall be performed explicitly using a
@@ -1943,7 +1943,7 @@ case it becomes a discarded-value expression (Clause  [[expr]]).
 [*Note 2*: However, if the value is in a temporary object (
 [[class.temporary]]), the destructor for that object is not executed
 until the usual time, and the value of the object is preserved for the
-purpose of executing the destructor. — *end note*\]
+purpose of executing the destructor. — *end note*]
 
 The inverse of any standard conversion sequence (Clause  [[conv]]) not
 containing an lvalue-to-rvalue ( [[conv.lval]]), array-to-pointer (
@@ -1965,7 +1965,7 @@ void f() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 The lvalue-to-rvalue ( [[conv.lval]]), array-to-pointer (
 [[conv.array]]), and function-to-pointer ( [[conv.func]]) conversions
@@ -2024,7 +2024,7 @@ member. Otherwise, the behavior is undefined.
 [*Note 3*: Although class `B` need not contain the original member, the
 dynamic type of the object with which indirection through the pointer to
 member is performed must contain the original member; see 
-[[expr.mptr.oper]]. — *end note*\]
+[[expr.mptr.oper]]. — *end note*]
 
 A prvalue of type “pointer to cv-qualifiercv1 `void`” can be converted
 to a prvalue of type “pointer to cv-qualifiercv2 `T`”, where `T` is an
@@ -2046,7 +2046,7 @@ const T* p2 = static_cast<const T*>(static_cast<void*>(p1));
 bool b = p1 == p2;  // b will have the value true.
 ```
 
-— *end example*\]
+— *end example*]
 
 ### Reinterpret cast <a id="expr.reinterpret.cast">[[expr.reinterpret.cast]]</a>
 
@@ -2068,20 +2068,20 @@ such a cast yields the value of its operand.
 
 [*Note 1*: The mapping performed by `reinterpret_cast` might, or might
 not, produce a representation different from the original
-value. — *end note*\]
+value. — *end note*]
 
 A pointer can be explicitly converted to any integral type large enough
 to hold it. The mapping function is *implementation-defined*.
 
 [*Note 2*: It is intended to be unsurprising to those who know the
-addressing structure of the underlying machine. — *end note*\]
+addressing structure of the underlying machine. — *end note*]
 
 A value of type `std::nullptr_t` can be converted to an integral type;
 the conversion has the same meaning and validity as a conversion of
 `(void*)0` to the integral type.
 
 [*Note 3*: A `reinterpret_cast` cannot be used to convert a value of
-any type to the type `std::nullptr_t`. — *end note*\]
+any type to the type `std::nullptr_t`. — *end note*]
 
 A value of integral type or enumeration type can be explicitly converted
 to a pointer. A pointer converted to an integer of sufficient size (if
@@ -2091,14 +2091,14 @@ otherwise *implementation-defined*.
 
 [*Note 4*: Except as described in [[basic.stc.dynamic.safety]], the
 result of such a conversion will not be a safely-derived pointer
-value. — *end note*\]
+value. — *end note*]
 
 A function pointer can be explicitly converted to a function pointer of
 a different type.
 
 [*Note 5*: The effect of calling a function through a pointer to a
 function type ( [[dcl.fct]]) that is not the same as the type used in
-the definition of the function is undefined. — *end note*\]
+the definition of the function is undefined. — *end note*]
 
 Except that converting a prvalue of type “pointer to `T1`” to the type
 “pointer to `T2`” (where `T1` and `T2` are function types) and back to
@@ -2106,7 +2106,7 @@ its original type yields the original pointer value, the result of such
 a pointer conversion is unspecified.
 
 [*Note 6*: See also  [[conv.ptr]] for more details of pointer
-conversions. — *end note*\]
+conversions. — *end note*]
 
 An object pointer can be explicitly converted to an object pointer of a
 different type.[^12] When a prvalue `v` of object pointer type is
@@ -2117,7 +2117,7 @@ converted to the object pointer type “pointer to cv `T`”, the result is
 “pointer to `T2`” (where `T1` and `T2` are object types and where the
 alignment requirements of `T2` are no stricter than those of `T1`) and
 back to its original type yields the original pointer
-value. — *end note*\]
+value. — *end note*]
 
 Converting a function pointer to an object pointer type or vice versa is
 conditionally-supported. The meaning of such a conversion is
@@ -2132,7 +2132,7 @@ value of the destination type.
 [*Note 8*: A null pointer constant of type `std::nullptr_t` cannot be
 converted to a pointer type, and a null pointer constant of integral
 type is not necessarily converted to a null pointer
-value. — *end note*\]
+value. — *end note*]
 
 A prvalue of type “pointer to member of `X` of type `T1`” can be
 explicitly converted to a prvalue of a different type “pointer to member
@@ -2159,7 +2159,7 @@ specified type.
 [*Note 9*: That is, for lvalues, a reference cast
 `reinterpret_cast<T&>(x)` has the same effect as the conversion
 `*reinterpret_cast<T*>(&x)` with the built-in `&` and `*` operators (and
-similarly for `reinterpret_cast<T&&>(x)`). — *end note*\]
+similarly for `reinterpret_cast<T&&>(x)`). — *end note*]
 
 No temporary is created, no copy is made, and constructors (
 [[class.ctor]]) or conversion functions ( [[class.conv]]) are not
@@ -2179,7 +2179,7 @@ performed explicitly using `const_cast`.
 
 [*Note 1*: Subject to the restrictions in this section, an expression
 may be cast to its own type using a `const_cast`
-operator. — *end note*\]
+operator. — *end note*]
 
 For two similar types `T1` and `T2` ( [[conv.qual]]), a prvalue of type
 `T1` may be explicitly converted to the type `T2` using a `const_cast`.
@@ -2196,7 +2196,7 @@ A &&r1 = const_cast<A>(CA{});    // error: temporary array decayed to pointer
 A &&r2 = const_cast<A&&>(CA{});  // OK
 ```
 
-— *end example*\]
+— *end example*]
 
 For two object types `T1` and `T2`, if a pointer to `T1` can be
 explicitly converted to the type “pointer to `T2`” using a `const_cast`,
@@ -2221,7 +2221,7 @@ destination type.
 [*Note 2*: Depending on the type of the object, a write operation
 through the pointer, lvalue or pointer to data member resulting from a
 `const_cast` that casts away a const-qualifier[^15] may produce
-undefined behavior ( [[dcl.type.cv]]). — *end note*\]
+undefined behavior ( [[dcl.type.cv]]). — *end note*]
 
 A conversion from a type `T1` to a type `T2` *casts away constness* if
 `T1` and `T2` are different, there is a cv-decomposition (
@@ -2243,7 +2243,7 @@ conversions lead to values whose use causes undefined behavior. For the
 same reasons, conversions between pointers to member functions, and in
 particular, the conversion from a pointer to a const member function to
 a pointer to a non-const member function, are not
-covered. — *end note*\]
+covered. — *end note*]
 
 ## Unary expressions <a id="expr.unary">[[expr.unary]]</a>
 
@@ -2281,7 +2281,7 @@ is “pointer to `T`”, the type of the result is “`T`”.
 than cv-qualifiercv `void`) is valid. The lvalue thus obtained can be
 used in limited ways (to initialize a reference, for example); this
 lvalue must not be converted to a prvalue, see 
-[[conv.lval]]. — *end note*\]
+[[conv.lval]]. — *end note*]
 
 The result of each of the following unary operators is a prvalue.
 
@@ -2295,7 +2295,7 @@ prvalue that is the address of the designated object ( [[intro.memory]])
 or a pointer to the designated function.
 
 [*Note 2*: In particular, the address of an object of type “cv `T`” is
-“pointer to cv `T`”, with the same cv-qualification. — *end note*\]
+“pointer to cv `T`”, with the same cv-qualification. — *end note*]
 
 For purposes of pointer arithmetic ( [[expr.add]]) and comparison (
 [[expr.rel]], [[expr.eq]]), an object that is not an array element whose
@@ -2314,11 +2314,11 @@ int* p2 = p1 + 1;   // defined behavior
 bool b = p2 > p1;   // defined behavior, with value true
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Note 3*: A pointer to member formed from a `mutable` non-static data
 member ( [[dcl.stc]]) does not reflect the `mutable` specifier
-associated with the non-static data member. — *end note*\]
+associated with the non-static data member. — *end note*]
 
 A pointer to member is only formed when an explicit `&` is used and its
 operand is a *qualified-id* not enclosed in parentheses.
@@ -2330,7 +2330,7 @@ is no implicit conversion from a *qualified-id* for a non-static member
 function to the type “pointer to member function” as there is from an
 lvalue of function type to the type “pointer to function” (
 [[conv.func]]). Nor is `&unqualified-id` a pointer to member, even
-within the scope of the *unqualified-id*’s class. — *end note*\]
+within the scope of the *unqualified-id*’s class. — *end note*]
 
 If `&` is applied to an lvalue of incomplete class type and the complete
 type declares `operator&()`, it is unspecified whether the operator has
@@ -2344,7 +2344,7 @@ overloaded function is referred to (see  [[over.over]]).
 [*Note 5*: Since the context might determine whether the operand is a
 static or non-static member function, the context can also affect
 whether the expression has type “pointer to function” or “pointer to
-member function”. — *end note*\]
+member function”. — *end note*]
 
 The operand of the unary `+` operator shall have arithmetic, unscoped
 enumeration, or pointer type and the result is the value of the
@@ -2374,7 +2374,7 @@ of an *unqualified-id* naming a destructor.
 [*Note 6*: Because the grammar does not permit an operator to follow
 the `.`, `->`, or `::` tokens, a `~` followed by a *class-name* or
 *decltype-specifier* in a member access expression or *qualified-id* is
-unambiguously parsed as a destructor name. — *end note*\]
+unambiguously parsed as a destructor name. — *end note*]
 
 ### Increment and decrement <a id="expr.pre.incr">[[expr.pre.incr]]</a>
 
@@ -2387,14 +2387,14 @@ equivalent to `x+=1`.
 
 [*Note 1*: See the discussions of addition ( [[expr.add]]) and
 assignment operators ( [[expr.ass]]) for information on
-conversions. — *end note*\]
+conversions. — *end note*]
 
 The operand of prefix `\dcr` is modified by subtracting `1`. The
 requirements on the operand of prefix `\dcr` and the properties of its
 result are otherwise the same as those of prefix `++`.
 
 [*Note 2*: For postfix increment and decrement, see 
-[[expr.post.incr]]. — *end note*\]
+[[expr.post.incr]]. — *end note*]
 
 ### Sizeof <a id="expr.sizeof">[[expr.sizeof]]</a>
 
@@ -2410,11 +2410,11 @@ is *implementation-defined*.
 
 [*Note 1*: In particular, `sizeof(bool)`, `sizeof(char16_t)`,
 `sizeof(char32_t)`, and `sizeof(wchar_t)` are
-implementation-defined.[^16] — *end note*\]
+implementation-defined.[^16] — *end note*]
 
 [*Note 2*: See  [[intro.memory]] for the definition of *byte* and 
 [[basic.types]] for the definition of *object
-representation*. — *end note*\]
+representation*. — *end note*]
 
 When applied to a reference or a reference type, the result is the size
 of the referenced type. When applied to a class, the result is the
@@ -2449,13 +2449,13 @@ struct count {
 };
 ```
 
-— *end example*\]
+— *end example*]
 
 The result of `sizeof` and `sizeof...` is a constant of type
 `std::size_t`.
 
 [*Note 3*:  `std::size_t` is defined in the standard header
-`<cstddef>` ( [[cstddef.syn]], [[support.types.layout]]). — *end note*\]
+`<cstddef>` ( [[cstddef.syn]], [[support.types.layout]]). — *end note*]
 
 ### New <a id="expr.new">[[expr.new]]</a>
 
@@ -2466,11 +2466,11 @@ type, but not an abstract class type or array thereof (
 [[intro.object]],  [[basic.types]],  [[class.abstract]]).
 
 [*Note 1*: Because references are not objects, references cannot be
-created by *new-expression*s. — *end note*\]
+created by *new-expression*s. — *end note*]
 
 [*Note 2*: The *type-id* may be a cv-qualified type, in which case the
 object created by the *new-expression* has a cv-qualified
-type. — *end note*\]
+type. — *end note*]
 
 ``` bnf
 new-expression:
@@ -2511,7 +2511,7 @@ Entities created by a *new-expression* have dynamic storage duration (
 [[basic.stc.dynamic]]).
 
 [*Note 3*:  The lifetime of such an entity is not necessarily
-restricted to the scope in which it is created. — *end note*\]
+restricted to the scope in which it is created. — *end note*]
 
 If the entity is a non-array object, the *new-expression* returns a
 pointer to the object created. If it is an array, the *new-expression*
@@ -2539,14 +2539,14 @@ template<class T> struct A { A(T, T); };
 auto y = new A{1, 2};           // allocated type is A<int>
 ```
 
-— *end example*\]
+— *end example*]
 
 The *new-type-id* in a *new-expression* is the longest possible sequence
 of *new-declarator*s.
 
 [*Note 4*: This prevents ambiguities between the declarator operators
 `&`, `&&`, `*`, and `[]` and their expression
-counterparts. — *end note*\]
+counterparts. — *end note*]
 
 [*Example 2*:
 
@@ -2556,7 +2556,7 @@ new int * i;                    // syntax error: parsed as (new int*) i, not as 
 
 The `*` is the pointer declarator and not the multiplication operator.
 
-— *end example*\]
+— *end example*]
 
 [*Note 5*:
 
@@ -2585,9 +2585,9 @@ new (int (*[10])());
 allocates an array of `10` pointers to functions (taking no argument and
 returning `int`).
 
-— *end example*\]
+— *end example*]
 
-— *end note*\]
+— *end note*]
 
 When the allocated object is an array (that is, the
 *noptr-new-declarator* syntax is used or the *new-type-id* or *type-id*
@@ -2595,7 +2595,7 @@ denotes an array type), the *new-expression* yields a pointer to the
 initial element (if any) of the array.
 
 [*Note 6*: Both `new int` and `new int[10]` have type `int*` and the
-type of `new int[i][10]` is `int (*)[10]` — *end note*\]
+type of `new int[i][10]` is `int (*)[10]` — *end note*]
 
 The *attribute-specifier-seq* in a *noptr-new-declarator* appertains to
 the associated array type.
@@ -2608,7 +2608,7 @@ and shall evaluate to a strictly positive value. The *expression* in a
 [*Example 4*: Given the definition `int n = 42`, `new float[n][5]` is
 well-formed (because `n` is the *expression* of a
 *noptr-new-declarator*), but `new float[5][n]` is ill-formed (because
-`n` is not a constant expression). — *end example*\]
+`n` is not a constant expression). — *end example*]
 
 The *expression* in a *noptr-new-declarator* is erroneous if:
 
@@ -2657,7 +2657,7 @@ alternative definitions of these functions ( [[replacement.functions]])
 and/or class-specific versions ( [[class.free]]). The set of allocation
 and deallocation functions that may be called by a *new-expression* may
 include functions that do not perform allocation or deallocation; for
-example, see [[new.delete.placement]]. — *end note*\]
+example, see [[new.delete.placement]]. — *end note*]
 
 If the *new-expression* begins with a unary `::` operator, the
 allocation function’s name is looked up in the global scope. Otherwise,
@@ -2711,7 +2711,7 @@ true were the allocation not extended:
   }
 ```
 
-— *end example*\]
+— *end example*]
 
 When a *new-expression* calls an allocation function and that allocation
 has not been extended, the *new-expression* passes the amount of space
@@ -2729,7 +2729,7 @@ greater than the size of the array being created.
 to storage that is appropriately aligned for objects of any type with
 fundamental alignment, this constraint on array allocation overhead
 permits the common idiom of allocating character arrays into which
-objects of other types will later be placed. — *end note*\]
+objects of other types will later be placed. — *end note*]
 
 When a *new-expression* calls an allocation function and that allocation
 has been extended, the size argument to the allocation call shall be no
@@ -2785,7 +2785,7 @@ by `operator new[]`. This overhead may be applied in all array
 functions. The amount of overhead may vary from one invocation of `new`
 to another.
 
-— *end example*\]
+— *end example*]
 
 [*Note 9*: Unless an allocation function has a non-throwing exception
 specification ( [[except.spec]]), it indicates failure to allocate
@@ -2794,7 +2794,7 @@ storage by throwing a `std::bad_alloc` exception (
 it returns a non-null pointer otherwise. If the allocation function has
 a non-throwing exception specification, it returns null to indicate
 failure to allocate storage and a non-null pointer
-otherwise. — *end note*\]
+otherwise. — *end note*]
 
 If the allocation function is a non-allocating form (
 [[new.delete.placement]]) that returns null, the behavior is undefined.
@@ -2807,14 +2807,14 @@ null, it must be a pointer to a block of storage in which space for the
 object has been reserved. The block of storage is assumed to be
 appropriately aligned and of the requested size. The address of the
 created object will not necessarily be the same as that of the block if
-the object is an array. — *end note*\]
+the object is an array. — *end note*]
 
 A *new-expression* that creates an object of type `T` initializes that
 object as follows:
 
 - If the *new-initializer* is omitted, the object is
   default-initialized ( [[dcl.init]]). \[*Note 2*: If no initialization
-  is performed, the object has an indeterminate value. — *end note*\]
+  is performed, the object has an indeterminate value. — *end note*]
 - Otherwise, the *new-initializer* is interpreted according to the
   initialization rules of  [[dcl.init]] for direct-initialization.
 
@@ -2840,7 +2840,7 @@ does not cause the object’s memory to be freed.
 
 [*Note 11*: This is appropriate when the called allocation function
 does not allocate memory; otherwise, it is likely to result in a memory
-leak. — *end note*\]
+leak. — *end note*]
 
 If the *new-expression* begins with a unary `::` operator, the
 deallocation function’s name is looked up in the global scope.
@@ -2878,7 +2878,7 @@ S* p = new (0) S;   // ill-formed: non-placement deallocation function matches
                     // placement allocation function
 ```
 
-— *end example*\]
+— *end example*]
 
 If a *new-expression* calls a deallocation function, it passes the value
 returned from the allocation function call as the first argument of type
@@ -2926,12 +2926,12 @@ behavior is undefined.
 
 [*Note 1*: This means that the syntax of the *delete-expression* must
 match the type of the object allocated by `new`, not the syntax of the
-*new-expression*. — *end note*\]
+*new-expression*. — *end note*]
 
 [*Note 2*: A pointer to a `const` type can be the operand of a
 *delete-expression*; it is not necessary to cast away the constness (
 [[expr.const.cast]]) of the pointer expression before it is used as the
-operand of the *delete-expression*. — *end note*\]
+operand of the *delete-expression*. — *end note*]
 
 In the first alternative (*delete object*), if the static type of the
 object to be deleted is different from its dynamic type, the static type
@@ -2977,7 +2977,7 @@ pointer value, then:
 
 [*Note 3*: The deallocation function is called regardless of whether
 the destructor for the object or some element of the array throws an
-exception. — *end note*\]
+exception. — *end note*]
 
 If the value of the operand of the *delete-expression* is a null pointer
 value, it is unspecified whether a deallocation function will be called
@@ -2988,7 +2988,7 @@ deallocation functions `operator delete` for non-arrays (
 [[new.delete.single]]) and `operator delete[]` for arrays (
 [[new.delete.array]]). A C++ program can provide alternative definitions
 of these functions ( [[replacement.functions]]), and/or class-specific
-versions ( [[class.free]]). — *end note*\]
+versions ( [[class.free]]). — *end note*]
 
 When the keyword `delete` in a *delete-expression* is preceded by the
 unary `::` operator, the deallocation function’s name is looked up in
@@ -3031,7 +3031,7 @@ overhead, respectively, is passed as the corresponding argument. [^23]
 and either the first argument was not the result of a prior call to a
 usual allocation function or the second argument was not the
 corresponding argument in said call, the behavior is undefined (
-[[new.delete.single]], [[new.delete.array]]). — *end note*\]
+[[new.delete.single]], [[new.delete.array]]). — *end note*]
 
 Access and ambiguity control are done for both the deallocation function
 and the destructor ( [[class.dtor]],  [[class.free]]).
@@ -3074,7 +3074,7 @@ to object type; otherwise the result is a prvalue.
 
 [*Note 1*: If `T` is a non-class type that is cv-qualified, the
 *cv-qualifier*s are discarded when determining the type of the resulting
-prvalue; see Clause  [[expr]]. — *end note*\]
+prvalue; see Clause  [[expr]]. — *end note*]
 
 An explicit type conversion can be expressed using functional notation (
 [[expr.type.conv]]), a type conversion operator (`dynamic_cast`,
@@ -3132,7 +3132,7 @@ A* foo( D* p ) {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 The operand of a cast using the cast notation can be a prvalue of type
 “pointer to incomplete class type”. The destination type of a cast using
@@ -3145,7 +3145,7 @@ inheritance relationship between the two classes.
 [*Note 2*: For example, if the classes were defined later in the
 translation unit, a multi-pass compiler would be permitted to interpret
 a cast between pointers to the classes as if the class types were
-complete at the point of the cast. — *end note*\]
+complete at the point of the cast. — *end note*]
 
 ## Pointer-to-member operators <a id="expr.mptr.oper">[[expr.mptr.oper]]</a>
 
@@ -3198,7 +3198,7 @@ cs.*pm = 88;                    // ill-formed: cs is a const object
 }
 ```
 
-— *end note*\]
+— *end note*]
 
 If the result of `.*` or `->*` is a function, then that result can be
 used only as the operand for the function call operator `()`.
@@ -3212,7 +3212,7 @@ used only as the operand for the function call operator `()`.
 calls the member function denoted by `ptr_to_mfct` for the object
 pointed to by `ptr_to_obj`.
 
-— *end example*\]
+— *end example*]
 
 In a `.*` expression whose object expression is an rvalue, the program
 is ill-formed if the second operand is a pointer to member function with
@@ -3301,7 +3301,7 @@ i - j; otherwise, the behavior is undefined.
 
 [*Note 1*: If the value i - j is not in the range of representable
 values of type `std::ptrdiff_t`, the behavior is
-undefined. — *end note*\]
+undefined. — *end note*]
 
 For addition or subtraction, if the expressions `P` or `Q` have type
 “pointer to cv `T`”, where `T` and the array element type are not
@@ -3309,7 +3309,7 @@ similar ( [[conv.qual]]), the behavior is undefined.
 
 [*Note 2*: In particular, a pointer to a base class cannot be used for
 pointer arithmetic when the array contains objects of a derived class
-type. — *end note*\]
+type. — *end note*]
 
 If the value 0 is added to or subtracted from a null pointer value, the
 result is a null pointer value. If two null pointer values are
@@ -3356,7 +3356,7 @@ The expression `E1` is sequenced before the expression `E2`.
 The relational operators group left-to-right.
 
 [*Example 1*: `a<b<c` means `(a<b)<c` and *not*
-`(a<b)&&(b<c)`. — *end example*\]
+`(a<b)&&(b<c)`. — *end example*]
 
 ``` bnf
 relational-expression:
@@ -3460,7 +3460,7 @@ is defined as follows:
   bool b1 = (bx == cx);   // unspecified
   ```
 
-  — *end example*\]
+  — *end example*]
 - If both refer to (possibly different) members of the same union (
   [[class.union]]), they compare equal.
 - Otherwise, two pointers to members compare equal if they would refer
@@ -3485,7 +3485,7 @@ is defined as follows:
   bool y = (pb == pl);            // true
   ```
 
-  — *end example*\]
+  — *end example*]
 
 Two operands of type `std::nullptr_t` or one operand of type
 `std::nullptr_t` and the other a null pointer constant compare equal.
@@ -3601,7 +3601,7 @@ following shall hold:
   is a bit-field if that operand is a bit-field.
 - Both the second and the third operands have type `void`; the result is
   of type `void` and is a prvalue. \[*Note 3*: This includes the case
-  where both operands are *throw-expression*s. — *end note*\]
+  where both operands are *throw-expression*s. — *end note*]
 
 Otherwise, if the second and third operand are glvalue bit-fields of the
 same value category and of types cv-qualifiercv1 `T` and cv-qualifiercv2
@@ -3618,7 +3618,7 @@ the other.
 
 [*Note 1*: Properties such as access, whether an operand is a
 bit-field, or whether a conversion function is deleted are ignored for
-that determination. — *end note*\]
+that determination. — *end note*]
 
 Attempts are made to form an implicit conversion sequence from an
 operand expression `E1` of type `T1` to a target type related to the
@@ -3652,7 +3652,7 @@ and the converted operand is used in place of the original operand for
 the remainder of this section.
 
 [*Note 2*: The conversion might be ill-formed even if an implicit
-conversion sequence could be formed. — *end note*\]
+conversion sequence could be formed. — *end note*]
 
 If the second and third operands are glvalues of the same value category
 and have the same type, the result is of that type and value category
@@ -3727,7 +3727,7 @@ try {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 If no exception is presently being handled, evaluating a
 *throw-expression* with no operand calls `std::{}terminate()` (
@@ -3747,7 +3747,7 @@ operation of a compound assignment is a single evaluation.
 
 [*Note 1*: Therefore, a function call shall not intervene between the
 lvalue-to-rvalue conversion and the side effect associated with any
-single compound assignment operator. — *end note*\]
+single compound assignment operator. — *end note*]
 
 ``` bnf
 assignment-expression:
@@ -3774,7 +3774,7 @@ operator ( [[class.copy]],  [[over.ass]]).
 
 [*Note 2*: For class objects, assignment is not in general the same as
 initialization ( [[dcl.init]],  [[class.ctor]],  [[class.init]], 
-[[class.copy]]). — *end note*\]
+[[class.copy]]). — *end note*]
 
 When the left operand of an assignment operator is a bit-field that
 cannot represent the value of the expression, the resulting value of the
@@ -3794,7 +3794,7 @@ the behavior is undefined.
 [*Note 3*: This restriction applies to the relationship between the
 left and right sides of the assignment operation; it is not a statement
 about how the target of the assignment may be aliased in general. See 
-[[basic.lval]]. — *end note*\]
+[[basic.lval]]. — *end note*]
 
 A *braced-init-list* may appear on the right-hand side of
 
@@ -3818,7 +3818,7 @@ a = b = { 1 };            // meaning a=b=1;
 a = { 1 } = b;            // syntax error
 ```
 
-— *end example*\]
+— *end example*]
 
 ## Comma operator <a id="expr.comma">[[expr.comma]]</a>
 
@@ -3843,7 +3843,7 @@ operand is a bit-field. If the right operand is a temporary expression (
 In contexts where comma is given a special meaning,
 
 [*Example 1*: in lists of arguments to functions ( [[expr.call]]) and
-lists of initializers ( [[dcl.init]]) — *end example*\]
+lists of initializers ( [[dcl.init]]) — *end example*]
 
 the comma operator as described in Clause  [[expr]] can appear only in
 parentheses.
@@ -3856,7 +3856,7 @@ f(a, (t=3, t+2), c);
 
 has three arguments, the second of which has the value `5`.
 
-— *end example*\]
+— *end example*]
 
 ## Constant expressions <a id="expr.const">[[expr.const]]</a>
 
@@ -3868,7 +3868,7 @@ assuming that copy elision is performed, are called
 *constant expressions*.
 
 [*Note 1*: Constant expressions can be evaluated during
-translation. — *end note*\]
+translation. — *end note*]
 
 ``` bnf
 constant-expression:
@@ -3884,7 +3884,7 @@ of `e`, following the rules of the abstract machine (
 - an invocation of a function other than a constexpr constructor for a
   literal class, a constexpr function, or an implicit invocation of a
   trivial destructor ( [[class.dtor]]) \[*Note 4*: Overload resolution (
-  [[over.match]]) is applied as usual — *end note*\] ;
+  [[over.match]]) is applied as usual — *end note*] ;
 - an invocation of an undefined constexpr function or an undefined
   constexpr constructor;
 - an invocation of an instantiated constexpr function or constexpr
@@ -3897,7 +3897,7 @@ of `e`, following the rules of the abstract machine (
   \[*Note 5*: including, for example, signed integer overflow (Clause
   [[expr]]), certain pointer arithmetic ( [[expr.add]]), division by
   zero ( [[expr.mul]]), or certain shift operations (
-  [[expr.shift]]) — *end note*\] ;
+  [[expr.shift]]) — *end note*] ;
 - an lvalue-to-rvalue conversion ( [[conv.lval]]) unless it is applied
   to
   - a non-volatile glvalue of integral or enumeration type that refers
@@ -3940,7 +3940,7 @@ of `e`, following the rules of the abstract machine (
   }
   ```
 
-  — *end example*\]
+  — *end example*]
   \[*Note 6*:
   If the odr-use occurs in an invocation of a function call operator of
   a closure type, it no longer refers to `this` or to an enclosing
@@ -3958,8 +3958,8 @@ of `e`, following the rules of the abstract machine (
   static_assert(bind(monad(2))(monad)() == monad(2)());
   ```
 
-  — *end example*\]
-  — *end note*\]
+  — *end example*]
+  — *end note*]
 - a conversion from type cv `void*` to a pointer-to-object type;
 - a dynamic cast ( [[expr.dynamic.cast]]);
 - a `reinterpret_cast` ( [[expr.reinterpret.cast]]);
@@ -4022,7 +4022,7 @@ constexpr int y = h(1);             // OK: initializes y with the value 2
                                     // the lifetime of k begins inside h(1)
 ```
 
-— *end example*\]
+— *end example*]
 
 An *integral constant expression* is an expression of integral or
 unscoped enumeration type, implicitly converted to a prvalue, where the
@@ -4031,7 +4031,7 @@ converted expression is a core constant expression.
 [*Note 2*: Such expressions may be used as bit-field lengths (
 [[class.bit]]), as enumerator initializers if the underlying type is not
 fixed ( [[dcl.enum]]), and as alignments (
-[[dcl.align]]). — *end note*\]
+[[dcl.align]]). — *end note*]
 
 A *converted constant expression* of type `T` is an expression,
 implicitly converted to type `T`, where the converted expression is a
@@ -4056,7 +4056,7 @@ and where the reference binding (if any) binds directly.
 [[expr.new]]), as case expressions ( [[stmt.switch]]), as enumerator
 initializers if the underlying type is fixed ( [[dcl.enum]]), as array
 bounds ( [[dcl.array]]), and as non-type template arguments (
-[[temp.arg]]). — *end note*\]
+[[temp.arg]]). — *end note*]
 
 A *contextually converted constant expression of type `bool`* is an
 expression, contextually converted to `bool` (Clause [[conv]]), where
@@ -4103,9 +4103,9 @@ bool f() {
 
 It is unspecified whether the value of `f()` will be `true` or `false`.
 
-— *end example*\]
+— *end example*]
 
-— *end note*\]
+— *end note*]
 
 If an expression of literal class type is used in a context where an
 integral constant expression is required, then that expression is
@@ -4129,7 +4129,7 @@ X<a> x;             // OK: unique conversion to int
 int ary[a];         // error: ambiguous conversion
 ```
 
-— *end example*\]
+— *end example*]
 
 <!-- Section link definitions -->
 [expr]: #expr

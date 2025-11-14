@@ -34,7 +34,7 @@ terms of the number of operations on the contained objects.
 
 [*Example 1*: The copy constructor of type `vector<vector<int>>` has
 linear complexity, even though the complexity of copying each contained
-`vector<int>` is itself linear. — *end example*\]
+`vector<int>` is itself linear. — *end example*]
 
 For the components affected by this subclause that declare an
 `allocator_type`, objects stored in these components shall be
@@ -49,7 +49,7 @@ for internal types used by the container.
 
 [*Note 1*: This means, for example, that a node-based container might
 need to construct nodes containing aligned buffers and call `construct`
-to place the element into the buffer. — *end note*\]
+to place the element into the buffer. — *end note*]
 
 In Tables  [[tab:container.req]], [[tab:container.rev.req]], and
 [[tab:container.opt]] `X` denotes a container class containing objects
@@ -62,7 +62,7 @@ Those entries marked “(Note A)” or “(Note B)” have linear complexity for
 `array` and have constant complexity for all other standard containers.
 
 [*Note 2*: The algorithm `equal()` is defined in
-[[algorithms]]. — *end note*\]
+[[algorithms]]. — *end note*]
 
 The member function `size()` returns the number of elements in the
 container. The number of elements is defined by the rules of
@@ -99,7 +99,7 @@ memory using an allocator (see  [[allocator.requirements]]).
 references to allocated elements other than through the allocator’s
 pointer type, i.e., as objects of type `P` or
 `pointer_traits<P>::template rebind<unspecified>`, where `P` is
-`allocator_traits<allocator_type>::pointer`. — *end note*\]
+`allocator_traits<allocator_type>::pointer`. — *end note*]
 
 Copy constructors for these container types obtain an allocator by
 calling
@@ -112,7 +112,7 @@ these container types take a `const allocator_type&` argument.
 
 [*Note 4*: If an invocation of a constructor uses the default value of
 an optional allocator argument, then the allocator type must support
-value-initialization. — *end note*\]
+value-initialization. — *end note*]
 
 A copy of this allocator is used for any memory allocation and element
 construction performed, by these constructors and by all member
@@ -171,7 +171,7 @@ requirements:
 - no `swap()` function invalidates any references, pointers, or
   iterators referring to the elements of the containers being swapped.
   \[*Note 1*: The `end()` iterator does not refer to any element, so it
-  may be invalidated. — *end note*\]
+  may be invalidated. — *end note*]
 
 Unless otherwise specified (either explicitly or by defining a function
 in terms of other functions), invoking a container member function or
@@ -193,7 +193,7 @@ requirements [[iterator.requirements.general]] then the operations
 described in [[container.opt]] are implemented by constexpr functions.
 
 [*Note 5*: The algorithm `lexicographical_compare_three_way` is defined
-in [[algorithms]]. — *end note*\]
+in [[algorithms]]. — *end note*]
 
 All of the containers defined in this Clause and in  [[basic.string]]
 except `array` meet the additional requirements of an allocator-aware
@@ -233,7 +233,7 @@ user specializations of `allocator<T>` are not instantiated:
   value of `*p` is equivalent to the value of `rv` before the
   evaluation.
   \[*Note 2*: `rv` remains a valid object. Its state is
-  unspecified — *end note*\]
+  unspecified — *end note*]
 - `T` is *\textit{Cpp17CopyInsertable} into `X`* into
   X@*Cpp17CopyInsertable* into `X` means that, in addition to `T` being
   *Cpp17MoveInsertable* into `X`, the following expression is
@@ -261,7 +261,7 @@ user specializations of `allocator<T>` are not instantiated:
 `allocator_traits<A>::construct(m, p, args)` to construct an element at
 `p` using `args`, with `m == get_allocator()`. The default `construct`
 in `allocator` will call `::new((void*)p) T(args)`, but specialized
-allocators may choose a different definition. — *end note*\]
+allocators may choose a different definition. — *end note*]
 
 In [[container.alloc.req]], `X` denotes an allocator-aware container
 class with a `value_type` of `T` using allocator of type `A`, `u`
@@ -301,7 +301,7 @@ concurrently.
 data race, but `x[0] = 5` and `*x.begin() = 10` executed concurrently
 may result in a data race. As an exception to the general rule, for a
 `vector<bool> y`, `y[0] = true` may race with
-`y[1] = true`. — *end note*\]
+`y[1] = true`. — *end note*]
 
 ### Sequence containers <a id="sequence.reqmts">[[sequence.reqmts]]</a>
 
@@ -324,7 +324,7 @@ frequent insertions and deletions from the middle of the sequence.
 `deque` is the data structure of choice when most insertions and
 deletions take place at the beginning or at the end of the sequence.
 When choosing a container, remember `vector` is best; leave a comment to
-explain if you choose from the rest! — *end note*\]
+explain if you choose from the rest! — *end note*]
 
 In Tables  [[tab:container.seq.req]] and [[tab:container.seq.opt]], `X`
 denotes a sequence container class, `a` denotes a value of type `X`
@@ -346,7 +346,7 @@ pattern `Args&&`.
 The complexities of the expressions are sequence dependent.
 
 [*Note 2*: `args` may directly or indirectly refer to a value in
-`a`. — *end note*\]
+`a`. — *end note*]
 
 The iterator returned from `a.insert(p, t)` points to the copy of `t`
 inserted into `a`.
@@ -662,7 +662,7 @@ to be equivalent if for the comparison object `comp`,
 `comp(k1, k2) == false && comp(k2, k1) == false`.
 
 [*Note 1*: This is not necessarily the same as the result of
-`k1 == k2`. — *end note*\]
+`k1 == k2`. — *end note*]
 
 For any two keys `k1` and `k2` in the same container, calling
 `comp(k1, k2)` shall always return the same value.
@@ -688,7 +688,7 @@ type.
 [*Note 2*: `iterator` and `const_iterator` have identical semantics in
 this case, and `iterator` is convertible to `const_iterator`. Users can
 avoid violating the one-definition rule by always using `const_iterator`
-in their function parameter lists. — *end note*\]
+in their function parameter lists. — *end note*]
 
 The associative containers meet all the requirements of Allocator-aware
 containers [[container.requirements.general]], except that for `map` and
@@ -698,7 +698,7 @@ containers [[container.requirements.general]], except that for `map` and
 [*Note 3*: For example, in some cases `key_type` and `mapped_type` are
 required to be *Cpp17CopyAssignable* even though the associated
 `value_type`, `pair<const key_type, mapped_type>`, is not
-*Cpp17CopyAssignable*. — *end note*\]
+*Cpp17CopyAssignable*. — *end note*]
 
 In [[container.assoc.req]], `X` denotes an associative container class,
 `a` denotes a value of type `X`, `a2` denotes a value of a type with
@@ -826,7 +826,7 @@ hash function shall return the same value for both.
 
 [*Note 1*: Thus, when an unordered associative container is
 instantiated with a non-default `Pred` parameter it usually needs a
-non-default `Hash` parameter as well. — *end note*\]
+non-default `Hash` parameter as well. — *end note*]
 
 For any two keys `k1` and `k2` in the same container, calling
 `pred(k1, k2)` shall always return the same value. For any key `k` in a
@@ -858,7 +858,7 @@ type.
 [*Note 2*: `iterator` and `const_iterator` have identical semantics in
 this case, and `iterator` is convertible to `const_iterator`. Users can
 avoid violating the one-definition rule by always using `const_iterator`
-in their function parameter lists. — *end note*\]
+in their function parameter lists. — *end note*]
 
 The elements of an unordered associative container are organized into
 *buckets*. Keys with the same hash code appear in the same bucket. The
@@ -879,7 +879,7 @@ placed on `value_type` in [[container.alloc.req]] apply instead to
 [*Note 3*: For example, `key_type` and `mapped_type` are sometimes
 required to be *Cpp17CopyAssignable* even though the associated
 `value_type`, `pair<const key_type, mapped_type>`, is not
-*Cpp17CopyAssignable*. — *end note*\]
+*Cpp17CopyAssignable*. — *end note*]
 
 In [[container.hash.req]]:
 
@@ -1346,7 +1346,7 @@ constexpr void swap(array& y) noexcept(is_nothrow_swappable_v<T>);
 [*Note 1*: Unlike the `swap` function for other containers,
 `array::swap` takes linear time, may exit via an exception, and does not
 cause iterators to become associated with the other
-container. — *end note*\]
+container. — *end note*]
 
 #### Specialized algorithms <a id="array.special">[[array.special]]</a>
 
@@ -1640,7 +1640,7 @@ void shrink_to_fit();
 but does not change the size of the sequence.
 
 [*Note 1*: The request is non-binding to allow latitude for
-implementation-specific optimizations. — *end note*\]
+implementation-specific optimizations. — *end note*]
 
 If the size is equal to the old capacity, or if an exception is thrown
 other than by the move constructor of a non-*Cpp17CopyInsertable* `T`,
@@ -1708,7 +1708,7 @@ invalidates the past-the-end iterator and all iterators and references
 to all the elements of the deque.
 
 [*Note 1*: `pop_front` and `pop_back` are erase
-operations. — *end note*\]
+operations. — *end note*]
 
 *Complexity:* The number of calls to the destructor of `T` is the same
 as the number of elements erased, but the number of calls to the
@@ -1762,7 +1762,7 @@ access to list elements is not supported.
 
 [*Note 1*: It is intended that `forward_list` have zero space or time
 overhead relative to a hand-written C-style singly linked list. Features
-that would conflict with that goal have been omitted. — *end note*\]
+that would conflict with that goal have been omitted. — *end note*]
 
 A `forward_list` meets all of the requirements of a container (
 [[container.req]]), except that the `size()` member function is not
@@ -1779,7 +1779,7 @@ semantic information.
 the first element of interest, but in a `forward_list` there is no
 constant-time way to access a preceding element. For this reason, ranges
 that are modified, such as those supplied to `erase` and `splice`, must
-be open at the beginning. — *end note*\]
+be open at the beginning. — *end note*]
 
 ``` cpp
 namespace std {
@@ -3001,7 +3001,7 @@ iterators referring to the elements in the sequence, as well as the
 past-the-end iterator.
 
 [*Note 1*: If no reallocation happens, they remain
-valid. — *end note*\]
+valid. — *end note*]
 
 No reallocation shall take place during insertions that happen after a
 call to `reserve()` until an insertion would make the size of the vector
@@ -3017,7 +3017,7 @@ constexpr void shrink_to_fit();
 `capacity()` to `size()`.
 
 [*Note 2*: The request is non-binding to allow latitude for
-implementation-specific optimizations. — *end note*\]
+implementation-specific optimizations. — *end note*]
 
 It does not increase `capacity()`, but may reduce `capacity()` by
 causing reallocation. If an exception is thrown other than by the move
@@ -3031,7 +3031,7 @@ iterators referring to the elements in the sequence as well as the
 past-the-end iterator.
 
 [*Note 3*: If no reallocation happens, they remain
-valid. — *end note*\]
+valid. — *end note*]
 
 ``` cpp
 constexpr void swap(vector& x)
@@ -6994,7 +6994,7 @@ template<class It>
 - `It` satisfies `contiguous_iterator`.
 - `is_convertible_v<U(*)[], element_type(*)[]>` is `true`.
   \[*Note 3*: The intent is to allow only qualification conversions of
-  the iterator reference type to `element_type`. — *end note*\]
+  the iterator reference type to `element_type`. — *end note*]
 
 *Preconditions:*
 
@@ -7017,7 +7017,7 @@ template<class It, class End>
 
 - `is_convertible_v<U(*)[], element_type(*)[]>` is `true`.
   \[*Note 4*: The intent is to allow only qualification conversions of
-  the iterator reference type to `element_type`. — *end note*\]
+  the iterator reference type to `element_type`. — *end note*]
 - `It` satisfies `contiguous_iterator`.
 - `End` satisfies `sized_sentinel_for<It>`.
 - `is_convertible_v<End, size_t>` is `false`.
@@ -7046,12 +7046,12 @@ template<class T, size_t N> constexpr span(const array<T, N>& arr) noexcept;
 - `extent == dynamic_extent || N == extent` is `true`, and
 - `is_convertible_v<U(*)[], element_type(*)[]>` is `true`.
   \[*Note 5*: The intent is to allow only qualification conversions of
-  the array element type to `element_type`. — *end note*\]
+  the array element type to `element_type`. — *end note*]
 
 *Effects:* Constructs a `span` that is a view over the supplied array.
 
 [*Note 1*: `type_identity_t` affects class template argument
-deduction. — *end note*\]
+deduction. — *end note*]
 
 *Ensures:* `size() == N && data() == data(arr)` is `true`.
 
@@ -7070,7 +7070,7 @@ template<class R> constexpr explicit(extent != dynamic_extent) span(R&& r);
 - `is_array_v<remove_cvref_t<R>>` is `false`.
 - `is_convertible_v<U(*)[], element_type(*)[]>` is `true`.
   \[*Note 6*: The intent is to allow only qualification conversions of
-  the range reference type to `element_type`. — *end note*\]
+  the range reference type to `element_type`. — *end note*]
 
 *Preconditions:*
 
@@ -7103,7 +7103,7 @@ template<class OtherElementType, size_t OtherExtent>
 - `is_convertible_v<OtherElementType(*)[], element_type(*)[]>` is
   `true`. \[*Note 7*: The intent is to allow only qualification
   conversions of the `OtherElementType` to
-  `element_type`. — *end note*\]
+  `element_type`. — *end note*]
 
 *Preconditions:* If `extent` is not equal to `dynamic_extent`, then
 `s.size()` is equal to `extent`.

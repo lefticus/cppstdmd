@@ -79,12 +79,12 @@ requirements:[^1]
   constructor for each element) and then assigning each element its
   value. Or the implementation can allocate raw storage and use the copy
   constructor to initialize each element.
-  — *end example*\]
+  — *end example*]
   If the distinction between initialization and assignment is important
   for a class, or if it fails to satisfy any of the other conditions
   listed above, the programmer should use `vector` ( [[vector]]) instead
   of `valarray` for that class.
-  — *end note*\]
+  — *end note*]
 - If `T` is a class, it does not overload unary `operator&`.
 
 If any operation on `T` throws an exception the effects are undefined.
@@ -97,7 +97,7 @@ member or related function.
 [*Example 1*: It is valid to instantiate `valarray<complex>`, but
 `operator>()` will not be successfully instantiated for
 `valarray<complex>` operands, since `complex` does not have any ordering
-operators. — *end example*\]
+operators. — *end example*]
 
 ## The floating-point environment <a id="cfenv">[[cfenv]]</a>
 
@@ -151,7 +151,7 @@ these functions can be used to test floating-point status flags, set
 floating-point control modes, or run under non-default mode settings. If
 the pragma is used to enable control over the floating-point
 environment, this International Standard does not specify the effect on
-floating-point evaluation in constant expressions. — *end note*\]
+floating-point evaluation in constant expressions. — *end note*]
 
 The floating-point environment has thread storage duration (
 [[basic.stc.thread]]). The initial state for a thread’s floating-point
@@ -160,7 +160,7 @@ that constructs the corresponding `thread` object (
 [[thread.thread.class]]) at the time it constructed the object.
 
 [*Note 2*: That is, the child thread gets the floating-point state of
-the parent thread at the time of the child’s creation. — *end note*\]
+the parent thread at the time of the child’s creation. — *end note*]
 
 A separate floating-point environment shall be maintained for each
 thread. Each function accesses the environment corresponding to its
@@ -645,7 +645,7 @@ return o << s.str();
 character, the use of comma as a field separator can be ambiguous.
 Inserting `showpoint` into the output stream forces all outputs to show
 an explicit decimal point character; as a result, all inserted sequences
-of complex numbers can be extracted unambiguously. — *end note*\]
+of complex numbers can be extracted unambiguously. — *end note*]
 
 ### `complex` value operations <a id="complex.value.ops">[[complex.value.ops]]</a>
 
@@ -912,7 +912,7 @@ instantiated.
 binding of any uniform random bit generator object `e` as the argument
 to any random number distribution object `d`, thus producing a
 zero-argument function object such as given by
-`bind(d,e)`. — *end note*\]
+`bind(d,e)`. — *end note*]
 
 Each of the entities specified via this subclause has an associated
 arithmetic type ( [[basic.fundamental]]) identified as `result_type`.
@@ -953,7 +953,7 @@ $0 \le i < 2^{32}$, based on the consumed data.
 [*Note 1*: Such an object provides a mechanism to avoid replication of
 streams of random variates. This can be useful, for example, in
 applications requiring large numbers of random number
-engines. — *end note*\]
+engines. — *end note*]
 
 A class `S` satisfies the requirements of a seed sequence if the
 expressions shown in Table  [[tab:SeedSequence]] are valid and have the
@@ -968,7 +968,7 @@ such that each value in the range of possible results has (ideally)
 equal probability of being returned.
 
 [*Note 1*: The degree to which `g`’s results approximate the ideal is
-often determined statistically. — *end note*\]
+often determined statistically. — *end note*]
 
 A class `G` satisfies the requirements of a if the expressions shown in
 Table  [[tab:UniformRandomBitGenerator]] are valid and have the
@@ -1358,7 +1358,7 @@ section  [[rand.eng.lcong]] is `numeric_limits<result_type>::max()` plus
 1.
 
 [*Note 1*: m need not be representable as a value of type
-`result_type`. — *end note*\]
+`result_type`. — *end note*]
 
 If the template parameter `m` is not 0, the following relations shall
 hold: `a < m` and `c < m`.
@@ -1499,7 +1499,7 @@ The state transition is performed as follows:
 
 [*Note 1*: This algorithm corresponds to a modular linear function of
 the form $\mathsf{TA}(\state{x}{i}) = (a \cdot \state{x}{i}) \bmod b$,
-where b is of the form mʳ - mˢ + 1 and a = b - (b-1) / m. — *end note*\]
+where b is of the form mʳ - mˢ + 1 and a = b - (b-1) / m. — *end note*]
 
 The generation algorithm is given by $\mathsf{GA}(\state{x}{i}) = y$,
 where y is the value produced as a result of advancing the engine’s
@@ -1675,7 +1675,7 @@ The transition and generation algorithms are described in terms of the
 following integral constants:
 
 [*Note 1*: The relation w = n₀ w₀ + (n - n₀)(w₀ + 1) always
-holds. — *end note*\]
+holds. — *end note*]
 
 The transition algorithm is carried out by invoking `e()` as often as
 needed to obtain n₀ values less than y_0 + `e.min()` and n - n₀ values
@@ -1897,7 +1897,7 @@ provide at least acceptable engine behavior for relatively casual,
 inexpert, and/or lightweight use. Because different implementations may
 select different underlying engine types, code that uses this `typedef`
 need not generate identical sequences across
-implementations. — *end note*\]
+implementations. — *end note*]
 
 ### Class `random_device` <a id="rand.device">[[rand.device]]</a>
 
@@ -2091,7 +2091,7 @@ as uniformly as possible as specified below.
 [*Note 1*: Obtaining a value in this way can be a useful step in the
 process of transforming a value generated by a uniform random bit
 generator into a value that can be delivered by a random number
-distribution. — *end note*\]
+distribution. — *end note*]
 
 ``` cpp
 template<class RealType, size_t bits, class URBG>
@@ -2205,7 +2205,7 @@ density function $$%
 \; \mbox{.}$$
 
 [*Note 1*: This implies that p(x | a,b) is undefined when
-`a == b`. — *end note*\]
+`a == b`. — *end note*]
 
 ``` cpp
 template<class RealType = double>
@@ -2439,7 +2439,7 @@ function $$%
 \; \mbox{.}$$
 
 [*Note 1*: This implies that P(i | k,p) is undefined when
-`p == 1`. — *end note*\]
+`p == 1`. — *end note*]
 
 ``` cpp
 template<class IntType = int>
@@ -3225,7 +3225,7 @@ discrete_distribution();
 p₀ = 1.
 
 [*Note 1*: Such an object will always deliver the value
-0. — *end note*\]
+0. — *end note*]
 
 ``` cpp
 template<class InputIterator>
@@ -3554,7 +3554,7 @@ k = 0, …, n.
 ### Low-quality random number generation <a id="c.math.rand">[[c.math.rand]]</a>
 
 [*Note 1*: The header `<cstdlib>` ( [[cstdlib.syn]]) declares the
-functions described in this subclause. — *end note*\]
+functions described in this subclause. — *end note*]
 
 ``` cpp
 int rand();
@@ -3572,7 +3572,7 @@ functions may call `rand`. It is *implementation-defined* whether the
 International Standard ( [[rand]]) are often preferable to `rand`,
 because `rand`’s underlying algorithm is unspecified. Use of `rand`
 therefore continues to be non-portable, with unpredictable and
-oft-questionable quality and performance. — *end note*\]
+oft-questionable quality and performance. — *end note*]
 
 ISO C 7.22.2
 
@@ -3986,7 +3986,7 @@ T& operator[](size_t n);
 [*Note 1*: The expression `(a[i] = q, a[i]) == q` evaluates to `true`
 for any non-constant `valarray<T> a`, any `T q`, and for any `size_t i`
 such that the value of `i` is less than the length of
-`a`. — *end note*\]
+`a`. — *end note*]
 
 *Remarks:* The expression `&a[i+j] == &a[i] + j` evaluates to `true` for
 all `size_t i` and `size_t j` such that `i+j < a.size()`.
@@ -3999,7 +3999,7 @@ The expression `&a[i] != &b[j]` evaluates to `true` for any two arrays
 used to advantage by optimizing compilers. Compilers may take advantage
 of inlining, constant propagation, loop fusion, tracking of pointers
 obtained from `operator new`, and other techniques to generate efficient
-`valarray`s. — *end note*\]
+`valarray`s. — *end note*]
 
 The reference returned by the subscript operator for an array shall be
 valid until the member function
@@ -4032,7 +4032,7 @@ const valarray<char> v0("abcdefghijklmnop", 16);
 // v0[slice(2, 5, 3)] returns valarray<char>("cfilo", 5)
 ```
 
-— *end example*\]
+— *end example*]
 
 ``` cpp
 slice_array<T> operator[](slice slicearr);
@@ -4050,7 +4050,7 @@ v0[slice(2, 5, 3)] = v1;
 // v0 == valarray<char>("abAdeBghCjkDmnEp", 16);
 ```
 
-— *end example*\]
+— *end example*]
 
 ``` cpp
 valarray operator[](const gslice& gslicearr) const;
@@ -4070,7 +4070,7 @@ const valarray<size_t> len(lv, 2), str(dv, 2);
 // valarray<char>("dfhkmo", 6)
 ```
 
-— *end example*\]
+— *end example*]
 
 ``` cpp
 gslice_array<T> operator[](const gslice& gslicearr);
@@ -4091,7 +4091,7 @@ v0[gslice(3, len, str)] = v1;
 // v0 == valarray<char>("abcAeBgCijDlEnFp", 16)
 ```
 
-— *end example*\]
+— *end example*]
 
 ``` cpp
 valarray operator[](const valarray<bool>& boolarr) const;
@@ -4109,7 +4109,7 @@ const bool vb[] = { false, false, true, true, false, true };
 // valarray<char>("cdf", 3)
 ```
 
-— *end example*\]
+— *end example*]
 
 ``` cpp
 mask_array<T> operator[](const valarray<bool>& boolarr);
@@ -4128,7 +4128,7 @@ v0[valarray<bool>(vb, 6)] = v1;
 // v0 == valarray<char>("abABeCghijklmnop", 16)
 ```
 
-— *end example*\]
+— *end example*]
 
 ``` cpp
 valarray operator[](const valarray<size_t>& indarr) const;
@@ -4146,7 +4146,7 @@ const size_t vi[] = { 7, 5, 2, 3, 8 };
 // valarray<char>("hfcdi", 5)
 ```
 
-— *end example*\]
+— *end example*]
 
 ``` cpp
 indirect_array<T> operator[](const valarray<size_t>& indarr);
@@ -4165,7 +4165,7 @@ v0[valarray<size_t>(vi, 5)] = v1;
 // v0 == valarray<char>("abCDeBgAEjklmnop", 16)
 ```
 
-— *end example*\]
+— *end example*]
 
 #### `valarray` unary operators <a id="valarray.unary">[[valarray.unary]]</a>
 
@@ -4306,12 +4306,12 @@ is `(*this)[`*`I`*` + n]` if *`I`*` + n` is non-negative and less than
 
 [*Note 1*: If element zero is taken as the leftmost element, a positive
 value of `n` shifts the elements left `n` places, with zero
-fill. — *end note*\]
+fill. — *end note*]
 
 [*Example 1*: If the argument has the value -2, the first two elements
 of the result will be value-initialized ( [[dcl.init]]); the third
 element of the result will be assigned the value of the first element of
-the argument; etc. — *end example*\]
+the argument; etc. — *end example*]
 
 ``` cpp
 valarray cshift(int n) const;
@@ -4550,7 +4550,7 @@ slices. The constructor with arguments for a slice takes a start,
 length, and stride parameter.
 
 [*Example 1*: `slice(3, 8, 2)` constructs a slice which selects
-elements 3, 5, 7, ... 17 from an array. — *end example*\]
+elements 3, 5, 7, ... 17 from an array. — *end example*]
 
 #### `slice` access functions <a id="slice.access">[[slice.access]]</a>
 
@@ -4609,7 +4609,7 @@ It has reference semantics to a subset of an array specified by a
 [*Example 1*: The expression `a[slice(1, 5, 3)] = b;` has the effect of
 assigning the elements of `b` to a slice of the elements in `a`. For the
 slice shown, the elements selected from `a` are 1, 4, ...,
-13. — *end example*\]
+13. — *end example*]
 
 #### `slice_array` assignment <a id="slice.arr.assign">[[slice.arr.assign]]</a>
 
@@ -4699,7 +4699,7 @@ which are ordered as shown in the following table:
 
 That is, the highest-ordered index turns fastest.
 
-— *end example*\]
+— *end example*]
 
 It is possible to have degenerate generalized slices in which an address
 is repeated.
@@ -4709,7 +4709,7 @@ is repeated.
 If the stride parameters in the previous example are changed to {1, 1,
 1}, the first few elements of the resulting sequence of indices will be
 
-— *end example*\]
+— *end example*]
 
 If a degenerate slice is used as the argument to the non-`const` version
 of `operator[](const gslice&)`, the behavior is undefined.
@@ -4986,7 +4986,7 @@ a[indirect] = b;
 results in undefined behavior since element 4 is specified twice in the
 indirection.
 
-— *end example*\]
+— *end example*]
 
 #### `indirect_array` compound assignment <a id="indirect.array.comp.assign">[[indirect.array.comp.assign]]</a>
 
@@ -5297,7 +5297,7 @@ whenever an algorithm expects a function object ( [[function.objects]]).
 
 [*Note 1*: The use of closed ranges as well as semi-open ranges to
 specify requirements throughout this subclause is
-intentional. — *end note*\]
+intentional. — *end note*]
 
 ### Accumulate <a id="accumulate">[[accumulate]]</a>
 
@@ -5399,7 +5399,7 @@ template<class ExecutionPolicy, class ForwardIterator, class T, class BinaryOper
 [*Note 1*: The difference between `reduce` and `accumulate` is that
 `reduce` applies `binary_op` in an unspecified order, which yields a
 nondeterministic result for non-associative or non-commutative
-`binary_op` such as floating-point addition. — *end note*\]
+`binary_op` such as floating-point addition. — *end note*]
 
 ### Inner product <a id="inner.product">[[inner.product]]</a>
 
@@ -5532,7 +5532,7 @@ for every iterator `i` in \[`first`, `last`).
 `binary_op`.
 
 [*Note 1*: `transform_reduce` does not apply `unary_op` to
-`init`. — *end note*\]
+`init`. — *end note*]
 
 ### Partial sum <a id="partial.sum">[[partial.sum]]</a>
 
@@ -5639,7 +5639,7 @@ GENERALIZED_NONCOMMUTATIVE_SUM(
 [*Note 1*: The difference between `exclusive_scan` and `inclusive_scan`
 is that `exclusive_scan` excludes the `i`th input element from the `i`th
 sum. If `binary_op` is not mathematically associative, the behavior of
-`exclusive_scan` may be nondeterministic. — *end note*\]
+`exclusive_scan` may be nondeterministic. — *end note*]
 
 ### Inclusive scan <a id="inclusive.scan">[[inclusive.scan]]</a>
 
@@ -5725,7 +5725,7 @@ through `result + K` the value of
 [*Note 1*: The difference between `exclusive_scan` and `inclusive_scan`
 is that `inclusive_scan` includes the `i`th input element in the `i`th
 sum. If `binary_op` is not mathematically associative, the behavior of
-`inclusive_scan` may be nondeterministic. — *end note*\]
+`inclusive_scan` may be nondeterministic. — *end note*]
 
 ### Transform exclusive scan <a id="transform.exclusive.scan">[[transform.exclusive.scan]]</a>
 
@@ -5782,7 +5782,7 @@ GENERALIZED_NONCOMMUTATIVE_SUM(
 the iᵗʰ input element from the iᵗʰ sum. If `binary_op` is not
 mathematically associative, the behavior of `transform_exclusive_scan`
 may be nondeterministic. `transform_exclusive_scan` does not apply
-`unary_op` to `init`. — *end note*\]
+`unary_op` to `init`. — *end note*]
 
 ### Transform inclusive scan <a id="transform.inclusive.scan">[[transform.inclusive.scan]]</a>
 
@@ -5862,7 +5862,7 @@ through `result + K` the value of
 the iᵗʰ input element in the iᵗʰ sum. If `binary_op` is not
 mathematically associative, the behavior of `transform_inclusive_scan`
 may be nondeterministic. `transform_inclusive_scan` does not apply
-`unary_op` to `init`. — *end note*\]
+`unary_op` to `init`. — *end note*]
 
 ### Adjacent difference <a id="adjacent.difference">[[adjacent.difference]]</a>
 
@@ -5965,7 +5965,7 @@ template <class M, class N>
 
 [*Note 1*: These requirements ensure, for example, that
 `gcd(m, m) = |m|` is representable as a value of type
-`M`. — *end note*\]
+`M`. — *end note*]
 
 *Remarks:* If either `M` or `N` is not an integer type, or if either is
 cv `bool`, the program is ill-formed.
@@ -6545,7 +6545,7 @@ mathematical special functions described in [[sf.cmath]].
 
 [*Note 1*: Several functions have additional overloads in this
 International Standard, but they have the same behavior as in the C
-standard library ( [[library.c]]). — *end note*\]
+standard library ( [[library.c]]). — *end note*]
 
 For each set of overloaded functions within `<cmath>`, with the
 exception of `abs`, there shall be additional overloads sufficient to
@@ -6563,7 +6563,7 @@ ensure:
     `double` parameters have type `float`.
 
 [*Note 2*: `abs` is exempted from these rules in order to stay
-compatible with C. — *end note*\]
+compatible with C. — *end note*]
 
 ISO C 7.12
 
@@ -6571,7 +6571,7 @@ ISO C 7.12
 
 [*Note 1*: The headers `<cstdlib>` ( [[cstdlib.syn]]) and `<cmath>` (
 [[cmath.syn]]) declare the functions described in this
-subclause. — *end note*\]
+subclause. — *end note*]
 
 ``` cpp
 int abs(int j);
@@ -6591,7 +6591,7 @@ standard library for the functions `abs`, `labs`, `llabs`, `fabsf`,
 integral promotion ( [[conv.prom]]), the program is ill-formed.
 
 [*Note 1*: Arguments that can be promoted to `int` are permitted for
-compatibility with C. — *end note*\]
+compatibility with C. — *end note*]
 
 ISO C 7.12.7.2, 7.22.6.1
 

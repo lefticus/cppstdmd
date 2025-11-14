@@ -125,11 +125,11 @@ to the extent applicable to the floating-point types
 
 [*Note 1*: ISO/IEC 9899:2018 (C), Annex F specifies the conditions
 under which floating-point exceptions are raised and the behavior when
-NaNs and/or infinities are passed as arguments. — *end note*\]
+NaNs and/or infinities are passed as arguments. — *end note*]
 
 [*Note 2*: Equivalently, a call to a C standard library function is a
 non-constant library call if `errno` is set when
-`math_errhandling & MATH_ERRNO` is `true`. — *end note*\]
+`math_errhandling & MATH_ERRNO` is `true`. — *end note*]
 
 ## Method of description <a id="description">[[description]]</a>
 
@@ -221,7 +221,7 @@ result in the required semantics failing to be met.
 
 [*Example 1*: The required `<` operator of the `totally_ordered`
 concept [[concept.totallyordered]] does not meet the semantic
-requirements of that concept when operating on NaNs. — *end example*\]
+requirements of that concept when operating on NaNs. — *end example*]
 
 This does not affect whether a type models the concept.
 
@@ -256,9 +256,9 @@ appropriate):[^5]
 - *Constraints:* the conditions for the function’s participation in
   overload resolution [[over.match]]. \[*Note 1*: Failure to meet such a
   condition results in the function’s silent
-  non-viability. — *end note*\] \[*Example 1*: An implementation can
+  non-viability. — *end note*] \[*Example 1*: An implementation can
   express such a condition via a *constraint-expression*
-  [[temp.constr.decl]]. — *end example*\]
+  [[temp.constr.decl]]. — *end example*]
 
 - *Mandates:* the conditions that, if not met, render the program
   ill-formed. \[*Example 2*: An implementation can express such a
@@ -267,7 +267,7 @@ appropriate):[^5]
   emitted only after the function has been selected by overload
   resolution, an implementation can express such a condition via a
   *constraint-expression* [[temp.constr.decl]] and also define the
-  function as deleted. — *end example*\]
+  function as deleted. — *end example*]
 
 -  the conditions that are required for a call to the function to be a
   constant subexpression [[defns.const.subexpr]].
@@ -276,7 +276,7 @@ appropriate):[^5]
   it is called; violation of any preconditions results in undefined
   behavior. \[*Example 3*: An implementation can express some such
   conditions via the use of a contract assertion, such as a precondition
-  assertion [[dcl.contract.func]]. — *end example*\]
+  assertion [[dcl.contract.func]]. — *end example*]
 
 - conditions that the function assumes to hold whenever it is called.
   - When invoking the function in a hardened implementation, prior to
@@ -298,7 +298,7 @@ appropriate):[^5]
 - *Ensures:* the conditions (sometimes termed observable results)
   established by the function. \[*Example 4*: An implementation can
   express some such conditions via the use of a contract assertion, such
-  as a postcondition assertion [[dcl.contract.func]]. — *end example*\]
+  as a postcondition assertion [[dcl.contract.func]]. — *end example*]
 
 - *Result:* for a *typename-specifier*, a description of the named type;
   for an *expression*, a description of the type and value category of
@@ -533,7 +533,7 @@ sequences that follow a few uniform conventions:
   wide-character set is encoded as a single code unit representable by a
   value of type `wchar_t`. \[*Note 2*: The encodings of the execution
   character sets can be unrelated to any literal
-  encoding. — *end note*\]
+  encoding. — *end note*]
 - A *letter* is any of the 26 lowercase or 26 uppercase letters in the
   basic character set.
 - The *decimal-point character* is the locale-specific (single-byte)
@@ -645,9 +645,9 @@ void foo() {
 The function call expression at \#1 invokes `std::ranges::find`, not
 `std::find`.
 
-— *end example*\]
+— *end example*]
 
-— *end note*\]
+— *end note*]
 
 #### Functions within classes <a id="functions.within.classes">[[functions.within.classes]]</a>
 
@@ -702,7 +702,7 @@ corresponding requirements for a hosted implementation.
 
 [*Note 1*: Deleted definitions reduce the chance of overload resolution
 silently changing when migrating from a freestanding implementation to a
-hosted implementation. — *end note*\]
+hosted implementation. — *end note*]
 
 [*Example 1*:
 
@@ -710,7 +710,7 @@ hosted implementation. — *end note*\]
 double abs(double j);           // freestanding-deleted
 ```
 
-— *end example*\]
+— *end example*]
 
 A declaration in a synopsis is a freestanding item if
 
@@ -721,7 +721,7 @@ A declaration in a synopsis is a freestanding item if
   *hosted*. \[*Note 3*: Declarations followed by *hosted* in
   freestanding headers are not freestanding items. As a result, looking
   up the name of such functions can vary between hosted and freestanding
-  implementations. — *end note*\]
+  implementations. — *end note*]
 
 [*Example 2*:
 
@@ -730,7 +730,7 @@ A declaration in a synopsis is a freestanding item if
 namespace std {
 ```
 
-— *end example*\]
+— *end example*]
 
 An entity or deduction guide is a freestanding item if its introducing
 declaration is not followed by a comment that includes *hosted*, and is:
@@ -758,7 +758,7 @@ A macro is a freestanding item if it is defined in a header synopsis and
 #define NULL see below      // freestanding
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Note 2*: Freestanding annotations follow some additional exposition
 conventions that do not impose any additional normative requirements.
@@ -768,7 +768,7 @@ synopses that begin with a comment containing "mostly freestanding"
 contain at least one hosted item or freestanding deleted function.
 Classes and class templates followed by a comment containing "partially
 freestanding" contain at least one hosted item or freestanding deleted
-function. — *end note*\]
+function. — *end note*]
 
 [*Example 4*:
 
@@ -783,7 +783,7 @@ struct array {
 };
 ```
 
-— *end example*\]
+— *end example*]
 
 ## Library-wide requirements <a id="requirements">[[requirements]]</a>
 
@@ -832,7 +832,7 @@ the specification of a declaration `D` in [[support]] through [[thread]]
 or [[depr]], its meaning is established as-if by performing unqualified
 name lookup [[basic.lookup.unqual]] in the context of `D`.
 
-[*Note 1*: Argument-dependent lookup is not performed. — *end note*\]
+[*Note 1*: Argument-dependent lookup is not performed. — *end note*]
 
 Similarly, the meaning of a *qualified-id* is established as-if by
 performing qualified name lookup [[basic.lookup.qual]] in the context of
@@ -840,10 +840,10 @@ performing qualified name lookup [[basic.lookup.qual]] in the context of
 
 [*Example 1*: The reference to `is_array_v` in the specification of
 `std::to_array` [[array.creation]] refers to
-`::std::is_array_v`. — *end example*\]
+`::std::is_array_v`. — *end example*]
 
 [*Note 2*: Operators in expressions [[over.match.oper]] are not so
-constrained; see [[global.functions]]. — *end note*\]
+constrained; see [[global.functions]]. — *end note*]
 
 The meaning of the unqualified name `swap` is established in an overload
 resolution context for swappable values [[swappable.requirements]]. The
@@ -869,7 +869,7 @@ implementation, are collectively known as the
 *importable C++ library headers*.
 
 [*Note 1*: Importable C++ library headers can be imported
-[[module.import]]. — *end note*\]
+[[module.import]]. — *end note*]
 
 [*Example 1*:
 
@@ -878,7 +878,7 @@ import <vector>;                // imports the <vector> header unit
 std::vector<int> vi;            // OK
 ```
 
-— *end example*\]
+— *end example*]
 
 Except as noted in [[library]] through [[thread]] and [[depr]], the
 contents of each header `cname` is the same as that of the corresponding
@@ -897,7 +897,7 @@ functions.
 
 [*Note 2*: The names defined as macros in C include the following:
 `assert`, `offsetof`, `setjmp`, `va_arg`, `va_end`, and
-`va_start`. — *end note*\]
+`va_start`. — *end note*]
 
 Names that are defined as functions in C shall be defined as functions
 in the C++ standard library.[^16]
@@ -947,7 +947,7 @@ is attached.
 
 [*Note 1*: Conforming implementations ensure that mixing `#include` and
 `import` does not result in conflicting attachments
-[[basic.link]]. — *end note*\]
+[[basic.link]]. — *end note*]
 
 *Recommended practice:* Implementations should ensure such attachments
 do not preclude further evolution or decomposition of the standard
@@ -963,7 +963,7 @@ declarations from the C++ library modules.
 [*Note 2*: Like all named modules, the C++ library modules do not make
 macros visible [[module.import]], such as `assert` [[cassert.syn]],
 `errno` [[cerrno.syn]], `offsetof` [[cstddef.syn]], and `va_arg`
-[[cstdarg.syn]]. — *end note*\]
+[[cstdarg.syn]]. — *end note*]
 
 #### Freestanding implementations <a id="compliance">[[compliance]]</a>
 
@@ -1047,7 +1047,7 @@ hosted library facilities.
 [*Note 1*: An implementation can provide a deleted definition so that
 the result of overload resolution does not silently change when
 migrating a program from a freestanding implementation to a hosted
-implementation. — *end note*\]
+implementation. — *end note*]
 
 ### Using the library <a id="using">[[using]]</a>
 
@@ -1220,11 +1220,11 @@ overload resolution [[over.match]] on a candidate set that includes:
 fundamental types and the declarations from the header `<utility>` are
 in scope, the overall lookup set described above is equivalent to that
 of the qualified name lookup applied to the expression `std::swap(t, u)`
-or `std::swap(u, t)` as appropriate. — *end note*\]
+or `std::swap(u, t)` as appropriate. — *end note*]
 
 [*Note 2*: It is unspecified whether a library component that has a
 swappable requirement includes the header `<utility>` to ensure an
-appropriate evaluation context. — *end note*\]
+appropriate evaluation context. — *end note*]
 
 An rvalue or lvalue `t` is *swappable* if and only if `t` is swappable
 with any rvalue or lvalue, respectively, of type `T`.
@@ -1282,7 +1282,7 @@ int main() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 #### *Cpp17NullablePointer* requirements <a id="nullablepointer.requirements">[[nullablepointer.requirements]]</a>
 
@@ -1303,7 +1303,7 @@ erroneous value.
 
 [*Note 1*: Operations involving indeterminate values can cause
 undefined behavior, and operations involving erroneous values can cause
-erroneous behavior [[basic.indet]]. — *end note*\]
+erroneous behavior [[basic.indet]]. — *end note*]
 
 An object `p` of type `P` can be contextually converted to `bool`
 [[conv]]. The effect shall be as if `p != nullptr` had been evaluated in
@@ -1349,7 +1349,7 @@ lvalue of type `Key`, and `k` is a value of a type convertible to
 
 [*Note 1*: Thus all evaluations of the expression `h(k)` with the same
 value for `k` yield the same result for a given execution of the
-program. — *end note*\]
+program. — *end note*]
 
 #### *Cpp17Allocator* requirements <a id="allocator.requirements">[[allocator.requirements]]</a>
 
@@ -1403,7 +1403,7 @@ supplied by an allocator is replaced by the specified default type or
 expression.
 
 [*Note 1*: There are no program-defined specializations of
-`allocator_traits`. — *end note*\]
+`allocator_traits`. — *end note*]
 
 ``` cpp
 typename X::pointer
@@ -1483,7 +1483,7 @@ not template instantiations of the above form, no default is provided.
 typedef template. In general, if the name `Allocator` is bound to
 `SomeAllocator<T>`, then `Allocator::rebind<U>::other` is the same type
 as `SomeAllocator<U>`, where `SomeAllocator<T>::value_type` is `T` and
-`SomeAllocator<U>::value_type` is `U`. — *end note*\]
+`SomeAllocator<U>::value_type` is `U`. — *end note*]
 
 ``` cpp
 *p
@@ -1555,14 +1555,14 @@ object is created but array elements are not constructed.
 [*Example 1*: When reusing storage denoted by some pointer value `p`,
 `launder(reinterpret_cast<T*>(new (p) byte[n * sizeof(T)]))` can be used
 to implicitly create a suitable array object and obtain a pointer to
-it. — *end example*\]
+it. — *end example*]
 
 *Throws:* `allocate` may throw an appropriate exception.
 
 [*Note 2*: It is intended that `a.allocate` be an efficient means of
 allocating a single object of type `T`, even when `sizeof(T)` is small.
 That is, there is no need for a container to maintain its own free
-list. — *end note*\]
+list. — *end note*]
 
 *Remarks:* If `n == 0`, the return value is unspecified.
 
@@ -1840,7 +1840,7 @@ may fail. The allocator also may silently ignore the requested
 alignment.
 
 [*Note 2*: Additionally, the member function `allocate` for that type
-can fail by throwing an object of type `bad_alloc`. — *end note*\]
+can fail by throwing an object of type `bad_alloc`. — *end note*]
 
 [*Example 1*:
 
@@ -1863,7 +1863,7 @@ struct SimpleAllocator {
 };
 ```
 
-— *end example*\]
+— *end example*]
 
 The following exposition-only concept defines the minimal requirements
 on an Allocator type.
@@ -1931,7 +1931,7 @@ template.
 
 [*Note 1*: The requirements on an explicit or partial specialization
 are stated by each variable template that grants such
-permission. — *end note*\]
+permission. — *end note*]
 
 The behavior of a C++ program is undefined if it declares
 
@@ -1960,7 +1960,7 @@ pointer to `F`.
 [*Note 2*: Possible means of forming such pointers include application
 of the unary `&` operator [[expr.unary.op]], `addressof`
 [[specialized.addressof]], or a function-to-pointer standard conversion
-[[conv.func]]. — *end note*\]
+[[conv.func]]. — *end note*]
 
 Moreover, the behavior of a C++ program is unspecified (possibly
 ill-formed) if it attempts to form a reference to `F` or if it attempts
@@ -1975,7 +1975,7 @@ reflection value designating the associated entity can be formed.
 [*Note 3*: For example, it is possible that `std::meta::members_of`
 will not return reflections of standard library functions that an
 implementation handles through an extra-linguistic
-mechanism. — *end note*\]
+mechanism. — *end note*]
 
 Let `C` denote a standard library class or class template
 specialization. It is unspecified if or how a reflection value can be
@@ -2000,7 +2000,7 @@ standardization. The behavior of a C++ program is undefined if it adds
 declarations or definitions to such a namespace.
 
 [*Example 1*: The top-level namespace `std2` is reserved for use by
-future revisions of this International Standard. — *end example*\]
+future revisions of this International Standard. — *end example*]
 
 #### Reserved names <a id="reserved.names">[[reserved.names]]</a>
 
@@ -2170,13 +2170,13 @@ the C++ standard library, unless explicitly stated otherwise.
   operator may be a reference to `*this` [[lib.types.movedfrom]].
   \[*Note 4*: If the type of a parameter is a forwarding reference
   [[temp.deduct.call]] that is deduced to an lvalue reference type, then
-  the argument is not bound to an rvalue reference. — *end note*\]
+  the argument is not bound to an rvalue reference. — *end note*]
   \[*Note 5*: If a program casts an lvalue to an xvalue while passing
   that lvalue to a library function (e.g., by calling the function with
   the argument `std::move(x)`), the program is effectively asking that
   function to treat that lvalue as a temporary object. The
   implementation is free to optimize away aliasing checks which would
-  possibly be needed if the argument was an lvalue. — *end note*\]
+  possibly be needed if the argument was an lvalue. — *end note*]
 
 #### Library object access <a id="res.on.objects">[[res.on.objects]]</a>
 
@@ -2188,7 +2188,7 @@ conditions under which this may occur are specified in 
 [*Note 1*: Modifying an object of a standard library type that is
 shared between threads risks undefined behavior unless objects of that
 type are explicitly specified as being shareable without data races or
-the user supplies a locking mechanism. — *end note*\]
+the user supplies a locking mechanism. — *end note*]
 
 If an object of a standard library type is accessed, and the beginning
 of the object’s lifetime [[basic.life]] does not happen before the
@@ -2196,7 +2196,7 @@ access, or the access does not happen before the end of the object’s
 lifetime, the behavior is undefined unless otherwise specified.
 
 [*Note 2*: This applies even to objects such as mutexes intended for
-thread synchronization. — *end note*\]
+thread synchronization. — *end note*]
 
 #### Semantic requirements <a id="res.on.requirements">[[res.on.requirements]]</a>
 
@@ -2290,7 +2290,7 @@ if (delim != 0)
 return *this;
 ```
 
-— *end note*\]
+— *end note*]
 
 #### Member functions <a id="member.functions">[[member.functions]]</a>
 
@@ -2306,7 +2306,7 @@ document behaves as if that overload were selected.
 [*Note 1*: For instance, an implementation can add parameters with
 default values, or replace a member function with default arguments with
 two or more member functions with equivalent behavior, or add additional
-signatures for a member function name. — *end note*\]
+signatures for a member function name. — *end note*]
 
 #### Friend functions <a id="hidden.friends">[[hidden.friends]]</a>
 
@@ -2317,12 +2317,12 @@ template provided by an implementation.
 
 [*Note 1*: In particular, a conforming implementation does not provide
 any additional declarations of that function or function template at
-namespace scope. — *end note*\]
+namespace scope. — *end note*]
 
 [*Note 2*: Such a friend function or function template declaration is
 known as a hidden friend, as it is visible neither to ordinary
 unqualified lookup [[basic.lookup.unqual]] nor to qualified lookup
-[[basic.lookup.qual]]. — *end note*\]
+[[basic.lookup.qual]]. — *end note*]
 
 #### Constexpr functions and constructors <a id="constexpr.functions">[[constexpr.functions]]</a>
 
@@ -2374,7 +2374,7 @@ via the function’s non-const arguments, including `this`.
 [*Note 1*: This means, for example, that implementations can’t use an
 object with static storage duration for internal purposes without
 synchronization because doing so can cause a data race even in programs
-that do not explicitly share objects between threads. — *end note*\]
+that do not explicitly share objects between threads. — *end note*]
 
 A C++ standard library function shall not access objects indirectly
 accessible via its arguments or via elements of its container arguments
@@ -2387,7 +2387,7 @@ not modify it.
 
 [*Note 2*: In particular, container operations that invalidate
 iterators conflict with operations on iterators associated with that
-container. — *end note*\]
+container. — *end note*]
 
 Implementations may share their own internal objects between threads if
 the objects are not visible to users and are protected against data
@@ -2398,7 +2398,7 @@ all operations solely within the current thread if those operations have
 effects that are visible [[intro.multithread]] to users.
 
 [*Note 3*: This allows implementations to parallelize operations if
-there are no visible side effects. — *end note*\]
+there are no visible side effects. — *end note*]
 
 #### Properties of library classes <a id="library.class.props">[[library.class.props]]</a>
 
@@ -2443,7 +2443,7 @@ In any case:
   distinct types. \[*Note 6*: There is an implicit exception to this
   rule for types that are described as synonyms
   [[dcl.typedef]], [[namespace.udecl]], such as `size_t`
-  [[support.types]] and `streamoff` [[stream.types]]. — *end note*\]
+  [[support.types]] and `streamoff` [[stream.types]]. — *end note*]
 
 All types specified in the C++ standard library shall be non-`final`
 types unless otherwise specified.
@@ -2501,7 +2501,7 @@ by the operating system’s documentation. Implementations for operating
 systems that are not based on POSIX should define values identical to
 the operating system’s values. For errors that do not originate from the
 operating system, the implementation may provide enums for the
-associated values. — *end example*\]
+associated values. — *end example*]
 
 #### Moved-from state of library types <a id="lib.types.movedfrom">[[lib.types.movedfrom]]</a>
 

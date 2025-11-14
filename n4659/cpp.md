@@ -117,7 +117,7 @@ preprocessing directive, because it does not begin with a `#` at the
 start of translation phase 4, even though it will do so after the macro
 `EMPTY` has been replaced.
 
-— *end example*\]
+— *end example*]
 
 ## Conditional inclusion <a id="cpp.cond">[[cpp.cond]]</a>
 
@@ -202,7 +202,7 @@ preprocessing token is converted into a token.
 [*Note 1*: An alternative token ( [[lex.digraph]]) is not an
 identifier, even when its spelling consists entirely of letters and
 underscores. Therefore it is not subject to this
-replacement. — *end note*\]
+replacement. — *end note*]
 
 The resulting tokens comprise the controlling constant expression which
 is evaluated according to the rules of  [[expr.const]] using arithmetic
@@ -216,7 +216,7 @@ respectively, `intmax_t` or `uintmax_t` ( [[cstdint]]).
 `std::numeric_limits<unsigned int>::max()` is `0xFFFF`, the integer
 literal `0x8000` is signed and positive within a `#if` expression even
 though it is unsigned in translation phase 7 (
-[[lex.phases]]). — *end note*\]
+[[lex.phases]]). — *end note*]
 
 This includes interpreting character literals, which may involve
 converting escape sequences into execution character set members.
@@ -236,7 +236,7 @@ contexts:
 if ('z' - 'a' == 25)
 ```
 
-— *end note*\]
+— *end note*]
 
 Also, whether a single-character character literal may have a negative
 value is *implementation-defined*. Each subexpression with type `bool`
@@ -279,7 +279,7 @@ it is available:
 #endif
 ```
 
-— *end example*\]
+— *end example*]
 
 ## Source file inclusion <a id="cpp.include">[[cpp.include]]</a>
 
@@ -358,7 +358,7 @@ implementation. For instance:
 #include "myprog.h"
 ```
 
-— *end note*\]
+— *end note*]
 
 [*Example 1*:
 
@@ -375,7 +375,7 @@ This illustrates macro-replaced `#include` directives:
 #include INCFILE
 ```
 
-— *end example*\]
+— *end example*]
 
 ## Macro replacement <a id="cpp.replace">[[cpp.replace]]</a>
 
@@ -561,7 +561,7 @@ In other words, expanding `hash_hash` produces a new token, consisting
 of two adjacent sharp signs, but this new token is not the `##`
 operator.
 
-— *end example*\]
+— *end example*]
 
 ### Rescanning and further replacement <a id="cpp.rescan">[[cpp.rescan]]</a>
 
@@ -612,7 +612,7 @@ in
 int table[TABSIZE];
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Example 2*:
 
@@ -631,7 +631,7 @@ cannot have its address taken, as it has none.
 The parentheses ensure that the arguments and the resulting expression
 are bound properly.
 
-— *end example*\]
+— *end example*]
 
 [*Example 3*:
 
@@ -669,7 +669,7 @@ int i[] = { 1, 23, 4, 5, };
 char c[2][6] = { "hello", "" };
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Example 4*:
 
@@ -718,7 +718,7 @@ fputs("strncmp(\"abc\\0d\", \"abc\", '\\4') == 0: \@n", s);
 Space around the `#` and `##` tokens in the macro definition is
 optional.
 
-— *end example*\]
+— *end example*]
 
 [*Example 5*:
 
@@ -738,7 +738,7 @@ int j[] = { 123, 45, 67, 89,
   10, 11, 12, };
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Example 6*:
 
@@ -762,7 +762,7 @@ But the following redefinitions are invalid:
 #define FUNC_LIKE(b) ( b )      // different parameter spelling
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Example 7*:
 
@@ -787,7 +787,7 @@ puts("The first, second, and third items.");
 ((x>y) ? puts("x>y") : printf("x is %d but y is %d", x, y));
 ```
 
-— *end example*\]
+— *end example*]
 
 ## Line control <a id="cpp.line">[[cpp.line]]</a>
 
@@ -910,7 +910,7 @@ guaranteed by a call to `operator new(std::size_t)` or
 
 [*Note 1*: Larger alignments will be passed to
 `operator new(std::size_t, std::align_val_t)`, etc. (
-[[expr.new]]). — *end note*\]
+[[expr.new]]). — *end note*]
 
 - **`__TIME__`**
 
@@ -1008,7 +1008,7 @@ literally as shown, or results from macro replacement, as in:
 LISTING( ..\listing.dir )
 ```
 
-— *end example*\]
+— *end example*]
 
 <!-- Section link definitions -->
 [cpp]: #cpp

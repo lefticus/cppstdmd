@@ -41,7 +41,7 @@ constraint-logical-and-expression:
 
 [*Note 1*: The `>` token following the *template-parameter-list* of a
 *template-declaration* can be the product of replacing a `>>` token by
-two consecutive `>` tokens [[temp.names]]. — *end note*\]
+two consecutive `>` tokens [[temp.names]]. — *end note*]
 
 The *declaration* in a *template-declaration* (if any) shall
 
@@ -78,10 +78,10 @@ struct matrix_constants {
 };
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Note 2*: A *template-declaration* can appear only as a namespace
-scope or class scope declaration. — *end note*\]
+scope or class scope declaration. — *end note*]
 
 Its *declaration* shall not be an *export-declaration*. In a function
 template declaration, the *unqualified-id* of the *declarator-id* shall
@@ -89,7 +89,7 @@ be a name.
 
 [*Note 3*: A class or variable template declaration of a
 *simple-template-id* declares a partial specialization
-[[temp.spec.partial]]. — *end note*\]
+[[temp.spec.partial]]. — *end note*]
 
 In a *template-declaration*, explicit specialization, or explicit
 instantiation the *init-declarator-list* in the declaration shall
@@ -104,7 +104,7 @@ not have C language linkage.
 [*Note 4*: Default arguments for function templates and for member
 functions of class templates are considered definitions for the purpose
 of template instantiation [[temp.decls]] and must obey the
-one-definition rule [[basic.def.odr]]. — *end note*\]
+one-definition rule [[basic.def.odr]]. — *end note*]
 
 [*Note 5*: A template cannot have the same name as any other name bound
 in the same scope [[basic.scope.scope]], except that a function template
@@ -113,7 +113,7 @@ templates [[temp.over]]. Specializations, including partial
 specializations [[temp.spec.partial]], do not reintroduce or bind names.
 Their target scope is the target scope of the primary template, so all
 specializations of a template belong to the same scope as it
-does. — *end note*\]
+does. — *end note*]
 
 An entity is *templated* if it is
 
@@ -127,7 +127,7 @@ An entity is *templated* if it is
 
 [*Note 6*: A local class, a local or block variable, or a friend
 function defined in a templated entity is a templated
-entity. — *end note*\]
+entity. — *end note*]
 
 A *templated function* is a function template or a function that is
 templated. A *templated class* is a class template or a class that is
@@ -156,9 +156,9 @@ template<int N> requires N == sizeof new unsigned short
 int f();            // error: parentheses required around == expression
 ```
 
-— *end example*\]
+— *end example*]
 
-— *end note*\]
+— *end note*]
 
 A definition of a function template, member function of a class
 template, variable template, or static data member of a class template
@@ -204,7 +204,7 @@ those of its *nested-name-specifier* (if any).
 
 [*Note 1*: The `>` token following the *template-parameter-list* of a
 *type-parameter* can be the product of replacing a `>>` token by two
-consecutive `>` tokens [[temp.names]]. — *end note*\]
+consecutive `>` tokens [[temp.names]]. — *end note*]
 
 There is no semantic difference between `class` and `typename` in a
 *type-parameter-key*. `typename` followed by an *unqualified-id* names a
@@ -229,7 +229,7 @@ template<class T, T i> void f(T t) {
 Here, the template `f` has a *type-parameter* called `T`, rather than an
 unnamed non-type *template-parameter* of class `T`.
 
-— *end example*\]
+— *end example*]
 
 A storage class shall not be specified in a *template-parameter*
 declaration. Types shall not be defined in a *template-parameter*
@@ -256,7 +256,7 @@ class Map {
 };
 ```
 
-— *end note*\]
+— *end note*]
 
 A *type-constraint* `Q` that designates a concept `C` can be used to
 constrain a contextually-determined type or template type parameter pack
@@ -286,7 +286,7 @@ template<C3<int> T> struct s4;          // associates C3<T, int>
 template<C3<int>... T> struct s5;       // associates (C3<T, int> && ...)
 ```
 
-— *end example*\]
+— *end example*]
 
 A non-type *template-parameter* shall have one of the following
 (possibly cv-qualified) types:
@@ -320,7 +320,7 @@ A template parameter object shall have constant destruction
 [*Note 3*: If an *id-expression* names a non-type non-reference
 *template-parameter*, then it is a prvalue if it has non-class type.
 Otherwise, if it is of class type `T`, it is an lvalue and has type
-`const T` [[expr.prim.id.unqual]]. — *end note*\]
+`const T` [[expr.prim.id.unqual]]. — *end note*]
 
 [*Example 3*:
 
@@ -339,7 +339,7 @@ template<const X& x, int i, A a> void f() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Note 4*:
 
@@ -353,9 +353,9 @@ template<void v> class X;       // error
 template<void* pv> class Y;     // OK
 ```
 
-— *end example*\]
+— *end example*]
 
-— *end note*\]
+— *end note*]
 
 A non-type *template-parameter* of type “array of `T`” or of function
 type `T` is adjusted to be of type “pointer to `T`”.
@@ -373,7 +373,7 @@ R<v> y;                         // OK due to implicit argument conversion
 S<v> z;                         // OK due to both adjustment and conversion
 ```
 
-— *end example*\]
+— *end example*]
 
 A non-type template parameter declared with a type that contains a
 placeholder type with a *type-constraint* introduces the
@@ -412,7 +412,7 @@ is equivalent to
 template<class T1 = int, class T2 = int> class A;
 ```
 
-— *end example*\]
+— *end example*]
 
 If a *template-parameter* of a class template, variable template, or
 alias template has a default *template-argument*, each subsequent
@@ -438,7 +438,7 @@ template<class... T, class... U> void f() { }   // error
 template<class... T, class U> void g() { }      // error
 ```
 
-— *end example*\]
+— *end example*]
 
 When parsing a default *template-argument* for a non-type
 *template-parameter*, the first non-nested `>` is taken as the end of
@@ -454,7 +454,7 @@ template<int i = (3 > 4) >      // OK
 class Y { ... };
 ```
 
-— *end example*\]
+— *end example*]
 
 A *template-parameter* of a template *template-parameter* is permitted
 to have a default *template-argument*. When such default arguments are
@@ -476,7 +476,7 @@ template <template <class TT = char> class T> void A<T>::g() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 If a *template-parameter* is a *type-parameter* with an ellipsis prior
 to its optional *identifier* or is a *parameter-declaration* that
@@ -509,7 +509,7 @@ template <class... T, T... Values>              // error: Values expands templat
   struct static_array;                          // pack T within the same template parameter list
 ```
 
-— *end example*\]
+— *end example*]
 
 ## Names of template specializations <a id="temp.names">[[temp.names]]</a>
 
@@ -565,7 +565,7 @@ it follows a name that is not a *conversion-function-id* and
 [*Note 1*: If the name is an *identifier*, it is then interpreted as a
 *template-name*. The keyword `template` is used to indicate that a
 dependent qualified name [[temp.dep.type]] denotes a template where an
-expression might appear. — *end note*\]
+expression might appear. — *end note*]
 
 [*Example 1*:
 
@@ -582,7 +582,7 @@ template<class T> void f(T* p) {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 When parsing a *template-argument-list*, the first non-nested `>`[^2]
 
@@ -593,7 +593,7 @@ distinct `>` tokens, the first of which is taken as the end of the
 
 [*Note 2*: The second `>` token produced by this replacement rule can
 terminate an enclosing *template-id* construct or it can be part of a
-different construct (e.g., a cast). — *end note*\]
+different construct (e.g., a cast). — *end note*]
 
 [*Example 2*:
 
@@ -609,7 +609,7 @@ Y<X<6>>1>> x4;                          // syntax error
 Y<X<(6>>1)>> x5;                        // OK
 ```
 
-— *end example*\]
+— *end example*]
 
 The keyword `template` shall not appear immediately after a declarative
 *nested-name-specifier* [[expr.prim.id.qual]].
@@ -621,11 +621,11 @@ keyword `template` shall not appear immediately before a `~` token (as
 to name a destructor).
 
 [*Note 3*: The keyword `template` cannot be applied to non-template
-members of class templates. — *end note*\]
+members of class templates. — *end note*]
 
 [*Note 4*: As is the case with the `typename` prefix, the `template`
 prefix is allowed even when lookup for the name would already find a
-template. — *end note*\]
+template. — *end note*]
 
 [*Example 3*:
 
@@ -650,7 +650,7 @@ template <class T, template <class X> class TT = T::template C> struct D { };
 D<B<int> > db;
 ```
 
-— *end example*\]
+— *end example*]
 
 A *template-id* is *valid* if
 
@@ -682,7 +682,7 @@ using T4 = X<int>;              // error: substitution failure for second templa
 using T5 = X<S>;                // OK
 ```
 
-— *end example*\]
+— *end example*]
 
 When the *template-name* of a *simple-template-id* names a constrained
 non-function template or a constrained template *template-parameter*,
@@ -723,7 +723,7 @@ template struct S<char[2]>;         // error: constraints not satisfied
 template<> struct S<char[2]> { };   // error: constraints not satisfied
 ```
 
-— *end example*\]
+— *end example*]
 
 A *concept-id* is a *simple-template-id* where the *template-name* is a
 *concept-name*. A concept-id is a prvalue of type `bool`, and does not
@@ -735,7 +735,7 @@ satisfied [[temp.constr.constr]] by the specified template arguments and
 [*Note 5*: Since a *constraint-expression* is an unevaluated operand, a
 concept-id appearing in a *constraint-expression* is not evaluated
 except as necessary to determine whether the normalized constraints are
-satisfied. — *end note*\]
+satisfied. — *end note*]
 
 [*Example 6*:
 
@@ -744,7 +744,7 @@ template<typename T> concept C = true;
 static_assert(C<int>);      // OK
 ```
 
-— *end example*\]
+— *end example*]
 
 ## Template arguments <a id="temp.arg">[[temp.arg]]</a>
 
@@ -782,7 +782,7 @@ void bar() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 The template argument list of a *template-head* is a template argument
 list in which the nᵗʰ template argument has the value of the nᵗʰ
@@ -806,11 +806,11 @@ void g() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Note 1*: Names used in a *template-argument* are subject to access
 control where they appear. Because a *template-parameter* is not a class
-member, no access control applies. — *end note*\]
+member, no access control applies. — *end note*]
 
 [*Example 3*:
 
@@ -830,7 +830,7 @@ private:
 X<Y::S> y;          // error: S not accessible
 ```
 
-— *end example*\]
+— *end example*]
 
 For a *template-argument* that is a class type or a class template, the
 template definition has no special access rights to the members of the
@@ -851,7 +851,7 @@ private:
 A<B> b;             // error: A has no access to B::S
 ```
 
-— *end example*\]
+— *end example*]
 
 When template argument packs or default *template-argument*s are used, a
 *template-argument* list can be empty. In that case the empty `<>`
@@ -868,7 +868,7 @@ Tuple<>* t;                     // OK, Elements is empty
 Tuple* u;                       // syntax error
 ```
 
-— *end example*\]
+— *end example*]
 
 An explicit destructor call [[class.dtor]] for an object that has a type
 that is a class template specialization may explicitly specify the
@@ -886,7 +886,7 @@ void f(A<int>* p, A<int>* q) {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 If the use of a *template-argument* gives rise to an ill-formed
 construct in the instantiation of a template specialization, the program
@@ -898,7 +898,7 @@ function templates in the overload set for which the
 *template-argument*s do not match the *template-parameter*s are ignored.
 
 [*Note 2*: If none of the function templates have matching
-*template-parameter*s, the program is ill-formed. — *end note*\]
+*template-parameter*s, the program is ill-formed. — *end note*]
 
 When a *simple-template-id* does not name a function, a default
 *template-argument* is implicitly instantiated [[temp.inst]] when the
@@ -914,7 +914,7 @@ S<bool>* p;         // the type of p is S<bool, int>*
 The default argument for `U` is instantiated to form the type
 `S<bool, int>*`.
 
-— *end example*\]
+— *end example*]
 
 A *template-argument* followed by an ellipsis is a pack expansion
 [[temp.variadic]].
@@ -945,10 +945,10 @@ void f() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Note 1*: A template type argument can be an incomplete type
-[[term.incomplete.type]]. — *end note*\]
+[[term.incomplete.type]]. — *end note*]
 
 ### Template non-type arguments <a id="temp.arg.nontype">[[temp.arg.nontype]]</a>
 
@@ -970,7 +970,7 @@ converted constant expression [[expr.const]] of the type of the
 
 [*Note 1*: If the *template-argument* is an overload set (or the
 address of such, including forming a pointer-to-member), the matching
-function is selected from the set [[over.over]]. — *end note*\]
+function is selected from the set [[over.over]]. — *end note*]
 
 For a non-type *template-parameter* of reference or pointer type, or for
 each non-static data member of reference or pointer type in a non-type
@@ -1013,7 +1013,7 @@ B<2.5> b3;                      // OK, template parameter type is double
 B<void(0)> b4;                  // error: template parameter type cannot be void
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Note 2*:
 
@@ -1040,9 +1040,9 @@ struct A {
 X<A, "Pyrophoricity"> z;        // OK, string-literal is a constructor argument to A
 ```
 
-— *end example*\]
+— *end example*]
 
-— *end note*\]
+— *end note*]
 
 [*Note 3*:
 
@@ -1066,9 +1066,9 @@ C<Y{X{1}.n}> c;                 // error: subobject of temporary object used to 
                                 // reference member of template parameter
 ```
 
-— *end example*\]
+— *end example*]
 
-— *end note*\]
+— *end note*]
 
 ### Template template arguments <a id="temp.arg.template">[[temp.arg.template]]</a>
 
@@ -1103,7 +1103,7 @@ C<A> c;             // V<int> within C<A> uses the primary template, so c.y.x ha
                     // V<int*> within C<A> uses the partial specialization, so c.z.x has type long
 ```
 
-— *end example*\]
+— *end example*]
 
 A *template-argument* matches a template *template-parameter* `P` when
 `P` is at least as specialized as the *template-argument* `A`. In this
@@ -1142,7 +1142,7 @@ Y<C> yc;            // OK
 Z<D> zd;            // OK
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Example 3*:
 
@@ -1165,7 +1165,7 @@ eval<D<int, 17>> eD;            // error: D does not match TT in partial special
 eval<E<int, float>> eE;         // error: E does not match TT in partial specialization
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Example 4*:
 
@@ -1184,7 +1184,7 @@ S<Y> s2;            // error: P is not at least as specialized as Y
 S<Z> s3;            // OK, P is at least as specialized as Z
 ```
 
-— *end example*\]
+— *end example*]
 
 A template *template-parameter* `P` is at least as specialized as a
 template *template-argument* `A` if, given the following rewrite to two
@@ -1217,7 +1217,7 @@ specialized as `A`.
 on template arguments. The abstract syntax and satisfaction rules are
 defined in [[temp.constr.constr]]. Constraints are associated with
 declarations in [[temp.constr.decl]]. Declarations are partially ordered
-by their associated constraints [[temp.constr.order]]. — *end note*\]
+by their associated constraints [[temp.constr.order]]. — *end note*]
 
 ### Constraints <a id="temp.constr.constr">[[temp.constr.constr]]</a>
 
@@ -1240,7 +1240,7 @@ described in the following subclauses.
 variable template, or an alias template [[temp.names]] requires the
 satisfaction of its constraints. Overload resolution
 [[over.match.viable]] requires the satisfaction of constraints on
-functions and function templates. — *end note*\]
+functions and function templates. — *end note*]
 
 #### Logical operations <a id="temp.constr.op">[[temp.constr.op]]</a>
 
@@ -1251,7 +1251,7 @@ disjunction.
 For the purpose of exposition, conjunction is spelled using the symbol ∧
 and disjunction is spelled using the symbol ∨. The operands of these
 operations are called the left and right operands. In the constraint
-A ∧ B, A is the left operand, and B is the right operand. — *end note*\]
+A ∧ B, A is the left operand, and B is the right operand. — *end note*]
 
 A *conjunction* is a constraint taking two operands. To determine if a
 conjunction is *satisfied*, the satisfaction of the first operand is
@@ -1284,7 +1284,7 @@ In the satisfaction of the associated constraints [[temp.constr.decl]]
 of `f`, the constraint `sizeof(char) > 1` is not satisfied; the second
 operand is not checked for satisfaction.
 
-— *end example*\]
+— *end example*]
 
 [*Note 2*:
 
@@ -1325,9 +1325,9 @@ nested `type` that is not `sad`, whereas
 `requires (!sad_nested_type<T>)` requires that there is no `sad` nested
 `type`.
 
-— *end example*\]
+— *end example*]
 
-— *end note*\]
+— *end note*]
 
 #### Atomic constraints <a id="temp.constr.atomic">[[temp.constr.atomic]]</a>
 
@@ -1342,7 +1342,7 @@ constrained entity), called the *parameter mapping*
 [*Note 1*: Atomic constraints are formed by constraint normalization
 [[temp.constr.normal]]. `E` is never a logical expression
 [[expr.log.and]] nor a logical expression
-[[expr.log.or]]. — *end note*\]
+[[expr.log.or]]. — *end note*]
 
 Two atomic constraints, e₁ and e₂, are *identical* if they are formed
 from the same appearance of the same *expression* and if, given a
@@ -1386,7 +1386,7 @@ void h() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 As specified in [[temp.over.link]], if the validity or meaning of the
 program depends on whether two constructs are equivalent, and they are
@@ -1407,9 +1407,9 @@ void h2() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
-— *end note*\]
+— *end note*]
 
 To determine if an atomic constraint is *satisfied*, the parameter
 mapping and template arguments are first substituted into its
@@ -1442,7 +1442,7 @@ void g() {
                                 // call is ill-formed even though #2 is a better match
 ```
 
-— *end example*\]
+— *end example*]
 
 ### Constrained declarations <a id="temp.constr.decl">[[temp.constr.decl]]</a>
 
@@ -1516,7 +1516,7 @@ template<C2 T> requires C1<T> void f7();
 The associated constraints of `f6` are `C1<T> \land C2<T>`, and those of
 `f7` are `C2<T> \land C1<T>`.
 
-— *end example*\]
+— *end example*]
 
 When determining whether a given introduced *constraint-expression* C₁
 of a declaration in an instantiated specialization of a templated class
@@ -1526,7 +1526,7 @@ is instantiated. If the instantiation results in an invalid expression,
 the *constraint-expression*s are not equivalent.
 
 [*Note 1*: This can happen when determining which member template is
-specialized by an explicit specialization declaration. — *end note*\]
+specialized by an explicit specialization declaration. — *end note*]
 
 [*Example 2*:
 
@@ -1546,7 +1546,7 @@ expression, so the specialization does not match \#1. Substituting `int`
 for `T` in `C<T>` produces `C<int>`, which is equivalent to the
 *constraint-expression* for the specialization, so it does match \#2.
 
-— *end example*\]
+— *end example*]
 
 ### Constraint normalization <a id="temp.constr.normal">[[temp.constr.normal]]</a>
 
@@ -1577,7 +1577,7 @@ The *normal form* of an *expression* `E` is a constraint
   pointer type `T`. Normalization of `C`'s *constraint-expression*
   results in the program being ill-formed, because it would form the
   invalid type `V&*` in the parameter mapping.
-  — *end example*\]
+  — *end example*]
 - The normal form of any other expression `E` is the atomic constraint
   whose expression is `E` and whose parameter mapping is the identity
   mapping.
@@ -1588,7 +1588,7 @@ called *normalization*.
 [*Note 1*: Normalization of *constraint-expression*s is performed when
 determining the associated constraints [[temp.constr.constr]] of a
 declaration and when evaluating the value of an *id-expression* that
-names a concept specialization [[expr.prim.id]]. — *end note*\]
+names a concept specialization [[expr.prim.id]]. — *end note*]
 
 [*Example 1*:
 
@@ -1610,7 +1610,7 @@ The associated constraints of \#2 are `requires { typename T::type; }`
 The associated constraints of \#3 are `requires (T x) { ++x; }` (with
 mapping `T` \mapsto `U`).
 
-— *end example*\]
+— *end example*]
 
 ### Partial ordering by constraints <a id="temp.constr.order">[[temp.constr.order]]</a>
 
@@ -1633,7 +1633,7 @@ of Q, where
 [*Example 1*: Let A and B be atomic constraints [[temp.constr.atomic]].
 The constraint A ∧ B subsumes A, but A does not subsume A ∧ B. The
 constraint A subsumes A ∨ B, but A ∨ B does not subsume A. Also note
-that every constraint subsumes itself. — *end example*\]
+that every constraint subsumes itself. — *end example*]
 
 [*Note 1*:
 
@@ -1648,7 +1648,7 @@ partial ordering is used to determine
   [[temp.spec.partial.order]], and
 - the partial ordering of function templates [[temp.func.order]].
 
-— *end note*\]
+— *end note*]
 
 A declaration `D1` is *at least as constrained* as a declaration `D2` if
 
@@ -1677,7 +1677,7 @@ g(true);                        // selects #3 because C1<bool> is not satisfied
 g(0);                           // selects #4
 ```
 
-— *end example*\]
+— *end example*]
 
 ## Type equivalence <a id="temp.type">[[temp.type]]</a>
 
@@ -1746,7 +1746,7 @@ X<Z<int> > z;
 
 declares `y` and `z` to be of the same type.
 
-— *end example*\]
+— *end example*]
 
 If an expression e is type-dependent [[temp.dep.expr]], `decltype(e)`
 denotes a unique dependent type. Two such *decltype-specifier*s refer to
@@ -1754,7 +1754,7 @@ the same type only if their *expression*s are equivalent
 [[temp.over.link]].
 
 [*Note 1*: However, such a type might be aliased, e.g., by a
-*typedef-name*. — *end note*\]
+*typedef-name*. — *end note*]
 
 ## Template declarations <a id="temp.decls">[[temp.decls]]</a>
 
@@ -1815,7 +1815,7 @@ The prefix `template<class T>` specifies that a template is being
 declared and that a *type-name* `T` can be used in the declaration. In
 other words, `Array` is a parameterized type with `T` as its parameter.
 
-— *end example*\]
+— *end example*]
 
 [*Note 1*:
 
@@ -1871,9 +1871,9 @@ template<C X> template<D Y>
 struct S<X>::Inner { };                 // OK
 ```
 
-— *end example*\]
+— *end example*]
 
-— *end note*\]
+— *end note*]
 
 In a partial specialization, explicit specialization or explicit
 instantiation of a class template, the *class-key* shall agree in kind
@@ -1925,7 +1925,7 @@ template<typename T>
   void S<T>::g() { }                    // error: no matching function in S<T>
 ```
 
-— *end example*\]
+— *end example*]
 
 The *template-argument*s for a member function of a class template are
 determined by the *template-argument*s of the type of the object for
@@ -1944,7 +1944,7 @@ v1[3] = 7;                              // Array<int>::operator[]
 v2[3] = dcomplex(7,8);                  // Array<dcomplex>::operator[]
 ```
 
-— *end example*\]
+— *end example*]
 
 #### Deduction guides <a id="temp.deduct.guide">[[temp.deduct.guide]]</a>
 
@@ -1976,7 +1976,7 @@ struct A {
 S x{A()};           // x is of type S<short, int>
 ```
 
-— *end example*\]
+— *end example*]
 
 The same restrictions apply to the *parameter-declaration-clause* of a
 deduction guide as in a function declaration [[dcl.fct]]. The
@@ -2007,7 +2007,7 @@ template<class T> class A<T>::B { };
 A<int>::B  b2;                          // OK, requires A::B to be defined
 ```
 
-— *end note*\]
+— *end note*]
 
 #### Static data members of class templates <a id="temp.static">[[temp.static]]</a>
 
@@ -2032,7 +2032,7 @@ template<class T>
   const T limits::min = { };            // definition
 ```
 
-— *end example*\]
+— *end example*]
 
 An explicit specialization of a static data member declared as an array
 of unknown bound can have a different bound from its definition, if any.
@@ -2047,7 +2047,7 @@ template <class T> int A<T>::i[4];      // 4 elements
 template <> int A<int>::i[] = { 1 };    // OK, 1 element
 ```
 
-— *end example*\]
+— *end example*]
 
 #### Enumeration members of class templates <a id="temp.mem.enum">[[temp.mem.enum]]</a>
 
@@ -2065,7 +2065,7 @@ template<class T> enum A<T>::E : T { e1, e2 };
 A<int>::E e = A<int>::e1;
 ```
 
-— *end example*\]
+— *end example*]
 
 ### Member templates <a id="temp.mem">[[temp.mem]]</a>
 
@@ -2089,7 +2089,7 @@ template<class T> template<class T2> int string<T>::compare(const T2& s) {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Example 2*:
 
@@ -2108,7 +2108,7 @@ template<C1 T> template<typename U>
 void S<T>::g(U) { }             // error: no matching function in S<T>
 ```
 
-— *end example*\]
+— *end example*]
 
 A local class of non-closure type shall not have member templates.
 Access control rules [[class.access]] apply to member template names. A
@@ -2138,7 +2138,7 @@ int main() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 A member function template shall not be declared `virtual`.
 
@@ -2151,7 +2151,7 @@ template <class T> struct AA {
 };
 ```
 
-— *end example*\]
+— *end example*]
 
 A specialization of a member function template does not override a
 virtual function from a base class.
@@ -2169,7 +2169,7 @@ class D : public B {
 };
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Note 1*:
 
@@ -2194,13 +2194,13 @@ int main() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 There is no syntax to form a *template-id* [[temp.names]] by providing
 an explicit template argument list [[temp.arg.explicit]] for a
 conversion function template.
 
-— *end note*\]
+— *end note*]
 
 ### Variadic templates <a id="temp.variadic">[[temp.variadic]]</a>
 
@@ -2218,7 +2218,7 @@ Tuple<int, float> t2;           // Types contains two arguments: int and float
 Tuple<0> error;                 // error: 0 is not a type
 ```
 
-— *end example*\]
+— *end example*]
 
 A *function parameter pack* is a function parameter that accepts zero or
 more function arguments.
@@ -2233,7 +2233,7 @@ f(1);                           // args contains one argument: int
 f(2, 1.0);                      // args contains two arguments: int and double
 ```
 
-— *end example*\]
+— *end example*]
 
 An *\*init-capture\* pack* is a lambda capture that introduces an
 *init-capture* for each of the elements in the pack expansion of its
@@ -2253,7 +2253,7 @@ foo();                          // xs contains zero init-captures
 foo(1);                         // xs contains one init-capture
 ```
 
-— *end example*\]
+— *end example*]
 
 A *pack* is a template parameter pack, a function parameter pack, or an
 *init-capture* pack. The number of elements of a template parameter pack
@@ -2305,7 +2305,7 @@ template<class ... Types> void g(Types ... rest) {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 For the purpose of determining whether a pack satisfies a rule regarding
 entities other than packs, the pack is considered to be the entity that
@@ -2347,7 +2347,7 @@ template<class ... Args>
   }
 ```
 
-— *end example*\]
+— *end example*]
 
 The instantiation of a pack expansion considers items
 `E₁`, `E₂`, \dotsc, `E_N`, where N is the number of elements in the pack
@@ -2406,7 +2406,7 @@ bool b = all(true, true, true, false);
 Within the instantiation of `all`, the returned expression expands to
 `((true && true) && true) && false`, which evaluates to `false`.
 
-— *end example*\]
+— *end example*]
 
 If N is zero for a unary fold, the value of the expression is shown in
 [[temp.fold.empty]]; if the operator is not listed in
@@ -2426,7 +2426,7 @@ elements `E₁`, `E₂`, \dotsc, `E_N`.
 
 [*Note 1*: The variety of list varies with the context:
 *expression-list*, *base-specifier-list*, *template-argument-list*,
-etc. — *end note*\]
+etc. — *end note*]
 
 When N is zero, the instantiation of the expansion produces an empty
 list.
@@ -2443,7 +2443,7 @@ template void f<>();    // OK, X<> has no base classes
                         // x is a variable of type X<> that is value-initialized
 ```
 
-— *end example*\]
+— *end example*]
 
 ### Friends <a id="temp.friend">[[temp.friend]]</a>
 
@@ -2481,7 +2481,7 @@ function template `preempt` as a friend; and each specialization of the
 template has the class template specialization `task<int>` as a friend,
 and has all specializations of the class template `frd` as friends.
 
-— *end example*\]
+— *end example*]
 
 Friend classes, class templates, functions, or function templates can be
 declared within a class template. When a template is instantiated, its
@@ -2490,7 +2490,7 @@ had been explicitly declared at its point of instantiation.
 
 [*Note 1*: They can introduce entities that belong to an enclosing
 namespace scope [[dcl.meaning]], in which case they are attached to the
-same module as the class template [[module.unit]]. — *end note*\]
+same module as the class template [[module.unit]]. — *end note*]
 
 A friend template may be declared within a class or class template. A
 friend function template may be defined within a class or class
@@ -2508,7 +2508,7 @@ class A {
 };
 ```
 
-— *end example*\]
+— *end example*]
 
 A template friend declaration specifies that all specializations of that
 template, whether they are implicitly instantiated [[temp.inst]],
@@ -2528,7 +2528,7 @@ template<class T> struct A { X::Y ab; };            // OK
 template<class T> struct A<T*> { X::Y ab; };        // OK
 ```
 
-— *end example*\]
+— *end example*]
 
 A template friend declaration may declare a member of a dependent type
 to be a friend. The friend declaration shall declare a function or
@@ -2579,7 +2579,7 @@ class C {
 };                                              // of those function templates
 ```
 
-— *end example*\]
+— *end example*]
 
 A friend template shall not be declared in a local class.
 
@@ -2594,7 +2594,7 @@ class X {
 };
 ```
 
-— *end example*\]
+— *end example*]
 
 When a friend declaration refers to a specialization of a function
 template, the function parameter declarations shall not include default
@@ -2641,7 +2641,7 @@ The first declaration declares the primary (unspecialized) class
 template. The second and subsequent declarations declare partial
 specializations of the primary template.
 
-— *end example*\]
+— *end example*]
 
 A partial specialization may be constrained [[temp.constr]].
 
@@ -2662,7 +2662,7 @@ specialization succeeds, while the reverse does not. \#2 is more
 specialized because the template arguments are equivalent, but the
 partial specialization is more constrained [[temp.constr.order]].
 
-— *end example*\]
+— *end example*]
 
 The template argument list of a partial specialization is the
 *template-argument-list* following the name of the template.
@@ -2688,7 +2688,7 @@ template<class T> template<class T2>
 A<short>::C::B<int*> absip;                     // uses partial specialization #2
 ```
 
-— *end example*\]
+— *end example*]
 
 Partial specialization declarations do not introduce a name. Instead,
 when the primary template name is used, any reachable partial
@@ -2696,7 +2696,7 @@ specializations of the primary template are also considered.
 
 [*Note 1*: One consequence is that a *using-declaration* which refers
 to a class template does not restrict the set of partial specializations
-that are found through the *using-declaration*. — *end note*\]
+that are found through the *using-declaration*. — *end note*]
 
 [*Example 4*:
 
@@ -2715,7 +2715,7 @@ A<int,int*> a;      // uses the partial specialization, which is found through t
                     // which refers to the primary template
 ```
 
-— *end example*\]
+— *end example*]
 
 A non-type argument is non-specialized if it is the name of a non-type
 parameter. All other non-type arguments are specialized.
@@ -2736,7 +2736,7 @@ restrictions apply:
   template< int X > class A<X,&array> { };        // error
   ```
 
-  — *end example*\]
+  — *end example*]
 - The partial specialization shall be more specialized than the primary
   template [[temp.spec.partial.order]].
 - The template parameter list of a partial specialization shall not
@@ -2752,7 +2752,7 @@ specialization.
 [*Note 2*: The template arguments can be private types or objects that
 would normally not be accessible. Dependent names cannot be checked when
 declaring the partial specialization, but will be checked when
-substituting into the partial specialization. — *end note*\]
+substituting into the partial specialization. — *end note*]
 
 #### Matching of partial specializations <a id="temp.spec.partial.match">[[temp.spec.partial.match]]</a>
 
@@ -2796,7 +2796,7 @@ A<int, char*, 1> a4;                    // uses #5, T1 is int, T2 is char, I is 
 A<int*, int*, 2> a5;                    // ambiguous: matches #3 and #5
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Example 2*:
 
@@ -2812,7 +2812,7 @@ S<int> s1;                              // uses #1; the constraints of #2 are no
 S<Arg> s2;                              // uses #2; both constraints are satisfied but #2 is more specialized
 ```
 
-— *end example*\]
+— *end example*]
 
 If the template arguments of a partial specialization cannot be deduced
 because of the structure of its *template-parameter-list* and the
@@ -2830,7 +2830,7 @@ template <int I, int J, int K> struct B {};
 template <int I> struct B<I, I*2, 2> {};    // OK
 ```
 
-— *end example*\]
+— *end example*]
 
 In a name that refers to a specialization of a class or variable
 template (e.g., `A<int, int, 1>`), the argument list shall match the
@@ -2880,7 +2880,7 @@ function template *D* is more specialized than the function template
 the partial specialization \#1 and the partial specialization \#4 is
 more specialized than the partial specialization \#3.
 
-— *end example*\]
+— *end example*]
 
 [*Example 2*:
 
@@ -2899,7 +2899,7 @@ template<D T> void f(S<T>);     // B
 The partial specialization \#2 is more specialized than \#1 because `B`
 is more specialized than `A`.
 
-— *end example*\]
+— *end example*]
 
 #### Members of class template partial specializations <a id="temp.spec.partial.member">[[temp.spec.partial.member]]</a>
 
@@ -2946,7 +2946,7 @@ int main() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 If a member template of a class template is partially specialized, the
 member template partial specializations are member templates of the
@@ -2978,7 +2978,7 @@ A<short>::B<int*> absip;                                        // uses #3
 A<char>::B<int>  abci;                                          // uses #1
 ```
 
-— *end example*\]
+— *end example*]
 
 ### Function templates <a id="temp.fct">[[temp.fct]]</a>
 
@@ -2995,11 +2995,11 @@ template<class T> class Array { };
 template<class T> void sort(Array<T>&);
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Note 1*: A function template can have the same name as other function
 templates and non-template functions [[dcl.fct]] in the same
-scope. — *end note*\]
+scope. — *end note*]
 
 A non-template function is not related to a function template (i.e., it
 is never considered to be a specialization), even if it has the same
@@ -3031,7 +3031,7 @@ void h(int* p) {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 Such specializations are distinct functions and do not violate the
 one-definition rule [[basic.def.odr]].
@@ -3053,7 +3053,7 @@ template<int I> void f();       // OK, overloads the first template
                                 // distinguishable with an explicit template argument list
 ```
 
-— *end note*\]
+— *end note*]
 
 When an expression that references a template parameter is used in the
 function parameter list or the return type in the declaration of a
@@ -3072,12 +3072,12 @@ template <int K, int L> A<K+L> f(A<K>, A<L>);   // same as #1
 template <int I, int J> A<I-J> f(A<I>, A<J>);   // different from #1
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Note 2*: Most expressions that use template parameters use non-type
 template parameters, but it is possible for an expression to reference a
 type parameter. For example, a template type parameter can be used in
-the `sizeof` operator. — *end note*\]
+the `sizeof` operator. — *end note*]
 
 Two expressions involving template parameters are considered
 *equivalent* if two function definitions containing the expressions
@@ -3094,19 +3094,19 @@ as they name the same entities, and the tokens used to form concept-ids
 [[temp.type]].
 
 [*Note 3*: For instance, `A<42>` and `A<40+2>` name the same
-type. — *end note*\]
+type. — *end note*]
 
 Two *lambda-expression*s are never considered equivalent.
 
 [*Note 4*: The intent is to avoid *lambda-expression*s appearing in the
-signature of a function template with external linkage. — *end note*\]
+signature of a function template with external linkage. — *end note*]
 
 For determining whether two dependent names [[temp.dep]] are equivalent,
 only the name itself is considered, not the result of name lookup.
 
 [*Note 5*: If such a dependent name is unqualified, it is looked up
 from the first declaration of the function template
-[[temp.dep.candidate]]. — *end note*\]
+[[temp.dep.candidate]]. — *end note*]
 
 [*Example 3*:
 
@@ -3130,7 +3130,7 @@ template <class T> void spam(decltype([]{}) (*s)[sizeof(T)]);
 template <class T> void spam(decltype([]{}) (*s)[sizeof(T)]);
 ```
 
-— *end example*\]
+— *end example*]
 
 Two potentially-evaluated expressions involving template parameters that
 are not equivalent are *functionally equivalent* if, for any given set
@@ -3141,7 +3141,7 @@ expressions perform the same operations in the same order with the same
 entities.
 
 [*Note 6*: For instance, one could have redundant
-parentheses. — *end note*\]
+parentheses. — *end note*]
 
 [*Example 4*:
 
@@ -3153,7 +3153,7 @@ template<typename T> struct A {
 };
 ```
 
-— *end example*\]
+— *end example*]
 
 Two *template-head*s are *equivalent* if their
 *template-parameter-list*s have the same length, corresponding
@@ -3213,7 +3213,7 @@ template <int I> void f(A<I>, A<I+10>);
 template <int I> void f(A<I>, A<I+1+2+3+4>);
 ```
 
-— *end note*\]
+— *end note*]
 
 #### Partial ordering of function templates <a id="temp.func.order">[[temp.func.order]]</a>
 
@@ -3251,7 +3251,7 @@ parameter in the function type of the template.
 
 [*Note 1*: The type replacing the placeholder in the type of the value
 synthesized for a non-type template parameter is also a unique
-synthesized type. — *end note*\]
+synthesized type. — *end note*]
 
 Each function template M that is a member function is considered to have
 a new first parameter of type X(M), described below, inserted in its
@@ -3272,7 +3272,7 @@ A:
 
 [*Note 2*: This allows a non-static member to be ordered with respect
 to a non-member function and for the results to be equivalent to the
-ordering of two equivalent non-members. — *end note*\]
+ordering of two equivalent non-members. — *end note*]
 
 [*Example 1*:
 
@@ -3294,7 +3294,7 @@ int main() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 Using the transformed function template’s function type, perform type
 deduction against the other template as described in 
@@ -3327,7 +3327,7 @@ void m() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Note 3*:
 
@@ -3353,7 +3353,7 @@ int main() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Example 4*:
 
@@ -3372,7 +3372,7 @@ void h() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Example 5*:
 
@@ -3388,9 +3388,9 @@ void h(int i) {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
-— *end note*\]
+— *end note*]
 
 If deduction against the other template succeeds for both transformed
 templates, constraints can be considered as follows:
@@ -3451,7 +3451,7 @@ void h() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 ### Alias templates <a id="temp.alias">[[temp.alias]]</a>
 
@@ -3465,7 +3465,7 @@ it is equivalent to the associated type obtained by substitution of its
 *template-argument*s for the *template-parameter*s in the
 *defining-type-id* of the alias template.
 
-[*Note 1*: An alias template name is never deduced. — *end note*\]
+[*Note 1*: An alias template name is never deduced. — *end note*]
 
 [*Example 1*:
 
@@ -3492,7 +3492,7 @@ template<template<class,class> class TT>
 g(v);               // OK, TT = vector
 ```
 
-— *end example*\]
+— *end example*]
 
 However, if the *template-id* is dependent, subsequent template argument
 substitution still applies to the *template-id*.
@@ -3505,7 +3505,7 @@ template<typename T> void_t<typename T::foo> f();
 f<int>();           // error: int does not have a nested type foo
 ```
 
-— *end example*\]
+— *end example*]
 
 The *defining-type-id* in an alias template declaration shall not refer
 to the alias template being declared. The type produced by an alias
@@ -3523,7 +3523,7 @@ template <class T> struct A {
 B<short> b;         // error: instantiation of B<short> uses own type via A<short>::U
 ```
 
-— *end example*\]
+— *end example*]
 
 The type of a *lambda-expression* appearing in an alias template
 declaration is different between instantiations of that template, even
@@ -3536,7 +3536,7 @@ template <class T>
   using A = decltype([] { });   // A<int> and A<char> refer to different closure types
 ```
 
-— *end example*\]
+— *end example*]
 
 ### Concept definitions <a id="temp.concept">[[temp.concept]]</a>
 
@@ -3573,7 +3573,7 @@ template<C T>       // C, as a type-constraint, constrains f2(T)
 T f2(T x) { return x; }
 ```
 
-— *end example*\]
+— *end example*]
 
 A *concept-definition* shall inhabit a namespace scope
 [[basic.scope.namespace]].
@@ -3585,7 +3585,7 @@ A concept is not instantiated [[temp.spec]].
 [*Note 1*: A concept-id [[temp.names]] is evaluated as an expression. A
 concept cannot be explicitly instantiated [[temp.explicit]], explicitly
 specialized [[temp.expl.spec]], or partially specialized
-[[temp.spec.partial]]. — *end note*\]
+[[temp.spec.partial]]. — *end note*]
 
 The *constraint-expression* of a *concept-definition* is an unevaluated
 operand [[expr.context]].
@@ -3611,7 +3611,7 @@ determine that they are dependent or to interpret following `<` tokens.
 Uses of other names might be type-dependent or value-dependent
 [[temp.dep.expr]], [[temp.dep.constexpr]]. A *using-declarator* is never
 dependent in a specialization and is therefore replaced during lookup
-for that specialization [[basic.lookup]]. — *end note*\]
+for that specialization [[basic.lookup]]. — *end note*]
 
 [*Example 1*:
 
@@ -3624,7 +3624,7 @@ struct D : B {
 int f(D<A, int> d) { return d.get(); }  // OK, lookup finds A::operator int
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Example 2*:
 
@@ -3648,7 +3648,7 @@ void h() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Example 3*:
 
@@ -3674,7 +3674,7 @@ Y<A> ya;
 The members `A::B`, `A::a`, and `A::Y` of the template argument `A` do
 not affect the binding of names in `Y<A>`.
 
-— *end example*\]
+— *end example*]
 
 If the validity or meaning of the program would be changed by
 considering a default argument or default template argument introduced
@@ -3695,7 +3695,7 @@ denoted by the *simple-type-specifier* [[dcl.type.simple]] formed by
 omitting the keyword `typename`.
 
 [*Note 2*: The usual qualified name lookup [[basic.lookup.qual]]
-applies even in the presence of `typename`. — *end note*\]
+applies even in the presence of `typename`. — *end note*]
 
 [*Example 4*:
 
@@ -3718,7 +3718,7 @@ void foo() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 A qualified or unqualified name is said to be in a *type-only context*
 if it is the terminal name of
@@ -3766,7 +3766,7 @@ template<typename T> void f() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 A *qualified-id* whose terminal name is dependent and that is in a
 type-only context is considered to denote a type. A name that refers to
@@ -3794,12 +3794,12 @@ int main() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 The validity of a template may be checked prior to any instantiation.
 
 [*Note 3*: Knowing which names are type names allows the syntax of
-every template to be checked in this way. — *end note*\]
+every template to be checked in this way. — *end note*]
 
 The program is ill-formed, no diagnostic required, if:
 
@@ -3851,14 +3851,14 @@ This can happen in situations including the following:
   it names an explicit specialization that was not declared when the
   template was defined.
 
-— *end note*\]
+— *end note*]
 
 Otherwise, no diagnostic shall be issued for a template for which a
 valid specialization can be generated.
 
 [*Note 5*: If a template is instantiated, errors will be diagnosed
 according to the other rules in this document. Exactly when these errors
-are diagnosed is a quality of implementation issue. — *end note*\]
+are diagnosed is a quality of implementation issue. — *end note*]
 
 [*Example 7*:
 
@@ -3884,12 +3884,12 @@ template<class... T> union X : T... { };            // error: union with base cl
 template<class... T> struct A : T...,  T... { };    // error: duplicate base class
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Note 6*: For purposes of name lookup, default arguments and
 *noexcept-specifier*s of function templates and default arguments and
 *noexcept-specifier*s of member functions of class templates are
-considered definitions [[temp.decls]]. — *end note*\]
+considered definitions [[temp.decls]]. — *end note*]
 
 ### Locally declared names <a id="temp.local">[[temp.local]]</a>
 
@@ -3925,7 +3925,7 @@ template<> class Y<int> {
 };
 ```
 
-— *end example*\]
+— *end example*]
 
 The injected-class-name of a class template or class template
 specialization can be used as either a *template-name* or a *type-name*
@@ -3946,7 +3946,7 @@ template<class T, template<class> class U = T::Base> struct Third { };
 Third<Derived<int> > t;                 // OK, default argument uses injected-class-name as a template
 ```
 
-— *end example*\]
+— *end example*]
 
 A lookup that finds an injected-class-name [[class.member.lookup]] can
 result in an ambiguity in certain cases (for example, if it is found in
@@ -3965,7 +3965,7 @@ template <class T> struct Derived: Base<int>, Base<char> {
 };
 ```
 
-— *end example*\]
+— *end example*]
 
 When the normal name of the template (i.e., the name from the enclosing
 scope, not the injected-class-name) is used, it always refers to the
@@ -3983,7 +3983,7 @@ template<class T> class X {
 };
 ```
 
-— *end example*\]
+— *end example*]
 
 The name of a *template-parameter* shall not be bound to any following
 declaration whose locus is contained by the scope to which the
@@ -4003,7 +4003,7 @@ template<class T, int i> class Y {
 template<class X> class X;              // error: hidden by template-parameter
 ```
 
-— *end example*\]
+— *end example*]
 
 Unqualified name lookup considers the template parameter scope of a
 *template-declaration* immediately after the outermost scope associated
@@ -4012,7 +4012,7 @@ the *template-parameter-list*).
 
 [*Note 1*: The scope of a class template, including its non-dependent
 base classes [[temp.dep.type]], [[class.member.lookup]], is searched
-before its template parameter scope. — *end note*\]
+before its template parameter scope. — *end note*]
 
 [*Example 6*:
 
@@ -4037,7 +4037,7 @@ template<class B> template<class C> void N::A<B>::g(C) {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 ### Dependent names <a id="temp.dep">[[temp.dep]]</a>
 
@@ -4080,7 +4080,7 @@ dependent if
 [*Note 1*: Such names are looked up only at the point of the template
 instantiation [[temp.point]] in both the context of the template
 definition and the context of the point of instantiation
-[[temp.dep.candidate]]. — *end note*\]
+[[temp.dep.candidate]]. — *end note*]
 
 [*Example 1*:
 
@@ -4097,7 +4097,7 @@ template<class T> struct X : B<T> {
 The base class name `B<T>`, the type name `T::A`, the names `B<T>::i`
 and `pb->j` explicitly depend on the *template-parameter*.
 
-— *end example*\]
+— *end example*]
 
 #### Dependent types <a id="temp.dep.type">[[temp.dep.type]]</a>
 
@@ -4135,7 +4135,7 @@ template parameter if
   template parameter or, recursively, such a variable.
 
 [*Note 1*: Using a parenthesized variable name breaks the
-equivalence. — *end note*\]
+equivalence. — *end note*]
 
 [*Example 1*:
 
@@ -4174,7 +4174,7 @@ template <class T1, class T2, int I> struct B {
 };
 ```
 
-— *end example*\]
+— *end example*]
 
 A *dependent base class* is a base class that is a dependent type and is
 not the current instantiation.
@@ -4200,9 +4200,9 @@ template<class T> struct A<T>::B::C : A<T> {
 };
 ```
 
-— *end example*\]
+— *end example*]
 
-— *end note*\]
+— *end note*]
 
 A qualified [[basic.lookup.qual]] or unqualified name is a
 *member of the current instantiation* if
@@ -4228,7 +4228,7 @@ template <class T> int A<T>::f() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 A qualified or unqualified name names a
 *dependent member of the current instantiation* if it is a member of the
@@ -4263,7 +4263,7 @@ void g(T t) {
 template void g(C);             // … even though A is ::A here
 ```
 
-— *end example*\]
+— *end example*]
 
 If, for a given set of template arguments, a specialization of a
 template is instantiated that refers to a member of the current
@@ -4294,7 +4294,7 @@ template int C<B>::g();         // OK, transformation to class member access syn
                                 // does not occur in the template definition context; see~[class.mfct.non.static]
 ```
 
-— *end example*\]
+— *end example*]
 
 A type is dependent if it is
 
@@ -4319,7 +4319,7 @@ A type is dependent if it is
 [*Note 3*: Because typedefs do not introduce new types, but instead
 simply refer to other types, a name that refers to a typedef that is a
 member of the current instantiation is dependent only if the type
-referred to is dependent. — *end note*\]
+referred to is dependent. — *end note*]
 
 #### Type-dependent expressions <a id="temp.dep.expr">[[temp.dep.expr]]</a>
 
@@ -4394,7 +4394,7 @@ noexcept '(' expression ')'
 ```
 
 [*Note 1*: For the standard library macro `offsetof`, see 
-[[support.types]]. — *end note*\]
+[[support.types]]. — *end note*]
 
 A class member access expression [[expr.ref]] is type-dependent if the
 terminal name of its *id-expression*, if any, is dependent or the
@@ -4405,7 +4405,7 @@ of the referenced member is dependent.
 the expression is usually the type of the member `y` of the class of `x`
 (or the class pointed to by `xp`). However, if `x` or `xp` refers to a
 dependent type that is not the current instantiation, the type of `y` is
-always dependent. — *end note*\]
+always dependent. — *end note*]
 
 A *braced-init-list* is type-dependent if any element is type-dependent
 or is a pack expansion.
@@ -4444,7 +4444,7 @@ noexcept '(' expression ')'
 ```
 
 [*Note 1*: For the standard library macro `offsetof`, see 
-[[support.types]]. — *end note*\]
+[[support.types]]. — *end note*]
 
 Expressions of the following form are value-dependent if either the
 *type-id* or *simple-type-specifier* is dependent or the *expression* or
@@ -4614,7 +4614,7 @@ void h(Q::X x) {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Example 2*:
 
@@ -4644,7 +4644,7 @@ void f(S* p, S* q)
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Example 3*:
 
@@ -4678,7 +4678,7 @@ void g(X x) {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Example 4*:
 
@@ -4767,7 +4767,7 @@ void k() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 ## Template instantiation and specialization <a id="temp.spec">[[temp.spec]]</a>
 
@@ -4823,7 +4823,7 @@ template<class T = int> struct B {
 template<> int B<>::x = 1;              // specialize for T == int
 ```
 
-— *end example*\]
+— *end example*]
 
 An instantiated template specialization can be either implicitly
 instantiated [[temp.inst]] for a given argument list or be explicitly
@@ -4854,7 +4854,7 @@ member or variable template initializer.
 [*Note 1*: In particular, the template arguments and names used in the
 function declarator (including parameter types, return types and
 exception specifications) can be private types or objects that would
-normally not be accessible. — *end note*\]
+normally not be accessible. — *end note*]
 
 Each class template specialization instantiated from a template has its
 own copy of any static members.
@@ -4875,7 +4875,7 @@ X<char*> bb;
 has a static member `s` of type `int` and `X<char*>` has a static member
 `s` of type `char*`.
 
-— *end example*\]
+— *end example*]
 
 If a function declaration acquired its function type through a dependent
 type [[temp.dep.type]] without using the syntactic form of a function
@@ -4891,7 +4891,7 @@ typedef int function();
 A<function> a;      // error: would declare A<function>::t as a static member function
 ```
 
-— *end example*\]
+— *end example*]
 
 ### Implicit instantiation <a id="temp.inst">[[temp.inst]]</a>
 
@@ -4909,7 +4909,7 @@ not
 
 [*Note 1*: An implicit instantiation in an importing translation unit
 cannot use names with internal linkage from an imported translation unit
-[[basic.link]]. — *end note*\]
+[[basic.link]]. — *end note*]
 
 Unless a class template specialization is a declared specialization, the
 class template specialization is implicitly instantiated when the
@@ -4923,7 +4923,7 @@ class template specialization is implicitly generated. For instance,
 deleting a pointer to class type depends on whether or not the class
 declares a destructor, and a conversion between pointers to class type
 depends on the inheritance relationship between the two classes
-involved. — *end note*\]
+involved. — *end note*]
 
 [*Example 1*:
 
@@ -4941,7 +4941,7 @@ void g(D<int>* p, D<char>* pp, D<double>* ppp) {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 If the template selected for the specialization
 [[temp.spec.partial.match]] has been declared, but not defined, at the
@@ -4955,7 +4955,7 @@ template<class T> class X;
 X<char> ch;         // error: incomplete type X<char>
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Note 3*: Within a template declaration, a local class [[class.local]]
 or enumeration and the members of a local class are never considered to
@@ -4965,7 +4965,7 @@ initializers, if any, but not their *type-constraint*s or
 *requires-clause*s). As a result, the dependent names are looked up, the
 semantic constraints are checked, and any templates used are
 instantiated as part of the instantiation of the entity within which the
-local class or enumeration is declared. — *end note*\]
+local class or enumeration is declared. — *end note*]
 
 The implicit instantiation of a class template specialization causes
 
@@ -4992,7 +4992,7 @@ C<void> c;                      // OK, definition of C<void>::f is not instantia
 template<> void C<int>::g() { } // error: redefinition of C<int>::g
 ```
 
-— *end example*\]
+— *end example*]
 
 However, for the purpose of determining whether an instantiated
 redeclaration is valid according to  [[basic.def.odr]] and
@@ -5027,7 +5027,7 @@ Friendly<char> fc;
 Friendly<float> ff;                             // error: produces second definition of f(U)
 ```
 
-— *end example*\]
+— *end example*]
 
 Unless a member of a templated class is a declared specialization, the
 specialization of the member is implicitly instantiated when the
@@ -5057,7 +5057,7 @@ instantiation declaration is not a declared specialization; the intent
 is that it still be implicitly instantiated when odr-used
 [[term.odr.use]] so that the body can be considered for inlining, but
 that no out-of-line copy of it be generated in the translation
-unit. — *end note*\]
+unit. — *end note*]
 
 [*Example 5*:
 
@@ -5081,7 +5081,7 @@ void h() {
 Nothing in this example requires `class` `Z<double>`, `Z<int>::g()`, or
 `Z<char>::f()` to be implicitly instantiated.
 
-— *end example*\]
+— *end example*]
 
 Unless a variable template specialization is a declared specialization,
 the variable template specialization is implicitly instantiated when it
@@ -5112,7 +5112,7 @@ void x() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 If the function selected by overload resolution [[over.match]] can be
 determined without instantiating a class template definition, it is
@@ -5135,7 +5135,7 @@ void g(S<int>& sr) {
 };
 ```
 
-— *end example*\]
+— *end example*]
 
 If a function template or a member function template specialization is
 used in a way that involves overload resolution, a declaration of the
@@ -5150,7 +5150,7 @@ instantiation is required.
 [*Note 5*: The instantiation of a generic lambda does not require
 instantiation of substatements of a constexpr if statement within its
 *compound-statement* unless the call operator template is
-instantiated. — *end note*\]
+instantiated. — *end note*]
 
 It is unspecified whether or not an implementation implicitly
 instantiates a virtual member function of a class template if the
@@ -5196,7 +5196,7 @@ void g(A a, A b, A c) {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 The *noexcept-specifier* of a function template specialization is not
 instantiated along with the function declaration; it is instantiated
@@ -5208,7 +5208,7 @@ done as part of instantiating the declaration of the specialization at
 that point.
 
 [*Note 6*:  [[temp.point]] defines the point of instantiation of a
-template specialization. — *end note*\]
+template specialization. — *end note*]
 
 There is an *implementation-defined* quantity that specifies the limit
 on the total depth of recursive instantiations [[implimits]], which
@@ -5226,7 +5226,7 @@ template<class T> class X {
 };
 ```
 
-— *end example*\]
+— *end example*]
 
 The *type-constraint*s and *requires-clause* of a template
 specialization or member function are not instantiated along with the
@@ -5239,7 +5239,7 @@ declarations.
 
 [*Note 7*: The satisfaction of constraints is determined during
 template argument deduction [[temp.deduct]] and overload resolution
-[[over.match]]. — *end note*\]
+[[over.match]]. — *end note*]
 
 [*Example 10*:
 
@@ -5261,7 +5261,7 @@ specialization. Their constraints are not satisfied, and they suppress
 the implicit declaration of a default constructor for `S<char>`
 [[class.default.ctor]], so there is no viable constructor for `s1`.
 
-— *end example*\]
+— *end example*]
 
 [*Example 11*:
 
@@ -5284,7 +5284,7 @@ it has no valid specializations. `S2` is ill-formed, no diagnostic
 required, since no substitution into the constraints of its `Inner2`
 template would result in a valid expression.
 
-— *end example*\]
+— *end example*]
 
 ### Explicit instantiation <a id="temp.explicit">[[temp.explicit]]</a>
 
@@ -5336,7 +5336,7 @@ namespace N {
 template void N::f<int>(int&);
 ```
 
-— *end example*\]
+— *end example*]
 
 An explicit instantiation does not introduce a name
 [[basic.scope.scope]]. A declaration of a function template, a variable
@@ -5376,9 +5376,9 @@ template void f<int>();         // error: function with deduced return type
                                 // redeclared with non-deduced return type[dcl.spec.auto]
 ```
 
-— *end example*\]
+— *end example*]
 
-— *end note*\]
+— *end note*]
 
 Despite its syntactic form, the *declaration* in an
 *explicit-instantiation* for a variable is not itself a definition and
@@ -5409,7 +5409,7 @@ template<class T> void sort(Array<T>& v) { ... }
 template void sort<>(Array<int>&);
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Note 2*: An explicit instantiation of a constrained template is
 required to satisfy that template’s associated constraints
@@ -5418,7 +5418,7 @@ forming the template name of an explicit instantiation in which all
 template arguments are specified [[temp.names]], or, for explicit
 instantiations of function templates, during template argument deduction
 [[temp.deduct.decl]] when one or more trailing template arguments are
-left unspecified. — *end note*\]
+left unspecified. — *end note*]
 
 An explicit instantiation that names a class template specialization is
 also an explicit instantiation of the same kind (declaration or
@@ -5430,7 +5430,7 @@ explicit instantiation [[temp.constr.decl]], [[temp.constr.constr]],
 except as described below.
 
 [*Note 3*: In addition, it will typically be an explicit instantiation
-of certain implementation-dependent data about the class. — *end note*\]
+of certain implementation-dependent data about the class. — *end note*]
 
 An explicit instantiation definition that names a class template
 specialization explicitly instantiates the class template specialization
@@ -5454,7 +5454,7 @@ explicit instantiation declaration of such an entity has no other
 normative effect. This is needed to ensure that if the address of an
 inline function is taken in a translation unit in which the
 implementation chose to suppress the out-of-line body, another
-translation unit will supply the body. — *end note*\]
+translation unit will supply the body. — *end note*]
 
 An explicit instantiation declaration shall not name a specialization of
 a template with internal linkage.
@@ -5470,7 +5470,7 @@ template<class T> T g(T x = &p) { return x; }
 template int g<int>(int);       // OK even though &p isn't an int.
 ```
 
-— *end example*\]
+— *end example*]
 
 ### Explicit specialization <a id="temp.expl.spec">[[temp.expl.spec]]</a>
 
@@ -5513,7 +5513,7 @@ specializations instantiated from the class template. Similarly,
 `Array<char*>`; other `Array` types will be sorted by functions
 generated from the template.
 
-— *end example*\]
+— *end example*]
 
 The *declaration* in an *explicit-specialization* shall not be an
 *export-declaration*. An explicit specialization shall not use a
@@ -5529,7 +5529,7 @@ template, or variable template being explicitly specialized shall be
 reachable from the declaration of the explicit specialization.
 
 [*Note 1*: A declaration, but not a definition of the template is
-required. — *end note*\]
+required. — *end note*]
 
 The definition of a class or class template shall be reachable from the
 declaration of an explicit specialization for a member template of the
@@ -5545,7 +5545,7 @@ template<class T> class X;
 template<> class X<char*> { ... };        // OK, X is a template
 ```
 
-— *end example*\]
+— *end example*]
 
 A member function, a member function template, a member class, a member
 enumeration, a member class template, a static data member, or a static
@@ -5618,7 +5618,7 @@ template<> template<class U> struct A<short>::C {
 template<class U> void A<short>::C<U>::f() { ... }    // error: template<> required
 ```
 
-— *end example*\]
+— *end example*]
 
 If a template, a member template or a member of a class template is
 explicitly specialized, a declaration of that specialization shall be
@@ -5658,7 +5658,7 @@ template<> enum A<char>::E : char { echar };        // error: A<char>::E was ins
 template<> enum class A<char>::S : char { schar };  // OK
 ```
 
-— *end example*\]
+— *end example*]
 
 The placement of explicit specialization declarations for function
 templates, class templates, variable templates, member functions of
@@ -5694,7 +5694,7 @@ X<int>* p;                                      // OK, pointer to declared class
 X<int> x;                                       // error: object of incomplete class X<int>
 ```
 
-— *end example*\]
+— *end example*]
 
 A trailing *template-argument* can be left unspecified in the
 *template-id* naming an explicit function template specialization
@@ -5711,7 +5711,7 @@ template<class T> void sort(Array<T>& v);
 template<> void sort(Array<int>&);
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Note 2*: An explicit specialization of a constrained template is
 required to satisfy that template’s associated constraints
@@ -5720,7 +5720,7 @@ forming the template name of an explicit specialization in which all
 template arguments are specified [[temp.names]], or, for explicit
 specializations of function templates, during template argument
 deduction [[temp.deduct.decl]] when one or more trailing template
-arguments are left unspecified. — *end note*\]
+arguments are left unspecified. — *end note*]
 
 A function with the same name as a template and a type that exactly
 matches that of a template specialization is not an explicit
@@ -5748,7 +5748,7 @@ template<> void h<int>(int i) {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 An explicit specialization of a static data member of a template or an
 explicit specialization of a static data member template is a definition
@@ -5767,7 +5767,7 @@ template<> X Q<int>::x ();                      // error: declares a function
 template<> X Q<int>::x = X();                   // definition
 ```
 
-— *end note*\]
+— *end note*]
 
 A member or a member template of a class template may be explicitly
 specialized for a given implicit instantiation of the class template,
@@ -5804,7 +5804,7 @@ template<> template<>
 template<> void A<int>::h(int) { }
 ```
 
-— *end example*\]
+— *end example*]
 
 A member or a member template may be nested within many enclosing class
 templates. In an explicit specialization for such a member, the member
@@ -5823,7 +5823,7 @@ template<> template<> class A<int>::B<double>;
 template<> template<> void A<char>::B<char>::mf();
 ```
 
-— *end example*\]
+— *end example*]
 
 In an explicit specialization declaration for a member of a class
 template or a member template that appears in namespace scope, the
@@ -5857,7 +5857,7 @@ template <class Y> template <>
                                         // its enclosing class template A is not
 ```
 
-— *end example*\]
+— *end example*]
 
 A specialization of a member function template, member class template,
 or static data member template of a non-specialized class template is
@@ -5876,7 +5876,7 @@ definition for one of the following explicit specializations:
   specialization belongs is implicitly instantiated. \[*Note 1*: Default
   function arguments can be specified in the declaration or definition
   of a member function of a class template specialization that is
-  explicitly specialized. — *end note*\]
+  explicitly specialized. — *end note*]
 
 ## Function template specializations <a id="temp.fct.spec">[[temp.fct.spec]]</a>
 
@@ -5909,7 +5909,7 @@ void g(int a, char* b) {
 Here `f<int>(int*)` has a static variable `s` of type `int` and
 `f<char*>(char**)` has a static variable `s` of type `char*`.
 
-— *end example*\]
+— *end example*]
 
 ### Explicit template argument specification <a id="temp.arg.explicit">[[temp.arg.explicit]]</a>
 
@@ -5940,7 +5940,7 @@ void g(double d) {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 Template arguments shall not be specified when referring to a
 specialization of a constructor template [[class.ctor]], [[class.qual]].
@@ -5961,7 +5961,7 @@ of explicit *template-argument*s.
 
 [*Note 1*: A trailing template parameter pack [[temp.variadic]] not
 otherwise deduced will be deduced as an empty sequence of template
-arguments. — *end note*\]
+arguments. — *end note*]
 
 If all of the template arguments can be deduced or obtained from default
 *template-argument*s, they may all be omitted; in this case, the empty
@@ -5983,7 +5983,7 @@ void h() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Note 2*:
 
@@ -5999,7 +5999,7 @@ int k = f(1);                   // uses #2
 int l = f<>(1);                 // uses #1
 ```
 
-— *end note*\]
+— *end note*]
 
 Template arguments that are present shall be specified in the
 declaration order of their corresponding *template-parameter*s. The
@@ -6021,7 +6021,7 @@ void g() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 Implicit conversions [[conv]] will be performed on a function argument
 to convert it to the type of the corresponding function parameter if the
@@ -6045,13 +6045,13 @@ void g() {
 }
 ```
 
-— *end note*\]
+— *end note*]
 
 [*Note 4*: Because the explicit template argument list follows the
 function template name, and because constructor templates [[class.ctor]]
 are named without using a function name [[class.qual]], there is no way
 to provide an explicit template argument list for these function
-templates. — *end note*\]
+templates. — *end note*]
 
 Template argument deduction can extend the sequence of template
 arguments corresponding to a template parameter pack, even when the
@@ -6067,7 +6067,7 @@ void g() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 ### Template argument deduction <a id="temp.deduct">[[temp.deduct]]</a>
 
@@ -6096,7 +6096,7 @@ void g(double d) {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 When an explicit template argument list is specified, if the given
 *template-id* is not valid [[temp.names]], type deduction fails.
@@ -6107,11 +6107,11 @@ After this substitution is performed, the function parameter type
 adjustments described in  [[dcl.fct]] are performed.
 
 [*Example 2*: A parameter type of “`void (const int, int[5])`” becomes
-“`void(*)(int,int*)`”. — *end example*\]
+“`void(*)(int,int*)`”. — *end example*]
 
 [*Note 1*: A top-level qualifier in a function parameter declaration
 does not affect the function type but still affects the type of the
-function parameter variable within the function. — *end note*\]
+function parameter variable within the function. — *end note*]
 
 [*Example 3*:
 
@@ -6138,11 +6138,11 @@ int main() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Note 2*: `f<int>(1)` and `f<const int>(1)` call distinct functions
 even though both of the functions called have the same function
-type. — *end note*\]
+type. — *end note*]
 
 The resulting substituted and adjusted function type is used as the type
 of the function template for template argument deduction. If a template
@@ -6167,7 +6167,7 @@ void g() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 When all template arguments have been deduced or obtained from default
 template arguments, all uses of template parameters in the template
@@ -6188,7 +6188,7 @@ be implicitly converted to the parameter type, type deduction fails.
 including parameters with dependent types in which no template
 parameters participate in template argument deduction and parameters
 that became non-dependent due to substitution of explicitly-specified
-template arguments. — *end note*\]
+template arguments. — *end note*]
 
 If type deduction has not yet failed, then all uses of template
 parameters in the function type are replaced with the corresponding
@@ -6216,7 +6216,7 @@ int main() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 At certain points in the template argument deduction process it is
 necessary to take a function type that makes use of template parameters
@@ -6248,7 +6248,7 @@ required.
 [*Note 4*: The equivalent substitution in exception specifications is
 done only when the *noexcept-specifier* is instantiated, at which point
 a program is ill-formed if the substitution results in an invalid type
-or expression. — *end note*\]
+or expression. — *end note*]
 
 [*Example 6*:
 
@@ -6269,7 +6269,7 @@ void x() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 If a substitution results in an invalid type or expression, type
 deduction fails. An invalid type or expression is one that would be
@@ -6278,7 +6278,7 @@ using the substituted arguments.
 
 [*Note 5*: If no diagnostic is required, the program is still
 ill-formed. Access checking is done as part of the substitution
-process. — *end note*\]
+process. — *end note*]
 
 Invalid types and expressions can result in a deduction failure only in
 the immediate context of the deduction substitution loci.
@@ -6288,7 +6288,7 @@ effects such as the instantiation of class template specializations
 and/or function template specializations, the generation of
 implicitly-defined functions, etc. Such effects are not in the
 “immediate context” and can result in the program being
-ill-formed. — *end note*\]
+ill-formed. — *end note*]
 
 A *lambda-expression* appearing in a function type or a template
 parameter is not considered part of the immediate context for the
@@ -6328,9 +6328,9 @@ void j(...);                                                            // #2
 j(0);               // deduction fails on #1, calls #2
 ```
 
-— *end example*\]
+— *end example*]
 
-— *end note*\]
+— *end note*]
 
 [*Example 8*:
 
@@ -6347,7 +6347,7 @@ X x1, x2;
 X x3 = f(x1, x2);   // deduction fails on #1 (cannot add X+X), calls #2
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Note 8*:
 
@@ -6368,7 +6368,7 @@ Type deduction can fail for the following reasons:
     or
   - the specified member is not a non-type where a non-type is required.
 
-  \[*Example 1*: \_\_CODEBLOCK_3\_\_ — *end example*\]
+  \[*Example 1*: \_\_CODEBLOCK_3\_\_ — *end example*]
 - Attempting to create a pointer to reference type.
 - Attempting to create a reference to `void`.
 - Attempting to create “pointer to member of `T`” when `T` is not a
@@ -6381,7 +6381,7 @@ Type deduction can fail for the following reasons:
   of `void`, or in which the return type is a function type or array
   type.
 
-— *end note*\]
+— *end note*]
 
 [*Example 9*:
 
@@ -6398,7 +6398,7 @@ int i1 = f<1000>(0);            // OK
 int i2 = f<1>(0);               // ambiguous; not narrowing
 ```
 
-— *end example*\]
+— *end example*]
 
 #### Deducing template arguments from a function call <a id="temp.deduct.call">[[temp.deduct.call]]</a>
 
@@ -6453,7 +6453,7 @@ o({ &f1, &f4 });                                // OK, T deduced as int from fir
 o({ &f1, static_cast<char(*)(char)>(&f4) });    // error: conflicting deductions for T
 ```
 
-— *end example*\]
+— *end example*]
 
 For a function parameter pack that occurs at the end of the
 *parameter-declaration-list*, deduction is performed for each remaining
@@ -6480,7 +6480,7 @@ void h(int x, float& y) {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 If `P` is not a reference type:
 
@@ -6508,7 +6508,7 @@ template <class T> int g(volatile T&);
 int n3 = g(i);                  // calls g<const int>(const volatile int&)
 ```
 
-— *end example*\]
+— *end example*]
 
 A *forwarding reference* is an rvalue reference to a cv-unqualified
 template parameter that does not represent a template parameter of a
@@ -6543,7 +6543,7 @@ A a0{0, 0, ip};                 // uses #1 to deduce A<int> and #1 to initialize
 A a2{i, ip};                    // uses #3 to deduce A<int&> and #2 to initialize
 ```
 
-— *end example*\]
+— *end example*]
 
 In general, the deduction process attempts to find template argument
 values that will make the deduced `A` identical to `A` (after the type
@@ -6582,7 +6582,7 @@ that allow a difference:
   int z = f(E());     // calls f<int>, not f<>
   ```
 
-  — *end example*\]
+  — *end example*]
 
 These alternatives are considered only if type deduction would otherwise
 fail. If they yield more than one possible deduced `A`, the type
@@ -6592,7 +6592,7 @@ deduction fails.
 parameters of a function template, or is used only in a non-deduced
 context, its corresponding *template-argument* cannot be deduced from a
 function call and the *template-argument* must be explicitly
-specified. — *end note*\]
+specified. — *end note*]
 
 When `P` is a function type, function pointer type, or
 pointer-to-member-function type:
@@ -6616,7 +6616,7 @@ int g(char);
 int i = f(g);       // calls f(int (*)(int))
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Example 6*:
 
@@ -6628,7 +6628,7 @@ char g(char);
 int i = f(1, g);    // calls f(int, int (*)(int))
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Example 7*:
 
@@ -6640,7 +6640,7 @@ template <class T> T g(T);
 int i = f(1, g);    // calls f(int, int (*)(int))
 ```
 
-— *end example*\]
+— *end example*]
 
 #### Deducing template arguments taking the address of a function template <a id="temp.deduct.funcaddr">[[temp.deduct.funcaddr]]</a>
 
@@ -6711,7 +6711,7 @@ of the templates involved there is the original function type and the
 transformed function type.
 
 [*Note 1*: The creation of the transformed type is described in 
-[[temp.func.order]]. — *end note*\]
+[[temp.func.order]]. — *end note*]
 
 The deduction process uses the transformed type as the argument template
 and the original type of the other template as the parameter template.
@@ -6779,7 +6779,7 @@ f(1, 2);            // calls #3; non-variadic template #3 is more specialized
                     // than the variadic templates #1 and #2
 ```
 
-— *end example*\]
+— *end example*]
 
 If, for a given type, the types are identical after the transformations
 above and both `P` and `A` were reference types (before being replaced
@@ -6812,7 +6812,7 @@ remain without a value provided it is not used in the types being used
 for partial ordering.
 
 [*Note 2*: A template parameter used in a non-deduced context is
-considered used. — *end note*\]
+considered used. — *end note*]
 
 [*Example 2*:
 
@@ -6824,11 +6824,11 @@ void g() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Note 3*: Partial ordering of function templates containing template
 parameter packs is independent of the number of deduced arguments for
-those template parameter packs. — *end note*\]
+those template parameter packs. — *end note*]
 
 [*Example 3*:
 
@@ -6844,7 +6844,7 @@ g(Tuple<int, float&>());        // calls #3
 g(Tuple<int>());                // calls #3
 ```
 
-— *end example*\]
+— *end example*]
 
 #### Deducing template arguments from a type <a id="temp.deduct.type">[[temp.deduct.type]]</a>
 
@@ -6893,7 +6893,7 @@ deduction fails.
 
 [*Note 1*: Under [[temp.deduct.call]], if `P` contains no
 *template-parameter*s that appear in deduced contexts, no deduction is
-done, so `P` and `A` need not have the same form. — *end note*\]
+done, so `P` and `A` need not have the same form. — *end note*]
 
 The non-deduced contexts are:
 
@@ -6922,7 +6922,7 @@ The non-deduced contexts are:
   g({1,2,3});                 // error: no argument deduced for T
   ```
 
-  — *end example*\]
+  — *end example*]
 - A function parameter pack that does not occur at the end of the
   *parameter-declaration-list*.
 
@@ -6936,7 +6936,7 @@ non-deduced types.
 `A<I+J>::X<T>`, `I`, `J`, and `T` are non-deduced. If a type is
 specified as `void` `f(typename` `A<T>::B,` `A<T>)`, the `T` in
 `A<T>::B` is non-deduced but the `T` in `A<T>` is
-deduced. — *end example*\]
+deduced. — *end example*]
 
 [*Example 2*:
 
@@ -7020,7 +7020,7 @@ void t() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 A template type argument `T`, a template template argument `TT`, or a
 template non-type argument `i` can be deduced if `P` and `A` have one of
@@ -7056,7 +7056,7 @@ where
   above.
 
 [*Note 2*: If a type matches such a form but contains no `T`s, `i`s, or
-`TT`s, deduction is not possible. — *end note*\]
+`TT`s, deduction is not possible. — *end note*]
 
 Similarly, `<T>` represents template argument lists where at least one
 argument contains a `T`, `<i>` represents template argument lists where
@@ -7094,7 +7094,7 @@ template<class T1, class T2>             struct A<T1, T2> { };          // #3
 template struct A<int, int*>;   // selects #2
 ```
 
-— *end example*\]
+— *end example*]
 
 Similarly, if `P` has a form that contains `(T)`, then each parameter
 type `Pᵢ` of the respective parameter-type-list [[dcl.fct]] of `P` is
@@ -7111,7 +7111,7 @@ is changed to simply `T`).
 
 [*Note 3*: As a result, when `Pᵢ` is `T&&` and `Aᵢ` is `X&`, the
 adjusted `Pᵢ` will be `T`, causing `T` to be deduced as
-`X&`. — *end note*\]
+`X&`. — *end note*]
 
 [*Example 4*:
 
@@ -7125,7 +7125,7 @@ void g(int i) {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 If the *parameter-declaration* corresponding to `Pᵢ` is a function
 parameter pack, then the type of its *declarator-id* is compared with
@@ -7148,7 +7148,7 @@ template<class T>             void f(T) { }         // #2
 template void f(int*);                              // selects #1
 ```
 
-— *end example*\]
+— *end example*]
 
 These forms can be used in the same way as `T` is for further
 composition of types.
@@ -7173,7 +7173,7 @@ type (*)(T)
 
 where type is `X<int>` and `T` is `char[6]`.
 
-— *end example*\]
+— *end example*]
 
 Template arguments cannot be deduced from function arguments involving
 constructs other than the ones specified above.
@@ -7198,7 +7198,7 @@ using R = C<A<2>>::Q;           // OK; T was deduced as long from the
                                 // template argument value in the type A<2>
 ```
 
-— *end example*\]
+— *end example*]
 
 The type of `N` in the type `T[N]` is `std::size_t`.
 
@@ -7214,7 +7214,7 @@ using V = decltype(sizeof 0);
 using V = S<int[42]>::Q;        // OK; T was deduced as std::size_t from the type int[42]
 ```
 
-— *end example*\]
+— *end example*]
 
 The type of `B` in the *noexcept-specifier* `noexcept(B)` of a function
 type is `bool`.
@@ -7231,7 +7231,7 @@ void f_nothrow() noexcept;
 B<f_nothrow> bn;                // OK, type of X deduced as bool
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Example 10*:
 
@@ -7243,7 +7243,7 @@ void g() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Note 4*:
 
@@ -7265,7 +7265,7 @@ void g() {
 }
 ```
 
-— *end note*\]
+— *end note*]
 
 [*Note 5*:
 
@@ -7289,9 +7289,9 @@ void k() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
-— *end note*\]
+— *end note*]
 
 [*Note 6*:
 
@@ -7311,7 +7311,7 @@ int    x = deduce<77>(a.xm, 62, b.ym);
 // i is explicitly specified to be 77; b.ym must be convertible to B<77>::Y
 ```
 
-— *end note*\]
+— *end note*]
 
 If `P` has a form that contains `<i>`, and if the type of `i` differs
 from the type of the corresponding template parameter of the template
@@ -7341,7 +7341,7 @@ void k2() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 A *template-argument* can be deduced from a function, pointer to
 function, or pointer-to-member-function type.
@@ -7363,7 +7363,7 @@ int m() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 A template *type-parameter* cannot be deduced from the type of a
 function default argument.
@@ -7379,7 +7379,7 @@ void g() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 The *template-argument* corresponding to a template *template-parameter*
 is deduced from the type of the *template-argument* of a class template
@@ -7395,11 +7395,11 @@ A<B> ab;
 f(ab);              // calls f(A<B>)
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Note 7*: Template argument deduction involving parameter packs
 [[temp.variadic]] can deduce zero or more arguments for each parameter
-pack. — *end note*\]
+pack. — *end note*]
 
 [*Example 16*:
 
@@ -7421,7 +7421,7 @@ Y<int, float, double> y3;       // uses primary template; Types contains int, fl
 int fv = f(g);                  // OK; Types contains int, float
 ```
 
-— *end example*\]
+— *end example*]
 
 #### Deducing template arguments from a function declaration <a id="temp.deduct.decl">[[temp.deduct.decl]]</a>
 
@@ -7489,7 +7489,7 @@ to the example above would resolve the third call, by providing a
 function that can be called for `max(a,c)` after using the standard
 conversion of `char` to `int` for `c`.
 
-— *end example*\]
+— *end example*]
 
 [*Example 2*:
 
@@ -7507,7 +7507,7 @@ void g(B<int>& bi, D<int>& di) {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Example 3*:
 
@@ -7527,7 +7527,7 @@ void h(int* pi, int i, char c) {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 Only the signature of a function template specialization is needed to
 enter the specialization in a set of candidate functions. Therefore only
@@ -7549,7 +7549,7 @@ and not defined at the point of the call. The program will be ill-formed
 unless a specialization for `f<const char*>` is explicitly instantiated
 in some translation unit [[temp.pre]].
 
-— *end example*\]
+— *end example*]
 
 <!-- Section link definitions -->
 [temp]: #temp

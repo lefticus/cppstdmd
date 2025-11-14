@@ -84,26 +84,26 @@ C `restrict` qualifier) are the same unless otherwise stated.
 ## Definitions <a id="definitions">[[definitions]]</a>
 
 [*Note 1*: Clause [[intro.defs]] defines additional terms used
-elsewhere in this International Standard. — *end note*\]
+elsewhere in this International Standard. — *end note*]
 
 a stream (described in Clause  [[input.output]]) that can seek to any
 integral position within the length of the stream  
 
 [*Note 2*: Every arbitrary-positional stream is also a repositional
-stream. — *end note*\]
+stream. — *end note*]
 
 [[strings]] any object which, when treated sequentially, can represent
 text  
 
 [*Note 3*: The term does not mean only `char`, `char16_t`, `char32_t`,
 and `wchar_t` objects, but any value that can be represented by a type
-that provides the definitions specified in these Clauses. — *end note*\]
+that provides the definitions specified in these Clauses. — *end note*]
 
 a class or a type used to represent a *character*  
 
 [*Note 4*: It is used for one of the template parameters of the string,
 iostream, and regular expression class templates. A character container
-type is a POD ( [[basic.types]]) type. — *end note*\]
+type is a POD ( [[basic.types]]) type. — *end note*]
 
 an operator function ( [[over.oper]]) for any of the equality (
 [[expr.eq]]) or relational ( [[expr.rel]]) operators
@@ -113,7 +113,7 @@ return types
 
 [*Note 5*: For example, the class template `basic_string` and the
 non-member function templates that operate on strings are referred to as
-the *string component*. — *end note*\]
+the *string component*. — *end note*]
 
 an expression whose evaluation as subexpression of a
 *conditional-expression* `CE` ( [[expr.cond]]) would not prevent `CE`
@@ -136,7 +136,7 @@ C++program
 [*Note 6*: A C++program may designate a handler function at various
 points in its execution by supplying a pointer to the function when
 calling any of the library functions that install handler functions
-(Clause  [[language.support]]). — *end note*\]
+(Clause  [[language.support]]). — *end note*]
 
 templates, defined in Clause  [[input.output]], that take two template
 arguments  
@@ -145,7 +145,7 @@ arguments
 `charT` is a character container class, and the argument `traits` is a
 class which defines additional characteristics and functions of the
 character type represented by `charT` necessary to implement the
-iostream class templates. — *end note*\]
+iostream class templates. — *end note*]
 
 a class member function ( [[class.mfct]]) other than a constructor,
 assignment operator, or destructor that alters the state of an object of
@@ -164,20 +164,20 @@ a class member function ( [[class.mfct]]) that accesses the state of an
 object of the class but does not alter that state  
 
 [*Note 8*: Observer functions are specified as `const` member
-functions ( [[class.this]]). — *end note*\]
+functions ( [[class.this]]). — *end note*]
 
 an object type, a function type that does not have cv-qualifiers or a
 *ref-qualifier*, or a reference type
 
 [*Note 9*: The term describes a type to which a reference can be
-created, including reference types. — *end note*\]
+created, including reference types. — *end note*]
 
 a *non-reserved function* whose definition is provided by a C++program  
 
 [*Note 10*: Only one definition for such a function is in effect for
 the duration of the program’s execution, as the result of creating the
 program ( [[lex.phases]]) and resolving the definitions of all
-translation units ( [[basic.link]]). — *end note*\]
+translation units ( [[basic.link]]). — *end note*]
 
 a stream (described in Clause  [[input.output]]) that can seek to a
 position that was previously encountered
@@ -188,19 +188,19 @@ behavior of any such function definition in the program
 
 [*Note 11*: If such a function defined in a C++program fails to meet
 the required behavior when it executes, the behavior is undefined.
- — *end note*\]
+ — *end note*]
 
 a function, specified as part of the C++standard library, that must be
 defined by the implementation  
 
 [*Note 12*: If a C++program provides a definition for any reserved
-function, the results are undefined.  — *end note*\]
+function, the results are undefined.  — *end note*]
 
 an algorithm that preserves, as appropriate to the particular algorithm,
 the order of elements  
 
 [*Note 13*: Requirements for stable algorithms are given in 
-[[algorithm.stable]]. — *end note*\]
+[[algorithm.stable]]. — *end note*]
 
 a class that encapsulates a set of types and functions necessary for
 class templates and function templates to manipulate objects of types
@@ -213,7 +213,7 @@ its type
 [*Example 1*: If an object `x` of type `std::vector<int>` is in a valid
 but unspecified state, `x.empty()` can be called unconditionally, and
 `x.front()` can be called only if `x.empty()` returns
-`false`. — *end example*\]
+`false`. — *end example*]
 
 ## Method of description (Informative) <a id="description">[[description]]</a>
 
@@ -404,7 +404,7 @@ namespace std {
 The type placeholder `some-handler` can now be used to specify a
 function that takes a callback parameter with C language linkage.
 
-— *end example*\]
+— *end example*]
 
 ##### Enumerated types <a id="enumerated.types">[[enumerated.types]]</a>
 
@@ -553,7 +553,7 @@ declared as either explicit or non-explicit ( [[class.conv.ctor]]).
 
 [*Note 1*: This is typically implemented by declaring two such
 constructors, of which at most one participates in overload
-resolution. — *end note*\]
+resolution. — *end note*]
 
 #### Private members <a id="objects.within.classes">[[objects.within.classes]]</a>
 
@@ -682,7 +682,7 @@ functions.
 
 [*Note 1*: The names defined as macros in C include the following:
 `assert`, `offsetof`, `setjmp`, `va_arg`, `va_end`, and
-`va_start`. — *end note*\]
+`va_start`. — *end note*]
 
 Names that are defined as functions in C shall be defined as functions
 in the C++standard library.[^16]
@@ -860,7 +860,7 @@ signatures is called using the default argument ( [[dcl.fct.default]]).
 [*Note 1*: `rv` must still meet the requirements of the library
 component that is using it. The operations listed in those requirements
 must work as specified whether `rv` has been moved from or
-not. — *end note*\]
+not. — *end note*]
 
 **Table: `CopyConstructible` requirements (in addition to `MoveConstructible`)**
 
@@ -872,7 +872,7 @@ not. — *end note*\]
 [*Note 2*:  `rv` must still meet the requirements of the library
 component that is using it, whether or not `t` and `rv` refer to the
 same object. The operations listed in those requirements must work as
-specified whether `rv` has been moved from or not. — *end note*\]
+specified whether `rv` has been moved from or not. — *end note*]
 
 **Table: `CopyAssignable` requirements (in addition to `MoveAssignable`)**
 
@@ -916,11 +916,11 @@ overload resolution ( [[over.match]]) on a candidate set that includes:
 fundamental types and the declarations from the header `<utility>` are
 in scope, the overall lookup set described above is equivalent to that
 of the qualified name lookup applied to the expression `std::swap(t, u)`
-or `std::swap(u, t)` as appropriate. — *end note*\]
+or `std::swap(u, t)` as appropriate. — *end note*]
 
 [*Note 2*: It is unspecified whether a library component that has a
 swappable requirement includes the header `<utility>` to ensure an
-appropriate evaluation context. — *end note*\]
+appropriate evaluation context. — *end note*]
 
 An rvalue or lvalue `t` is *swappable* if and only if `t` is swappable
 with any rvalue or lvalue, respectively, of type `T`.
@@ -976,7 +976,7 @@ int main() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 #### `NullablePointer` requirements <a id="nullablepointer.requirements">[[nullablepointer.requirements]]</a>
 
@@ -996,7 +996,7 @@ type. The null value shall be equivalent only to itself. A
 default-initialized object of type `P` may have an indeterminate value.
 
 [*Note 1*: Operations involving indeterminate values may cause
-undefined behavior. — *end note*\]
+undefined behavior. — *end note*]
 
 An object `p` of type `P` can be contextually converted to `bool`
 (Clause  [[conv]]). The effect shall be as if `p != nullptr` had been
@@ -1042,7 +1042,7 @@ is an lvalue of type `Key`, and `k` is a value of a type convertible to
 
 [*Note 1*: Thus all evaluations of the expression `h(k)` with the same
 value for `k` yield the same result for a given execution of the
-program. — *end note*\]
+program. — *end note*]
 
 #### Allocator requirements <a id="allocator.requirements">[[allocator.requirements]]</a>
 
@@ -1072,7 +1072,7 @@ Tables  [[tab:desc.var.def]] and 
 [[tab:utilities.allocator.requirements]], the use of `move` and
 `forward` always refers to `std::move` and `std::forward`, respectively.
 
-[*Note 1*: If `n == 0`, the return value is unspecified. — *end note*\]
+[*Note 1*: If `n == 0`, the return value is unspecified. — *end note*]
 
 Note A: The member class template `rebind` in the table above is
 effectively a typedef template.
@@ -1080,7 +1080,7 @@ effectively a typedef template.
 [*Note 2*: In general, if the name `Allocator` is bound to
 `SomeAllocator<T>`, then `Allocator::rebind<U>::other` is the same type
 as `SomeAllocator<U>`, where `SomeAllocator<T>::value_type` is `T` and
-`SomeAllocator<U>::{}value_type` is `U`. — *end note*\]
+`SomeAllocator<U>::{}value_type` is `U`. — *end note*]
 
 If `Allocator` is a class template instantiation of the form
 `SomeAllocator<T, Args>`, where `Args` is zero or more type arguments,
@@ -1175,7 +1175,7 @@ template <class T, class U>
 bool operator!=(const SimpleAllocator<T>&, const SimpleAllocator<U>&);
 ```
 
-— *end example*\]
+— *end example*]
 
 If the alignment associated with a specific over-aligned type is not
 supported by an allocator, instantiation of the allocator for that type
@@ -1183,7 +1183,7 @@ may fail. The allocator also may silently ignore the requested
 alignment.
 
 [*Note 3*: Additionally, the member function `allocate` for that type
-may fail by throwing an object of type `bad_alloc`. — *end note*\]
+may fail by throwing an object of type `bad_alloc`. — *end note*]
 
 ##### Allocator completeness requirements <a id="allocator.requirements.completeness">[[allocator.requirements.completeness]]</a>
 
@@ -1253,7 +1253,7 @@ The behavior of a C++program is undefined if it adds declarations or
 definitions to such a namespace.
 
 [*Example 1*: The top level namespace `std2` is reserved for use by
-future revisions of this International Standard. — *end example*\]
+future revisions of this International Standard. — *end example*]
 
 #### Reserved names <a id="reserved.names">[[reserved.names]]</a>
 
@@ -1479,13 +1479,13 @@ the C++standard library, unless explicitly stated otherwise.
   this argument. \[*Note 1*: If the parameter is a generic parameter of
   the form `T&&` and an lvalue of type `A` is bound, the argument binds
   to an lvalue reference ( [[temp.deduct.call]]) and thus is not covered
-  by the previous sentence. — *end note*\] \[*Note 2*: If a program
+  by the previous sentence. — *end note*] \[*Note 2*: If a program
   casts an lvalue to an xvalue while passing that lvalue to a library
   function (e.g. by calling the function with the argument
   `std::move(x)`), the program is effectively asking that function to
   treat that lvalue as a temporary. The implementation is free to
   optimize away aliasing checks which might be needed if the argument
-  was an lvalue. — *end note*\]
+  was an lvalue. — *end note*]
 
 #### Library object access <a id="res.on.objects">[[res.on.objects]]</a>
 
@@ -1497,7 +1497,7 @@ conditions under which this may occur are specified in 
 [*Note 1*: Modifying an object of a standard library type that is
 shared between threads risks undefined behavior unless objects of that
 type are explicitly specified as being sharable without data races or
-the user supplies a locking mechanism. — *end note*\]
+the user supplies a locking mechanism. — *end note*]
 
 If an object of a standard library type is accessed, and the beginning
 of the object’s lifetime ( [[basic.life]]) does not happen before the
@@ -1505,7 +1505,7 @@ access, or the access does not happen before the end of the object’s
 lifetime, the behavior is undefined unless otherwise specified.
 
 [*Note 2*: This applies even to objects such as mutexes intended for
-thread synchronization. — *end note*\]
+thread synchronization. — *end note*]
 
 #### Requires paragraph <a id="res.on.required">[[res.on.required]]</a>
 
@@ -1589,7 +1589,7 @@ if (delim != 0)
 return *this;
 ```
 
-— *end note*\]
+— *end note*]
 
 #### Member functions <a id="member.functions">[[member.functions]]</a>
 
@@ -1605,7 +1605,7 @@ International Standard behaves as if that overload were selected.
 [*Note 1*: For instance, an implementation may add parameters with
 default values, or replace a member function with default arguments with
 two or more member functions with equivalent behavior, or add additional
-signatures for a member function name. — *end note*\]
+signatures for a member function name. — *end note*]
 
 #### Constexpr functions and constructors <a id="constexpr.functions">[[constexpr.functions]]</a>
 
@@ -1658,7 +1658,7 @@ via the function’s non-const arguments, including `this`.
 [*Note 1*: This means, for example, that implementations can’t use a
 static object for internal purposes without synchronization because it
 could cause a data race even in programs that do not explicitly share
-objects between threads. — *end note*\]
+objects between threads. — *end note*]
 
 A C++standard library function shall not access objects indirectly
 accessible via its arguments or via elements of its container arguments
@@ -1671,7 +1671,7 @@ not modify it.
 
 [*Note 2*: In particular, container operations that invalidate
 iterators conflict with operations on iterators associated with that
-container. — *end note*\]
+container. — *end note*]
 
 Implementations may share their own internal objects between threads if
 the objects are not visible to users and are protected against data
@@ -1682,7 +1682,7 @@ all operations solely within the current thread if those operations have
 effects that are visible ( [[intro.multithread]]) to users.
 
 [*Note 3*: This allows implementations to parallelize operations if
-there are no visible side effects. — *end note*\]
+there are no visible side effects. — *end note*]
 
 #### Protection within classes <a id="protection.within.classes">[[protection.within.classes]]</a>
 
@@ -1748,7 +1748,7 @@ store such values in a traceable pointer location (
 since not doing so may result in accidental use of pointers that are not
 safely derived. Libraries that store pointers outside the user’s address
 space should make it appear that they are stored and retrieved from a
-traceable pointer location. — *end note*\]
+traceable pointer location. — *end note*]
 
 #### Value of error codes <a id="value.error.codes">[[value.error.codes]]</a>
 
@@ -1767,7 +1767,7 @@ as defined by the operating system’s documentation. Implementations for
 operating systems that are not based on POSIX are encouraged to define
 values identical to the operating system’s values. For errors that do
 not originate from the operating system, the implementation may provide
-enums for the associated values. — *end example*\]
+enums for the associated values. — *end example*]
 
 #### Moved-from state of library types <a id="lib.types.movedfrom">[[lib.types.movedfrom]]</a>
 

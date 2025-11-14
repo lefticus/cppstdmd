@@ -1084,7 +1084,7 @@ requirements of a mutable iterator ( [[iterator.requirements]]).
 
 [*Note 1*: This requirement does not affect arguments that are named
 `OutputIterator`, `OutputIterator1`, or `OutputIterator2`, because
-output iterators must always be mutable. — *end note*\]
+output iterators must always be mutable. — *end note*]
 
 Both in-place and copying versions are provided for certain
 algorithms.[^1] When such a version is provided for *algorithm* it is
@@ -1119,7 +1119,7 @@ objects as arguments are permitted to copy those function objects
 freely. Programmers for whom object identity is important should
 consider using a wrapper class that points to a noncopied implementation
 object such as `reference_wrapper<T>` ( [[refwrap]]), or some equivalent
-solution. — *end note*\]
+solution. — *end note*]
 
 When the description of an algorithm gives an expression such as
 `*first == value` for a condition, the expression shall evaluate to
@@ -1158,7 +1158,7 @@ arguments by invoking the following functions:
 - User-provided function objects to be applied during the execution of
   the algorithm, if required by the specification.
 - Operations on those function objects required by the specification.
-  \[*Note 1*: See  [[algorithms.general]]. — *end note*\]
+  \[*Note 1*: See  [[algorithms.general]]. — *end note*]
 
 These functions are herein called *element access functions*.
 
@@ -1173,7 +1173,7 @@ The `sort` function may invoke the following element access functions:
   preconditions specified in [[sort]]).
 - The user-provided `Compare` function object.
 
-— *end example*\]
+— *end example*]
 
 ### Requirements on user-provided function objects <a id="algorithms.parallel.user">[[algorithms.parallel.user]]</a>
 
@@ -1203,7 +1203,7 @@ rely on object identity of arguments for such input sequences. Users for
 whom the object identity of the arguments to these function objects is
 important should consider using a wrapping iterator that returns a
 non-copied implementation object such as `reference_wrapper<T>` (
-[[refwrap]]) or some equivalent solution. — *end note*\]
+[[refwrap]]) or some equivalent solution. — *end note*]
 
 The invocations of element access functions in parallel algorithms
 invoked with an execution policy object of type
@@ -1211,7 +1211,7 @@ invoked with an execution policy object of type
 execution.
 
 [*Note 2*: The invocations are not interleaved; see 
-[[intro.execution]]. — *end note*\]
+[[intro.execution]]. — *end note*]
 
 The invocations of element access functions in parallel algorithms
 invoked with an execution policy object of type
@@ -1227,7 +1227,7 @@ invocations executing in the same thread of execution are
 indeterminately sequenced with respect to each other.
 
 [*Note 3*: It is the caller’s responsibility to ensure that the
-invocation does not introduce data races or deadlocks. — *end note*\]
+invocation does not introduce data races or deadlocks. — *end note*]
 
 [*Example 1*:
 
@@ -1242,7 +1242,7 @@ std::for_each(std::execution::par, std::begin(a), std::end(a), [&](int i) {
 The program above has a data race because of the unsynchronized access
 to the container `v`.
 
-— *end example*\]
+— *end example*]
 
 [*Example 2*:
 
@@ -1260,7 +1260,7 @@ The above example depends on the order of execution of the iterations,
 and will not terminate if both iterations are executed sequentially on
 the same thread of execution.
 
-— *end example*\]
+— *end example*]
 
 [*Example 3*:
 
@@ -1277,7 +1277,7 @@ std::for_each(std::execution::par, std::begin(a), std::end(a), [&](int) {
 The above example synchronizes access to object `x` ensuring that it is
 incremented correctly.
 
-— *end example*\]
+— *end example*]
 
 The invocations of element access functions in parallel algorithms
 invoked with an execution policy of type
@@ -1291,7 +1291,7 @@ provide weakly parallel forward progress guarantees.
 [*Note 4*: This means that multiple function object invocations may be
 interleaved on a single thread of execution, which overrides the usual
 guarantee from [[intro.execution]] that function executions do not
-interleave with one another. — *end note*\]
+interleave with one another. — *end note*]
 
 Since `execution::parallel_unsequenced_policy` allows the execution of
 element access functions to be interleaved on a single thread of
@@ -1308,7 +1308,7 @@ standard library functions may not be invoked by user code called from
 [*Note 5*: Implementations must ensure that internal synchronization
 inside standard library functions does not prevent forward progress when
 those functions are executed by threads of execution with weakly
-parallel forward progress guarantees. — *end note*\]
+parallel forward progress guarantees. — *end note*]
 
 [*Example 4*:
 
@@ -1327,13 +1327,13 @@ the same thread of execution (which may deadlock), because the
 applications of the function object are not guaranteed to run on
 different threads of execution.
 
-— *end example*\]
+— *end example*]
 
 [*Note 6*: The semantics of the `execution::parallel_policy` or the
 `execution::parallel_unsequenced_policy` invocation allow the
 implementation to fall back to sequential execution if the system cannot
 parallelize an algorithm invocation due to lack of
-resources. — *end note*\]
+resources. — *end note*]
 
 If an invocation of a parallel algorithm uses threads of execution
 implicitly created by the library, then the invoking thread of execution
@@ -1351,7 +1351,7 @@ finished.
 this context, a thread of execution created by the library is considered
 to have finished execution as soon as it has finished the execution of
 the particular element access function that the invoking thread of
-execution logically depends on. — *end note*\]
+execution logically depends on. — *end note*]
 
 The semantics of parallel algorithms invoked with an execution policy
 object of *implementation-defined* type are *implementation-defined*.
@@ -1375,7 +1375,7 @@ each parallel algorithm overload has an additional function parameter of
 type `ExecutionPolicy&&`, which is the first function parameter.
 
 [*Note 1*: Not all algorithms have parallel algorithm
-overloads. — *end note*\]
+overloads. — *end note*]
 
 Unless otherwise specified, the semantics of `ExecutionPolicy` algorithm
 overloads are identical to their overloads without.
@@ -1451,7 +1451,7 @@ template<class InputIterator, class Function>
 `MoveConstructible` (Table  [[tab:moveconstructible]]).
 
 [*Note 1*: `Function` need not meet the requirements of
-`CopyConstructible` (Table  [[tab:copyconstructible]]). — *end note*\]
+`CopyConstructible` (Table  [[tab:copyconstructible]]). — *end note*]
 
 *Effects:* Applies `f` to the result of dereferencing every iterator in
 the range \[`first`, `last`), starting from `first` and proceeding to
@@ -1459,7 +1459,7 @@ the range \[`first`, `last`), starting from `first` and proceeding to
 
 [*Note 2*: If the type of `first` satisfies the requirements of a
 mutable iterator, `f` may apply non-constant functions through the
-dereferenced iterator. — *end note*\]
+dereferenced iterator. — *end note*]
 
 *Returns:* `f`.
 
@@ -1482,7 +1482,7 @@ the range \[`first`, `last`).
 
 [*Note 3*: If the type of `first` satisfies the requirements of a
 mutable iterator, `f` may apply non-constant functions through the
-dereferenced iterator. — *end note*\]
+dereferenced iterator. — *end note*]
 
 *Complexity:* Applies `f` exactly `last - first` times.
 
@@ -1493,7 +1493,7 @@ the input sequence.
 
 [*Note 4*: Does not return a copy of its `Function` parameter, since
 parallelization may not permit efficient state
-accumulation. — *end note*\]
+accumulation. — *end note*]
 
 ``` cpp
 template<class InputIterator, class Size, class Function>
@@ -1504,7 +1504,7 @@ template<class InputIterator, class Size, class Function>
 `MoveConstructible`
 
 [*Note 5*: `Function` need not meet the requirements of
-`CopyConstructible`. — *end note*\]
+`CopyConstructible`. — *end note*]
 
 *Requires:* `n >= 0`.
 
@@ -1513,7 +1513,7 @@ the range \[`first`, `first + n`) in order.
 
 [*Note 6*: If the type of `first` satisfies the requirements of a
 mutable iterator, `f` may apply non-constant functions through the
-dereferenced iterator. — *end note*\]
+dereferenced iterator. — *end note*]
 
 *Returns:* `first + n`.
 
@@ -1535,7 +1535,7 @@ the range \[`first`, `first + n`).
 
 [*Note 7*: If the type of `first` satisfies the requirements of a
 mutable iterator, `f` may apply non-constant functions through the
-dereferenced iterator. — *end note*\]
+dereferenced iterator. — *end note*]
 
 *Returns:* `first + n`.
 
@@ -2049,7 +2049,7 @@ template<class ExecutionPolicy, class ForwardIterator1, class ForwardIterator2, 
 [*Note 1*: For the overload with an `ExecutionPolicy`, there may be a
 performance cost if `iterator_traits<ForwardIterator1>::value_type` is
 not `MoveConstructible`
-(Table  [[tab:moveconstructible]]). — *end note*\]
+(Table  [[tab:moveconstructible]]). — *end note*]
 
 *Effects:* Copies all of the elements referred to by the iterator `i` in
 the range \[`first`, `last`) for which `pred(*i)` is `true`.
@@ -2402,7 +2402,7 @@ predicate.
 [*Note 1*: Each element in the range \[`ret`, `last`), where `ret` is
 the returned value, has a valid but unspecified state, because the
 algorithms can eliminate elements by moving from elements that were
-originally in that range. — *end note*\]
+originally in that range. — *end note*]
 
 ``` cpp
 template<class InputIterator, class OutputIterator, class T>
@@ -2433,7 +2433,7 @@ template<class ExecutionPolicy, class ForwardIterator1, class ForwardIterator2, 
 [*Note 2*: For the overloads with an `ExecutionPolicy`, there may be a
 performance cost if `iterator_traits<ForwardIterator1>::value_type` is
 not `MoveConstructible`
-(Table  [[tab:moveconstructible]]). — *end note*\]
+(Table  [[tab:moveconstructible]]). — *end note*]
 
 *Effects:* Copies all the elements referred to by the iterator `i` in
 the range \[`first`, `last`) for which the following corresponding
@@ -2518,7 +2518,7 @@ template<class ExecutionPolicy, class ForwardIterator1, class ForwardIterator2,
   `CopyAssignable`. \[*Note 2*: For the overloads with an
   `ExecutionPolicy`, there may be a performance cost if the value type
   of `ForwardIterator1` is not both `CopyConstructible` and
-  `CopyAssignable`. — *end note*\]
+  `CopyAssignable`. — *end note*]
 
 *Effects:* Copies only the first element from every consecutive group of
 equal elements referred to by the iterator `i` in the range \[`first`,
@@ -2661,7 +2661,7 @@ template<class PopulationIterator, class SampleIterator,
 sample has equal probability of appearance.
 
 [*Note 1*: Algorithms that obtain such effects include *selection
-sampling* and *reservoir sampling*. — *end note*\]
+sampling* and *reservoir sampling*. — *end note*]
 
 *Returns:* The end of the resulting sample range.
 
@@ -2741,7 +2741,7 @@ Under these conditions, it can be shown that
   determined by `equiv`
 - The induced relation is a strict total ordering.
 
-— *end note*\]
+— *end note*]
 
 A sequence is `comp` if for every iterator `i` pointing to the sequence
 and every non-negative integer `n` such that `i + n` is a valid iterator
@@ -3240,7 +3240,7 @@ template <class ExecutionPolicy, class ForwardIterator, class ForwardIterator1,
   `out_true` and `out_false` `ForwardIterator`s, and shall be
   convertible to `Predicate`’s argument type. \[*Note 3*: There may be a
   performance cost if `ForwardIterator`’s value type is not
-  `CopyConstructible`. — *end note*\]
+  `CopyConstructible`. — *end note*]
 - For both overloads, the input range shall not overlap with either of
   the output ranges.
 
@@ -3970,7 +3970,7 @@ first form, type `T` shall be `LessThanComparable`
 otherwise `v`.
 
 [*Note 1*: If NaN is avoided, `T` can be a floating-point
-type. — *end note*\]
+type. — *end note*]
 
 *Complexity:* At most two comparisons.
 
@@ -4028,10 +4028,10 @@ for ( ; first1 != last1 && first2 != last2 ; ++first1, (void) ++first2) {
 return first1 == last1 && first2 != last2;
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Note 1*: An empty sequence is lexicographically less than any
-non-empty sequence, but not less than any empty sequence. — *end note*\]
+non-empty sequence, but not less than any empty sequence. — *end note*]
 
 ### Permutation generators <a id="alg.permutation.generators">[[alg.permutation.generators]]</a>
 
@@ -4086,7 +4086,7 @@ sorted one, and returns `false`.
 ## C library algorithms <a id="alg.c.library">[[alg.c.library]]</a>
 
 [*Note 1*: The header `<cstdlib>` ( [[cstdlib.syn]]) declares the
-functions described in this subclause. — *end note*\]
+functions described in this subclause. — *end note*]
 
 ``` cpp
 void* bsearch(const void* key, const void* base, size_t nmemb, size_t size,

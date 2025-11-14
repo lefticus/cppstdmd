@@ -25,7 +25,7 @@ abs(1);             // calls abs(int);
 abs(1.0);           // calls abs(double);
 ```
 
-— *end example*\]
+— *end example*]
 
 ## Overloadable declarations <a id="over.load">[[over.load]]</a>
 
@@ -38,7 +38,7 @@ scope, and between such declarations and declarations made through a
 *using-declaration* [[namespace.udecl]]. It does not apply to sets of
 functions fabricated as a result of name lookup (e.g., because of
 *using-directive*s) or overload resolution (e.g., for operator
-functions). — *end note*\]
+functions). — *end note*]
 
 Certain function declarations cannot be overloaded:
 
@@ -74,7 +74,7 @@ Certain function declarations cannot be overloaded:
   };
   ```
 
-  — *end example*\]
+  — *end example*]
 - Member function declarations with the same name, the same
   parameter-type-list [[dcl.fct]], and the same trailing
   *requires-clause* (if any), as well as member function template
@@ -93,7 +93,7 @@ Certain function declarations cannot be overloaded:
   };
   ```
 
-  — *end example*\]
+  — *end example*]
 
 [*Note 2*:
 
@@ -131,7 +131,7 @@ overloaded:
 - Two parameter declarations that differ only in their default arguments
   are equivalent.
 
-— *end note*\]
+— *end note*]
 
 ## Declaration matching <a id="over.dcl">[[over.dcl]]</a>
 
@@ -155,9 +155,9 @@ template<typename T> struct A {
 };
 ```
 
-— *end example*\]
+— *end example*]
 
-— *end note*\]
+— *end note*]
 
 A function member of a derived class is *not* in the same scope as a
 function member of the same name in a base class.
@@ -185,7 +185,7 @@ void h(D* pd) {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 A locally declared function is not in the same scope as a function in a
 containing scope.
@@ -209,7 +209,7 @@ void caller () {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 Different versions of an overloaded member function can be given
 different access rules.
@@ -228,7 +228,7 @@ public:
 };
 ```
 
-— *end example*\]
+— *end example*]
 
 ## Overload resolution <a id="over.match">[[over.match]]</a>
 
@@ -244,7 +244,7 @@ certain other properties of the candidate function.
 [*Note 1*: The function selected by overload resolution is not
 guaranteed to be appropriate for the context. Other restrictions, such
 as the accessibility of the function, can make its use in the calling
-context ill-formed. — *end note*\]
+context ill-formed. — *end note*]
 
 Overload resolution selects the function to call in seven distinct
 contexts within the language:
@@ -326,7 +326,7 @@ cv-qualification on the member function declaration.
 
 [*Example 1*: For a `const` member function of class `X`, the extra
 parameter is assumed to have type “reference to
-`const X`”. — *end example*\]
+`const X`”. — *end example*]
 
 For conversion functions, the function is considered to be a member of
 the class of the implied object argument for the purpose of defining the
@@ -340,7 +340,7 @@ object (since if the function is selected, the object is discarded).
 [*Note 1*: No actual type is established for the implicit object
 parameter of a static member function, and no attempt will be made to
 determine a conversion sequence for that parameter
-[[over.match.best]]. — *end note*\]
+[[over.match.best]]. — *end note*]
 
 During overload resolution, the implied object argument is
 indistinguishable from other arguments. The implicit object parameter,
@@ -353,7 +353,7 @@ to the type of the implicit object parameter.
 
 [*Note 2*: The fact that such an argument is an rvalue does not affect
 the ranking of implicit conversion sequences
-[[over.ics.rank]]. — *end note*\]
+[[over.ics.rank]]. — *end note*]
 
 Because other than in list-initialization only one user-defined
 conversion is allowed in an implicit conversion sequence, special rules
@@ -375,7 +375,7 @@ public:
 T a = 1;            // error: no viable conversion (T(C(1)) not considered)
 ```
 
-— *end example*\]
+— *end example*]
 
 In each case where a candidate is a function template, candidate
 function template specializations are generated using template argument
@@ -422,7 +422,7 @@ struct C { operator B&&(); };
 B b3 = C();                             // calls #4
 ```
 
-— *end example*\]
+— *end example*]
 
 #### Function call syntax <a id="over.match.call">[[over.match.call]]</a>
 
@@ -444,7 +444,7 @@ selected by overload resolution is a non-static member function, the
 program is ill-formed.
 
 [*Note 1*: The resolution of the address of an overload set in other
-contexts is described in [[over.over]]. — *end note*\]
+contexts is described in [[over.over]]. — *end note*]
 
 ##### Call to named function <a id="over.call.func">[[over.call.func]]</a>
 
@@ -545,7 +545,7 @@ against the first parameter of the surrogate call function. The
 conversion function from which the surrogate call function was derived
 will be used in the conversion sequence for that parameter since it
 converts the implied object argument to the appropriate function pointer
-or reference required by that first parameter. — *end note*\]
+or reference required by that first parameter. — *end note*]
 
 [*Example 1*:
 
@@ -561,7 +561,7 @@ struct A {
 int i = a(1);                   // calls f1 via pointer returned from conversion function
 ```
 
-— *end example*\]
+— *end example*]
 
 #### Operators in expressions <a id="over.match.oper">[[over.match.oper]]</a>
 
@@ -574,7 +574,7 @@ operators are always built-in operators interpreted according to
 [[expr.compound]]. `?:` cannot be overloaded, but the rules in this
 subclause are used to determine the conversions to be applied to the
 second and third operands when they have class or enumeration type
-[[expr.cond]]. — *end note*\]
+[[expr.cond]]. — *end note*]
 
 [*Example 1*:
 
@@ -594,7 +594,7 @@ void f() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 If either operand has a type that is a class or an enumeration, a
 user-defined operator function might be declared that implements this
@@ -670,7 +670,7 @@ four sets of candidate functions, designated *member candidates*,
   \[*Note 1*: A candidate synthesized from a member candidate has its
   implicit object parameter as the second parameter, thus implicit
   conversions are considered for the first, but not for the second,
-  parameter. — *end note*\]
+  parameter. — *end note*]
 
 For the built-in assignment operators, conversions of the left operand
 are restricted as follows:
@@ -703,7 +703,7 @@ void m() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 If a rewritten `operator<=>` candidate is selected by overload
 resolution for an operator `@`, `x @ y` is interpreted as
@@ -747,7 +747,7 @@ int *a = Y() + 100.0;           // error: pointer arithmetic requires integral o
 int *b = Y() + X();             // error: pointer arithmetic requires integral operand
 ```
 
-— *end example*\]
+— *end example*]
 
 The second operand of operator `->` is ignored in selecting an
 `operator->` function, and is not an argument when the `operator->`
@@ -782,7 +782,7 @@ void B::f() {
 }
 ```
 
-— *end note*\]
+— *end note*]
 
 #### Initialization by constructor <a id="over.match.ctor">[[over.match.ctor]]</a>
 
@@ -808,7 +808,7 @@ select the user-defined conversion to be invoked.
 
 [*Note 1*: The conversion performed for indirect binding to a reference
 to a possibly cv-qualified class type is determined in terms of a
-corresponding non-reference copy-initialization. — *end note*\]
+corresponding non-reference copy-initialization. — *end note*]
 
 Assuming that “cv-qualifiercv1 `T`” is the type of the object being
 initialized, with `T` a class type, the candidate functions are selected
@@ -835,7 +835,7 @@ initializer expression.
 
 [*Note 2*: This argument will be compared against the first parameter
 of the constructors and against the implicit object parameter of the
-conversion functions. — *end note*\]
+conversion functions. — *end note*]
 
 #### Initialization by conversion function <a id="over.match.conv">[[over.match.conv]]</a>
 
@@ -865,7 +865,7 @@ type, the candidate functions are selected as follows:
 The argument list has one argument, which is the initializer expression.
 
 [*Note 1*: This argument will be compared against the implicit object
-parameter of the conversion functions. — *end note*\]
+parameter of the conversion functions. — *end note*]
 
 #### Initialization by conversion function for direct reference binding <a id="over.match.ref">[[over.match.ref]]</a>
 
@@ -897,7 +897,7 @@ type, the candidate functions are selected as follows:
 The argument list has one argument, which is the initializer expression.
 
 [*Note 1*: This argument will be compared against the implicit object
-parameter of the conversion functions. — *end note*\]
+parameter of the conversion functions. — *end note*]
 
 #### Initialization by list-initialization <a id="over.match.list">[[over.match.list]]</a>
 
@@ -924,7 +924,7 @@ initialization is ill-formed.
 [[over.match.copy]]), where only converting constructors are considered
 for copy-initialization. This restriction only applies if this
 initialization is part of the final result of overload
-resolution. — *end note*\]
+resolution. — *end note*]
 
 #### Class template argument deduction <a id="over.match.class.deduct">[[over.match.class.deduct]]</a>
 
@@ -1149,7 +1149,7 @@ F f2 = {Types<X, Y, Z>{}, X{}, Y{}};    // OK, F<X, Y, Z> deduced
 F f3 = {Types<X, Y, Z>{}, X{}, W{}};    // error: conflicting types deduced; operator Y not considered
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Example 2*:
 
@@ -1215,7 +1215,7 @@ template<std::integral W, class U>
   auto f2_prime_for_B(W *, U) -> C<W *, std::type_identity_t<U>>;
 ```
 
-— *end example*\]
+— *end example*]
 
 ### Viable functions <a id="over.match.viable">[[over.match.viable]]</a>
 
@@ -1297,7 +1297,7 @@ and then
                       // and neither is better than the other
   ```
 
-  — *end example*\]
+  — *end example*]
   or, if not that,
 - the context is an initialization by conversion function for direct
   reference binding [[over.match.ref]] of a reference to function type,
@@ -1316,7 +1316,7 @@ and then
   Fn&& rf = a;        // calls #2
   ```
 
-  — *end example*\]
+  — *end example*]
   or, if not that,
 - `F1` is not a function template specialization and `F2` is a function
   template specialization, or, if not that,
@@ -1347,7 +1347,7 @@ and then
   }
   ```
 
-  — *end example*\]
+  — *end example*]
   or, if not that,
 - `F2` is a rewritten candidate [[over.match.oper]] and `F1` is not
   \[*Example 6*:
@@ -1359,7 +1359,7 @@ and then
   bool b = S() < S();                                             // calls #2
   ```
 
-  — *end example*\]
+  — *end example*]
   or, if not that,
 - `F1` and `F2` are rewritten candidates, and `F2` is a synthesized
   candidate with reversed order of parameters and `F1` is not
@@ -1372,7 +1372,7 @@ and then
   bool b = 1 < S();                                               // calls #2
   ```
 
-  — *end example*\]
+  — *end example*]
   or, if not that
 - `F1` is generated from a *deduction-guide* [[over.match.class.deduct]]
   and `F2` is not, or, if not that,
@@ -1406,7 +1406,7 @@ and then
   A b2 = a;           // uses #7 to deduce A<A<int>> and #1 to initialize
   ```
 
-  — *end example*\]
+  — *end example*]
 
 If there is exactly one viable function that is a better function than
 all other viable functions, then it is the one selected by overload
@@ -1433,7 +1433,7 @@ void f() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 If the best viable function resolves to a function for which multiple
 declarations were found, and if at least two of these declarations — or
@@ -1460,7 +1460,7 @@ void use() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 #### Implicit conversion sequences <a id="over.best.ics">[[over.best.ics]]</a>
 
@@ -1481,7 +1481,7 @@ bit-field, and whether a function is deleted [[dcl.fct.def.delete]], are
 ignored. So, although an implicit conversion sequence can be defined for
 a given argument-parameter pair, the conversion from the argument to the
 parameter might still be ill-formed in the final
-analysis. — *end note*\]
+analysis. — *end note*]
 
 A well-formed implicit conversion sequence is one of the following
 forms:
@@ -1511,7 +1511,7 @@ user-defined conversion sequences are not considered.
 
 [*Note 2*: These rules prevent more than one user-defined conversion
 from being applied during overload resolution, thereby avoiding infinite
-recursion. — *end note*\]
+recursion. — *end note*]
 
 [*Example 1*:
 
@@ -1526,7 +1526,7 @@ B b;
 X x{{b}};           // error: B::operator X() is not a candidate
 ```
 
-— *end example*\]
+— *end example*]
 
 For the case where the parameter type is a reference, see 
 [[over.ics.ref]].
@@ -1540,7 +1540,7 @@ parameter.
 [*Note 3*: When the parameter has a class type, this is a conceptual
 conversion defined for the purposes of [[over]]; the actual
 initialization is defined in terms of constructors and is not a
-conversion. — *end note*\]
+conversion. — *end note*]
 
 Any difference in top-level cv-qualification is subsumed by the
 initialization itself and does not constitute a conversion.
@@ -1548,7 +1548,7 @@ initialization itself and does not constitute a conversion.
 [*Example 2*: A parameter of type `A` can be initialized from an
 argument of type `const A`. The implicit conversion sequence for that
 case is the identity sequence; it contains no “conversion” from
-`const A` to `A`. — *end example*\]
+`const A` to `A`. — *end example*]
 
 When the parameter has a class type and the argument expression has the
 same type, the implicit conversion sequence is an identity conversion.
@@ -1558,7 +1558,7 @@ derived-to-base conversion from the derived class to the base class.
 
 [*Note 4*: There is no such standard conversion; this derived-to-base
 conversion exists only in the description of implicit conversion
-sequences. — *end note*\]
+sequences. — *end note*]
 
 A derived-to-base conversion has Conversion rank [[over.ics.scs]].
 
@@ -1603,9 +1603,9 @@ void f(B) { }
 f(b);               // OK, unambiguous
 ```
 
-— *end example*\]
+— *end example*]
 
-— *end note*\]
+— *end note*]
 
 If a function that uses the ambiguous conversion sequence is selected as
 the best viable function, the call will be ill-formed because the
@@ -1626,14 +1626,14 @@ Transformations do not change the cv-qualification or data
 representation of the type; the Qualification Adjustments do not change
 the value category or data representation of the type; and the
 Promotions and Conversions do not change the value category or
-cv-qualification of the type. — *end note*\]
+cv-qualification of the type. — *end note*]
 
 [*Note 7*: As described in [[conv]], a standard conversion sequence
 either is the Identity conversion by itself (that is, no conversion) or
 consists of one to three conversions from the other four categories. If
 there are two or more conversions in the sequence, the conversions are
 applied in the canonical order: **Lvalue Transformation**, **Promotion**
-or **Conversion**, **Qualification Adjustment**. — *end note*\]
+or **Conversion**, **Qualification Adjustment**. — *end note*]
 
 Each conversion in [[over.ics.scs]] also has an associated rank (Exact
 Match, Promotion, or Conversion). These are used to rank standard
@@ -1707,7 +1707,7 @@ int f(B&);
 int i = f(b);       // calls f(B&), an exact match, rather than f(A&), a conversion
 ```
 
-— *end example*\]
+— *end example*]
 
 If the parameter binds directly to the result of applying a conversion
 function to the argument expression, the implicit conversion sequence is
@@ -1734,7 +1734,7 @@ an lvalue other than a function lvalue.
 a viable function if it has a non-`const` lvalue reference parameter
 (other than the implicit object parameter) and the corresponding
 argument would require a temporary to be created to initialize the
-lvalue reference (see  [[dcl.init.ref]]). — *end note*\]
+lvalue reference (see  [[dcl.init.ref]]). — *end note*]
 
 Other restrictions on binding a reference to a particular argument that
 are not based on the types of the reference and the argument do not
@@ -1747,7 +1747,7 @@ bit-field. The formation of implicit conversion sequences treats the
 parameter. If the function is selected by overload resolution, the call
 will nonetheless be ill-formed because of the prohibition on binding a
 non-`const` lvalue reference to a bit-field
-[[dcl.init.ref]]. — *end example*\]
+[[dcl.init.ref]]. — *end example*]
 
 ##### List-initialization sequence <a id="over.ics.list">[[over.ics.list]]</a>
 
@@ -1786,9 +1786,9 @@ void h() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
-— *end note*\]
+— *end note*]
 
 Otherwise, if the parameter type is an aggregate class `X` and the
 initializer list has a single element of type cv `U`, where `U` is `X`
@@ -1832,7 +1832,7 @@ void h(const IA&);
 h({ 1, 2, 3 });                 // OK: identity conversion
 ```
 
-— *end example*\]
+— *end example*]
 
 Otherwise, if the parameter type is “array of `N` `X`” or “array of
 unknown bound of `X`”, if there exists an implicit conversion sequence
@@ -1892,7 +1892,7 @@ void i(D);
 i({ {1,2}, {"bar"} });  // OK: i(D(A(std::initializer_list<int>{1,2\), C(std::string("bar"))))}
 ```
 
-— *end example*\]
+— *end example*]
 
 Otherwise, if the parameter has an aggregate type which can be
 initialized from the initializer list according to the rules for
@@ -1913,12 +1913,12 @@ f( {'a', 'b'} );        // OK: f(A(int,double)) user-defined conversion
 f( {1.0} );             // error: narrowing
 ```
 
-— *end example*\]
+— *end example*]
 
 Otherwise, if the parameter is a reference, see  [[over.ics.ref]].
 
 [*Note 10*: The rules in this subclause will apply for initializing the
-underlying temporary for the reference. — *end note*\]
+underlying temporary for the reference. — *end note*]
 
 [*Example 10*:
 
@@ -1936,7 +1936,7 @@ void g(const double &);
 g({1});                 // same conversion as int to double
 ```
 
-— *end example*\]
+— *end example*]
 
 Otherwise, if the parameter type is not a class:
 
@@ -1950,7 +1950,7 @@ Otherwise, if the parameter type is not a class:
   f( {1.0} );             // error: narrowing
   ```
 
-  — *end example*\]
+  — *end example*]
 - if the initializer list has no elements, the implicit conversion
   sequence is the identity conversion.
   \[*Example 10*:
@@ -1959,7 +1959,7 @@ Otherwise, if the parameter type is not a class:
   f( { } );               // OK: identity conversion
   ```
 
-  — *end example*\]
+  — *end example*]
 
 In all cases other than those enumerated above, no conversion is
 possible.
@@ -2009,7 +2009,7 @@ conversion sequences unless one of the following rules applies:
   void g2() { f2({"foo","bar"}); }                // chooses #4
   ```
 
-  — *end example*\]
+  — *end example*]
   \[*Example 12*:
   ``` cpp
   void f(int    (&&)[] );         // #1
@@ -2023,7 +2023,7 @@ conversion sequences unless one of the following rules applies:
                       // and an identity conversion is better than floating-integral conversion
   ```
 
-  — *end example*\]
+  — *end example*]
 - Standard conversion sequence `S1` is a better conversion sequence than
   standard conversion sequence `S2` if
   - `S1` is a proper subsequence of `S2` (comparing the conversion
@@ -2064,7 +2064,7 @@ conversion sequences unless one of the following rules applies:
     a.p();                          // calls A::p()&
     ```
 
-    — *end example*\]
+    — *end example*]
     or, if not that,
   - `S1` and `S2` include reference bindings [[dcl.init.ref]] and `S1`
     binds an lvalue reference to a function lvalue and `S2` binds an
@@ -2077,7 +2077,7 @@ conversion sequences unless one of the following rules applies:
     int i1 = f(g);                  // calls #1
     ```
 
-    — *end example*\]
+    — *end example*]
     or, if not that,
   - `S1` and `S2` differ only in their qualification conversion
     [[conv.qual]] and yield similar types `T1` and `T2`, respectively,
@@ -2090,7 +2090,7 @@ conversion sequences unless one of the following rules applies:
     int j = f(&i);                  // calls f(const int*)
     ```
 
-    — *end example*\]
+    — *end example*]
     or, if not that,
   - `S1`
     and `S2` include reference bindings [[dcl.init.ref]], and the types
@@ -2119,7 +2119,7 @@ conversion sequences unless one of the following rules applies:
     }
     ```
 
-    — *end example*\]
+    — *end example*]
 - User-defined conversion sequence `U1` is a better conversion sequence
   than another user-defined conversion sequence `U2` if they contain the
   same user-defined conversion function or constructor or they
@@ -2137,7 +2137,7 @@ conversion sequences unless one of the following rules applies:
                                   // better than short $\to$ float.
   ```
 
-  — *end example*\]
+  — *end example*]
 
 Standard conversion sequences are ordered by their ranks: an Exact Match
 is a better conversion than a Promotion, which is a better conversion
@@ -2168,7 +2168,7 @@ indistinguishable unless one of the following rules applies:
     int i = f(pc);                  // calls f(B*)
     ```
 
-    — *end example*\]
+    — *end example*]
   - binding of an expression of type `C` to a reference to type `B` is
     better than binding an expression of type `C` to a reference to type
     `A`,
@@ -2188,7 +2188,7 @@ indistinguishable unless one of the following rules applies:
   types only in the context of comparing the second standard conversion
   sequence of an initialization by user-defined conversion (see 
   [[over.match.best]]); in all other contexts, the source types will be
-  the same and the target types will be different. — *end note*\]
+  the same and the target types will be different. — *end note*]
 
 ## Address of overloaded function <a id="over.over">[[over.over]]</a>
 
@@ -2212,7 +2212,7 @@ below. The target can be
 The function name can be preceded by the `&` operator.
 
 [*Note 1*: Any redundant set of parentheses surrounding the function
-name is ignored [[expr.prim.paren]]. — *end note*\]
+name is ignored [[expr.prim.paren]]. — *end note*]
 
 If there is no target, all non-template functions named are selected.
 Otherwise, a non-template function with type `F` is selected for the
@@ -2220,7 +2220,7 @@ function type `FT` of the target type if `F` (after possibly applying
 the function pointer conversion [[conv.fctptr]]) is identical to `FT`.
 
 [*Note 2*: That is, the class of which the function is a member is
-ignored when matching a pointer-to-member-function type. — *end note*\]
+ignored when matching a pointer-to-member-function type. — *end note*]
 
 For each function template designated by the name, template argument
 deduction is done [[temp.deduct.funcaddr]], and if the argument
@@ -2234,7 +2234,7 @@ argument list, the *template-id* is then examined to see whether it
 identifies a single function template specialization. If it does, the
 *template-id* is considered to be an lvalue for that function template
 specialization. The target type is not used in that
-determination. — *end note*\]
+determination. — *end note*]
 
 Non-member functions and static member functions match targets of
 function pointer type or reference to function type. Non-static member
@@ -2291,11 +2291,11 @@ int (X::*p5)(int)  = &(X::f);   // error: wrong syntax for
 int    (*p6)(long) = &(X::f);   // OK
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Note 4*: If `f()` and `g()` are both overloaded functions, the cross
 product of possibilities must be considered to resolve `f(&g)`, or the
-equivalent expression `f(g)`. — *end note*\]
+equivalent expression `f(g)`. — *end note*]
 
 [*Note 5*:
 
@@ -2309,7 +2309,7 @@ void g(D*);
 void (*p2)(B*) = &g;            // error
 ```
 
-— *end note*\]
+— *end note*]
 
 ## Overloaded operators <a id="over.oper">[[over.oper]]</a>
 
@@ -2338,7 +2338,7 @@ operator: one of
 
 [*Note 1*: The operators `new[]`, `delete[]`, `()`, and `[]` are formed
 from more than one token. The latter two operators are function call
-[[expr.call]] and subscripting [[expr.sub]]. — *end note*\]
+[[expr.call]] and subscripting [[expr.sub]]. — *end note*]
 
 Both the unary and binary forms of
 
@@ -2359,7 +2359,7 @@ The following operators cannot be overloaded:
 nor can the preprocessing symbols `#` [[cpp.stringize]] and `##`
 [[cpp.concat]].
 
-— *end note*\]
+— *end note*]
 
 Operator functions are usually not called directly; instead they are
 invoked to evaluate the operators they implement ( [[over.unary]] –
@@ -2374,7 +2374,7 @@ complex z = a.operator+(b);     // complex z = a+b;
 void* p = operator new(sizeof(int)*n);
 ```
 
-— *end example*\]
+— *end example*]
 
 The allocation and deallocation functions, `operator` `new`, `operator`
 `new[]`, `operator` `delete`, and `operator` `delete[]`, are described
@@ -2406,7 +2406,7 @@ function.
 basic types (for example, `++a` $\equiv$ `a+=1`) need not hold for
 operator functions. Some predefined operators, such as `+=`, require an
 operand to be an lvalue when applied to basic types; this is not
-required by operator functions. — *end note*\]
+required by operator functions. — *end note*]
 
 An operator function cannot have default arguments [[dcl.fct.default]],
 except where explicitly stated below. Operator functions cannot have
@@ -2439,13 +2439,13 @@ operator '@' '(' cast-expression ')'
 ```
 
 [*Note 1*: The operators `++` and `\dcr` [[expr.pre.incr]] are
-described in  [[over.inc]]. — *end note*\]
+described in  [[over.inc]]. — *end note*]
 
 The unary and binary forms of the same operator are considered to have
 the same name.
 
 [*Note 2*: Consequently, a unary operator can hide a binary operator
-from an enclosing scope, and vice versa. — *end note*\]
+from an enclosing scope, and vice versa. — *end note*]
 
 ### Binary operators <a id="over.binary">[[over.binary]]</a>
 
@@ -2486,12 +2486,12 @@ non-static member function.
 [*Note 1*: Because only standard conversion sequences are considered
 when converting to the left operand of an assignment operation
 [[over.best.ics]], an expression `x = y` with a subexpression x of class
-type is always interpreted as `x.operator=(y)`. — *end note*\]
+type is always interpreted as `x.operator=(y)`. — *end note*]
 
 [*Note 2*: Since a copy assignment operator is implicitly declared for
 a class if not declared by the user [[class.copy.assign]], a base class
 assignment operator function is always hidden by the copy assignment
-operator function of the derived class. — *end note*\]
+operator function of the derived class. — *end note*]
 
 [*Note 3*:
 
@@ -2525,9 +2525,9 @@ void f() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
-— *end note*\]
+— *end note*]
 
 ### Function call <a id="over.call">[[over.call]]</a>
 
@@ -2584,7 +2584,7 @@ int a[10];
 a[{1,2,3}] = 7;                 // error: built-in subscript operator
 ```
 
-— *end example*\]
+— *end example*]
 
 ### Class member access <a id="over.ref">[[over.ref]]</a>
 
@@ -2640,7 +2640,7 @@ void f(X a, Y b) {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 A *decrement operator function* is a function named `operator\dcr` and
 is handled analogously to an increment operator function.
@@ -2668,7 +2668,7 @@ the built-in operator given in [[expr.compound]], and therefore to any
 additional semantic constraints given there. If there is a user-written
 candidate with the same name and parameter types as a built-in candidate
 operator function, the built-in operator function is hidden and is not
-included in the set of candidate functions. — *end note*\]
+included in the set of candidate functions. — *end note*]
 
 In this subclause, the term *promoted integral type* is used to refer to
 those integral types which are preserved by integral promotion
@@ -2677,7 +2677,7 @@ those integral types which are preserved by integral promotion
 
 [*Note 2*: In all cases where a promoted integral type is required, an
 operand of unscoped enumeration type will be acceptable by way of the
-integral promotions. — *end note*\]
+integral promotions. — *end note*]
 
 In the remainder of this subclause, cv-qualifiervq represents either
 `volatile` or no cv-qualifier.
@@ -2918,7 +2918,7 @@ where `LR` is the result of the usual arithmetic conversions
 [*Note 3*: As with all these descriptions of candidate functions, this
 declaration serves only to describe the built-in operator for purposes
 of overload resolution. The operator “`?:`” cannot be
-overloaded. — *end note*\]
+overloaded. — *end note*]
 
 For every type `T`, where `T` is a pointer, pointer-to-member, or scoped
 enumeration type, there exist candidate operator functions of the form
@@ -2999,7 +2999,7 @@ are looked up like ordinary functions and function templates and they
 follow the same overload resolution rules. Also, they can be declared
 `inline` or `constexpr`, they may have internal, module, or external
 linkage, they can be called explicitly, their addresses can be taken,
-etc. — *end note*\]
+etc. — *end note*]
 
 [*Example 1*:
 
@@ -3018,7 +3018,7 @@ template <char...> int operator "" _j(const char*); // error: invalid parameter-
 extern "C" void operator "" _m(long double);        // error: C language linkage
 ```
 
-— *end example*\]
+— *end example*]
 
 <!-- Section link definitions -->
 [over]: #over

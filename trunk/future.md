@@ -15,7 +15,7 @@ A declaration of a non-TU-local entity that is an exposure
 [[basic.link]] is deprecated.
 
 [*Note 1*: Such a declaration in an importable module unit is
-ill-formed. — *end note*\]
+ill-formed. — *end note*]
 
 [*Example 1*:
 
@@ -29,7 +29,7 @@ A h();                          // deprecated: not internal linkage
 inline void g() {A().f();}      // deprecated: inline and not internal linkage
 ```
 
-— *end example*\]
+— *end example*]
 
 ## Implicit capture of `*this` by reference <a id="depr.capture.this">[[depr.capture.this]]</a>
 
@@ -49,7 +49,7 @@ struct X {
 };
 ```
 
-— *end example*\]
+— *end example*]
 
 ## Deprecated `volatile` types <a id="depr.volatile.type">[[depr.volatile.type]]</a>
 
@@ -64,7 +64,7 @@ volatile int velociraptor;
 ++velociraptor;                     // deprecated
 ```
 
-— *end example*\]
+— *end example*]
 
 Certain assignments where the left operand is a volatile-qualified
 non-class type are deprecated; see  [[expr.assign]].
@@ -80,7 +80,7 @@ tail = brachiosaur = neck;          // deprecated
 brachiosaur += neck;                // OK
 ```
 
-— *end example*\]
+— *end example*]
 
 A function type [[dcl.fct]] with a parameter with volatile-qualified
 type or with a volatile-qualified return type is deprecated.
@@ -93,7 +93,7 @@ void trex(volatile short left_arm, volatile short right_arm);   // deprecated
 void fly(volatile struct pterosaur* pteranodon);                // OK
 ```
 
-— *end example*\]
+— *end example*]
 
 A structured binding [[dcl.struct.bind]] of a volatile-qualified type is
 deprecated.
@@ -108,7 +108,7 @@ void park(linhenykus alvarezsauroid) {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 ## Non-comma-separated ellipsis parameters <a id="depr.ellipsis.comma">[[depr.ellipsis.comma]]</a>
 
@@ -123,7 +123,7 @@ void g(auto...);        // OK, declares a function parameter pack
 void h(auto......);     // deprecated
 ```
 
-— *end example*\]
+— *end example*]
 
 ## Implicit declaration of copy functions <a id="depr.impldec">[[depr.impldec]]</a>
 
@@ -153,7 +153,7 @@ struct A {
 constexpr int A::n;             // redundant declaration (definition in C++14{})
 ```
 
-— *end example*\]
+— *end example*]
 
 ## Literal operator function declarations using an identifier <a id="depr.lit">[[depr.lit]]</a>
 
@@ -284,7 +284,7 @@ A *trivial class* is a class that is trivially copyable and has one or
 more eligible default constructors, all of which are trivial.
 
 [*Note 1*: In particular, a trivial class does not have virtual
-functions or virtual base classes. — *end note*\]
+functions or virtual base classes. — *end note*]
 
 A *trivial type* is a scalar type, a trivial class, an array of such a
 type, or a cv-qualified version of one of these types.
@@ -307,7 +307,7 @@ a base characteristic of `true_type` if `T` is a trivial type, and
 `false_type` otherwise.
 
 [*Note 1*: It is unspecified whether a closure
-type [[expr.prim.lambda.closure]] is a trivial type. — *end note*\]
+type [[expr.prim.lambda.closure]] is a trivial type. — *end note*]
 
 ``` cpp
 template<class T> struct is_pod;
@@ -321,7 +321,7 @@ base characteristic of `true_type` if `T` is a POD type, and
 `false_type` otherwise.
 
 [*Note 2*: It is unspecified whether a closure
-type [[expr.prim.lambda.closure]] is a POD type. — *end note*\]
+type [[expr.prim.lambda.closure]] is a POD type. — *end note*]
 
 ``` cpp
 template<size_t Len, size_t Align = default-alignment>
@@ -341,7 +341,7 @@ at most `Len` and whose alignment is a divisor of `Align`.
 
 [*Note 3*: Uses of `aligned_storage<Len, Align>::type` can be replaced
 by an array `std::byte[Len]` declared with
-`alignas(Align)`. — *end note*\]
+`alignas(Align)`. — *end note*]
 
 [*Note 4*:
 
@@ -356,7 +356,7 @@ struct aligned_storage {
 };
 ```
 
-— *end note*\]
+— *end note*]
 
 ``` cpp
 template<size_t Len, class... Types>
@@ -536,7 +536,7 @@ definition of required types for new iterators.
 
 [*Note 1*: If the new iterator type is a class template, then these
 aliases will not be visible from within the iterator class’s template
-definition, but only to callers of that class. — *end note*\]
+definition, but only to callers of that class. — *end note*]
 
 [*Example 1*:
 
@@ -551,7 +551,7 @@ class MyIterator :
 };
 ```
 
-— *end example*\]
+— *end example*]
 
 ## Deprecated `move_iterator` access <a id="depr.move.iter.elem">[[depr.move.iter.elem]]</a>
 
@@ -697,12 +697,12 @@ native character set representation.
 For Windows-based operating systems a conversion from UTF-8 to UTF-16
 occurs.
 
-— *end example*\]
+— *end example*]
 
 [*Note 1*: The example above is representative of a historical use of
 `filesystem::u8path`. To indicate a UTF-8 encoding, passing a
 `std::u8string` to `path`’s constructor is preferred as it is consistent
-with `path`’s handling of other encodings. — *end note*\]
+with `path`’s handling of other encodings. — *end note*]
 
 ### Deprecated filesystem path format observers <a id="depr.fs.path.obs">[[depr.fs.path.obs]]</a>
 
@@ -799,7 +799,7 @@ initialization of an atomic variable with static storage duration of a
 type that is initialization-compatible with `value`.
 
 [*Note 1*: This operation possibly needs to initialize
-locks. — *end note*\]
+locks. — *end note*]
 
 Concurrent access to the variable being initialized, even via an atomic
 operation, constitutes a data race.
@@ -810,7 +810,7 @@ operation, constitutes a data race.
 atomic<int> v = ATOMIC_VAR_INIT(5);
 ```
 
-— *end example*\]
+— *end example*]
 
 ### `memory_order::consume` <a id="depr.atomics.order">[[depr.atomics.order]]</a>
 

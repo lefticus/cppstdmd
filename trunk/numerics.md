@@ -45,7 +45,7 @@ or related function.
 [*Example 1*: It is valid to instantiate `valarray<complex>`, but
 `operator>()` will not be successfully instantiated for
 `valarray<complex>` operands, since `complex` does not have any ordering
-operators. — *end example*\]
+operators. — *end example*]
 
 ## The floating-point environment <a id="cfenv">[[cfenv]]</a>
 
@@ -100,7 +100,7 @@ floating-point status flags, set floating-point control modes, or run
 under non-default mode settings. If the pragma is used to enable control
 over the floating-point environment, this document does not specify the
 effect on floating-point evaluation in constant
-expressions. — *end note*\]
+expressions. — *end note*]
 
 ### Threads <a id="cfenv.thread">[[cfenv.thread]]</a>
 
@@ -112,7 +112,7 @@ that constructs the corresponding `thread` object
 the time it constructed the object.
 
 [*Note 1*: That is, the child thread gets the floating-point state of
-the parent thread at the time of the child’s creation. — *end note*\]
+the parent thread at the time of the child’s creation. — *end note*]
 
 A separate floating-point environment is maintained for each thread.
 Each function accesses the environment corresponding to its calling
@@ -512,7 +512,7 @@ return o << s.str();
 character, the use of comma as a field separator can be ambiguous.
 Inserting `showpoint` into the output stream forces all outputs to show
 an explicit decimal point character; as a result, all inserted sequences
-of complex numbers can be extracted unambiguously. — *end note*\]
+of complex numbers can be extracted unambiguously. — *end note*]
 
 ### Value operations <a id="complex.value.ops">[[complex.value.ops]]</a>
 
@@ -645,7 +645,7 @@ template<class T> constexpr complex<T> log(const complex<T>& x);
 `imag(log(x))` lies in the interval \[-π, π\].
 
 [*Note 1*: The semantics of this function are intended to be the same
-in C++ as they are for `clog` in C. — *end note*\]
+in C++ as they are for `clog` in C. — *end note*]
 
 *Remarks:* The branch cuts are along the negative real axis.
 
@@ -690,7 +690,7 @@ template<class T> constexpr complex<T> sqrt(const complex<T>& x);
 half-plane.
 
 [*Note 2*: The semantics of this function are intended to be the same
-in C++ as they are for `csqrt` in C. — *end note*\]
+in C++ as they are for `csqrt` in C. — *end note*]
 
 *Remarks:* The branch cuts are along the negative real axis.
 
@@ -807,7 +807,7 @@ to templates producing such types when instantiated.
 binding of any uniform random bit generator object `e` as the argument
 to any random number distribution object `d`, thus producing a
 zero-argument function object such as given by
-`bind(d,e)`. — *end note*\]
+`bind(d,e)`. — *end note*]
 
 Each of the entities specified in [[rand]] has an associated arithmetic
 type [[basic.fundamental]] identified as `result_type`. With `T` as the
@@ -1049,7 +1049,7 @@ values i, $0 \le i < 2^{32}$, based on the consumed data.
 [*Note 1*: Such an object provides a mechanism to avoid replication of
 streams of random variates. This can be useful, for example, in
 applications requiring large numbers of random number
-engines. — *end note*\]
+engines. — *end note*]
 
 A class `S` meets the requirements of a seed sequence if the expressions
 shown in [[rand.req.seedseq]] are valid and have the indicated
@@ -1074,7 +1074,7 @@ returning unsigned integer values such that each value in the range of
 possible results has (ideally) equal probability of being returned.
 
 [*Note 1*: The degree to which `g`’s results approximate the ideal is
-often determined statistically. — *end note*\]
+often determined statistically. — *end note*]
 
 ``` cpp
 template<class G>
@@ -1486,7 +1486,7 @@ If the template parameter `m` is 0, the modulus m used throughout
 [[rand.eng.lcong]] is `numeric_limits<result_type>::max()` plus 1.
 
 [*Note 1*: m need not be representable as a value of type
-`result_type`. — *end note*\]
+`result_type`. — *end note*]
 
 If the template parameter `m` is not 0, the following relations shall
 hold: `a < m` and `c < m`.
@@ -1655,7 +1655,7 @@ The state transition is performed as follows:
 [*Note 1*: This algorithm corresponds to a modular linear function of
 the form $\mathsf{TA}(\state{x}{i}) = (a \cdot \state{x}{i}) \bmod b$,
 where b is of the form mʳ - mˢ + 1 and
-a = b - (b - 1) / m. — *end note*\]
+a = b - (b - 1) / m. — *end note*]
 
 The generation algorithm is given by $\mathsf{GA}(\state{x}{i}) = y$,
 where y is the value produced as a result of advancing the engine’s
@@ -1796,7 +1796,7 @@ the generation algorithm performs the following steps:
   |                                               | 4                            | 2   | 1   | 0   | 3   |
 
 
-  \[*Note 1*: For n = 2 the sequence is not permuted. — *end note*\]
+  \[*Note 1*: For n = 2 the sequence is not permuted. — *end note*]
 - The following computations are applied to the elements of the V
   sequence:
   ``` cpp
@@ -1881,7 +1881,7 @@ The textual representation consists of the values of
 $K_0, \dotsc, K_{n/2 - 1}, X_{0}, \dotsc, X_{n - 1}, i$, in that order.
 
 [*Note 1*: The stream extraction operator can reconstruct Y from K and
-X, as needed. — *end note*\]
+X, as needed. — *end note*]
 
 ``` cpp
 explicit philox_engine(result_type value);
@@ -1911,7 +1911,7 @@ void set_counter(const array<result_type, n>& c);
 value of i is set to n - 1.
 
 [*Note 1*: The counter is the value Z introduced at the beginning of
-this subclause. — *end note*\]
+this subclause. — *end note*]
 
 ### Random number engine adaptor class templates <a id="rand.adapt">[[rand.adapt]]</a>
 
@@ -2040,7 +2040,7 @@ following integral constants:
   Otherwise let $n = 1 + \left\lceil w / m \right\rceil$.
 
 [*Note 1*: The relation w = n₀ w₀ + (n - n₀)(w₀ + 1) always
-holds. — *end note*\]
+holds. — *end note*]
 
 The transition algorithm is carried out by invoking `e()` as often as
 needed to obtain n₀ values less than y_0 + `e.min()` and n - n₀ values
@@ -2290,7 +2290,7 @@ provide at least acceptable engine behavior for relatively casual,
 inexpert, and/or lightweight use. Because different implementations can
 select different underlying engine types, code that uses this `typedef`
 need not generate identical sequences across
-implementations. — *end note*\]
+implementations. — *end note*]
 
 ``` cpp
 using philox4x32 =
@@ -2562,11 +2562,11 @@ respectively, and the calculation of a quantity S given by :
 *Effects:* Attempts are made until S < xrᵈ.
 
 [*Note 1*: When R is a power of r, precisely one attempt is
-made. — *end note*\]
+made. — *end note*]
 
 *Returns:* $\left\lfloor S / x \right\rfloor / r^d$.
 
-[*Note 2*: The return value c satisfies 0 ≤ c < 1. — *end note*\]
+[*Note 2*: The return value c satisfies 0 ≤ c < 1. — *end note*]
 
 *Throws:* What and when `g` throws.
 
@@ -2577,11 +2577,11 @@ the instantiation’s results are distributed as uniformly as possible.
 Obtaining a value in this way can be a useful step in the process of
 transforming a value generated by a uniform random bit generator into a
 value that can be delivered by a random number
-distribution. — *end note*\]
+distribution. — *end note*]
 
 [*Note 4*: When R is a power of r, an implementation can avoid using an
 arithmetic type that is wider than the output when computing
-S. — *end note*\]
+S. — *end note*]
 
 ### Random number distribution class templates <a id="rand.dist">[[rand.dist]]</a>
 
@@ -2688,7 +2688,7 @@ numbers x, a ≤ x < b, distributed according to the constant probability
 density function in .
 
 [*Note 1*: This implies that p(x | a,b) is undefined when
-`a == b`. — *end note*\]
+`a == b`. — *end note*]
 
 ``` cpp
 namespace std {
@@ -2963,7 +2963,7 @@ random integers i ≥ 0 distributed according to the discrete probability
 function in .
 
 [*Note 1*: This implies that P(i | k,p) is undefined when
-`p == 1`. — *end note*\]
+`p == 1`. — *end note*]
 
 ``` cpp
 namespace std {
@@ -3864,7 +3864,7 @@ discrete_distribution();
 p₀ = 1.
 
 [*Note 1*: Such an object will always deliver the value
-0. — *end note*\]
+0. — *end note*]
 
 ``` cpp
 template<class InputIterator>
@@ -4211,7 +4211,7 @@ k = 0, …, n.
 ### Low-quality random number generation <a id="c.math.rand">[[c.math.rand]]</a>
 
 [*Note 1*: The header `<cstdlib>` declares the functions described in
-this subclause. — *end note*\]
+this subclause. — *end note*]
 
 ``` cpp
 int rand();
@@ -4229,7 +4229,7 @@ functions may call `rand`. It is *implementation-defined* whether the
 document [[rand]] are often preferable to `rand`, because `rand`’s
 underlying algorithm is unspecified. Use of `rand` therefore continues
 to be non-portable, with unpredictable and oft-questionable quality and
-performance. — *end note*\]
+performance. — *end note*]
 
 ## Numeric arrays <a id="numarray">[[numarray]]</a>
 
@@ -4669,7 +4669,7 @@ T& operator[](size_t n);
 [*Note 1*: The expression `(a[i] = q, a[i]) == q` evaluates to `true`
 for any non-constant `valarray<T> a`, any `T q`, and for any `size_t i`
 such that the value of `i` is less than the length of
-`a`. — *end note*\]
+`a`. — *end note*]
 
 *Remarks:* The expression `addressof(a[i + j]) == addressof(a[i]) + j`
 evaluates to `true` for all `size_t i` and `size_t j` such that
@@ -4683,7 +4683,7 @@ such that `i < a.size()` and `j < b.size()`.
 used to advantage by optimizing compilers. Compilers can take advantage
 of inlining, constant propagation, loop fusion, tracking of pointers
 obtained from `operator new`, and other techniques to generate efficient
-`valarray`s. — *end note*\]
+`valarray`s. — *end note*]
 
 The reference returned by the subscript operator for an array shall be
 valid until the member function `resize(size_t, T)`[[valarray.members]]
@@ -4716,7 +4716,7 @@ const valarray<char> v0("abcdefghijklmnop", 16);
 // v0[slice(2, 5, 3)] returns valarray<char>("cfilo", 5)
 ```
 
-— *end example*\]
+— *end example*]
 
 ``` cpp
 slice_array<T> operator[](slice slicearr);
@@ -4734,7 +4734,7 @@ v0[slice(2, 5, 3)] = v1;
 // v0 == valarray<char>("abAdeBghCjkDmnEp", 16);
 ```
 
-— *end example*\]
+— *end example*]
 
 ``` cpp
 valarray operator[](const gslice& gslicearr) const;
@@ -4754,7 +4754,7 @@ const valarray<size_t> len(lv, 2), str(dv, 2);
 // valarray<char>("dfhkmo", 6)
 ```
 
-— *end example*\]
+— *end example*]
 
 ``` cpp
 gslice_array<T> operator[](const gslice& gslicearr);
@@ -4775,7 +4775,7 @@ v0[gslice(3, len, str)] = v1;
 // v0 == valarray<char>("abcAeBgCijDlEnFp", 16)
 ```
 
-— *end example*\]
+— *end example*]
 
 ``` cpp
 valarray operator[](const valarray<bool>& boolarr) const;
@@ -4793,7 +4793,7 @@ const bool vb[] = { false, false, true, true, false, true };
 // valarray<char>("cdf", 3)
 ```
 
-— *end example*\]
+— *end example*]
 
 ``` cpp
 mask_array<T> operator[](const valarray<bool>& boolarr);
@@ -4812,7 +4812,7 @@ v0[valarray<bool>(vb, 6)] = v1;
 // v0 == valarray<char>("abABeCghijklmnop", 16)
 ```
 
-— *end example*\]
+— *end example*]
 
 ``` cpp
 valarray operator[](const valarray<size_t>& indarr) const;
@@ -4830,7 +4830,7 @@ const size_t vi[] = { 7, 5, 2, 3, 8 };
 // valarray<char>("hfcdi", 5)
 ```
 
-— *end example*\]
+— *end example*]
 
 ``` cpp
 indirect_array<T> operator[](const valarray<size_t>& indarr);
@@ -4849,7 +4849,7 @@ v0[valarray<size_t>(vi, 5)] = v1;
 // v0 == valarray<char>("abCDeBgAEjklmnop", 16)
 ```
 
-— *end example*\]
+— *end example*]
 
 #### Unary operators <a id="valarray.unary">[[valarray.unary]]</a>
 
@@ -4992,12 +4992,12 @@ is `(*this)[`*`I`*` + n]` if *`I`*` + n` is non-negative and less than
 
 [*Note 1*: If element zero is taken as the leftmost element, a positive
 value of `n` shifts the elements left `n` places, with zero
-fill. — *end note*\]
+fill. — *end note*]
 
 [*Example 1*: If the argument has the value -2, the first two elements
 of the result will be value-initialized [[dcl.init]]; the third element
 of the result will be assigned the value of the first element of
-`*this`; etc. — *end example*\]
+`*this`; etc. — *end example*]
 
 ``` cpp
 valarray cshift(int n) const;
@@ -5252,7 +5252,7 @@ slices. The constructor with arguments for a slice takes a start,
 length, and stride parameter.
 
 [*Example 1*: `slice(3, 8, 2)` constructs a slice which selects
-elements 3, 5, 7, …, 17 from an array. — *end example*\]
+elements 3, 5, 7, …, 17 from an array. — *end example*]
 
 #### Access functions <a id="slice.access">[[slice.access]]</a>
 
@@ -5323,7 +5323,7 @@ It has reference semantics to a subset of an array specified by a
 [*Example 1*: The expression `a[slice(1, 5, 3)] = b;` has the effect of
 assigning the elements of `b` to a slice of the elements in `a`. For the
 slice shown, the elements selected from `a` are
-1, 4, …, 13. — *end example*\]
+1, 4, …, 13. — *end example*]
 
 #### Assignment <a id="slice.arr.assign">[[slice.arr.assign]]</a>
 
@@ -5413,7 +5413,7 @@ which are ordered as shown in the following table:
 
 That is, the highest-ordered index turns fastest.
 
-— *end example*\]
+— *end example*]
 
 It is possible to have degenerate generalized slices in which an address
 is repeated.
@@ -5423,7 +5423,7 @@ is repeated.
 If the stride parameters in the previous example are changed to {1, 1,
 1}, the first few elements of the resulting sequence of indices will be
 
-— *end example*\]
+— *end example*]
 
 If a degenerate slice is used as the argument to the non-`const` version
 of `operator[](const gslice&)`, the behavior is undefined.
@@ -5698,7 +5698,7 @@ a[indirect] = b;
 results in undefined behavior since element 4 is specified twice in the
 indirection.
 
-— *end example*\]
+— *end example*]
 
 #### Compound assignment <a id="indirect.array.comp.assign">[[indirect.array.comp.assign]]</a>
 
@@ -6186,7 +6186,7 @@ hypotenuse function [[c.math.hypot3]], a linear interpolation function
 
 [*Note 1*: Several functions have additional overloads in this
 document, but they have the same behavior as in the C standard library
-[[library.c]]. — *end note*\]
+[[library.c]]. — *end note*]
 
 For each function with at least one parameter of type
 `floating-point-type`, the implementation provides an overload for each
@@ -6214,7 +6214,7 @@ floating-point type.
 ### Absolute values <a id="c.math.abs">[[c.math.abs]]</a>
 
 [*Note 1*: The headers `<cstdlib>` and `<cmath>` declare the functions
-described in this subclause. — *end note*\]
+described in this subclause. — *end note*]
 
 ``` cpp
 constexpr int abs(int j);
@@ -6231,7 +6231,7 @@ respectively.
 integral promotion [[conv.prom]], the program is ill-formed.
 
 [*Note 1*: Allowing arguments that can be promoted to `int` provides
-compatibility with C. — *end note*\]
+compatibility with C. — *end note*]
 
 ``` cpp
 constexpr floating-point-type abs(floating-point-type x);
@@ -7483,7 +7483,7 @@ void triangular_matrix_vector_2x2_product(
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 For any function `F` that takes a parameter named `d`, `d` applies to
 accesses done through the previous-of-the-previous parameter of `d` in
@@ -7509,7 +7509,7 @@ multidimensional index in `e`, `x[i...]` and `y[i...]` refer to the same
 element.
 
 [*Note 1*: This means that `x` and `y` view the same elements in the
-same order. — *end note*\]
+same order. — *end note*]
 
 Two `mdspan` objects `x` and `y` *overlap* each other, if for some pack
 of integers `i` that is a multidimensional index in `x.extents()`, there
@@ -7518,7 +7518,7 @@ exists a pack of integers `j` that is a multidimensional index in
 element.
 
 [*Note 2*: Aliasing is a special case of overlapping. If `x` and `y` do
-not overlap, then they also do not alias each other. — *end note*\]
+not overlap, then they also do not alias each other. — *end note*]
 
 ### Requirements <a id="linalg.reqs">[[linalg.reqs]]</a>
 
@@ -7581,7 +7581,7 @@ complexity requirements, if any, are satisfied.
   `value_type`.
 - The function may reorder addends and partial sums arbitrarily.
   \[*Note 2*: Factors in each product are not reordered; multiplication
-  is not necessarily commutative. — *end note*\]
+  is not necessarily commutative. — *end note*]
 
 [*Note 1*: The above requirements do not prohibit implementation
 approaches and optimization techniques which are not user-observable. In
@@ -7589,7 +7589,7 @@ particular, if for all input and output arguments the `value_type` is a
 floating-point type, implementers are free to leverage approximations,
 use arithmetic operations not explicitly listed above, and compute
 floating-point sums in any way that improves their
-accuracy. — *end note*\]
+accuracy. — *end note*]
 
 [*Note 2*:
 
@@ -7614,7 +7614,7 @@ as long as
   Strassen’s algorithm for matrix-matrix multiply is an example of a
   logarithmically stable algorithm.
 
-— *end note*\]
+— *end note*]
 
 ### Tag classes <a id="linalg.tags">[[linalg.tags]]</a>
 
@@ -7706,7 +7706,7 @@ and proceeding row by row, from the leftmost (least column index) entry.
 
 [*Note 1*: `layout_blas_packed` describes the data layout used by the
 BLAS’ Symmetric Packed (SP), Hermitian Packed (HP), and Triangular
-Packed (TP) matrix types. — *end note*\]
+Packed (TP) matrix types. — *end note*]
 
 ``` cpp
 namespace std::linalg {
@@ -7832,7 +7832,7 @@ constexpr index_type required_span_size() const noexcept;
 *Returns:* *`extents_`*`.extent(0) * (`*`extents_`*`.extent(0) + 1)/2`.
 
 [*Note 1*: For example, a 5 x 5 packed matrix only stores 15 matrix
-elements. — *end note*\]
+elements. — *end note*]
 
 ``` cpp
 template<class Index0, class Index1>
@@ -8042,7 +8042,7 @@ shall not overlap any other `mdspan` parameter of the function.
 constraining input concepts even for the output arguments, because the
 additional constraint for assignability of elements is not necessary,
 and they are sometimes used in a context where the third argument is an
-input type too. — *end note*\]
+input type too. — *end note*]
 
 ``` cpp
 template<class MDS1, class MDS2>
@@ -8097,7 +8097,7 @@ template<in-matrix InMat1, in-matrix InMat2, in-matrix OutMat>
 constraining input concepts even for the output arguments, because the
 additional constraint for assignability of elements is not necessary,
 and they are sometimes used in a context where the third argument is an
-input type too. — *end note*\]
+input type too. — *end note*]
 
 ``` cpp
 constexpr bool addable(                                          // exposition only
@@ -8152,7 +8152,7 @@ void z_equals_alpha_times_x_plus_beta_times_y(double alpha, Vec x, double beta, 
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 #### Class template `scaled_accessor` <a id="linalg.scaled.scaledaccessor">[[linalg.scaled.scaledaccessor]]</a>
 
@@ -8276,7 +8276,7 @@ void test_scaled(mdspan<double, extents<int, 10>> x)
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 ### Conjugated in-place transformation <a id="linalg.conj">[[linalg.conj]]</a>
 
@@ -8417,7 +8417,7 @@ void test_conjugated_real(mdspan<double, extents<int, 10>> a) {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 ### Transpose in-place transformation <a id="linalg.transp">[[linalg.transp]]</a>
 
@@ -8675,7 +8675,7 @@ void test_transposed(mdspan<double, extents<size_t, 3, 4>> a) {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 ### Conjugate transpose in-place transform <a id="linalg.conjtransposed">[[linalg.conjtransposed]]</a>
 
@@ -8724,7 +8724,7 @@ void test_conjugate_transposed(mdspan<complex<double>, extents<size_t, 3, 4>> a)
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 ### Algorithm requirements based on template parameter name <a id="linalg.algs.reqs">[[linalg.algs.reqs]]</a>
 
@@ -8743,7 +8743,7 @@ following constraints.
 
 [*Note 1*: Function templates that have a template parameter named
 `ExecutionPolicy` are parallel algorithms
-[[algorithms.parallel.defns]]. — *end note*\]
+[[algorithms.parallel.defns]]. — *end note*]
 
 ### BLAS 1 algorithms <a id="linalg.algs.blas1">[[linalg.algs.blas1]]</a>
 
@@ -8791,7 +8791,7 @@ whose first component r is the Euclidean norm of the input vector, and
 whose second component is zero.
 
 [*Note 1*: These functions correspond to the LAPACK function
-`xLARTG`. — *end note*\]
+`xLARTG`. — *end note*]
 
 *Returns:* `c, s, r`, where `c` and `s` form the Givens plane rotation
 corresponding to the input `a` and `b`, and `r` is the Euclidean norm of
@@ -8813,7 +8813,7 @@ template<class ExecutionPolicy, inout-vector InOutVec1, inout-vector InOutVec2, 
 ```
 
 [*Note 2*: These functions correspond to the BLAS function
-`xROT`. — *end note*\]
+`xROT`. — *end note*]
 
 *Mandates:* *`compatible-static-extents`*`<InOutVec1, InOutVec2>(0, 0)`
 is `true`.
@@ -8834,7 +8834,7 @@ template<class ExecutionPolicy, inout-object InOutObj1, inout-object InOutObj2>
 ```
 
 [*Note 1*: These functions correspond to the BLAS function
-`xSWAP`. — *end note*\]
+`xSWAP`. — *end note*]
 
 *Constraints:* `x.rank()` equals `y.rank()`.
 
@@ -8860,7 +8860,7 @@ template<class ExecutionPolicy, class Scalar, inout-object InOutObj>
 ```
 
 [*Note 1*: These functions correspond to the BLAS function
-`xSCAL`. — *end note*\]
+`xSCAL`. — *end note*]
 
 *Effects:* Overwrites x with the result of computing the elementwise
 multiplication α x, where the scalar α is `alpha`.
@@ -8875,7 +8875,7 @@ template<class ExecutionPolicy, in-object InObj, out-object OutObj>
 ```
 
 [*Note 1*: These functions correspond to the BLAS function
-`xCOPY`. — *end note*\]
+`xCOPY`. — *end note*]
 
 *Constraints:* `x.rank()` equals `y.rank()`.
 
@@ -8902,7 +8902,7 @@ template<class ExecutionPolicy, in-object InObj1, in-object InObj2, out-object O
 ```
 
 [*Note 1*: These functions correspond to the BLAS function
-`xAXPY`. — *end note*\]
+`xAXPY`. — *end note*]
 
 *Constraints:* `x.rank()`, `y.rank()`, and `z.rank()` are all equal.
 
@@ -8917,7 +8917,7 @@ template<class ExecutionPolicy, in-object InObj1, in-object InObj2, out-object O
 #### Dot product of two vectors <a id="linalg.algs.blas1.dot">[[linalg.algs.blas1.dot]]</a>
 
 [*Note 1*: The functions in this section correspond to the BLAS
-functions `xDOT`, `xDOTU`, and `xDOTC`. — *end note*\]
+functions `xDOT`, `xDOTU`, and `xDOTC`. — *end note*]
 
 The following elements apply to all functions in
 [[linalg.algs.blas1.dot]].
@@ -9036,7 +9036,7 @@ template<class ExecutionPolicy, in-vector InVec, class Scalar>
 ```
 
 [*Note 1*: These functions correspond to the LAPACK function
-`xLASSQ`. — *end note*\]
+`xLASSQ`. — *end note*]
 
 *Mandates:*
 `decltype(`*`abs-if-needed`*`(declval<typename InVec::value_type>()))`
@@ -9071,7 +9071,7 @@ template<class ExecutionPolicy, in-vector InVec, class Scalar>
 ```
 
 [*Note 1*: These functions correspond to the BLAS function
-`xNRM2`. — *end note*\]
+`xNRM2`. — *end note*]
 
 *Mandates:* Let `a` be
 *`abs-if-needed`*`(declval<typename InVec::value_type>())`. Then,
@@ -9081,7 +9081,7 @@ template<class ExecutionPolicy, in-vector InVec, class Scalar>
 squares of the absolute values of the elements of `v`.
 
 [*Note 2*: For `init` equal to zero, this is the Euclidean norm (also
-called 2-norm) of the vector `v`. — *end note*\]
+called 2-norm) of the vector `v`. — *end note*]
 
 *Remarks:* If `InVec::value_type`, and `Scalar` are all floating-point
 types or specializations of `complex`, and if `Scalar` has higher
@@ -9090,7 +9090,7 @@ use `Scalar`’s precision or greater.
 
 [*Note 3*: An implementation of this function for floating-point types
 `T` can use the `scaled_sum_of_squares` result from
-`vector_sum_of_squares(x, {.scaling_factor=1.0, .scaled_sum_of_squares=init})`. — *end note*\]
+`vector_sum_of_squares(x, {.scaling_factor=1.0, .scaled_sum_of_squares=init})`. — *end note*]
 
 ``` cpp
 template<in-vector InVec>
@@ -9124,7 +9124,7 @@ template<class ExecutionPolicy, in-vector InVec, class Scalar>
 ```
 
 [*Note 1*: These functions correspond to the BLAS functions `SASUM`,
-`DASUM`, `SCASUM`, and `DZASUM`. — *end note*\]
+`DASUM`, `SCASUM`, and `DZASUM`. — *end note*]
 
 *Mandates:*
 
@@ -9185,7 +9185,7 @@ template<class ExecutionPolicy, in-vector InVec>
 ```
 
 [*Note 1*: These functions correspond to the BLAS function
-`IxAMAX`. — *end note*\]
+`IxAMAX`. — *end note*]
 
 Let `T` be
 
@@ -9212,7 +9212,7 @@ decltype(abs-if-needed(real-if-needed(declval<typename InVec::value_type>())) +
 #### Frobenius norm of a matrix <a id="linalg.algs.blas1.matfrobnorm">[[linalg.algs.blas1.matfrobnorm]]</a>
 
 [*Note 1*: These functions exist in the BLAS standard but are not part
-of the reference implementation. — *end note*\]
+of the reference implementation. — *end note*]
 
 ``` cpp
 template<in-matrix InMat, class Scalar>
@@ -9229,7 +9229,7 @@ template<class ExecutionPolicy, in-matrix InMat, class Scalar>
 absolute values of the elements of `A`.
 
 [*Note 1*: For `init` equal to zero, this is the Frobenius norm of the
-matrix `A`. — *end note*\]
+matrix `A`. — *end note*]
 
 *Remarks:* If `InMat::value_type` and `Scalar` are all floating-point
 types or specializations of `complex`, and if `Scalar` has higher
@@ -9261,7 +9261,7 @@ template<class ExecutionPolicy, in-matrix InMat>
 #### One norm of a matrix <a id="linalg.algs.blas1.matonenorm">[[linalg.algs.blas1.matonenorm]]</a>
 
 [*Note 1*: These functions exist in the BLAS standard but are not part
-of the reference implementation. — *end note*\]
+of the reference implementation. — *end note*]
 
 ``` cpp
 template<in-matrix InMat, class Scalar>
@@ -9281,7 +9281,7 @@ is convertible to `Scalar`.
 
 [*Note 1*: The one norm of the matrix `A` is the maximum over all
 columns of `A`, of the sum of the absolute values of the elements of the
-column. — *end note*\]
+column. — *end note*]
 
 *Remarks:* If `InMat::value_type` and `Scalar` are all floating-point
 types or specializations of `complex`, and if `Scalar` has higher
@@ -9313,7 +9313,7 @@ Then,
 #### Infinity norm of a matrix <a id="linalg.algs.blas1.matinfnorm">[[linalg.algs.blas1.matinfnorm]]</a>
 
 [*Note 1*: These functions exist in the BLAS standard but are not part
-of the reference implementation. — *end note*\]
+of the reference implementation. — *end note*]
 
 ``` cpp
 template<in-matrix InMat, class Scalar>
@@ -9333,7 +9333,7 @@ is convertible to `Scalar`.
 
 [*Note 1*: The infinity norm of the matrix `A` is the maximum over all
 rows of `A`, of the sum of the absolute values of the elements of the
-row. — *end note*\]
+row. — *end note*]
 
 *Remarks:* If `InMat::value_type` and `Scalar` are all floating-point
 types or specializations of `complex`, and if `Scalar` has higher
@@ -9367,7 +9367,7 @@ Then,
 #### General matrix-vector product <a id="linalg.algs.blas2.gemv">[[linalg.algs.blas2.gemv]]</a>
 
 [*Note 1*: These functions correspond to the BLAS function
-`xGEMV`. — *end note*\]
+`xGEMV`. — *end note*]
 
 The following elements apply to all functions in
 [[linalg.algs.blas2.gemv]].
@@ -9417,7 +9417,7 @@ void scaled_transposed_matvec(mdspan<double, extents<size_t, num_rows, num_cols>
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 ``` cpp
 template<in-matrix InMat, in-vector InVec1, in-vector InVec2, out-vector OutVec>
@@ -9444,12 +9444,12 @@ void scaled_matvec_2(mdspan<double, extents<size_t, num_rows, num_cols>> A,
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 #### Symmetric matrix-vector product <a id="linalg.algs.blas2.symv">[[linalg.algs.blas2.symv]]</a>
 
 [*Note 1*: These functions correspond to the BLAS functions `xSYMV` and
-`xSPMV`. — *end note*\]
+`xSPMV`. — *end note*]
 
 The following elements apply to all functions in
 [[linalg.algs.blas2.symv]].
@@ -9509,7 +9509,7 @@ symmetric matrix `A`[[linalg.general]].
 #### Hermitian matrix-vector product <a id="linalg.algs.blas2.hemv">[[linalg.algs.blas2.hemv]]</a>
 
 [*Note 1*: These functions correspond to the BLAS functions `xHEMV` and
-`xHPMV`. — *end note*\]
+`xHPMV`. — *end note*]
 
 The following elements apply to all functions in
 [[linalg.algs.blas2.hemv]].
@@ -9569,7 +9569,7 @@ Hermitian matrix `A`[[linalg.general]].
 #### Triangular matrix-vector product <a id="linalg.algs.blas2.trmv">[[linalg.algs.blas2.trmv]]</a>
 
 [*Note 1*: These functions correspond to the BLAS functions `xTRMV` and
-`xTPMV`. — *end note*\]
+`xTPMV`. — *end note*]
 
 The following elements apply to all functions in
 [[linalg.algs.blas2.trmv]].
@@ -9629,7 +9629,7 @@ apply to the triangular matrix `A`[[linalg.general]].
 
 [*Note 1*: Performing this operation in place hinders parallelization.
 However, other `ExecutionPolicy` specific optimizations, such as
-vectorization, are still possible. — *end note*\]
+vectorization, are still possible. — *end note*]
 
 *Effects:* Computes a vector y' such that y' = A y, and assigns each
 element of y' to the corresponding element of y.
@@ -9661,7 +9661,7 @@ apply to the triangular matrix `A`[[linalg.general]].
 #### Solve a triangular linear system <a id="linalg.algs.blas2.trsv">[[linalg.algs.blas2.trsv]]</a>
 
 [*Note 1*: These functions correspond to the BLAS functions `xTRSV` and
-`xTPSV`. — *end note*\]
+`xTPSV`. — *end note*]
 
 The following elements apply to all functions in
 [[linalg.algs.blas2.trsv]].
@@ -9750,7 +9750,7 @@ the triangular matrix `A`[[linalg.general]].
 
 [*Note 1*: Performing triangular solve in place hinders
 parallelization. However, other `ExecutionPolicy` specific
-optimizations, such as vectorization, are still possible. — *end note*\]
+optimizations, such as vectorization, are still possible. — *end note*]
 
 *Effects:* Computes a vector x' such that b = A x', and assigns each
 element of x' to the corresponding element of b. If no such x' exists,
@@ -9796,7 +9796,7 @@ These functions perform a nonsymmetric nonconjugated rank-1 update.
 
 [*Note 1*: These functions correspond to the BLAS functions `xGER` (for
 real element types) and `xGERU` (for complex element
-types). — *end note*\]
+types). — *end note*]
 
 *Mandates:* *`possibly-multipliable`*`<InOutMat, InVec2, InVec1>()` is
 `true`.
@@ -9819,7 +9819,7 @@ These functions perform a nonsymmetric conjugated rank-1 update.
 
 [*Note 2*: These functions correspond to the BLAS functions `xGER` (for
 real element types) and `xGERC` (for complex element
-types). — *end note*\]
+types). — *end note*]
 
 *Effects:*
 
@@ -9838,7 +9838,7 @@ types). — *end note*\]
 [*Note 1*: These functions correspond to the BLAS functions `xSYR`,
 `xSPR`, `xHER`, and `xHPR`. They have overloads taking a scaling factor
 `alpha`, because it would be impossible to express the update
-$A = A - x x^T$ otherwise. — *end note*\]
+$A = A - x x^T$ otherwise. — *end note*]
 
 The following elements apply to all functions in
 [[linalg.algs.blas2.symherrank1]].
@@ -9926,7 +9926,7 @@ each element of A' to the corresponding element of A.
 #### Symmetric and Hermitian rank-2 matrix updates <a id="linalg.algs.blas2.rank2">[[linalg.algs.blas2.rank2]]</a>
 
 [*Note 1*: These functions correspond to the BLAS functions
-`xSYR2`,`xSPR2`, `xHER2` and `xHPR2`. — *end note*\]
+`xSYR2`,`xSPR2`, `xHER2` and `xHPR2`. — *end note*]
 
 The following elements apply to all functions in
 [[linalg.algs.blas2.rank2]].
@@ -9987,7 +9987,7 @@ each element of A' to the corresponding element of A.
 #### General matrix-matrix product <a id="linalg.algs.blas3.gemm">[[linalg.algs.blas3.gemm]]</a>
 
 [*Note 1*: These functions correspond to the BLAS function
-`xGEMM`. — *end note*\]
+`xGEMM`. — *end note*]
 
 The following elements apply to all functions in
 [[linalg.algs.blas3.gemm]] in addition to function-specific elements.
@@ -10029,7 +10029,7 @@ template<class ExecutionPolicy,
 #### Symmetric, Hermitian, and triangular matrix-matrix product <a id="linalg.algs.blas3.xxmm">[[linalg.algs.blas3.xxmm]]</a>
 
 [*Note 1*: These functions correspond to the BLAS functions `xSYMM`,
-`xHEMM`, and `xTRMM`. — *end note*\]
+`xHEMM`, and `xTRMM`. — *end note*]
 
 The following elements apply to all functions in
 [[linalg.algs.blas3.xxmm]] in addition to function-specific elements.
@@ -10234,7 +10234,7 @@ account the `Triangle` and `DiagonalStorage` parameters that apply to
 the triangular matrix `A` [[linalg.general]].
 
 [*Note 1*: These functions correspond to the BLAS function
-`xTRMM`. — *end note*\]
+`xTRMM`. — *end note*]
 
 ``` cpp
 template<in-matrix InMat, class Triangle, class DiagonalStorage, inout-matrix InOutMat>
@@ -10295,7 +10295,7 @@ element of C' to the corresponding element of C.
 #### Rank-k update of a symmetric or Hermitian matrix <a id="linalg.algs.blas3.rankk">[[linalg.algs.blas3.rankk]]</a>
 
 [*Note 1*: These functions correspond to the BLAS functions `xSYRK` and
-`xHERK`. — *end note*\]
+`xHERK`. — *end note*]
 
 The following elements apply to all functions in
 [[linalg.algs.blas3.rankk]].
@@ -10372,7 +10372,7 @@ each element of C' to the corresponding element of C.
 #### Rank-2k update of a symmetric or Hermitian matrix <a id="linalg.algs.blas3.rank2k">[[linalg.algs.blas3.rank2k]]</a>
 
 [*Note 1*: These functions correspond to the BLAS functions `xSYR2K`
-and `xHER2K`. — *end note*\]
+and `xHER2K`. — *end note*]
 
 The following elements apply to all functions in
 [[linalg.algs.blas3.rank2k]].
@@ -10424,7 +10424,7 @@ assigns each element of C' to the corresponding element of C.
 #### Solve multiple triangular linear systems <a id="linalg.algs.blas3.trsm">[[linalg.algs.blas3.trsm]]</a>
 
 [*Note 1*: These functions correspond to the BLAS function
-`xTRSM`. — *end note*\]
+`xTRSM`. — *end note*]
 
 ``` cpp
 template<in-matrix InMat1, class Triangle, class DiagonalStorage,
@@ -10466,7 +10466,7 @@ elements of `X` are valid but unspecified.
 `divide` implementation in the case of noncommutative multiplication is
 mathematically equivalent to $y^{-1} x$, where x is the first argument
 and y is the second argument, and $y^{-1}$ denotes the multiplicative
-inverse of y. — *end note*\]
+inverse of y. — *end note*]
 
 ``` cpp
 template<in-matrix InMat1, class Triangle, class DiagonalStorage,
@@ -10536,7 +10536,7 @@ elements of `X` are valid but unspecified.
 `divide` implementation in the case of noncommutative multiplication is
 mathematically equivalent to $x y^{-1}$, where x is the first argument
 and y is the second argument, and $y^{-1}$ denotes the multiplicative
-inverse of y. — *end note*\]
+inverse of y. — *end note*]
 
 ``` cpp
 template<in-matrix InMat1, class Triangle, class DiagonalStorage,
@@ -10569,7 +10569,7 @@ triangular_matrix_matrix_right_solve(std::forward<ExecutionPolicy>(exec),
 #### Solve multiple triangular linear systems in-place <a id="linalg.algs.blas3.inplacetrsm">[[linalg.algs.blas3.inplacetrsm]]</a>
 
 [*Note 1*: These functions correspond to the BLAS function
-`xTRSM`. — *end note*\]
+`xTRSM`. — *end note*]
 
 ``` cpp
 template<in-matrix InMat, class Triangle, class DiagonalStorage,
@@ -10590,7 +10590,7 @@ the triangular matrix `A`[[linalg.general]].
 [*Note 1*: This algorithm makes it possible to compute factorizations
 like Cholesky and LU in place. Performing triangular solve in place
 hinders parallelization. However, other `ExecutionPolicy` specific
-optimizations, such as vectorization, are still possible. — *end note*\]
+optimizations, such as vectorization, are still possible. — *end note*]
 
 *Mandates:*
 
@@ -10658,7 +10658,7 @@ the triangular matrix `A`[[linalg.general]].
 [*Note 2*: This algorithm makes it possible to compute factorizations
 like Cholesky and LU in place. Performing triangular solve in place
 hinders parallelization. However, other `ExecutionPolicy` specific
-optimizations, such as vectorization, are still possible. — *end note*\]
+optimizations, such as vectorization, are still possible. — *end note*]
 
 *Mandates:*
 
@@ -10717,7 +10717,7 @@ types.
 execution resources where available, such as SIMD registers and
 instructions or execution units driven by a common instruction decoder.
 SIMD stands for “Single Instruction Stream – Multiple Data Stream”; it
-is defined in Flynn 1966. — *end note*\]
+is defined in Flynn 1966. — *end note*]
 
 The set of comprises
 
@@ -10931,13 +10931,13 @@ representation for objects of data-parallel type.
 
 [*Note 1*: The intent is for the size and binary representation to
 depend on the target architecture and compiler flags. The ABI tag,
-together with a given element type, implies the width. — *end note*\]
+together with a given element type, implies the width. — *end note*]
 
 [*Note 2*: The ABI tag is orthogonal to selecting the machine
 instruction set. The selected machine instruction set limits the usable
 ABI tag types, though (see [[simd.overview]]). The ABI tags enable users
 to safely pass objects of data-parallel type between translation unit
-boundaries (e.g., function calls or I/O). — *end note*\]
+boundaries (e.g., function calls or I/O). — *end note*]
 
 An implementation defines ABI tag types as necessary for the following
 aliases.
@@ -10966,7 +10966,7 @@ Where present, *`deduce-abi-t`*`<T, N>` names an ABI tag type such that
 efficient data-parallel execution for the element type `T` on the
 currently targeted system. For target architectures with ISA extensions,
 compiler flags can change the type of the *`native-abi`*`<T>`
-alias. — *end note*\]
+alias. — *end note*]
 
 [*Example 1*:
 
@@ -10978,7 +10978,7 @@ floating-point types. The implementation therefore defines
 - `__simd256` if `T` is a floating-point type, and
 - `__simd128` otherwise.
 
-— *end example*\]
+— *end example*]
 
 ### Header `<simd>` synopsis <a id="simd.syn">[[simd.syn]]</a>
 
@@ -11643,7 +11643,7 @@ unspecified `N`[[simd.ctor,simd.loadstore]].
 
 [*Note 1*: `value` identifies the alignment restrictions on pointers
 used for (converting) loads and stores for the given type `T` on arrays
-of type `U`. — *end note*\]
+of type `U`. — *end note*]
 
 The behavior of a program that adds specializations for `alignment` is
 undefined.
@@ -11706,7 +11706,7 @@ namespace std::simd {
 ```
 
 [*Note 1*: The class template `flags` acts like an integer bit-flag for
-types. — *end note*\]
+types. — *end note*]
 
 *Constraints:* Every type in the parameter pack `Flags` is one of
 `convert-flag`, `aligned-flag`, or `overaligned-{flag}<N>`.
@@ -12044,7 +12044,7 @@ conversions between specializations of `basic_vec` and appropriate
 *implementation-defined* types.
 
 [*Note 1*: Appropriate types are non-standard vector types which are
-available in the implementation. — *end note*\]
+available in the implementation. — *end note*]
 
 #### Constructors <a id="simd.ctor">[[simd.ctor]]</a>
 
@@ -12806,7 +12806,7 @@ Let:
   `v[`*`bit-index`*`(`i`)]` for i in the range \[`0`,
   `reduce_count(selector)`) and a valid but unspecified value otherwise.
   \[*Note 3*: Different calls to *select-value* can return different
-  unspecified values. — *end note*\]
+  unspecified values. — *end note*]
 
 *Returns:* A data-parallel object where the iᵗʰ element is initialized
 to the result of *`select-value`*`(`i`)` for all i in the range \[`0`,
@@ -13714,7 +13714,7 @@ conversions between specializations of `basic_mask` and appropriate
 *implementation-defined* types.
 
 [*Note 1*: Appropriate types are non-standard vector types which are
-available in the implementation. — *end note*\]
+available in the implementation. — *end note*]
 
 #### Constructors <a id="simd.mask.ctor">[[simd.mask.ctor]]</a>
 

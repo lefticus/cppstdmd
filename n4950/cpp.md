@@ -148,7 +148,7 @@ character.[^1]
 
 [*Note 1*: A new-line character ends the preprocessing directive even
 if it occurs within what would otherwise be an invocation of a
-function-like macro. — *end note*\]
+function-like macro. — *end note*]
 
 [*Example 1*:
 
@@ -175,7 +175,7 @@ import ::               // not a preprocessing directive
 import ->               // not a preprocessing directive
 ```
 
-— *end example*\]
+— *end example*]
 
 A sequence of preprocessing tokens is only a *text-line* if it does not
 begin with a directive-introducing token. A sequence of preprocessing
@@ -222,7 +222,7 @@ preprocessing directive, because it does not begin with a `#` at the
 start of translation phase 4, even though it will do so after the macro
 `EMPTY` has been replaced.
 
-— *end example*\]
+— *end example*]
 
 ## Conditional inclusion <a id="cpp.cond">[[cpp.cond]]</a>
 
@@ -301,7 +301,7 @@ attributes recognized by the implementation, the value is
 *implementation-defined*.
 
 [*Note 1*: It is expected that the availability of an attribute can be
-detected by any non-zero result. — *end note*\]
+detected by any non-zero result. — *end note*]
 
 **Table: __has_cpp_attribute values**
 
@@ -356,7 +356,7 @@ into a token.
 
 [*Note 2*: An alternative token [[lex.digraph]] is not an identifier,
 even when its spelling consists entirely of letters and underscores.
-Therefore it is not subject to this replacement. — *end note*\]
+Therefore it is not subject to this replacement. — *end note*]
 
 The resulting tokens comprise the controlling constant expression which
 is evaluated according to the rules of  [[expr.const]] using arithmetic
@@ -370,13 +370,13 @@ respectively, `intmax_t` or `uintmax_t` [[cstdint.syn]].
 `std::numeric_limits<unsigned int>::max()` is `0xFFFF`, the integer
 literal `0x8000` is signed and positive within a `#if` expression even
 though it is unsigned in translation phase 7
-[[lex.phases]]. — *end note*\]
+[[lex.phases]]. — *end note*]
 
 This includes interpreting *character-literal*s according to the rules
 in [[lex.ccon]].
 
 [*Note 4*: The associated character encodings of literals are the same
-in `#if` and `#elif` directives and in any expression. — *end note*\]
+in `#if` and `#elif` directives and in any expression. — *end note*]
 
 Each subexpression with type `bool` is subjected to integral promotion
 before processing continues.
@@ -431,7 +431,7 @@ it is available:
 #endif
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Example 2*:
 
@@ -447,7 +447,7 @@ if it is available.
 ATTR_DEPRECATED("This function is deprecated") void anvil();
 ```
 
-— *end example*\]
+— *end example*]
 
 ## Source file inclusion <a id="cpp.include">[[cpp.include]]</a>
 
@@ -537,7 +537,7 @@ For instance:
 #include "myprog.h"
 ```
 
-— *end note*\]
+— *end note*]
 
 [*Example 1*:
 
@@ -554,7 +554,7 @@ This illustrates macro-replaced `#include` directives:
 #include INCFILE
 ```
 
-— *end example*\]
+— *end example*]
 
 ## Module directive <a id="cpp.module">[[cpp.module]]</a>
 
@@ -571,14 +571,14 @@ Any preprocessing tokens after the `module` preprocessing token in the
 `module` directive are processed just as in normal text.
 
 [*Note 1*: Each identifier currently defined as a macro name is
-replaced by its replacement list of preprocessing tokens. — *end note*\]
+replaced by its replacement list of preprocessing tokens. — *end note*]
 
 The `module` and `export` (if it exists) preprocessing tokens are
 replaced by the *module-keyword* and *export-keyword* preprocessing
 tokens respectively.
 
 [*Note 2*: This makes the line no longer a directive so it is not
-removed at the end of phase 4. — *end note*\]
+removed at the end of phase 4. — *end note*]
 
 ## Header unit importation <a id="cpp.import">[[cpp.import]]</a>
 
@@ -601,7 +601,7 @@ replacement list of preprocessing tokens).
 [*Note 1*: An `import` directive matching the first two forms of a
 *pp-import* instructs the preprocessor to import macros from the header
 unit [[module.import]] denoted by the *header-name*, as described
-below. — *end note*\]
+below. — *end note*]
 
 The *point of macro import* for the first two forms of *pp-import* is
 immediately after the *new-line* terminating the *pp-import*. The last
@@ -618,7 +618,7 @@ exists) preprocessing tokens are replaced by the *import-keyword* and
 *export-keyword* preprocessing tokens respectively.
 
 [*Note 2*: This makes the line no longer a directive so it is not
-removed at the end of phase 4. — *end note*\]
+removed at the end of phase 4. — *end note*]
 
 Additionally, in the second form of *pp-import*, a *header-name* token
 is formed as if the *header-name-tokens* were the *pp-tokens* of a
@@ -626,7 +626,7 @@ is formed as if the *header-name-tokens* were the *pp-tokens* of a
 *header-name* token.
 
 [*Note 3*: This ensures that imports are treated consistently by the
-preprocessor and later phases of translation. — *end note*\]
+preprocessor and later phases of translation. — *end note*]
 
 Each `#define` directive encountered when preprocessing each translation
 unit in a program results in a distinct *macro definition*.
@@ -634,7 +634,7 @@ unit in a program results in a distinct *macro definition*.
 [*Note 4*: A predefined macro name [[cpp.predefined]] is not introduced
 by a `#define` directive. Implementations providing mechanisms to
 predefine additional macros are encouraged to not treat them as being
-introduced by a `#define` directive. — *end note*\]
+introduced by a `#define` directive. — *end note*]
 
 Each macro definition has at most one point of definition in each
 translation unit and at most one point of undefinition, as follows:
@@ -666,7 +666,7 @@ definitions are active for that macro name, the active macro definitions
 shall all be valid redefinitions of the same macro [[cpp.replace]].
 
 [*Note 5*: The relative order of *pp-import*s has no bearing on whether
-a particular macro definition is active. — *end note*\]
+a particular macro definition is active. — *end note*]
 
 [*Example 1*:
 
@@ -725,7 +725,7 @@ import f;
 int x = Y;      // error: Y is neither a defined macro nor a declared name
 ```
 
-— *end example*\]
+— *end example*]
 
 ## Macro replacement <a id="cpp.replace">[[cpp.replace]]</a>
 
@@ -767,7 +767,7 @@ But the following redefinitions are invalid:
 #define FUNC_LIKE(b) ( b )      // different parameter spelling
 ```
 
-— *end example*\]
+— *end example*]
 
 There shall be whitespace between the identifier and the replacement
 list in the definition of an object-like macro.
@@ -822,7 +822,7 @@ in
 int table[TABSIZE];
 ```
 
-— *end example*\]
+— *end example*]
 
 A preprocessing directive of the form
 
@@ -869,7 +869,7 @@ cannot have its address taken, as it has none.
 The parentheses ensure that the arguments and the resulting expression
 are bound properly.
 
-— *end example*\]
+— *end example*]
 
 If there is a `...` immediately preceding the `)` in the function-like
 macro definition, then the trailing arguments (if any), including any
@@ -912,7 +912,7 @@ sequence determined as follows:
 int x = F(LPAREN(), 0, <:-);    // replaced by int x = 42;
 ```
 
-— *end example*\]
+— *end example*]
 
 An identifier `__VA_ARGS__` that occurs in the replacement list shall be
 treated as if it were a parameter, and the variable arguments shall form
@@ -939,7 +939,7 @@ puts("The first, second, and third items.");
 ((x>y) ? puts("x>y") : printf("x is %d but y is %d", x, y));
 ```
 
-— *end example*\]
+— *end example*]
 
 The identifier `__VA_OPT__` shall always occur as part of the
 preprocessing token sequence *va-opt-replacement*; its closing `)` is
@@ -960,7 +960,7 @@ replacement.
 
 [*Note 1*: The placemarker tokens are removed before stringization
 [[cpp.stringize]], and can be removed by rescanning and further
-replacement [[cpp.rescan]]. — *end note*\]
+replacement [[cpp.rescan]]. — *end note*]
 
 [*Example 3*:
 
@@ -999,7 +999,7 @@ H4(, 1)             // replaced by a b
 H5C(H5A())          // replaced by ab
 ```
 
-— *end example*\]
+— *end example*]
 
 ### The `#` operator <a id="cpp.stringize">[[cpp.stringize]]</a>
 
@@ -1055,7 +1055,7 @@ begins with a sequence matching the syntax of
 
 [*Note 1*: This determination does not consider the replacement of
 *universal-character-name*s in translation phase 3
-[[lex.phases]]. — *end note*\]
+[[lex.phases]]. — *end note*]
 
 If the result is not a valid preprocessing token, the behavior is
 undefined. The resulting token is available for further macro
@@ -1107,7 +1107,7 @@ fputs("strncmp(\"abc\\0d\", \"abc\", '\\4') == 0: \@n", s);
 Space around the `#` and `##` tokens in the macro definition is
 optional.
 
-— *end example*\]
+— *end example*]
 
 [*Example 2*:
 
@@ -1135,7 +1135,7 @@ In other words, expanding `hash_hash` produces a new token, consisting
 of two adjacent sharp signs, but this new token is not the `##`
 operator.
 
-— *end example*\]
+— *end example*]
 
 [*Example 3*:
 
@@ -1155,7 +1155,7 @@ int j[] = { 123, 45, 67, 89,
   10, 11, 12, };
 ```
 
-— *end example*\]
+— *end example*]
 
 ### Rescanning and further replacement <a id="cpp.rescan">[[cpp.rescan]]</a>
 
@@ -1201,7 +1201,7 @@ int i[] = { 1, 23, 4, 5, };
 char c[2][6] = { "hello", "" };
 ```
 
-— *end example*\]
+— *end example*]
 
 If the name of the macro being replaced is found during this scan of the
 replacement list (not including the rest of the source file’s
@@ -1324,7 +1324,7 @@ The following macro names shall be defined by the implementation:
 The integer literal `202302L`.
 
 [*Note 1*: Future revisions of C++ will replace the value of this macro
-with a greater value. — *end note*\]
+with a greater value. — *end note*]
 
 - **The names listed in [[cpp.predefined.ft]].**
 
@@ -1332,7 +1332,7 @@ The macros defined in [[cpp.predefined.ft]] shall be defined to the
 corresponding integer literal.
 
 [*Note 2*: Future revisions of C++ might replace the values of these
-macros with greater values. — *end note*\]
+macros with greater values. — *end note*]
 
 - **`__DATE__`**
 
@@ -1367,7 +1367,7 @@ guaranteed by a call to `operator new(std::size_t)` or
 
 [*Note 3*: Larger alignments will be passed to
 `operator new(std::size_t, std::align_val_t)`, etc.
-[[expr.new]]. — *end note*\]
+[[expr.new]]. — *end note*]
 
 - **`__STDCPP_FLOAT16_T__`**
 
@@ -1558,7 +1558,7 @@ literally as shown, or results from macro replacement, as in:
 LISTING( ..\listing.dir )
 ```
 
-— *end example*\]
+— *end example*]
 
 <!-- Section link definitions -->
 [cpp]: #cpp

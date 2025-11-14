@@ -51,7 +51,7 @@ API call used by the implementation. Since POSIX specifies an `errno` of
 `EPERM` when “the caller does not have the privilege to perform the
 operation”, the implementation maps `EPERM` to an `error_condition` of
 `operation_not_permitted` [[syserr]] and an exception of type
-`system_error` is thrown. — *end example*\]
+`system_error` is thrown. — *end example*]
 
 The `error_code` reported by such an exception’s `code()` member
 function compares equal to one of the conditions specified in the
@@ -66,7 +66,7 @@ and their semantics is *implementation-defined*.
 [*Note 1*: These members allow implementations to provide access to
 implementation details. Their names are specified to facilitate portable
 compile-time detection. Actual use of these members is inherently
-non-portable. — *end note*\]
+non-portable. — *end note*]
 
 ### Timing specifications <a id="thread.req.timing">[[thread.req.timing]]</a>
 
@@ -107,7 +107,7 @@ follows:
   can result in the total duration of the wait increasing when measured
   against a steady clock. When the clock is adjusted forwards, this
   specification can result in the total duration of the wait decreasing
-  when measured against a steady clock. — *end note*\]
+  when measured against a steady clock. — *end note*]
 
 An implementation returns from such a timeout at any point from the time
 specified above to the time it would return from a steady-clock relative
@@ -115,11 +115,11 @@ timeout on the difference between Cₜ and the time point of the call to
 the `_until` function.
 
 [*Note 1*: Implementations should decrease the duration of the wait
-when the clock is adjusted forwards. — *end note*\]
+when the clock is adjusted forwards. — *end note*]
 
 [*Note 2*: If the clock is not synchronized with a steady clock, e.g.,
 a CPU time clock, these timeouts might not provide useful
-functionality. — *end note*\]
+functionality. — *end note*]
 
 The resolution of timing provided by an implementation depends on both
 operating system and hardware. The finest resolution provided by an
@@ -135,7 +135,7 @@ exceptions*.
 
 [*Note 3*: Instantiations of clock, time point and duration types
 supplied by the implementation as specified in  [[time.clock]] do not
-throw exceptions. — *end note*\]
+throw exceptions. — *end note*]
 
 ### Requirements for *Cpp17Lockable* types <a id="thread.req.lockable">[[thread.req.lockable]]</a>
 
@@ -145,14 +145,14 @@ An *execution agent* is an entity such as a thread that may perform work
 in parallel with other execution agents.
 
 [*Note 1*: Implementations or users can introduce other kinds of agents
-such as processes or thread-pool tasks. — *end note*\]
+such as processes or thread-pool tasks. — *end note*]
 
 The calling agent is determined by context, e.g., the calling thread
 that contains the call, and so on.
 
 [*Note 2*: Some lockable objects are “agent oblivious” in that they
 work for any execution agent model because they do not determine or
-store the agent’s ID (e.g., an ordinary spin lock). — *end note*\]
+store the agent’s ID (e.g., an ordinary spin lock). — *end note*]
 
 The standard library templates `unique_lock` [[thread.lock.unique]],
 `shared_lock` [[thread.lock.shared]], `scoped_lock`
@@ -165,7 +165,7 @@ requirements imposed by these library types in order to acquire or
 release ownership of a `lock` by a given execution agent.
 
 [*Note 3*: The nature of any lock ownership and any synchronization it
-entails are not part of these requirements. — *end note*\]
+entails are not part of these requirements. — *end note*]
 
 #### *Cpp17BasicLockable* requirements <a id="thread.req.lockable.basic">[[thread.req.lockable.basic]]</a>
 
@@ -352,7 +352,7 @@ stop_token() noexcept;
 
 [*Note 1*: Because the created `stop_token` object can never receive a
 stop request, no resources are allocated for a stop
-state. — *end note*\]
+state. — *end note*]
 
 ``` cpp
 stop_token(const stop_token& rhs) noexcept;
@@ -361,7 +361,7 @@ stop_token(const stop_token& rhs) noexcept;
 *Ensures:* `*this == rhs` is `true`.
 
 [*Note 2*: `*this` and `rhs` share the ownership of the same stop
-state, if any. — *end note*\]
+state, if any. — *end note*]
 
 ``` cpp
 stop_token(stop_token&& rhs) noexcept;
@@ -498,7 +498,7 @@ explicit stop_source(nostopstate_t) noexcept;
 *Ensures:* `stop_possible()` is `false` and `stop_requested()` is
 `false`.
 
-[*Note 1*: No resources are allocated for the state. — *end note*\]
+[*Note 1*: No resources are allocated for the state. — *end note*]
 
 ``` cpp
 stop_source(const stop_source& rhs) noexcept;
@@ -507,7 +507,7 @@ stop_source(const stop_source& rhs) noexcept;
 *Ensures:* `*this == rhs` is `true`.
 
 [*Note 2*: `*this` and `rhs` share the ownership of the same stop
-state, if any. — *end note*\]
+state, if any. — *end note*]
 
 ``` cpp
 stop_source(stop_source&& rhs) noexcept;
@@ -582,7 +582,7 @@ exception then `terminate` is called [[except.terminate]].
 
 [*Note 1*: A stop request includes notifying all condition variables of
 type `condition_variable_any` temporarily registered during an
-interruptible wait [[thread.condvarany.intwait]]. — *end note*\]
+interruptible wait [[thread.condvarany.intwait]]. — *end note*]
 
 *Ensures:* `stop_possible()` is `false` or `stop_requested()` is `true`.
 
@@ -696,7 +696,7 @@ stop state, if any.
 manage threads.
 
 [*Note 1*: These threads are intended to map one-to-one with operating
-system threads. — *end note*\]
+system threads. — *end note*]
 
 ### Header `<thread>` synopsis <a id="thread.syn">[[thread.syn]]</a>
 
@@ -739,7 +739,7 @@ execution.
 
 [*Note 1*: A `thread` object does not represent a thread of execution
 after default construction, after being moved from, or after a
-successful call to `detach` or `join`. — *end note*\]
+successful call to `detach` or `join`. — *end note*]
 
 ``` cpp
 namespace std {
@@ -807,7 +807,7 @@ may reuse the value of a `thread::id` of a terminated thread that can no
 longer be joined.
 
 [*Note 1*: Relational operators allow `thread::id` objects to be used
-as keys in associative containers. — *end note*\]
+as keys in associative containers. — *end note*]
 
 ``` cpp
 id() noexcept;
@@ -891,7 +891,7 @@ thread. Any return value from this invocation is ignored.
 
 [*Note 1*: This implies that any exceptions not thrown from the
 invocation of the copy of `f` will be thrown in the constructing thread,
-not the new thread. — *end note*\]
+not the new thread. — *end note*]
 
 If the invocation of `invoke` terminates with an uncaught exception,
 `terminate` is called.
@@ -930,7 +930,7 @@ effects.
 in its destructor could result in difficult to debug correctness (for
 detach) or performance (for join) bugs encountered only when an
 exception is thrown. Thus the programmer must ensure that the destructor
-is never executed while the thread is still joinable. — *end note*\]
+is never executed while the thread is still joinable. — *end note*]
 
 #### Assignment <a id="thread.thread.assign">[[thread.thread.assign]]</a>
 
@@ -970,7 +970,7 @@ void join();
 synchronizes with [[intro.multithread]] the corresponding successful
 `join()` return.
 
-[*Note 1*: Operations on `*this` are not synchronized. — *end note*\]
+[*Note 1*: Operations on `*this` are not synchronized. — *end note*]
 
 *Ensures:* The thread represented by `*this` has completed.
 `get_id() == id()`.
@@ -1022,7 +1022,7 @@ unsigned hardware_concurrency() noexcept;
 *Returns:* The number of hardware thread contexts.
 
 [*Note 1*: This value should only be considered to be a
-hint. — *end note*\]
+hint. — *end note*]
 
 If this value is not computable or well-defined, an implementation
 should return 0.
@@ -1133,7 +1133,7 @@ thread. Any return value from this invocation is ignored.
 
 [*Note 1*: This implies that any exceptions not thrown from the
 invocation of the copy of `f` will be thrown in the constructing thread,
-not the new thread. — *end note*\]
+not the new thread. — *end note*]
 
 If the `invoke` expression exits via an exception, `terminate` is
 called.
@@ -1145,7 +1145,7 @@ synchronizes with the beginning of the invocation of the copy of `f`.
 `true` and `*this` represents the newly started thread.
 
 [*Note 2*: The calling thread can make a stop request only once,
-because it cannot replace this stop token. — *end note*\]
+because it cannot replace this stop token. — *end note*]
 
 *Throws:* `system_error` if unable to start the new thread.
 
@@ -1171,7 +1171,7 @@ of `x.ssource` prior to the start of construction and
 *Effects:* If `joinable()` is `true`, calls `request_stop()` and then
 `join()`.
 
-[*Note 3*: Operations on `*this` are not synchronized. — *end note*\]
+[*Note 3*: Operations on `*this` are not synchronized. — *end note*]
 
 ``` cpp
 jthread& operator=(jthread&& x) noexcept;
@@ -1212,7 +1212,7 @@ void join();
 synchronizes with [[intro.multithread]] the corresponding successful
 `join()` return.
 
-[*Note 1*: Operations on `*this` are not synchronized. — *end note*\]
+[*Note 1*: Operations on `*this` are not synchronized. — *end note*]
 
 *Ensures:* The thread represented by `*this` has completed.
 `get_id() == id()`.
@@ -1442,12 +1442,12 @@ behave as atomic operations [[intro.multithread]]. The lock and unlock
 operations on a single mutex appears to occur in a single total order.
 
 [*Note 1*: This can be viewed as the modification order
-[[intro.multithread]] of the mutex. — *end note*\]
+[[intro.multithread]] of the mutex. — *end note*]
 
 [*Note 2*: Construction and destruction of an object of a mutex type
 need not be thread-safe; other synchronization should be used to ensure
 that mutex objects are initialized and visible to other
-threads. — *end note*\]
+threads. — *end note*]
 
 The expression `m.lock()` is well-formed and has the following
 semantics:
@@ -1490,7 +1490,7 @@ to obtain the lock even if it is not held by any other thread.
 
 [*Note 1*: This spurious failure is normally uncommon, but allows
 interesting implementations based on a simple compare and
-exchange [[atomics]]. — *end note*\]
+exchange [[atomics]]. — *end note*]
 
 An implementation should ensure that `try_lock()` does not consistently
 return `false` in the absence of contending mutex acquisitions.
@@ -1507,7 +1507,7 @@ this operation.
 [*Note 2*: Since `lock()` does not synchronize with a failed subsequent
 `try_lock()`, the visibility rules are weak enough that little would be
 known about the state after a failure, even in the absence of spurious
-failures. — *end note*\]
+failures. — *end note*]
 
 *Throws:* Nothing.
 
@@ -1561,7 +1561,7 @@ that it is no longer in use, unlock it, and destroy it, before thread
 required to handle such scenarios correctly, as long as thread `A`
 doesn’t access the mutex after the unlock call returns. These cases
 typically occur when a reference-counted object contains a mutex that is
-used to protect the reference count. — *end note*\]
+used to protect the reference count. — *end note*]
 
 The class `mutex` meets all of the mutex requirements
 [[thread.mutex.requirements]]. It is a standard-layout class
@@ -1570,7 +1570,7 @@ The class `mutex` meets all of the mutex requirements
 [*Note 4*: A program can deadlock if the thread that owns a `mutex`
 object calls `lock()` on that object. If the implementation can detect
 the deadlock, a `resource_deadlock_would_occur` error condition might be
-observed. — *end note*\]
+observed. — *end note*]
 
 The behavior of a program is undefined if it destroys a `mutex` object
 owned by any thread or a thread terminates while owning a `mutex`
@@ -1652,7 +1652,7 @@ the mutex object.
 
 [*Note 1*: As with `try_lock()`, there is no guarantee that ownership
 will be obtained if the lock is available, but implementations are
-expected to make a strong effort to do so. — *end note*\]
+expected to make a strong effort to do so. — *end note*]
 
 *Return type:* `bool`.
 
@@ -1678,7 +1678,7 @@ before the absolute timeout [[thread.req.timing]] specified by
 
 [*Note 2*: As with `try_lock()`, there is no guarantee that ownership
 will be obtained if the lock is available, but implementations are
-expected to make a strong effort to do so. — *end note*\]
+expected to make a strong effort to do so. — *end note*]
 
 *Return type:* `bool`.
 
@@ -1948,7 +1948,7 @@ shared ownership of the mutex object.
 
 [*Note 1*: As with `try_lock()`, there is no guarantee that ownership
 will be obtained if the lock is available, but implementations are
-expected to make a strong effort to do so. — *end note*\]
+expected to make a strong effort to do so. — *end note*]
 
 If an exception is thrown then a shared lock has not been acquired for
 the current thread.
@@ -1977,7 +1977,7 @@ obtained shared ownership of the mutex object.
 
 [*Note 2*: As with `try_lock()`, there is no guarantee that ownership
 will be obtained if the lock is available, but implementations are
-expected to make a strong effort to do so. — *end note*\]
+expected to make a strong effort to do so. — *end note*]
 
 If an exception is thrown then a shared lock has not been acquired for
 the current thread.
@@ -2052,7 +2052,7 @@ not manage the lifetime of the lockable object it references.
 
 [*Note 1*: Locks are intended to ease the burden of unlocking the
 lockable object under both normal and exceptional
-circumstances. — *end note*\]
+circumstances. — *end note*]
 
 Some lock constructors take tag types which describe what should be done
 with the lockable object during the lock’s construction.
@@ -2260,7 +2260,7 @@ requirements. If `Mutex` meets the *Cpp17Lockable* requirements
 [[thread.req.lockable.req]], `unique_lock<Mutex>` also meets the
 *Cpp17Lockable* requirements; if `Mutex` meets the *Cpp17TimedLockable*
 requirements [[thread.req.lockable.timed]], `unique_lock<Mutex>` also
-meets the *Cpp17TimedLockable* requirements. — *end note*\]
+meets the *Cpp17TimedLockable* requirements. — *end note*]
 
 ##### Constructors, destructor, and assignment <a id="thread.lock.unique.cons">[[thread.lock.unique.cons]]</a>
 
@@ -2358,7 +2358,7 @@ state of `u` just prior to this construction), `u.pm == 0` and
 
 [*Note 1*: With a recursive mutex it is possible for both `*this` and
 `u` to own the same mutex before the assignment. In this case, `*this`
-will own the mutex after the assignment and `u` will not. — *end note*\]
+will own the mutex after the assignment and `u` will not. — *end note*]
 
 *Throws:* Nothing.
 
@@ -2579,7 +2579,7 @@ supplied `Mutex` type shall meet the shared mutex requirements
 [[thread.sharedtimedmutex.requirements]].
 
 [*Note 1*: `shared_lock<Mutex>` meets the *Cpp17TimedLockable*
-requirements [[thread.req.lockable.timed]]. — *end note*\]
+requirements [[thread.req.lockable.timed]]. — *end note*]
 
 ##### Constructors, destructor, and assignment <a id="thread.lock.shared.cons">[[thread.lock.shared.cons]]</a>
 
@@ -2825,7 +2825,7 @@ template<class L1, class L2, class... L3> int try_lock(L1&, L2&, L3&...);
 requirements.
 
 [*Note 1*: The `unique_lock` class template meets these requirements
-when suitably instantiated. — *end note*\]
+when suitably instantiated. — *end note*]
 
 *Effects:* Calls `try_lock()` for each argument in order beginning with
 the first until all arguments have been processed or a call to
@@ -2845,7 +2845,7 @@ template<class L1, class L2, class... L3> void lock(L1&, L2&, L3&...);
 requirements.
 
 [*Note 2*: The `unique_lock` class template meets these requirements
-when suitably instantiated. — *end note*\]
+when suitably instantiated. — *end note*]
 
 *Effects:* All arguments are locked via a sequence of calls to `lock()`,
 `try_lock()`, or `unlock()` on each argument. The sequence of calls does
@@ -2853,7 +2853,7 @@ not result in deadlock, but is otherwise unspecified.
 
 [*Note 3*: A deadlock avoidance algorithm such as try-and-back-off must
 be used, but the specific algorithm is not specified to avoid
-over-constraining implementations. — *end note*\]
+over-constraining implementations. — *end note*]
 
 If a call to `lock()` or `try_lock()` throws an exception, `unlock()` is
 called for any argument that had been locked by a call to `lock()` or
@@ -2910,7 +2910,7 @@ execution; and there are passive executions only if there is a returning
 execution.
 
 [*Note 1*: Passive executions allow other threads to reliably observe
-the results produced by the earlier returning execution. — *end note*\]
+the results produced by the earlier returning execution. — *end note*]
 
 *Synchronization:* For any given `once_flag`: all active executions
 occur in a total order; completion of an active execution synchronizes
@@ -2951,7 +2951,7 @@ public:
 };
 ```
 
-— *end example*\]
+— *end example*]
 
 ## Condition variables <a id="thread.condition">[[thread.condition]]</a>
 
@@ -3029,14 +3029,14 @@ care should be taken to ensure that this does not cause deadlock due to
 lock ordering issues. After calling `notify_all_at_thread_exit` it is
 recommended that the thread should be exited as soon as possible, and
 that no blocking or time-consuming tasks are run on that
-thread. — *end note*\]
+thread. — *end note*]
 
 [*Note 2*: It is the user’s responsibility to ensure that waiting
 threads do not erroneously assume that the thread has finished if they
 experience spurious wakeups. This typically requires that the condition
 being waited for is satisfied while holding the lock on `lk`, and that
 this lock is not released and reacquired prior to calling
-`notify_all_at_thread_exit`. — *end note*\]
+`notify_all_at_thread_exit`. — *end note*]
 
 ### Class `condition_variable` <a id="thread.condition.condvar">[[thread.condition.condvar]]</a>
 
@@ -3105,7 +3105,7 @@ before destruction. The user should take care to ensure that no threads
 wait on `*this` once the destructor has been started, especially when
 the waiting threads are calling the wait functions in a loop or using
 the overloads of `wait`, `wait_for`, or `wait_until` that take a
-predicate. — *end note*\]
+predicate. — *end note*]
 
 ``` cpp
 void notify_one() noexcept;
@@ -3144,7 +3144,7 @@ locked by the calling thread, and either
 `terminate()` is called [[except.terminate]].
 
 [*Note 2*: This can happen if the re-locking of the mutex throws an
-exception. — *end note*\]
+exception. — *end note*]
 
 *Ensures:* `lock.owns_lock()` is `true` and `lock.mutex()` is locked by
 the calling thread.
@@ -3175,7 +3175,7 @@ while (!pred())
 `terminate()` is called [[except.terminate]].
 
 [*Note 3*: This can happen if the re-locking of the mutex throws an
-exception. — *end note*\]
+exception. — *end note*]
 
 *Ensures:* `lock.owns_lock()` is `true` and `lock.mutex()` is locked by
 the calling thread.
@@ -3211,7 +3211,7 @@ locked by the calling thread, and either
 `terminate()` is called [[except.terminate]].
 
 [*Note 4*: This can happen if the re-locking of the mutex throws an
-exception. — *end note*\]
+exception. — *end note*]
 
 *Ensures:* `lock.owns_lock()` is `true` and `lock.mutex()` is locked by
 the calling thread.
@@ -3250,7 +3250,7 @@ timeout [[thread.req.timing]] specified by `rel_time` expired, otherwise
 `terminate()` is called [[except.terminate]].
 
 [*Note 5*: This can happen if the re-locking of the mutex throws an
-exception. — *end note*\]
+exception. — *end note*]
 
 *Ensures:* `lock.owns_lock()` is `true` and `lock.mutex()` is locked by
 the calling thread.
@@ -3285,14 +3285,14 @@ return true;
 `terminate()` is called [[except.terminate]].
 
 [*Note 6*: This can happen if the re-locking of the mutex throws an
-exception. — *end note*\]
+exception. — *end note*]
 
 *Ensures:* `lock.owns_lock()` is `true` and `lock.mutex()` is locked by
 the calling thread.
 
 [*Note 7*: The returned value indicates whether the predicate evaluated
 to `true` regardless of whether the timeout was
-triggered. — *end note*\]
+triggered. — *end note*]
 
 *Throws:* Timeout-related exceptions [[thread.req.timing]] or any
 exception thrown by `pred`.
@@ -3319,20 +3319,20 @@ return wait_until(lock, chrono::steady_clock::now() + rel_time, std::move(pred))
 ```
 
 [*Note 8*: There is no blocking if `pred()` is initially `true`, even
-if the timeout has already expired. — *end note*\]
+if the timeout has already expired. — *end note*]
 
 *Remarks:* If the function fails to meet the postcondition,
 `terminate()` is called [[except.terminate]].
 
 [*Note 9*: This can happen if the re-locking of the mutex throws an
-exception. — *end note*\]
+exception. — *end note*]
 
 *Ensures:* `lock.owns_lock()` is `true` and `lock.mutex()` is locked by
 the calling thread.
 
 [*Note 10*: The returned value indicates whether the predicate
 evaluates to `true` regardless of whether the timeout was
-triggered. — *end note*\]
+triggered. — *end note*]
 
 *Throws:* Timeout-related exceptions [[thread.req.timing]] or any
 exception thrown by `pred`.
@@ -3347,7 +3347,7 @@ A `Lock` type shall meet the *Cpp17BasicLockable* requirements
 `unique_lock` wrapper for a standard mutex type is used with
 `condition_variable_any`, the user should ensure that any necessary
 synchronization is in place with respect to the predicate associated
-with the `condition_variable_any` instance. — *end note*\]
+with the `condition_variable_any` instance. — *end note*]
 
 ``` cpp
 namespace std {
@@ -3419,7 +3419,7 @@ before destruction. The user should take care to ensure that no threads
 wait on `*this` once the destructor has been started, especially when
 the waiting threads are calling the wait functions in a loop or using
 the overloads of `wait`, `wait_for`, or `wait_until` that take a
-predicate. — *end note*\]
+predicate. — *end note*]
 
 ``` cpp
 void notify_one() noexcept;
@@ -3453,7 +3453,7 @@ template<class Lock>
 `terminate()` is called [[except.terminate]].
 
 [*Note 1*: This can happen if the re-locking of the mutex throws an
-exception. — *end note*\]
+exception. — *end note*]
 
 *Ensures:* `lock` is locked by the calling thread.
 
@@ -3491,7 +3491,7 @@ template<class Lock, class Clock, class Duration>
 `terminate()` is called [[except.terminate]].
 
 [*Note 2*: This can happen if the re-locking of the mutex throws an
-exception. — *end note*\]
+exception. — *end note*]
 
 *Ensures:* `lock` is locked by the calling thread.
 
@@ -3520,7 +3520,7 @@ timeout [[thread.req.timing]] specified by `rel_time` expired, otherwise
 `terminate()` is called [[except.terminate]].
 
 [*Note 3*: This can happen if the re-locking of the mutex throws an
-exception. — *end note*\]
+exception. — *end note*]
 
 *Ensures:* `lock` is locked by the calling thread.
 
@@ -3541,11 +3541,11 @@ return true;
 ```
 
 [*Note 4*: There is no blocking if `pred()` is initially `true`, or if
-the timeout has already expired. — *end note*\]
+the timeout has already expired. — *end note*]
 
 [*Note 5*: The returned value indicates whether the predicate evaluates
 to `true` regardless of whether the timeout was
-triggered. — *end note*\]
+triggered. — *end note*]
 
 ``` cpp
 template<class Lock, class Rep, class Period, class Predicate>
@@ -3583,7 +3583,7 @@ return pred();
 ```
 
 [*Note 1*: The returned value indicates whether the predicate evaluated
-to `true` regardless of whether there was a stop request. — *end note*\]
+to `true` regardless of whether there was a stop request. — *end note*]
 
 *Ensures:* `lock` is locked by the calling thread.
 
@@ -3591,7 +3591,7 @@ to `true` regardless of whether there was a stop request. — *end note*\]
 is called [[except.terminate]].
 
 [*Note 2*: This can happen if the re-locking of the mutex throws an
-exception. — *end note*\]
+exception. — *end note*]
 
 *Throws:* Any exception thrown by `pred`.
 
@@ -3617,11 +3617,11 @@ return pred();
 
 [*Note 3*: There is no blocking if `pred()` is initially `true`,
 `stoken.stop_requested()` was already `true` or the timeout has already
-expired. — *end note*\]
+expired. — *end note*]
 
 [*Note 4*: The returned value indicates whether the predicate evaluated
 to `true` regardless of whether the timeout was triggered or a stop
-request was made. — *end note*\]
+request was made. — *end note*]
 
 *Ensures:* `lock` is locked by the calling thread.
 
@@ -3629,7 +3629,7 @@ request was made. — *end note*\]
 is called [[except.terminate]].
 
 [*Note 5*: This can happen if the re-locking of the mutex throws an
-exception. — *end note*\]
+exception. — *end note*]
 
 *Throws:* Timeout-related exceptions [[thread.req.timing]], or any
 exception thrown by `pred`.
@@ -3760,7 +3760,7 @@ decrement `counter` even if it is positive.
 
 [*Note 1*: This spurious failure is normally uncommon, but allows
 interesting implementations based on a simple compare and
-exchange [[atomics]]. — *end note*\]
+exchange [[atomics]]. — *end note*]
 
 An implementation should ensure that `try_acquire` does not consistently
 return `false` in the absence of contending semaphore operations.
@@ -3938,7 +3938,7 @@ expected number of threads to block until the expected number of threads
 arrive at the barrier.
 
 [*Note 1*: A barrier is useful for managing repeated tasks that are
-handled by multiple threads. — *end note*\]
+handled by multiple threads. — *end note*]
 
 #### Header `<barrier>` synopsis <a id="barrier.syn">[[barrier.syn]]</a>
 
@@ -4052,7 +4052,7 @@ and the current expected count for the first phase to `expected`.
 Initializes `completion` with `std::move(f)`. Starts the first phase.
 
 [*Note 1*: If `expected` is 0 this object can only be
-destroyed. — *end note*\]
+destroyed. — *end note*]
 
 *Throws:* Any exception thrown by `CompletionFunction`’s move
 constructor.
@@ -4080,7 +4080,7 @@ required [[thread.req.exception]].
 types [[thread.mutex.requirements.mutex]].
 
 [*Note 2*: This call can cause the completion step for the current
-phase to start. — *end note*\]
+phase to start. — *end note*]
 
 ``` cpp
 void wait(arrival_token&& arrival) const;
@@ -4095,7 +4095,7 @@ same barrier object.
 synchronization point’s phase is run.
 
 [*Note 3*: If `arrival` is associated with the synchronization point
-for a previous phase, the call returns immediately. — *end note*\]
+for a previous phase, the call returns immediately. — *end note*]
 
 *Throws:* `system_error` when an exception is
 required [[thread.req.exception]].
@@ -4130,7 +4130,7 @@ required [[thread.req.exception]].
 types [[thread.mutex.requirements.mutex]].
 
 [*Note 4*: This call can cause the completion step for the current
-phase to start. — *end note*\]
+phase to start. — *end note*]
 
 ## Futures <a id="futures">[[futures]]</a>
 
@@ -4142,7 +4142,7 @@ run in the same thread or another thread.
 
 [*Note 1*: These components are not restricted to multi-threaded
 programs but can be useful in single-threaded programs as
-well. — *end note*\]
+well. — *end note*]
 
 ### Header `<future>` synopsis <a id="future.syn">[[future.syn]]</a>
 
@@ -4216,7 +4216,7 @@ elements `launch::async` and `launch::deferred`.
 on task interaction by functions launched by `async()` applicable to a
 corresponding subset of available launch policies. Implementations can
 extend the behavior of the first overload of `async()` by adding their
-extensions to the launch policy under the “as if” rule. — *end note*\]
+extensions to the launch policy under the “as if” rule. — *end note*]
 
 The enum values of `future_errc` are distinct and not zero.
 
@@ -4288,11 +4288,11 @@ information and some (possibly not yet evaluated) *result*, which can be
 a (possibly void) value or an exception.
 
 [*Note 1*: Futures, promises, and tasks defined in this clause
-reference such shared state. — *end note*\]
+reference such shared state. — *end note*]
 
 [*Note 2*: The result can be any kind of object including a function to
 compute that result, as used by `async` when `policy` is
-`launch::deferred`. — *end note*\]
+`launch::deferred`. — *end note*]
 
 An *asynchronous return object* is an object that reads results from a
 shared state. A *waiting function* of an asynchronous return object is
@@ -4305,7 +4305,7 @@ An *asynchronous provider* is an object that provides a result to a
 shared state. The result of a shared state is set by respective
 functions on the asynchronous provider.
 
-[*Note 3*: Such as promises or tasks. — *end note*\]
+[*Note 3*: Such as promises or tasks. — *end note*]
 
 The means of setting the result of a shared state is specified in the
 description of those classes and functions that create such a state
@@ -4364,7 +4364,7 @@ state is visible in the objects that reference this state in the sense
 of data race avoidance [[res.on.data.races]]. For example, concurrent
 accesses through references returned by `shared_future::get()`
 [[futures.shared.future]] must either use read-only operations or
-provide additional synchronization. — *end note*\]
+provide additional synchronization. — *end note*]
 
 ### Class template `promise` <a id="futures.promise">[[futures.promise]]</a>
 
@@ -4478,7 +4478,7 @@ races  [[intro.multithread]] with calls to `set_value`, `set_exception`,
 `set_value_at_thread_exit`, or `set_exception_at_thread_exit`.
 
 [*Note 1*: Such calls need not synchronize with each
-other. — *end note*\]
+other. — *end note*]
 
 *Throws:* `future_error` if `*this` has no shared state or if
 `get_future` has already been called on a `promise` with the same shared
@@ -4598,18 +4598,18 @@ result (value or exception) of a `future` object can be set by calling a
 respective function on an object that shares the same shared state.
 
 [*Note 1*: Member functions of `future` do not synchronize with
-themselves or with member functions of `shared_future`. — *end note*\]
+themselves or with member functions of `shared_future`. — *end note*]
 
 The effect of calling any member function other than the destructor, the
 move-assignment operator, `share`, or `valid` on a `future` object for
 which `valid() == false` is undefined.
 
 [*Note 2*: It is valid to move from a future object for which
-`valid() == false`. — *end note*\]
+`valid() == false`. — *end note*]
 
 [*Note 3*: Implementations should detect this case and throw an object
 of type `future_error` with an error condition of
-`future_errc::no_state`. — *end note*\]
+`future_errc::no_state`. — *end note*]
 
 ``` cpp
 namespace std {
@@ -4705,7 +4705,7 @@ void future<void>::get();
 
 [*Note 1*: As described above, the template and its two required
 specializations differ only in the return type and return value of the
-member function `get`. — *end note*\]
+member function `get`. — *end note*]
 
 *Effects:*
 
@@ -4793,18 +4793,18 @@ of the shared state. The result (value or exception) of a
 object that shares the same shared state.
 
 [*Note 1*: Member functions of `shared_future` do not synchronize with
-themselves, but they synchronize with the shared state. — *end note*\]
+themselves, but they synchronize with the shared state. — *end note*]
 
 The effect of calling any member function other than the destructor, the
 move-assignment operator, the copy-assignment operator, or `valid()` on
 a `shared_future` object for which `valid() == false` is undefined.
 
 [*Note 2*: It is valid to copy or move from a `shared_future` object
-for which `valid()` is `false`. — *end note*\]
+for which `valid()` is `false`. — *end note*]
 
 [*Note 3*: Implementations should detect this case and throw an object
 of type `future_error` with an error condition of
-`future_errc::no_state`. — *end note*\]
+`future_errc::no_state`. — *end note*]
 
 ``` cpp
 namespace std {
@@ -4902,7 +4902,7 @@ shared_future& operator=(const shared_future& rhs) noexcept;
 - Releases any shared state [[futures.state]];
 - assigns the contents of `rhs` to `*this`. \[*Note 2*: As a result,
   `*this` refers to the same shared state as `rhs` (if
-  any). — *end note*\]
+  any). — *end note*]
 
 *Ensures:* `valid() == rhs.valid()`.
 
@@ -4914,11 +4914,11 @@ void shared_future<void>::get() const;
 
 [*Note 1*: As described above, the template and its two required
 specializations differ only in the return type and return value of the
-member function `get`. — *end note*\]
+member function `get`. — *end note*]
 
 [*Note 2*: Access to a value object stored in the shared state is
 unsynchronized, so programmers should apply only those operations on `R`
-that do not introduce a data race [[intro.multithread]]. — *end note*\]
+that do not introduce a data race [[intro.multithread]]. — *end note*]
 
 *Effects:* `wait()`s until the shared state is ready, then retrieves the
 value stored in the shared state.
@@ -4930,7 +4930,7 @@ value stored in the shared state.
   reference after the shared state has been destroyed produces undefined
   behavior; this can be avoided by not storing the reference in any
   storage with a greater lifetime than the `shared_future` object that
-  returned the reference. — *end note*\]
+  returned the reference. — *end note*]
 - `shared_future<R&>::get()` returns the reference stored as value in
   the object’s shared state.
 - `shared_future<void>::get()` returns nothing.
@@ -5058,7 +5058,7 @@ implementation may choose any of the corresponding policies):
   together with other policies, such as when using a `policy` value of
   `launch::async | launch::deferred`, implementations should defer
   invocation or the selection of the policy when no more concurrency can
-  be effectively exploited. — *end note*\]
+  be effectively exploited. — *end note*]
 - If no value is set in the launch policy, or a value is set that is
   neither specified in this document nor by the implementation, the
   behavior is undefined.
@@ -5070,18 +5070,18 @@ the shared state created by this call to `async`.
 [*Note 1*: If a future obtained from `async` is moved outside the local
 scope, other code that uses the future should be aware that the future’s
 destructor can block for the shared state to become
-ready. — *end note*\]
+ready. — *end note*]
 
 *Synchronization:* Regardless of the provided `policy` argument,
 
 - the invocation of `async` synchronizes with [[intro.multithread]] the
   invocation of `f`. \[*Note 5*: This statement applies even when the
   corresponding `future` object is moved to another
-  thread. — *end note*\] ; and
+  thread. — *end note*] ; and
 - the completion of the function `f` is sequenced
   before [[intro.multithread]] the shared state is made ready.
   \[*Note 6*: `f` might not be called at all, so its completion might
-  never happen. — *end note*\]
+  never happen. — *end note*]
 
 If the implementation chooses the `launch::async` policy,
 
@@ -5108,7 +5108,7 @@ memory for the internal data structures could not be allocated.
 call uses the default policy, which may use `launch::deferred`, in which
 case the lambda might not be invoked until the `get()` call; in that
 case, `work1` and `work2` are called on the same thread and there is no
-concurrency. — *end note*\]
+concurrency. — *end note*]
 
 ### Class template `packaged_task` <a id="futures.task">[[futures.task]]</a>
 
@@ -5242,7 +5242,7 @@ races  [[intro.multithread]] with calls to `operator()` or
 `make_ready_at_thread_exit`.
 
 [*Note 1*: Such calls need not synchronize with each
-other. — *end note*\]
+other. — *end note*]
 
 *Throws:* A `future_error` object if an error occurs.
 
@@ -5303,7 +5303,7 @@ void reset();
 task stored in `*this`.
 
 [*Note 2*: This constructs a new shared state for `*this`. The old
-state is abandoned [[futures.state]]. — *end note*\]
+state is abandoned [[futures.state]]. — *end note*]
 
 *Throws:*
 

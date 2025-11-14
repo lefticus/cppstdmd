@@ -61,7 +61,7 @@ A *substatement* of a *statement* is one of the following:
 
 [*Note 1*: The *compound-statement* of a *lambda-expression* is not a
 substatement of the *statement* (if any) in which the
-*lambda-expression* lexically appears. — *end note*\]
+*lambda-expression* lexically appears. — *end note*]
 
 A *statement* `S1` *encloses* a *statement* `S2` if
 
@@ -162,7 +162,7 @@ missing is called a *null statement*.
 [*Note 1*: Most statements are expression statements — usually
 assignments or function calls. A null statement is useful to supply a
 null body to an iteration statement such as a `while` statement
-[[stmt.while]]. — *end note*\]
+[[stmt.while]]. — *end note*]
 
 ## Compound statement or block <a id="stmt.block">[[stmt.block]]</a>
 
@@ -188,7 +188,7 @@ A label at the end of a *compound-statement* is treated as if it were
 followed by a null statement.
 
 [*Note 1*: A compound statement defines a block scope [[basic.scope]].
-A declaration is a *statement* [[stmt.dcl]]. — *end note*\]
+A declaration is a *statement* [[stmt.dcl]]. — *end note*]
 
 ## Selection statements <a id="stmt.select">[[stmt.select]]</a>
 
@@ -208,11 +208,11 @@ selection-statement:
 See  [[dcl.meaning]] for the optional *attribute-specifier-seq* in a
 condition.
 
-[*Note 1*: An *init-statement* ends with a semicolon. — *end note*\]
+[*Note 1*: An *init-statement* ends with a semicolon. — *end note*]
 
 [*Note 2*: Each *selection-statement* and each substatement of a
 *selection-statement* has a block scope
-[[basic.scope.block]]. — *end note*\]
+[[basic.scope.block]]. — *end note*]
 
 ### The `if` statement <a id="stmt.if">[[stmt.if]]</a>
 
@@ -243,10 +243,10 @@ of a constexpr if statement is a control-flow-limited statement
 if constexpr (sizeof(int[2])) {}        // OK, narrowing allowed
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Note 1*: Odr-uses [[term.odr.use]] in a discarded statement do not
-require an entity to be defined. — *end note*\]
+require an entity to be defined. — *end note*]
 
 [*Example 2*:
 
@@ -270,7 +270,7 @@ int f() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 An `if` statement of the form
 
@@ -319,13 +319,13 @@ constexpr void f(bool b) {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 If a consteval if statement is evaluated in a context that is manifestly
 constant-evaluated [[expr.const]], the first substatement is executed.
 
 [*Note 2*: The first substatement is an immediate function
-context. — *end note*\]
+context. — *end note*]
 
 Otherwise, if the `else` part of the selection statement is present,
 then the second substatement is executed. Each substatement of a
@@ -409,7 +409,7 @@ switch, see `break`, [[stmt.break]].
 compound and `case` and `default` labels appear on the top-level
 statements contained within the (compound) substatement, but this is not
 required. Declarations can appear in the substatement of a `switch`
-statement. — *end note*\]
+statement. — *end note*]
 
 A `switch` statement of the form
 
@@ -443,7 +443,7 @@ iteration-statement:
     for '(' init-statementₒₚₜ for-range-declaration ':' for-range-initializer ')' statement
 ```
 
-[*Note 1*: An *init-statement* ends with a semicolon. — *end note*\]
+[*Note 1*: An *init-statement* ends with a semicolon. — *end note*]
 
 The substatement in an *iteration-statement* implicitly defines a block
 scope [[basic.scope]] which is entered and exited each time through the
@@ -468,7 +468,7 @@ while (--x >= 0) {
 
 Thus after the `while` statement, `i` is no longer in scope.
 
-— *end example*\]
+— *end example*]
 
 A *trivially empty iteration statement* is an iteration statement
 matching one of the following forms:
@@ -494,7 +494,7 @@ implementations.
 [*Note 2*: In a freestanding environment, concurrent forward progress
 is not guaranteed; such systems therefore require explicit cooperation.
 A call to yield can add implicit cooperation where none is otherwise
-intended. — *end note*\]
+intended. — *end note*]
 
 ### The `while` statement <a id="stmt.while">[[stmt.while]]</a>
 
@@ -539,9 +539,9 @@ In the while-loop, the constructor and destructor are each called twice,
 once for the condition that succeeds and once for the condition that
 fails.
 
-— *end example*\]
+— *end example*]
 
-— *end note*\]
+— *end note*]
 
 ### The `do` statement <a id="stmt.do">[[stmt.do]]</a>
 
@@ -581,7 +581,7 @@ re-evaluating *condition*.
 loop; the condition [[stmt.pre]] specifies a test, sequenced before each
 iteration, such that the loop is exited when the condition becomes
 `false`; the expression often specifies incrementing that is sequenced
-after each iteration. — *end note*\]
+after each iteration. — *end note*]
 
 Either or both of the *condition* and the *expression* can be omitted. A
 missing *condition* makes the implied `while` clause equivalent to
@@ -631,7 +631,7 @@ where
     `end(range)`, respectively, where `begin` and `end` undergo
     argument-dependent lookup [[basic.lookup.argdep]].
     \[*Note 1*: Ordinary unqualified lookup [[basic.lookup.unqual]] is
-    not performed. — *end note*\]
+    not performed. — *end note*]
 
 [*Example 1*:
 
@@ -641,11 +641,11 @@ for (int& x : array)
   x *= 2;
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Note 1*: The lifetime of some temporaries in the
 *for-range-initializer* is extended to cover the entire loop
-[[class.temporary]]. — *end note*\]
+[[class.temporary]]. — *end note*]
 
 [*Example 2*:
 
@@ -661,7 +661,7 @@ void foo() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 ## Expansion statements <a id="stmt.expand">[[stmt.expand]]</a>
 
@@ -766,7 +766,7 @@ follows:
   The variables *range*, *begin*, *end*, and *iter* are defined for
   exposition only.
   \[*Note 2*: The instantiation is ill-formed if *range* is not a
-  constant expression [[expr.const]]. — *end note*\]
+  constant expression [[expr.const]]. — *end note*]
 - Otherwise, S is a destructuring expansion statement and S is
   equivalent to:
   ``` cpp
@@ -808,7 +808,7 @@ constexpr int c2[] = {4, 3, 2, 1};
 static_assert(f(c1, c2) == 5);
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Example 2*:
 
@@ -824,7 +824,7 @@ consteval int f() {
 static_assert(f() == 6);
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Example 3*:
 
@@ -844,7 +844,7 @@ consteval long f(S s) {
 static_assert(f(S{}) == sizeof(int) + sizeof(short));
 ```
 
-— *end example*\]
+— *end example*]
 
 ## Jump statements <a id="stmt.jump">[[stmt.jump]]</a>
 
@@ -867,10 +867,10 @@ in that scope are destroyed in the reverse order of their construction
 [[stmt.dcl]]. For temporaries, see  [[class.temporary]]. However, the
 program can be terminated (by calling `std::exit()` or `std::abort()`
 [[support.start.term]], for example) without destroying objects with
-automatic storage duration. — *end note*\]
+automatic storage duration. — *end note*]
 
 [*Note 2*: A suspension of a coroutine [[expr.await]] is not considered
-to be an exit from a scope. — *end note*\]
+to be an exit from a scope. — *end note*]
 
 ### The `break` statement <a id="stmt.break">[[stmt.break]]</a>
 
@@ -906,14 +906,14 @@ the (explicit or implicit) function call by copy-initialization
 [[dcl.init]] from the operand.
 
 [*Note 1*: A constructor or destructor does not have a return
-type. — *end note*\]
+type. — *end note*]
 
 [*Note 2*: A `return` statement can involve an invocation of a
 constructor to perform a copy or move of the operand if it is not a
 prvalue or if its type differs from the return type of the function. A
 copy operation associated with a `return` statement can be elided or
 converted to a move operation if an automatic storage duration variable
-is returned [[class.copy.elision]]. — *end note*\]
+is returned [[class.copy.elision]]. — *end note*]
 
 The destructor for the result object is potentially invoked
 [[class.dtor]], [[except.ctor]].
@@ -927,7 +927,7 @@ class A {
 A f() { return A(); }   // error: destructor of A is private (even though it is never invoked)
 ```
 
-— *end example*\]
+— *end example*]
 
 Flowing off the end of a constructor, a destructor, or a non-coroutine
 function with a cv `void` return type is equivalent to a `return` with
@@ -946,7 +946,7 @@ local variables in each remaining enclosing block of the function
 [[stmt.dcl]], which, in turn, is sequenced before the evaluation of
 postcondition assertions of the function [[dcl.contract.func]], which,
 in turn, is sequenced before the destruction of function parameters
-[[expr.call]]. — *end note*\]
+[[expr.call]]. — *end note*]
 
 In a function whose return type is a reference, other than an invented
 function for `std::is_convertible` [[meta.rel]], a `return` statement
@@ -971,7 +971,7 @@ auto&& f3() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 ### The `co_return` statement <a id="stmt.return.coroutine">[[stmt.return.coroutine]]</a>
 
@@ -986,7 +986,7 @@ coroutine [[dcl.fct.def.coroutine]]. A coroutine shall not enclose a
 
 [*Note 1*: For this determination, it is irrelevant whether the
 `return` statement is enclosed by a discarded statement
-[[stmt.if]]. — *end note*\]
+[[stmt.if]]. — *end note*]
 
 The *expr-or-braced-init-list* of a `co_return` statement is called its
 operand. Let *p* be an lvalue naming the coroutine promise object
@@ -1053,9 +1053,9 @@ int f(int i)
 int g = f(0);   // can evaluate #1, #2, #1, #2
 ```
 
-— *end example*\]
+— *end example*]
 
-— *end note*\]
+— *end note*]
 
 ## Declaration statement <a id="stmt.dcl">[[stmt.dcl]]</a>
 
@@ -1070,7 +1070,7 @@ declaration-statement:
 [*Note 1*: If an identifier introduced by a declaration was previously
 declared in an outer block, the outer declaration is hidden for the
 remainder of the block [[basic.lookup.unqual]], after which it resumes
-its force. — *end note*\]
+its force. — *end note*]
 
 A block variable with automatic storage duration [[basic.stc.auto]] is
 *active* everywhere in the scope to which it belongs after its
@@ -1103,7 +1103,7 @@ lx:
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 Dynamic initialization of a block variable with static storage duration
 [[basic.stc.static]] or thread storage duration [[basic.stc.thread]] is
@@ -1118,7 +1118,7 @@ execution shall wait for completion of the initialization.
 [*Note 2*: A conforming implementation cannot introduce any deadlock
 around execution of the initializer. Deadlocks might still be caused by
 the program logic; the implementation need only avoid deadlocks due to
-its own synchronization operations. — *end note*\]
+its own synchronization operations. — *end note*]
 
 If control re-enters the declaration recursively while the variable is
 being initialized, the behavior is undefined.
@@ -1132,13 +1132,13 @@ int foo(int i) {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 An object associated with a block variable with static or thread storage
 duration will be destroyed if and only if it was constructed.
 
 [*Note 3*:  [[basic.start.term]] describes the order in which such
-objects are destroyed. — *end note*\]
+objects are destroyed. — *end note*]
 
 ## Ambiguity resolution <a id="stmt.ambig">[[stmt.ambig]]</a>
 
@@ -1175,7 +1175,7 @@ In the last example above, `g`, which is a pointer to `T`, is
 initialized to `double(3)`. This is of course ill-formed for semantic
 reasons, but that does not affect the syntactic analysis.
 
-— *end example*\]
+— *end example*]
 
 The remaining cases are *declaration*s.
 
@@ -1197,9 +1197,9 @@ extern int h;
 T(g)(h,2);          //  declaration
 ```
 
-— *end example*\]
+— *end example*]
 
-— *end note*\]
+— *end note*]
 
 The disambiguation is purely syntactic; that is, the meaning of the
 names occurring in such a statement, beyond whether they are
@@ -1231,7 +1231,7 @@ void f() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 A syntactically ambiguous statement that can syntactically be a
 *declaration* with an outermost *declarator* with a
@@ -1264,7 +1264,7 @@ void f(S s) {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 <!-- Section link definitions -->
 [stmt]: #stmt

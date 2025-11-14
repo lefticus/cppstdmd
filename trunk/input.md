@@ -69,7 +69,7 @@ as noted explicitly below, their behavior when `traits::pos_type` and
 [*Note 1*: For each of the specializations of `char_traits` defined in
 [[char.traits.specializations]], `state_type` denotes `mbstate_t`,
 `pos_type` denotes `fpos<mbstate_t>`, and `off_type` denotes
-`streamoff`. — *end note*\]
+`streamoff`. — *end note*]
 
 In the classes of [[input.output]], a template parameter with name
 `charT` represents a member of the set of types containing `char`,
@@ -86,7 +86,7 @@ may result in a data race [[intro.multithread]] unless otherwise
 specified [[iostream.objects]].
 
 [*Note 1*: Data races result in undefined behavior
-[[intro.multithread]]. — *end note*\]
+[[intro.multithread]]. — *end note*]
 
 If one thread makes a library call *a* that writes a value to a stream
 and, as a result, another thread reads this value from the stream
@@ -244,7 +244,7 @@ as a base class for class templates `basic_stringstream` and
 
 [*Note 1*: For each of the class templates above, the program is
 ill-formed if `traits::char_type` is not the same type as `charT`
-[[char.traits]]. — *end note*\]
+[[char.traits]]. — *end note*]
 
 Other *typedef-name*s define instances of class templates specialized
 for `char` or `wchar_t` types.
@@ -254,11 +254,11 @@ file position information.
 
 [*Example 1*: The types `streampos` and `wstreampos` are used for
 positioning streams specialized on `char` and `wchar_t`
-respectively. — *end example*\]
+respectively. — *end example*]
 
 [*Note 2*: This synopsis suggests a circularity between `streampos` and
 `char_traits<char>`. An implementation can avoid this circularity by
-substituting equivalent types. — *end note*\]
+substituting equivalent types. — *end note*]
 
 ## Standard iostream objects <a id="iostream.objects">[[iostream.objects]]</a>
 
@@ -315,7 +315,7 @@ initialization [[basic.start.dynamic]].
 appearance-ordered before any declaration following the point of
 importation of a C++ library module. Whether such a definition exists is
 unobservable by a program that does not reference any of the standard
-iostream objects. — *end note*\]
+iostream objects. — *end note*]
 
 Mixing operations on corresponding wide- and narrow-character streams
 follows the same semantics as mixing such operations on `FILE`s, as
@@ -327,7 +327,7 @@ iostream object’s formatted and unformatted input [[istream]] and output
 not result in a data race [[intro.multithread]].
 
 [*Note 2*: Unsynchronized concurrent use of these objects and streams
-by multiple threads can result in interleaved characters. — *end note*\]
+by multiple threads can result in interleaved characters. — *end note*]
 
 ### Narrow stream objects <a id="narrow.stream.objects">[[narrow.stream.objects]]</a>
 
@@ -606,7 +606,7 @@ For the sake of exposition, the maintained data is presented here as:
 - `void** parray`, points to the first element of an arbitrary-length
   pointer array maintained for the private use of the program.
 
-— *end note*\]
+— *end note*]
 
 #### Types <a id="ios.types">[[ios.types]]</a>
 
@@ -628,7 +628,7 @@ synonym for a class with equivalent functionality to class
 
 [*Note 1*: When `ios_base::failure` is a synonym for another type, that
 type needs to provide a nested type `failure` to emulate the
-injected-class-name. — *end note*\]
+injected-class-name. — *end note*]
 
 The class `failure` defines the base class for the types of all objects
 thrown as exceptions, by functions in the iostreams library, to report
@@ -643,7 +643,7 @@ reported as `system_category()` errors with an error value of the error
 number reported by the operating system. Errors arising from within the
 stream library would typically be reported as
 `error_code(io_errc::stream,
-iostream_category())`. — *end note*\]
+iostream_category())`. — *end note*]
 
 ``` cpp
 explicit failure(const string& msg, const error_code& ec = io_errc::stream);
@@ -1320,7 +1320,7 @@ member objects of `rhs` as follows:
 
 [*Note 1*: The second pass through the callback pairs permits a copied
 `pword` value to be zeroed, or to have its referent deep copied or
-reference counted, or to have other special action taken. — *end note*\]
+reference counted, or to have other special action taken. — *end note*]
 
 *Ensures:* The postconditions of this function are indicated in
 [[basic.ios.copyfmt]].
@@ -1662,7 +1662,7 @@ ios_base& hexfloat(ios_base& str);
 
 [*Note 1*: `ios_base::hex` cannot be used to specify a hexadecimal
 floating-point format, because it is not part of `ios_base::floatfield`
-( [[ios.fmtflags.const]]). — *end note*\]
+( [[ios.fmtflags.const]]). — *end note*]
 
 ``` cpp
 ios_base& defaultfloat(ios_base& str);
@@ -2819,7 +2819,7 @@ In the above fragment, `loc` stands for the private member of the
 [*Note 1*: The first argument provides an object of the
 `istreambuf_iterator` class which is an iterator pointed to an input
 stream. It bypasses istreams and uses streambufs
-directly. — *end note*\]
+directly. — *end note*]
 
 Class `locale` relies on this type as its interface to `istream`, so
 that it does not need to depend directly on `istream`.
@@ -2907,7 +2907,7 @@ if (fval < -numeric_limits<extended-floating-point-type>::max()) {
 conversion rank that is not equal to the rank of any standard
 floating-point type, then double rounding during the conversion can
 result in inaccurate results. `from_chars` can be used in situations
-where maximum accuracy is important. — *end note*\]
+where maximum accuracy is important. — *end note*]
 
 ##### `basic_istream::operator>>` <a id="istream.extractors">[[istream.extractors]]</a>
 
@@ -3190,7 +3190,7 @@ int main() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 ``` cpp
 basic_istream& getline(char_type* s, streamsize n);
@@ -3216,7 +3216,7 @@ occurs:
   available input character `c` (in which case `c` is extracted).
 
 [*Note 1*: The last condition will never occur if
-`traits::eq_int_type(delim, traits::eof())`. — *end note*\]
+`traits::eq_int_type(delim, traits::eof())`. — *end note*]
 
 *Returns:* `*this`.
 
@@ -3290,7 +3290,7 @@ returns `traits::eof()`, calls `setstate(badbit)` (which may throw
 `ios_base::failure`[[iostate.flags]]).
 
 [*Note 2*: This function extracts no characters, so the value returned
-by the next call to `gcount()` is 0. — *end note*\]
+by the next call to `gcount()` is 0. — *end note*]
 
 *Returns:* `*this`.
 
@@ -3307,7 +3307,7 @@ returns `traits::eof()`, calls `setstate(badbit)` (which may throw
 `ios_base::failure`[[iostate.flags]]).
 
 [*Note 3*: This function extracts no characters, so the value returned
-by the next call to `gcount()` is 0. — *end note*\]
+by the next call to `gcount()` is 0. — *end note*]
 
 *Returns:* `*this`.
 
@@ -3657,7 +3657,7 @@ not throw anything and proceeds as if the called function had returned a
 failure indication.
 
 [*Note 1*: The deleted overloads of `operator<<` prevent formatting
-characters as integers and strings as pointers. — *end note*\]
+characters as integers and strings as pointers. — *end note*]
 
 ##### Constructors <a id="ostream.cons">[[ostream.cons]]</a>
 
@@ -4253,7 +4253,7 @@ manipulator has no effect.
 [*Note 1*: To work around the issue that the `Allocator` template
 argument cannot be deduced, implementations can introduce an
 intermediate base class to `basic_syncbuf` that manages its
-*emit-on-sync* flag. — *end note*\]
+*emit-on-sync* flag. — *end note*]
 
 *Returns:* `os`.
 
@@ -4581,7 +4581,7 @@ The expression `out << put_time(tmb, fmt)` has type
 of quoted strings (for example, XML and CSV formats). Quoted
 manipulators are useful in ensuring that the content of a string with
 embedded spaces remains unchanged if inserted and then extracted via
-stream I/O. — *end note*\]
+stream I/O. — *end note*]
 
 ``` cpp
 template<class charT>
@@ -4775,7 +4775,7 @@ Unconditionally unlocks `stream` on function exit.
 [*Note 1*: On Windows the native Unicode API is `WriteConsoleW` and
 `stream` referring to a terminal means that
 `GetConsoleMode(_get_osfhandle(_fileno(stream)), ...)` returns
-nonzero. — *end note*\]
+nonzero. — *end note*]
 
 *Throws:* Any exception thrown by the call to
 `vformat`[[format.err.report]]. `system_error` if writing to the
@@ -5181,7 +5181,7 @@ invariants of *buf* while it is held encapsulated in the
 [*`buf`*`.data() + `*`buf`*`.size()`,
 *`buf`*`.data() + `*`buf`*`.capacity()`). All operations retrieving a
 `basic_string` from `buf` ensure that the `basic_string` invariants hold
-on the returned value. — *end note*\]
+on the returned value. — *end note*]
 
 ``` cpp
 allocator_type get_allocator() const noexcept;
@@ -5243,7 +5243,7 @@ character sequence in `buf`:
 
 [*Note 2*: Using the returned `sv` object after destruction or
 invalidation of the character sequence underlying `*this` is undefined
-behavior, unless `sv.empty()` is `true`. — *end note*\]
+behavior, unless `sv.empty()` is `true`. — *end note*]
 
 ``` cpp
 void str(const basic_string<charT, traits, Allocator>& s);
@@ -6234,7 +6234,7 @@ the sequence by objects of the classes in [[span.streams]]. Using
 multiple `basic_spanbuf` objects referring to overlapping underlying
 sequences from different threads, where at least one `basic_spanbuf`
 object is used for writing to the sequence, results in a data
-race. — *end note*\]
+race. — *end note*]
 
 ### Header `<spanstream>` synopsis <a id="spanstream.syn">[[spanstream.syn]]</a>
 
@@ -6422,7 +6422,7 @@ std::span<charT> span() const noexcept;
 
 [*Note 1*: In contrast to `basic_stringbuf`, the underlying sequence
 never grows and is not owned. An owning copy can be obtained by
-converting the result to `basic_string<charT>`. — *end note*\]
+converting the result to `basic_string<charT>`. — *end note*]
 
 ``` cpp
 void span(std::span<charT> s) noexcept;
@@ -6446,7 +6446,7 @@ according to *mode*.
 
 [*Note 1*: Because the underlying buffer is of fixed size, neither
 `overflow`, `underflow`, nor `pbackfail` can provide useful
-behavior. — *end note*\]
+behavior. — *end note*]
 
 ``` cpp
 pos_type seekoff(off_type off, ios_base::seekdir way,
@@ -6556,7 +6556,7 @@ namespace std {
 
 [*Note 1*: Constructing an `ispanstream` from a *string-literal*
 includes the termination character `'\0'` in the underlying
-`spanbuf`. — *end note*\]
+`spanbuf`. — *end note*]
 
 #### Constructors <a id="ispanstream.cons">[[ispanstream.cons]]</a>
 
@@ -6915,14 +6915,14 @@ files.
 or sink of bytes. In an environment that uses a large character set, the
 file typically holds multibyte character sequences and the
 `basic_filebuf` object converts those multibyte sequences into wide
-character sequences. — *end note*\]
+character sequences. — *end note*]
 
 In subclause  [[file.streams]], member functions taking arguments of
 `const filesystem::path::value_type*` are only provided on systems where
 `filesystem::path::value_type` [[fs.class.path]] is not `char`.
 
 [*Note 2*: These functions enable class `path` support for systems with
-a wide native path character type, such as `wchar_t`. — *end note*\]
+a wide native path character type, such as `wchar_t`. — *end note*]
 
 ### Native handles <a id="file.native">[[file.native]]</a>
 
@@ -6935,7 +6935,7 @@ The type `native_handle_type` represents a platform-specific
 
 [*Note 1*: For operating systems based on POSIX, `native_handle_type`
 is `int`. For Windows-based operating systems, `native_handle_type` is
-`HANDLE`. — *end note*\]
+`HANDLE`. — *end note*]
 
 ### Class template `basic_filebuf` <a id="filebuf">[[filebuf]]</a>
 
@@ -8175,7 +8175,7 @@ int sync() override;
 Then, if *emit-on-sync* is `true`, calls `emit()`.
 
 [*Note 1*: If *emit-on-sync* is `false`, the actual flush is delayed
-until a call to `emit()`. — *end note*\]
+until a call to `emit()`. — *end note*]
 
 *Returns:* If `emit()` was called and returned `false`, returns `-1`;
 otherwise `0`.
@@ -8251,7 +8251,7 @@ A named variable can be used within a block statement for streaming.
 }   // characters are transferred and cout is flushed
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Example 2*:
 
@@ -8263,7 +8263,7 @@ osyncstream(cout) << "Hello, " << "World!" << '\n';
 
 In this example, `cout` is not flushed.
 
-— *end example*\]
+— *end example*]
 
 #### Construction and destruction <a id="syncstream.osyncstream.cons">[[syncstream.osyncstream.cons]]</a>
 
@@ -8276,7 +8276,7 @@ base class with `basic_ostream<charT, traits>(addressof(`*`sb`*`))`.
 
 [*Note 1*: The member functions of the provided stream buffer can be
 called from `emit()` while a lock is held, which might result in a
-deadlock if used incautiously. — *end note*\]
+deadlock if used incautiously. — *end note*]
 
 *Ensures:* `get_wrapped() == buf` is `true`.
 
@@ -8318,7 +8318,7 @@ A flush on a `basic_osyncstream` does not flush immediately:
 }   // characters transferred; cout not flushed
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Example 2*:
 
@@ -8337,7 +8337,7 @@ on the underlying stream.
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 ``` cpp
 streambuf_type* get_wrapped() const noexcept;
@@ -8368,7 +8368,7 @@ Goodbye, Planet!
 Hello, World!
 ```
 
-— *end example*\]
+— *end example*]
 
 ## File systems <a id="filesystems">[[filesystems]]</a>
 
@@ -8401,7 +8401,7 @@ file. If the last hard link to a file is removed, the file itself is
 removed.
 
 [*Note 1*: A hard link can be thought of as a shared-ownership smart
-pointer to a file. — *end note*\]
+pointer to a file. — *end note*]
 
 A *symbolic link* is a type of file with the property that when the file
 is encountered during pathname resolution [[fs.class.path]], a string
@@ -8410,7 +8410,7 @@ stored by the file is used to modify the pathname resolution.
 [*Note 2*: Symbolic links are often called symlinks. A symbolic link
 can be thought of as a raw pointer to a file. If the file pointed to
 does not exist, the symbolic link is said to be a “dangling” symbolic
-link. — *end note*\]
+link. — *end note*]
 
 ### Conformance <a id="fs.conformance">[[fs.conformance]]</a>
 
@@ -8423,7 +8423,7 @@ account.
 #### POSIX conformance <a id="fs.conform.9945">[[fs.conform.9945]]</a>
 
 [*Note 1*: This constitutes an “as if” rule allowing implementations to
-call native operating system or other APIs. — *end note*\]
+call native operating system or other APIs. — *end note*]
 
 Implementations should provide such behavior as it is defined by POSIX.
 Implementations shall document any behavior that differs from the
@@ -8436,7 +8436,7 @@ the implementation shall report an error as specified in 
 
 [*Note 2*: This allows users to rely on an exception being thrown or an
 error code being set when an implementation cannot provide any
-reasonable behavior. — *end note*\]
+reasonable behavior. — *end note*]
 
 Implementations are not required to provide behavior that is not
 supported by a particular file system.
@@ -8445,7 +8445,7 @@ supported by a particular file system.
 memory, and floppy disks does not support hard links, symlinks, and many
 other features of more capable file systems, so implementations are not
 required to support those features on the FAT file system but instead
-are required to report an error as described above. — *end example*\]
+are required to report an error as described above. — *end example*]
 
 #### Operating system dependent behavior conformance <a id="fs.conform.os">[[fs.conform.os]]</a>
 
@@ -8466,7 +8466,7 @@ herein, *Preconditions:* is not specified for the function.
 
 [*Note 1*: As a design practice, preconditions are not specified when
 it is unreasonable for a program to detect them prior to calling the
-function. — *end note*\]
+function. — *end note*]
 
 ### Requirements <a id="fs.req">[[fs.req]]</a>
 
@@ -8485,7 +8485,7 @@ value type that is one of the encoded character types.
 [*Note 1*: Use of an encoded character type implies an associated
 character set and encoding. Since `signed char` and `unsigned char` have
 no implied character set and encoding, they are not included as
-permitted types. — *end note*\]
+permitted types. — *end note*]
 
 Template parameters named `Allocator` shall meet the *Cpp17Allocator*
 requirements [[allocator.requirements.general]].
@@ -8735,7 +8735,7 @@ This supports two common use cases:
   response. This allows application specific error handling, including
   simply ignoring the error.
 
-— *end note*\]
+— *end note*]
 
 Functions not having an argument of type `error_code&` handle errors as
 follows, unless otherwise specified:
@@ -8777,7 +8777,7 @@ or for a particular file system.
 [*Note 1*: Class `path` is used to support the differences between the
 string types used by different operating systems to represent pathnames,
 and to perform conversions between encodings when
-necessary. — *end note*\]
+necessary. — *end note*]
 
 A *path* is a sequence of elements that identify the location of a file
 within a filesystem. The elements are the *root-name*ₒₚₜ,
@@ -8793,7 +8793,7 @@ such, only unambiguously identifies the location of a file when resolved
 relative to an implied starting location. The elements of a path that
 determine if it is relative are operating system dependent.
 
-[*Note 2*: Pathnames “.” and “..” are relative paths. — *end note*\]
+[*Note 2*: Pathnames “.” and “..” are relative paths. — *end note*]
 
 A *pathname* is a character string that represents the name of a path.
 Pathnames are formatted according to the generic pathname format grammar
@@ -8807,7 +8807,7 @@ a particular file in a file hierarchy. There may be multiple pathnames
 that resolve to the same file.
 
 [*Example 1*: For POSIX-based operating systems, this mechanism is
-specified in POSIX, section 4.12, Pathname resolution. — *end example*\]
+specified in POSIX, section 4.12, Pathname resolution. — *end example*]
 
 ``` cpp
 namespace std::filesystem {
@@ -8975,7 +8975,7 @@ dependent *preferred-separator* character [[fs.path.generic]].
 and `preferred_separator` is the slash character (`'/'`). For
 Windows-based operating systems, `value_type` is `wchar_t` and
 `preferred_separator` is the backslash character
-(`L'\\'`). — *end example*\]
+(`L'\\'`). — *end example*]
 
 #### Generic pathname format <a id="fs.path.generic">[[fs.path.generic]]</a>
 
@@ -9030,12 +9030,12 @@ operating system dependent:
 
 - The permitted characters. \[*Example 1*: Some operating systems
   prohibit the ASCII control characters (0x00 – 0x1F) in
-  filenames. — *end example*\] \[*Note 1*: Wider portability can be
+  filenames. — *end example*] \[*Note 1*: Wider portability can be
   achieved by limiting *filename* characters to the POSIX Portable
   Filename Character Set:  
   `A B C D E F G H I J K L M N O P Q R S T U V W X Y Z`  
   `a b c d e f g h i j k l m n o p q r s t u v w x y z`  
-  `0 1 2 3 4 5 6 7 8 9 . _ -` — *end note*\]
+  `0 1 2 3 4 5 6 7 8 9 . _ -` — *end note*]
 - The maximum permitted length.
 - Filenames that are not permitted.
 - Filenames that have special meaning.
@@ -9062,14 +9062,14 @@ required.
 *directory-separator* characters as a *root-name* that identifies
 network or other resource locations. Some operating systems define a
 single letter followed by a colon as a drive specifier — a *root-name*
-identifying a specific device such as a disk drive. — *end note*\]
+identifying a specific device such as a disk drive. — *end note*]
 
 If a *root-name* is otherwise ambiguous, the possibility with the
 longest sequence of characters is chosen.
 
 [*Note 2*: On a POSIX-like operating system, it is impossible to have a
 *root-name* and a *relative-path* without an intervening
-*root-directory* element. — *end note*\]
+*root-directory* element. — *end note*]
 
 *Normalization* of a generic format pathname means:
 
@@ -9079,7 +9079,7 @@ longest sequence of characters is chosen.
 3.  Replace each *directory-separator* with a *preferred-separator*.
     \[*Note 2*: The generic pathname grammar defines
     *directory-separator* as one or more slashes and
-    *preferred-separator*s. — *end note*\]
+    *preferred-separator*s. — *end note*]
 4.  Remove each dot filename and any immediately following
     *directory-separator*.
 5.  As long as any appear, remove a non-dot-dot filename immediately
@@ -9088,7 +9088,7 @@ longest sequence of characters is chosen.
 6.  If there is a *root-directory*, remove all dot-dot filenames and any
     *directory-separator*s immediately following them. \[*Note 3*: These
     dot-dot filenames attempt to refer to nonexistent parent
-    directories. — *end note*\]
+    directories. — *end note*]
 7.  If the last filename is dot-dot, remove any trailing
     *directory-separator*.
 8.  If the path is empty, add a dot.
@@ -9111,7 +9111,7 @@ POSIX-based operating systems because on these systems:
 - Paths for regular files and paths for directories share the same
   syntax.
 
-— *end note*\]
+— *end note*]
 
 Several functions are defined to accept *detected-format* arguments,
 which are character sequences. A detected-format argument represents a
@@ -9126,7 +9126,7 @@ distinguish between native format and generic format arguments. This is
 by design as it simplifies use for operating systems that do not require
 disambiguation. It is possible that an implementation for an operating
 system where disambiguation is needed distinguishes between the
-formats. — *end note*\]
+formats. — *end note*]
 
 Pathnames are converted as needed between the generic and native formats
 in an operating-system-dependent manner. Let *G(n)* and *N(g)* in a
@@ -9135,7 +9135,7 @@ native-to-generic and generic-to-native formats respectively. If
 *g=G(n)* for some *n*, then *G(N(g))=g*; if *n=N(g)* for some *g*, then
 *N(G(n))=n*.
 
-[*Note 3*: Neither *G* nor *N* need be invertible. — *end note*\]
+[*Note 3*: Neither *G* nor *N* need be invertible. — *end note*]
 
 If the native format requires paths for regular files to be formatted
 differently from paths for directories, the path shall be treated as a
@@ -9146,7 +9146,7 @@ it shall be treated as a path to a regular file.
 [[fs.path.native.obs]] and acts as if it also stores a generic format
 pathname, related as given below. The implementation can generate the
 generic format pathname based on the native format pathname (and
-possibly other information) when requested. — *end note*\]
+possibly other information) when requested. — *end note*]
 
 When a path is constructed from or is assigned a single representation
 separate from any path, the other representation is selected by the
@@ -9158,7 +9158,7 @@ the other representation. The value *q* converts to *p* (by *G* or *N*
 as appropriate) if any such value does so; *q* is otherwise unspecified.
 
 [*Note 5*: If *q* is the result of converting any path at all, it is
-the result of converting *p*. — *end note*\]
+the result of converting *p*. — *end note*]
 
 ##### Type and encoding conversions <a id="fs.path.type.cvt">[[fs.path.type.cvt]]</a>
 
@@ -9181,16 +9181,16 @@ determined by its value type:
   conversion from `char` value type arguments or to `char` value type
   return values is performed. For Windows-based operating systems, the
   native ordinary encoding is determined by calling a Windows API
-  function. — *end note*\] \[*Note 5*: This results in behavior
+  function. — *end note*] \[*Note 5*: This results in behavior
   identical to other C and C++ standard library functions that perform
   file operations using ordinary character strings to identify paths.
   Changing this behavior would be surprising and
-  error-prone. — *end note*\]
+  error-prone. — *end note*]
 - `wchar_t`: The encoding is the native wide encoding. The method of
   conversion is unspecified. \[*Note 6*: For Windows-based operating
   systems `path::value_type` is `wchar_t` so no conversion from
   `wchar_t` value type arguments or to `wchar_t` value type return
-  values is performed. — *end note*\]
+  values is performed. — *end note*]
 - `char8_t`: The encoding is UTF-8. The method of conversion is
   unspecified.
 - `char16_t`: The encoding is UTF-16. The method of conversion is
@@ -9238,7 +9238,7 @@ than `path`, and either
 
 [*Note 1*: See path conversions [[fs.path.cvt]] for how the value types
 above and their encodings convert to `path::value_type` and its
-encoding. — *end note*\]
+encoding. — *end note*]
 
 Arguments of type `Source` shall not be null pointers.
 
@@ -9337,7 +9337,7 @@ UTF-16 encoded wide character pathname string. All of the characters in
 the ISO/IEC 8859-1 character set will be converted to their Unicode
 representation.
 
-— *end example*\]
+— *end example*]
 
 ##### Assignments <a id="fs.path.assign">[[fs.path.assign]]</a>
 
@@ -9359,7 +9359,7 @@ path& operator=(path&& p) noexcept;
 Otherwise, sets both respective pathnames of `*this` to the respective
 pathnames of `p`. `p` is left in a valid but unspecified state.
 
-[*Note 1*: A valid implementation is `swap(p)`. — *end note*\]
+[*Note 1*: A valid implementation is `swap(p)`. — *end note*]
 
 *Returns:* `*this`.
 
@@ -9437,7 +9437,7 @@ path("c:foo") /= path("/bar");  // yields path("c:/bar")
 path("c:foo") /= path("c:bar"); // yields path("c:foo\{bar")}
 ```
 
-— *end example*\]
+— *end example*]
 
 *Returns:* `*this`.
 
@@ -9474,7 +9474,7 @@ template<class Source>
 format.
 
 [*Note 2*: This directly manipulates the value of `native()`, which is
-not necessarily portable between operating systems. — *end note*\]
+not necessarily portable between operating systems. — *end note*]
 
 *Returns:* `*this`.
 
@@ -9535,7 +9535,7 @@ output is:
 "foo\bar"
 ```
 
-— *end example*\]
+— *end example*]
 
 ``` cpp
 path& remove_filename();
@@ -9557,7 +9557,7 @@ path("/foo").remove_filename();         // yields "/"
 path("/").remove_filename();            // yields "/"
 ```
 
-— *end example*\]
+— *end example*]
 
 ``` cpp
 path& replace_filename(const path& replacement);
@@ -9579,7 +9579,7 @@ path("/foo").replace_filename("bar");   // yields "/bar" on POSIX
 path("/").replace_filename("bar");      // yields "/bar" on POSIX
 ```
 
-— *end example*\]
+— *end example*]
 
 ``` cpp
 path& replace_extension(const path& replacement = path());
@@ -9659,7 +9659,7 @@ std::string display_string() const;
 
 [*Note 3*: The returned string is suitable for use with
 formatting [[format.functions]] and print
-functions [[print.fun]]. — *end note*\]
+functions [[print.fun]]. — *end note*]
 
 ##### Generic format observers <a id="fs.path.generic.obs">[[fs.path.generic.obs]]</a>
 
@@ -9677,7 +9677,7 @@ path("foo\\bar").generic_string()
 
 returns `"foo/bar"`.
 
-— *end example*\]
+— *end example*]
 
 ``` cpp
 template<class EcharT, class traits = char_traits<EcharT>, class Allocator = allocator<EcharT>>
@@ -9710,7 +9710,7 @@ std::string generic_display_string() const;
 
 [*Note 4*: The returned string is suitable for use with
 formatting [[format.functions]] and print
-functions [[print.fun]]. — *end note*\]
+functions [[print.fun]]. — *end note*]
 
 ##### Compare <a id="fs.path.compare">[[fs.path.compare]]</a>
 
@@ -9800,7 +9800,7 @@ path(".").filename();                   // yields "."
 path("..").filename();                  // yields ".."
 ```
 
-— *end example*\]
+— *end example*]
 
 ``` cpp
 path stem() const;
@@ -9825,7 +9825,7 @@ for (; !p.extension().empty(); p = p.stem())
   //          .bar
 ```
 
-— *end example*\]
+— *end example*]
 
 ``` cpp
 path extension() const;
@@ -9844,15 +9844,15 @@ path(".bar").extension();               // yields "" and stem() is ".bar"
 path("..bar").extension();              // yields ".bar" and stem() is "."
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Note 5*: The period is included in the return value so that it is
 possible to distinguish between no extension and an empty
-extension. — *end note*\]
+extension. — *end note*]
 
 [*Note 6*: On non-POSIX operating systems, for a path `p`, it is
 possible that `p.stem() + p.extension() == p.filename()` is `false`,
-even though the generic format pathnames are the same. — *end note*\]
+even though the generic format pathnames are the same. — *end note*]
 
 ##### Query <a id="fs.path.query">[[fs.path.query]]</a>
 
@@ -9920,7 +9920,7 @@ absolute path [[fs.class.path]], otherwise `false`.
 
 [*Example 9*: `path("/").is_absolute()` is `true` for POSIX-based
 operating systems, and `false` for Windows-based operating
-systems. — *end example*\]
+systems. — *end example*]
 
 ``` cpp
 bool is_relative() const;
@@ -9949,7 +9949,7 @@ The above assertions will succeed. On Windows, the returned path’s
 *directory-separator* characters will be backslashes rather than
 slashes, but that does not affect `path` equality.
 
-— *end example*\]
+— *end example*]
 
 ``` cpp
 path lexically_relative(const path& base) const;
@@ -9966,7 +9966,7 @@ path lexically_relative(const path& base) const;
 returns `path()`.
 
 [*Note 7*: On a POSIX implementation, no *filename* in a
-*relative-path* is acceptable as a *root-name*. — *end note*\]
+*relative-path* is acceptable as a *root-name*. — *end note*]
 
 Determines the first mismatched element of `*this` and `base` as if by:
 
@@ -10006,14 +10006,14 @@ The above assertions will succeed. On Windows, the returned path’s
 *directory-separator* characters will be backslashes rather than
 slashes, but that does not affect `path` equality.
 
-— *end example*\]
+— *end example*]
 
 [*Note 8*: If symlink following semantics are desired, use the
-operational function `relative()`. — *end note*\]
+operational function `relative()`. — *end note*]
 
 [*Note 9*: If normalization [[fs.path.generic]] is needed to ensure
 consistent matching of elements, apply `lexically_normal()` to `*this`,
-`base`, or both. — *end note*\]
+`base`, or both. — *end note*]
 
 ``` cpp
 path lexically_proximate(const path& base) const;
@@ -10023,11 +10023,11 @@ path lexically_proximate(const path& base) const;
 path, return it. Otherwise return `*this`.
 
 [*Note 10*: If symlink following semantics are desired, use the
-operational function `proximate()`. — *end note*\]
+operational function `proximate()`. — *end note*]
 
 [*Note 11*: If normalization [[fs.path.generic]] is needed to ensure
 consistent matching of elements, apply `lexically_normal()` to `*this`,
-`base`, or both. — *end note*\]
+`base`, or both. — *end note*]
 
 #### Iterators <a id="fs.path.itr">[[fs.path.itr]]</a>
 
@@ -10049,7 +10049,7 @@ traversal order is as follows:
 - The *root-name* element, if present.
 - The *root-directory* element, if present. \[*Note 7*: It is possible
   that the use of the generic format is needed to ensure correct
-  lexicographical comparison. — *end note*\]
+  lexicographical comparison. — *end note*]
 - Each successive *filename* element, if present.
 - An empty element, if a trailing non-root *directory-separator* is
   present.
@@ -10080,7 +10080,7 @@ template<class charT, class traits>
 *Effects:* Equivalent to `os << quoted(p.string<charT, traits>())`.
 
 [*Note 1*: The `quoted` function is described
-in  [[quoted.manip]]. — *end note*\]
+in  [[quoted.manip]]. — *end note*]
 
 *Returns:* `os`.
 
@@ -10128,13 +10128,13 @@ Path equality and path equivalence have different semantics.
 - Equality is determined by the `path` non-member `operator==`, which
   considers the two paths’ lexical representations only.
   \[*Example 2*: `path("foo") == "bar"` is never
-  `true`. — *end example*\]
+  `true`. — *end example*]
 - Equivalence is determined by the `equivalent()` non-member function,
   which determines if two paths resolve [[fs.class.path]] to the same
   file system entity. \[*Example 3*: `equivalent("foo", "bar")` will be
-  `true` when both paths resolve to the same file. — *end example*\]
+  `true` when both paths resolve to the same file. — *end example*]
 
-— *end note*\]
+— *end note*]
 
 ``` cpp
 friend strong_ordering operator<=>(const path& lhs, const path& rhs) noexcept;
@@ -10607,7 +10607,7 @@ attribute values are said to be *cached*.
 
 [*Note 1*: `directory_iterator` can cache already available attribute
 values directly into a `directory_entry` object without the cost of a
-call to `refresh()`. — *end note*\]
+call to `refresh()`. — *end note*]
 
 [*Example 1*:
 
@@ -10637,7 +10637,7 @@ so will not result in a potentially expensive call to the
 `std::filesystem::last_write_time` function. The code is portable to any
 implementation, regardless of whether or not it employs caching.
 
-— *end example*\]
+— *end example*]
 
 #### Constructors <a id="fs.dir.entry.cons">[[fs.dir.entry.cons]]</a>
 
@@ -10692,7 +10692,7 @@ unspecified.
 [*Note 1*: Implementations of
 `directory_iterator`[[fs.class.directory.iterator]] are prohibited from
 directly or indirectly calling the `refresh` function as described in
-[[fs.class.directory.iterator.general]]. — *end note*\]
+[[fs.class.directory.iterator.general]]. — *end note*]
 
 #### Observers <a id="fs.dir.entry.obs">[[fs.dir.entry.obs]]</a>
 
@@ -10881,7 +10881,7 @@ cached attribute values [[fs.class.directory.entry]] for each file in a
 directory or in an *implementation-defined* directory-like file type.
 
 [*Note 1*: For iteration into subdirectories, see class
-`recursive_directory_iterator` [[fs.class.rec.dir.itr]]. — *end note*\]
+`recursive_directory_iterator` [[fs.class.rec.dir.itr]]. — *end note*]
 
 ``` cpp
 namespace std::filesystem {
@@ -10954,19 +10954,19 @@ the values of any cached attributes [[fs.class.directory.entry]] in the
 call any `directory_entry` `refresh` function.
 
 [*Note 2*: The exact mechanism for storing cached attribute values is
-not exposed to users. — *end note*\]
+not exposed to users. — *end note*]
 
 [*Note 3*: A path obtained by dereferencing a directory iterator might
 not actually exist; it could be a symbolic link to a non-existent file.
 Recursively walking directory trees for purposes of removing and
 renaming entries might invalidate symbolic links that are being
-followed. — *end note*\]
+followed. — *end note*]
 
 [*Note 4*: If a file is removed from or added to a directory after the
 construction of a `directory_iterator` for the directory, it is
 unspecified whether or not subsequently incrementing the iterator will
 ever result in an iterator referencing the removed or added directory
-entry. See POSIX `readdir`. — *end note*\]
+entry. See POSIX `readdir`. — *end note*]
 
 #### Members <a id="fs.dir.itr.members">[[fs.dir.itr.members]]</a>
 
@@ -11000,7 +11000,7 @@ error.
 
 [*Note 1*: To iterate over the current directory, use
 `directory_iterator(".")` rather than
-`directory_iterator("")`. — *end note*\]
+`directory_iterator("")`. — *end note*]
 
 ``` cpp
 directory_iterator(const directory_iterator& rhs);
@@ -11118,7 +11118,7 @@ The behavior of a `recursive_directory_iterator` is the same as a
 
 [*Note 1*: If the directory structure being iterated over contains
 cycles then it is possible that the end iterator is
-unreachable. — *end note*\]
+unreachable. — *end note*]
 
 #### Members <a id="fs.rec.dir.itr.members">[[fs.rec.dir.itr.members]]</a>
 
@@ -11155,11 +11155,11 @@ error.
 
 [*Note 1*: Use `recursive_directory_iterator(".")` rather than
 `recursive_directory_iterator("")` to iterate over the current
-directory. — *end note*\]
+directory. — *end note*]
 
 [*Note 2*: By default, `recursive_directory_iterator` does not follow
 directory symlinks. To follow directory symlinks, specify `options` as
-`directory_options::follow_directory_symlink`. — *end note*\]
+`directory_options::follow_directory_symlink`. — *end note*]
 
 ``` cpp
 recursive_directory_iterator(const recursive_directory_iterator& rhs);
@@ -11223,7 +11223,7 @@ int depth() const;
 *Returns:* The current depth of the directory tree being traversed.
 
 [*Note 3*: The initial directory is depth `0`, its immediate
-subdirectories are depth `1`, and so forth. — *end note*\]
+subdirectories are depth `1`, and so forth. — *end note*]
 
 *Throws:* Nothing.
 
@@ -11291,7 +11291,7 @@ void disable_recursion_pending();
 *Ensures:* `recursion_pending() == false`.
 
 [*Note 4*: `disable_recursion_pending()` is used to prevent unwanted
-recursion into a directory. — *end note*\]
+recursion into a directory. — *end note*]
 
 #### Non-member functions <a id="fs.rec.dir.itr.nonmembers">[[fs.rec.dir.itr.nonmembers]]</a>
 
@@ -11321,7 +11321,7 @@ directories, in external storage.
 races [[fs.race.behavior]], and many other kinds of errors occur
 frequently in file system operations, any filesystem operation function,
 no matter how apparently innocuous, can encounter an error; see 
-[[fs.err.report]]. — *end note*\]
+[[fs.err.report]]. — *end note*]
 
 #### Absolute <a id="fs.op.absolute">[[fs.op.absolute]]</a>
 
@@ -11337,22 +11337,22 @@ location as `p` according to the operating system [[fs.conform.os]].
 `path()` if an error occurs.
 
 [*Note 1*: For the returned path, `rp`, `rp.is_absolute()` is `true`
-unless an error occurs. — *end note*\]
+unless an error occurs. — *end note*]
 
 *Throws:* As specified in  [[fs.err.report]].
 
 [*Note 2*: To resolve symlinks or perform other sanitization that can
 involve queries to secondary storage, such as hard disks, consider
-`canonical`[[fs.op.canonical]]. — *end note*\]
+`canonical`[[fs.op.canonical]]. — *end note*]
 
 [*Note 3*: Implementations are strongly encouraged to not query
 secondary storage, and not consider `!exists(p)` an
-error. — *end note*\]
+error. — *end note*]
 
 [*Example 1*: For POSIX-based operating systems, `absolute(p)` is
 simply `current_path()/p`. For Windows-based operating systems,
 `absolute` might have the same semantics as
-`GetFullPathNameW`. — *end example*\]
+`GetFullPathNameW`. — *end example*]
 
 #### Canonical <a id="fs.op.canonical">[[fs.op.canonical]]</a>
 
@@ -11524,7 +11524,7 @@ would result in:
     file3
 ```
 
-— *end example*\]
+— *end example*]
 
 #### Copy file <a id="fs.op.copy.file">[[fs.op.copy.file]]</a>
 
@@ -11641,7 +11641,7 @@ copied by native API `stat(existing_p.c_str(), &attributes_stat)`
 followed by `mkdir(p.c_str(), attributes_stat.st_mode)`. For
 Windows-based operating systems, the attributes are those copied by
 native API
-`CreateDirectoryExW(existing_p.c_str(), p.c_str(), 0)`. — *end note*\]
+`CreateDirectoryExW(existing_p.c_str(), p.c_str(), 0)`. — *end note*]
 
 *Returns:* `true` if a new directory was created with attributes copied
 from directory `existing_p`, otherwise `false`.
@@ -11666,12 +11666,12 @@ an unspecified representation of `to`.
 [*Note 1*: Some operating systems require symlink creation to identify
 that the link is to a directory. Thus, `create_symlink` (instead of
 `create_directory_symlink`) cannot be used reliably to create directory
-symlinks. — *end note*\]
+symlinks. — *end note*]
 
 [*Note 2*: Some operating systems do not support symbolic links at all
 or support them only for regular files. Some file systems (such as the
 FAT file system) do not support symbolic links regardless of the
-operating system. — *end note*\]
+operating system. — *end note*]
 
 #### Create hard link <a id="fs.op.create.hard.lk">[[fs.op.create.hard.lk]]</a>
 
@@ -11694,7 +11694,7 @@ void filesystem::create_hard_link(const path& to, const path& new_hard_link,
 support them only for regular files. Some file systems (such as the FAT
 file system) do not support hard links regardless of the operating
 system. Some file systems limit the number of links per
-file. — *end note*\]
+file. — *end note*]
 
 #### Create symlink <a id="fs.op.create.symlink">[[fs.op.create.symlink]]</a>
 
@@ -11714,7 +11714,7 @@ an unspecified representation of `to`.
 [*Note 1*: Some operating systems do not support symbolic links at all
 or support them only for regular files. Some file systems (such as the
 FAT file system) do not support symbolic links regardless of the
-operating system. — *end note*\]
+operating system. — *end note*]
 
 #### Current path <a id="fs.op.current.path">[[fs.op.current.path]]</a>
 
@@ -11735,7 +11735,7 @@ resolution for relative paths.
 
 [*Note 1*: The current path as returned by many operating systems is a
 dangerous global variable and can be changed unexpectedly by third-party
-or system library functions, or by another thread. — *end note*\]
+or system library functions, or by another thread. — *end note*]
 
 ``` cpp
 void filesystem::current_path(const path& p);
@@ -11750,7 +11750,7 @@ void filesystem::current_path(const path& p, error_code& ec) noexcept;
 
 [*Note 2*: The current path for many operating systems is a dangerous
 global state and can be changed unexpectedly by third-party or system
-library functions, or by another thread. — *end note*\]
+library functions, or by another thread. — *end note*]
 
 #### Equivalent <a id="fs.op.equivalent">[[fs.op.equivalent]]</a>
 
@@ -11764,7 +11764,7 @@ two candidate entities reside on the same device at the same location.
 
 [*Note 1*: On POSIX platforms, this is determined as if by the values
 of the POSIX `stat` class, obtained as if by `stat` for the two paths,
-having equal `st_dev` values and equal `st_ino` values. — *end note*\]
+having equal `st_dev` values and equal `st_ino` values. — *end note*]
 
 *Returns:* `true`, if `p1` and `p2` resolve to the same file system
 entity, otherwise `false`. The signature with argument `ec` returns
@@ -11980,7 +11980,7 @@ bool filesystem::is_regular_file(const path& p, error_code& ec) noexcept;
 
 [*Note 1*: `file_type::none`, `file_type::not_found` and
 `file_type::unknown` cases set `ec` to error values. To distinguish
-between cases, call the `status` function directly. — *end note*\]
+between cases, call the `status` function directly. — *end note*]
 
 *Returns:* `is_regular_file(status(p, ec))`. Returns `false` if an error
 occurs.
@@ -12050,7 +12050,7 @@ to by `p` to `new_time`, as if by POSIX `futimens`.
 
 [*Note 1*: A postcondition of `last_write_time(p) == new_time` is not
 specified because it does not necessarily hold for file systems with
-coarse time granularity. — *end note*\]
+coarse time granularity. — *end note*]
 
 #### Permissions <a id="fs.op.permissions">[[fs.op.permissions]]</a>
 
@@ -12069,7 +12069,7 @@ resolves to, or to file `p` itself if `p` is a symbolic link and
 by POSIX `fchmodat`.
 
 [*Note 1*: Conceptually permissions are viewed as bits, but the actual
-implementation can use some other mechanism. — *end note*\]
+implementation can use some other mechanism. — *end note*]
 
 *Throws:* As specified in  [[fs.err.report]].
 
@@ -12122,7 +12122,7 @@ argument `ec` returns `path()` if an error occurs.
 *Throws:* As specified in  [[fs.err.report]].
 
 [*Note 1*: It is an error if `p` does not resolve to a symbolic
-link. — *end note*\]
+link. — *end note*]
 
 #### Relative <a id="fs.op.relative">[[fs.op.relative]]</a>
 
@@ -12166,13 +12166,13 @@ bool filesystem::remove(const path& p, error_code& ec) noexcept;
 as if by POSIX `remove`.
 
 [*Note 1*: A symbolic link is itself removed, rather than the file it
-resolves to. — *end note*\]
+resolves to. — *end note*]
 
 *Ensures:* `exists(symlink_status(p))` is `false`.
 
 *Returns:* `true` if a file `p` has been removed and `false` otherwise.
 
-[*Note 2*: Absence of a file `p` is not an error. — *end note*\]
+[*Note 2*: Absence of a file `p` is not an error. — *end note*]
 
 *Throws:* As specified in  [[fs.err.report]].
 
@@ -12187,7 +12187,7 @@ uintmax_t filesystem::remove_all(const path& p, error_code& ec);
 deletes file `p` itself, as if by POSIX `remove`.
 
 [*Note 1*: A symbolic link is itself removed, rather than the file it
-resolves to. — *end note*\]
+resolves to. — *end note*]
 
 *Ensures:* `exists(symlink_status(p))` is `false`.
 
@@ -12218,7 +12218,7 @@ void filesystem::rename(const path& old_p, const path& new_p, error_code& ec) no
 
 A symbolic link is itself renamed, rather than the file it resolves to.
 
-— *end note*\]
+— *end note*]
 
 *Throws:* As specified in  [[fs.err.report]].
 
@@ -12255,7 +12255,7 @@ members are set to `static_cast<uintmax_t>(-1)` if an error occurs.
 *Remarks:* The value of member `space_info::available` is operating
 system dependent.
 
-[*Note 1*: `available` might be less than `free`. — *end note*\]
+[*Note 1*: `available` might be less than `free`. — *end note*]
 
 #### Status <a id="fs.op.status">[[fs.op.status]]</a>
 
@@ -12279,7 +12279,7 @@ return result;
 
 [*Note 1*: `result` values of `file_status(file_type::not_found)` and
 `file_status(file_type::unknown)` are not considered failures and do not
-cause an exception to be thrown. — *end note*\]
+cause an exception to be thrown. — *end note*]
 
 ``` cpp
 file_status filesystem::status(const path& p, error_code& ec) noexcept;
@@ -12293,7 +12293,7 @@ reported. Otherwise, `ec.clear()`.
 
 [*Note 2*: This allows users to inspect the specifics of underlying API
 errors even when the value returned by `status` is not
-`file_status(file_type::none)`. — *end note*\]
+`file_status(file_type::none)`. — *end note*]
 
 Let `prms` denote the result of `(m & perms::mask)`, where `m` is
 determined as if by converting the `st_mode` member of the obtained
@@ -12313,7 +12313,7 @@ determined as if by converting the `st_mode` member of the obtained
   \[*Note 8*: These semantics distinguish between `p` being known not to
   exist, `p` existing but not being able to determine its attributes,
   and there being an error that prevents even knowing if `p` exists.
-  These distinctions are important to some use cases. — *end note*\]
+  These distinctions are important to some use cases. — *end note*]
 - Otherwise,
   - If the attributes indicate a regular file, as if by POSIX `S_ISREG`,
     returns `file_status(file_type::regular, prms)`.
@@ -12321,11 +12321,11 @@ determined as if by converting the `st_mode` member of the obtained
     operations would succeed, assuming no hardware, permission, access,
     or file system race errors. Lack of `file_type::regular` does not
     necessarily imply `<fstream>` operations would fail on a
-    directory. — *end note*\]
+    directory. — *end note*]
   - Otherwise, if the attributes indicate a directory, as if by POSIX
     `S_ISDIR`, returns `file_status(file_type::directory, prms)`.
     \[*Note 10*: `file_type::directory` implies that calling
-    `directory_iterator(p)` would succeed. — *end note*\]
+    `directory_iterator(p)` would succeed. — *end note*]
   - Otherwise, if the attributes indicate a block special file, as if by
     POSIX `S_ISBLK`, returns `file_status(file_type::block, prms)`.
   - Otherwise, if the attributes indicate a character special file, as
@@ -12398,7 +12398,7 @@ might return the path supplied by the first environment variable found
 in the list TMPDIR, TMP, TEMP, TEMPDIR, or if none of these are found,
 `"/tmp"`. For Windows-based operating systems, an implementation might
 return the path reported by the Windows `GetTempPath` API
-function. — *end example*\]
+function. — *end example*]
 
 #### Weakly canonical <a id="fs.op.weakly.canonical">[[fs.op.weakly.canonical]]</a>
 

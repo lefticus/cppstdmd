@@ -334,7 +334,7 @@ forwarded to `A`’s constructor as an rvalue. In the second call to
 constructor as an lvalue. In both cases, `A2` is deduced as `double`, so
 1.414 is forwarded to `A`’s constructor as an rvalue.
 
-— *end example*\]
+— *end example*]
 
 ``` cpp
 template<class T, class U>
@@ -375,7 +375,7 @@ void g() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 ``` cpp
 template<class T> constexpr remove_reference_t<T>&& move(T&& t) noexcept;
@@ -411,7 +411,7 @@ forwarded as a non-const lvalue. This binds to the constructor
 so `a` is forwarded as an rvalue. This binds to the constructor
 `A(A&&)`, which moves the value from `a`.
 
-— *end example*\]
+— *end example*]
 
 ``` cpp
 template<class T> constexpr conditional_t<
@@ -455,7 +455,7 @@ overload resolution if the type `From` can be explicitly converted to
 type `To`. For another example see class template
 `common_type`[[meta.trans.other]].
 
-— *end example*\]
+— *end example*]
 
 ### Integer comparison functions <a id="utility.intcmp">[[utility.intcmp]]</a>
 
@@ -546,7 +546,7 @@ return cmp_greater_equal(t, numeric_limits<R>::min()) &&
 
 [*Note 1*: These function templates cannot be used to compare `byte`,
 `char`, `char8_t`, `char16_t`, `char32_t`, `wchar_t`, and
-`bool`. — *end note*\]
+`bool`. — *end note*]
 
 ### Function template `to_underlying` <a id="utility.underlying">[[utility.underlying]]</a>
 
@@ -566,7 +566,7 @@ template<class T>
 *Preconditions:* `false` is `true`.
 
 [*Note 1*: This precondition cannot be satisfied, thus the behavior of
-calling `unreachable` is undefined. — *end note*\]
+calling `unreachable` is undefined. — *end note*]
 
 [*Example 1*:
 
@@ -584,7 +584,7 @@ int a = f(1);           // OK, a has value 1
 int b = f(3);           // undefined behavior
 ```
 
-— *end example*\]
+— *end example*]
 
 ``` cpp
 void observable_checkpoint() noexcept;
@@ -695,7 +695,7 @@ only if either `T1` or `T2` is not implicitly default-constructible.
 
 [*Note 1*: This behavior can be implemented with a trait that checks
 whether a `const T1&` or a `const T2&` can be initialized with
-`{}`. — *end note*\]
+`{}`. — *end note*]
 
 ``` cpp
 constexpr explicit(see below) pair(const T1& x, const T2& y);
@@ -795,7 +795,7 @@ construction*.
 
 [*Note 2*: If a data member of `pair` is of reference type and its
 initialization binds it to a temporary object, the program is
-ill-formed [[class.base.init]]. — *end note*\]
+ill-formed [[class.base.init]]. — *end note*]
 
 ``` cpp
 constexpr pair& operator=(const pair& p);
@@ -1039,7 +1039,7 @@ a C++ program may contain:
 return make_pair(5, 3.1415926);             // types are deduced
 ```
 
-— *end example*\]
+— *end example*]
 
 ### Tuple-like access to pair <a id="pair.astuple">[[pair.astuple]]</a>
 
@@ -1429,7 +1429,7 @@ only if `Tᵢ` is not copy-list-initializable from an empty list for at
 least one i.
 
 [*Note 1*: This behavior can be implemented with a trait that checks
-whether a `const ``Tᵢ``&` can be initialized with `{}`. — *end note*\]
+whether a `const ``Tᵢ``&` can be initialized with `{}`. — *end note*]
 
 ``` cpp
 constexpr explicit(see below) tuple(const Types&...);
@@ -1931,7 +1931,7 @@ make_tuple(1, ref(i), cref(j));
 
 creates a tuple of type `tuple<int, int&, const float&>`.
 
-— *end example*\]
+— *end example*]
 
 ``` cpp
 template<class... TTypes>
@@ -1965,7 +1965,7 @@ tie(i, ignore, s) = make_tuple(42, 3.14, "C++");
 // i == 42, s == "C++"
 ```
 
-— *end example*\]
+— *end example*]
 
 ``` cpp
 template<tuple-like... Tuples>
@@ -2052,7 +2052,7 @@ return make-from-tuple-impl<T>(
 
 [*Note 1*: The type of `T` must be supplied as an explicit template
 parameter, as it cannot be deduced from the argument
-list. — *end note*\]
+list. — *end note*]
 
 ### Tuple helper classes <a id="tuple.helper">[[tuple.helper]]</a>
 
@@ -2105,7 +2105,7 @@ considered.
 such as the instantiation of class template specializations and function
 template specializations, the generation of implicitly-defined
 functions, and so on. Such side effects are not in the “immediate
-context” and can result in the program being ill-formed. — *end note*\]
+context” and can result in the program being ill-formed. — *end note*]
 
 In addition to being available via inclusion of the `<tuple>` header,
 the template is available when any of the headers `<array>`, `<ranges>`,
@@ -2148,14 +2148,14 @@ indexing is zero-based.
 [*Note 1*: For the overload marked \#1, if a type `T` in `Types` is
 some reference type `X&`, the return type is `X&`, not `X&&`. However,
 if the element type is a non-reference type `T`, the return type is
-`T&&`. — *end note*\]
+`T&&`. — *end note*]
 
 [*Note 2*: Constness is shallow. For the overload marked \#2, if a type
 `T` in `Types` is some reference type `X&`, the return type is `X&`, not
 `const X&`. However, if the element type is a non-reference type `T`,
 the return type is `const T&`. This is consistent with how constness is
 defined to work for non-static data members of reference
-type. — *end note*\]
+type. — *end note*]
 
 ``` cpp
 template<class T, class... Types>
@@ -2182,12 +2182,12 @@ const int& i2 = get<const int>(t);              // OK, i2 has value 2
 const double& d = get<double>(t);               // error: type double is not unique within t
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Note 1*: The reason `get` is a non-member function is that if this
 functionality had been provided as a member function, code where the
 type depended on a template parameter would have required using the
-`template` keyword. — *end note*\]
+`template` keyword. — *end note*]
 
 ### Relational operators <a id="tuple.rel">[[tuple.rel]]</a>
 
@@ -2209,7 +2209,7 @@ For the first overload let `UTuple` be `tuple<UTypes...>`.
 `false`.
 
 [*Note 1*: If `sizeof...(TTypes)` equals zero, returns
-`true`. — *end note*\]
+`true`. — *end note*]
 
 *Remarks:*
 
@@ -2252,7 +2252,7 @@ lookup [[basic.lookup.argdep]] only.
 `u` are not required to be copy constructible. Also, all comparison
 operator functions are short circuited; they do not perform element
 accesses beyond what is needed to determine the result of the
-comparison. — *end note*\]
+comparison. — *end note*]
 
 ### `common_reference` related specializations <a id="tuple.common.ref">[[tuple.common.ref]]</a>
 
@@ -2317,7 +2317,7 @@ requirements [[allocator.requirements.general]].
 
 [*Note 1*: Specialization of this trait informs other library
 components that `tuple` can be constructed with an allocator, even
-though it does not have a nested `allocator_type`. — *end note*\]
+though it does not have a nested `allocator_type`. — *end note*]
 
 ### Tuple specialized algorithms <a id="tuple.special">[[tuple.special]]</a>
 
@@ -3183,7 +3183,7 @@ U u(invoke(std::forward<F>(f), *val));
 is well-formed for some invented variable `u`.
 
 [*Note 1*: There is no requirement that `U` is
-movable [[dcl.init.general]]. — *end note*\]
+movable [[dcl.init.general]]. — *end note*]
 
 *Returns:* If `*this` contains a value, an `optional<U>` object whose
 contained value is direct-non-list-initialized with
@@ -3207,7 +3207,7 @@ U u(invoke(std::forward<F>(f), std::move(*val)));
 is well-formed for some invented variable `u`.
 
 [*Note 2*: There is no requirement that `U` is
-movable [[dcl.init.general]]. — *end note*\]
+movable [[dcl.init.general]]. — *end note*]
 
 *Returns:* If `*this` contains a value, an `optional<U>` object whose
 contained value is direct-non-list-initialized with
@@ -3642,7 +3642,7 @@ U u(invoke(std::forward<F>(f), *val));
 is well-formed for some invented variable `u`.
 
 [*Note 1*: There is no requirement that `U` is
-movable [[dcl.init.general]]. — *end note*\]
+movable [[dcl.init.general]]. — *end note*]
 
 *Returns:* If `*this` contains a value, an `optional<U>` object whose
 contained value is direct-non-list-initialized with
@@ -3735,7 +3735,7 @@ template<class T, class U> constexpr bool operator==(const optional<T>& x, const
 *Constraints:* The expression `*x == *y` is well-formed and its result
 is convertible to `bool`.
 
-[*Note 1*: `T` need not be *Cpp17EqualityComparable*. — *end note*\]
+[*Note 1*: `T` need not be *Cpp17EqualityComparable*. — *end note*]
 
 *Returns:* If `x.has_value() != y.has_value()`, `false`; otherwise if
 `x.has_value() == false`, `true`; otherwise `*x == *y`.
@@ -3843,7 +3843,7 @@ template<class T, class U> constexpr bool operator==(const optional<T>& x, const
 *Constraints:* `U` is not a specialization of `optional`. The expression
 `*x == v` is well-formed and its result is convertible to `bool`.
 
-[*Note 1*: `T` need not be *Cpp17EqualityComparable*. — *end note*\]
+[*Note 1*: `T` need not be *Cpp17EqualityComparable*. — *end note*]
 
 *Effects:* Equivalent to: `return x.has_value() ? *x == v : false;`
 
@@ -4239,7 +4239,7 @@ value-initialization of the alternative type `T₀` would be
 constexpr-suitable [[dcl.constexpr]]. The exception specification is
 equivalent to `is_nothrow_default_constructible_v<``T₀``>`.
 
-[*Note 1*: See also class `monostate`. — *end note*\]
+[*Note 1*: See also class `monostate`. — *end note*]
 
 ``` cpp
 constexpr variant(const variant& w);
@@ -4301,7 +4301,7 @@ which is the type of the contained value after construction.
 
   is ill-formed, as both alternative types have an equally viable
   constructor for the argument.
-  — *end note*\]
+  — *end note*]
 
 *Effects:* Initializes `*this` to hold the alternative type `Tⱼ` and
 direct-non-list-initializes the contained value with
@@ -4498,7 +4498,7 @@ which is the type of the contained value after assignment.
 
   is ill-formed, as both alternative types have an equally viable
   constructor for the argument.
-  — *end note*\]
+  — *end note*]
 
 *Effects:*
 
@@ -4632,7 +4632,7 @@ variant<float, int> v{12.f};
 v.emplace<1>(S());
 ```
 
-— *end note*\]
+— *end note*]
 
 ``` cpp
 constexpr size_t index() const noexcept;
@@ -5015,7 +5015,7 @@ constexpr strong_ordering operator<=>(monostate, monostate) noexcept
 ```
 
 [*Note 1*: `monostate` objects have only a single state; they thus
-always compare equal. — *end note*\]
+always compare equal. — *end note*]
 
 ### Specialized algorithms <a id="variant.specalg">[[variant.specalg]]</a>
 
@@ -5083,7 +5083,7 @@ but does not attempt conversion between them, i.e., `5` is held strictly
 as an `int` and is not implicitly convertible either to `"5"` or to
 `5.0`. This indifference to interpretation but awareness of type
 effectively allows safe, generic containers of single values, with no
-scope for surprises from ambiguous conversions. — *end note*\]
+scope for surprises from ambiguous conversions. — *end note*]
 
 ### Header `<any>` synopsis <a id="any.synop">[[any.synop]]</a>
 
@@ -5200,7 +5200,7 @@ shall only be applied to types `T` for which
 `is_nothrow_move_constructible_v<T>` is `true`.
 
 [*Example 1*: A contained value of type `int` could be stored in an
-internal buffer, not in separately-allocated memory. — *end example*\]
+internal buffer, not in separately-allocated memory. — *end example*]
 
 #### Construction and destruction <a id="any.cons">[[any.cons]]</a>
 
@@ -5421,7 +5421,7 @@ const type_info& type() const noexcept;
 otherwise `typeid(void)`.
 
 [*Note 1*: Useful for querying against types known either at compile
-time or only at runtime. — *end note*\]
+time or only at runtime. — *end note*]
 
 ### Non-member functions <a id="any.nonmembers">[[any.nonmembers]]</a>
 
@@ -5496,7 +5496,7 @@ assert(any_cast<const string&>(y) == cat);
 any_cast<string&>(y);                       // error: cannot any_cast away const
 ```
 
-— *end example*\]
+— *end example*]
 
 ``` cpp
 template<class T>
@@ -5519,7 +5519,7 @@ bool is_string(const any& operand) {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 ## Expected objects <a id="expected">[[expected]]</a>
 
@@ -6732,7 +6732,7 @@ template<class T2> friend constexpr bool operator==(const expected& x, const T2&
 expression `*x == v` is well-formed and its result is convertible to
 `bool`.
 
-[*Note 1*: `T` need not be *Cpp17EqualityComparable*. — *end note*\]
+[*Note 1*: `T` need not be *Cpp17EqualityComparable*. — *end note*]
 
 *Returns:* `x.has_value() && static_cast<bool>(*x == v)`.
 
@@ -8152,7 +8152,7 @@ and `b` containing `double` and put the result into `a`, it can do:
 transform(a.begin(), a.end(), b.begin(), a.begin(), plus<double>());
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Example 2*:
 
@@ -8162,7 +8162,7 @@ To negate every element of `a`:
 transform(a.begin(), a.end(), a.begin(), negate<double>());
 ```
 
-— *end example*\]
+— *end example*]
 
 ### Definitions <a id="func.def">[[func.def]]</a>
 
@@ -8238,7 +8238,7 @@ template<class... UnBoundArgs>
   constexpr R operator()(UnBoundArgs&&... unbound_args) cv-qual;
 ```
 
-— *end note*\]
+— *end note*]
 
 A *perfect forwarding call wrapper* is an argument forwarding call
 wrapper that forwards its state entities to the underlying call
@@ -8267,7 +8267,7 @@ were performed [[class.copy.ctor]].
 [*Note 2*: This implies that each of the copy/move constructors has the
 same exception-specification as the corresponding implicit definition
 and is declared as `constexpr` if the corresponding implicit definition
-would be considered to be constexpr. — *end note*\]
+would be considered to be constexpr. — *end note*]
 
 Argument forwarding call wrappers returned by a given standard library
 function template have the same type if the types of their corresponding
@@ -8353,7 +8353,7 @@ type.
 [*Note 1*: Using the comparison operators described in
 [[refwrap.comparisons]] with `T` being an incomplete type can lead to an
 ill-formed program with no diagnostic required
-[[temp.point]], [[temp.constr.atomic]]. — *end note*\]
+[[temp.point]], [[temp.constr.atomic]]. — *end note*]
 
 #### Constructors <a id="refwrap.const">[[refwrap.const]]</a>
 
@@ -8740,7 +8740,7 @@ implementation-defined strict total order over pointers
 
 [*Note 1*: If `a < b` is well-defined for pointers `a` and `b` of type
 `P`, then `(a < b) == less<P>()(a, b)`, `(a > b) == greater<P>()(a, b)`,
-and so forth. — *end note*\]
+and so forth. — *end note*]
 
 For template specializations `less<void>`, `greater<void>`,
 `less_equal<void>`, and `greater_equal<void>`, if the call operator
@@ -9608,7 +9608,7 @@ entities of `g`.
 
 [*Note 1*: If all of `FD` and `TDᵢ` meet the requirements of
 *Cpp17CopyConstructible*, then the return type meets the requirements of
-*Cpp17CopyConstructible*. — *end note*\]
+*Cpp17CopyConstructible*. — *end note*]
 
 The values of the *bound arguments* `v₁`, `v₂`, …, `v_N` and their
 corresponding types `V₁`, `V₂`, …, `V_N` depend on the types `TDᵢ`
@@ -9705,7 +9705,7 @@ T t;
 f(t);                               // it is unspecified how many copies of T are made
 ```
 
-— *end example*\]
+— *end example*]
 
 *Recommended practice:* Implementations should avoid double wrapping
 when constructing polymorphic wrappers from one another.
@@ -9789,7 +9789,7 @@ The `function` class template is a call wrapper [[func.def]] whose call
 signature [[func.def]] is `R(ArgTypes...)`.
 
 [*Note 1*: The types deduced by the deduction guides for `function`
-might change in future revisions of C++. — *end note*\]
+might change in future revisions of C++. — *end note*]
 
 ##### Constructors and destructor <a id="func.wrap.func.con">[[func.wrap.func.con]]</a>
 
@@ -9897,7 +9897,7 @@ void f() {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 ``` cpp
 function& operator=(const function& f);
@@ -10083,7 +10083,7 @@ dynamically allocated memory for a small contained value.
 
 [*Note 1*: Such small-object optimization can only be applied to a type
 `T` for which `is_nothrow_move_constructible_v<T>` is
-`true`. — *end note*\]
+`true`. — *end note*]
 
 ##### Constructors, assignments, and destructor <a id="func.wrap.move.ctor">[[func.wrap.move.ctor]]</a>
 
@@ -10349,7 +10349,7 @@ dynamically allocated memory for a small contained value.
 
 [*Note 1*: Such small-object optimization can only be applied to a type
 `T` for which `is_nothrow_move_constructible_v<T>` is
-`true`. — *end note*\]
+`true`. — *end note*]
 
 ##### Constructors, assignments, and destructor <a id="func.wrap.copy.ctor">[[func.wrap.copy.ctor]]</a>
 
@@ -11054,7 +11054,7 @@ Each specialization of `hash` is either enabled or disabled, as
 described below.
 
 [*Note 1*: Enabled specializations meet the *Cpp17Hash* requirements,
-and disabled specializations do not. — *end note*\]
+and disabled specializations do not. — *end note*]
 
 Each header that declares the template `hash` provides enabled
 specializations of `hash` for `nullptr_t` and all cv-unqualified
@@ -11073,7 +11073,7 @@ If `H` is a disabled specialization of `hash`, these values are `false`:
 function object types [[function.objects]].
 
 [*Note 2*: This means that the specialization of `hash` exists, but any
-attempts to use it as a *Cpp17Hash* will be ill-formed. — *end note*\]
+attempts to use it as a *Cpp17Hash* will be ill-formed. — *end note*]
 
 An enabled specialization `hash<Key>` will:
 
@@ -11311,7 +11311,7 @@ template<class T>
 *Returns:* The number of consecutive `0` bits in the value of `x`,
 starting from the most significant bit.
 
-[*Note 1*: Returns `N` if `x == 0`. — *end note*\]
+[*Note 1*: Returns `N` if `x == 0`. — *end note*]
 
 ``` cpp
 template<class T>
@@ -11324,7 +11324,7 @@ template<class T>
 starting from the most significant bit.
 
 [*Note 2*: Returns `N` if
-`x == numeric_limits<T>::max()`. — *end note*\]
+`x == numeric_limits<T>::max()`. — *end note*]
 
 ``` cpp
 template<class T>
@@ -11336,7 +11336,7 @@ template<class T>
 *Returns:* The number of consecutive `0` bits in the value of `x`,
 starting from the least significant bit.
 
-[*Note 3*: Returns `N` if `x == 0`. — *end note*\]
+[*Note 3*: Returns `N` if `x == 0`. — *end note*]
 
 ``` cpp
 template<class T>
@@ -11349,7 +11349,7 @@ template<class T>
 starting from the least significant bit.
 
 [*Note 4*: Returns `N` if
-`x == numeric_limits<T>::max()`. — *end note*\]
+`x == numeric_limits<T>::max()`. — *end note*]
 
 ``` cpp
 template<class T>

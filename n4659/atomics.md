@@ -270,7 +270,7 @@ enumerated values and their meanings are as follows:
   `memory_order_acquire`, which provides stronger guarantees than
   `memory_order_consume`. Implementations have found it infeasible to
   provide performance better than that of `memory_order_acquire`.
-  Specification revisions are under consideration. — *end note*\]
+  Specification revisions are under consideration. — *end note*]
 - `memory_order_acquire`, `memory_order_acq_rel`, and
   `memory_order_seq_cst`: a load operation performs an acquire operation
   on the affected memory location.
@@ -279,7 +279,7 @@ enumerated values and their meanings are as follows:
 relaxed with respect to memory ordering. Implementations must still
 guarantee that any given atomic access to a particular atomic object be
 indivisible with respect to all other atomic accesses to that
-object. — *end note*\]
+object. — *end note*]
 
 An atomic operation *A* that performs a release operation on an atomic
 object *M* synchronizes with an atomic operation *B* that performs an
@@ -302,7 +302,7 @@ of the following values:
 [*Note 2*: Although it is not explicitly required that *S* include
 locks, it can always be extended to an order that does include lock and
 unlock operations, since the ordering between those is already included
-in the “happens before” ordering. — *end note*\]
+in the “happens before” ordering. — *end note*]
 
 For an atomic operation *B* that reads the value of an atomic object
 *M*, if there is a `memory_order_seq_cst` fence *X* sequenced before
@@ -341,7 +341,7 @@ invalidate this guarantee unless extreme care is used. In particular,
 `memory_order_seq_cst` fences ensure a total order only for the fences
 themselves. Fences cannot, in general, be used to restore sequential
 consistency for atomic operations with weaker ordering
-specifications. — *end note*\]
+specifications. — *end note*]
 
 Implementations should ensure that no “out-of-thin-air” values are
 computed that circularly depend on their own computation.
@@ -367,7 +367,7 @@ only possible if the store to `x` stores `42`, which circularly depends
 on the store to `y` storing `42`. Note that without this restriction,
 such an execution is possible.
 
-— *end note*\]
+— *end note*]
 
 [*Note 5*:
 
@@ -386,7 +386,7 @@ r2 = y.load(memory_order_relaxed);
 if (r2 == 42) x.store(42, memory_order_relaxed);
 ```
 
-— *end note*\]
+— *end note*]
 
 Atomic read-modify-write operations shall always read the last value (in
 the modification order) written before the write associated with the
@@ -443,7 +443,7 @@ That is, atomic operations on the same memory location via two different
 addresses will communicate atomically. The implementation should not
 depend on any per-process state. This restriction enables communication
 by memory that is mapped into a process more than once and by memory
-that is shared between two processes. — *end note*\]
+that is shared between two processes. — *end note*]
 
 ## Class template `atomic` <a id="atomics.types.generic">[[atomics.types.generic]]</a>
 
@@ -486,14 +486,14 @@ The template argument for `T` shall be trivially copyable (
 [[basic.types]]).
 
 [*Note 1*: Type arguments that are not also statically initializable
-may be difficult to use. — *end note*\]
+may be difficult to use. — *end note*]
 
 The specialization `atomic<bool>` is a standard-layout struct.
 
 [*Note 2*: The representation of an atomic specialization need not have
 the same size as its corresponding argument type. Specializations should
 have the same size whenever possible, as this reduces the effort
-required to port existing code. — *end note*\]
+required to port existing code. — *end note*]
 
 ### Operations on atomic types <a id="atomics.types.operations">[[atomics.types.operations]]</a>
 
@@ -501,7 +501,7 @@ required to port existing code. — *end note*\]
 device register” semantics have not changed in the standard. This
 qualification means that volatility is preserved when applying these
 operations to volatile objects. It does not mean that operations on
-non-volatile objects become volatile. — *end note*\]
+non-volatile objects become volatile. — *end note*]
 
 ``` cpp
 atomic() noexcept = default;
@@ -509,7 +509,7 @@ atomic() noexcept = default;
 
 *Effects:* Leaves the atomic object in an uninitialized state.
 
-[*Note 1*: These semantics ensure compatibility with C. — *end note*\]
+[*Note 1*: These semantics ensure compatibility with C. — *end note*]
 
 ``` cpp
 constexpr atomic(T desired) noexcept;
@@ -523,7 +523,7 @@ race with its construction, for example by communicating the address of
 the just-constructed object `A` to another thread via
 `memory_order_relaxed` operations on a suitable atomic pointer variable,
 and then immediately accessing `A` in the receiving thread. This results
-in undefined behavior. — *end note*\]
+in undefined behavior. — *end note*]
 
 ``` cpp
 #define ATOMIC_VAR_INIT(value) see below
@@ -533,7 +533,7 @@ The macro expands to a token sequence suitable for constant
 initialization of an atomic variable of static storage duration of a
 type that is initialization-compatible with `value`.
 
-[*Note 3*: This operation may need to initialize locks. — *end note*\]
+[*Note 3*: This operation may need to initialize locks. — *end note*]
 
 Concurrent access to the variable being initialized, even via an atomic
 operation, constitutes a data race.
@@ -544,7 +544,7 @@ operation, constitutes a data race.
 atomic<int> v = ATOMIC_VAR_INIT(5);
 ```
 
-— *end example*\]
+— *end example*]
 
 *integral*
 
@@ -557,7 +557,7 @@ type’s operations are always lock-free, and `false` otherwise.
 
 [*Note 4*: The value of `is_always_lock_free` is consistent with the
 value of the corresponding `ATOMIC_..._LOCK_FREE` macro, if
-defined. — *end note*\]
+defined. — *end note*]
 
 *integral*
 
@@ -571,7 +571,7 @@ otherwise.
 
 [*Note 5*: The return value of the `is_lock_free` member function is
 consistent with the value of `is_always_lock_free` for the same
-type. — *end note*\]
+type. — *end note*]
 
 *integral*
 
@@ -692,7 +692,7 @@ else
   memcpy(expected, this, sizeof(*this));
 ```
 
-— *end note*\]
+— *end note*]
 
 [*Example 2*:
 
@@ -707,7 +707,7 @@ do {
 } while (!current.compare_exchange_weak(expected, desired));
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Example 3*:
 
@@ -722,7 +722,7 @@ do {
 } while (!head.compare_exchange_weak(p->next, p)); // try to insert
 ```
 
-— *end example*\]
+— *end example*]
 
 Implementations should ensure that weak compare-and-exchange operations
 do not consistently return `false` unless either the atomic object has
@@ -741,7 +741,7 @@ nearly all uses of weak compare-and-exchange will be in a loop. When a
 compare-and-exchange is in a loop, the weak version will yield better
 performance on some platforms. When a weak compare-and-exchange would
 require a loop and a strong one would not, the strong one is
-preferable. — *end note*\]
+preferable. — *end note*]
 
 [*Note 8*: The `memcpy` and `memcmp` semantics of the
 compare-and-exchange operations may result in failed comparisons for
@@ -749,7 +749,7 @@ values that compare equal with `operator==` if the underlying type has
 padding bits, trap bits, or alternate representations of the same value.
 Thus, `compare_exchange_strong` should be used with extreme care. On the
 other hand, `compare_exchange_weak` should converge
-rapidly. — *end note*\]
+rapidly. — *end note*]
 
 ### Specializations for integers <a id="atomics.types.int">[[atomics.types.int]]</a>
 
@@ -762,7 +762,7 @@ integral type `integral`, the specialization `atomic<integral>` provides
 additional atomic operations appropriate to integral types.
 
 [*Note 1*: For the specialization `atomic<bool>`, see
-[[atomics.types.generic]]. — *end note*\]
+[[atomics.types.generic]]. — *end note*]
 
 ``` cpp
 namespace std {
@@ -965,7 +965,7 @@ T* fetch_key(ptrdiff_t operand, memory_order order = memory_order_seq_cst) noexc
 ill-formed.
 
 [*Note 1*: Pointer arithmetic on `void*` or function pointers is
-ill-formed. — *end note*\]
+ill-formed. — *end note*]
 
 *Effects:* Atomically replaces the value pointed to by `this` with the
 result of the computation applied to the value pointed to by `this` and
@@ -1047,14 +1047,14 @@ template<class T>
 This function shall only be applied to objects that have been default
 constructed, and then only once.
 
-[*Note 1*: These semantics ensure compatibility with C. — *end note*\]
+[*Note 1*: These semantics ensure compatibility with C. — *end note*]
 
 [*Note 2*: Concurrent access from another thread, even via an atomic
-operation, constitutes a data race. — *end note*\]
+operation, constitutes a data race. — *end note*]
 
 [*Note 1*: The non-member functions enable programmers to write code
 that can be compiled as either C or C++, for example in a shared header
-file. — *end note*\]
+file. — *end note*]
 
 ## Flag type and operations <a id="atomics.flag">[[atomics.flag]]</a>
 
@@ -1091,7 +1091,7 @@ It has two states, set and clear.
 Operations on an object of type `atomic_flag` shall be lock-free.
 
 [*Note 1*: Hence the operations should also be
-address-free. — *end note*\]
+address-free. — *end note*]
 
 The `atomic_flag` type is a standard-layout struct. It has a trivial
 default constructor and a trivial destructor.
@@ -1197,7 +1197,7 @@ which actions performed by the thread become visible to the signal
 handler. Compiler optimizations and reorderings of loads and stores are
 inhibited in the same way as with `atomic_thread_fence`, but the
 hardware fence instructions that `atomic_thread_fence` would have
-inserted are not emitted. — *end note*\]
+inserted are not emitted. — *end note*]
 
 <!-- Section link definitions -->
 [atomics]: #atomics

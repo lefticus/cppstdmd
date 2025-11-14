@@ -26,7 +26,7 @@ expansion.
 
 [*Note 1*: The `index_sequence` alias template is provided for the
 common case of an integer sequence of type `size_t`; see also
-[[tuple.apply]]. — *end note*\]
+[[tuple.apply]]. — *end note*]
 
 ### Class template `integer_sequence` <a id="intseq.intseq">[[intseq.intseq]]</a>
 
@@ -56,7 +56,7 @@ The alias template `make_integer_sequence` denotes a specialization of
 `integer_sequence<T, 0, 1, `…`, N - 1>`.
 
 [*Note 1*: `make_integer_sequence<int, 0>` is an alias for the type
-`integer_sequence<int>`. — *end note*\]
+`integer_sequence<int>`. — *end note*]
 
 ## Metaprogramming and type traits <a id="type.traits">[[type.traits]]</a>
 
@@ -826,7 +826,7 @@ constexpr functions to be used in constant expressions.
 is present to aid argument-dependent lookup [[basic.lookup.argdep]] in
 finding overloads for which `constant_wrapper`’s wrapped value is a
 suitable argument, but for which the `constant_wrapper` itself is
-not. — *end note*\]
+not. — *end note*]
 
 [*Example 1*:
 
@@ -859,7 +859,7 @@ not. — *end note*\]
   }
 ```
 
-— *end example*\]
+— *end example*]
 
 ``` cpp
 constexpr cw-fixed-value(T (&arr)[Extent]) noexcept;
@@ -889,7 +889,7 @@ For any given type `T`, the result of applying one of these templates to
 `T` and to cv `T` shall yield the same result.
 
 [*Note 1*: For any given type `T`, exactly one of the primary type
-categories has a `value` member that evaluates to `true`. — *end note*\]
+categories has a `value` member that evaluates to `true`. — *end note*]
 
 #### Composite type traits <a id="meta.unary.comp">[[meta.unary.comp]]</a>
 
@@ -928,7 +928,7 @@ For the purpose of defining the templates in this subclause, let
   the same type and value category as `declval<T>()`.
 - Otherwise, `VAL<T>` is a prvalue that initially has type `T`.
   \[*Note 1*: If `T` is cv-qualified, the cv-qualification is subject to
-  adjustment [[expr.type]]. — *end note*\]
+  adjustment [[expr.type]]. — *end note*]
 
 [*Example 1*:
 
@@ -940,7 +940,7 @@ is_const_v<int[3]>                  // false
 is_const_v<const int[3]>            // true
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Example 2*:
 
@@ -951,7 +951,7 @@ remove_const_t<const int&>          // const int&
 remove_const_t<const int[3]>        // int[3]
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Example 3*:
 
@@ -968,7 +968,7 @@ static_assert(!is_final_v<U1>);
 static_assert(is_final_v<U2>);
 ```
 
-— *end example*\]
+— *end example*]
 
 The predicate condition for a template specialization
 `is_constructible<T, Args...>` shall be satisfied if and only if the
@@ -980,7 +980,7 @@ T t(declval<Args>()...);
 ```
 
 [*Note 1*: These tokens are never interpreted as a function
-declaration. — *end note*\]
+declaration. — *end note*]
 
 Access checking is performed as if in a context unrelated to `T` and any
 of the `Args`. Only the validity of the immediate context of the
@@ -990,7 +990,7 @@ variable initialization is considered.
 effects such as the instantiation of class template specializations and
 function template specializations, the generation of implicitly-defined
 functions, and so on. Such side effects are not in the “immediate
-context” and can result in the program being ill-formed. — *end note*\]
+context” and can result in the program being ill-formed. — *end note*]
 
 The predicate condition for a template specialization
 `has_unique_object_representations<T>` shall be satisfied if and only if
@@ -1009,7 +1009,7 @@ The set of scalar types for which this condition holds is
 *implementation-defined*.
 
 [*Note 3*: If a type has padding bits, the condition does not hold;
-otherwise, the condition holds true for integral types. — *end note*\]
+otherwise, the condition holds true for integral types. — *end note*]
 
 ### Type property queries <a id="meta.unary.prop.query">[[meta.unary.prop.query]]</a>
 
@@ -1028,7 +1028,7 @@ static_assert(rank_v<int[2]> == 1);
 static_assert(rank_v<int[][4]> == 2);
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Example 2*:
 
@@ -1044,7 +1044,7 @@ static_assert(extent_v<int[2][4], 1> == 4);
 static_assert(extent_v<int[][4], 1> == 4);
 ```
 
-— *end example*\]
+— *end example*]
 
 ### Relationships between types <a id="meta.rel">[[meta.rel]]</a>
 
@@ -1061,7 +1061,7 @@ Let `ELEMS-OF(T)` be the parameter pack `get<N>(declval<T>())`, where
 `make_index_sequence<tuple_size_v<remove_reference_t<T>>>`.
 
 [*Note 1*: Virtual base classes that are private, protected, or
-ambiguous are, nonetheless, virtual base classes. — *end note*\]
+ambiguous are, nonetheless, virtual base classes. — *end note*]
 
 For the purpose of defining the templates in this subclause, a function
 call expression `declval<T>()` for any type `T` is considered to be a
@@ -1088,7 +1088,7 @@ is_base_of_v<B[3], D[3]>        // false
 is_base_of_v<int, int>          // false
 ```
 
-— *end example*\]
+— *end example*]
 
 The predicate condition for a template specialization
 `is_convertible<From, To>` shall be satisfied if and only if the return
@@ -1102,7 +1102,7 @@ To test() {
 ```
 
 [*Note 2*: This requirement gives well-defined results for reference
-types, array types, function types, and cv `void`. — *end note*\]
+types, array types, function types, and cv `void`. — *end note*]
 
 Access checking is performed in a context unrelated to `To` and `From`.
 Only the validity of the immediate context of the *expression* of the
@@ -1113,7 +1113,7 @@ returned object or reference) is considered.
 instantiation of class template specializations and function template
 specializations, the generation of implicitly-defined functions, and so
 on. Such side effects are not in the “immediate context” and can result
-in the program being ill-formed. — *end note*\]
+in the program being ill-formed. — *end note*]
 
 ### Transformations between types <a id="meta.trans">[[meta.trans]]</a>
 
@@ -1150,7 +1150,7 @@ static_assert(is_same_v<remove_extent_t<int[2][3]>, int[3]>);
 static_assert(is_same_v<remove_extent_t<int[][3]>, int[3]>);
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Example 2*:
 
@@ -1162,7 +1162,7 @@ static_assert(is_same_v<remove_all_extents_t<int[2][3]>, int>);
 static_assert(is_same_v<remove_all_extents_t<int[][3]>, int>);
 ```
 
-— *end example*\]
+— *end example*]
 
 #### Pointer modifications <a id="meta.trans.ptr">[[meta.trans.ptr]]</a>
 
@@ -1177,7 +1177,7 @@ modifications of a type.
 such as the instantiation of class template specializations and function
 template specializations, the generation of implicitly-defined
 functions, and so on. Such side effects are not in the “immediate
-context” and can result in the program being ill-formed. — *end note*\]
+context” and can result in the program being ill-formed. — *end note*]
 
 In addition to being available via inclusion of the `<type_traits>`
 header, the templates `unwrap_reference`, `unwrap_ref_decay`,
@@ -1193,7 +1193,7 @@ Let:
 - `COPYCV(FROM, TO)` be an alias for type `TO` with the addition of
   `FROM`’s top-level cv-qualifiers,
   \[*Example 1*: `COPYCV(const int, volatile short)` is an alias for
-  `const volatile short`. — *end example*\]
+  `const volatile short`. — *end example*]
 - `COND-RES(X, Y)` be
   `decltype(false ?\ declval<X(&)()>()() :\ declval<Y(&)()>()())`.
 
@@ -1233,7 +1233,7 @@ follows:
   - If `is_same_v<T1, D1>` is `false` or `is_same_v<T2, D2>` is `false`,
     let `C` denote the same type, if any, as `common_type_t<D1, D2>`.
   - \[*Note 2*: None of the following will apply if there is a
-    specialization `common_type<D1, D2>`. — *end note*\]
+    specialization `common_type<D1, D2>`. — *end note*]
   - Otherwise, if
     ``` cpp
     decay_t<decltype(false ? declval<D1>() : declval<D2>())>
@@ -1260,7 +1260,7 @@ types `T1` and `T2` such that `is_same_v<T1, decay_t<T1>>` and
 `is_same_v<T2, decay_t<T2>>` are each `true`.
 
 [*Note 2*: Such specializations are needed when only explicit
-conversions are desired between the template arguments. — *end note*\]
+conversions are desired between the template arguments. — *end note*]
 
 Such a specialization need not have a member named `type`, but if it
 does, the *qualified-id* `common_type<T1, T2>::type` shall denote a
@@ -1308,7 +1308,7 @@ that `is_same_v<T, decay_t<T>>` and `is_same_v<U, decay_t<U>>` are each
 
 [*Note 3*: Such specializations can be used to influence the result of
 `common_reference`, and are needed when only explicit conversions are
-desired between the template arguments. — *end note*\]
+desired between the template arguments. — *end note*]
 
 Such a specialization need not have a member named `type`, but if it
 does, the *qualified-id*
@@ -1349,7 +1349,7 @@ static_assert(is_same_v<invoke_result_t<PMD, S>, char&&>);
 static_assert(is_same_v<invoke_result_t<PMD, const S*>, const char&>);
 ```
 
-— *end example*\]
+— *end example*]
 
 ### Logical operator traits <a id="meta.logical">[[meta.logical]]</a>
 
@@ -1369,7 +1369,7 @@ then instantiating `conjunction<``B₁``, `…`, ``B_N``>::value` does not
 require the instantiation of `Bⱼ``::value` for j > i.
 
 [*Note 1*: This is analogous to the short-circuiting behavior of the
-built-in operator `&&`. — *end note*\]
+built-in operator `&&`. — *end note*]
 
 Every template type argument for which `Bᵢ``::value` is instantiated
 shall be usable as a base class and shall have a member `value` which is
@@ -1385,7 +1385,7 @@ unambiguous base that is either
 
 [*Note 2*: This means a specialization of `conjunction` does not
 necessarily inherit from either `true_type` or
-`false_type`. — *end note*\]
+`false_type`. — *end note*]
 
 The member names of the base class, other than `conjunction` and
 `operator=`, shall not be hidden and shall be unambiguously available in
@@ -1404,7 +1404,7 @@ then instantiating `disjunction<``B₁``, `…`, ``B_N``>::value` does not
 require the instantiation of `Bⱼ``::value` for j > i.
 
 [*Note 3*: This is analogous to the short-circuiting behavior of the
-built-in operator `||`. — *end note*\]
+built-in operator `||`. — *end note*]
 
 Every template type argument for which `Bᵢ``::value` is instantiated
 shall be usable as a base class and shall have a member `value` which is
@@ -1420,7 +1420,7 @@ unambiguous base that is either
 
 [*Note 4*: This means a specialization of `disjunction` does not
 necessarily inherit from either `true_type` or
-`false_type`. — *end note*\]
+`false_type`. — *end note*]
 
 The member names of the base class, other than `disjunction` and
 `operator=`, shall not be hidden and shall be unambiguously available in
@@ -1486,9 +1486,9 @@ static_assert( !is_corresponding_member<C, C, int, int>( &C::a, &C::b ) );
   // Forces the use of class C, and the result is false.
 ```
 
-— *end example*\]
+— *end example*]
 
-— *end note*\]
+— *end note*]
 
 ### Constant evaluation context <a id="meta.const.eval">[[meta.const.eval]]</a>
 
@@ -1518,7 +1518,7 @@ constexpr void f(unsigned char *p, int n) {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 ``` cpp
 consteval bool is_within_lifetime(const auto* p) noexcept;
@@ -1565,7 +1565,7 @@ static_assert(engaged.has_value());
 static_assert(*engaged);
 ```
 
-— *end example*\]
+— *end example*]
 
 ## Reflection <a id="meta.reflection">[[meta.reflection]]</a>
 
@@ -1960,7 +1960,7 @@ The behavior of any function specified in namespace `std::meta` is
 specified by this document is provided as an argument.
 
 [*Note 1*: Values of type `std::meta::info` can represent
-implementation-specific constructs [[basic.fundamental]]. — *end note*\]
+implementation-specific constructs [[basic.fundamental]]. — *end note*]
 
 [*Note 2*:
 
@@ -1982,9 +1982,9 @@ struct X {
 static_assert(size_of(^^X<int>) == sizeof(int));    // instantiates X<int>
 ```
 
-— *end example*\]
+— *end example*]
 
-— *end note*\]
+— *end note*]
 
 Any function in namespace `std::meta` whose return type is `string_view`
 or `u8string_view` returns an object *V* such that `V.data()[V.size()]`
@@ -2001,7 +2001,7 @@ static_assert(sv.data()[0] == 'C');
 static_assert(sv.data()[1] == '{}0');
 ```
 
-— *end example*\]
+— *end example*]
 
 For the purpose of exposition, throughout this clause `^^E` is used to
 indicate a reflection representing source construct `E`.
@@ -2049,7 +2049,7 @@ Let P be the template parameter object [[temp.param]] of type
 *Returns:* .
 
 [*Note 1*: P is a potentially non-unique
-object [[intro.object]]. — *end note*\]
+object [[intro.object]]. — *end note*]
 
 ``` cpp
 template<ranges::input_range R>
@@ -2080,7 +2080,7 @@ Let P be
 subexpression for every element `e` of `r`.
 
 [*Note 2*: P is a potentially non-unique
-object [[intro.object]]. — *end note*\]
+object [[intro.object]]. — *end note*]
 
 ``` cpp
 template<ranges::input_range R>
@@ -2128,7 +2128,7 @@ if constexpr (meta::is_class_type(^^U)) {
 
 [*Note 3*: For class types, `define_static_object` provides the address
 of the template parameter object [[temp.param]] that is
-template-argument equivalent to `t`. — *end note*\]
+template-argument equivalent to `t`. — *end note*]
 
 ### Class `exception` <a id="meta.reflection.exception">[[meta.reflection.exception]]</a>
 
@@ -2351,7 +2351,7 @@ consteval bool has_identifier(info r);
       }
       static_assert(!has_identifier(r));
 
-  — *end example*\]
+  — *end example*]
 - Otherwise, if `r` represents a variable, then `false` if the
   declaration of that variable was instantiated from a function
   parameter pack. Otherwise, `!has_template_arguments(r)`.
@@ -2497,7 +2497,7 @@ static_assert(object_of(^^x) == object_of(^^y));    // OK, because y is a refere
                                                     // to x, their underlying objects are the same
 ```
 
-— *end example*\]
+— *end example*]
 
 ``` cpp
 consteval info constant_of(info r);
@@ -2550,7 +2550,7 @@ consteval info fn() {
 constexpr info r = constant_of(fn());           // error: x is outside its lifetime
 ```
 
-— *end example*\]
+— *end example*]
 
 ``` cpp
 consteval bool is_public(info r);
@@ -2617,7 +2617,7 @@ explicit. Otherwise, `false`.
 
 [*Note 1*: If `r` represents a member function template that is
 declared explicit, `is_explicit(r)` is still `false` because in general,
-such queries for templates cannot be answered. — *end note*\]
+such queries for templates cannot be answered. — *end note*]
 
 ``` cpp
 consteval bool is_noexcept(info r);
@@ -2629,7 +2629,7 @@ Otherwise, `false`.
 
 [*Note 2*: If `r` represents a function template that is declared
 `noexcept`, `is_noexcept(r)` is still `false` because in general, such
-queries for templates cannot be answered. — *end note*\]
+queries for templates cannot be answered. — *end note*]
 
 ``` cpp
 consteval bool is_bit_field(info r);
@@ -2688,7 +2688,7 @@ static, thread, or automatic storage duration,
 respectively [[basic.stc]]. Otherwise, `false`.
 
 [*Note 3*: It is not possible to have a reflection representing an
-object or variable having dynamic storage duration. — *end note*\]
+object or variable having dynamic storage duration. — *end note*]
 
 ``` cpp
 consteval bool has_internal_linkage(info r);
@@ -2748,7 +2748,7 @@ static_assert(is_enumerable_type(^^E));
 static_assert(static_cast<int>(E::A) == 2);
 ```
 
-— *end example*\]
+— *end example*]
 
 ``` cpp
 consteval bool is_variable(info r);
@@ -2773,7 +2773,7 @@ consteval bool is_namespace_alias(info r);
 respectively. Otherwise, `false`.
 
 [*Note 4*: A specialization of an alias template is a type
-alias. — *end note*\]
+alias. — *end note*]
 
 ``` cpp
 consteval bool is_function(info r);
@@ -2855,7 +2855,7 @@ variable template, alias template, or concept. Otherwise, `false`.
 
 [*Note 5*: A template specialization is not a template. For example,
 `is_template(``)` is `true` but `is_template(``)` is
-`false`. — *end note*\]
+`false`. — *end note*]
 
 ``` cpp
 consteval bool is_function_template(info r);
@@ -2948,7 +2948,7 @@ consteval info parent_of(info r);
     *consteval-block-declaration*[[dcl.pre]], then
     `parent_of(parent_of(``))`. \[*Note 3*: In this case, the first
     `parent_of` will be the closure type, so the second `parent_of` is
-    necessary to give the parent of that closure type. — *end note*\]
+    necessary to give the parent of that closure type. — *end note*]
   - Otherwise, .
 
 *Throws:* `meta::exception` unless `has_parent(r)` is `true`.
@@ -2977,7 +2977,7 @@ static_assert(parent_of(^^F::N) == ^^F);
 static_assert(parent_of(^^F::A) == ^^F::N);
 ```
 
-— *end example*\]
+— *end example*]
 
 ``` cpp
 consteval info dealias(info r);
@@ -2998,7 +2998,7 @@ static_assert(dealias(^^X) == ^^int);
 static_assert(dealias(^^Y) == ^^int);
 ```
 
-— *end example*\]
+— *end example*]
 
 ``` cpp
 consteval bool has_template_arguments(info r);
@@ -3030,7 +3030,7 @@ follows:
 
 - If A denotes a type or type alias, then R is a reflection representing
   the underlying entity of A. \[*Note 4*: R always represents a type,
-  never a type alias. — *end note*\]
+  never a type alias. — *end note*]
 - Otherwise, if A denotes a class template, variable template, concept,
   or alias template, then R is a reflection representing A.
 - Otherwise, A is a constant template argument [[temp.arg.nontype]]. Let
@@ -3070,7 +3070,7 @@ static_assert(is_object(template_arguments_of(T)[2]));
 static_assert(template_arguments_of(T)[3] == ^^PairPtr);
 ```
 
-— *end example*\]
+— *end example*]
 
 ``` cpp
 consteval vector<info> parameters_of(info r);
@@ -3258,7 +3258,7 @@ namespace NS {
 }
 ```
 
-— *end example*\]
+— *end example*]
 
 ``` cpp
 static consteval access_context unprivileged() noexcept;
@@ -3306,7 +3306,7 @@ Let *`DESIGNATING-CLS`*`(r, ctx)` be:
   `is_accessible(``r_H``, ctx)`, where `r_H` represents a hypothetical
   non-static data member of the class represented by *`PARENT-CLS`*`(r)`
   with the same access as F. \[*Note 5*: Unnamed bit-fields are treated
-  as class members for the purpose of `is_accessible`. — *end note*\]
+  as class members for the purpose of `is_accessible`. — *end note*]
 - Otherwise, if `r` does not represent a class member or a direct base
   class relationship, then `true`.
 - Otherwise, if `r` represents
@@ -3333,7 +3333,7 @@ Let *`DESIGNATING-CLS`*`(r, ctx)` be:
 
 [*Note 1*: The definitions of when a class member or base class is
 accessible from a point P do not consider whether a declaration of that
-entity is reachable from P. — *end note*\]
+entity is reachable from P. — *end note*]
 
 *Throws:* `meta::exception` if
 
@@ -3361,7 +3361,7 @@ static_assert(!is_accessible(Cls::r, access_context::current()));       // OK
 static_assert(is_accessible(Cls::r, access_context::unchecked()));      // OK
 ```
 
-— *end example*\]
+— *end example*]
 
 ``` cpp
 consteval bool has_inaccessible_nonstatic_data_members(info r, access_context ctx);
@@ -3447,7 +3447,7 @@ members-of-precedes P, and M is
 Q-members-of-representable for any entity Q include: unscoped
 enumerators [[enum]], partial specializations of
 templates [[temp.spec.partial]], and closure
-types [[expr.prim.lambda.closure]]. — *end note*\]
+types [[expr.prim.lambda.closure]]. — *end note*]
 
 *Returns:* A `vector` containing reflections of all members M of the
 entity Q represented by `dealias(r)` for which
@@ -3465,7 +3465,7 @@ are declared.
 
 [*Note 2*: Base classes are not members. Implicitly-declared special
 members appear after any user-declared
-members [[special]]. — *end note*\]
+members [[special]]. — *end note*]
 
 *Throws:* `meta::exception` unless `dealias(r)` is a reflection
 representing either a class type that is complete from some point in the
@@ -3506,7 +3506,7 @@ static_assert(                                                  // all of the ab
                                                                 // representing S::I
 ```
 
-— *end example*\]
+— *end example*]
 
 ``` cpp
 consteval vector<info> bases_of(info type, access_context ctx);
@@ -3611,7 +3611,7 @@ then `sizeof(`T`)` if T is not a reference type and
 [*Note 1*: It is possible that while `sizeof(char) == size_of(``)` is
 `true`, that `sizeof(char&) == size_of(``&)` is `false`. If `b`
 represents a direct base class relationship of an empty base class, then
-`size_of(b) > 0` is `true`. — *end note*\]
+`size_of(b) > 0` is `true`. — *end note*]
 
 *Throws:* `meta::exception` unless all of the following conditions are
 met:
@@ -3697,7 +3697,7 @@ translation unit T, any element in the returned `vector` between R₁ and
 R₂ represents an annotation from T.
 
 [*Note 1*: The order in which two annotations appear is otherwise
-unspecified. — *end note*\]
+unspecified. — *end note*]
 
 *Throws:* `meta::exception` unless `item` represents a type, type alias,
 variable, function, namespace, enumerator, direct base class
@@ -3738,7 +3738,7 @@ static_assert(constant_of(a1) == constant_of(a2));
 static_assert(annotations_of(^^x)[0] == annotations_of(^^y)[0]);
 ```
 
-— *end example*\]
+— *end example*]
 
 ``` cpp
 consteval vector<info> annotations_of_with_type(info item, info type);
@@ -3772,7 +3772,7 @@ template<class T>
   consteval T extract-ref(info r);      // exposition only
 ```
 
-[*Note 1*: `T` is a reference type. — *end note*\]
+[*Note 1*: `T` is a reference type. — *end note*]
 
 *Returns:* If `r` represents an object O, then a reference to O.
 Otherwise, a reference to the object declared, or referred to, by the
@@ -3783,7 +3783,7 @@ variable represented by `r`.
 - `r` represents a variable or object of type `U`,
 - `is_convertible_v<remove_reference_t<U>(*)[], remove_reference_t<T>(*)[]>`
   is `true`,and \[*Note 6*: The intent is to allow only qualification
-  conversion from `U` to `T`. — *end note*\]
+  conversion from `U` to `T`. — *end note*]
 - If `r` represents a variable, then either that variable is usable in
   constant expressions or its lifetime began within the core constant
   expression currently under evaluation.
@@ -3879,7 +3879,7 @@ every reflection in `arguments` represents a construct usable as a
 template argument [[temp.arg]].
 
 [*Note 1*: If forming `Z<[:Args:]...>` leads to a failure outside of
-the immediate context, the program is ill-formed. — *end note*\]
+the immediate context, the program is ill-formed. — *end note*]
 
 ``` cpp
 template<reflection_range R = initializer_list<info>>
@@ -3896,7 +3896,7 @@ held by the elements of `arguments`, in order.
 `true`.
 
 [*Note 2*: If forming `Z<[:Args:]...>` leads to a failure outside of
-the immediate context, the program is ill-formed. — *end note*\]
+the immediate context, the program is ill-formed. — *end note*]
 
 [*Example 1*:
 
@@ -3918,7 +3918,7 @@ constexpr bool r2 = can_substitute(^^fn2, {^^int});     // error: instantiation 
                                                         // is needed to deduce return type
 ```
 
-— *end example*\]
+— *end example*]
 
 [*Example 2*:
 
@@ -3930,7 +3930,7 @@ constexpr info r = to_integral_constant(2);     // OK, r represents the type
                                                 // integral_constant<unsigned, 2>
 ```
 
-— *end example*\]
+— *end example*]
 
 ### Expression result reflection <a id="meta.reflection.result">[[meta.reflection.result]]</a>
 
@@ -3958,7 +3958,7 @@ template<T P> struct TCls;
 *Returns:* `template_arguments_of(``)[0]`.
 
 [*Note 1*: This is a reflection of an object for class types, and a
-reflection of a value otherwise. — *end note*\]
+reflection of a value otherwise. — *end note*]
 
 *Throws:* `meta::exception` unless the *template-id* `TCls<`V`>` would
 be valid.
@@ -3985,7 +3985,7 @@ constexpr info r4 = reflect_constant(K{"ebab"});    // error: constituent pointe
                                                     // points to string literal
 ```
 
-— *end example*\]
+— *end example*]
 
 ``` cpp
 template<class T>
@@ -4073,9 +4073,9 @@ string literal (or `u8string_view`, `u8string`, etc.) equally well.
       data_member_options o2 = {.name = u8"utf8_encoding"};
     }
 
-— *end example*\]
+— *end example*]
 
-— *end note*\]
+— *end note*]
 
 ``` cpp
 consteval info data_member_spec(info type, data_member_options options);
@@ -4096,7 +4096,7 @@ consteval info data_member_spec(info type, data_member_options options);
 [*Note 2*: The returned reflection value is primarily useful in
 conjunction with `define_aggregate`; it can also be queried by certain
 other functions in `std::meta` (e.g., `type_of`,
-`identifier_of`). — *end note*\]
+`identifier_of`). — *end note*]
 
 *Throws:* `meta::exception` unless the following conditions are met:
 
@@ -4117,7 +4117,7 @@ other functions in `std::meta` (e.g., `type_of`,
   *universal-character-name*s@@REF:lex.universal.char@@ are not
   processed and will cause evaluation to fail. For example,
   `R"(\u03B1)"` is an invalid identifier and is not interpreted as
-  `"`α`"`. — *end note*\]
+  `"`α`"`. — *end note*]
 - if `options.name` does not contain a value, then `options.bit_width`
   contains a value;
 - if `options.bit_width` contains a value V, then
@@ -4148,14 +4148,14 @@ description represented by $r_K$.
 - C is incomplete from every point in the evaluation context;
   \[*Note 8*: C can be a class template specialization for which there
   is a reachable definition of the class template. In this case, the
-  injected declaration is an explicit specialization. — *end note*\]
+  injected declaration is an explicit specialization. — *end note*]
 - `is_data_member_spec(`$r_K$`)` is `true` for every $r_K$;
 - `is_complete_type(`$T_K$`)` is `true` for every $r_K$; and
 - for every pair $(r_K, r_L)$ where K < L, if $N_K$ is not $\bot$ and
   $N_L$ is not $\bot$, then either:
   - $N_K$` != `$N_L$ is `true` or
   - $N_K$` == u8"_"` is `true`. \[*Note 9*: Every provided identifier is
-    unique or `"_"`. — *end note*\]
+    unique or `"_"`. — *end note*]
 
 *Effects:* Produces an injected declaration D[[expr.const]] that defines
 C and has properties as follows:
@@ -4362,16 +4362,16 @@ behavior based on the signature and return type of that function or
 function template.
 
 [*Note 1*: The associated class template need not be
-instantiated. — *end note*\]
+instantiated. — *end note*]
 
 [*Note 2*: For those functions or function templates which return a
 reflection, that reflection always represents a type and never a type
-alias. — *end note*\]
+alias. — *end note*]
 
 [*Note 3*: If `t` is a reflection of the type `int` and `u` is a
 reflection of an alias to the type `int`, then `t == u` is `false` but
 `is_same_type(t, u)` is `true`. Also, `t == dealias(u)` is
-`true`. — *end note*\]
+`true`. — *end note*]
 
 ``` cpp
 consteval size_t rank(info type);
@@ -4521,7 +4521,7 @@ the template arguments `N` and `D` is not representable by type
 [*Note 1*: These rules ensure that infinite ratios are avoided and that
 for any negative input, there exists a representable value of its
 absolute value which is positive. This excludes the most negative
-value. — *end note*\]
+value. — *end note*]
 
 The static data members `num` and `den` shall have the following values,
 where `gcd` represents the greatest common divisor of the absolute
@@ -4578,7 +4578,7 @@ static_assert(ratio_multiply<ratio<1, INT_MAX>, ratio<INT_MAX, 2>>::den == 2,
   "1/MAX * MAX/2 == 1/2");
 ```
 
-— *end example*\]
+— *end example*]
 
 ### Comparison of `ratio`s <a id="ratio.comparison">[[ratio.comparison]]</a>
 
