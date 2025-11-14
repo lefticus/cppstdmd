@@ -5505,7 +5505,11 @@ template <class T, class Container>
 
 *Effects:* `x.swap(y)`.
 
-<!-- Section link definitions -->
+<!-- Link reference definitions -->
+[alg.sorting]: algorithms.md#alg.sorting
+[algorithms]: algorithms.md#algorithms
+[allocator.requirements]: library.md#allocator.requirements
+[allocator.traits.members]: utilities.md#allocator.traits.members
 [array]: #array
 [array.cons]: #array.cons
 [array.data]: #array.data
@@ -5522,6 +5526,10 @@ template <class T, class Container>
 [associative.reqmts]: #associative.reqmts
 [associative.reqmts.except]: #associative.reqmts.except
 [associative.set.syn]: #associative.set.syn
+[basic.string]: strings.md#basic.string
+[class.copy]: special.md#class.copy
+[class.ctor]: special.md#class.ctor
+[class.dtor]: special.md#class.dtor
 [container.adaptors]: #container.adaptors
 [container.adaptors.general]: #container.adaptors.general
 [container.requirements]: #container.requirements
@@ -5529,12 +5537,14 @@ template <class T, class Container>
 [container.requirements.general]: #container.requirements.general
 [containers]: #containers
 [containers.general]: #containers.general
+[dcl.init.aggr]: dcl.md#dcl.init.aggr
 [deque]: #deque
 [deque.capacity]: #deque.capacity
 [deque.cons]: #deque.cons
 [deque.modifiers]: #deque.modifiers
 [deque.overview]: #deque.overview
 [deque.special]: #deque.special
+[forward.iterators]: iterators.md#forward.iterators
 [forwardlist]: #forwardlist
 [forwardlist.access]: #forwardlist.access
 [forwardlist.cons]: #forwardlist.cons
@@ -5543,6 +5553,8 @@ template <class T, class Container>
 [forwardlist.ops]: #forwardlist.ops
 [forwardlist.overview]: #forwardlist.overview
 [forwardlist.spec]: #forwardlist.spec
+[hash.requirements]: library.md#hash.requirements
+[iterator.requirements]: iterators.md#iterator.requirements
 [list]: #list
 [list.capacity]: #list.capacity
 [list.cons]: #list.cons
@@ -5579,6 +5591,7 @@ template <class T, class Container>
 [queue.ops]: #queue.ops
 [queue.special]: #queue.special
 [queue.syn]: #queue.syn
+[res.on.data.races]: library.md#res.on.data.races
 [sequence.reqmts]: #sequence.reqmts
 [sequences]: #sequences
 [sequences.general]: #sequences.general
@@ -5593,8 +5606,19 @@ template <class T, class Container>
 [stack.ops]: #stack.ops
 [stack.special]: #stack.special
 [stack.syn]: #stack.syn
+[strings]: strings.md#strings
+[tab:HashRequirements]: #tab:HashRequirements
+[tab:containers.allocatoraware]: #tab:containers.allocatoraware
+[tab:containers.associative.requirements]: #tab:containers.associative.requirements
+[tab:containers.container.requirements]: #tab:containers.container.requirements
+[tab:containers.lib.summary]: #tab:containers.lib.summary
+[tab:containers.optional.operations]: #tab:containers.optional.operations
+[tab:containers.reversible.requirements]: #tab:containers.reversible.requirements
+[tab:containers.sequence.optional]: #tab:containers.sequence.optional
+[tab:containers.sequence.requirements]: #tab:containers.sequence.requirements
 [unord]: #unord
 [unord.general]: #unord.general
+[unord.hash]: utilities.md#unord.hash
 [unord.map]: #unord.map
 [unord.map.cnstr]: #unord.map.cnstr
 [unord.map.elem]: #unord.map.elem
@@ -5626,47 +5650,6 @@ template <class T, class Container>
 [vector.modifiers]: #vector.modifiers
 [vector.overview]: #vector.overview
 [vector.special]: #vector.special
-
-<!-- Link reference definitions -->
-[alg.sorting]: algorithms.md#alg.sorting
-[algorithms]: algorithms.md#algorithms
-[allocator.requirements]: library.md#allocator.requirements
-[allocator.traits.members]: utilities.md#allocator.traits.members
-[associative]: #associative
-[associative.reqmts]: #associative.reqmts
-[associative.reqmts.except]: #associative.reqmts.except
-[basic.string]: strings.md#basic.string
-[class.copy]: special.md#class.copy
-[class.ctor]: special.md#class.ctor
-[class.dtor]: special.md#class.dtor
-[container.adaptors]: #container.adaptors
-[container.requirements]: #container.requirements
-[container.requirements.general]: #container.requirements.general
-[dcl.init.aggr]: dcl.md#dcl.init.aggr
-[deque]: #deque
-[deque.modifiers]: #deque.modifiers
-[forward.iterators]: iterators.md#forward.iterators
-[hash.requirements]: library.md#hash.requirements
-[iterator.requirements]: iterators.md#iterator.requirements
-[list]: #list
-[res.on.data.races]: library.md#res.on.data.races
-[sequence.reqmts]: #sequence.reqmts
-[sequences]: #sequences
-[strings]: strings.md#strings
-[tab:HashRequirements]: #tab:HashRequirements
-[tab:containers.allocatoraware]: #tab:containers.allocatoraware
-[tab:containers.associative.requirements]: #tab:containers.associative.requirements
-[tab:containers.container.requirements]: #tab:containers.container.requirements
-[tab:containers.lib.summary]: #tab:containers.lib.summary
-[tab:containers.optional.operations]: #tab:containers.optional.operations
-[tab:containers.reversible.requirements]: #tab:containers.reversible.requirements
-[tab:containers.sequence.optional]: #tab:containers.sequence.optional
-[tab:containers.sequence.requirements]: #tab:containers.sequence.requirements
-[unord]: #unord
-[unord.hash]: utilities.md#unord.hash
-[unord.req.except]: #unord.req.except
-[vector]: #vector
-[vector.modifiers]: #vector.modifiers
 
 [^1]: Equality comparison is a refinement of partitioning if no two
     objects that compare equal fall into different partitions.

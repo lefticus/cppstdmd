@@ -1113,8 +1113,10 @@ constructor.
 The returned NTBS might be the contents of
 `what_arg + ": " + code.message()`.
 
-<!-- Section link definitions -->
+<!-- Link reference definitions -->
 [assertions]: #assertions
+[bad.alloc]: language.md#bad.alloc
+[comparisons]: utilities.md#comparisons
 [diagnostics]: #diagnostics
 [diagnostics.general]: #diagnostics.general
 [domain.error]: #domain.error
@@ -1125,6 +1127,7 @@ The returned NTBS might be the contents of
 [out.of.range]: #out.of.range
 [overflow.error]: #overflow.error
 [range.error]: #range.error
+[res.on.exception.handling]: library.md#res.on.exception.handling
 [runtime.error]: #runtime.error
 [std.exceptions]: #std.exceptions
 [syserr]: #syserr
@@ -1151,18 +1154,8 @@ The returned NTBS might be the contents of
 [syserr.syserr]: #syserr.syserr
 [syserr.syserr.members]: #syserr.syserr.members
 [syserr.syserr.overview]: #syserr.syserr.overview
-[underflow.error]: #underflow.error
-
-<!-- Link reference definitions -->
-[assertions]: #assertions
-[bad.alloc]: language.md#bad.alloc
-[comparisons]: utilities.md#comparisons
-[errno]: #errno
-[res.on.exception.handling]: library.md#res.on.exception.handling
-[std.exceptions]: #std.exceptions
-[syserr]: #syserr
-[syserr.errcode]: #syserr.errcode
 [tab:diagnostics.hdr.cassert]: #tab:diagnostics.hdr.cassert
 [tab:diagnostics.hdr.cerrno]: #tab:diagnostics.hdr.cerrno
 [tab:diagnostics.lib.summary]: #tab:diagnostics.lib.summary
+[underflow.error]: #underflow.error
 [unord.hash]: utilities.md#unord.hash

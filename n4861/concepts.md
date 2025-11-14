@@ -1023,7 +1023,12 @@ Under these conditions, it can be shown that
 
 — *end note*]
 
-<!-- Section link definitions -->
+<!-- Link reference definitions -->
+[basic.compound]: basic.md#basic.compound
+[basic.fundamental]: basic.md#basic.fundamental
+[basic.lookup.argdep]: basic.md#basic.lookup.argdep
+[basic.types]: basic.md#basic.types
+[class.member.lookup]: class.md#class.member.lookup
 [concept.assignable]: #concept.assignable
 [concept.booleantestable]: #concept.booleantestable
 [concept.common]: #concept.common
@@ -1056,20 +1061,8 @@ Under these conditions, it can be shown that
 [concepts.lang]: #concepts.lang
 [concepts.lang.general]: #concepts.lang.general
 [concepts.object]: #concepts.object
-[concepts.syn]: #concepts.syn
-
-<!-- Link reference definitions -->
-[basic.compound]: basic.md#basic.compound
-[basic.fundamental]: basic.md#basic.fundamental
-[basic.lookup.argdep]: basic.md#basic.lookup.argdep
-[basic.types]: basic.md#basic.types
-[class.member.lookup]: class.md#class.member.lookup
-[concepts.callable]: #concepts.callable
-[concepts.compare]: #concepts.compare
-[concepts.equality]: #concepts.equality
-[concepts.lang]: #concepts.lang
-[concepts.object]: #concepts.object
 [concepts.summary]: #concepts.summary
+[concepts.syn]: #concepts.syn
 [cpp17.destructible]: #cpp17.destructible
 [customization.point.object]: library.md#customization.point.object
 [declval]: utilities.md#declval

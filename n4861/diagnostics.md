@@ -1151,13 +1151,18 @@ constructor.
 [*Note 1*: The returned NTBS might be the contents of
 `what_arg + ": " + code.message()`. — *end note*]
 
-<!-- Section link definitions -->
+<!-- Link reference definitions -->
 [assertions]: #assertions
 [assertions.assert]: #assertions.assert
+[bad.alloc]: support.md#bad.alloc
 [cassert.syn]: #cassert.syn
 [cerrno.syn]: #cerrno.syn
+[comparisons.three.way]: utilities.md#comparisons.three.way
+[conv]: expr.md#conv
+[defns.const.subexpr]: library.md#defns.const.subexpr
 [diagnostics]: #diagnostics
 [diagnostics.general]: #diagnostics.general
+[diagnostics.summary]: #diagnostics.summary
 [domain.error]: #domain.error
 [errno]: #errno
 [invalid.argument]: #invalid.argument
@@ -1166,6 +1171,7 @@ constructor.
 [out.of.range]: #out.of.range
 [overflow.error]: #overflow.error
 [range.error]: #range.error
+[res.on.exception.handling]: library.md#res.on.exception.handling
 [runtime.error]: #runtime.error
 [std.exceptions]: #std.exceptions
 [stdexcept.syn]: #stdexcept.syn
@@ -1195,18 +1201,4 @@ constructor.
 [syserr.syserr.overview]: #syserr.syserr.overview
 [system.error.syn]: #system.error.syn
 [underflow.error]: #underflow.error
-
-<!-- Link reference definitions -->
-[assertions]: #assertions
-[bad.alloc]: support.md#bad.alloc
-[comparisons.three.way]: utilities.md#comparisons.three.way
-[conv]: expr.md#conv
-[defns.const.subexpr]: library.md#defns.const.subexpr
-[diagnostics.summary]: #diagnostics.summary
-[errno]: #errno
-[res.on.exception.handling]: library.md#res.on.exception.handling
-[std.exceptions]: #std.exceptions
-[syserr]: #syserr
-[syserr.errcat]: #syserr.errcat
-[syserr.errcode]: #syserr.errcode
 [unord.hash]: utilities.md#unord.hash

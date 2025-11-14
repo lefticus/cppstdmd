@@ -3175,49 +3175,6 @@ extern "C" void operator ""_m(long double);         // error: C language linkage
 
 — *end example*]
 
-<!-- Section link definitions -->
-[over]: #over
-[over.assign]: #over.assign
-[over.best.ics]: #over.best.ics
-[over.best.ics.general]: #over.best.ics.general
-[over.binary]: #over.binary
-[over.binary.general]: #over.binary.general
-[over.built]: #over.built
-[over.call]: #over.call
-[over.call.func]: #over.call.func
-[over.call.object]: #over.call.object
-[over.ics.ellipsis]: #over.ics.ellipsis
-[over.ics.list]: #over.ics.list
-[over.ics.rank]: #over.ics.rank
-[over.ics.ref]: #over.ics.ref
-[over.ics.scs]: #over.ics.scs
-[over.ics.user]: #over.ics.user
-[over.inc]: #over.inc
-[over.literal]: #over.literal
-[over.match]: #over.match
-[over.match.best]: #over.match.best
-[over.match.best.general]: #over.match.best.general
-[over.match.call]: #over.match.call
-[over.match.call.general]: #over.match.call.general
-[over.match.class.deduct]: #over.match.class.deduct
-[over.match.conv]: #over.match.conv
-[over.match.copy]: #over.match.copy
-[over.match.ctor]: #over.match.ctor
-[over.match.funcs]: #over.match.funcs
-[over.match.funcs.general]: #over.match.funcs.general
-[over.match.general]: #over.match.general
-[over.match.list]: #over.match.list
-[over.match.oper]: #over.match.oper
-[over.match.ref]: #over.match.ref
-[over.match.viable]: #over.match.viable
-[over.oper]: #over.oper
-[over.oper.general]: #over.oper.general
-[over.over]: #over.over
-[over.pre]: #over.pre
-[over.ref]: #over.ref
-[over.sub]: #over.sub
-[over.unary]: #over.unary
-
 <!-- Link reference definitions -->
 [basic.lookup]: basic.md#basic.lookup
 [basic.lookup.argdep]: basic.md#basic.lookup.argdep
@@ -3289,8 +3246,11 @@ extern "C" void operator ""_m(long double);         // error: C language linkage
 [over]: #over
 [over.assign]: #over.assign
 [over.best.ics]: #over.best.ics
+[over.best.ics.general]: #over.best.ics.general
 [over.binary]: #over.binary
+[over.binary.general]: #over.binary.general
 [over.built]: #over.built
+[over.call]: #over.call
 [over.call.func]: #over.call.func
 [over.call.object]: #over.call.object
 [over.ics.ellipsis]: #over.ics.ellipsis
@@ -3300,19 +3260,27 @@ extern "C" void operator ""_m(long double);         // error: C language linkage
 [over.ics.scs]: #over.ics.scs
 [over.ics.user]: #over.ics.user
 [over.inc]: #over.inc
+[over.literal]: #over.literal
 [over.match]: #over.match
 [over.match.best]: #over.match.best
+[over.match.best.general]: #over.match.best.general
+[over.match.call]: #over.match.call
+[over.match.call.general]: #over.match.call.general
 [over.match.class.deduct]: #over.match.class.deduct
 [over.match.conv]: #over.match.conv
 [over.match.copy]: #over.match.copy
 [over.match.ctor]: #over.match.ctor
 [over.match.funcs]: #over.match.funcs
+[over.match.funcs.general]: #over.match.funcs.general
+[over.match.general]: #over.match.general
 [over.match.list]: #over.match.list
 [over.match.oper]: #over.match.oper
 [over.match.ref]: #over.match.ref
 [over.match.viable]: #over.match.viable
 [over.oper]: #over.oper
+[over.oper.general]: #over.oper.general
 [over.over]: #over.over
+[over.pre]: #over.pre
 [over.ref]: #over.ref
 [over.sub]: #over.sub
 [over.unary]: #over.unary

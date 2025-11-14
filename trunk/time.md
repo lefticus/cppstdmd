@@ -8029,8 +8029,26 @@ library header `<time.h>`.[^1]
 The functions `gmtime` and `localtime` are not required to avoid data
 races [[res.on.data.races]].
 
-<!-- Section link definitions -->
+<!-- Link reference definitions -->
+[basic.lookup.argdep]: basic.md#basic.lookup.argdep
+[cpp17.equalitycomparable]: #cpp17.equalitycomparable
+[cpp17.lessthancomparable]: #cpp17.lessthancomparable
 [ctime.syn]: #ctime.syn
+[dcl.constexpr]: dcl.md#dcl.constexpr
+[filesystems]: input.md#filesystems
+[format.formatter]: text.md#format.formatter
+[format.string]: text.md#format.string
+[formatter.requirements]: text.md#formatter.requirements
+[intro.multithread]: basic.md#intro.multithread
+[lex.charset]: lex.md#lex.charset
+[meta.rqmts]: meta.md#meta.rqmts
+[numeric.requirements]: numerics.md#numeric.requirements
+[over.ics.rank]: over.md#over.ics.rank
+[over.match.class.deduct]: over.md#over.match.class.deduct
+[res.on.data.races]: library.md#res.on.data.races
+[swappable.requirements]: library.md#swappable.requirements
+[temp.deduct]: temp.md#temp.deduct
+[term.unevaluated.operand]: expr.md#term.unevaluated.operand
 [time]: #time
 [time.12]: #time.12
 [time.cal]: #time.cal
@@ -8140,13 +8158,16 @@ races [[res.on.data.races]].
 [time.duration.observer]: #time.duration.observer
 [time.duration.special]: #time.duration.special
 [time.format]: #time.format
+[time.format.spec]: #time.format.spec
 [time.general]: #time.general
 [time.hash]: #time.hash
 [time.hms]: #time.hms
 [time.hms.members]: #time.hms.members
 [time.hms.nonmembers]: #time.hms.nonmembers
 [time.hms.overview]: #time.hms.overview
+[time.hms.width]: #time.hms.width
 [time.parse]: #time.parse
+[time.parse.spec]: #time.parse.spec
 [time.point]: #time.point
 [time.point.arithmetic]: #time.point.arithmetic
 [time.point.cast]: #time.point.cast
@@ -8156,6 +8177,7 @@ races [[res.on.data.races]].
 [time.point.nonmember]: #time.point.nonmember
 [time.point.observer]: #time.point.observer
 [time.point.special]: #time.point.special
+[time.summary]: #time.summary
 [time.syn]: #time.syn
 [time.traits]: #time.traits
 [time.traits.duration.values]: #time.traits.duration.values
@@ -8193,50 +8215,6 @@ races [[res.on.data.races]].
 [time.zone.zonedtime.nonmembers]: #time.zone.zonedtime.nonmembers
 [time.zone.zonedtime.overview]: #time.zone.zonedtime.overview
 [time.zone.zonedtraits]: #time.zone.zonedtraits
-
-<!-- Link reference definitions -->
-[basic.lookup.argdep]: basic.md#basic.lookup.argdep
-[cpp17.equalitycomparable]: #cpp17.equalitycomparable
-[cpp17.lessthancomparable]: #cpp17.lessthancomparable
-[ctime.syn]: #ctime.syn
-[dcl.constexpr]: dcl.md#dcl.constexpr
-[filesystems]: input.md#filesystems
-[format.formatter]: text.md#format.formatter
-[format.string]: text.md#format.string
-[formatter.requirements]: text.md#formatter.requirements
-[intro.multithread]: basic.md#intro.multithread
-[lex.charset]: lex.md#lex.charset
-[meta.rqmts]: meta.md#meta.rqmts
-[numeric.requirements]: numerics.md#numeric.requirements
-[over.ics.rank]: over.md#over.ics.rank
-[over.match.class.deduct]: over.md#over.match.class.deduct
-[res.on.data.races]: library.md#res.on.data.races
-[swappable.requirements]: library.md#swappable.requirements
-[temp.deduct]: temp.md#temp.deduct
-[term.unevaluated.operand]: expr.md#term.unevaluated.operand
-[time.12]: #time.12
-[time.cal]: #time.cal
-[time.clock]: #time.clock
-[time.clock.cast.id]: #time.clock.cast.id
-[time.clock.cast.sys]: #time.clock.cast.sys
-[time.clock.cast.sys.utc]: #time.clock.cast.sys.utc
-[time.clock.cast.utc]: #time.clock.cast.utc
-[time.clock.req]: #time.clock.req
-[time.duration]: #time.duration
-[time.duration.io]: #time.duration.io
-[time.format]: #time.format
-[time.format.spec]: #time.format.spec
-[time.hash]: #time.hash
-[time.hms]: #time.hms
-[time.hms.width]: #time.hms.width
-[time.parse]: #time.parse
-[time.parse.spec]: #time.parse.spec
-[time.point]: #time.point
-[time.point.general]: #time.point.general
-[time.summary]: #time.summary
-[time.syn]: #time.syn
-[time.traits]: #time.traits
-[time.zone]: #time.zone
 [unord.hash]: utilities.md#unord.hash
 
 [^1]: `strftime` supports the C conversion specifiers `C`, `D`, `e`,

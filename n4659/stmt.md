@@ -838,27 +838,6 @@ void f() {
 
 — *end example*]
 
-<!-- Section link definitions -->
-[stmt.ambig]: #stmt.ambig
-[stmt.block]: #stmt.block
-[stmt.break]: #stmt.break
-[stmt.cont]: #stmt.cont
-[stmt.dcl]: #stmt.dcl
-[stmt.do]: #stmt.do
-[stmt.expr]: #stmt.expr
-[stmt.for]: #stmt.for
-[stmt.goto]: #stmt.goto
-[stmt.if]: #stmt.if
-[stmt.iter]: #stmt.iter
-[stmt.jump]: #stmt.jump
-[stmt.label]: #stmt.label
-[stmt.ranged]: #stmt.ranged
-[stmt.return]: #stmt.return
-[stmt.select]: #stmt.select
-[stmt.stmt]: #stmt.stmt
-[stmt.switch]: #stmt.switch
-[stmt.while]: #stmt.while
-
 <!-- Link reference definitions -->
 [basic.def.odr]: basic.md#basic.def.odr
 [basic.lookup.argdep]: basic.md#basic.lookup.argdep
@@ -884,12 +863,21 @@ void f() {
 [expr]: expr.md#expr
 [expr.const]: expr.md#expr.const
 [expr.type.conv]: expr.md#expr.type.conv
+[stmt.ambig]: #stmt.ambig
+[stmt.block]: #stmt.block
 [stmt.break]: #stmt.break
+[stmt.cont]: #stmt.cont
 [stmt.dcl]: #stmt.dcl
+[stmt.do]: #stmt.do
+[stmt.expr]: #stmt.expr
+[stmt.for]: #stmt.for
 [stmt.goto]: #stmt.goto
+[stmt.if]: #stmt.if
 [stmt.iter]: #stmt.iter
 [stmt.jump]: #stmt.jump
 [stmt.label]: #stmt.label
+[stmt.ranged]: #stmt.ranged
+[stmt.return]: #stmt.return
 [stmt.select]: #stmt.select
 [stmt.stmt]: #stmt.stmt
 [stmt.switch]: #stmt.switch

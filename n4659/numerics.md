@@ -7104,9 +7104,14 @@ respective arguments `n` and `x`.
 
 See also [[sf.cmath.cyl_neumann]].
 
-<!-- Section link definitions -->
+<!-- Link reference definitions -->
 [accumulate]: #accumulate
 [adjacent.difference]: #adjacent.difference
+[algorithms]: algorithms.md#algorithms
+[bad.alloc]: language.md#bad.alloc
+[basic.fundamental]: basic.md#basic.fundamental
+[basic.stc.thread]: basic.md#basic.stc.thread
+[basic.types]: basic.md#basic.types
 [c.math]: #c.math
 [c.math.abs]: #c.math.abs
 [c.math.fpclass]: #c.math.fpclass
@@ -7131,17 +7136,30 @@ See also [[sf.cmath.cyl_neumann]].
 [complex.transcendentals]: #complex.transcendentals
 [complex.value.ops]: #complex.value.ops
 [cons.slice]: #cons.slice
+[conv.prom]: conv.md#conv.prom
+[cpp.pragma]: cpp.md#cpp.pragma
+[cstdlib.syn]: language.md#cstdlib.syn
+[dcl.array]: dcl.md#dcl.array
+[dcl.init]: dcl.md#dcl.init
 [exclusive.scan]: #exclusive.scan
+[function.objects]: utilities.md#function.objects
 [gslice.access]: #gslice.access
 [gslice.array.assign]: #gslice.array.assign
 [gslice.array.comp.assign]: #gslice.array.comp.assign
 [gslice.array.fill]: #gslice.array.fill
 [gslice.cons]: #gslice.cons
+[implimits]: #implimits
 [inclusive.scan]: #inclusive.scan
 [indirect.array.assign]: #indirect.array.assign
 [indirect.array.comp.assign]: #indirect.array.comp.assign
 [indirect.array.fill]: #indirect.array.fill
 [inner.product]: #inner.product
+[input.iterators]: iterators.md#input.iterators
+[input.output]: input.md#input.output
+[iostate.flags]: input.md#iostate.flags
+[istream.formatted]: input.md#istream.formatted
+[iterator.requirements.general]: iterators.md#iterator.requirements.general
+[library.c]: library.md#library.c
 [mask.array.assign]: #mask.array.assign
 [mask.array.comp.assign]: #mask.array.comp.assign
 [mask.array.fill]: #mask.array.fill
@@ -7155,6 +7173,7 @@ See also [[sf.cmath.cyl_neumann]].
 [numerics]: #numerics
 [numerics.defns]: #numerics.defns
 [numerics.general]: #numerics.general
+[output.iterators]: iterators.md#output.iterators
 [partial.sum]: #partial.sum
 [rand]: #rand
 [rand.adapt]: #rand.adapt
@@ -7206,7 +7225,9 @@ See also [[sf.cmath.cyl_neumann]].
 [rand.util]: #rand.util
 [rand.util.canonical]: #rand.util.canonical
 [rand.util.seedseq]: #rand.util.seedseq
+[random.access.iterators]: iterators.md#random.access.iterators
 [reduce]: #reduce
+[res.on.data.races]: library.md#res.on.data.races
 [sf.cmath]: #sf.cmath
 [sf.cmath.assoc_laguerre]: #sf.cmath.assoc_laguerre
 [sf.cmath.assoc_legendre]: #sf.cmath.assoc_legendre
@@ -7233,6 +7254,18 @@ See also [[sf.cmath.cyl_neumann]].
 [slice.arr.assign]: #slice.arr.assign
 [slice.arr.comp.assign]: #slice.arr.comp.assign
 [slice.arr.fill]: #slice.arr.fill
+[strings]: strings.md#strings
+[tab:RandomDistribution]: #tab:RandomDistribution
+[tab:RandomEngine]: #tab:RandomEngine
+[tab:SeedSequence]: #tab:SeedSequence
+[tab:UniformRandomBitGenerator]: #tab:UniformRandomBitGenerator
+[tab:copyassignable]: #tab:copyassignable
+[tab:copyconstructible]: #tab:copyconstructible
+[tab:equalitycomparable]: #tab:equalitycomparable
+[tab:iterator.input.requirements]: #tab:iterator.input.requirements
+[tab:moveassignable]: #tab:moveassignable
+[tab:moveconstructible]: #tab:moveconstructible
+[tab:numerics.lib.summary]: #tab:numerics.lib.summary
 [template.gslice.array]: #template.gslice.array
 [template.gslice.array.overview]: #template.gslice.array.overview
 [template.indirect.array]: #template.indirect.array
@@ -7243,6 +7276,7 @@ See also [[sf.cmath.cyl_neumann]].
 [template.slice.array.overview]: #template.slice.array.overview
 [template.valarray]: #template.valarray
 [template.valarray.overview]: #template.valarray.overview
+[thread.thread.class]: thread.md#thread.thread.class
 [transform.exclusive.scan]: #transform.exclusive.scan
 [transform.inclusive.scan]: #transform.inclusive.scan
 [transform.reduce]: #transform.reduce
@@ -7260,72 +7294,6 @@ See also [[sf.cmath.cyl_neumann]].
 [valarray.syn]: #valarray.syn
 [valarray.transcend]: #valarray.transcend
 [valarray.unary]: #valarray.unary
-
-<!-- Link reference definitions -->
-[algorithms]: algorithms.md#algorithms
-[bad.alloc]: language.md#bad.alloc
-[basic.fundamental]: basic.md#basic.fundamental
-[basic.stc.thread]: basic.md#basic.stc.thread
-[basic.types]: basic.md#basic.types
-[c.math]: #c.math
-[c.math.hypot3]: #c.math.hypot3
-[cfenv]: #cfenv
-[cmath.syn]: #cmath.syn
-[complex.numbers]: #complex.numbers
-[conv.prom]: conv.md#conv.prom
-[cpp.pragma]: cpp.md#cpp.pragma
-[cstdlib.syn]: language.md#cstdlib.syn
-[dcl.array]: dcl.md#dcl.array
-[dcl.init]: dcl.md#dcl.init
-[function.objects]: utilities.md#function.objects
-[implimits]: #implimits
-[input.iterators]: iterators.md#input.iterators
-[input.output]: input.md#input.output
-[iostate.flags]: input.md#iostate.flags
-[istream.formatted]: input.md#istream.formatted
-[iterator.requirements.general]: iterators.md#iterator.requirements.general
-[library.c]: library.md#library.c
-[numarray]: #numarray
-[numeric.ops]: #numeric.ops
-[numeric.requirements]: #numeric.requirements
-[numerics.defns]: #numerics.defns
-[output.iterators]: iterators.md#output.iterators
-[rand]: #rand
-[rand.adapt]: #rand.adapt
-[rand.dist]: #rand.dist
-[rand.eng]: #rand.eng
-[rand.eng.lcong]: #rand.eng.lcong
-[rand.req.adapt]: #rand.req.adapt
-[rand.req.dist]: #rand.req.dist
-[rand.req.eng]: #rand.req.eng
-[rand.req.seedseq]: #rand.req.seedseq
-[rand.req.urng]: #rand.req.urng
-[rand.util.canonical]: #rand.util.canonical
-[random.access.iterators]: iterators.md#random.access.iterators
-[res.on.data.races]: library.md#res.on.data.races
-[sf.cmath]: #sf.cmath
-[sf.cmath.assoc_legendre]: #sf.cmath.assoc_legendre
-[sf.cmath.cyl_bessel_i]: #sf.cmath.cyl_bessel_i
-[sf.cmath.cyl_bessel_j]: #sf.cmath.cyl_bessel_j
-[sf.cmath.cyl_neumann]: #sf.cmath.cyl_neumann
-[sf.cmath.ellint_1]: #sf.cmath.ellint_1
-[sf.cmath.ellint_2]: #sf.cmath.ellint_2
-[sf.cmath.ellint_3]: #sf.cmath.ellint_3
-[strings]: strings.md#strings
-[tab:RandomDistribution]: #tab:RandomDistribution
-[tab:RandomEngine]: #tab:RandomEngine
-[tab:SeedSequence]: #tab:SeedSequence
-[tab:UniformRandomBitGenerator]: #tab:UniformRandomBitGenerator
-[tab:copyassignable]: #tab:copyassignable
-[tab:copyconstructible]: #tab:copyconstructible
-[tab:equalitycomparable]: #tab:equalitycomparable
-[tab:iterator.input.requirements]: #tab:iterator.input.requirements
-[tab:moveassignable]: #tab:moveassignable
-[tab:moveconstructible]: #tab:moveconstructible
-[tab:numerics.lib.summary]: #tab:numerics.lib.summary
-[thread.thread.class]: thread.md#thread.thread.class
-[valarray.members]: #valarray.members
-[valarray.range]: #valarray.range
 [vector]: containers.md#vector
 
 [^1]: In other words, value types. These include arithmetic types,

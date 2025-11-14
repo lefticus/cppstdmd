@@ -1998,7 +1998,23 @@ atomic<int> v = ATOMIC_VAR_INIT(5);
 
 — *end example*]
 
-<!-- Section link definitions -->
+<!-- Link reference definitions -->
+[atomics.order]: thread.md#atomics.order
+[atomics.types.generic]: thread.md#atomics.types.generic
+[atomics.types.operations]: thread.md#atomics.types.operations
+[basic.link]: basic.md#basic.link
+[basic.types]: basic.md#basic.types
+[cerrno.syn]: diagnostics.md#cerrno.syn
+[class.copy.assign]: class.md#class.copy.assign
+[class.copy.ctor]: class.md#class.copy.ctor
+[class.dtor]: class.md#class.dtor
+[cpp17.equalitycomparable]: #cpp17.equalitycomparable
+[cpp17.lessthancomparable]: #cpp17.lessthancomparable
+[dcl.attr.deprecated]: dcl.md#dcl.attr.deprecated
+[dcl.fct]: dcl.md#dcl.fct
+[dcl.fct.def.delete]: dcl.md#dcl.fct.def.delete
+[dcl.struct.bind]: dcl.md#dcl.struct.bind
+[default.allocator]: mem.md#default.allocator
 [depr.arith.conv.enum]: #depr.arith.conv.enum
 [depr.array.comp]: #depr.array.comp
 [depr.atomics]: #depr.atomics
@@ -2050,38 +2066,19 @@ atomic<int> v = ATOMIC_VAR_INIT(5);
 [depr.strstream.syn]: #depr.strstream.syn
 [depr.strstreambuf]: #depr.strstreambuf
 [depr.strstreambuf.cons]: #depr.strstreambuf.cons
+[depr.strstreambuf.cons.alloc]: #depr.strstreambuf.cons.alloc
+[depr.strstreambuf.cons.ptr]: #depr.strstreambuf.cons.ptr
+[depr.strstreambuf.cons.sz]: #depr.strstreambuf.cons.sz
 [depr.strstreambuf.general]: #depr.strstreambuf.general
 [depr.strstreambuf.members]: #depr.strstreambuf.members
+[depr.strstreambuf.seekoff.newoff]: #depr.strstreambuf.seekoff.newoff
+[depr.strstreambuf.seekoff.pos]: #depr.strstreambuf.seekoff.pos
 [depr.strstreambuf.virtuals]: #depr.strstreambuf.virtuals
 [depr.template.template]: #depr.template.template
 [depr.tuple]: #depr.tuple
 [depr.util.smartptr.shared.atomic]: #depr.util.smartptr.shared.atomic
 [depr.variant]: #depr.variant
 [depr.volatile.type]: #depr.volatile.type
-
-<!-- Link reference definitions -->
-[atomics.order]: thread.md#atomics.order
-[atomics.types.generic]: thread.md#atomics.types.generic
-[atomics.types.operations]: thread.md#atomics.types.operations
-[basic.link]: basic.md#basic.link
-[basic.types]: basic.md#basic.types
-[cerrno.syn]: diagnostics.md#cerrno.syn
-[class.copy.assign]: class.md#class.copy.assign
-[class.copy.ctor]: class.md#class.copy.ctor
-[class.dtor]: class.md#class.dtor
-[cpp17.equalitycomparable]: #cpp17.equalitycomparable
-[cpp17.lessthancomparable]: #cpp17.lessthancomparable
-[dcl.attr.deprecated]: dcl.md#dcl.attr.deprecated
-[dcl.fct]: dcl.md#dcl.fct
-[dcl.fct.def.delete]: dcl.md#dcl.fct.def.delete
-[dcl.struct.bind]: dcl.md#dcl.struct.bind
-[default.allocator]: mem.md#default.allocator
-[depr.strstreambuf.cons.alloc]: #depr.strstreambuf.cons.alloc
-[depr.strstreambuf.cons.ptr]: #depr.strstreambuf.cons.ptr
-[depr.strstreambuf.cons.sz]: #depr.strstreambuf.cons.sz
-[depr.strstreambuf.seekoff.newoff]: #depr.strstreambuf.seekoff.newoff
-[depr.strstreambuf.seekoff.pos]: #depr.strstreambuf.seekoff.pos
-[depr.strstreambuf.virtuals]: #depr.strstreambuf.virtuals
 [expr.arith.conv]: expr.md#expr.arith.conv
 [expr.ass]: expr.md#expr.ass
 [expr.eq]: expr.md#expr.eq

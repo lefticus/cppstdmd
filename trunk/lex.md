@@ -1619,33 +1619,6 @@ int main() {
 
 — *end example*]
 
-<!-- Section link definitions -->
-[lex]: #lex
-[lex.bool]: #lex.bool
-[lex.ccon]: #lex.ccon
-[lex.char]: #lex.char
-[lex.charset]: #lex.charset
-[lex.comment]: #lex.comment
-[lex.digraph]: #lex.digraph
-[lex.ext]: #lex.ext
-[lex.fcon]: #lex.fcon
-[lex.header]: #lex.header
-[lex.icon]: #lex.icon
-[lex.key]: #lex.key
-[lex.literal]: #lex.literal
-[lex.literal.kinds]: #lex.literal.kinds
-[lex.name]: #lex.name
-[lex.nullptr]: #lex.nullptr
-[lex.operators]: #lex.operators
-[lex.phases]: #lex.phases
-[lex.ppnumber]: #lex.ppnumber
-[lex.pptoken]: #lex.pptoken
-[lex.separate]: #lex.separate
-[lex.string]: #lex.string
-[lex.string.uneval]: #lex.string.uneval
-[lex.token]: #lex.token
-[lex.universal.char]: #lex.universal.char
-
 <!-- Link reference definitions -->
 [basic.extended.fp]: basic.md#basic.extended.fp
 [basic.fundamental]: basic.md#basic.fundamental
@@ -1674,14 +1647,18 @@ int main() {
 [expr.prim.literal]: expr.md#expr.prim.literal
 [headers]: library.md#headers
 [intro.object]: basic.md#intro.object
+[lex]: #lex
+[lex.bool]: #lex.bool
 [lex.ccon]: #lex.ccon
 [lex.ccon.esc]: #lex.ccon.esc
 [lex.ccon.literal]: #lex.ccon.literal
+[lex.char]: #lex.char
 [lex.charset]: #lex.charset
 [lex.charset.basic]: #lex.charset.basic
 [lex.charset.literal]: #lex.charset.literal
 [lex.comment]: #lex.comment
 [lex.digraph]: #lex.digraph
+[lex.ext]: #lex.ext
 [lex.fcon]: #lex.fcon
 [lex.fcon.type]: #lex.fcon.type
 [lex.header]: #lex.header
@@ -1690,12 +1667,20 @@ int main() {
 [lex.icon.type]: #lex.icon.type
 [lex.key]: #lex.key
 [lex.key.digraph]: #lex.key.digraph
+[lex.literal]: #lex.literal
+[lex.literal.kinds]: #lex.literal.kinds
+[lex.name]: #lex.name
 [lex.name.special]: #lex.name.special
+[lex.nullptr]: #lex.nullptr
+[lex.operators]: #lex.operators
 [lex.phases]: #lex.phases
+[lex.ppnumber]: #lex.ppnumber
 [lex.pptoken]: #lex.pptoken
+[lex.separate]: #lex.separate
 [lex.string]: #lex.string
 [lex.string.concat]: #lex.string.concat
 [lex.string.literal]: #lex.string.literal
+[lex.string.uneval]: #lex.string.uneval
 [lex.token]: #lex.token
 [lex.universal.char]: #lex.universal.char
 [module.import]: module.md#module.import

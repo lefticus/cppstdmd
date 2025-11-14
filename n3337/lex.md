@@ -1154,7 +1154,23 @@ Some *identifier*s appearing as *ud-suffix*es are reserved for future
 standardization ([[usrlit.suffix]]). A program containing such a
 *ud-suffix* is ill-formed, no diagnostic required.
 
-<!-- Section link definitions -->
+<!-- Link reference definitions -->
+[basic.fundamental]: basic.md#basic.fundamental
+[basic.link]: basic.md#basic.link
+[basic.lookup.unqual]: basic.md#basic.lookup.unqual
+[basic.stc]: basic.md#basic.stc
+[charname.allowed]: charname.md#charname.allowed
+[charname.disallowed]: charname.md#charname.disallowed
+[conv.mem]: conv.md#conv.mem
+[conv.ptr]: conv.md#conv.ptr
+[cpp]: cpp.md#cpp
+[cpp.concat]: cpp.md#cpp.concat
+[cpp.cond]: cpp.md#cpp.cond
+[cpp.include]: cpp.md#cpp.include
+[cpp.stringize]: cpp.md#cpp.stringize
+[dcl.attr.grammar]: dcl.md#dcl.attr.grammar
+[global.names]: library.md#global.names
+[headers]: library.md#headers
 [lex]: #lex
 [lex.bool]: #lex.bool
 [lex.ccon]: #lex.ccon
@@ -1175,35 +1191,6 @@ standardization ([[usrlit.suffix]]). A program containing such a
 [lex.ppnumber]: #lex.ppnumber
 [lex.pptoken]: #lex.pptoken
 [lex.separate]: #lex.separate
-[lex.string]: #lex.string
-[lex.token]: #lex.token
-[lex.trigraph]: #lex.trigraph
-
-<!-- Link reference definitions -->
-[basic.fundamental]: basic.md#basic.fundamental
-[basic.link]: basic.md#basic.link
-[basic.lookup.unqual]: basic.md#basic.lookup.unqual
-[basic.stc]: basic.md#basic.stc
-[charname.allowed]: charname.md#charname.allowed
-[charname.disallowed]: charname.md#charname.disallowed
-[conv.mem]: conv.md#conv.mem
-[conv.ptr]: conv.md#conv.ptr
-[cpp]: cpp.md#cpp
-[cpp.concat]: cpp.md#cpp.concat
-[cpp.cond]: cpp.md#cpp.cond
-[cpp.include]: cpp.md#cpp.include
-[cpp.stringize]: cpp.md#cpp.stringize
-[dcl.attr.grammar]: dcl.md#dcl.attr.grammar
-[global.names]: library.md#global.names
-[headers]: library.md#headers
-[lex.ccon]: #lex.ccon
-[lex.charset]: #lex.charset
-[lex.comment]: #lex.comment
-[lex.digraph]: #lex.digraph
-[lex.fcon]: #lex.fcon
-[lex.icon]: #lex.icon
-[lex.phases]: #lex.phases
-[lex.pptoken]: #lex.pptoken
 [lex.string]: #lex.string
 [lex.token]: #lex.token
 [lex.trigraph]: #lex.trigraph

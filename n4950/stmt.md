@@ -970,32 +970,6 @@ void f() {
 
 — *end example*]
 
-<!-- Section link definitions -->
-[stmt.ambig]: #stmt.ambig
-[stmt.block]: #stmt.block
-[stmt.break]: #stmt.break
-[stmt.cont]: #stmt.cont
-[stmt.dcl]: #stmt.dcl
-[stmt.do]: #stmt.do
-[stmt.expr]: #stmt.expr
-[stmt.for]: #stmt.for
-[stmt.goto]: #stmt.goto
-[stmt.if]: #stmt.if
-[stmt.iter]: #stmt.iter
-[stmt.iter.general]: #stmt.iter.general
-[stmt.jump]: #stmt.jump
-[stmt.jump.general]: #stmt.jump.general
-[stmt.label]: #stmt.label
-[stmt.pre]: #stmt.pre
-[stmt.ranged]: #stmt.ranged
-[stmt.return]: #stmt.return
-[stmt.return.coroutine]: #stmt.return.coroutine
-[stmt.select]: #stmt.select
-[stmt.select.general]: #stmt.select.general
-[stmt.stmt]: #stmt.stmt
-[stmt.switch]: #stmt.switch
-[stmt.while]: #stmt.while
-
 <!-- Link reference definitions -->
 [basic.life]: basic.md#basic.life
 [basic.lookup.argdep]: basic.md#basic.lookup.argdep
@@ -1025,16 +999,28 @@ void f() {
 [expr.const]: expr.md#expr.const
 [expr.context]: expr.md#expr.context
 [expr.type.conv]: expr.md#expr.type.conv
+[stmt.ambig]: #stmt.ambig
+[stmt.block]: #stmt.block
 [stmt.break]: #stmt.break
+[stmt.cont]: #stmt.cont
 [stmt.dcl]: #stmt.dcl
+[stmt.do]: #stmt.do
+[stmt.expr]: #stmt.expr
+[stmt.for]: #stmt.for
 [stmt.goto]: #stmt.goto
 [stmt.if]: #stmt.if
 [stmt.iter]: #stmt.iter
+[stmt.iter.general]: #stmt.iter.general
 [stmt.jump]: #stmt.jump
+[stmt.jump.general]: #stmt.jump.general
 [stmt.label]: #stmt.label
 [stmt.pre]: #stmt.pre
+[stmt.ranged]: #stmt.ranged
 [stmt.return]: #stmt.return
+[stmt.return.coroutine]: #stmt.return.coroutine
 [stmt.select]: #stmt.select
+[stmt.select.general]: #stmt.select.general
+[stmt.stmt]: #stmt.stmt
 [stmt.switch]: #stmt.switch
 [stmt.while]: #stmt.while
 [support.start.term]: support.md#support.start.term

@@ -6387,7 +6387,8 @@ otherwise
 a.outer_allocator() == b.outer_allocator() && a.inner_allocator() == b.inner_allocator()
 ```
 
-<!-- Section link definitions -->
+<!-- Link reference definitions -->
+[alg.sorting]: algorithms.md#alg.sorting
 [allocator.adaptor]: #allocator.adaptor
 [allocator.adaptor.cnstr]: #allocator.adaptor.cnstr
 [allocator.adaptor.members]: #allocator.adaptor.members
@@ -6395,6 +6396,8 @@ a.outer_allocator() == b.outer_allocator() && a.inner_allocator() == b.inner_all
 [allocator.adaptor.types]: #allocator.adaptor.types
 [allocator.globals]: #allocator.globals
 [allocator.members]: #allocator.members
+[allocator.requirements.completeness]: library.md#allocator.requirements.completeness
+[allocator.requirements.general]: library.md#allocator.requirements.general
 [allocator.tag]: #allocator.tag
 [allocator.traits]: #allocator.traits
 [allocator.traits.general]: #allocator.traits.general
@@ -6404,9 +6407,24 @@ a.outer_allocator() == b.outer_allocator() && a.inner_allocator() == b.inner_all
 [allocator.uses]: #allocator.uses
 [allocator.uses.construction]: #allocator.uses.construction
 [allocator.uses.trait]: #allocator.uses.trait
+[basic.align]: basic.md#basic.align
+[basic.compound]: basic.md#basic.compound
+[basic.life]: basic.md#basic.life
+[basic.stc.dynamic.allocation]: basic.md#basic.stc.dynamic.allocation
+[bit.cast]: utilities.md#bit.cast
 [c.malloc]: #c.malloc
+[container.reqmts]: containers.md#container.reqmts
+[conv.qual]: expr.md#conv.qual
+[cpp17.defaultconstructible]: #cpp17.defaultconstructible
+[cpp17.destructible]: #cpp17.destructible
+[cpp17.moveassignable]: #cpp17.moveassignable
+[cpp17.moveconstructible]: #cpp17.moveconstructible
+[cpp17.nullablepointer]: #cpp17.nullablepointer
 [default.allocator]: #default.allocator
 [default.allocator.general]: #default.allocator.general
+[defns.const.subexpr]: intro.md#defns.const.subexpr
+[expr.eq]: expr.md#expr.eq
+[function.objects]: utilities.md#function.objects
 [indirect]: #indirect
 [indirect.assign]: #indirect.assign
 [indirect.comp.with.t]: #indirect.comp.with.t
@@ -6420,6 +6438,9 @@ a.outer_allocator() == b.outer_allocator() && a.inner_allocator() == b.inner_all
 [indirect.syn]: #indirect.syn
 [inout.ptr]: #inout.ptr
 [inout.ptr.t]: #inout.ptr.t
+[intro.multithread]: basic.md#intro.multithread
+[intro.object]: basic.md#intro.object
+[intro.races]: basic.md#intro.races
 [mem]: #mem
 [mem.composite.types]: #mem.composite.types
 [mem.general]: #mem.general
@@ -6445,9 +6466,12 @@ a.outer_allocator() == b.outer_allocator() && a.inner_allocator() == b.inner_all
 [mem.res.private]: #mem.res.private
 [mem.res.public]: #mem.res.public
 [mem.res.syn]: #mem.res.syn
+[mem.summary]: #mem.summary
 [memory]: #memory
 [memory.general]: #memory.general
 [memory.syn]: #memory.syn
+[meta.rqmts]: meta.md#meta.rqmts
+[new.delete]: support.md#new.delete
 [obj.lifetime]: #obj.lifetime
 [out.ptr]: #out.ptr
 [out.ptr.t]: #out.ptr.t
@@ -6470,6 +6494,14 @@ a.outer_allocator() == b.outer_allocator() && a.inner_allocator() == b.inner_all
 [smartptr]: #smartptr
 [smartptr.adapt]: #smartptr.adapt
 [specialized.addressof]: #specialized.addressof
+[specialized.algorithms]: algorithms.md#specialized.algorithms
+[stmt.dcl]: stmt.md#stmt.dcl
+[swappable.requirements]: library.md#swappable.requirements
+[temp.deduct]: temp.md#temp.deduct
+[term.implicit.lifetime.type]: basic.md#term.implicit.lifetime.type
+[term.incomplete.type]: basic.md#term.incomplete.type
+[term.trivially.copyable.type]: basic.md#term.trivially.copyable.type
+[tuple]: utilities.md#tuple
 [unique.ptr]: #unique.ptr
 [unique.ptr.create]: #unique.ptr.create
 [unique.ptr.dltr]: #unique.ptr.dltr
@@ -6492,6 +6524,7 @@ a.outer_allocator() == b.outer_allocator() && a.inner_allocator() == b.inner_all
 [unique.ptr.single.modifiers]: #unique.ptr.single.modifiers
 [unique.ptr.single.observers]: #unique.ptr.single.observers
 [unique.ptr.special]: #unique.ptr.special
+[unord.hash]: utilities.md#unord.hash
 [util.sharedptr]: #util.sharedptr
 [util.smartptr.enab]: #util.smartptr.enab
 [util.smartptr.getdeleter]: #util.smartptr.getdeleter
@@ -6520,57 +6553,3 @@ a.outer_allocator() == b.outer_allocator() && a.inner_allocator() == b.inner_all
 [util.smartptr.weak.mod]: #util.smartptr.weak.mod
 [util.smartptr.weak.obs]: #util.smartptr.weak.obs
 [util.smartptr.weak.spec]: #util.smartptr.weak.spec
-
-<!-- Link reference definitions -->
-[alg.sorting]: algorithms.md#alg.sorting
-[allocator.adaptor]: #allocator.adaptor
-[allocator.requirements.completeness]: library.md#allocator.requirements.completeness
-[allocator.requirements.general]: library.md#allocator.requirements.general
-[allocator.uses.construction]: #allocator.uses.construction
-[basic.align]: basic.md#basic.align
-[basic.compound]: basic.md#basic.compound
-[basic.life]: basic.md#basic.life
-[basic.stc.dynamic.allocation]: basic.md#basic.stc.dynamic.allocation
-[bit.cast]: utilities.md#bit.cast
-[container.reqmts]: containers.md#container.reqmts
-[conv.qual]: expr.md#conv.qual
-[cpp17.defaultconstructible]: #cpp17.defaultconstructible
-[cpp17.destructible]: #cpp17.destructible
-[cpp17.moveassignable]: #cpp17.moveassignable
-[cpp17.moveconstructible]: #cpp17.moveconstructible
-[cpp17.nullablepointer]: #cpp17.nullablepointer
-[defns.const.subexpr]: intro.md#defns.const.subexpr
-[expr.eq]: expr.md#expr.eq
-[function.objects]: utilities.md#function.objects
-[indirect.ctor]: #indirect.ctor
-[intro.multithread]: basic.md#intro.multithread
-[intro.object]: basic.md#intro.object
-[intro.races]: basic.md#intro.races
-[mem.composite.types]: #mem.composite.types
-[mem.res]: #mem.res
-[mem.res.class]: #mem.res.class
-[mem.res.monotonic.buffer]: #mem.res.monotonic.buffer
-[mem.summary]: #mem.summary
-[memory]: #memory
-[memory.general]: #memory.general
-[meta.rqmts]: meta.md#meta.rqmts
-[new.delete]: support.md#new.delete
-[pointer.conversion]: #pointer.conversion
-[pointer.traits]: #pointer.traits
-[pointer.traits.functions]: #pointer.traits.functions
-[pointer.traits.optmem]: #pointer.traits.optmem
-[polymorphic.ctor]: #polymorphic.ctor
-[smartptr]: #smartptr
-[specialized.addressof]: #specialized.addressof
-[specialized.algorithms]: algorithms.md#specialized.algorithms
-[stmt.dcl]: stmt.md#stmt.dcl
-[swappable.requirements]: library.md#swappable.requirements
-[temp.deduct]: temp.md#temp.deduct
-[term.implicit.lifetime.type]: basic.md#term.implicit.lifetime.type
-[term.incomplete.type]: basic.md#term.incomplete.type
-[term.trivially.copyable.type]: basic.md#term.trivially.copyable.type
-[tuple]: utilities.md#tuple
-[unique.ptr]: #unique.ptr
-[unord.hash]: utilities.md#unord.hash
-[util.smartptr.enab]: #util.smartptr.enab
-[util.smartptr.shared.mod]: #util.smartptr.shared.mod

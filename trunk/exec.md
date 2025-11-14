@@ -6956,7 +6956,16 @@ the beginning of the evaluation of one of the expressions below.
 temporary storage for the duration of the operation launched by this
 call.
 
-<!-- Section link definitions -->
+<!-- Link reference definitions -->
+[algorithms.parallel.exec]: algorithms.md#algorithms.parallel.exec
+[allocator.requirements.general]: library.md#allocator.requirements.general
+[basic.def.odr]: basic.md#basic.def.odr
+[concepts.equality]: concepts.md#concepts.equality
+[customization.point.object]: library.md#customization.point.object
+[dcl.init]: dcl.md#dcl.init
+[dcl.struct.bind]: dcl.md#dcl.struct.bind
+[defns.block]: intro.md#defns.block
+[except.terminate]: except.md#except.terminate
 [exec]: #exec
 [exec.adapt]: #exec.adapt
 [exec.adapt.general]: #exec.adapt.general
@@ -7000,6 +7009,7 @@ call.
 [exec.opstate.general]: #exec.opstate.general
 [exec.opstate.start]: #exec.opstate.start
 [exec.par.scheduler]: #exec.par.scheduler
+[exec.pos]: #exec.pos
 [exec.prop]: #exec.prop
 [exec.queries]: #exec.queries
 [exec.queryable]: #exec.queryable
@@ -7040,6 +7050,7 @@ call.
 [exec.stop.when]: #exec.stop.when
 [exec.stopped.err]: #exec.stopped.err
 [exec.stopped.opt]: #exec.stopped.opt
+[exec.summary]: #exec.summary
 [exec.sync.wait]: #exec.sync.wait
 [exec.sync.wait.var]: #exec.sync.wait.var
 [exec.sysctxrepl]: #exec.sysctxrepl
@@ -7055,41 +7066,6 @@ call.
 [exec.with.awaitable.senders]: #exec.with.awaitable.senders
 [exec.write.env]: #exec.write.env
 [execution.syn]: #execution.syn
-[task.class]: #task.class
-[task.members]: #task.members
-[task.overview]: #task.overview
-[task.promise]: #task.promise
-[task.state]: #task.state
-
-<!-- Link reference definitions -->
-[algorithms.parallel.exec]: algorithms.md#algorithms.parallel.exec
-[allocator.requirements.general]: library.md#allocator.requirements.general
-[basic.def.odr]: basic.md#basic.def.odr
-[concepts.equality]: concepts.md#concepts.equality
-[customization.point.object]: library.md#customization.point.object
-[dcl.init]: dcl.md#dcl.init
-[dcl.struct.bind]: dcl.md#dcl.struct.bind
-[defns.block]: intro.md#defns.block
-[except.terminate]: except.md#except.terminate
-[exec]: #exec
-[exec.adapt]: #exec.adapt
-[exec.adapt.obj]: #exec.adapt.obj
-[exec.async.ops]: #exec.async.ops
-[exec.bulk]: #exec.bulk
-[exec.cmplsig]: #exec.cmplsig
-[exec.coro.util]: #exec.coro.util
-[exec.counting.scopes]: #exec.counting.scopes
-[exec.factories]: #exec.factories
-[exec.fwd.env]: #exec.fwd.env
-[exec.general]: #exec.general
-[exec.opstate]: #exec.opstate
-[exec.pos]: #exec.pos
-[exec.queryable]: #exec.queryable
-[exec.recv]: #exec.recv
-[exec.sched]: #exec.sched
-[exec.snd]: #exec.snd
-[exec.snd.expos]: #exec.snd.expos
-[exec.summary]: #exec.summary
 [expr.await]: expr.md#expr.await
 [expr.const]: expr.md#expr.const
 [func.def]: utilities.md#func.def
@@ -7100,5 +7076,10 @@ call.
 [intro.races]: basic.md#intro.races
 [meta.trans.other]: meta.md#meta.trans.other
 [namespace.std]: library.md#namespace.std
+[task.class]: #task.class
+[task.members]: #task.members
+[task.overview]: #task.overview
+[task.promise]: #task.promise
+[task.state]: #task.state
 [term.replaceable.function]: dcl.md#term.replaceable.function
 [thread.req.lockable.general]: thread.md#thread.req.lockable.general

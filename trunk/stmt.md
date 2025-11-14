@@ -1266,34 +1266,6 @@ void f(S s) {
 
 — *end example*]
 
-<!-- Section link definitions -->
-[stmt]: #stmt
-[stmt.ambig]: #stmt.ambig
-[stmt.block]: #stmt.block
-[stmt.break]: #stmt.break
-[stmt.cont]: #stmt.cont
-[stmt.contract.assert]: #stmt.contract.assert
-[stmt.dcl]: #stmt.dcl
-[stmt.do]: #stmt.do
-[stmt.expand]: #stmt.expand
-[stmt.expr]: #stmt.expr
-[stmt.for]: #stmt.for
-[stmt.goto]: #stmt.goto
-[stmt.if]: #stmt.if
-[stmt.iter]: #stmt.iter
-[stmt.iter.general]: #stmt.iter.general
-[stmt.jump]: #stmt.jump
-[stmt.jump.general]: #stmt.jump.general
-[stmt.label]: #stmt.label
-[stmt.pre]: #stmt.pre
-[stmt.ranged]: #stmt.ranged
-[stmt.return]: #stmt.return
-[stmt.return.coroutine]: #stmt.return.coroutine
-[stmt.select]: #stmt.select
-[stmt.select.general]: #stmt.select.general
-[stmt.switch]: #stmt.switch
-[stmt.while]: #stmt.while
-
 <!-- Link reference definitions -->
 [basic.contract]: basic.md#basic.contract
 [basic.contract.eval]: basic.md#basic.contract.eval
@@ -1332,18 +1304,30 @@ void f(S s) {
 [expr.type.conv]: expr.md#expr.type.conv
 [intro.execution]: basic.md#intro.execution
 [meta.rel]: meta.md#meta.rel
+[stmt]: #stmt
+[stmt.ambig]: #stmt.ambig
+[stmt.block]: #stmt.block
 [stmt.break]: #stmt.break
+[stmt.cont]: #stmt.cont
+[stmt.contract.assert]: #stmt.contract.assert
 [stmt.dcl]: #stmt.dcl
+[stmt.do]: #stmt.do
 [stmt.expand]: #stmt.expand
+[stmt.expr]: #stmt.expr
+[stmt.for]: #stmt.for
 [stmt.goto]: #stmt.goto
 [stmt.if]: #stmt.if
 [stmt.iter]: #stmt.iter
+[stmt.iter.general]: #stmt.iter.general
 [stmt.jump]: #stmt.jump
+[stmt.jump.general]: #stmt.jump.general
 [stmt.label]: #stmt.label
 [stmt.pre]: #stmt.pre
 [stmt.ranged]: #stmt.ranged
 [stmt.return]: #stmt.return
+[stmt.return.coroutine]: #stmt.return.coroutine
 [stmt.select]: #stmt.select
+[stmt.select.general]: #stmt.select.general
 [stmt.switch]: #stmt.switch
 [stmt.while]: #stmt.while
 [support.start.term]: support.md#support.start.term

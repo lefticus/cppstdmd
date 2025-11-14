@@ -1829,7 +1829,19 @@ initializes `cvtstate` to `state`.
 
 *Effects:* The destructor shall delete `cvtptr`.
 
-<!-- Section link definitions -->
+<!-- Link reference definitions -->
+[basic.align]: basic.md#basic.align
+[basic.scope.namespace]: basic.md#basic.scope.namespace
+[basic.types]: basic.md#basic.types
+[class.copy]: special.md#class.copy
+[class.dtor]: special.md#class.dtor
+[cmath.syn]: numerics.md#cmath.syn
+[complex.syn]: numerics.md#complex.syn
+[containers]: containers.md#containers
+[cstddef.syn]: language.md#cstddef.syn
+[dcl.attr.deprecated]: dcl.md#dcl.attr.deprecated
+[dcl.fct.def]: dcl.md#dcl.fct.def
+[default.allocator]: utilities.md#default.allocator
 [depr.c.headers]: #depr.c.headers
 [depr.ccomplex.syn]: #depr.ccomplex.syn
 [depr.codecvt.syn]: #depr.codecvt.syn
@@ -1871,26 +1883,6 @@ initializes `cvtstate` to `state`.
 [depr.temporary.buffer]: #depr.temporary.buffer
 [depr.uncaught]: #depr.uncaught
 [depr.util.smartptr.shared.obs]: #depr.util.smartptr.shared.obs
-[depr.weak.result_type]: #depr.weak.result_type
-
-<!-- Link reference definitions -->
-[basic.align]: basic.md#basic.align
-[basic.scope.namespace]: basic.md#basic.scope.namespace
-[basic.types]: basic.md#basic.types
-[class.copy]: special.md#class.copy
-[class.dtor]: special.md#class.dtor
-[cmath.syn]: numerics.md#cmath.syn
-[complex.syn]: numerics.md#complex.syn
-[containers]: containers.md#containers
-[cstddef.syn]: language.md#cstddef.syn
-[dcl.attr.deprecated]: dcl.md#dcl.attr.deprecated
-[dcl.fct.def]: dcl.md#dcl.fct.def
-[default.allocator]: utilities.md#default.allocator
-[depr.ccomplex.syn]: #depr.ccomplex.syn
-[depr.cstdalign.syn]: #depr.cstdalign.syn
-[depr.cstdbool.syn]: #depr.cstdbool.syn
-[depr.ctgmath.syn]: #depr.ctgmath.syn
-[depr.strstreambuf.virtuals]: #depr.strstreambuf.virtuals
 [depr.weak.result_type]: #depr.weak.result_type
 [expr.unary.op]: expr.md#expr.unary.op
 [func.bind.bind]: utilities.md#func.bind.bind

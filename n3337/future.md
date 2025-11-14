@@ -1306,11 +1306,17 @@ called directly by the program.
 `unexpected_handler` is always considered a callable handler in this
 context.
 
-<!-- Section link definitions -->
+<!-- Link reference definitions -->
 [auto.ptr]: #auto.ptr
 [auto.ptr.cons]: #auto.ptr.cons
 [auto.ptr.conv]: #auto.ptr.conv
 [auto.ptr.members]: #auto.ptr.members
+[basic.scope.namespace]: basic.md#basic.scope.namespace
+[bind]: utilities.md#bind
+[class.copy]: special.md#class.copy
+[class.dtor]: special.md#class.dtor
+[dcl.fct.def]: dcl.md#dcl.fct.def
+[dcl.stc]: dcl.md#dcl.stc
 [depr.adaptors]: #depr.adaptors
 [depr.auto.ptr]: #depr.auto.ptr
 [depr.base]: #depr.base
@@ -1343,28 +1349,16 @@ context.
 [depr.strstreambuf.cons]: #depr.strstreambuf.cons
 [depr.strstreambuf.members]: #depr.strstreambuf.members
 [depr.strstreambuf.virtuals]: #depr.strstreambuf.virtuals
-[exception.unexpected]: #exception.unexpected
-[get.unexpected]: #get.unexpected
-[set.unexpected]: #set.unexpected
-[unexpected]: #unexpected
-[unexpected.handler]: #unexpected.handler
-
-<!-- Link reference definitions -->
-[basic.scope.namespace]: basic.md#basic.scope.namespace
-[bind]: utilities.md#bind
-[class.copy]: special.md#class.copy
-[class.dtor]: special.md#class.dtor
-[dcl.fct.def]: dcl.md#dcl.fct.def
-[dcl.stc]: dcl.md#dcl.stc
-[depr.function.pointer.adaptors]: #depr.function.pointer.adaptors
-[depr.strstreambuf.virtuals]: #depr.strstreambuf.virtuals
 [except.unexpected]: except.md#except.unexpected
+[exception.unexpected]: #exception.unexpected
 [expr.post.incr]: expr.md#expr.post.incr
 [expr.pre.incr]: expr.md#expr.pre.incr
 [func.bind]: utilities.md#func.bind
+[get.unexpected]: #get.unexpected
 [input.output]: input.md#input.output
 [iostreams.limits.pos]: input.md#iostreams.limits.pos
 [namespace.udecl]: dcl.md#namespace.udecl
+[set.unexpected]: #set.unexpected
 [stmt.dcl]: stmt.md#stmt.dcl
 [streambuf.pub.get]: input.md#streambuf.pub.get
 [tab:future.c.headers]: #tab:future.c.headers
@@ -1372,6 +1366,7 @@ context.
 [tab:future.seekoff.positioning]: #tab:future.seekoff.positioning
 [tab:future.strstreambuf.effects]: #tab:future.strstreambuf.effects
 [tab:future.strstreambuf1.effects]: #tab:future.strstreambuf1.effects
+[unexpected]: #unexpected
 [unexpected.handler]: #unexpected.handler
 [unique.ptr]: utilities.md#unique.ptr
 

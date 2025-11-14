@@ -1034,16 +1034,6 @@ X x;                // error: X not visible to unqualified lookup
 
 — *end example*]
 
-<!-- Section link definitions -->
-[module]: #module
-[module.context]: #module.context
-[module.global.frag]: #module.global.frag
-[module.import]: #module.import
-[module.interface]: #module.interface
-[module.private.frag]: #module.private.frag
-[module.reach]: #module.reach
-[module.unit]: #module.unit
-
 <!-- Link reference definitions -->
 [basic.def.odr]: basic.md#basic.def.odr
 [basic.link]: basic.md#basic.link
@@ -1063,10 +1053,12 @@ X x;                // error: X not visible to unqualified lookup
 [meta.reflection]: meta.md#meta.reflection
 [meta.reflection.define.aggregate]: meta.md#meta.reflection.define.aggregate
 [meta.reflection.member.queries]: meta.md#meta.reflection.member.queries
+[module]: #module
 [module.context]: #module.context
 [module.global.frag]: #module.global.frag
 [module.import]: #module.import
 [module.interface]: #module.interface
+[module.private.frag]: #module.private.frag
 [module.reach]: #module.reach
 [module.unit]: #module.unit
 [namespace.udecl]: dcl.md#namespace.udecl

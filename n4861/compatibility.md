@@ -1960,7 +1960,31 @@ The functions `aligned_alloc`, `calloc`, `malloc`, and `realloc` are
 restricted in this International Standard. Subclause [[c.malloc]]
 describes the changes.
 
-<!-- Section link definitions -->
+<!-- Link reference definitions -->
+[algorithms]: algorithms.md#algorithms
+[basic]: basic.md#basic
+[basic.link]: basic.md#basic.link
+[basic.scope]: basic.md#basic.scope
+[basic.stc.dynamic]: basic.md#basic.stc.dynamic
+[c.malloc]: utilities.md#c.malloc
+[class]: class.md#class
+[containers]: containers.md#containers
+[conv.array]: expr.md#conv.array
+[conv.func]: expr.md#conv.func
+[conv.lval]: expr.md#conv.lval
+[cpp]: cpp.md#cpp
+[csetjmp.syn]: support.md#csetjmp.syn
+[cstring.syn]: strings.md#cstring.syn
+[cwchar.syn]: strings.md#cwchar.syn
+[dcl.constexpr]: dcl.md#dcl.constexpr
+[dcl.constinit]: dcl.md#dcl.constinit
+[dcl.dcl]: dcl.md#dcl.dcl
+[dcl.fct.def.coroutine]: dcl.md#dcl.fct.def.coroutine
+[dcl.type]: dcl.md#dcl.type
+[dcl.typedef]: dcl.md#dcl.typedef
+[depr]: #depr
+[depr.c.headers]: future.md#depr.c.headers
+[diagnostics]: diagnostics.md#diagnostics
 [diff.basic]: #diff.basic
 [diff.char16]: #diff.char16
 [diff.class]: #diff.class
@@ -2032,32 +2056,6 @@ describes the changes.
 [diff.offsetof]: #diff.offsetof
 [diff.stat]: #diff.stat
 [diff.wchar.t]: #diff.wchar.t
-
-<!-- Link reference definitions -->
-[algorithms]: algorithms.md#algorithms
-[basic]: basic.md#basic
-[basic.link]: basic.md#basic.link
-[basic.scope]: basic.md#basic.scope
-[basic.stc.dynamic]: basic.md#basic.stc.dynamic
-[c.malloc]: utilities.md#c.malloc
-[class]: class.md#class
-[containers]: containers.md#containers
-[conv.array]: expr.md#conv.array
-[conv.func]: expr.md#conv.func
-[conv.lval]: expr.md#conv.lval
-[cpp]: cpp.md#cpp
-[csetjmp.syn]: support.md#csetjmp.syn
-[cstring.syn]: strings.md#cstring.syn
-[cwchar.syn]: strings.md#cwchar.syn
-[dcl.constexpr]: dcl.md#dcl.constexpr
-[dcl.constinit]: dcl.md#dcl.constinit
-[dcl.dcl]: dcl.md#dcl.dcl
-[dcl.fct.def.coroutine]: dcl.md#dcl.fct.def.coroutine
-[dcl.type]: dcl.md#dcl.type
-[dcl.typedef]: dcl.md#dcl.typedef
-[depr]: #depr
-[depr.c.headers]: future.md#depr.c.headers
-[diagnostics]: diagnostics.md#diagnostics
 [except]: except.md#except
 [expr]: expr.md#expr
 [expr.new]: expr.md#expr.new

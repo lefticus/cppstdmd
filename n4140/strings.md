@@ -2832,10 +2832,11 @@ an `mbstate_t*` argument of `NULL` may introduce a data race (
 
 ISO C 7.3, 7.10.7, 7.10.8, and 7.11. Amendment 1 4.4, 4.5, and 4.6.
 
-<!-- Section link definitions -->
+<!-- Link reference definitions -->
 [basic.string]: #basic.string
 [basic.string.hash]: #basic.string.hash
 [basic.string.literals]: #basic.string.literals
+[basic.types]: basic.md#basic.types
 [c.strings]: #c.strings
 [char.traits]: #char.traits
 [char.traits.require]: #char.traits.require
@@ -2845,6 +2846,23 @@ ISO C 7.3, 7.10.7, 7.10.8, and 7.11. Amendment 1 4.4, 4.5, and 4.6.
 [char.traits.specializations.char32_t]: #char.traits.specializations.char32_t
 [char.traits.specializations.wchar.t]: #char.traits.specializations.wchar.t
 [char.traits.typedefs]: #char.traits.typedefs
+[container.requirements.general]: containers.md#container.requirements.general
+[copyassignable]: #copyassignable
+[copyconstructible]: #copyconstructible
+[defaultconstructible]: #defaultconstructible
+[input.output]: input.md#input.output
+[iostate.flags]: input.md#iostate.flags
+[iostream.forward]: input.md#iostream.forward
+[iostreams.limits.pos]: input.md#iostreams.limits.pos
+[istream.formatted.reqmts]: input.md#istream.formatted.reqmts
+[istream.unformatted]: input.md#istream.unformatted
+[length.error]: diagnostics.md#length.error
+[lex.key]: lex.md#lex.key
+[ostream.formatted.reqmts]: input.md#ostream.formatted.reqmts
+[out.of.range]: diagnostics.md#out.of.range
+[random.access.iterators]: iterators.md#random.access.iterators
+[res.on.data.races]: library.md#res.on.data.races
+[sequence.reqmts]: containers.md#sequence.reqmts
 [string.access]: #string.access
 [string.accessors]: #string.accessors
 [string.capacity]: #string.capacity
@@ -2883,34 +2901,6 @@ ISO C 7.3, 7.10.7, 7.10.8, and 7.11. Amendment 1 4.4, 4.5, and 4.6.
 [string::swap]: #string::swap
 [strings]: #strings
 [strings.general]: #strings.general
-
-<!-- Link reference definitions -->
-[basic.types]: basic.md#basic.types
-[c.strings]: #c.strings
-[char.traits]: #char.traits
-[char.traits.require]: #char.traits.require
-[char.traits.typedefs]: #char.traits.typedefs
-[container.requirements.general]: containers.md#container.requirements.general
-[copyassignable]: #copyassignable
-[copyconstructible]: #copyconstructible
-[defaultconstructible]: #defaultconstructible
-[input.output]: input.md#input.output
-[iostate.flags]: input.md#iostate.flags
-[iostream.forward]: input.md#iostream.forward
-[iostreams.limits.pos]: input.md#iostreams.limits.pos
-[istream.formatted.reqmts]: input.md#istream.formatted.reqmts
-[istream.unformatted]: input.md#istream.unformatted
-[length.error]: diagnostics.md#length.error
-[lex.key]: lex.md#lex.key
-[ostream.formatted.reqmts]: input.md#ostream.formatted.reqmts
-[out.of.range]: diagnostics.md#out.of.range
-[random.access.iterators]: iterators.md#random.access.iterators
-[res.on.data.races]: library.md#res.on.data.races
-[sequence.reqmts]: containers.md#sequence.reqmts
-[string.classes]: #string.classes
-[string.io]: #string.io
-[string.require]: #string.require
-[string.special]: #string.special
 [tab:char.traits.require]: #tab:char.traits.require
 [tab:mbstate.data.races]: #tab:mbstate.data.races
 [tab:strings.compare]: #tab:strings.compare

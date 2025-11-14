@@ -2103,10 +2103,12 @@ LISTING( ..\listing.dir )
 
 — *end example*]
 
-<!-- Section link definitions -->
+<!-- Link reference definitions -->
+[basic.extended.fp]: basic.md#basic.extended.fp
 [cpp]: #cpp
 [cpp.concat]: #cpp.concat
 [cpp.cond]: #cpp.cond
+[cpp.cond.ha]: #cpp.cond.ha
 [cpp.embed]: #cpp.embed
 [cpp.embed.gen]: #cpp.embed.gen
 [cpp.embed.param]: #cpp.embed.param
@@ -2124,31 +2126,13 @@ LISTING( ..\listing.dir )
 [cpp.pragma.op]: #cpp.pragma.op
 [cpp.pre]: #cpp.pre
 [cpp.predefined]: #cpp.predefined
+[cpp.predefined.ft]: #cpp.predefined.ft
 [cpp.replace]: #cpp.replace
 [cpp.replace.general]: #cpp.replace.general
 [cpp.rescan]: #cpp.rescan
 [cpp.scope]: #cpp.scope
 [cpp.stringize]: #cpp.stringize
 [cpp.subst]: #cpp.subst
-
-<!-- Link reference definitions -->
-[basic.extended.fp]: basic.md#basic.extended.fp
-[cpp.concat]: #cpp.concat
-[cpp.cond]: #cpp.cond
-[cpp.cond.ha]: #cpp.cond.ha
-[cpp.embed]: #cpp.embed
-[cpp.embed.gen]: #cpp.embed.gen
-[cpp.embed.param]: #cpp.embed.param
-[cpp.embed.param.limit]: #cpp.embed.param.limit
-[cpp.import]: #cpp.import
-[cpp.include]: #cpp.include
-[cpp.pragma.op]: #cpp.pragma.op
-[cpp.predefined]: #cpp.predefined
-[cpp.predefined.ft]: #cpp.predefined.ft
-[cpp.replace]: #cpp.replace
-[cpp.replace.general]: #cpp.replace.general
-[cpp.rescan]: #cpp.rescan
-[cpp.stringize]: #cpp.stringize
 [cstdint.syn]: support.md#cstdint.syn
 [cstdio.syn]: input.md#cstdio.syn
 [dcl.attr]: dcl.md#dcl.attr

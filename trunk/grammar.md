@@ -49,16 +49,14 @@ template-name:
     identifier
 ```
 
-<!-- Section link definitions -->
-[gram.general]: #gram.general
-[gram.key]: #gram.key
-
 <!-- Link reference definitions -->
 [class]: class.md#class
 [class.member.lookup]: basic.md#class.member.lookup
 [dcl.enum]: dcl.md#dcl.enum
 [dcl.spec]: dcl.md#dcl.spec
 [dcl.typedef]: dcl.md#dcl.typedef
+[gram.general]: #gram.general
+[gram.key]: #gram.key
 [namespace.def]: dcl.md#namespace.def
 [stmt.ambig]: stmt.md#stmt.ambig
 [temp]: temp.md#temp

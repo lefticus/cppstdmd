@@ -982,20 +982,6 @@ Electronic Engineers, Inc.
 
 All rights in these originals are reserved.
 
-<!-- Section link definitions -->
-[intro]: #intro
-[intro.ack]: #intro.ack
-[intro.compliance]: #intro.compliance
-[intro.defs]: #intro.defs
-[intro.execution]: #intro.execution
-[intro.memory]: #intro.memory
-[intro.multithread]: #intro.multithread
-[intro.object]: #intro.object
-[intro.refs]: #intro.refs
-[intro.scope]: #intro.scope
-[intro.structure]: #intro.structure
-[syntax]: #syntax
-
 <!-- Link reference definitions -->
 [atomics]: atomics.md#atomics
 [atomics.lockfree]: atomics.md#atomics.lockfree
@@ -1037,12 +1023,17 @@ All rights in these originals are reserved.
 [expr.new]: expr.md#expr.new
 [gram]: #gram
 [implimits]: #implimits
+[intro]: #intro
+[intro.ack]: #intro.ack
 [intro.compliance]: #intro.compliance
 [intro.defs]: #intro.defs
 [intro.execution]: #intro.execution
 [intro.memory]: #intro.memory
 [intro.multithread]: #intro.multithread
 [intro.object]: #intro.object
+[intro.refs]: #intro.refs
+[intro.scope]: #intro.scope
+[intro.structure]: #intro.structure
 [lex]: lex.md#lex
 [lex.charset]: lex.md#lex.charset
 [lex.phases]: lex.md#lex.phases

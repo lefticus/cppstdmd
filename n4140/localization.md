@@ -3851,7 +3851,13 @@ the functions listed in Table  [[tab:setlocale.data.races]].
 
 ISO C Clause 7.4.
 
-<!-- Section link definitions -->
+<!-- Link reference definitions -->
+[alg.lex.comparison]: algorithms.md#alg.lex.comparison
+[alg.sort]: algorithms.md#alg.sort
+[algorithms]: algorithms.md#algorithms
+[basic.start.init]: basic.md#basic.start.init
+[bitmask.types]: library.md#bitmask.types
+[c.files]: input.md#c.files
 [c.locales]: #c.locales
 [category.collate]: #category.collate
 [category.ctype]: #category.ctype
@@ -3877,6 +3883,12 @@ ISO C Clause 7.4.
 [facet.numpunct.members]: #facet.numpunct.members
 [facet.numpunct.virtuals]: #facet.numpunct.virtuals
 [facets.examples]: #facets.examples
+[file.streams]: input.md#file.streams
+[ios.base]: input.md#ios.base
+[istream.formatted]: input.md#istream.formatted
+[istream.formatted.reqmts]: input.md#istream.formatted.reqmts
+[iterator.requirements]: iterators.md#iterator.requirements
+[lex.charset]: lex.md#lex.charset
 [locale]: #locale
 [locale.categories]: #locale.categories
 [locale.category]: #locale.category
@@ -3932,32 +3944,6 @@ ISO C Clause 7.4.
 [locales]: #locales
 [localization]: #localization
 [localization.general]: #localization.general
-
-<!-- Link reference definitions -->
-[alg.lex.comparison]: algorithms.md#alg.lex.comparison
-[alg.sort]: algorithms.md#alg.sort
-[algorithms]: algorithms.md#algorithms
-[basic.start.init]: basic.md#basic.start.init
-[bitmask.types]: library.md#bitmask.types
-[c.files]: input.md#c.files
-[c.locales]: #c.locales
-[category.ctype]: #category.ctype
-[category.monetary]: #category.monetary
-[category.numeric]: #category.numeric
-[category.time]: #category.time
-[facets.examples]: #facets.examples
-[file.streams]: input.md#file.streams
-[ios.base]: input.md#ios.base
-[istream.formatted]: input.md#istream.formatted
-[istream.formatted.reqmts]: input.md#istream.formatted.reqmts
-[iterator.requirements]: iterators.md#iterator.requirements
-[lex.charset]: lex.md#lex.charset
-[locale.categories]: #locale.categories
-[locale.category]: #locale.category
-[locale.ctype.members]: #locale.ctype.members
-[locale.facet]: #locale.facet
-[locale.stdcvt]: #locale.stdcvt
-[locales]: #locales
 [ostream.formatted.reqmts]: input.md#ostream.formatted.reqmts
 [res.on.data.races]: library.md#res.on.data.races
 [sequence.reqmts]: containers.md#sequence.reqmts

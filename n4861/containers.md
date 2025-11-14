@@ -7350,7 +7350,14 @@ template<class ElementType, size_t Extent>
 `return R{reinterpret_cast<byte*>(s.data()), s.size_bytes()};` where `R`
 is the return type.
 
-<!-- Section link definitions -->
+<!-- Link reference definitions -->
+[alg.sorting]: algorithms.md#alg.sorting
+[algorithm.stable]: library.md#algorithm.stable
+[algorithms]: algorithms.md#algorithms
+[algorithms.requirements]: algorithms.md#algorithms.requirements
+[allocator.requirements]: library.md#allocator.requirements
+[allocator.requirements.completeness]: library.md#allocator.requirements.completeness
+[allocator.traits.members]: utilities.md#allocator.traits.members
 [array]: #array
 [array.cons]: #array.cons
 [array.creation]: #array.creation
@@ -7366,20 +7373,35 @@ is the return type.
 [associative.reqmts]: #associative.reqmts
 [associative.reqmts.except]: #associative.reqmts.except
 [associative.set.syn]: #associative.set.syn
+[basic.string]: strings.md#basic.string
+[class.copy.ctor]: class.md#class.copy.ctor
+[class.default.ctor]: class.md#class.default.ctor
+[class.dtor]: class.md#class.dtor
 [container.adaptors]: #container.adaptors
 [container.adaptors.general]: #container.adaptors.general
+[container.alloc.req]: #container.alloc.req
+[container.assoc.req]: #container.assoc.req
+[container.hash.req]: #container.hash.req
 [container.insert.return]: #container.insert.return
 [container.node]: #container.node
+[container.node.compat]: #container.node.compat
 [container.node.cons]: #container.node.cons
 [container.node.dtor]: #container.node.dtor
 [container.node.modifiers]: #container.node.modifiers
 [container.node.observers]: #container.node.observers
 [container.node.overview]: #container.node.overview
+[container.opt]: #container.opt
+[container.req]: #container.req
 [container.requirements]: #container.requirements
 [container.requirements.dataraces]: #container.requirements.dataraces
 [container.requirements.general]: #container.requirements.general
+[container.rev.req]: #container.rev.req
+[container.seq.opt]: #container.seq.opt
+[container.seq.req]: #container.seq.req
 [containers]: #containers
 [containers.general]: #containers.general
+[containers.summary]: #containers.summary
+[dcl.init.aggr]: dcl.md#dcl.init.aggr
 [deque]: #deque
 [deque.capacity]: #deque.capacity
 [deque.cons]: #deque.cons
@@ -7396,6 +7418,10 @@ is the return type.
 [forwardlist.modifiers]: #forwardlist.modifiers
 [forwardlist.ops]: #forwardlist.ops
 [forwardlist.overview]: #forwardlist.overview
+[hash.requirements]: library.md#hash.requirements
+[iterator.concept.contiguous]: iterators.md#iterator.concept.contiguous
+[iterator.requirements]: iterators.md#iterator.requirements
+[iterator.requirements.general]: iterators.md#iterator.requirements.general
 [list]: #list
 [list.capacity]: #list.capacity
 [list.cons]: #list.cons
@@ -7432,6 +7458,8 @@ is the return type.
 [queue.ops]: #queue.ops
 [queue.special]: #queue.special
 [queue.syn]: #queue.syn
+[random.access.iterators]: iterators.md#random.access.iterators
+[res.on.data.races]: library.md#res.on.data.races
 [sequence.reqmts]: #sequence.reqmts
 [sequences]: #sequences
 [sequences.general]: #sequences.general
@@ -7455,8 +7483,19 @@ is the return type.
 [stack.ops]: #stack.ops
 [stack.special]: #stack.special
 [stack.syn]: #stack.syn
+[strings]: strings.md#strings
+[swappable.requirements]: library.md#swappable.requirements
+[tab:container.opt]: #tab:container.opt
+[tab:container.req]: #tab:container.req
+[tab:container.rev.req]: #tab:container.rev.req
+[tab:container.seq.opt]: #tab:container.seq.opt
+[tab:container.seq.req]: #tab:container.seq.req
+[temp.deduct]: temp.md#temp.deduct
+[temp.param]: temp.md#temp.param
+[temp.type]: temp.md#temp.type
 [unord]: #unord
 [unord.general]: #unord.general
+[unord.hash]: utilities.md#unord.hash
 [unord.map]: #unord.map
 [unord.map.cnstr]: #unord.map.cnstr
 [unord.map.elem]: #unord.map.elem
@@ -7492,70 +7531,6 @@ is the return type.
 [views]: #views
 [views.general]: #views.general
 [views.span]: #views.span
-
-<!-- Link reference definitions -->
-[alg.sorting]: algorithms.md#alg.sorting
-[algorithm.stable]: library.md#algorithm.stable
-[algorithms]: algorithms.md#algorithms
-[algorithms.requirements]: algorithms.md#algorithms.requirements
-[allocator.requirements]: library.md#allocator.requirements
-[allocator.requirements.completeness]: library.md#allocator.requirements.completeness
-[allocator.traits.members]: utilities.md#allocator.traits.members
-[associative]: #associative
-[associative.general]: #associative.general
-[associative.reqmts]: #associative.reqmts
-[associative.reqmts.except]: #associative.reqmts.except
-[basic.string]: strings.md#basic.string
-[class.copy.ctor]: class.md#class.copy.ctor
-[class.default.ctor]: class.md#class.default.ctor
-[class.dtor]: class.md#class.dtor
-[container.adaptors]: #container.adaptors
-[container.alloc.req]: #container.alloc.req
-[container.assoc.req]: #container.assoc.req
-[container.hash.req]: #container.hash.req
-[container.node]: #container.node
-[container.node.compat]: #container.node.compat
-[container.opt]: #container.opt
-[container.req]: #container.req
-[container.requirements]: #container.requirements
-[container.requirements.general]: #container.requirements.general
-[container.rev.req]: #container.rev.req
-[container.seq.opt]: #container.seq.opt
-[container.seq.req]: #container.seq.req
-[containers.summary]: #containers.summary
-[dcl.init.aggr]: dcl.md#dcl.init.aggr
-[deque]: #deque
-[deque.modifiers]: #deque.modifiers
-[hash.requirements]: library.md#hash.requirements
-[iterator.concept.contiguous]: iterators.md#iterator.concept.contiguous
-[iterator.requirements]: iterators.md#iterator.requirements
-[iterator.requirements.general]: iterators.md#iterator.requirements.general
-[list]: #list
-[random.access.iterators]: iterators.md#random.access.iterators
-[res.on.data.races]: library.md#res.on.data.races
-[sequence.reqmts]: #sequence.reqmts
-[sequences]: #sequences
-[strings]: strings.md#strings
-[swappable.requirements]: library.md#swappable.requirements
-[tab:container.opt]: #tab:container.opt
-[tab:container.req]: #tab:container.req
-[tab:container.rev.req]: #tab:container.rev.req
-[tab:container.seq.opt]: #tab:container.seq.opt
-[tab:container.seq.req]: #tab:container.seq.req
-[temp.deduct]: temp.md#temp.deduct
-[temp.param]: temp.md#temp.param
-[temp.type]: temp.md#temp.type
-[unord]: #unord
-[unord.hash]: utilities.md#unord.hash
-[unord.map]: #unord.map
-[unord.multimap]: #unord.multimap
-[unord.multiset]: #unord.multiset
-[unord.req]: #unord.req
-[unord.req.except]: #unord.req.except
-[unord.set]: #unord.set
-[vector]: #vector
-[vector.modifiers]: #vector.modifiers
-[views]: #views
 
 [^1]: Equality comparison is a refinement of partitioning if no two
     objects that compare equal fall into different partitions.

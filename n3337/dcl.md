@@ -5175,54 +5175,6 @@ int a[] =
   { 2, f(2), f(2.0) };    // OK: the double-to-int conversion is not at the top level
 ```
 
-<!-- Section link definitions -->
-[basic.namespace]: #basic.namespace
-[dcl.align]: #dcl.align
-[dcl.ambig.res]: #dcl.ambig.res
-[dcl.array]: #dcl.array
-[dcl.asm]: #dcl.asm
-[dcl.attr]: #dcl.attr
-[dcl.attr.depend]: #dcl.attr.depend
-[dcl.attr.grammar]: #dcl.attr.grammar
-[dcl.attr.noreturn]: #dcl.attr.noreturn
-[dcl.constexpr]: #dcl.constexpr
-[dcl.dcl]: #dcl.dcl
-[dcl.decl]: #dcl.decl
-[dcl.enum]: #dcl.enum
-[dcl.fct]: #dcl.fct
-[dcl.fct.def]: #dcl.fct.def
-[dcl.fct.def.default]: #dcl.fct.def.default
-[dcl.fct.def.delete]: #dcl.fct.def.delete
-[dcl.fct.def.general]: #dcl.fct.def.general
-[dcl.fct.default]: #dcl.fct.default
-[dcl.fct.spec]: #dcl.fct.spec
-[dcl.friend]: #dcl.friend
-[dcl.init]: #dcl.init
-[dcl.init.aggr]: #dcl.init.aggr
-[dcl.init.list]: #dcl.init.list
-[dcl.init.ref]: #dcl.init.ref
-[dcl.init.string]: #dcl.init.string
-[dcl.link]: #dcl.link
-[dcl.meaning]: #dcl.meaning
-[dcl.mptr]: #dcl.mptr
-[dcl.name]: #dcl.name
-[dcl.ptr]: #dcl.ptr
-[dcl.ref]: #dcl.ref
-[dcl.spec]: #dcl.spec
-[dcl.spec.auto]: #dcl.spec.auto
-[dcl.stc]: #dcl.stc
-[dcl.type]: #dcl.type
-[dcl.type.cv]: #dcl.type.cv
-[dcl.type.elab]: #dcl.type.elab
-[dcl.type.simple]: #dcl.type.simple
-[dcl.typedef]: #dcl.typedef
-[namespace.alias]: #namespace.alias
-[namespace.def]: #namespace.def
-[namespace.memdef]: #namespace.memdef
-[namespace.udecl]: #namespace.udecl
-[namespace.udir]: #namespace.udir
-[namespace.unnamed]: #namespace.unnamed
-
 <!-- Link reference definitions -->
 [basic.compound]: basic.md#basic.compound
 [basic.def]: basic.md#basic.def
@@ -5237,6 +5189,7 @@ int a[] =
 [basic.lookup.udir]: basic.md#basic.lookup.udir
 [basic.lookup.unqual]: basic.md#basic.lookup.unqual
 [basic.lval]: basic.md#basic.lval
+[basic.namespace]: #basic.namespace
 [basic.scope]: basic.md#basic.scope
 [basic.scope.local]: basic.md#basic.scope.local
 [basic.scope.namespace]: basic.md#basic.scope.namespace
@@ -5282,18 +5235,26 @@ int a[] =
 [conv.lval]: conv.md#conv.lval
 [conv.prom]: conv.md#conv.prom
 [conv.ptr]: conv.md#conv.ptr
+[dcl.align]: #dcl.align
+[dcl.ambig.res]: #dcl.ambig.res
 [dcl.array]: #dcl.array
 [dcl.asm]: #dcl.asm
 [dcl.attr]: #dcl.attr
+[dcl.attr.depend]: #dcl.attr.depend
 [dcl.attr.grammar]: #dcl.attr.grammar
+[dcl.attr.noreturn]: #dcl.attr.noreturn
 [dcl.constexpr]: #dcl.constexpr
 [dcl.dcl]: #dcl.dcl
 [dcl.decl]: #dcl.decl
 [dcl.enum]: #dcl.enum
 [dcl.fct]: #dcl.fct
 [dcl.fct.def]: #dcl.fct.def
+[dcl.fct.def.default]: #dcl.fct.def.default
+[dcl.fct.def.delete]: #dcl.fct.def.delete
+[dcl.fct.def.general]: #dcl.fct.def.general
 [dcl.fct.default]: #dcl.fct.default
 [dcl.fct.spec]: #dcl.fct.spec
+[dcl.friend]: #dcl.friend
 [dcl.init]: #dcl.init
 [dcl.init.aggr]: #dcl.init.aggr
 [dcl.init.list]: #dcl.init.list
@@ -5301,6 +5262,9 @@ int a[] =
 [dcl.init.string]: #dcl.init.string
 [dcl.link]: #dcl.link
 [dcl.meaning]: #dcl.meaning
+[dcl.mptr]: #dcl.mptr
+[dcl.name]: #dcl.name
+[dcl.ptr]: #dcl.ptr
 [dcl.ref]: #dcl.ref
 [dcl.spec]: #dcl.spec
 [dcl.spec.auto]: #dcl.spec.auto
@@ -5337,6 +5301,7 @@ int a[] =
 [lex.digraph]: lex.md#lex.digraph
 [lex.key]: lex.md#lex.key
 [lex.name]: lex.md#lex.name
+[namespace.alias]: #namespace.alias
 [namespace.def]: #namespace.def
 [namespace.memdef]: #namespace.memdef
 [namespace.qual]: basic.md#namespace.qual

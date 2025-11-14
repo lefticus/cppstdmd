@@ -812,17 +812,6 @@ permitted to finish stack unwinding prematurely based on a determination
 that the unwind process will eventually cause an invocation of the
 function `std::terminate`.
 
-<!-- Section link definitions -->
-[except]: #except
-[except.ctor]: #except.ctor
-[except.handle]: #except.handle
-[except.pre]: #except.pre
-[except.spec]: #except.spec
-[except.special]: #except.special
-[except.special.general]: #except.special.general
-[except.terminate]: #except.terminate
-[except.throw]: #except.throw
-
 <!-- Link reference definitions -->
 [algorithms.parallel.defns]: algorithms.md#algorithms.parallel.defns
 [algorithms.parallel.exceptions]: algorithms.md#algorithms.parallel.exceptions
@@ -847,10 +836,14 @@ function `std::terminate`.
 [dcl.init]: dcl.md#dcl.init
 [dcl.init.aggr]: dcl.md#dcl.init.aggr
 [dcl.init.general]: dcl.md#dcl.init.general
+[except]: #except
 [except.ctor]: #except.ctor
 [except.handle]: #except.handle
 [except.nested]: support.md#except.nested
+[except.pre]: #except.pre
 [except.spec]: #except.spec
+[except.special]: #except.special
+[except.special.general]: #except.special.general
 [except.terminate]: #except.terminate
 [except.throw]: #except.throw
 [exception.terminate]: support.md#exception.terminate

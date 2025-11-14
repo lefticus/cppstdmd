@@ -6576,7 +6576,11 @@ specialization depends on a program-defined type.
 A program that instantiates a primary template of a mathematical
 constant variable template is ill-formed.
 
-<!-- Section link definitions -->
+<!-- Link reference definitions -->
+[bad.alloc]: support.md#bad.alloc
+[basic.fundamental]: basic.md#basic.fundamental
+[basic.stc.thread]: basic.md#basic.stc.thread
+[basic.types]: basic.md#basic.types
 [bit]: #bit
 [bit.cast]: #bit.cast
 [bit.count]: #bit.count
@@ -6610,24 +6614,43 @@ constant variable template is ill-formed.
 [complex.transcendentals]: #complex.transcendentals
 [complex.value.ops]: #complex.value.ops
 [cons.slice]: #cons.slice
+[conv.prom]: expr.md#conv.prom
+[cpp.pragma]: cpp.md#cpp.pragma
+[cpp17.copyassignable]: #cpp17.copyassignable
+[cpp17.copyconstructible]: #cpp17.copyconstructible
+[cpp17.equalitycomparable]: #cpp17.equalitycomparable
+[dcl.init]: dcl.md#dcl.init
+[expr.const]: expr.md#expr.const
 [gslice.access]: #gslice.access
 [gslice.array.assign]: #gslice.array.assign
 [gslice.array.comp.assign]: #gslice.array.comp.assign
 [gslice.array.fill]: #gslice.array.fill
 [gslice.cons]: #gslice.cons
+[implimits]: #implimits
 [indirect.array.assign]: #indirect.array.assign
 [indirect.array.comp.assign]: #indirect.array.comp.assign
 [indirect.array.fill]: #indirect.array.fill
+[input.iterators]: iterators.md#input.iterators
+[input.output]: input.md#input.output
+[intro.object]: basic.md#intro.object
+[iostate.flags]: input.md#iostate.flags
+[istream.formatted]: input.md#istream.formatted
+[iterator.concept.contiguous]: iterators.md#iterator.concept.contiguous
+[iterator.requirements.general]: iterators.md#iterator.requirements.general
+[library.c]: library.md#library.c
 [mask.array.assign]: #mask.array.assign
 [mask.array.comp.assign]: #mask.array.comp.assign
 [mask.array.fill]: #mask.array.fill
 [math.constants]: #math.constants
+[namespace.std]: library.md#namespace.std
 [numarray]: #numarray
 [numbers]: #numbers
 [numbers.syn]: #numbers.syn
 [numeric.requirements]: #numeric.requirements
 [numerics]: #numerics
 [numerics.general]: #numerics.general
+[numerics.summary]: #numerics.summary
+[output.iterators]: iterators.md#output.iterators
 [rand]: #rand
 [rand.adapt]: #rand.adapt
 [rand.adapt.disc]: #rand.adapt.disc
@@ -6678,6 +6701,8 @@ constant variable template is ill-formed.
 [rand.util]: #rand.util
 [rand.util.canonical]: #rand.util.canonical
 [rand.util.seedseq]: #rand.util.seedseq
+[random.access.iterators]: iterators.md#random.access.iterators
+[res.on.data.races]: library.md#res.on.data.races
 [sf.cmath]: #sf.cmath
 [sf.cmath.assoc.laguerre]: #sf.cmath.assoc.laguerre
 [sf.cmath.assoc.legendre]: #sf.cmath.assoc.legendre
@@ -6705,6 +6730,7 @@ constant variable template is ill-formed.
 [slice.arr.comp.assign]: #slice.arr.comp.assign
 [slice.arr.fill]: #slice.arr.fill
 [slice.ops]: #slice.ops
+[strings]: strings.md#strings
 [template.gslice.array]: #template.gslice.array
 [template.gslice.array.overview]: #template.gslice.array.overview
 [template.indirect.array]: #template.indirect.array
@@ -6715,6 +6741,9 @@ constant variable template is ill-formed.
 [template.slice.array.overview]: #template.slice.array.overview
 [template.valarray]: #template.valarray
 [template.valarray.overview]: #template.valarray.overview
+[thread.jthread.class]: thread.md#thread.jthread.class
+[thread.thread.class]: thread.md#thread.thread.class
+[utility.arg.requirements]: library.md#utility.arg.requirements
 [valarray.access]: #valarray.access
 [valarray.assign]: #valarray.assign
 [valarray.binary]: #valarray.binary
@@ -6729,65 +6758,6 @@ constant variable template is ill-formed.
 [valarray.syn]: #valarray.syn
 [valarray.transcend]: #valarray.transcend
 [valarray.unary]: #valarray.unary
-
-<!-- Link reference definitions -->
-[bad.alloc]: support.md#bad.alloc
-[basic.fundamental]: basic.md#basic.fundamental
-[basic.stc.thread]: basic.md#basic.stc.thread
-[basic.types]: basic.md#basic.types
-[bit]: #bit
-[c.math]: #c.math
-[c.math.hypot3]: #c.math.hypot3
-[cfenv]: #cfenv
-[complex.numbers]: #complex.numbers
-[conv.prom]: expr.md#conv.prom
-[cpp.pragma]: cpp.md#cpp.pragma
-[cpp17.copyassignable]: #cpp17.copyassignable
-[cpp17.copyconstructible]: #cpp17.copyconstructible
-[cpp17.equalitycomparable]: #cpp17.equalitycomparable
-[dcl.init]: dcl.md#dcl.init
-[expr.const]: expr.md#expr.const
-[implimits]: #implimits
-[input.iterators]: iterators.md#input.iterators
-[input.output]: input.md#input.output
-[intro.object]: basic.md#intro.object
-[iostate.flags]: input.md#iostate.flags
-[istream.formatted]: input.md#istream.formatted
-[iterator.concept.contiguous]: iterators.md#iterator.concept.contiguous
-[iterator.requirements.general]: iterators.md#iterator.requirements.general
-[library.c]: library.md#library.c
-[namespace.std]: library.md#namespace.std
-[numarray]: #numarray
-[numbers]: #numbers
-[numeric.requirements]: #numeric.requirements
-[numerics.summary]: #numerics.summary
-[output.iterators]: iterators.md#output.iterators
-[rand]: #rand
-[rand.adapt]: #rand.adapt
-[rand.dist]: #rand.dist
-[rand.eng]: #rand.eng
-[rand.eng.lcong]: #rand.eng.lcong
-[rand.req.adapt]: #rand.req.adapt
-[rand.req.dist]: #rand.req.dist
-[rand.req.eng]: #rand.req.eng
-[rand.req.seedseq]: #rand.req.seedseq
-[rand.req.urng]: #rand.req.urng
-[random.access.iterators]: iterators.md#random.access.iterators
-[res.on.data.races]: library.md#res.on.data.races
-[sf.cmath]: #sf.cmath
-[sf.cmath.assoc.legendre]: #sf.cmath.assoc.legendre
-[sf.cmath.cyl.bessel.i]: #sf.cmath.cyl.bessel.i
-[sf.cmath.cyl.bessel.j]: #sf.cmath.cyl.bessel.j
-[sf.cmath.cyl.neumann]: #sf.cmath.cyl.neumann
-[sf.cmath.ellint.1]: #sf.cmath.ellint.1
-[sf.cmath.ellint.2]: #sf.cmath.ellint.2
-[sf.cmath.ellint.3]: #sf.cmath.ellint.3
-[strings]: strings.md#strings
-[thread.jthread.class]: thread.md#thread.jthread.class
-[thread.thread.class]: thread.md#thread.thread.class
-[utility.arg.requirements]: library.md#utility.arg.requirements
-[valarray.members]: #valarray.members
-[valarray.range]: #valarray.range
 
 [^1]: In other words, value types. These include arithmetic types,
     pointers, the library class `complex`, and instantiations of

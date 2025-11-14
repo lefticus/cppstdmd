@@ -2505,25 +2505,6 @@ Weird g() {
 
 — *end example*]
 
-<!-- Section link definitions -->
-[class.base.init]: #class.base.init
-[class.cdtor]: #class.cdtor
-[class.conv]: #class.conv
-[class.conv.ctor]: #class.conv.ctor
-[class.conv.fct]: #class.conv.fct
-[class.copy]: #class.copy
-[class.copy.assign]: #class.copy.assign
-[class.copy.ctor]: #class.copy.ctor
-[class.copy.elision]: #class.copy.elision
-[class.ctor]: #class.ctor
-[class.dtor]: #class.dtor
-[class.expl.init]: #class.expl.init
-[class.free]: #class.free
-[class.inhctor.init]: #class.inhctor.init
-[class.init]: #class.init
-[class.temporary]: #class.temporary
-[special]: #special
-
 <!-- Link reference definitions -->
 [basic.def.odr]: basic.md#basic.def.odr
 [basic.life]: basic.md#basic.life
@@ -2543,13 +2524,19 @@ Weird g() {
 [class.access]: class.md#class.access
 [class.base.init]: #class.base.init
 [class.cdtor]: #class.cdtor
+[class.conv]: #class.conv
+[class.conv.ctor]: #class.conv.ctor
 [class.conv.fct]: #class.conv.fct
 [class.copy]: #class.copy
+[class.copy.assign]: #class.copy.assign
+[class.copy.ctor]: #class.copy.ctor
+[class.copy.elision]: #class.copy.elision
 [class.ctor]: #class.ctor
 [class.dtor]: #class.dtor
 [class.expl.init]: #class.expl.init
 [class.free]: #class.free
 [class.friend]: class.md#class.friend
+[class.inhctor.init]: #class.inhctor.init
 [class.init]: #class.init
 [class.mem]: class.md#class.mem
 [class.member.lookup]: class.md#class.member.lookup
@@ -2613,6 +2600,7 @@ Weird g() {
 [over.match.best]: over.md#over.match.best
 [over.match.copy]: over.md#over.match.copy
 [over.over]: over.md#over.over
+[special]: #special
 [stmt.dcl]: stmt.md#stmt.dcl
 [stmt.return]: stmt.md#stmt.return
 [temp.dep.type]: temp.md#temp.dep.type

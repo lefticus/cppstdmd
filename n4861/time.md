@@ -7819,8 +7819,23 @@ library header `<time.h>`. [^1]
 The functions `asctime`, `ctime`, `gmtime`, and `localtime` are not
 required to avoid data races [[res.on.data.races]].
 
-<!-- Section link definitions -->
+<!-- Link reference definitions -->
+[basic.lookup.argdep]: basic.md#basic.lookup.argdep
+[cpp17.equalitycomparable]: #cpp17.equalitycomparable
+[cpp17.lessthancomparable]: #cpp17.lessthancomparable
 [ctime.syn]: #ctime.syn
+[filesystems]: input.md#filesystems
+[format.formatter]: utilities.md#format.formatter
+[format.string]: utilities.md#format.string
+[formatter.requirements]: utilities.md#formatter.requirements
+[intro.multithread]: basic.md#intro.multithread
+[meta.rqmts]: utilities.md#meta.rqmts
+[numeric.requirements]: numerics.md#numeric.requirements
+[over.ics.rank]: over.md#over.ics.rank
+[over.match.class.deduct]: over.md#over.match.class.deduct
+[res.on.data.races]: library.md#res.on.data.races
+[swappable.requirements]: library.md#swappable.requirements
+[temp.deduct]: temp.md#temp.deduct
 [time]: #time
 [time.12]: #time.12
 [time.cal]: #time.cal
@@ -7928,12 +7943,15 @@ required to avoid data races [[res.on.data.races]].
 [time.duration.observer]: #time.duration.observer
 [time.duration.special]: #time.duration.special
 [time.format]: #time.format
+[time.format.spec]: #time.format.spec
 [time.general]: #time.general
 [time.hms]: #time.hms
 [time.hms.members]: #time.hms.members
 [time.hms.nonmembers]: #time.hms.nonmembers
 [time.hms.overview]: #time.hms.overview
+[time.hms.width]: #time.hms.width
 [time.parse]: #time.parse
+[time.parse.spec]: #time.parse.spec
 [time.point]: #time.point
 [time.point.arithmetic]: #time.point.arithmetic
 [time.point.cast]: #time.point.cast
@@ -7942,6 +7960,7 @@ required to avoid data races [[res.on.data.races]].
 [time.point.nonmember]: #time.point.nonmember
 [time.point.observer]: #time.point.observer
 [time.point.special]: #time.point.special
+[time.summary]: #time.summary
 [time.syn]: #time.syn
 [time.traits]: #time.traits
 [time.traits.duration.values]: #time.traits.duration.values
@@ -7979,45 +7998,6 @@ required to avoid data races [[res.on.data.races]].
 [time.zone.zonedtime.nonmembers]: #time.zone.zonedtime.nonmembers
 [time.zone.zonedtime.overview]: #time.zone.zonedtime.overview
 [time.zone.zonedtraits]: #time.zone.zonedtraits
-
-<!-- Link reference definitions -->
-[basic.lookup.argdep]: basic.md#basic.lookup.argdep
-[cpp17.equalitycomparable]: #cpp17.equalitycomparable
-[cpp17.lessthancomparable]: #cpp17.lessthancomparable
-[ctime.syn]: #ctime.syn
-[filesystems]: input.md#filesystems
-[format.formatter]: utilities.md#format.formatter
-[format.string]: utilities.md#format.string
-[formatter.requirements]: utilities.md#formatter.requirements
-[intro.multithread]: basic.md#intro.multithread
-[meta.rqmts]: utilities.md#meta.rqmts
-[numeric.requirements]: numerics.md#numeric.requirements
-[over.ics.rank]: over.md#over.ics.rank
-[over.match.class.deduct]: over.md#over.match.class.deduct
-[res.on.data.races]: library.md#res.on.data.races
-[swappable.requirements]: library.md#swappable.requirements
-[temp.deduct]: temp.md#temp.deduct
-[time.12]: #time.12
-[time.cal]: #time.cal
-[time.clock]: #time.clock
-[time.clock.cast.id]: #time.clock.cast.id
-[time.clock.cast.sys]: #time.clock.cast.sys
-[time.clock.cast.sys.utc]: #time.clock.cast.sys.utc
-[time.clock.cast.utc]: #time.clock.cast.utc
-[time.clock.req]: #time.clock.req
-[time.duration]: #time.duration
-[time.duration.io]: #time.duration.io
-[time.format]: #time.format
-[time.format.spec]: #time.format.spec
-[time.hms]: #time.hms
-[time.hms.width]: #time.hms.width
-[time.parse]: #time.parse
-[time.parse.spec]: #time.parse.spec
-[time.point]: #time.point
-[time.summary]: #time.summary
-[time.syn]: #time.syn
-[time.traits]: #time.traits
-[time.zone]: #time.zone
 
 [^1]: `strftime` supports the C conversion specifiers `C`, `D`, `e`,
     `F`, `g`, `G`, `h`, `r`, `R`, `t`, `T`, `u`, `V`, and `z`, and the

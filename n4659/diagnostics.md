@@ -1251,11 +1251,15 @@ constructor.
 [*Note 1*: The returned NTBSmight be the contents of
 `what_arg + ": " + code.message()`. — *end note*]
 
-<!-- Section link definitions -->
+<!-- Link reference definitions -->
 [assertions]: #assertions
 [assertions.assert]: #assertions.assert
+[bad.alloc]: language.md#bad.alloc
 [cassert.syn]: #cassert.syn
 [cerrno.syn]: #cerrno.syn
+[comparisons]: utilities.md#comparisons
+[conv]: conv.md#conv
+[defns.const.subexpr]: library.md#defns.const.subexpr
 [diagnostics]: #diagnostics
 [diagnostics.general]: #diagnostics.general
 [domain.error]: #domain.error
@@ -1266,6 +1270,7 @@ constructor.
 [out.of.range]: #out.of.range
 [overflow.error]: #overflow.error
 [range.error]: #range.error
+[res.on.exception.handling]: library.md#res.on.exception.handling
 [runtime.error]: #runtime.error
 [std.exceptions]: #std.exceptions
 [stdexcept.syn]: #stdexcept.syn
@@ -1294,18 +1299,6 @@ constructor.
 [syserr.syserr.members]: #syserr.syserr.members
 [syserr.syserr.overview]: #syserr.syserr.overview
 [system_error.syn]: #system_error.syn
-[underflow.error]: #underflow.error
-
-<!-- Link reference definitions -->
-[assertions]: #assertions
-[bad.alloc]: language.md#bad.alloc
-[comparisons]: utilities.md#comparisons
-[conv]: conv.md#conv
-[defns.const.subexpr]: library.md#defns.const.subexpr
-[errno]: #errno
-[res.on.exception.handling]: library.md#res.on.exception.handling
-[std.exceptions]: #std.exceptions
-[syserr]: #syserr
-[syserr.errcode]: #syserr.errcode
 [tab:diagnostics.lib.summary]: #tab:diagnostics.lib.summary
+[underflow.error]: #underflow.error
 [unord.hash]: utilities.md#unord.hash

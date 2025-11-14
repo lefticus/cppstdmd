@@ -2325,7 +2325,7 @@ template <class E> constexpr const E* data(initializer_list<E> il) noexcept;
 
 *Returns:* `il.begin()`.
 
-<!-- Section link definitions -->
+<!-- Link reference definitions -->
 [back.insert.iter.cons]: #back.insert.iter.cons
 [back.insert.iter.op*]: #back.insert.iter.op*
 [back.insert.iter.op++]: #back.insert.iter.op++
@@ -2334,6 +2334,7 @@ template <class E> constexpr const E* data(initializer_list<E> il) noexcept;
 [back.insert.iterator]: #back.insert.iterator
 [back.inserter]: #back.inserter
 [bidirectional.iterators]: #bidirectional.iterators
+[containers]: containers.md#containers
 [forward.iterators]: #forward.iterators
 [front.insert.iter.cons]: #front.insert.iter.cons
 [front.insert.iter.op*]: #front.insert.iter.op*
@@ -2351,6 +2352,7 @@ template <class E> constexpr const E* data(initializer_list<E> il) noexcept;
 [insert.iterator]: #insert.iterator
 [insert.iterators]: #insert.iterators
 [inserter]: #inserter
+[iostream.format]: input.md#iostream.format
 [istream.iterator]: #istream.iterator
 [istream.iterator.cons]: #istream.iterator.cons
 [istream.iterator.ops]: #istream.iterator.ops
@@ -2421,34 +2423,6 @@ template <class E> constexpr const E* data(initializer_list<E> il) noexcept;
 [reverse.iterator]: #reverse.iterator
 [reverse.iterators]: #reverse.iterators
 [std.iterator.tags]: #std.iterator.tags
-[stream.iterators]: #stream.iterators
-
-<!-- Link reference definitions -->
-[bidirectional.iterators]: #bidirectional.iterators
-[containers]: containers.md#containers
-[forward.iterators]: #forward.iterators
-[input.iterators]: #input.iterators
-[iostream.format]: input.md#iostream.format
-[iterator.container]: #iterator.container
-[iterator.iterators]: #iterator.iterators
-[iterator.primitives]: #iterator.primitives
-[iterator.range]: #iterator.range
-[iterator.requirements]: #iterator.requirements
-[iterator.traits]: #iterator.traits
-[output.iterators]: #output.iterators
-[predef.iterators]: #predef.iterators
-[random.access.iterators]: #random.access.iterators
-[reverse.iter.op+]: #reverse.iter.op+
-[reverse.iter.op+=]: #reverse.iter.op+=
-[reverse.iter.op-]: #reverse.iter.op-
-[reverse.iter.op-=]: #reverse.iter.op-=
-[reverse.iter.op<]: #reverse.iter.op<
-[reverse.iter.op<=]: #reverse.iter.op<=
-[reverse.iter.op>]: #reverse.iter.op>
-[reverse.iter.op>=]: #reverse.iter.op>=
-[reverse.iter.opdiff]: #reverse.iter.opdiff
-[reverse.iter.opindex]: #reverse.iter.opindex
-[reverse.iter.opsum]: #reverse.iter.opsum
 [stream.buffers]: input.md#stream.buffers
 [stream.iterators]: #stream.iterators
 [swappable.requirements]: library.md#swappable.requirements

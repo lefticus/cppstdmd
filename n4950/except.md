@@ -791,18 +791,6 @@ exception is caught. The function `std::uncaught_exceptions`
 [[uncaught.exceptions]] returns the number of uncaught exceptions in the
 current thread.
 
-<!-- Section link definitions -->
-[except]: #except
-[except.ctor]: #except.ctor
-[except.handle]: #except.handle
-[except.pre]: #except.pre
-[except.spec]: #except.spec
-[except.special]: #except.special
-[except.special.general]: #except.special.general
-[except.terminate]: #except.terminate
-[except.throw]: #except.throw
-[except.uncaught]: #except.uncaught
-
 <!-- Link reference definitions -->
 [algorithms.parallel.defns]: algorithms.md#algorithms.parallel.defns
 [algorithms.parallel.exceptions]: algorithms.md#algorithms.parallel.exceptions
@@ -824,10 +812,14 @@ current thread.
 [dcl.init]: dcl.md#dcl.init
 [dcl.init.aggr]: dcl.md#dcl.init.aggr
 [dcl.init.general]: dcl.md#dcl.init.general
+[except]: #except
 [except.ctor]: #except.ctor
 [except.handle]: #except.handle
 [except.nested]: support.md#except.nested
+[except.pre]: #except.pre
 [except.spec]: #except.spec
+[except.special]: #except.special
+[except.special.general]: #except.special.general
 [except.terminate]: #except.terminate
 [except.throw]: #except.throw
 [except.uncaught]: #except.uncaught

@@ -1806,28 +1806,44 @@ such a tracing process is a debugger. — *end note*]
 
 *Remarks:* This function is replaceable [[term.replaceable.function]].
 
-<!-- Section link definitions -->
+<!-- Link reference definitions -->
 [assertions]: #assertions
 [assertions.assert]: #assertions.assert
 [assertions.general]: #assertions.general
+[bad.alloc]: support.md#bad.alloc
 [cassert.syn]: #cassert.syn
 [cerrno.syn]: #cerrno.syn
+[cmp.concept]: support.md#cmp.concept
+[comparisons.three.way]: utilities.md#comparisons.three.way
+[concepts.object]: concepts.md#concepts.object
+[container.alloc.reqmts]: containers.md#container.alloc.reqmts
+[container.rev.reqmts]: containers.md#container.rev.reqmts
+[conv]: expr.md#conv
+[cpp.predefined]: cpp.md#cpp.predefined
 [debugging]: #debugging
 [debugging.general]: #debugging.general
 [debugging.syn]: #debugging.syn
 [debugging.utility]: #debugging.utility
+[defns.const.subexpr]: intro.md#defns.const.subexpr
 [diagnostics]: #diagnostics
 [diagnostics.general]: #diagnostics.general
+[diagnostics.summary]: #diagnostics.summary
 [domain.error]: #domain.error
 [errno]: #errno
 [errno.general]: #errno.general
+[format.string.std]: text.md#format.string.std
+[intro.execution]: basic.md#intro.execution
 [invalid.argument]: #invalid.argument
+[iterator.concept.random.access]: iterators.md#iterator.concept.random.access
 [length.error]: #length.error
 [logic.error]: #logic.error
 [out.of.range]: #out.of.range
 [overflow.error]: #overflow.error
+[random.access.iterators]: iterators.md#random.access.iterators
 [range.error]: #range.error
+[res.on.exception.handling]: library.md#res.on.exception.handling
 [runtime.error]: #runtime.error
+[sequence.reqmts]: containers.md#sequence.reqmts
 [stacktrace]: #stacktrace
 [stacktrace.basic]: #stacktrace.basic
 [stacktrace.basic.cmp]: #stacktrace.basic.cmp
@@ -1875,32 +1891,6 @@ such a tracing process is a debugger. — *end note*]
 [syserr.syserr.members]: #syserr.syserr.members
 [syserr.syserr.overview]: #syserr.syserr.overview
 [system.error.syn]: #system.error.syn
-[underflow.error]: #underflow.error
-
-<!-- Link reference definitions -->
-[assertions]: #assertions
-[bad.alloc]: support.md#bad.alloc
-[cmp.concept]: support.md#cmp.concept
-[comparisons.three.way]: utilities.md#comparisons.three.way
-[concepts.object]: concepts.md#concepts.object
-[container.alloc.reqmts]: containers.md#container.alloc.reqmts
-[container.rev.reqmts]: containers.md#container.rev.reqmts
-[conv]: expr.md#conv
-[cpp.predefined]: cpp.md#cpp.predefined
-[debugging]: #debugging
-[defns.const.subexpr]: intro.md#defns.const.subexpr
-[diagnostics.summary]: #diagnostics.summary
-[errno]: #errno
-[format.string.std]: text.md#format.string.std
-[intro.execution]: basic.md#intro.execution
-[iterator.concept.random.access]: iterators.md#iterator.concept.random.access
-[random.access.iterators]: iterators.md#random.access.iterators
-[res.on.exception.handling]: library.md#res.on.exception.handling
-[sequence.reqmts]: containers.md#sequence.reqmts
-[stacktrace]: #stacktrace
-[std.exceptions]: #std.exceptions
-[syserr]: #syserr
-[syserr.errcat]: #syserr.errcat
-[syserr.errcode]: #syserr.errcode
 [term.replaceable.function]: dcl.md#term.replaceable.function
+[underflow.error]: #underflow.error
 [unord.hash]: utilities.md#unord.hash

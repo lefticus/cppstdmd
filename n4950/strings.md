@@ -3999,7 +3999,8 @@ conversion state is unspecified.
 introduce a data race [[res.on.data.races]] with other calls to
 `c8rtomb` with a null pointer argument for `s`.
 
-<!-- Section link definitions -->
+<!-- Link reference definitions -->
+[basic.indet]: basic.md#basic.indet
 [basic.string]: #basic.string
 [basic.string.general]: #basic.string.general
 [basic.string.hash]: #basic.string.hash
@@ -4009,6 +4010,7 @@ introduce a data race [[res.on.data.races]] with other calls to
 [cctype.syn]: #cctype.syn
 [char.traits]: #char.traits
 [char.traits.general]: #char.traits.general
+[char.traits.req]: #char.traits.req
 [char.traits.require]: #char.traits.require
 [char.traits.specializations]: #char.traits.specializations
 [char.traits.specializations.char]: #char.traits.specializations.char
@@ -4018,10 +4020,34 @@ introduce a data race [[res.on.data.races]] with other calls to
 [char.traits.specializations.general]: #char.traits.specializations.general
 [char.traits.specializations.wchar.t]: #char.traits.specializations.wchar.t
 [char.traits.typedefs]: #char.traits.typedefs
+[cmp.categories]: support.md#cmp.categories
+[container.reqmts]: containers.md#container.reqmts
+[container.requirements]: containers.md#container.requirements
+[container.requirements.general]: containers.md#container.requirements.general
+[cpp17.copyassignable]: #cpp17.copyassignable
+[cpp17.copyconstructible]: #cpp17.copyconstructible
+[cpp17.defaultconstructible]: #cpp17.defaultconstructible
+[cpp17.destructible]: #cpp17.destructible
 [cstring.syn]: #cstring.syn
 [cuchar.syn]: #cuchar.syn
 [cwchar.syn]: #cwchar.syn
 [cwctype.syn]: #cwctype.syn
+[defns.character.container]: intro.md#defns.character.container
+[input.output]: input.md#input.output
+[intro.object]: basic.md#intro.object
+[iostream.forward]: input.md#iostream.forward
+[iostreams.limits.pos]: input.md#iostreams.limits.pos
+[istream.formatted.reqmts]: input.md#istream.formatted.reqmts
+[istream.unformatted]: input.md#istream.unformatted
+[iterator.concept.contiguous]: iterators.md#iterator.concept.contiguous
+[iterator.concept.winc]: iterators.md#iterator.concept.winc
+[iterator.range]: iterators.md#iterator.range
+[iterator.requirements.general]: iterators.md#iterator.requirements.general
+[library.c]: library.md#library.c
+[ostream.formatted.reqmts]: input.md#ostream.formatted.reqmts
+[random.access.iterators]: iterators.md#random.access.iterators
+[res.on.data.races]: library.md#res.on.data.races
+[sequence.reqmts]: containers.md#sequence.reqmts
 [string.access]: #string.access
 [string.accessors]: #string.accessors
 [string.append]: #string.append
@@ -4057,7 +4083,9 @@ introduce a data race [[res.on.data.races]] with other calls to
 [string.view]: #string.view
 [string.view.access]: #string.view.access
 [string.view.capacity]: #string.view.capacity
+[string.view.compare]: #string.view.compare
 [string.view.comparison]: #string.view.comparison
+[string.view.comparison.overloads]: #string.view.comparison.overloads
 [string.view.cons]: #string.view.cons
 [string.view.deduct]: #string.view.deduct
 [string.view.find]: #string.view.find
@@ -4072,47 +4100,6 @@ introduce a data race [[res.on.data.races]] with other calls to
 [string.view.template]: #string.view.template
 [string.view.template.general]: #string.view.template.general
 [strings]: #strings
-[strings.general]: #strings.general
-
-<!-- Link reference definitions -->
-[basic.indet]: basic.md#basic.indet
-[basic.string]: #basic.string
-[basic.string.hash]: #basic.string.hash
-[c.strings]: #c.strings
-[char.traits]: #char.traits
-[char.traits.req]: #char.traits.req
-[char.traits.require]: #char.traits.require
-[char.traits.typedefs]: #char.traits.typedefs
-[cmp.categories]: support.md#cmp.categories
-[container.reqmts]: containers.md#container.reqmts
-[container.requirements]: containers.md#container.requirements
-[container.requirements.general]: containers.md#container.requirements.general
-[cpp17.copyassignable]: #cpp17.copyassignable
-[cpp17.copyconstructible]: #cpp17.copyconstructible
-[cpp17.defaultconstructible]: #cpp17.defaultconstructible
-[cpp17.destructible]: #cpp17.destructible
-[defns.character.container]: intro.md#defns.character.container
-[input.output]: input.md#input.output
-[intro.object]: basic.md#intro.object
-[iostream.forward]: input.md#iostream.forward
-[iostreams.limits.pos]: input.md#iostreams.limits.pos
-[istream.formatted.reqmts]: input.md#istream.formatted.reqmts
-[istream.unformatted]: input.md#istream.unformatted
-[iterator.concept.contiguous]: iterators.md#iterator.concept.contiguous
-[iterator.concept.winc]: iterators.md#iterator.concept.winc
-[iterator.range]: iterators.md#iterator.range
-[iterator.requirements.general]: iterators.md#iterator.requirements.general
-[library.c]: library.md#library.c
-[ostream.formatted.reqmts]: input.md#ostream.formatted.reqmts
-[random.access.iterators]: iterators.md#random.access.iterators
-[res.on.data.races]: library.md#res.on.data.races
-[sequence.reqmts]: containers.md#sequence.reqmts
-[string.classes]: #string.classes
-[string.io]: #string.io
-[string.special]: #string.special
-[string.view]: #string.view
-[string.view.compare]: #string.view.compare
-[string.view.comparison.overloads]: #string.view.comparison.overloads
 [strings.general]: #strings.general
 [strings.summary]: #strings.summary
 [support.signal]: support.md#support.signal

@@ -3339,7 +3339,13 @@ the functions listed in [[setlocale.data.races]].
 
 
 
-<!-- Section link definitions -->
+<!-- Link reference definitions -->
+[alg.lex.comparison]: algorithms.md#alg.lex.comparison
+[alg.sort]: algorithms.md#alg.sort
+[algorithms]: algorithms.md#algorithms
+[basic.start.static]: basic.md#basic.start.static
+[bitmask.types]: library.md#bitmask.types
+[c.files]: input.md#c.files
 [c.locales]: #c.locales
 [category.collate]: #category.collate
 [category.ctype]: #category.ctype
@@ -3363,12 +3369,21 @@ the functions listed in [[setlocale.data.races]].
 [facet.numpunct]: #facet.numpunct
 [facet.numpunct.members]: #facet.numpunct.members
 [facet.numpunct.virtuals]: #facet.numpunct.virtuals
+[file.streams]: input.md#file.streams
+[ios.base]: input.md#ios.base
+[istream.formatted]: input.md#istream.formatted
+[istream.formatted.reqmts]: input.md#istream.formatted.reqmts
+[iterator.requirements]: iterators.md#iterator.requirements
+[lex.charset]: lex.md#lex.charset
 [locale]: #locale
 [locale.categories]: #locale.categories
 [locale.category]: #locale.category
+[locale.category.facets]: #locale.category.facets
 [locale.codecvt]: #locale.codecvt
 [locale.codecvt.byname]: #locale.codecvt.byname
+[locale.codecvt.inout]: #locale.codecvt.inout
 [locale.codecvt.members]: #locale.codecvt.members
+[locale.codecvt.unshift]: #locale.codecvt.unshift
 [locale.codecvt.virtuals]: #locale.codecvt.virtuals
 [locale.collate]: #locale.collate
 [locale.collate.byname]: #locale.collate.byname
@@ -3403,10 +3418,12 @@ the functions listed in [[setlocale.data.races]].
 [locale.numpunct]: #locale.numpunct
 [locale.numpunct.byname]: #locale.numpunct.byname
 [locale.operators]: #locale.operators
+[locale.spec]: #locale.spec
 [locale.statics]: #locale.statics
 [locale.syn]: #locale.syn
 [locale.time.get]: #locale.time.get
 [locale.time.get.byname]: #locale.time.get.byname
+[locale.time.get.dogetdate]: #locale.time.get.dogetdate
 [locale.time.get.members]: #locale.time.get.members
 [locale.time.get.virtuals]: #locale.time.get.virtuals
 [locale.time.put]: #locale.time.put
@@ -3417,35 +3434,6 @@ the functions listed in [[setlocale.data.races]].
 [locales]: #locales
 [localization]: #localization
 [localization.general]: #localization.general
-
-<!-- Link reference definitions -->
-[alg.lex.comparison]: algorithms.md#alg.lex.comparison
-[alg.sort]: algorithms.md#alg.sort
-[algorithms]: algorithms.md#algorithms
-[basic.start.static]: basic.md#basic.start.static
-[bitmask.types]: library.md#bitmask.types
-[c.files]: input.md#c.files
-[c.locales]: #c.locales
-[category.ctype]: #category.ctype
-[category.monetary]: #category.monetary
-[category.numeric]: #category.numeric
-[category.time]: #category.time
-[file.streams]: input.md#file.streams
-[ios.base]: input.md#ios.base
-[istream.formatted]: input.md#istream.formatted
-[istream.formatted.reqmts]: input.md#istream.formatted.reqmts
-[iterator.requirements]: iterators.md#iterator.requirements
-[lex.charset]: lex.md#lex.charset
-[locale.categories]: #locale.categories
-[locale.category]: #locale.category
-[locale.category.facets]: #locale.category.facets
-[locale.codecvt.inout]: #locale.codecvt.inout
-[locale.codecvt.unshift]: #locale.codecvt.unshift
-[locale.ctype.members]: #locale.ctype.members
-[locale.facet]: #locale.facet
-[locale.spec]: #locale.spec
-[locale.time.get.dogetdate]: #locale.time.get.dogetdate
-[locales]: #locales
 [localization.summary]: #localization.summary
 [ostream.formatted.reqmts]: input.md#ostream.formatted.reqmts
 [res.on.data.races]: library.md#res.on.data.races

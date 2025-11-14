@@ -5322,9 +5322,23 @@ template<class R, class... ArgTypes>
 
 *Effects:* As if by `x.swap(y)`.
 
-<!-- Section link definitions -->
+<!-- Link reference definitions -->
+[alg.sorting]: algorithms.md#alg.sorting
+[atomics]: atomics.md#atomics
 [barrier.syn]: #barrier.syn
+[basic.life]: basic.md#basic.life
+[basic.stc.thread]: basic.md#basic.stc.thread
+[bitmask.types]: library.md#bitmask.types
+[class.prop]: class.md#class.prop
 [condition.variable.syn]: #condition.variable.syn
+[cpp17.allocator]: #cpp17.allocator
+[cpp17.defaultconstructible]: #cpp17.defaultconstructible
+[cpp17.destructible]: #cpp17.destructible
+[cpp17.moveassignable]: #cpp17.moveassignable
+[cpp17.moveconstructible]: #cpp17.moveconstructible
+[defns.block]: intro.md#defns.block
+[except.terminate]: except.md#except.terminate
+[func.require]: utilities.md#func.require
 [future.syn]: #future.syn
 [futures]: #futures
 [futures.async]: #futures.async
@@ -5338,8 +5352,12 @@ template<class R, class... ArgTypes>
 [futures.task.members]: #futures.task.members
 [futures.task.nonmembers]: #futures.task.nonmembers
 [futures.unique.future]: #futures.unique.future
+[intro.multithread]: basic.md#intro.multithread
+[intro.races]: basic.md#intro.races
 [latch.syn]: #latch.syn
 [mutex.syn]: #mutex.syn
+[res.on.data.races]: library.md#res.on.data.races
+[res.on.exception.handling]: library.md#res.on.exception.handling
 [semaphore.syn]: #semaphore.syn
 [shared.mutex.syn]: #shared.mutex.syn
 [stopcallback]: #stopcallback
@@ -5352,6 +5370,8 @@ template<class R, class... ArgTypes>
 [stoptoken.cons]: #stoptoken.cons
 [stoptoken.mem]: #stoptoken.mem
 [stoptoken.nonmembers]: #stoptoken.nonmembers
+[syserr]: diagnostics.md#syserr
+[syserr.syserr]: diagnostics.md#syserr.syserr
 [thread]: #thread
 [thread.barrier]: #thread.barrier
 [thread.barrier.class]: #thread.barrier.class
@@ -5413,6 +5433,7 @@ template<class R, class... ArgTypes>
 [thread.stoptoken]: #thread.stoptoken
 [thread.stoptoken.intro]: #thread.stoptoken.intro
 [thread.stoptoken.syn]: #thread.stoptoken.syn
+[thread.summary]: #thread.summary
 [thread.syn]: #thread.syn
 [thread.thread.algorithm]: #thread.thread.algorithm
 [thread.thread.assign]: #thread.thread.assign
@@ -5426,64 +5447,6 @@ template<class R, class... ArgTypes>
 [thread.threads]: #thread.threads
 [thread.timedmutex.class]: #thread.timedmutex.class
 [thread.timedmutex.recursive]: #thread.timedmutex.recursive
-[thread.timedmutex.requirements]: #thread.timedmutex.requirements
-
-<!-- Link reference definitions -->
-[alg.sorting]: algorithms.md#alg.sorting
-[atomics]: atomics.md#atomics
-[basic.life]: basic.md#basic.life
-[basic.stc.thread]: basic.md#basic.stc.thread
-[bitmask.types]: library.md#bitmask.types
-[class.prop]: class.md#class.prop
-[cpp17.allocator]: #cpp17.allocator
-[cpp17.defaultconstructible]: #cpp17.defaultconstructible
-[cpp17.destructible]: #cpp17.destructible
-[cpp17.moveassignable]: #cpp17.moveassignable
-[cpp17.moveconstructible]: #cpp17.moveconstructible
-[defns.block]: intro.md#defns.block
-[except.terminate]: except.md#except.terminate
-[func.require]: utilities.md#func.require
-[futures]: #futures
-[futures.async]: #futures.async
-[futures.shared.future]: #futures.shared.future
-[futures.state]: #futures.state
-[intro.multithread]: basic.md#intro.multithread
-[intro.races]: basic.md#intro.races
-[res.on.data.races]: library.md#res.on.data.races
-[res.on.exception.handling]: library.md#res.on.exception.handling
-[stopcallback]: #stopcallback
-[stopsource]: #stopsource
-[stoptoken]: #stoptoken
-[syserr]: diagnostics.md#syserr
-[syserr.syserr]: diagnostics.md#syserr.syserr
-[thread.condition]: #thread.condition
-[thread.condition.condvarany]: #thread.condition.condvarany
-[thread.condvarany.intwait]: #thread.condvarany.intwait
-[thread.coord]: #thread.coord
-[thread.lock.algorithm]: #thread.lock.algorithm
-[thread.lock.guard]: #thread.lock.guard
-[thread.lock.scoped]: #thread.lock.scoped
-[thread.lock.shared]: #thread.lock.shared
-[thread.lock.unique]: #thread.lock.unique
-[thread.mutex]: #thread.mutex
-[thread.mutex.requirements]: #thread.mutex.requirements
-[thread.mutex.requirements.mutex]: #thread.mutex.requirements.mutex
-[thread.req]: #thread.req
-[thread.req.exception]: #thread.req.exception
-[thread.req.lockable]: #thread.req.lockable
-[thread.req.lockable.basic]: #thread.req.lockable.basic
-[thread.req.lockable.req]: #thread.req.lockable.req
-[thread.req.lockable.timed]: #thread.req.lockable.timed
-[thread.req.timing]: #thread.req.timing
-[thread.sema]: #thread.sema
-[thread.sharedmutex.requirements]: #thread.sharedmutex.requirements
-[thread.sharedtimedmutex.requirements]: #thread.sharedtimedmutex.requirements
-[thread.stoptoken]: #thread.stoptoken
-[thread.summary]: #thread.summary
-[thread.thread.class]: #thread.thread.class
-[thread.thread.constr]: #thread.thread.constr
-[thread.thread.member]: #thread.thread.member
-[thread.threads]: #thread.threads
 [thread.timedmutex.requirements]: #thread.timedmutex.requirements
 [time]: time.md#time
 [time.clock]: time.md#time.clock

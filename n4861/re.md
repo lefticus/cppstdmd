@@ -2555,7 +2555,15 @@ as follows:
 
 ECMA-262 15.10
 
-<!-- Section link definitions -->
+<!-- Link reference definitions -->
+[algorithms]: algorithms.md#algorithms
+[bidirectional.iterators]: iterators.md#bidirectional.iterators
+[bitmask.types]: library.md#bitmask.types
+[container.requirements.general]: containers.md#container.requirements.general
+[enumerated.types]: library.md#enumerated.types
+[forward.iterators]: iterators.md#forward.iterators
+[input.iterators]: iterators.md#input.iterators
+[output.iterators]: iterators.md#output.iterators
 [re]: #re
 [re.alg]: #re.alg
 [re.alg.match]: #re.alg.match
@@ -2595,6 +2603,7 @@ ECMA-262 15.10
 [re.submatch]: #re.submatch
 [re.submatch.members]: #re.submatch.members
 [re.submatch.op]: #re.submatch.op
+[re.summary]: #re.summary
 [re.syn]: #re.syn
 [re.synopt]: #re.synopt
 [re.tokiter]: #re.tokiter
@@ -2602,34 +2611,6 @@ ECMA-262 15.10
 [re.tokiter.comp]: #re.tokiter.comp
 [re.tokiter.deref]: #re.tokiter.deref
 [re.tokiter.incr]: #re.tokiter.incr
-[re.traits]: #re.traits
-
-<!-- Link reference definitions -->
-[algorithms]: algorithms.md#algorithms
-[bidirectional.iterators]: iterators.md#bidirectional.iterators
-[bitmask.types]: library.md#bitmask.types
-[container.requirements.general]: containers.md#container.requirements.general
-[enumerated.types]: library.md#enumerated.types
-[forward.iterators]: iterators.md#forward.iterators
-[input.iterators]: iterators.md#input.iterators
-[output.iterators]: iterators.md#output.iterators
-[re.alg]: #re.alg
-[re.alg.match]: #re.alg.match
-[re.alg.search]: #re.alg.search
-[re.badexp]: #re.badexp
-[re.const]: #re.const
-[re.def]: #re.def
-[re.err]: #re.err
-[re.grammar]: #re.grammar
-[re.iter]: #re.iter
-[re.matchflag]: #re.matchflag
-[re.regex]: #re.regex
-[re.req]: #re.req
-[re.results]: #re.results
-[re.results.const]: #re.results.const
-[re.submatch]: #re.submatch
-[re.summary]: #re.summary
-[re.synopt]: #re.synopt
 [re.traits]: #re.traits
 [re.traits.classnames]: #re.traits.classnames
 [sequence.reqmts]: containers.md#sequence.reqmts

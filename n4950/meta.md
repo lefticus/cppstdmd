@@ -1401,44 +1401,6 @@ if both of the constants used in its specification are representable by
 `intmax_t`, the typedef is defined; if either of the constants is not
 representable by `intmax_t`, the typedef is not defined.
 
-<!-- Section link definitions -->
-[intseq]: #intseq
-[intseq.general]: #intseq.general
-[intseq.intseq]: #intseq.intseq
-[intseq.make]: #intseq.make
-[meta]: #meta
-[meta.const.eval]: #meta.const.eval
-[meta.general]: #meta.general
-[meta.help]: #meta.help
-[meta.logical]: #meta.logical
-[meta.member]: #meta.member
-[meta.rel]: #meta.rel
-[meta.rqmts]: #meta.rqmts
-[meta.trans]: #meta.trans
-[meta.trans.arr]: #meta.trans.arr
-[meta.trans.cv]: #meta.trans.cv
-[meta.trans.general]: #meta.trans.general
-[meta.trans.other]: #meta.trans.other
-[meta.trans.ptr]: #meta.trans.ptr
-[meta.trans.ref]: #meta.trans.ref
-[meta.trans.sign]: #meta.trans.sign
-[meta.type.synop]: #meta.type.synop
-[meta.unary]: #meta.unary
-[meta.unary.cat]: #meta.unary.cat
-[meta.unary.comp]: #meta.unary.comp
-[meta.unary.general]: #meta.unary.general
-[meta.unary.prop]: #meta.unary.prop
-[meta.unary.prop.query]: #meta.unary.prop.query
-[ratio]: #ratio
-[ratio.arithmetic]: #ratio.arithmetic
-[ratio.comparison]: #ratio.comparison
-[ratio.general]: #ratio.general
-[ratio.ratio]: #ratio.ratio
-[ratio.si]: #ratio.si
-[ratio.syn]: #ratio.syn
-[type.traits]: #type.traits
-[type.traits.general]: #type.traits.general
-
 <!-- Link reference definitions -->
 [array]: containers.md#array
 [basic.compound]: basic.md#basic.compound
@@ -1467,15 +1429,41 @@ representable by `intmax_t`, the typedef is not defined.
 [func.require]: utilities.md#func.require
 [functional.syn]: utilities.md#functional.syn
 [intseq]: #intseq
+[intseq.general]: #intseq.general
+[intseq.intseq]: #intseq.intseq
+[intseq.make]: #intseq.make
+[meta]: #meta
+[meta.const.eval]: #meta.const.eval
+[meta.general]: #meta.general
 [meta.help]: #meta.help
+[meta.logical]: #meta.logical
+[meta.member]: #meta.member
+[meta.rel]: #meta.rel
 [meta.rqmts]: #meta.rqmts
 [meta.summary]: #meta.summary
 [meta.trans]: #meta.trans
+[meta.trans.arr]: #meta.trans.arr
+[meta.trans.cv]: #meta.trans.cv
+[meta.trans.general]: #meta.trans.general
+[meta.trans.other]: #meta.trans.other
+[meta.trans.ptr]: #meta.trans.ptr
+[meta.trans.ref]: #meta.trans.ref
+[meta.trans.sign]: #meta.trans.sign
 [meta.type.synop]: #meta.type.synop
 [meta.unary]: #meta.unary
+[meta.unary.cat]: #meta.unary.cat
+[meta.unary.comp]: #meta.unary.comp
+[meta.unary.general]: #meta.unary.general
+[meta.unary.prop]: #meta.unary.prop
+[meta.unary.prop.query]: #meta.unary.prop.query
 [namespace.std]: library.md#namespace.std
 [ratio]: #ratio
 [ratio.arithmetic]: #ratio.arithmetic
+[ratio.comparison]: #ratio.comparison
+[ratio.general]: #ratio.general
+[ratio.ratio]: #ratio.ratio
+[ratio.si]: #ratio.si
+[ratio.syn]: #ratio.syn
 [special]: class.md#special
 [stmt.return]: stmt.md#stmt.return
 [support.signal]: support.md#support.signal
@@ -1490,3 +1478,4 @@ representable by `intmax_t`, the typedef is not defined.
 [term.unevaluated.operand]: expr.md#term.unevaluated.operand
 [tuple.apply]: utilities.md#tuple.apply
 [type.traits]: #type.traits
+[type.traits.general]: #type.traits.general

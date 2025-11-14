@@ -15046,7 +15046,16 @@ swap(x.map_, y.map_);
 swap(x.acc_, y.acc_);
 ```
 
-<!-- Section link definitions -->
+<!-- Link reference definitions -->
+[alg.equal]: algorithms.md#alg.equal
+[alg.sorting]: algorithms.md#alg.sorting
+[algorithm.stable]: library.md#algorithm.stable
+[algorithms]: algorithms.md#algorithms
+[algorithms.requirements]: algorithms.md#algorithms.requirements
+[allocator.requirements]: library.md#allocator.requirements
+[allocator.requirements.completeness]: library.md#allocator.requirements.completeness
+[allocator.traits.members]: mem.md#allocator.traits.members
+[allocator.uses.construction]: mem.md#allocator.uses.construction
 [array]: #array
 [array.cons]: #array.cons
 [array.creation]: #array.creation
@@ -15063,6 +15072,11 @@ swap(x.acc_, y.acc_);
 [associative.reqmts.except]: #associative.reqmts.except
 [associative.reqmts.general]: #associative.reqmts.general
 [associative.set.syn]: #associative.set.syn
+[basic.fundamental]: basic.md#basic.fundamental
+[basic.string]: strings.md#basic.string
+[class.copy.ctor]: class.md#class.copy.ctor
+[class.default.ctor]: class.md#class.default.ctor
+[class.dtor]: class.md#class.dtor
 [container.adaptors]: #container.adaptors
 [container.adaptors.format]: #container.adaptors.format
 [container.adaptors.general]: #container.adaptors.general
@@ -15070,6 +15084,7 @@ swap(x.acc_, y.acc_);
 [container.gen.reqmts]: #container.gen.reqmts
 [container.insert.return]: #container.insert.return
 [container.node]: #container.node
+[container.node.compat]: #container.node.compat
 [container.node.cons]: #container.node.cons
 [container.node.dtor]: #container.node.dtor
 [container.node.modifiers]: #container.node.modifiers
@@ -15084,6 +15099,9 @@ swap(x.acc_, y.acc_);
 [container.rev.reqmts]: #container.rev.reqmts
 [containers]: #containers
 [containers.general]: #containers.general
+[containers.summary]: #containers.summary
+[dcl.init.aggr]: dcl.md#dcl.init.aggr
+[defns.valid]: intro.md#defns.valid
 [deque]: #deque
 [deque.capacity]: #deque.capacity
 [deque.cons]: #deque.cons
@@ -15091,6 +15109,7 @@ swap(x.acc_, y.acc_);
 [deque.modifiers]: #deque.modifiers
 [deque.overview]: #deque.overview
 [deque.syn]: #deque.syn
+[expr.const]: expr.md#expr.const
 [flat.map]: #flat.map
 [flat.map.access]: #flat.map.access
 [flat.map.capacity]: #flat.map.capacity
@@ -15118,6 +15137,7 @@ swap(x.acc_, y.acc_);
 [flat.set.modifiers]: #flat.set.modifiers
 [flat.set.overview]: #flat.set.overview
 [flat.set.syn]: #flat.set.syn
+[forward.iterators]: iterators.md#forward.iterators
 [forward.list]: #forward.list
 [forward.list.access]: #forward.list.access
 [forward.list.cons]: #forward.list.cons
@@ -15127,6 +15147,11 @@ swap(x.acc_, y.acc_);
 [forward.list.ops]: #forward.list.ops
 [forward.list.overview]: #forward.list.overview
 [forward.list.syn]: #forward.list.syn
+[hash.requirements]: library.md#hash.requirements
+[iterator.concept.contiguous]: iterators.md#iterator.concept.contiguous
+[iterator.concept.random.access]: iterators.md#iterator.concept.random.access
+[iterator.requirements]: iterators.md#iterator.requirements
+[iterator.requirements.general]: iterators.md#iterator.requirements.general
 [list]: #list
 [list.capacity]: #list.capacity
 [list.cons]: #list.cons
@@ -15201,6 +15226,8 @@ swap(x.acc_, y.acc_);
 [queue.ops]: #queue.ops
 [queue.special]: #queue.special
 [queue.syn]: #queue.syn
+[random.access.iterators]: iterators.md#random.access.iterators
+[res.on.data.races]: library.md#res.on.data.races
 [sequence.reqmts]: #sequence.reqmts
 [sequences]: #sequences
 [sequences.general]: #sequences.general
@@ -15226,8 +15253,15 @@ swap(x.acc_, y.acc_);
 [stack.ops]: #stack.ops
 [stack.special]: #stack.special
 [stack.syn]: #stack.syn
+[strings]: strings.md#strings
+[swappable.requirements]: library.md#swappable.requirements
+[temp.deduct]: temp.md#temp.deduct
+[temp.param]: temp.md#temp.param
+[temp.type]: temp.md#temp.type
+[term.trivially.copyable.type]: basic.md#term.trivially.copyable.type
 [unord]: #unord
 [unord.general]: #unord.general
+[unord.hash]: utilities.md#unord.hash
 [unord.map]: #unord.map
 [unord.map.cnstr]: #unord.map.cnstr
 [unord.map.elem]: #unord.map.elem
@@ -15268,82 +15302,6 @@ swap(x.acc_, y.acc_);
 [views.general]: #views.general
 [views.multidim]: #views.multidim
 [views.span]: #views.span
-
-<!-- Link reference definitions -->
-[alg.equal]: algorithms.md#alg.equal
-[alg.sorting]: algorithms.md#alg.sorting
-[algorithm.stable]: library.md#algorithm.stable
-[algorithms]: algorithms.md#algorithms
-[algorithms.requirements]: algorithms.md#algorithms.requirements
-[allocator.requirements]: library.md#allocator.requirements
-[allocator.requirements.completeness]: library.md#allocator.requirements.completeness
-[allocator.traits.members]: mem.md#allocator.traits.members
-[allocator.uses.construction]: mem.md#allocator.uses.construction
-[associative]: #associative
-[associative.general]: #associative.general
-[associative.reqmts]: #associative.reqmts
-[associative.reqmts.except]: #associative.reqmts.except
-[basic.fundamental]: basic.md#basic.fundamental
-[basic.string]: strings.md#basic.string
-[class.copy.ctor]: class.md#class.copy.ctor
-[class.default.ctor]: class.md#class.default.ctor
-[class.dtor]: class.md#class.dtor
-[container.adaptors]: #container.adaptors
-[container.alloc.reqmts]: #container.alloc.reqmts
-[container.gen.reqmts]: #container.gen.reqmts
-[container.node]: #container.node
-[container.node.compat]: #container.node.compat
-[container.node.overview]: #container.node.overview
-[container.opt.reqmts]: #container.opt.reqmts
-[container.reqmts]: #container.reqmts
-[container.requirements]: #container.requirements
-[container.requirements.general]: #container.requirements.general
-[container.rev.reqmts]: #container.rev.reqmts
-[containers]: #containers
-[containers.summary]: #containers.summary
-[dcl.init.aggr]: dcl.md#dcl.init.aggr
-[defns.valid]: intro.md#defns.valid
-[deque]: #deque
-[deque.modifiers]: #deque.modifiers
-[expr.const]: expr.md#expr.const
-[flat.map.defn]: #flat.map.defn
-[flat.multimap.defn]: #flat.multimap.defn
-[flat.multiset.defn]: #flat.multiset.defn
-[flat.set.defn]: #flat.set.defn
-[forward.iterators]: iterators.md#forward.iterators
-[hash.requirements]: library.md#hash.requirements
-[iterator.concept.contiguous]: iterators.md#iterator.concept.contiguous
-[iterator.concept.random.access]: iterators.md#iterator.concept.random.access
-[iterator.requirements]: iterators.md#iterator.requirements
-[iterator.requirements.general]: iterators.md#iterator.requirements.general
-[list]: #list
-[mdspan.accessor.reqmts]: #mdspan.accessor.reqmts
-[mdspan.layout.policy.reqmts]: #mdspan.layout.policy.reqmts
-[mdspan.layout.reqmts]: #mdspan.layout.reqmts
-[mdspan.layout.stride]: #mdspan.layout.stride
-[mdspan.overview]: #mdspan.overview
-[random.access.iterators]: iterators.md#random.access.iterators
-[res.on.data.races]: library.md#res.on.data.races
-[sequence.reqmts]: #sequence.reqmts
-[sequences]: #sequences
-[sequences.general]: #sequences.general
-[strings]: strings.md#strings
-[swappable.requirements]: library.md#swappable.requirements
-[temp.deduct]: temp.md#temp.deduct
-[temp.param]: temp.md#temp.param
-[temp.type]: temp.md#temp.type
-[term.trivially.copyable.type]: basic.md#term.trivially.copyable.type
-[unord]: #unord
-[unord.hash]: utilities.md#unord.hash
-[unord.map]: #unord.map
-[unord.multimap]: #unord.multimap
-[unord.multiset]: #unord.multiset
-[unord.req]: #unord.req
-[unord.req.except]: #unord.req.except
-[unord.set]: #unord.set
-[vector]: #vector
-[vector.modifiers]: #vector.modifiers
-[views]: #views
 
 [^1]: Equality comparison is a refinement of partitioning if no two
     objects that compare equal fall into different partitions.

@@ -5382,7 +5382,14 @@ Calling the function `std::abort()` declared in `<cstdlib>` terminates
 the program without executing any destructors and without calling the
 functions passed to `std::atexit()` or `std::at_quick_exit()`.
 
-<!-- Section link definitions -->
+<!-- Link reference definitions -->
+[allocator.members]: utilities.md#allocator.members
+[allocator.traits.members]: utilities.md#allocator.traits.members
+[atomics]: atomics.md#atomics
+[atomics.flag]: atomics.md#atomics.flag
+[atomics.lockfree]: atomics.md#atomics.lockfree
+[atomics.order]: atomics.md#atomics.order
+[bad.alloc]: support.md#bad.alloc
 [basic]: #basic
 [basic.align]: #basic.align
 [basic.compound]: #basic.compound
@@ -5390,6 +5397,7 @@ functions passed to `std::atexit()` or `std::at_quick_exit()`.
 [basic.def.odr]: #basic.def.odr
 [basic.exec]: #basic.exec
 [basic.fundamental]: #basic.fundamental
+[basic.fundamental.width]: #basic.fundamental.width
 [basic.funscope]: #basic.funscope
 [basic.indet]: #basic.indet
 [basic.life]: #basic.life
@@ -5401,7 +5409,9 @@ functions passed to `std::atexit()` or `std::at_quick_exit()`.
 [basic.lookup.qual]: #basic.lookup.qual
 [basic.lookup.udir]: #basic.lookup.udir
 [basic.lookup.unqual]: #basic.lookup.unqual
+[basic.lval]: expr.md#basic.lval
 [basic.memobj]: #basic.memobj
+[basic.namespace]: dcl.md#basic.namespace
 [basic.pre]: #basic.pre
 [basic.scope]: #basic.scope
 [basic.scope.block]: #basic.scope.block
@@ -5425,61 +5435,6 @@ functions passed to `std::atexit()` or `std::at_quick_exit()`.
 [basic.stc.dynamic.deallocation]: #basic.stc.dynamic.deallocation
 [basic.stc.dynamic.safety]: #basic.stc.dynamic.safety
 [basic.stc.inherit]: #basic.stc.inherit
-[basic.stc.static]: #basic.stc.static
-[basic.stc.thread]: #basic.stc.thread
-[basic.type.qualifier]: #basic.type.qualifier
-[basic.types]: #basic.types
-[class.qual]: #class.qual
-[class.temporary]: #class.temporary
-[conv.rank]: #conv.rank
-[intro.execution]: #intro.execution
-[intro.memory]: #intro.memory
-[intro.multithread]: #intro.multithread
-[intro.object]: #intro.object
-[intro.progress]: #intro.progress
-[intro.races]: #intro.races
-[namespace.qual]: #namespace.qual
-
-<!-- Link reference definitions -->
-[allocator.members]: utilities.md#allocator.members
-[allocator.traits.members]: utilities.md#allocator.traits.members
-[atomics]: atomics.md#atomics
-[atomics.flag]: atomics.md#atomics.flag
-[atomics.lockfree]: atomics.md#atomics.lockfree
-[atomics.order]: atomics.md#atomics.order
-[bad.alloc]: support.md#bad.alloc
-[basic.align]: #basic.align
-[basic.compound]: #basic.compound
-[basic.def]: #basic.def
-[basic.def.odr]: #basic.def.odr
-[basic.fundamental]: #basic.fundamental
-[basic.fundamental.width]: #basic.fundamental.width
-[basic.life]: #basic.life
-[basic.link]: #basic.link
-[basic.lookup]: #basic.lookup
-[basic.lookup.argdep]: #basic.lookup.argdep
-[basic.lookup.classref]: #basic.lookup.classref
-[basic.lookup.elab]: #basic.lookup.elab
-[basic.lookup.qual]: #basic.lookup.qual
-[basic.lookup.unqual]: #basic.lookup.unqual
-[basic.lval]: expr.md#basic.lval
-[basic.namespace]: dcl.md#basic.namespace
-[basic.pre]: #basic.pre
-[basic.scope]: #basic.scope
-[basic.scope.block]: #basic.scope.block
-[basic.scope.class]: #basic.scope.class
-[basic.scope.declarative]: #basic.scope.declarative
-[basic.scope.hiding]: #basic.scope.hiding
-[basic.scope.namespace]: #basic.scope.namespace
-[basic.scope.pdecl]: #basic.scope.pdecl
-[basic.start.dynamic]: #basic.start.dynamic
-[basic.start.main]: #basic.start.main
-[basic.start.static]: #basic.start.static
-[basic.start.term]: #basic.start.term
-[basic.stc]: #basic.stc
-[basic.stc.auto]: #basic.stc.auto
-[basic.stc.dynamic.allocation]: #basic.stc.dynamic.allocation
-[basic.stc.dynamic.deallocation]: #basic.stc.dynamic.deallocation
 [basic.stc.static]: #basic.stc.static
 [basic.stc.thread]: #basic.stc.thread
 [basic.type.qualifier]: #basic.type.qualifier
@@ -5511,6 +5466,7 @@ functions passed to `std::atexit()` or `std::at_quick_exit()`.
 [class.nest]: class.md#class.nest
 [class.pre]: class.md#class.pre
 [class.prop]: class.md#class.prop
+[class.qual]: #class.qual
 [class.spaceship]: class.md#class.spaceship
 [class.static]: class.md#class.static
 [class.static.data]: class.md#class.static.data
@@ -5526,6 +5482,7 @@ functions passed to `std::atexit()` or `std::at_quick_exit()`.
 [conv.mem]: expr.md#conv.mem
 [conv.prom]: expr.md#conv.prom
 [conv.ptr]: expr.md#conv.ptr
+[conv.rank]: #conv.rank
 [conv.rval]: expr.md#conv.rval
 [cpp.predefined]: cpp.md#cpp.predefined
 [cstddef.syn]: support.md#cstddef.syn
@@ -5618,6 +5575,7 @@ functions passed to `std::atexit()` or `std::at_quick_exit()`.
 [intro.memory]: #intro.memory
 [intro.multithread]: #intro.multithread
 [intro.object]: #intro.object
+[intro.progress]: #intro.progress
 [intro.races]: #intro.races
 [lex.charset]: lex.md#lex.charset
 [lex.name]: lex.md#lex.name

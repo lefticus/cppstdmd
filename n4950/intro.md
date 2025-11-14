@@ -700,17 +700,6 @@ the following rules:
 -  is one or more ’s separated by intervening commas (e.g.,
   *identifier-list* is a sequence of identifiers separated by commas).
 
-<!-- Section link definitions -->
-[intro]: #intro
-[intro.abstract]: #intro.abstract
-[intro.compliance]: #intro.compliance
-[intro.compliance.general]: #intro.compliance.general
-[intro.defs]: #intro.defs
-[intro.refs]: #intro.refs
-[intro.scope]: #intro.scope
-[intro.structure]: #intro.structure
-[syntax]: #syntax
-
 <!-- Link reference definitions -->
 [algorithm.stable]: library.md#algorithm.stable
 [basic.fundamental]: basic.md#basic.fundamental
@@ -745,6 +734,9 @@ the following rules:
 [intro.compliance.general]: #intro.compliance.general
 [intro.defs]: #intro.defs
 [intro.execution]: basic.md#intro.execution
+[intro.refs]: #intro.refs
+[intro.scope]: #intro.scope
+[intro.structure]: #intro.structure
 [lex]: lex.md#lex
 [lex.phases]: lex.md#lex.phases
 [library]: library.md#library

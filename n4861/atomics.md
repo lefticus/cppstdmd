@@ -2728,7 +2728,9 @@ inhibited in the same way as with `atomic_thread_fence`, but the
 hardware fence instructions that `atomic_thread_fence` would have
 inserted are not emitted. — *end note*]
 
-<!-- Section link definitions -->
+<!-- Link reference definitions -->
+[atomic.types.int.comp]: #atomic.types.int.comp
+[atomic.types.pointer.comp]: #atomic.types.pointer.comp
 [atomics]: #atomics
 [atomics.alias]: #atomics.alias
 [atomics.fences]: #atomics.fences
@@ -2743,6 +2745,7 @@ inserted are not emitted. — *end note*]
 [atomics.ref.memop]: #atomics.ref.memop
 [atomics.ref.ops]: #atomics.ref.ops
 [atomics.ref.pointer]: #atomics.ref.pointer
+[atomics.summary]: #atomics.summary
 [atomics.syn]: #atomics.syn
 [atomics.types.float]: #atomics.types.float
 [atomics.types.generic]: #atomics.types.generic
@@ -2750,25 +2753,6 @@ inserted are not emitted. — *end note*]
 [atomics.types.memop]: #atomics.types.memop
 [atomics.types.operations]: #atomics.types.operations
 [atomics.types.pointer]: #atomics.types.pointer
-[atomics.wait]: #atomics.wait
-[util.smartptr.atomic]: #util.smartptr.atomic
-[util.smartptr.atomic.shared]: #util.smartptr.atomic.shared
-[util.smartptr.atomic.weak]: #util.smartptr.atomic.weak
-
-<!-- Link reference definitions -->
-[atomic.types.int.comp]: #atomic.types.int.comp
-[atomic.types.pointer.comp]: #atomic.types.pointer.comp
-[atomics.alias]: #atomics.alias
-[atomics.fences]: #atomics.fences
-[atomics.flag]: #atomics.flag
-[atomics.general]: #atomics.general
-[atomics.lockfree]: #atomics.lockfree
-[atomics.nonmembers]: #atomics.nonmembers
-[atomics.order]: #atomics.order
-[atomics.ref.generic]: #atomics.ref.generic
-[atomics.summary]: #atomics.summary
-[atomics.types.generic]: #atomics.types.generic
-[atomics.types.operations]: #atomics.types.operations
 [atomics.wait]: #atomics.wait
 [basic.align]: basic.md#basic.align
 [basic.fundamental]: basic.md#basic.fundamental
@@ -2782,3 +2766,6 @@ inserted are not emitted. — *end note*]
 [intro.races]: basic.md#intro.races
 [limits.syn]: support.md#limits.syn
 [smartptr]: utilities.md#smartptr
+[util.smartptr.atomic]: #util.smartptr.atomic
+[util.smartptr.atomic.shared]: #util.smartptr.atomic.shared
+[util.smartptr.atomic.weak]: #util.smartptr.atomic.weak

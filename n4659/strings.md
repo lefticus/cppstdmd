@@ -4038,10 +4038,11 @@ is a null pointer value.
 
 ISO C 7.29.6.3
 
-<!-- Section link definitions -->
+<!-- Link reference definitions -->
 [basic.string]: #basic.string
 [basic.string.hash]: #basic.string.hash
 [basic.string.literals]: #basic.string.literals
+[basic.types]: basic.md#basic.types
 [c.mb.wcs]: #c.mb.wcs
 [c.strings]: #c.strings
 [cctype.syn]: #cctype.syn
@@ -4053,10 +4054,29 @@ ISO C 7.29.6.3
 [char.traits.specializations.char32_t]: #char.traits.specializations.char32_t
 [char.traits.specializations.wchar.t]: #char.traits.specializations.wchar.t
 [char.traits.typedefs]: #char.traits.typedefs
+[container.requirements]: containers.md#container.requirements
+[container.requirements.general]: containers.md#container.requirements.general
+[csignal.syn]: language.md#csignal.syn
+[cstdlib.syn]: language.md#cstdlib.syn
 [cstring.syn]: #cstring.syn
 [cuchar.syn]: #cuchar.syn
 [cwchar.syn]: #cwchar.syn
 [cwctype.syn]: #cwctype.syn
+[input.output]: input.md#input.output
+[iostate.flags]: input.md#iostate.flags
+[iostream.forward]: input.md#iostream.forward
+[iostreams.limits.pos]: input.md#iostreams.limits.pos
+[istream.formatted.reqmts]: input.md#istream.formatted.reqmts
+[istream.unformatted]: input.md#istream.unformatted
+[iterator.range]: iterators.md#iterator.range
+[iterator.requirements.general]: iterators.md#iterator.requirements.general
+[length.error]: diagnostics.md#length.error
+[library.c]: library.md#library.c
+[ostream.formatted.reqmts]: input.md#ostream.formatted.reqmts
+[out.of.range]: diagnostics.md#out.of.range
+[random.access.iterators]: iterators.md#random.access.iterators
+[res.on.data.races]: library.md#res.on.data.races
+[sequence.reqmts]: containers.md#sequence.reqmts
 [string.access]: #string.access
 [string.accessors]: #string.accessors
 [string.append]: #string.append
@@ -4109,40 +4129,6 @@ ISO C 7.29.6.3
 [string.view.synop]: #string.view.synop
 [string.view.template]: #string.view.template
 [strings]: #strings
-[strings.general]: #strings.general
-
-<!-- Link reference definitions -->
-[basic.string.hash]: #basic.string.hash
-[basic.types]: basic.md#basic.types
-[c.strings]: #c.strings
-[char.traits]: #char.traits
-[char.traits.require]: #char.traits.require
-[char.traits.typedefs]: #char.traits.typedefs
-[container.requirements]: containers.md#container.requirements
-[container.requirements.general]: containers.md#container.requirements.general
-[csignal.syn]: language.md#csignal.syn
-[cstdlib.syn]: language.md#cstdlib.syn
-[cwchar.syn]: #cwchar.syn
-[input.output]: input.md#input.output
-[iostate.flags]: input.md#iostate.flags
-[iostream.forward]: input.md#iostream.forward
-[iostreams.limits.pos]: input.md#iostreams.limits.pos
-[istream.formatted.reqmts]: input.md#istream.formatted.reqmts
-[istream.unformatted]: input.md#istream.unformatted
-[iterator.range]: iterators.md#iterator.range
-[iterator.requirements.general]: iterators.md#iterator.requirements.general
-[length.error]: diagnostics.md#length.error
-[library.c]: library.md#library.c
-[ostream.formatted.reqmts]: input.md#ostream.formatted.reqmts
-[out.of.range]: diagnostics.md#out.of.range
-[random.access.iterators]: iterators.md#random.access.iterators
-[res.on.data.races]: library.md#res.on.data.races
-[sequence.reqmts]: containers.md#sequence.reqmts
-[string.classes]: #string.classes
-[string.io]: #string.io
-[string.require]: #string.require
-[string.special]: #string.special
-[string.view]: #string.view
 [strings.general]: #strings.general
 [tab:char.traits.require]: #tab:char.traits.require
 [tab:copyassignable]: #tab:copyassignable

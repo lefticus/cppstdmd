@@ -1352,11 +1352,17 @@ function is *implementation-defined*. An implementation may use the
 In the second form of the function, the function object `rng` shall
 serve as the implementation’s source of randomness.
 
-<!-- Section link definitions -->
+<!-- Link reference definitions -->
 [auto.ptr]: #auto.ptr
 [auto.ptr.cons]: #auto.ptr.cons
 [auto.ptr.conv]: #auto.ptr.conv
 [auto.ptr.members]: #auto.ptr.members
+[basic.scope.namespace]: basic.md#basic.scope.namespace
+[class.copy]: special.md#class.copy
+[class.dtor]: special.md#class.dtor
+[dcl.attr.deprecated]: dcl.md#dcl.attr.deprecated
+[dcl.fct.def]: dcl.md#dcl.fct.def
+[dcl.stc]: dcl.md#dcl.stc
 [depr.adaptors]: #depr.adaptors
 [depr.alg.random.shuffle]: #depr.alg.random.shuffle
 [depr.auto.ptr]: #depr.auto.ptr
@@ -1390,29 +1396,17 @@ serve as the implementation’s source of randomness.
 [depr.strstreambuf.cons]: #depr.strstreambuf.cons
 [depr.strstreambuf.members]: #depr.strstreambuf.members
 [depr.strstreambuf.virtuals]: #depr.strstreambuf.virtuals
-[exception.unexpected]: #exception.unexpected
-[get.unexpected]: #get.unexpected
-[set.unexpected]: #set.unexpected
-[unexpected]: #unexpected
-[unexpected.handler]: #unexpected.handler
-
-<!-- Link reference definitions -->
-[basic.scope.namespace]: basic.md#basic.scope.namespace
-[class.copy]: special.md#class.copy
-[class.dtor]: special.md#class.dtor
-[dcl.attr.deprecated]: dcl.md#dcl.attr.deprecated
-[dcl.fct.def]: dcl.md#dcl.fct.def
-[dcl.stc]: dcl.md#dcl.stc
-[depr.function.pointer.adaptors]: #depr.function.pointer.adaptors
-[depr.strstreambuf.virtuals]: #depr.strstreambuf.virtuals
 [except.unexpected]: except.md#except.unexpected
+[exception.unexpected]: #exception.unexpected
 [expr.post.incr]: expr.md#expr.post.incr
 [expr.pre.incr]: expr.md#expr.pre.incr
 [func.bind]: utilities.md#func.bind
 [func.bind.bind]: utilities.md#func.bind.bind
+[get.unexpected]: #get.unexpected
 [input.output]: input.md#input.output
 [iostreams.limits.pos]: input.md#iostreams.limits.pos
 [namespace.udecl]: dcl.md#namespace.udecl
+[set.unexpected]: #set.unexpected
 [stmt.dcl]: stmt.md#stmt.dcl
 [streambuf.pub.get]: input.md#streambuf.pub.get
 [swappable.requirements]: library.md#swappable.requirements
@@ -1421,6 +1415,7 @@ serve as the implementation’s source of randomness.
 [tab:future.seekoff.positioning]: #tab:future.seekoff.positioning
 [tab:future.strstreambuf.effects]: #tab:future.strstreambuf.effects
 [tab:future.strstreambuf1.effects]: #tab:future.strstreambuf1.effects
+[unexpected]: #unexpected
 [unexpected.handler]: #unexpected.handler
 [unique.ptr]: utilities.md#unique.ptr
 

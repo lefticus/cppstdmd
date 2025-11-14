@@ -4108,7 +4108,7 @@ pointed to by `base` are of trivial type.
 
 ISO C 7.22.5.
 
-<!-- Section link definitions -->
+<!-- Link reference definitions -->
 [alg.adjacent.find]: #alg.adjacent.find
 [alg.all_of]: #alg.all_of
 [alg.any_of]: #alg.any_of
@@ -4149,6 +4149,7 @@ ISO C 7.22.5.
 [alg.swap]: #alg.swap
 [alg.transform]: #alg.transform
 [alg.unique]: #alg.unique
+[algorithm.stable]: library.md#algorithm.stable
 [algorithm.syn]: #algorithm.syn
 [algorithms]: #algorithms
 [algorithms.general]: #algorithms.general
@@ -4159,18 +4160,38 @@ ISO C 7.22.5.
 [algorithms.parallel.overloads]: #algorithms.parallel.overloads
 [algorithms.parallel.user]: #algorithms.parallel.user
 [algorithms.requirements]: #algorithms.requirements
+[bidirectional.iterators]: iterators.md#bidirectional.iterators
 [binary.search]: #binary.search
+[class.conv]: special.md#class.conv
+[containers]: containers.md#containers
+[conv]: conv.md#conv
+[conv.integral]: conv.md#conv.integral
+[cstdlib.syn]: language.md#cstdlib.syn
 [equal.range]: #equal.range
+[execpol]: utilities.md#execpol
+[forward.iterators]: iterators.md#forward.iterators
+[function.objects]: utilities.md#function.objects
 [includes]: #includes
+[input.iterators]: iterators.md#input.iterators
+[intro.execution]: intro.md#intro.execution
+[intro.progress]: intro.md#intro.progress
 [is.heap]: #is.heap
 [is.sorted]: #is.sorted
+[iterator.requirements]: iterators.md#iterator.requirements
+[iterator.requirements.general]: iterators.md#iterator.requirements.general
 [lower.bound]: #lower.bound
 [make.heap]: #make.heap
 [mismatch]: #mismatch
+[multiset]: containers.md#multiset
+[output.iterators]: iterators.md#output.iterators
 [partial.sort]: #partial.sort
 [partial.sort.copy]: #partial.sort.copy
 [pop.heap]: #pop.heap
 [push.heap]: #push.heap
+[rand.req.urng]: numerics.md#rand.req.urng
+[random.access.iterators]: iterators.md#random.access.iterators
+[refwrap]: utilities.md#refwrap
+[res.on.exception.handling]: library.md#res.on.exception.handling
 [set.difference]: #set.difference
 [set.intersection]: #set.intersection
 [set.symmetric.difference]: #set.symmetric.difference
@@ -4178,38 +4199,6 @@ ISO C 7.22.5.
 [sort]: #sort
 [sort.heap]: #sort.heap
 [stable.sort]: #stable.sort
-[upper.bound]: #upper.bound
-
-<!-- Link reference definitions -->
-[alg.binary.search]: #alg.binary.search
-[alg.c.library]: #alg.c.library
-[alg.modifying.operations]: #alg.modifying.operations
-[alg.nonmodifying]: #alg.nonmodifying
-[alg.sorting]: #alg.sorting
-[algorithm.stable]: library.md#algorithm.stable
-[algorithms.general]: #algorithms.general
-[algorithms.parallel.exec]: #algorithms.parallel.exec
-[bidirectional.iterators]: iterators.md#bidirectional.iterators
-[class.conv]: special.md#class.conv
-[containers]: containers.md#containers
-[conv]: conv.md#conv
-[conv.integral]: conv.md#conv.integral
-[cstdlib.syn]: language.md#cstdlib.syn
-[execpol]: utilities.md#execpol
-[forward.iterators]: iterators.md#forward.iterators
-[function.objects]: utilities.md#function.objects
-[input.iterators]: iterators.md#input.iterators
-[intro.execution]: intro.md#intro.execution
-[intro.progress]: intro.md#intro.progress
-[iterator.requirements]: iterators.md#iterator.requirements
-[iterator.requirements.general]: iterators.md#iterator.requirements.general
-[multiset]: containers.md#multiset
-[output.iterators]: iterators.md#output.iterators
-[rand.req.urng]: numerics.md#rand.req.urng
-[random.access.iterators]: iterators.md#random.access.iterators
-[refwrap]: utilities.md#refwrap
-[res.on.exception.handling]: library.md#res.on.exception.handling
-[sort]: #sort
 [swappable.requirements]: library.md#swappable.requirements
 [tab:algorithms.summary]: #tab:algorithms.summary
 [tab:copyassignable]: #tab:copyassignable
@@ -4218,6 +4207,7 @@ ISO C 7.22.5.
 [tab:moveassignable]: #tab:moveassignable
 [tab:moveconstructible]: #tab:moveconstructible
 [thread.thread.class]: thread.md#thread.thread.class
+[upper.bound]: #upper.bound
 
 [^1]: The decision whether to include a copying version was usually
     based on complexity considerations. When the cost of doing the

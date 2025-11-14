@@ -26,6 +26,6 @@ F900-FD3D, FD40-FDCF, FDF0-FE44, FE47-FFFD
 0300-036F, 1DC0-1DFF, 20D0-20FF, FE20-FE2F
 ```
 
-<!-- Section link definitions -->
+<!-- Link reference definitions -->
 [charname.allowed]: #charname.allowed
 [charname.disallowed]: #charname.disallowed

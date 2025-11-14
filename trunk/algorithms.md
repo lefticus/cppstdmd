@@ -11969,7 +11969,7 @@ standard library.
 
 *Throws:* Any exception thrown by `compar`[[res.on.exception.handling]].
 
-<!-- Section link definitions -->
+<!-- Link reference definitions -->
 [accumulate]: #accumulate
 [adjacent.difference]: #adjacent.difference
 [alg.adjacent.find]: #alg.adjacent.find
@@ -11991,6 +11991,7 @@ standard library.
 [alg.find.last]: #alg.find.last
 [alg.fold]: #alg.fold
 [alg.foreach]: #alg.foreach
+[alg.func.obj]: library.md#alg.func.obj
 [alg.generate]: #alg.generate
 [alg.heap.operations]: #alg.heap.operations
 [alg.heap.operations.general]: #alg.heap.operations.general
@@ -12027,6 +12028,7 @@ standard library.
 [alg.three.way]: #alg.three.way
 [alg.transform]: #alg.transform
 [alg.unique]: #alg.unique
+[algorithm.stable]: library.md#algorithm.stable
 [algorithm.syn]: #algorithm.syn
 [algorithms]: #algorithms
 [algorithms.general]: #algorithms.general
@@ -12038,8 +12040,23 @@ standard library.
 [algorithms.parallel.user]: #algorithms.parallel.user
 [algorithms.requirements]: #algorithms.requirements
 [algorithms.results]: #algorithms.results
+[algorithms.summary]: #algorithms.summary
+[atomics.order]: thread.md#atomics.order
+[basic.compound]: basic.md#basic.compound
+[basic.fundamental]: basic.md#basic.fundamental
+[basic.life]: basic.md#basic.life
+[bidirectional.iterators]: iterators.md#bidirectional.iterators
 [binary.search]: #binary.search
+[concept.booleantestable]: concepts.md#concept.booleantestable
+[containers]: containers.md#containers
+[conv.integral,class.conv]: #conv.integral,class.conv
+[cpp17.copyassignable]: #cpp17.copyassignable
+[cpp17.copyconstructible]: #cpp17.copyconstructible
+[cpp17.lessthancomparable]: #cpp17.lessthancomparable
+[cpp17.moveassignable]: #cpp17.moveassignable
+[cpp17.moveconstructible]: #cpp17.moveconstructible
 [equal.range]: #equal.range
+[except.terminate]: except.md#except.terminate
 [exclusive.scan]: #exclusive.scan
 [execpol]: #execpol
 [execpol.general]: #execpol.general
@@ -12049,13 +12066,30 @@ standard library.
 [execpol.seq]: #execpol.seq
 [execpol.type]: #execpol.type
 [execpol.unseq]: #execpol.unseq
+[expr.const]: expr.md#expr.const
+[expr.new]: expr.md#expr.new
+[forward.iterators]: iterators.md#forward.iterators
+[function.objects]: utilities.md#function.objects
 [includes]: #includes
 [inclusive.scan]: #inclusive.scan
 [inner.product]: #inner.product
+[input.iterators]: iterators.md#input.iterators
+[intro.execution]: basic.md#intro.execution
+[intro.object]: basic.md#intro.object
+[intro.progress]: basic.md#intro.progress
 [is.heap]: #is.heap
 [is.sorted]: #is.sorted
+[iterator.concept.bidir]: iterators.md#iterator.concept.bidir
+[iterator.concept.forward]: iterators.md#iterator.concept.forward
+[iterator.concept.input]: iterators.md#iterator.concept.input
+[iterator.concept.random.access]: iterators.md#iterator.concept.random.access
+[iterator.concept.sentinel]: iterators.md#iterator.concept.sentinel
+[iterator.concept.sizedsentinel]: iterators.md#iterator.concept.sizedsentinel
+[iterator.requirements]: iterators.md#iterator.requirements
+[iterator.requirements.general]: iterators.md#iterator.requirements.general
 [lower.bound]: #lower.bound
 [make.heap]: #make.heap
+[multiset]: containers.md#multiset
 [numeric.iota]: #numeric.iota
 [numeric.ops]: #numeric.ops
 [numeric.ops.gcd]: #numeric.ops.gcd
@@ -12067,12 +12101,18 @@ standard library.
 [numeric.sat.cast]: #numeric.sat.cast
 [numeric.sat.func]: #numeric.sat.func
 [numerics.defns]: #numerics.defns
+[output.iterators]: iterators.md#output.iterators
 [partial.sort]: #partial.sort
 [partial.sort.copy]: #partial.sort.copy
 [partial.sum]: #partial.sum
 [pop.heap]: #pop.heap
 [push.heap]: #push.heap
+[rand.req.urng]: numerics.md#rand.req.urng
+[random.access.iterators]: iterators.md#random.access.iterators
+[range.range]: ranges.md#range.range
 [reduce]: #reduce
+[refwrap]: utilities.md#refwrap
+[res.on.exception.handling]: library.md#res.on.exception.handling
 [set.difference]: #set.difference
 [set.intersection]: #set.intersection
 [set.symmetric.difference]: #set.symmetric.difference
@@ -12085,6 +12125,10 @@ standard library.
 [specialized.construct]: #specialized.construct
 [specialized.destroy]: #specialized.destroy
 [stable.sort]: #stable.sort
+[swappable.requirements]: library.md#swappable.requirements
+[term.unevaluated.operand]: expr.md#term.unevaluated.operand
+[thread.jthread.class]: thread.md#thread.jthread.class
+[thread.thread.class]: thread.md#thread.thread.class
 [transform.exclusive.scan]: #transform.exclusive.scan
 [transform.inclusive.scan]: #transform.inclusive.scan
 [transform.reduce]: #transform.reduce
@@ -12094,68 +12138,6 @@ standard library.
 [uninitialized.fill]: #uninitialized.fill
 [uninitialized.move]: #uninitialized.move
 [upper.bound]: #upper.bound
-
-<!-- Link reference definitions -->
-[alg.binary.search]: #alg.binary.search
-[alg.c.library]: #alg.c.library
-[alg.func.obj]: library.md#alg.func.obj
-[alg.modifying.operations]: #alg.modifying.operations
-[alg.nonmodifying]: #alg.nonmodifying
-[alg.rand]: #alg.rand
-[alg.set.operations]: #alg.set.operations
-[alg.sorting]: #alg.sorting
-[algorithm.stable]: library.md#algorithm.stable
-[algorithms.parallel]: #algorithms.parallel
-[algorithms.parallel.exec]: #algorithms.parallel.exec
-[algorithms.parallel.user]: #algorithms.parallel.user
-[algorithms.requirements]: #algorithms.requirements
-[algorithms.results]: #algorithms.results
-[algorithms.summary]: #algorithms.summary
-[atomics.order]: thread.md#atomics.order
-[basic.compound]: basic.md#basic.compound
-[basic.fundamental]: basic.md#basic.fundamental
-[basic.life]: basic.md#basic.life
-[bidirectional.iterators]: iterators.md#bidirectional.iterators
-[concept.booleantestable]: concepts.md#concept.booleantestable
-[containers]: containers.md#containers
-[conv.integral,class.conv]: #conv.integral,class.conv
-[cpp17.copyassignable]: #cpp17.copyassignable
-[cpp17.copyconstructible]: #cpp17.copyconstructible
-[cpp17.lessthancomparable]: #cpp17.lessthancomparable
-[cpp17.moveassignable]: #cpp17.moveassignable
-[cpp17.moveconstructible]: #cpp17.moveconstructible
-[except.terminate]: except.md#except.terminate
-[execpol]: #execpol
-[expr.const]: expr.md#expr.const
-[expr.new]: expr.md#expr.new
-[forward.iterators]: iterators.md#forward.iterators
-[function.objects]: utilities.md#function.objects
-[input.iterators]: iterators.md#input.iterators
-[intro.execution]: basic.md#intro.execution
-[intro.object]: basic.md#intro.object
-[intro.progress]: basic.md#intro.progress
-[iterator.concept.bidir]: iterators.md#iterator.concept.bidir
-[iterator.concept.forward]: iterators.md#iterator.concept.forward
-[iterator.concept.input]: iterators.md#iterator.concept.input
-[iterator.concept.random.access]: iterators.md#iterator.concept.random.access
-[iterator.concept.sentinel]: iterators.md#iterator.concept.sentinel
-[iterator.concept.sizedsentinel]: iterators.md#iterator.concept.sizedsentinel
-[iterator.requirements]: iterators.md#iterator.requirements
-[iterator.requirements.general]: iterators.md#iterator.requirements.general
-[multiset]: containers.md#multiset
-[numeric.ops]: #numeric.ops
-[output.iterators]: iterators.md#output.iterators
-[rand.req.urng]: numerics.md#rand.req.urng
-[random.access.iterators]: iterators.md#random.access.iterators
-[range.range]: ranges.md#range.range
-[refwrap]: utilities.md#refwrap
-[res.on.exception.handling]: library.md#res.on.exception.handling
-[sort]: #sort
-[specialized.algorithms]: #specialized.algorithms
-[swappable.requirements]: library.md#swappable.requirements
-[term.unevaluated.operand]: expr.md#term.unevaluated.operand
-[thread.jthread.class]: thread.md#thread.jthread.class
-[thread.thread.class]: thread.md#thread.thread.class
 
 [^1]: The decision whether to include a copying version was usually
     based on complexity considerations. When the cost of doing the

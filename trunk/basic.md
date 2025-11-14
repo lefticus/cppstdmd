@@ -6138,7 +6138,13 @@ replaceable [[term.replaceable.function]]. If the contract-violation
 handler is not replaceable, a declaration of a replacement function for
 the contract-violation handler is ill-formed, no diagnostic required.
 
-<!-- Section link definitions -->
+<!-- Link reference definitions -->
+[allocator.members]: mem.md#allocator.members
+[atomics]: thread.md#atomics
+[atomics.flag]: thread.md#atomics.flag
+[atomics.lockfree]: thread.md#atomics.lockfree
+[atomics.order]: thread.md#atomics.order
+[bad.alloc]: support.md#bad.alloc
 [basic]: #basic
 [basic.align]: #basic.align
 [basic.compound]: #basic.compound
@@ -6151,6 +6157,7 @@ the contract-violation handler is ill-formed, no diagnostic required.
 [basic.exec]: #basic.exec
 [basic.extended.fp]: #basic.extended.fp
 [basic.fundamental]: #basic.fundamental
+[basic.fundamental.width]: #basic.fundamental.width
 [basic.indet]: #basic.indet
 [basic.life]: #basic.life
 [basic.link]: #basic.link
@@ -6162,7 +6169,10 @@ the contract-violation handler is ill-formed, no diagnostic required.
 [basic.lookup.qual.general]: #basic.lookup.qual.general
 [basic.lookup.udir]: #basic.lookup.udir
 [basic.lookup.unqual]: #basic.lookup.unqual
+[basic.lval]: expr.md#basic.lval
 [basic.memobj]: #basic.memobj
+[basic.namespace]: dcl.md#basic.namespace
+[basic.namespace.general]: dcl.md#basic.namespace.general
 [basic.pre]: #basic.pre
 [basic.scope]: #basic.scope
 [basic.scope.block]: #basic.scope.block
@@ -6188,66 +6198,6 @@ the contract-violation handler is ill-formed, no diagnostic required.
 [basic.stc.dynamic.deallocation]: #basic.stc.dynamic.deallocation
 [basic.stc.dynamic.general]: #basic.stc.dynamic.general
 [basic.stc.general]: #basic.stc.general
-[basic.stc.static]: #basic.stc.static
-[basic.stc.thread]: #basic.stc.thread
-[basic.type.qualifier]: #basic.type.qualifier
-[basic.types]: #basic.types
-[basic.types.general]: #basic.types.general
-[class.member.lookup]: #class.member.lookup
-[class.qual]: #class.qual
-[class.temporary]: #class.temporary
-[conv.rank]: #conv.rank
-[intro.execution]: #intro.execution
-[intro.memory]: #intro.memory
-[intro.multithread]: #intro.multithread
-[intro.multithread.general]: #intro.multithread.general
-[intro.object]: #intro.object
-[intro.progress]: #intro.progress
-[intro.races]: #intro.races
-[namespace.qual]: #namespace.qual
-
-<!-- Link reference definitions -->
-[allocator.members]: mem.md#allocator.members
-[atomics]: thread.md#atomics
-[atomics.flag]: thread.md#atomics.flag
-[atomics.lockfree]: thread.md#atomics.lockfree
-[atomics.order]: thread.md#atomics.order
-[bad.alloc]: support.md#bad.alloc
-[basic.align]: #basic.align
-[basic.compound]: #basic.compound
-[basic.contract]: #basic.contract
-[basic.contract.eval]: #basic.contract.eval
-[basic.contract.handler]: #basic.contract.handler
-[basic.def]: #basic.def
-[basic.def.odr]: #basic.def.odr
-[basic.extended.fp]: #basic.extended.fp
-[basic.fundamental]: #basic.fundamental
-[basic.fundamental.width]: #basic.fundamental.width
-[basic.life]: #basic.life
-[basic.link]: #basic.link
-[basic.lookup]: #basic.lookup
-[basic.lookup.general]: #basic.lookup.general
-[basic.lookup.qual]: #basic.lookup.qual
-[basic.lookup.unqual]: #basic.lookup.unqual
-[basic.lval]: expr.md#basic.lval
-[basic.namespace]: dcl.md#basic.namespace
-[basic.namespace.general]: dcl.md#basic.namespace.general
-[basic.pre]: #basic.pre
-[basic.scope]: #basic.scope
-[basic.scope.block]: #basic.scope.block
-[basic.scope.contract]: #basic.scope.contract
-[basic.scope.namespace]: #basic.scope.namespace
-[basic.scope.pdecl]: #basic.scope.pdecl
-[basic.scope.scope]: #basic.scope.scope
-[basic.scope.temp]: #basic.scope.temp
-[basic.start.dynamic]: #basic.start.dynamic
-[basic.start.main]: #basic.start.main
-[basic.start.static]: #basic.start.static
-[basic.start.term]: #basic.start.term
-[basic.stc]: #basic.stc
-[basic.stc.auto]: #basic.stc.auto
-[basic.stc.dynamic.allocation]: #basic.stc.dynamic.allocation
-[basic.stc.dynamic.deallocation]: #basic.stc.dynamic.deallocation
 [basic.stc.static]: #basic.stc.static
 [basic.stc.thread]: #basic.stc.thread
 [basic.type.qualifier]: #basic.type.qualifier
@@ -6279,6 +6229,7 @@ the contract-violation handler is ill-formed, no diagnostic required.
 [class.name]: class.md#class.name
 [class.pre]: class.md#class.pre
 [class.prop]: class.md#class.prop
+[class.qual]: #class.qual
 [class.spaceship]: class.md#class.spaceship
 [class.static]: class.md#class.static
 [class.static.data]: class.md#class.static.data
@@ -6295,6 +6246,7 @@ the contract-violation handler is ill-formed, no diagnostic required.
 [conv.prom]: expr.md#conv.prom
 [conv.ptr]: expr.md#conv.ptr
 [conv.qual]: expr.md#conv.qual
+[conv.rank]: #conv.rank
 [conv.rval]: expr.md#conv.rval
 [cpp.predefined]: cpp.md#cpp.predefined
 [csetjmp.syn]: support.md#csetjmp.syn
@@ -6395,6 +6347,7 @@ the contract-violation handler is ill-formed, no diagnostic required.
 [intro.execution]: #intro.execution
 [intro.memory]: #intro.memory
 [intro.multithread]: #intro.multithread
+[intro.multithread.general]: #intro.multithread.general
 [intro.object]: #intro.object
 [intro.progress]: #intro.progress
 [intro.races]: #intro.races
@@ -6415,6 +6368,7 @@ the contract-violation handler is ill-formed, no diagnostic required.
 [multibyte.strings]: library.md#multibyte.strings
 [namespace.alias]: dcl.md#namespace.alias
 [namespace.def]: dcl.md#namespace.def
+[namespace.qual]: #namespace.qual
 [namespace.udecl]: dcl.md#namespace.udecl
 [namespace.udir]: dcl.md#namespace.udir
 [namespace.unnamed]: dcl.md#namespace.unnamed

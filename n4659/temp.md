@@ -6258,60 +6258,6 @@ template, with the same access. Two deduction guide declarations in the
 same translation unit for the same class template shall not have
 equivalent *parameter-declaration-clause*s.
 
-<!-- Section link definitions -->
-[temp]: #temp
-[temp.alias]: #temp.alias
-[temp.arg]: #temp.arg
-[temp.arg.explicit]: #temp.arg.explicit
-[temp.arg.nontype]: #temp.arg.nontype
-[temp.arg.template]: #temp.arg.template
-[temp.arg.type]: #temp.arg.type
-[temp.class]: #temp.class
-[temp.class.order]: #temp.class.order
-[temp.class.spec]: #temp.class.spec
-[temp.class.spec.match]: #temp.class.spec.match
-[temp.class.spec.mfunc]: #temp.class.spec.mfunc
-[temp.decls]: #temp.decls
-[temp.deduct]: #temp.deduct
-[temp.deduct.call]: #temp.deduct.call
-[temp.deduct.conv]: #temp.deduct.conv
-[temp.deduct.decl]: #temp.deduct.decl
-[temp.deduct.funcaddr]: #temp.deduct.funcaddr
-[temp.deduct.guide]: #temp.deduct.guide
-[temp.deduct.partial]: #temp.deduct.partial
-[temp.deduct.type]: #temp.deduct.type
-[temp.dep]: #temp.dep
-[temp.dep.candidate]: #temp.dep.candidate
-[temp.dep.constexpr]: #temp.dep.constexpr
-[temp.dep.expr]: #temp.dep.expr
-[temp.dep.res]: #temp.dep.res
-[temp.dep.temp]: #temp.dep.temp
-[temp.dep.type]: #temp.dep.type
-[temp.expl.spec]: #temp.expl.spec
-[temp.explicit]: #temp.explicit
-[temp.fct]: #temp.fct
-[temp.fct.spec]: #temp.fct.spec
-[temp.friend]: #temp.friend
-[temp.func.order]: #temp.func.order
-[temp.inject]: #temp.inject
-[temp.inst]: #temp.inst
-[temp.local]: #temp.local
-[temp.mem]: #temp.mem
-[temp.mem.class]: #temp.mem.class
-[temp.mem.enum]: #temp.mem.enum
-[temp.mem.func]: #temp.mem.func
-[temp.names]: #temp.names
-[temp.nondep]: #temp.nondep
-[temp.over]: #temp.over
-[temp.over.link]: #temp.over.link
-[temp.param]: #temp.param
-[temp.point]: #temp.point
-[temp.res]: #temp.res
-[temp.spec]: #temp.spec
-[temp.static]: #temp.static
-[temp.type]: #temp.type
-[temp.variadic]: #temp.variadic
-
 <!-- Link reference definitions -->
 [basic.def]: basic.md#basic.def
 [basic.def.odr]: basic.md#basic.def.odr
@@ -6384,8 +6330,14 @@ equivalent *parameter-declaration-clause*s.
 [stmt.if]: stmt.md#stmt.if
 [support.types]: language.md#support.types
 [tab:fold.empty]: #tab:fold.empty
+[temp]: #temp
+[temp.alias]: #temp.alias
 [temp.arg]: #temp.arg
+[temp.arg.explicit]: #temp.arg.explicit
 [temp.arg.nontype]: #temp.arg.nontype
+[temp.arg.template]: #temp.arg.template
+[temp.arg.type]: #temp.arg.type
+[temp.class]: #temp.class
 [temp.class.order]: #temp.class.order
 [temp.class.spec]: #temp.class.spec
 [temp.class.spec.match]: #temp.class.spec.match
@@ -6400,17 +6352,27 @@ equivalent *parameter-declaration-clause*s.
 [temp.deduct.partial]: #temp.deduct.partial
 [temp.deduct.type]: #temp.deduct.type
 [temp.dep]: #temp.dep
+[temp.dep.candidate]: #temp.dep.candidate
+[temp.dep.constexpr]: #temp.dep.constexpr
 [temp.dep.expr]: #temp.dep.expr
+[temp.dep.res]: #temp.dep.res
+[temp.dep.temp]: #temp.dep.temp
 [temp.dep.type]: #temp.dep.type
 [temp.expl.spec]: #temp.expl.spec
 [temp.explicit]: #temp.explicit
 [temp.fct]: #temp.fct
+[temp.fct.spec]: #temp.fct.spec
 [temp.friend]: #temp.friend
 [temp.func.order]: #temp.func.order
 [temp.inject]: #temp.inject
 [temp.inst]: #temp.inst
+[temp.local]: #temp.local
 [temp.mem]: #temp.mem
+[temp.mem.class]: #temp.mem.class
+[temp.mem.enum]: #temp.mem.enum
+[temp.mem.func]: #temp.mem.func
 [temp.names]: #temp.names
+[temp.nondep]: #temp.nondep
 [temp.over]: #temp.over
 [temp.over.link]: #temp.over.link
 [temp.param]: #temp.param
@@ -6418,6 +6380,7 @@ equivalent *parameter-declaration-clause*s.
 [temp.res]: #temp.res
 [temp.spec]: #temp.spec
 [temp.static]: #temp.static
+[temp.type]: #temp.type
 [temp.variadic]: #temp.variadic
 
 [^1]: Since template *template-parameter*s and template

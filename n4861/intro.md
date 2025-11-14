@@ -480,17 +480,6 @@ Unicode is a registered trademark of Unicode, Inc.
 
 All rights in these originals are reserved.
 
-<!-- Section link definitions -->
-[intro]: #intro
-[intro.abstract]: #intro.abstract
-[intro.ack]: #intro.ack
-[intro.compliance]: #intro.compliance
-[intro.defs]: #intro.defs
-[intro.refs]: #intro.refs
-[intro.scope]: #intro.scope
-[intro.structure]: #intro.structure
-[syntax]: #syntax
-
 <!-- Link reference definitions -->
 [basic.def.odr]: basic.md#basic.def.odr
 [basic.link]: basic.md#basic.link
@@ -524,10 +513,14 @@ All rights in these originals are reserved.
 [implimits]: #implimits
 [intro]: #intro
 [intro.abstract]: #intro.abstract
+[intro.ack]: #intro.ack
 [intro.compliance]: #intro.compliance
 [intro.defs]: #intro.defs
 [intro.execution]: basic.md#intro.execution
 [intro.object]: basic.md#intro.object
+[intro.refs]: #intro.refs
+[intro.scope]: #intro.scope
+[intro.structure]: #intro.structure
 [lex]: lex.md#lex
 [lex.charset]: lex.md#lex.charset
 [lex.phases]: lex.md#lex.phases

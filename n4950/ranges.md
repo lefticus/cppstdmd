@@ -12680,14 +12680,33 @@ friend bool operator==(const iterator& i, default_sentinel_t);
 
 *Effects:* Equivalent to: `return i.`*`coroutine_`*`.done();`
 
-<!-- Section link definitions -->
+<!-- Link reference definitions -->
+[basic.lookup.argdep]: basic.md#basic.lookup.argdep
+[concepts.equality]: concepts.md#concepts.equality
+[containers]: containers.md#containers
+[conv.rval]: expr.md#conv.rval
 [coro.generator]: #coro.generator
 [coro.generator.class]: #coro.generator.class
 [coro.generator.iterator]: #coro.generator.iterator
 [coro.generator.members]: #coro.generator.members
 [coro.generator.promise]: #coro.generator.promise
 [coroutine.generator.overview]: #coroutine.generator.overview
+[customization.point.object]: library.md#customization.point.object
+[dcl.fct.def.coroutine]: dcl.md#dcl.fct.def.coroutine
+[dcl.init.general]: dcl.md#dcl.init.general
+[expr.await]: expr.md#expr.await
+[expr.const]: expr.md#expr.const
+[expr.yield]: expr.md#expr.yield
 [generator.syn]: #generator.syn
+[iterator.concept.bidir]: iterators.md#iterator.concept.bidir
+[iterator.concept.forward]: iterators.md#iterator.concept.forward
+[iterator.concept.iterator]: iterators.md#iterator.concept.iterator
+[iterator.concept.output]: iterators.md#iterator.concept.output
+[iterator.concept.random.access]: iterators.md#iterator.concept.random.access
+[iterator.concept.sizedsentinel]: iterators.md#iterator.concept.sizedsentinel
+[iterator.concept.winc]: iterators.md#iterator.concept.winc
+[iterator.requirements.general]: iterators.md#iterator.requirements.general
+[namespace.std]: library.md#namespace.std
 [range.access]: #range.access
 [range.access.begin]: #range.access.begin
 [range.access.cbegin]: #range.access.cbegin
@@ -12835,6 +12854,7 @@ friend bool operator==(const iterator& i, default_sentinel_t);
 [range.subrange.access]: #range.subrange.access
 [range.subrange.ctor]: #range.subrange.ctor
 [range.subrange.general]: #range.subrange.general
+[range.summary]: #range.summary
 [range.take]: #range.take
 [range.take.overview]: #range.take.overview
 [range.take.sentinel]: #range.take.sentinel
@@ -12869,48 +12889,10 @@ friend bool operator==(const iterator& i, default_sentinel_t);
 [ranges]: #ranges
 [ranges.general]: #ranges.general
 [ranges.syn]: #ranges.syn
-[view.interface]: #view.interface
-[view.interface.general]: #view.interface.general
-[view.interface.members]: #view.interface.members
-
-<!-- Link reference definitions -->
-[basic.lookup.argdep]: basic.md#basic.lookup.argdep
-[concepts.equality]: concepts.md#concepts.equality
-[containers]: containers.md#containers
-[conv.rval]: expr.md#conv.rval
-[coro.generator]: #coro.generator
-[customization.point.object]: library.md#customization.point.object
-[dcl.fct.def.coroutine]: dcl.md#dcl.fct.def.coroutine
-[dcl.init.general]: dcl.md#dcl.init.general
-[expr.await]: expr.md#expr.await
-[expr.const]: expr.md#expr.const
-[expr.yield]: expr.md#expr.yield
-[iterator.concept.bidir]: iterators.md#iterator.concept.bidir
-[iterator.concept.forward]: iterators.md#iterator.concept.forward
-[iterator.concept.iterator]: iterators.md#iterator.concept.iterator
-[iterator.concept.output]: iterators.md#iterator.concept.output
-[iterator.concept.random.access]: iterators.md#iterator.concept.random.access
-[iterator.concept.sizedsentinel]: iterators.md#iterator.concept.sizedsentinel
-[iterator.concept.winc]: iterators.md#iterator.concept.winc
-[iterator.requirements.general]: iterators.md#iterator.requirements.general
-[namespace.std]: library.md#namespace.std
-[range.access]: #range.access
-[range.adaptor.object]: #range.adaptor.object
-[range.adaptors]: #range.adaptors
-[range.empty.view]: #range.empty.view
-[range.factories]: #range.factories
-[range.iota.view]: #range.iota.view
-[range.lazy.split]: #range.lazy.split
-[range.prim.data]: #range.prim.data
-[range.range]: #range.range
-[range.repeat.view]: #range.repeat.view
-[range.req]: #range.req
-[range.sized]: #range.sized
-[range.subrange]: #range.subrange
-[range.summary]: #range.summary
-[range.utility]: #range.utility
-[ranges.syn]: #ranges.syn
 [string.view]: strings.md#string.view
 [term.array.type]: dcl.md#term.array.type
 [term.perfect.forwarding.call.wrapper]: utilities.md#term.perfect.forwarding.call.wrapper
+[view.interface]: #view.interface
+[view.interface.general]: #view.interface.general
+[view.interface.members]: #view.interface.members
 [views.span]: containers.md#views.span

@@ -2130,22 +2130,6 @@ Class template `D` wraps any class and forwards all of its constructors,
 while writing a message to the standard log whenever an object of class
 `D` is destroyed.
 
-<!-- Section link definitions -->
-[class.base.init]: #class.base.init
-[class.cdtor]: #class.cdtor
-[class.conv]: #class.conv
-[class.conv.ctor]: #class.conv.ctor
-[class.conv.fct]: #class.conv.fct
-[class.copy]: #class.copy
-[class.ctor]: #class.ctor
-[class.dtor]: #class.dtor
-[class.expl.init]: #class.expl.init
-[class.free]: #class.free
-[class.inhctor]: #class.inhctor
-[class.init]: #class.init
-[class.temporary]: #class.temporary
-[special]: #special
-
 <!-- Link reference definitions -->
 [basic.def.odr]: basic.md#basic.def.odr
 [basic.life]: basic.md#basic.life
@@ -2164,6 +2148,7 @@ while writing a message to the standard log whenever an object of class
 [class.access]: class.md#class.access
 [class.base.init]: #class.base.init
 [class.cdtor]: #class.cdtor
+[class.conv]: #class.conv
 [class.conv.ctor]: #class.conv.ctor
 [class.conv.fct]: #class.conv.fct
 [class.copy]: #class.copy
@@ -2171,6 +2156,7 @@ while writing a message to the standard log whenever an object of class
 [class.dtor]: #class.dtor
 [class.expl.init]: #class.expl.init
 [class.free]: #class.free
+[class.inhctor]: #class.inhctor
 [class.init]: #class.init
 [class.mem]: class.md#class.mem
 [class.member.lookup]: class.md#class.member.lookup
@@ -2224,6 +2210,7 @@ while writing a message to the standard log whenever an object of class
 [over.load]: over.md#over.load
 [over.match]: over.md#over.match
 [over.match.best]: over.md#over.match.best
+[special]: #special
 [stmt.dcl]: stmt.md#stmt.dcl
 [stmt.return]: stmt.md#stmt.return
 [temp.over.link]: temp.md#temp.over.link

@@ -3022,7 +3022,36 @@ the change.
 The functions `aligned_alloc`, `calloc`, `malloc`, and `realloc` are
 restricted in C++. Subclause [[c.malloc]] describes the changes.
 
-<!-- Section link definitions -->
+<!-- Link reference definitions -->
+[algorithms]: algorithms.md#algorithms
+[basic]: basic.md#basic
+[basic.def.odr]: basic.md#basic.def.odr
+[basic.link]: basic.md#basic.link
+[basic.scope]: basic.md#basic.scope
+[basic.stc.dynamic]: basic.md#basic.stc.dynamic
+[c.malloc]: mem.md#c.malloc
+[class]: class.md#class
+[class.prop]: class.md#class.prop
+[class.temporary]: basic.md#class.temporary
+[concepts]: concepts.md#concepts
+[containers]: containers.md#containers
+[conv.array]: expr.md#conv.array
+[conv.func]: expr.md#conv.func
+[conv.lval]: expr.md#conv.lval
+[cpp]: cpp.md#cpp
+[cpp.import]: cpp.md#cpp.import
+[cpp.module]: cpp.md#cpp.module
+[csetjmp.syn]: support.md#csetjmp.syn
+[cstring.syn]: strings.md#cstring.syn
+[cwchar.syn]: text.md#cwchar.syn
+[dcl]: dcl.md#dcl
+[dcl.constexpr]: dcl.md#dcl.constexpr
+[dcl.constinit]: dcl.md#dcl.constinit
+[dcl.fct.def.coroutine]: dcl.md#dcl.fct.def.coroutine
+[dcl.type]: dcl.md#dcl.type
+[dcl.typedef]: dcl.md#dcl.typedef
+[depr]: #depr
+[diagnostics]: diagnostics.md#diagnostics
 [diff.basic]: #diff.basic
 [diff.char16]: #diff.char16
 [diff.class]: #diff.class
@@ -3125,45 +3154,6 @@ restricted in C++. Subclause [[c.malloc]] describes the changes.
 [diff.offsetof]: #diff.offsetof
 [diff.stat]: #diff.stat
 [diff.wchar.t]: #diff.wchar.t
-
-<!-- Link reference definitions -->
-[algorithms]: algorithms.md#algorithms
-[basic]: basic.md#basic
-[basic.def.odr]: basic.md#basic.def.odr
-[basic.link]: basic.md#basic.link
-[basic.scope]: basic.md#basic.scope
-[basic.stc.dynamic]: basic.md#basic.stc.dynamic
-[c.malloc]: mem.md#c.malloc
-[class]: class.md#class
-[class.prop]: class.md#class.prop
-[class.temporary]: basic.md#class.temporary
-[concepts]: concepts.md#concepts
-[containers]: containers.md#containers
-[conv.array]: expr.md#conv.array
-[conv.func]: expr.md#conv.func
-[conv.lval]: expr.md#conv.lval
-[cpp]: cpp.md#cpp
-[cpp.import]: cpp.md#cpp.import
-[cpp.module]: cpp.md#cpp.module
-[csetjmp.syn]: support.md#csetjmp.syn
-[cstring.syn]: strings.md#cstring.syn
-[cwchar.syn]: text.md#cwchar.syn
-[dcl]: dcl.md#dcl
-[dcl.constexpr]: dcl.md#dcl.constexpr
-[dcl.constinit]: dcl.md#dcl.constinit
-[dcl.fct.def.coroutine]: dcl.md#dcl.fct.def.coroutine
-[dcl.type]: dcl.md#dcl.type
-[dcl.typedef]: dcl.md#dcl.typedef
-[depr]: #depr
-[diagnostics]: diagnostics.md#diagnostics
-[diff.cpp03]: #diff.cpp03
-[diff.cpp11]: #diff.cpp11
-[diff.cpp14]: #diff.cpp14
-[diff.cpp17]: #diff.cpp17
-[diff.cpp20]: #diff.cpp20
-[diff.cpp23]: #diff.cpp23
-[diff.iso]: #diff.iso
-[diff.library]: #diff.library
 [except]: except.md#except
 [expr]: expr.md#expr
 [expr.eq]: expr.md#expr.eq

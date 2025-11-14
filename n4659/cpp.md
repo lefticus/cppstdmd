@@ -1010,7 +1010,8 @@ LISTING( ..\listing.dir )
 
 — *end example*]
 
-<!-- Section link definitions -->
+<!-- Link reference definitions -->
+[basic.stc.dynamic.safety]: basic.md#basic.stc.dynamic.safety
 [cpp]: #cpp
 [cpp.concat]: #cpp.concat
 [cpp.cond]: #cpp.cond
@@ -1026,12 +1027,6 @@ LISTING( ..\listing.dir )
 [cpp.scope]: #cpp.scope
 [cpp.stringize]: #cpp.stringize
 [cpp.subst]: #cpp.subst
-
-<!-- Link reference definitions -->
-[basic.stc.dynamic.safety]: basic.md#basic.stc.dynamic.safety
-[cpp.cond]: #cpp.cond
-[cpp.pragma.op]: #cpp.pragma.op
-[cpp.stringize]: #cpp.stringize
 [cstdint]: language.md#cstdint
 [expr.const]: expr.md#expr.const
 [expr.new]: expr.md#expr.new

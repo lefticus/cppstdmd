@@ -2040,59 +2040,13 @@ signal handlers shall have C linkage. The behavior of any function other
 than a POF used as a signal handler in a C++program is
 *implementation-defined*.[^35]
 
-<!-- Section link definitions -->
+<!-- Link reference definitions -->
 [alloc.errors]: #alloc.errors
+[atomics]: atomics.md#atomics
 [bad.alloc]: #bad.alloc
 [bad.cast]: #bad.cast
 [bad.exception]: #bad.exception
 [bad.typeid]: #bad.typeid
-[c.limits]: #c.limits
-[cstdint]: #cstdint
-[cstdint.syn]: #cstdint.syn
-[denorm.style]: #denorm.style
-[except.nested]: #except.nested
-[exception]: #exception
-[exception.terminate]: #exception.terminate
-[get.new.handler]: #get.new.handler
-[get.terminate]: #get.terminate
-[language.support]: #language.support
-[limits]: #limits
-[limits.numeric]: #limits.numeric
-[limits.syn]: #limits.syn
-[new.badlength]: #new.badlength
-[new.delete]: #new.delete
-[new.delete.array]: #new.delete.array
-[new.delete.dataraces]: #new.delete.dataraces
-[new.delete.placement]: #new.delete.placement
-[new.delete.single]: #new.delete.single
-[new.handler]: #new.handler
-[numeric.limits]: #numeric.limits
-[numeric.limits.members]: #numeric.limits.members
-[numeric.special]: #numeric.special
-[propagation]: #propagation
-[round.style]: #round.style
-[set.new.handler]: #set.new.handler
-[set.terminate]: #set.terminate
-[support.dynamic]: #support.dynamic
-[support.exception]: #support.exception
-[support.general]: #support.general
-[support.initlist]: #support.initlist
-[support.initlist.access]: #support.initlist.access
-[support.initlist.cons]: #support.initlist.cons
-[support.initlist.range]: #support.initlist.range
-[support.limits]: #support.limits
-[support.limits.general]: #support.limits.general
-[support.rtti]: #support.rtti
-[support.runtime]: #support.runtime
-[support.start.term]: #support.start.term
-[support.types]: #support.types
-[terminate]: #terminate
-[terminate.handler]: #terminate.handler
-[type.info]: #type.info
-[uncaught]: #uncaught
-
-<!-- Link reference definitions -->
-[atomics]: atomics.md#atomics
 [basic.align]: basic.md#basic.align
 [basic.fundamental]: basic.md#basic.fundamental
 [basic.start]: basic.md#basic.start
@@ -2109,13 +2063,18 @@ than a POF used as a signal handler in a C++program is
 [conv.ptr]: conv.md#conv.ptr
 [conv.rank]: conv.md#conv.rank
 [cstdint]: #cstdint
+[cstdint.syn]: #cstdint.syn
 [dcl.init.list]: dcl.md#dcl.init.list
+[denorm.style]: #denorm.style
 [except.ctor]: except.md#except.ctor
 [except.handle]: except.md#except.handle
+[except.nested]: #except.nested
 [except.special]: except.md#except.special
 [except.terminate]: except.md#except.terminate
 [except.throw]: except.md#except.throw
 [except.unexpected]: except.md#except.unexpected
+[exception]: #exception
+[exception.terminate]: #exception.terminate
 [expr.add]: expr.md#expr.add
 [expr.delete]: expr.md#expr.delete
 [expr.dynamic.cast]: expr.md#expr.dynamic.cast
@@ -2123,22 +2082,43 @@ than a POF used as a signal handler in a C++program is
 [expr.sizeof]: expr.md#expr.sizeof
 [expr.typeid]: expr.md#expr.typeid
 [get.new.handler]: #get.new.handler
+[get.terminate]: #get.terminate
 [intro.execution]: intro.md#intro.execution
 [intro.memory]: intro.md#intro.memory
 [intro.multithread]: intro.md#intro.multithread
+[language.support]: #language.support
 [limits]: #limits
+[limits.numeric]: #limits.numeric
+[limits.syn]: #limits.syn
 [locale.codecvt]: localization.md#locale.codecvt
 [memory]: utilities.md#memory
 [multibyte.strings]: library.md#multibyte.strings
+[new.badlength]: #new.badlength
 [new.delete]: #new.delete
+[new.delete.array]: #new.delete.array
+[new.delete.dataraces]: #new.delete.dataraces
+[new.delete.placement]: #new.delete.placement
+[new.delete.single]: #new.delete.single
 [new.handler]: #new.handler
 [nullablepointer.requirements]: library.md#nullablepointer.requirements
+[numeric.limits]: #numeric.limits
+[numeric.limits.members]: #numeric.limits.members
+[numeric.special]: #numeric.special
+[propagation]: #propagation
 [res.on.data.races]: library.md#res.on.data.races
+[round.style]: #round.style
+[set.new.handler]: #set.new.handler
+[set.terminate]: #set.terminate
 [string.classes]: strings.md#string.classes
 [support.dynamic]: #support.dynamic
 [support.exception]: #support.exception
+[support.general]: #support.general
 [support.initlist]: #support.initlist
+[support.initlist.access]: #support.initlist.access
+[support.initlist.cons]: #support.initlist.cons
+[support.initlist.range]: #support.initlist.range
 [support.limits]: #support.limits
+[support.limits.general]: #support.limits.general
 [support.rtti]: #support.rtti
 [support.runtime]: #support.runtime
 [support.start.term]: #support.start.term
@@ -2150,6 +2130,10 @@ than a POF used as a signal handler in a C++program is
 [tab:support.hdr.cstdlib]: #tab:support.hdr.cstdlib
 [temp.dep.constexpr]: temp.md#temp.dep.constexpr
 [temp.dep.expr]: temp.md#temp.dep.expr
+[terminate]: #terminate
+[terminate.handler]: #terminate.handler
+[type.info]: #type.info
+[uncaught]: #uncaught
 
 [^1]: Possible definitions include `0` and `0L`, but not `(void*)0`.
 

@@ -2580,7 +2580,7 @@ Because the function argument `compar()` may throw an exception,
 
 ISO C 7.10.5.
 
-<!-- Section link definitions -->
+<!-- Link reference definitions -->
 [alg.adjacent.find]: #alg.adjacent.find
 [alg.all_of]: #alg.all_of
 [alg.any_of]: #alg.any_of
@@ -2621,18 +2621,38 @@ ISO C 7.10.5.
 [alg.unique]: #alg.unique
 [algorithms]: #algorithms
 [algorithms.general]: #algorithms.general
+[bidirectional.iterators]: iterators.md#bidirectional.iterators
 [binary.search]: #binary.search
+[class.conv]: special.md#class.conv
+[containers]: containers.md#containers
+[conv]: conv.md#conv
+[conv.integral]: conv.md#conv.integral
+[copyassignable]: #copyassignable
+[copyconstructible]: #copyconstructible
 [equal.range]: #equal.range
+[forward.iterators]: iterators.md#forward.iterators
+[function.objects]: utilities.md#function.objects
 [includes]: #includes
+[input.iterators]: iterators.md#input.iterators
 [is.heap]: #is.heap
 [is.sorted]: #is.sorted
+[iterator.requirements]: iterators.md#iterator.requirements
+[lessthancomparable]: #lessthancomparable
 [lower.bound]: #lower.bound
 [make.heap]: #make.heap
 [mismatch]: #mismatch
+[moveassignable]: #moveassignable
+[moveconstructible]: #moveconstructible
+[multiset]: containers.md#multiset
+[output.iterators]: iterators.md#output.iterators
 [partial.sort]: #partial.sort
 [partial.sort.copy]: #partial.sort.copy
 [pop.heap]: #pop.heap
 [push.heap]: #push.heap
+[rand.req.urng]: numerics.md#rand.req.urng
+[random.access.iterators]: iterators.md#random.access.iterators
+[refwrap]: utilities.md#refwrap
+[res.on.exception.handling]: library.md#res.on.exception.handling
 [set.difference]: #set.difference
 [set.intersection]: #set.intersection
 [set.symmetric.difference]: #set.symmetric.difference
@@ -2640,37 +2660,10 @@ ISO C 7.10.5.
 [sort]: #sort
 [sort.heap]: #sort.heap
 [stable.sort]: #stable.sort
-[upper.bound]: #upper.bound
-
-<!-- Link reference definitions -->
-[alg.binary.search]: #alg.binary.search
-[alg.c.library]: #alg.c.library
-[alg.modifying.operations]: #alg.modifying.operations
-[alg.nonmodifying]: #alg.nonmodifying
-[alg.sorting]: #alg.sorting
-[bidirectional.iterators]: iterators.md#bidirectional.iterators
-[class.conv]: special.md#class.conv
-[containers]: containers.md#containers
-[conv]: conv.md#conv
-[conv.integral]: conv.md#conv.integral
-[copyassignable]: #copyassignable
-[copyconstructible]: #copyconstructible
-[forward.iterators]: iterators.md#forward.iterators
-[function.objects]: utilities.md#function.objects
-[input.iterators]: iterators.md#input.iterators
-[iterator.requirements]: iterators.md#iterator.requirements
-[lessthancomparable]: #lessthancomparable
-[moveassignable]: #moveassignable
-[moveconstructible]: #moveconstructible
-[multiset]: containers.md#multiset
-[output.iterators]: iterators.md#output.iterators
-[rand.req.urng]: numerics.md#rand.req.urng
-[random.access.iterators]: iterators.md#random.access.iterators
-[refwrap]: utilities.md#refwrap
-[res.on.exception.handling]: library.md#res.on.exception.handling
 [swappable.requirements]: library.md#swappable.requirements
 [tab:algorithms.hdr.cstdlib]: #tab:algorithms.hdr.cstdlib
 [tab:algorithms.summary]: #tab:algorithms.summary
+[upper.bound]: #upper.bound
 
 [^1]: The decision whether to include a copying version was usually
     based on complexity considerations. When the cost of doing the

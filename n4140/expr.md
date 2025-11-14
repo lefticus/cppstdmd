@@ -3372,48 +3372,6 @@ X<a> x;             // OK: unique conversion to int
 int ary[a];         // error: ambiguous conversion
 ```
 
-<!-- Section link definitions -->
-[expr]: #expr
-[expr.add]: #expr.add
-[expr.alignof]: #expr.alignof
-[expr.ass]: #expr.ass
-[expr.bit.and]: #expr.bit.and
-[expr.call]: #expr.call
-[expr.cast]: #expr.cast
-[expr.comma]: #expr.comma
-[expr.cond]: #expr.cond
-[expr.const]: #expr.const
-[expr.const.cast]: #expr.const.cast
-[expr.delete]: #expr.delete
-[expr.dynamic.cast]: #expr.dynamic.cast
-[expr.eq]: #expr.eq
-[expr.log.and]: #expr.log.and
-[expr.log.or]: #expr.log.or
-[expr.mptr.oper]: #expr.mptr.oper
-[expr.mul]: #expr.mul
-[expr.new]: #expr.new
-[expr.or]: #expr.or
-[expr.post]: #expr.post
-[expr.post.incr]: #expr.post.incr
-[expr.pre.incr]: #expr.pre.incr
-[expr.prim]: #expr.prim
-[expr.prim.general]: #expr.prim.general
-[expr.prim.lambda]: #expr.prim.lambda
-[expr.pseudo]: #expr.pseudo
-[expr.ref]: #expr.ref
-[expr.reinterpret.cast]: #expr.reinterpret.cast
-[expr.rel]: #expr.rel
-[expr.shift]: #expr.shift
-[expr.sizeof]: #expr.sizeof
-[expr.static.cast]: #expr.static.cast
-[expr.sub]: #expr.sub
-[expr.type.conv]: #expr.type.conv
-[expr.typeid]: #expr.typeid
-[expr.unary]: #expr.unary
-[expr.unary.noexcept]: #expr.unary.noexcept
-[expr.unary.op]: #expr.unary.op
-[expr.xor]: #expr.xor
-
 <!-- Link reference definitions -->
 [bad.alloc]: language.md#bad.alloc
 [bad.cast]: language.md#bad.cast
@@ -3502,7 +3460,9 @@ int ary[a];         // error: ambiguous conversion
 [except.throw]: except.md#except.throw
 [expr]: #expr
 [expr.add]: #expr.add
+[expr.alignof]: #expr.alignof
 [expr.ass]: #expr.ass
+[expr.bit.and]: #expr.bit.and
 [expr.call]: #expr.call
 [expr.cast]: #expr.cast
 [expr.comma]: #expr.comma
@@ -3512,9 +3472,13 @@ int ary[a];         // error: ambiguous conversion
 [expr.delete]: #expr.delete
 [expr.dynamic.cast]: #expr.dynamic.cast
 [expr.eq]: #expr.eq
+[expr.log.and]: #expr.log.and
+[expr.log.or]: #expr.log.or
 [expr.mptr.oper]: #expr.mptr.oper
 [expr.mul]: #expr.mul
 [expr.new]: #expr.new
+[expr.or]: #expr.or
+[expr.post]: #expr.post
 [expr.post.incr]: #expr.post.incr
 [expr.pre.incr]: #expr.pre.incr
 [expr.prim]: #expr.prim
@@ -3533,6 +3497,7 @@ int ary[a];         // error: ambiguous conversion
 [expr.unary]: #expr.unary
 [expr.unary.noexcept]: #expr.unary.noexcept
 [expr.unary.op]: #expr.unary.op
+[expr.xor]: #expr.xor
 [function.objects]: utilities.md#function.objects
 [implimits]: #implimits
 [intro.execution]: intro.md#intro.execution

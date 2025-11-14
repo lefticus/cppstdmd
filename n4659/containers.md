@@ -6697,7 +6697,13 @@ unless `is_swappable_v<Container>` is `true`.
 
 *Effects:* As if by `x.swap(y)`.
 
-<!-- Section link definitions -->
+<!-- Link reference definitions -->
+[alg.sorting]: algorithms.md#alg.sorting
+[algorithm.stable]: library.md#algorithm.stable
+[algorithms]: algorithms.md#algorithms
+[allocator.requirements]: library.md#allocator.requirements
+[allocator.requirements.completeness]: library.md#allocator.requirements.completeness
+[allocator.traits.members]: utilities.md#allocator.traits.members
 [array]: #array
 [array.cons]: #array.cons
 [array.data]: #array.data
@@ -6715,6 +6721,10 @@ unless `is_swappable_v<Container>` is `true`.
 [associative.reqmts]: #associative.reqmts
 [associative.reqmts.except]: #associative.reqmts.except
 [associative.set.syn]: #associative.set.syn
+[basic.string]: strings.md#basic.string
+[class.copy]: special.md#class.copy
+[class.ctor]: special.md#class.ctor
+[class.dtor]: special.md#class.dtor
 [container.adaptors]: #container.adaptors
 [container.adaptors.general]: #container.adaptors.general
 [container.insert.return]: #container.insert.return
@@ -6729,6 +6739,7 @@ unless `is_swappable_v<Container>` is `true`.
 [container.requirements.general]: #container.requirements.general
 [containers]: #containers
 [containers.general]: #containers.general
+[dcl.init.aggr]: dcl.md#dcl.init.aggr
 [deque]: #deque
 [deque.capacity]: #deque.capacity
 [deque.cons]: #deque.cons
@@ -6736,6 +6747,7 @@ unless `is_swappable_v<Container>` is `true`.
 [deque.overview]: #deque.overview
 [deque.special]: #deque.special
 [deque.syn]: #deque.syn
+[forward.iterators]: iterators.md#forward.iterators
 [forward_list.syn]: #forward_list.syn
 [forwardlist]: #forwardlist
 [forwardlist.access]: #forwardlist.access
@@ -6745,6 +6757,9 @@ unless `is_swappable_v<Container>` is `true`.
 [forwardlist.ops]: #forwardlist.ops
 [forwardlist.overview]: #forwardlist.overview
 [forwardlist.spec]: #forwardlist.spec
+[hash.requirements]: library.md#hash.requirements
+[iterator.requirements]: iterators.md#iterator.requirements
+[iterator.requirements.general]: iterators.md#iterator.requirements.general
 [list]: #list
 [list.capacity]: #list.capacity
 [list.cons]: #list.cons
@@ -6780,6 +6795,8 @@ unless `is_swappable_v<Container>` is `true`.
 [queue.ops]: #queue.ops
 [queue.special]: #queue.special
 [queue.syn]: #queue.syn
+[random.access.iterators]: iterators.md#random.access.iterators
+[res.on.data.races]: library.md#res.on.data.races
 [sequence.reqmts]: #sequence.reqmts
 [sequences]: #sequences
 [sequences.general]: #sequences.general
@@ -6794,8 +6811,22 @@ unless `is_swappable_v<Container>` is `true`.
 [stack.ops]: #stack.ops
 [stack.special]: #stack.special
 [stack.syn]: #stack.syn
+[strings]: strings.md#strings
+[swappable.requirements]: library.md#swappable.requirements
+[tab:HashRequirements]: #tab:HashRequirements
+[tab:containers.allocatoraware]: #tab:containers.allocatoraware
+[tab:containers.associative.requirements]: #tab:containers.associative.requirements
+[tab:containers.container.requirements]: #tab:containers.container.requirements
+[tab:containers.lib.summary]: #tab:containers.lib.summary
+[tab:containers.node.compat]: #tab:containers.node.compat
+[tab:containers.optional.operations]: #tab:containers.optional.operations
+[tab:containers.reversible.requirements]: #tab:containers.reversible.requirements
+[tab:containers.sequence.optional]: #tab:containers.sequence.optional
+[tab:containers.sequence.requirements]: #tab:containers.sequence.requirements
+[temp.deduct]: temp.md#temp.deduct
 [unord]: #unord
 [unord.general]: #unord.general
+[unord.hash]: utilities.md#unord.hash
 [unord.map]: #unord.map
 [unord.map.cnstr]: #unord.map.cnstr
 [unord.map.elem]: #unord.map.elem
@@ -6828,57 +6859,6 @@ unless `is_swappable_v<Container>` is `true`.
 [vector.overview]: #vector.overview
 [vector.special]: #vector.special
 [vector.syn]: #vector.syn
-
-<!-- Link reference definitions -->
-[alg.sorting]: algorithms.md#alg.sorting
-[algorithm.stable]: library.md#algorithm.stable
-[algorithms]: algorithms.md#algorithms
-[allocator.requirements]: library.md#allocator.requirements
-[allocator.requirements.completeness]: library.md#allocator.requirements.completeness
-[allocator.traits.members]: utilities.md#allocator.traits.members
-[associative]: #associative
-[associative.general]: #associative.general
-[associative.reqmts]: #associative.reqmts
-[associative.reqmts.except]: #associative.reqmts.except
-[basic.string]: strings.md#basic.string
-[class.copy]: special.md#class.copy
-[class.ctor]: special.md#class.ctor
-[class.dtor]: special.md#class.dtor
-[container.adaptors]: #container.adaptors
-[container.node]: #container.node
-[container.requirements]: #container.requirements
-[container.requirements.general]: #container.requirements.general
-[dcl.init.aggr]: dcl.md#dcl.init.aggr
-[deque]: #deque
-[deque.modifiers]: #deque.modifiers
-[forward.iterators]: iterators.md#forward.iterators
-[hash.requirements]: library.md#hash.requirements
-[iterator.requirements]: iterators.md#iterator.requirements
-[iterator.requirements.general]: iterators.md#iterator.requirements.general
-[list]: #list
-[random.access.iterators]: iterators.md#random.access.iterators
-[res.on.data.races]: library.md#res.on.data.races
-[sequence.reqmts]: #sequence.reqmts
-[sequences]: #sequences
-[strings]: strings.md#strings
-[swappable.requirements]: library.md#swappable.requirements
-[tab:HashRequirements]: #tab:HashRequirements
-[tab:containers.allocatoraware]: #tab:containers.allocatoraware
-[tab:containers.associative.requirements]: #tab:containers.associative.requirements
-[tab:containers.container.requirements]: #tab:containers.container.requirements
-[tab:containers.lib.summary]: #tab:containers.lib.summary
-[tab:containers.node.compat]: #tab:containers.node.compat
-[tab:containers.optional.operations]: #tab:containers.optional.operations
-[tab:containers.reversible.requirements]: #tab:containers.reversible.requirements
-[tab:containers.sequence.optional]: #tab:containers.sequence.optional
-[tab:containers.sequence.requirements]: #tab:containers.sequence.requirements
-[temp.deduct]: temp.md#temp.deduct
-[unord]: #unord
-[unord.hash]: utilities.md#unord.hash
-[unord.req]: #unord.req
-[unord.req.except]: #unord.req.except
-[vector]: #vector
-[vector.modifiers]: #vector.modifiers
 
 [^1]: Equality comparison is a refinement of partitioning if no two
     objects that compare equal fall into different partitions.

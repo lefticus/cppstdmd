@@ -3667,7 +3667,8 @@ used to obtain aligned storage. — *end note*]
 If a request for a specific extended alignment in a specific context is
 not supported by an implementation, the program is ill-formed.
 
-<!-- Section link definitions -->
+<!-- Link reference definitions -->
+[bad.alloc]: language.md#bad.alloc
 [basic]: #basic
 [basic.align]: #basic.align
 [basic.compound]: #basic.compound
@@ -3685,6 +3686,7 @@ not supported by an implementation, the program is ill-formed.
 [basic.lookup.udir]: #basic.lookup.udir
 [basic.lookup.unqual]: #basic.lookup.unqual
 [basic.lval]: #basic.lval
+[basic.namespace]: dcl.md#basic.namespace
 [basic.scope]: #basic.scope
 [basic.scope.block]: #basic.scope.block
 [basic.scope.class]: #basic.scope.class
@@ -3711,44 +3713,6 @@ not supported by an implementation, the program is ill-formed.
 [basic.stc.thread]: #basic.stc.thread
 [basic.type.qualifier]: #basic.type.qualifier
 [basic.types]: #basic.types
-[class.qual]: #class.qual
-[namespace.qual]: #namespace.qual
-
-<!-- Link reference definitions -->
-[bad.alloc]: language.md#bad.alloc
-[basic]: #basic
-[basic.align]: #basic.align
-[basic.compound]: #basic.compound
-[basic.def]: #basic.def
-[basic.def.odr]: #basic.def.odr
-[basic.fundamental]: #basic.fundamental
-[basic.life]: #basic.life
-[basic.link]: #basic.link
-[basic.lookup]: #basic.lookup
-[basic.lookup.argdep]: #basic.lookup.argdep
-[basic.lookup.classref]: #basic.lookup.classref
-[basic.lookup.elab]: #basic.lookup.elab
-[basic.lookup.qual]: #basic.lookup.qual
-[basic.lookup.unqual]: #basic.lookup.unqual
-[basic.namespace]: dcl.md#basic.namespace
-[basic.scope]: #basic.scope
-[basic.scope.block]: #basic.scope.block
-[basic.scope.class]: #basic.scope.class
-[basic.scope.hiding]: #basic.scope.hiding
-[basic.scope.namespace]: #basic.scope.namespace
-[basic.scope.pdecl]: #basic.scope.pdecl
-[basic.start.dynamic]: #basic.start.dynamic
-[basic.start.main]: #basic.start.main
-[basic.start.static]: #basic.start.static
-[basic.start.term]: #basic.start.term
-[basic.stc]: #basic.stc
-[basic.stc.auto]: #basic.stc.auto
-[basic.stc.dynamic.allocation]: #basic.stc.dynamic.allocation
-[basic.stc.dynamic.deallocation]: #basic.stc.dynamic.deallocation
-[basic.stc.static]: #basic.stc.static
-[basic.stc.thread]: #basic.stc.thread
-[basic.type.qualifier]: #basic.type.qualifier
-[basic.types]: #basic.types
 [class]: class.md#class
 [class.access]: class.md#class.access
 [class.base.init]: special.md#class.base.init
@@ -3768,6 +3732,7 @@ not supported by an implementation, the program is ill-formed.
 [class.mfct.non-static]: class.md#class.mfct.non-static
 [class.name]: class.md#class.name
 [class.nest]: class.md#class.nest
+[class.qual]: #class.qual
 [class.static]: class.md#class.static
 [class.static.data]: class.md#class.static.data
 [class.temporary]: special.md#class.temporary

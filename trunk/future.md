@@ -829,7 +829,21 @@ template<class T> constexpr T kill_dependency(T y) noexcept;
 
 *Returns:* `y`.
 
-<!-- Section link definitions -->
+<!-- Link reference definitions -->
+[atomics.types.generic]: thread.md#atomics.types.generic
+[basic.def]: basic.md#basic.def
+[basic.link]: basic.md#basic.link
+[basic.types]: basic.md#basic.types
+[class.copy.assign]: class.md#class.copy.assign
+[class.copy.ctor]: class.md#class.copy.ctor
+[class.dtor]: class.md#class.dtor
+[class.static.data]: class.md#class.static.data
+[cpp17.equalitycomparable]: #cpp17.equalitycomparable
+[cpp17.lessthancomparable]: #cpp17.lessthancomparable
+[dcl.attr.deprecated]: dcl.md#dcl.attr.deprecated
+[dcl.fct]: dcl.md#dcl.fct
+[dcl.fct.def.delete]: dcl.md#dcl.fct.def.delete
+[dcl.struct.bind]: dcl.md#dcl.struct.bind
 [depr.atomics]: #depr.atomics
 [depr.atomics.general]: #depr.atomics.general
 [depr.atomics.nonmembers]: #depr.atomics.nonmembers
@@ -862,22 +876,6 @@ template<class T> constexpr T kill_dependency(T y) noexcept;
 [depr.tuple]: #depr.tuple
 [depr.variant]: #depr.variant
 [depr.volatile.type]: #depr.volatile.type
-
-<!-- Link reference definitions -->
-[atomics.types.generic]: thread.md#atomics.types.generic
-[basic.def]: basic.md#basic.def
-[basic.link]: basic.md#basic.link
-[basic.types]: basic.md#basic.types
-[class.copy.assign]: class.md#class.copy.assign
-[class.copy.ctor]: class.md#class.copy.ctor
-[class.dtor]: class.md#class.dtor
-[class.static.data]: class.md#class.static.data
-[cpp17.equalitycomparable]: #cpp17.equalitycomparable
-[cpp17.lessthancomparable]: #cpp17.lessthancomparable
-[dcl.attr.deprecated]: dcl.md#dcl.attr.deprecated
-[dcl.fct]: dcl.md#dcl.fct
-[dcl.fct.def.delete]: dcl.md#dcl.fct.def.delete
-[dcl.struct.bind]: dcl.md#dcl.struct.bind
 [expr.assign]: expr.md#expr.assign
 [expr.post.incr]: expr.md#expr.post.incr
 [expr.pre.incr]: expr.md#expr.pre.incr

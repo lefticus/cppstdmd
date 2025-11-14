@@ -5794,14 +5794,19 @@ Library header `<inttypes.h>`, with the following changes:
   `intmax_t imaxabs(intmax_t)` and
   `imaxdiv_t imaxdiv(intmax_t, intmax_t)`, respectively.
 
-<!-- Section link definitions -->
+<!-- Link reference definitions -->
 [adjustfield.manip]: #adjustfield.manip
 [basefield.manip]: #basefield.manip
+[basic.fundamental]: basic.md#basic.fundamental
 [basic.ios.cons]: #basic.ios.cons
 [basic.ios.members]: #basic.ios.members
+[bitmask.types]: library.md#bitmask.types
 [c.files]: #c.files
+[enumerated.types]: library.md#enumerated.types
 [error.reporting]: #error.reporting
 [ext.manip]: #ext.manip
+[facet.num.put.virtuals]: localization.md#facet.num.put.virtuals
+[fig:streampos]: #fig:streampos
 [file.streams]: #file.streams
 [filebuf]: #filebuf
 [filebuf.assign]: #filebuf.assign
@@ -5826,6 +5831,7 @@ Library header `<inttypes.h>`, with the following changes:
 [input.output]: #input.output
 [input.output.general]: #input.output.general
 [input.streams]: #input.streams
+[intro.multithread]: intro.md#intro.multithread
 [ios]: #ios
 [ios.base]: #ios.base
 [ios.base.callback]: #ios.base.callback
@@ -5872,6 +5878,9 @@ Library header `<inttypes.h>`, with the following changes:
 [istringstream.assign]: #istringstream.assign
 [istringstream.cons]: #istringstream.cons
 [istringstream.members]: #istringstream.members
+[limits]: language.md#limits
+[locale.codecvt.virtuals]: localization.md#locale.codecvt.virtuals
+[locale.num.get]: localization.md#locale.num.get
 [narrow.stream.objects]: #narrow.stream.objects
 [ofstream]: #ofstream
 [ofstream.assign]: #ofstream.assign
@@ -5895,6 +5904,8 @@ Library header `<inttypes.h>`, with the following changes:
 [ostringstream.cons]: #ostringstream.cons
 [ostringstream.members]: #ostringstream.members
 [output.streams]: #output.streams
+[res.on.data.races]: library.md#res.on.data.races
+[res.on.exception.handling]: library.md#res.on.exception.handling
 [std.ios.manip]: #std.ios.manip
 [std.manip]: #std.manip
 [stream.buffers]: #stream.buffers
@@ -5919,6 +5930,7 @@ Library header `<inttypes.h>`, with the following changes:
 [streambuf.virt.pback]: #streambuf.virt.pback
 [streambuf.virt.put]: #streambuf.virt.put
 [streambuf.virtuals]: #streambuf.virtuals
+[string.classes]: strings.md#string.classes
 [string.streams]: #string.streams
 [string.streams.overview]: #string.streams.overview
 [stringbuf]: #stringbuf
@@ -5926,65 +5938,11 @@ Library header `<inttypes.h>`, with the following changes:
 [stringbuf.cons]: #stringbuf.cons
 [stringbuf.members]: #stringbuf.members
 [stringbuf.virtuals]: #stringbuf.virtuals
+[strings]: strings.md#strings
 [stringstream]: #stringstream
 [stringstream.assign]: #stringstream.assign
 [stringstream.cons]: #stringstream.cons
 [stringstream.members]: #stringstream.members
-[wide.stream.objects]: #wide.stream.objects
-
-<!-- Link reference definitions -->
-[basic.fundamental]: basic.md#basic.fundamental
-[basic.ios.cons]: #basic.ios.cons
-[basic.ios.members]: #basic.ios.members
-[bitmask.types]: library.md#bitmask.types
-[c.files]: #c.files
-[enumerated.types]: library.md#enumerated.types
-[facet.num.put.virtuals]: localization.md#facet.num.put.virtuals
-[fig:streampos]: #fig:streampos
-[file.streams]: #file.streams
-[filebuf]: #filebuf
-[filebuf.cons]: #filebuf.cons
-[filebuf.virtuals]: #filebuf.virtuals
-[fpos.operations]: #fpos.operations
-[input.output]: #input.output
-[intro.multithread]: intro.md#intro.multithread
-[ios.base.callback]: #ios.base.callback
-[ios.base.cons]: #ios.base.cons
-[ios.base.locales]: #ios.base.locales
-[ios.members.static]: #ios.members.static
-[ios::failure]: #ios::failure
-[iostate.flags]: #iostate.flags
-[iostream.format]: #iostream.format
-[iostream.forward]: #iostream.forward
-[iostream.objects]: #iostream.objects
-[iostreams.base]: #iostreams.base
-[iostreams.requirements]: #iostreams.requirements
-[istream]: #istream
-[istream.cons]: #istream.cons
-[istream.formatted.reqmts]: #istream.formatted.reqmts
-[istream.unformatted]: #istream.unformatted
-[istream::sentry]: #istream::sentry
-[limits]: language.md#limits
-[locale.codecvt.virtuals]: localization.md#locale.codecvt.virtuals
-[locale.num.get]: localization.md#locale.num.get
-[ostream]: #ostream
-[ostream.cons]: #ostream.cons
-[ostream.formatted.reqmts]: #ostream.formatted.reqmts
-[ostream.unformatted]: #ostream.unformatted
-[res.on.data.races]: library.md#res.on.data.races
-[res.on.exception.handling]: library.md#res.on.exception.handling
-[stream.buffers]: #stream.buffers
-[streambuf.cons]: #streambuf.cons
-[streambuf.locales]: #streambuf.locales
-[streambuf.virt.get]: #streambuf.virt.get
-[streambuf.virtuals]: #streambuf.virtuals
-[string.classes]: strings.md#string.classes
-[string.streams]: #string.streams
-[stringbuf]: #stringbuf
-[stringbuf.cons]: #stringbuf.cons
-[stringbuf.members]: #stringbuf.members
-[stringbuf.virtuals]: #stringbuf.virtuals
-[strings]: strings.md#strings
 [tab:iostreams.basicios.init.effects]: #tab:iostreams.basicios.init.effects
 [tab:iostreams.copyfmt.effects]: #tab:iostreams.copyfmt.effects
 [tab:iostreams.file.open.modes]: #tab:iostreams.file.open.modes
@@ -6000,6 +5958,7 @@ Library header `<inttypes.h>`, with the following changes:
 [tab:iostreams.seekdir.effects]: #tab:iostreams.seekdir.effects
 [tab:iostreams.seekoff.effects]: #tab:iostreams.seekoff.effects
 [tab:iostreams.seekoff.positioning]: #tab:iostreams.seekoff.positioning
+[wide.stream.objects]: #wide.stream.objects
 
 [^1]: It is the implementation’s responsibility to implement headers so
     that including `<iosfwd>` and other headers does not violate the

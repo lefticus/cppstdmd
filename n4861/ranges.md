@@ -5179,7 +5179,22 @@ friend constexpr range_difference_t<Base>
 
 *Effects:* Equivalent to: `return x.`*`end_`*` - y.`*`current_`*`;`
 
-<!-- Section link definitions -->
+<!-- Link reference definitions -->
+[basic.compound]: basic.md#basic.compound
+[concepts.equality]: concepts.md#concepts.equality
+[containers]: containers.md#containers
+[conv.rval]: expr.md#conv.rval
+[customization.point.object]: library.md#customization.point.object
+[dcl.array]: dcl.md#dcl.array
+[expr.const]: expr.md#expr.const
+[iterator.concept.bidir]: iterators.md#iterator.concept.bidir
+[iterator.concept.iterator]: iterators.md#iterator.concept.iterator
+[iterator.concept.output]: iterators.md#iterator.concept.output
+[iterator.concept.random.access]: iterators.md#iterator.concept.random.access
+[iterator.concept.sizedsentinel]: iterators.md#iterator.concept.sizedsentinel
+[iterator.concept.winc]: iterators.md#iterator.concept.winc
+[iterator.requirements.general]: iterators.md#iterator.requirements.general
+[namespace.std]: library.md#namespace.std
 [range.access]: #range.access
 [range.access.begin]: #range.access.begin
 [range.access.cbegin]: #range.access.cbegin
@@ -5258,6 +5273,7 @@ friend constexpr range_difference_t<Base>
 [range.subrange]: #range.subrange
 [range.subrange.access]: #range.subrange.access
 [range.subrange.ctor]: #range.subrange.ctor
+[range.summary]: #range.summary
 [range.take]: #range.take
 [range.take.overview]: #range.take.overview
 [range.take.sentinel]: #range.take.sentinel
@@ -5277,38 +5293,7 @@ friend constexpr range_difference_t<Base>
 [ranges]: #ranges
 [ranges.general]: #ranges.general
 [ranges.syn]: #ranges.syn
+[string.view]: strings.md#string.view
 [view.interface]: #view.interface
 [view.interface.members]: #view.interface.members
-
-<!-- Link reference definitions -->
-[basic.compound]: basic.md#basic.compound
-[concepts.equality]: concepts.md#concepts.equality
-[containers]: containers.md#containers
-[conv.rval]: expr.md#conv.rval
-[customization.point.object]: library.md#customization.point.object
-[dcl.array]: dcl.md#dcl.array
-[expr.const]: expr.md#expr.const
-[iterator.concept.bidir]: iterators.md#iterator.concept.bidir
-[iterator.concept.iterator]: iterators.md#iterator.concept.iterator
-[iterator.concept.output]: iterators.md#iterator.concept.output
-[iterator.concept.random.access]: iterators.md#iterator.concept.random.access
-[iterator.concept.sizedsentinel]: iterators.md#iterator.concept.sizedsentinel
-[iterator.concept.winc]: iterators.md#iterator.concept.winc
-[iterator.requirements.general]: iterators.md#iterator.requirements.general
-[namespace.std]: library.md#namespace.std
-[range.access]: #range.access
-[range.adaptor.object]: #range.adaptor.object
-[range.adaptors]: #range.adaptors
-[range.empty.view]: #range.empty.view
-[range.factories]: #range.factories
-[range.iota.view]: #range.iota.view
-[range.prim.data]: #range.prim.data
-[range.range]: #range.range
-[range.req]: #range.req
-[range.sized]: #range.sized
-[range.subrange]: #range.subrange
-[range.summary]: #range.summary
-[range.utility]: #range.utility
-[ranges.syn]: #ranges.syn
-[string.view]: strings.md#string.view
 [views.span]: containers.md#views.span

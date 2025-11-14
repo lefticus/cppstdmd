@@ -3230,36 +3230,6 @@ class E {
 
 — *end example*]
 
-<!-- Section link definitions -->
-[class]: #class
-[class.abstract]: #class.abstract
-[class.access]: #class.access
-[class.access.base]: #class.access.base
-[class.access.nest]: #class.access.nest
-[class.access.spec]: #class.access.spec
-[class.access.virt]: #class.access.virt
-[class.bit]: #class.bit
-[class.derived]: #class.derived
-[class.friend]: #class.friend
-[class.local]: #class.local
-[class.mem]: #class.mem
-[class.member.lookup]: #class.member.lookup
-[class.mfct]: #class.mfct
-[class.mfct.non-static]: #class.mfct.non-static
-[class.mi]: #class.mi
-[class.name]: #class.name
-[class.nest]: #class.nest
-[class.nested.type]: #class.nested.type
-[class.paths]: #class.paths
-[class.protected]: #class.protected
-[class.static]: #class.static
-[class.static.data]: #class.static.data
-[class.static.mfct]: #class.static.mfct
-[class.this]: #class.this
-[class.union]: #class.union
-[class.union.anon]: #class.union.anon
-[class.virtual]: #class.virtual
-
 <!-- Link reference definitions -->
 [basic.compound]: basic.md#basic.compound
 [basic.def.odr]: basic.md#basic.def.odr
@@ -3283,7 +3253,9 @@ class E {
 [class.abstract]: #class.abstract
 [class.access]: #class.access
 [class.access.base]: #class.access.base
+[class.access.nest]: #class.access.nest
 [class.access.spec]: #class.access.spec
+[class.access.virt]: #class.access.virt
 [class.base.init]: special.md#class.base.init
 [class.bit]: #class.bit
 [class.cdtor]: special.md#class.cdtor
@@ -3301,6 +3273,8 @@ class E {
 [class.mi]: #class.mi
 [class.name]: #class.name
 [class.nest]: #class.nest
+[class.nested.type]: #class.nested.type
+[class.paths]: #class.paths
 [class.protected]: #class.protected
 [class.static]: #class.static
 [class.static.data]: #class.static.data

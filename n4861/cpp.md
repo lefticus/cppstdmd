@@ -1494,10 +1494,12 @@ LISTING( ..\listing.dir )
 
 — *end example*]
 
-<!-- Section link definitions -->
+<!-- Link reference definitions -->
+[basic.stc.dynamic.safety]: basic.md#basic.stc.dynamic.safety
 [cpp]: #cpp
 [cpp.concat]: #cpp.concat
 [cpp.cond]: #cpp.cond
+[cpp.cond.ha]: #cpp.cond.ha
 [cpp.error]: #cpp.error
 [cpp.import]: #cpp.import
 [cpp.include]: #cpp.include
@@ -1508,24 +1510,12 @@ LISTING( ..\listing.dir )
 [cpp.pragma.op]: #cpp.pragma.op
 [cpp.pre]: #cpp.pre
 [cpp.predefined]: #cpp.predefined
+[cpp.predefined.ft]: #cpp.predefined.ft
 [cpp.replace]: #cpp.replace
 [cpp.rescan]: #cpp.rescan
 [cpp.scope]: #cpp.scope
 [cpp.stringize]: #cpp.stringize
 [cpp.subst]: #cpp.subst
-
-<!-- Link reference definitions -->
-[basic.stc.dynamic.safety]: basic.md#basic.stc.dynamic.safety
-[cpp.concat]: #cpp.concat
-[cpp.cond]: #cpp.cond
-[cpp.cond.ha]: #cpp.cond.ha
-[cpp.import]: #cpp.import
-[cpp.pragma.op]: #cpp.pragma.op
-[cpp.predefined]: #cpp.predefined
-[cpp.predefined.ft]: #cpp.predefined.ft
-[cpp.replace]: #cpp.replace
-[cpp.rescan]: #cpp.rescan
-[cpp.stringize]: #cpp.stringize
 [cstdint]: support.md#cstdint
 [expr.const]: expr.md#expr.const
 [expr.new]: expr.md#expr.new

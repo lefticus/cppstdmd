@@ -402,22 +402,6 @@ The integer conversion rank is used in the definition of the integral
 promotions ([[conv.prom]]) and the usual arithmetic conversions
 (Clause  [[expr]]).
 
-<!-- Section link definitions -->
-[conv]: #conv
-[conv.array]: #conv.array
-[conv.bool]: #conv.bool
-[conv.double]: #conv.double
-[conv.fpint]: #conv.fpint
-[conv.fpprom]: #conv.fpprom
-[conv.func]: #conv.func
-[conv.integral]: #conv.integral
-[conv.lval]: #conv.lval
-[conv.mem]: #conv.mem
-[conv.prom]: #conv.prom
-[conv.ptr]: #conv.ptr
-[conv.qual]: #conv.qual
-[conv.rank]: #conv.rank
-
 <!-- Link reference definitions -->
 [basic.def.odr]: basic.md#basic.def.odr
 [basic.fundamental]: basic.md#basic.fundamental
@@ -431,7 +415,15 @@ promotions ([[conv.prom]]) and the usual arithmetic conversions
 [class.member.lookup]: class.md#class.member.lookup
 [class.mi]: class.md#class.mi
 [conv]: #conv
+[conv.array]: #conv.array
 [conv.bool]: #conv.bool
+[conv.double]: #conv.double
+[conv.fpint]: #conv.fpint
+[conv.fpprom]: #conv.fpprom
+[conv.func]: #conv.func
+[conv.integral]: #conv.integral
+[conv.lval]: #conv.lval
+[conv.mem]: #conv.mem
 [conv.prom]: #conv.prom
 [conv.ptr]: #conv.ptr
 [conv.qual]: #conv.qual

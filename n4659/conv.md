@@ -480,24 +480,6 @@ Every integer type has an *integer conversion rank* defined as follows:
 integral promotions ([[conv.prom]]) and the usual arithmetic
 conversions (Clause  [[expr]]). — *end note*]
 
-<!-- Section link definitions -->
-[conv]: #conv
-[conv.array]: #conv.array
-[conv.bool]: #conv.bool
-[conv.double]: #conv.double
-[conv.fctptr]: #conv.fctptr
-[conv.fpint]: #conv.fpint
-[conv.fpprom]: #conv.fpprom
-[conv.func]: #conv.func
-[conv.integral]: #conv.integral
-[conv.lval]: #conv.lval
-[conv.mem]: #conv.mem
-[conv.prom]: #conv.prom
-[conv.ptr]: #conv.ptr
-[conv.qual]: #conv.qual
-[conv.rank]: #conv.rank
-[conv.rval]: #conv.rval
-
 <!-- Link reference definitions -->
 [basic.compound]: basic.md#basic.compound
 [basic.def.odr]: basic.md#basic.def.odr
@@ -516,7 +498,16 @@ conversions (Clause  [[expr]]). — *end note*]
 [class.temporary]: special.md#class.temporary
 [class.union]: class.md#class.union
 [conv]: #conv
+[conv.array]: #conv.array
 [conv.bool]: #conv.bool
+[conv.double]: #conv.double
+[conv.fctptr]: #conv.fctptr
+[conv.fpint]: #conv.fpint
+[conv.fpprom]: #conv.fpprom
+[conv.func]: #conv.func
+[conv.integral]: #conv.integral
+[conv.lval]: #conv.lval
+[conv.mem]: #conv.mem
 [conv.prom]: #conv.prom
 [conv.ptr]: #conv.ptr
 [conv.qual]: #conv.qual

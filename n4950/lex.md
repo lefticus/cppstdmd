@@ -1551,30 +1551,6 @@ int main() {
 
 — *end example*]
 
-<!-- Section link definitions -->
-[lex]: #lex
-[lex.bool]: #lex.bool
-[lex.ccon]: #lex.ccon
-[lex.charset]: #lex.charset
-[lex.comment]: #lex.comment
-[lex.digraph]: #lex.digraph
-[lex.ext]: #lex.ext
-[lex.fcon]: #lex.fcon
-[lex.header]: #lex.header
-[lex.icon]: #lex.icon
-[lex.key]: #lex.key
-[lex.literal]: #lex.literal
-[lex.literal.kinds]: #lex.literal.kinds
-[lex.name]: #lex.name
-[lex.nullptr]: #lex.nullptr
-[lex.operators]: #lex.operators
-[lex.phases]: #lex.phases
-[lex.ppnumber]: #lex.ppnumber
-[lex.pptoken]: #lex.pptoken
-[lex.separate]: #lex.separate
-[lex.string]: #lex.string
-[lex.token]: #lex.token
-
 <!-- Link reference definitions -->
 [basic.extended.fp]: basic.md#basic.extended.fp
 [basic.fundamental]: basic.md#basic.fundamental
@@ -1593,6 +1569,8 @@ int main() {
 [dcl.attr.grammar]: dcl.md#dcl.attr.grammar
 [expr.prim.literal]: expr.md#expr.prim.literal
 [headers]: library.md#headers
+[lex]: #lex
+[lex.bool]: #lex.bool
 [lex.ccon]: #lex.ccon
 [lex.ccon.esc]: #lex.ccon.esc
 [lex.ccon.literal]: #lex.ccon.literal
@@ -1601,6 +1579,7 @@ int main() {
 [lex.charset.literal]: #lex.charset.literal
 [lex.comment]: #lex.comment
 [lex.digraph]: #lex.digraph
+[lex.ext]: #lex.ext
 [lex.fcon]: #lex.fcon
 [lex.fcon.type]: #lex.fcon.type
 [lex.header]: #lex.header
@@ -1609,9 +1588,16 @@ int main() {
 [lex.icon.type]: #lex.icon.type
 [lex.key]: #lex.key
 [lex.key.digraph]: #lex.key.digraph
+[lex.literal]: #lex.literal
+[lex.literal.kinds]: #lex.literal.kinds
+[lex.name]: #lex.name
 [lex.name.special]: #lex.name.special
+[lex.nullptr]: #lex.nullptr
+[lex.operators]: #lex.operators
 [lex.phases]: #lex.phases
+[lex.ppnumber]: #lex.ppnumber
 [lex.pptoken]: #lex.pptoken
+[lex.separate]: #lex.separate
 [lex.string]: #lex.string
 [lex.string.concat]: #lex.string.concat
 [lex.string.literal]: #lex.string.literal

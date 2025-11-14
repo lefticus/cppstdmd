@@ -46,9 +46,6 @@ template-name:
 Note that a *typedef-name* naming a class is also a *class-name* (
 [[class.name]]).
 
-<!-- Section link definitions -->
-[gram.key]: #gram.key
-
 <!-- Link reference definitions -->
 [class]: class.md#class
 [class.member.lookup]: class.md#class.member.lookup
@@ -56,6 +53,7 @@ Note that a *typedef-name* naming a class is also a *class-name* (
 [dcl.enum]: dcl.md#dcl.enum
 [dcl.spec]: dcl.md#dcl.spec
 [dcl.typedef]: dcl.md#dcl.typedef
+[gram.key]: #gram.key
 [namespace.def]: dcl.md#namespace.def
 [stmt.ambig]: stmt.md#stmt.ambig
 [temp]: temp.md#temp

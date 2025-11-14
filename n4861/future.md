@@ -1953,7 +1953,21 @@ It is unspecified whether the macro can be used in other initialization
 contexts. For a complete static-duration object, that initialization
 shall be static.
 
-<!-- Section link definitions -->
+<!-- Link reference definitions -->
+[atomics.order]: atomics.md#atomics.order
+[atomics.types.operations]: atomics.md#atomics.types.operations
+[basic.link]: basic.md#basic.link
+[basic.scope.namespace]: basic.md#basic.scope.namespace
+[class.copy.assign]: class.md#class.copy.assign
+[class.copy.ctor]: class.md#class.copy.ctor
+[class.dtor]: class.md#class.dtor
+[cpp17.equalitycomparable]: #cpp17.equalitycomparable
+[cpp17.lessthancomparable]: #cpp17.lessthancomparable
+[cstddef.syn]: support.md#cstddef.syn
+[dcl.attr.deprecated]: dcl.md#dcl.attr.deprecated
+[dcl.fct]: dcl.md#dcl.fct
+[dcl.fct.def.delete]: dcl.md#dcl.fct.def.delete
+[dcl.struct.bind]: dcl.md#dcl.struct.bind
 [depr.arith.conv.enum]: #depr.arith.conv.enum
 [depr.array.comp]: #depr.array.comp
 [depr.atomics]: #depr.atomics
@@ -2001,36 +2015,18 @@ shall be static.
 [depr.strstream.syn]: #depr.strstream.syn
 [depr.strstreambuf]: #depr.strstreambuf
 [depr.strstreambuf.cons]: #depr.strstreambuf.cons
+[depr.strstreambuf.cons.alloc]: #depr.strstreambuf.cons.alloc
+[depr.strstreambuf.cons.ptr]: #depr.strstreambuf.cons.ptr
+[depr.strstreambuf.cons.sz]: #depr.strstreambuf.cons.sz
 [depr.strstreambuf.members]: #depr.strstreambuf.members
+[depr.strstreambuf.seekoff.newoff]: #depr.strstreambuf.seekoff.newoff
+[depr.strstreambuf.seekoff.pos]: #depr.strstreambuf.seekoff.pos
 [depr.strstreambuf.virtuals]: #depr.strstreambuf.virtuals
 [depr.tgmath.h.syn]: #depr.tgmath.h.syn
 [depr.tuple]: #depr.tuple
 [depr.util.smartptr.shared.atomic]: #depr.util.smartptr.shared.atomic
 [depr.variant]: #depr.variant
 [depr.volatile.type]: #depr.volatile.type
-
-<!-- Link reference definitions -->
-[atomics.order]: atomics.md#atomics.order
-[atomics.types.operations]: atomics.md#atomics.types.operations
-[basic.link]: basic.md#basic.link
-[basic.scope.namespace]: basic.md#basic.scope.namespace
-[class.copy.assign]: class.md#class.copy.assign
-[class.copy.ctor]: class.md#class.copy.ctor
-[class.dtor]: class.md#class.dtor
-[cpp17.equalitycomparable]: #cpp17.equalitycomparable
-[cpp17.lessthancomparable]: #cpp17.lessthancomparable
-[cstddef.syn]: support.md#cstddef.syn
-[dcl.attr.deprecated]: dcl.md#dcl.attr.deprecated
-[dcl.fct]: dcl.md#dcl.fct
-[dcl.fct.def.delete]: dcl.md#dcl.fct.def.delete
-[dcl.struct.bind]: dcl.md#dcl.struct.bind
-[depr.c.headers]: #depr.c.headers
-[depr.strstreambuf.cons.alloc]: #depr.strstreambuf.cons.alloc
-[depr.strstreambuf.cons.ptr]: #depr.strstreambuf.cons.ptr
-[depr.strstreambuf.cons.sz]: #depr.strstreambuf.cons.sz
-[depr.strstreambuf.seekoff.newoff]: #depr.strstreambuf.seekoff.newoff
-[depr.strstreambuf.seekoff.pos]: #depr.strstreambuf.seekoff.pos
-[depr.strstreambuf.virtuals]: #depr.strstreambuf.virtuals
 [expr.arith.conv]: expr.md#expr.arith.conv
 [expr.ass]: expr.md#expr.ass
 [expr.comma]: expr.md#expr.comma

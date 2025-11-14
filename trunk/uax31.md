@@ -97,7 +97,8 @@ UAX \#31 does not apply.
 There are no hashtags in C++, so this requirement from UAX \#31 does not
 apply.
 
-<!-- Section link definitions -->
+<!-- Link reference definitions -->
+[lex.name]: lex.md#lex.name
 [uaxid.def]: #uaxid.def
 [uaxid.def.general]: #uaxid.def.general
 [uaxid.def.stable]: #uaxid.def.stable
@@ -109,6 +110,3 @@ apply.
 [uaxid.hashtag]: #uaxid.hashtag
 [uaxid.immutable]: #uaxid.immutable
 [uaxid.pattern]: #uaxid.pattern
-
-<!-- Link reference definitions -->
-[lex.name]: lex.md#lex.name

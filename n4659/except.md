@@ -745,16 +745,6 @@ until the rethrown exception is caught. The function
 `std::uncaught_exceptions()` ([[uncaught.exceptions]]) returns the
 number of uncaught exceptions in the current thread.
 
-<!-- Section link definitions -->
-[except]: #except
-[except.ctor]: #except.ctor
-[except.handle]: #except.handle
-[except.spec]: #except.spec
-[except.special]: #except.special
-[except.terminate]: #except.terminate
-[except.throw]: #except.throw
-[except.uncaught]: #except.uncaught
-
 <!-- Link reference definitions -->
 [algorithms.parallel.defns]: algorithms.md#algorithms.parallel.defns
 [algorithms.parallel.exceptions]: algorithms.md#algorithms.parallel.exceptions
@@ -773,10 +763,12 @@ number of uncaught exceptions in the current thread.
 [dcl.fct]: dcl.md#dcl.fct
 [dcl.init]: dcl.md#dcl.init
 [depr.except.spec]: future.md#depr.except.spec
+[except]: #except
 [except.ctor]: #except.ctor
 [except.handle]: #except.handle
 [except.nested]: language.md#except.nested
 [except.spec]: #except.spec
+[except.special]: #except.special
 [except.terminate]: #except.terminate
 [except.throw]: #except.throw
 [except.uncaught]: #except.uncaught

@@ -1662,18 +1662,18 @@ new-line:
     the new-line character
 ```
 
-<!-- Section link definitions -->
+<!-- Link reference definitions -->
 [gram.basic]: #gram.basic
-[gram.class]: #gram.class
-[gram.cpp]: #gram.cpp
-[gram.dcl]: #gram.dcl
+[gram.class]: class.md#gram.class
+[gram.cpp]: cpp.md#gram.cpp
+[gram.dcl]: dcl.md#gram.dcl
 [gram.decl]: #gram.decl
-[gram.derived]: #gram.derived
+[gram.derived]: class.md#gram.derived
 [gram.except]: #gram.except
-[gram.expr]: #gram.expr
+[gram.expr]: expr.md#gram.expr
 [gram.key]: #gram.key
 [gram.lex]: #gram.lex
 [gram.over]: #gram.over
 [gram.special]: #gram.special
 [gram.stmt]: #gram.stmt
-[gram.temp]: #gram.temp
+[gram.temp]: temp.md#gram.temp

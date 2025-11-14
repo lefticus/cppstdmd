@@ -5340,9 +5340,14 @@ Moreover, there shall be additional overloads sufficient to ensure:
 
 ISO C 7.5, 7.10.2, 7.10.6.
 
-<!-- Section link definitions -->
+<!-- Link reference definitions -->
 [accumulate]: #accumulate
 [adjacent.difference]: #adjacent.difference
+[algorithms]: algorithms.md#algorithms
+[bad.alloc]: language.md#bad.alloc
+[basic.fundamental]: basic.md#basic.fundamental
+[basic.stc.thread]: basic.md#basic.stc.thread
+[basic.types]: basic.md#basic.types
 [c.math]: #c.math
 [ccmplx]: #ccmplx
 [cfenv]: #cfenv
@@ -5363,6 +5368,11 @@ ISO C 7.5, 7.10.2, 7.10.6.
 [complex.transcendentals]: #complex.transcendentals
 [complex.value.ops]: #complex.value.ops
 [cons.slice]: #cons.slice
+[copyassignable]: #copyassignable
+[copyconstructible]: #copyconstructible
+[dcl.init]: dcl.md#dcl.init
+[equalitycomparable]: #equalitycomparable
+[function.objects]: utilities.md#function.objects
 [gslice.access]: #gslice.access
 [gslice.array.assign]: #gslice.array.assign
 [gslice.array.comp.assign]: #gslice.array.comp.assign
@@ -5372,9 +5382,14 @@ ISO C 7.5, 7.10.2, 7.10.6.
 [indirect.array.comp.assign]: #indirect.array.comp.assign
 [indirect.array.fill]: #indirect.array.fill
 [inner.product]: #inner.product
+[input.output]: input.md#input.output
+[iostate.flags]: input.md#iostate.flags
+[istream.formatted]: input.md#istream.formatted
+[limits]: language.md#limits
 [mask.array.assign]: #mask.array.assign
 [mask.array.comp.assign]: #mask.array.comp.assign
 [mask.array.fill]: #mask.array.fill
+[moveassignable]: #moveassignable
 [numarray]: #numarray
 [numeric.iota]: #numeric.iota
 [numeric.ops]: #numeric.ops
@@ -5433,10 +5448,23 @@ ISO C 7.5, 7.10.2, 7.10.6.
 [rand.util]: #rand.util
 [rand.util.canonical]: #rand.util.canonical
 [rand.util.seedseq]: #rand.util.seedseq
+[random.access.iterators]: iterators.md#random.access.iterators
+[res.on.data.races]: library.md#res.on.data.races
 [slice.access]: #slice.access
 [slice.arr.assign]: #slice.arr.assign
 [slice.arr.comp.assign]: #slice.arr.comp.assign
 [slice.arr.fill]: #slice.arr.fill
+[strings]: strings.md#strings
+[tab:RandomDistribution]: #tab:RandomDistribution
+[tab:RandomEngine]: #tab:RandomEngine
+[tab:SeedSequence]: #tab:SeedSequence
+[tab:UniformRandomNumberGenerator]: #tab:UniformRandomNumberGenerator
+[tab:iterator.input.requirements]: #tab:iterator.input.requirements
+[tab:iterator.output.requirements]: #tab:iterator.output.requirements
+[tab:iterator.random.access.requirements]: #tab:iterator.random.access.requirements
+[tab:numerics.hdr.cmath]: #tab:numerics.hdr.cmath
+[tab:numerics.hdr.cstdlib]: #tab:numerics.hdr.cstdlib
+[tab:numerics.lib.summary]: #tab:numerics.lib.summary
 [template.gslice.array]: #template.gslice.array
 [template.gslice.array.overview]: #template.gslice.array.overview
 [template.indirect.array]: #template.indirect.array
@@ -5447,6 +5475,7 @@ ISO C 7.5, 7.10.2, 7.10.6.
 [template.slice.array.overview]: #template.slice.array.overview
 [template.valarray]: #template.valarray
 [template.valarray.overview]: #template.valarray.overview
+[thread.thread.class]: thread.md#thread.thread.class
 [valarray.access]: #valarray.access
 [valarray.assign]: #valarray.assign
 [valarray.binary]: #valarray.binary
@@ -5461,56 +5490,6 @@ ISO C 7.5, 7.10.2, 7.10.6.
 [valarray.syn]: #valarray.syn
 [valarray.transcend]: #valarray.transcend
 [valarray.unary]: #valarray.unary
-
-<!-- Link reference definitions -->
-[algorithms]: algorithms.md#algorithms
-[bad.alloc]: language.md#bad.alloc
-[basic.fundamental]: basic.md#basic.fundamental
-[basic.stc.thread]: basic.md#basic.stc.thread
-[basic.types]: basic.md#basic.types
-[c.math]: #c.math
-[cfenv]: #cfenv
-[complex.numbers]: #complex.numbers
-[copyassignable]: #copyassignable
-[copyconstructible]: #copyconstructible
-[dcl.init]: dcl.md#dcl.init
-[equalitycomparable]: #equalitycomparable
-[function.objects]: utilities.md#function.objects
-[input.output]: input.md#input.output
-[iostate.flags]: input.md#iostate.flags
-[istream.formatted]: input.md#istream.formatted
-[limits]: language.md#limits
-[moveassignable]: #moveassignable
-[numarray]: #numarray
-[numeric.ops]: #numeric.ops
-[numeric.requirements]: #numeric.requirements
-[rand]: #rand
-[rand.adapt]: #rand.adapt
-[rand.dist]: #rand.dist
-[rand.eng]: #rand.eng
-[rand.eng.lcong]: #rand.eng.lcong
-[rand.req.adapt]: #rand.req.adapt
-[rand.req.dist]: #rand.req.dist
-[rand.req.eng]: #rand.req.eng
-[rand.req.seedseq]: #rand.req.seedseq
-[rand.req.urng]: #rand.req.urng
-[rand.util.canonical]: #rand.util.canonical
-[random.access.iterators]: iterators.md#random.access.iterators
-[res.on.data.races]: library.md#res.on.data.races
-[strings]: strings.md#strings
-[tab:RandomDistribution]: #tab:RandomDistribution
-[tab:RandomEngine]: #tab:RandomEngine
-[tab:SeedSequence]: #tab:SeedSequence
-[tab:UniformRandomNumberGenerator]: #tab:UniformRandomNumberGenerator
-[tab:iterator.input.requirements]: #tab:iterator.input.requirements
-[tab:iterator.output.requirements]: #tab:iterator.output.requirements
-[tab:iterator.random.access.requirements]: #tab:iterator.random.access.requirements
-[tab:numerics.hdr.cmath]: #tab:numerics.hdr.cmath
-[tab:numerics.hdr.cstdlib]: #tab:numerics.hdr.cstdlib
-[tab:numerics.lib.summary]: #tab:numerics.lib.summary
-[thread.thread.class]: thread.md#thread.thread.class
-[valarray.members]: #valarray.members
-[valarray.range]: #valarray.range
 [vector]: containers.md#vector
 
 [^1]: In other words, value types. These include arithmetic types,

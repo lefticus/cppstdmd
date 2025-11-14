@@ -3036,7 +3036,15 @@ as follows:
   `traits_inst.isctype(c, traits_inst.lookup_classname(first, last, flags() & icase))`
   is `true`.
 
-<!-- Section link definitions -->
+<!-- Link reference definitions -->
+[algorithms]: algorithms.md#algorithms
+[bidirectional.iterators]: iterators.md#bidirectional.iterators
+[bitmask.types]: library.md#bitmask.types
+[container.requirements.general]: containers.md#container.requirements.general
+[enumerated.types]: library.md#enumerated.types
+[forward.iterators]: iterators.md#forward.iterators
+[input.iterators]: iterators.md#input.iterators
+[output.iterators]: iterators.md#output.iterators
 [re]: #re
 [re.alg]: #re.alg
 [re.alg.match]: #re.alg.match
@@ -3085,30 +3093,6 @@ as follows:
 [re.tokiter.comp]: #re.tokiter.comp
 [re.tokiter.deref]: #re.tokiter.deref
 [re.tokiter.incr]: #re.tokiter.incr
-[re.traits]: #re.traits
-
-<!-- Link reference definitions -->
-[algorithms]: algorithms.md#algorithms
-[bidirectional.iterators]: iterators.md#bidirectional.iterators
-[bitmask.types]: library.md#bitmask.types
-[container.requirements.general]: containers.md#container.requirements.general
-[enumerated.types]: library.md#enumerated.types
-[forward.iterators]: iterators.md#forward.iterators
-[input.iterators]: iterators.md#input.iterators
-[output.iterators]: iterators.md#output.iterators
-[re.alg]: #re.alg
-[re.alg.match]: #re.alg.match
-[re.alg.search]: #re.alg.search
-[re.badexp]: #re.badexp
-[re.const]: #re.const
-[re.def]: #re.def
-[re.grammar]: #re.grammar
-[re.iter]: #re.iter
-[re.matchflag]: #re.matchflag
-[re.regex]: #re.regex
-[re.req]: #re.req
-[re.results]: #re.results
-[re.submatch]: #re.submatch
 [re.traits]: #re.traits
 [sequence.reqmts]: containers.md#sequence.reqmts
 [strings.general]: strings.md#strings.general

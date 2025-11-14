@@ -755,17 +755,6 @@ exception is rethrown ([[except.throw]]), `std::uncaught_exception()`
 returns `true` from the point of rethrow until the rethrown exception is
 caught again.
 
-<!-- Section link definitions -->
-[except]: #except
-[except.ctor]: #except.ctor
-[except.handle]: #except.handle
-[except.spec]: #except.spec
-[except.special]: #except.special
-[except.terminate]: #except.terminate
-[except.throw]: #except.throw
-[except.uncaught]: #except.uncaught
-[except.unexpected]: #except.unexpected
-
 <!-- Link reference definitions -->
 [bad.exception]: language.md#bad.exception
 [basic.start.init]: basic.md#basic.start.init
@@ -781,12 +770,15 @@ caught again.
 [conv.ptr]: conv.md#conv.ptr
 [dcl.init]: dcl.md#dcl.init
 [depr]: #depr
+[except]: #except
 [except.ctor]: #except.ctor
 [except.handle]: #except.handle
 [except.nested]: language.md#except.nested
 [except.spec]: #except.spec
+[except.special]: #except.special
 [except.terminate]: #except.terminate
 [except.throw]: #except.throw
+[except.uncaught]: #except.uncaught
 [except.unexpected]: #except.unexpected
 [exception.terminate]: language.md#exception.terminate
 [exception.unexpected]: future.md#exception.unexpected

@@ -188,27 +188,17 @@ function RawBlock(elem)
   return elem
 end
 
--- Generate link definitions for all section labels
+-- Export section_labels to metadata for use by cpp-macros.lua
+-- This prevents duplicate link definitions (issue #2)
 function Pandoc(doc)
-  -- Convert section_labels table to sorted list
-  local labels = {}
+  -- Convert section_labels table to a list and store in metadata
+  local labels_list = {}
   for label, _ in pairs(section_labels) do
-    table.insert(labels, label)
+    table.insert(labels_list, label)
   end
-  table.sort(labels)
 
-  -- Only add definitions if we have sections
-  if #labels > 0 then
-    -- Add a separator comment
-    local separator = pandoc.RawBlock('markdown', '\n<!-- Section link definitions -->')
-    table.insert(doc.blocks, separator)
-
-    -- Add each link definition
-    for _, label in ipairs(labels) do
-      local link_def = pandoc.RawBlock('markdown', '[' .. label .. ']: #' .. label)
-      table.insert(doc.blocks, link_def)
-    end
-  end
+  -- Store in document metadata so cpp-macros.lua can access it
+  doc.meta['section_labels'] = labels_list
 
   return doc
 end

@@ -1068,7 +1068,7 @@ inhibited in the same way as with `atomic_thread_fence`, but the
 hardware fence instructions that `atomic_thread_fence` would have
 inserted are not emitted.
 
-<!-- Section link definitions -->
+<!-- Link reference definitions -->
 [atomics]: #atomics
 [atomics.fences]: #atomics.fences
 [atomics.flag]: #atomics.flag
@@ -1083,18 +1083,6 @@ inserted are not emitted.
 [atomics.types.operations.pointer]: #atomics.types.operations.pointer
 [atomics.types.operations.req]: #atomics.types.operations.req
 [atomics.types.operations.templ]: #atomics.types.operations.templ
-
-<!-- Link reference definitions -->
-[atomics.fences]: #atomics.fences
-[atomics.flag]: #atomics.flag
-[atomics.lockfree]: #atomics.lockfree
-[atomics.order]: #atomics.order
-[atomics.syn]: #atomics.syn
-[atomics.types.generic]: #atomics.types.generic
-[atomics.types.operations]: #atomics.types.operations
-[atomics.types.operations.arith]: #atomics.types.operations.arith
-[atomics.types.operations.general]: #atomics.types.operations.general
-[atomics.types.operations.pointer]: #atomics.types.operations.pointer
 [basic.types]: basic.md#basic.types
 [intro.multithread]: intro.md#intro.multithread
 [tab:atomics.integral]: #tab:atomics.integral

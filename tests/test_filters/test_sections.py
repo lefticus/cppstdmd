@@ -12,7 +12,11 @@ FILTER_PATH = Path("src/cpp_std_converter/filters/cpp-sections.lua")
 
 
 def run_pandoc_with_filter(latex_content):
-    """Helper to run Pandoc with sections filter"""
+    """Helper to run Pandoc with sections filter
+
+    Note: cpp-macros.lua is also included because after fixing issue #2,
+    link definitions are generated there (consuming section_labels from metadata)
+    """
     # Inject simplified_macros.tex preprocessing
     latex_with_macros = inject_macros(latex_content)
 
@@ -21,6 +25,7 @@ def run_pandoc_with_filter(latex_content):
         "--from=latex+raw_tex",
         "--to=gfm",
         f"--lua-filter={FILTER_PATH}",
+        "--lua-filter=src/cpp_std_converter/filters/cpp-macros.lua",
     ]
     result = subprocess.run(
         cmd,
@@ -138,8 +143,8 @@ def test_section_link_definitions_generated():
     assert "[intro.scope]: #intro.scope" in output
     assert "[intro.refs]: #intro.refs" in output
 
-    # Check for link definition comment
-    assert "<!-- Section link definitions -->" in output
+    # Check for link definition comment (now unified in cpp-macros.lua after fixing issue #2)
+    assert "<!-- Link reference definitions -->" in output
 
 
 def test_link_definitions_at_end_of_document():

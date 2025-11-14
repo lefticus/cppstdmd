@@ -4134,8 +4134,17 @@ template <class R, class Alloc>
 
 *Requires:* `Alloc` shall be an Allocator ([[allocator.requirements]]).
 
-<!-- Section link definitions -->
+<!-- Link reference definitions -->
+[alg.sorting]: algorithms.md#alg.sorting
+[allocator.requirements]: library.md#allocator.requirements
+[atomics]: atomics.md#atomics
+[basic.life]: basic.md#basic.life
+[basic.stc.thread]: basic.md#basic.stc.thread
+[bitmask.types]: library.md#bitmask.types
+[class]: class.md#class
 [condition_variable.syn]: #condition_variable.syn
+[except.terminate]: except.md#except.terminate
+[func.require]: utilities.md#func.require
 [future.syn]: #future.syn
 [futures]: #futures
 [futures.async]: #futures.async
@@ -4149,8 +4158,14 @@ template <class R, class Alloc>
 [futures.task.members]: #futures.task.members
 [futures.task.nonmembers]: #futures.task.nonmembers
 [futures.unique_future]: #futures.unique_future
+[intro.multithread]: intro.md#intro.multithread
 [mutex.syn]: #mutex.syn
+[res.on.data.races]: library.md#res.on.data.races
+[res.on.exception.handling]: library.md#res.on.exception.handling
 [shared_mutex.syn]: #shared_mutex.syn
+[syserr]: diagnostics.md#syserr
+[syserr.syserr]: diagnostics.md#syserr.syserr
+[tab:thread.lib.summary]: #tab:thread.lib.summary
 [thread]: #thread
 [thread.condition]: #thread.condition
 [thread.condition.condvar]: #thread.condition.condvar
@@ -4208,51 +4223,6 @@ template <class R, class Alloc>
 [thread.threads]: #thread.threads
 [thread.timedmutex.class]: #thread.timedmutex.class
 [thread.timedmutex.recursive]: #thread.timedmutex.recursive
-[thread.timedmutex.requirements]: #thread.timedmutex.requirements
-
-<!-- Link reference definitions -->
-[alg.sorting]: algorithms.md#alg.sorting
-[allocator.requirements]: library.md#allocator.requirements
-[atomics]: atomics.md#atomics
-[basic.life]: basic.md#basic.life
-[basic.stc.thread]: basic.md#basic.stc.thread
-[bitmask.types]: library.md#bitmask.types
-[class]: class.md#class
-[except.terminate]: except.md#except.terminate
-[func.require]: utilities.md#func.require
-[futures]: #futures
-[futures.async]: #futures.async
-[futures.shared_future]: #futures.shared_future
-[futures.state]: #futures.state
-[intro.multithread]: intro.md#intro.multithread
-[res.on.data.races]: library.md#res.on.data.races
-[res.on.exception.handling]: library.md#res.on.exception.handling
-[syserr]: diagnostics.md#syserr
-[syserr.syserr]: diagnostics.md#syserr.syserr
-[tab:thread.lib.summary]: #tab:thread.lib.summary
-[thread.condition]: #thread.condition
-[thread.condition.condvarany]: #thread.condition.condvarany
-[thread.lock.algorithm]: #thread.lock.algorithm
-[thread.lock.guard]: #thread.lock.guard
-[thread.lock.scoped]: #thread.lock.scoped
-[thread.lock.shared]: #thread.lock.shared
-[thread.lock.unique]: #thread.lock.unique
-[thread.mutex]: #thread.mutex
-[thread.mutex.requirements]: #thread.mutex.requirements
-[thread.mutex.requirements.mutex]: #thread.mutex.requirements.mutex
-[thread.req]: #thread.req
-[thread.req.exception]: #thread.req.exception
-[thread.req.lockable]: #thread.req.lockable
-[thread.req.lockable.basic]: #thread.req.lockable.basic
-[thread.req.lockable.req]: #thread.req.lockable.req
-[thread.req.lockable.timed]: #thread.req.lockable.timed
-[thread.req.timing]: #thread.req.timing
-[thread.sharedmutex.requirements]: #thread.sharedmutex.requirements
-[thread.sharedtimedmutex.requirements]: #thread.sharedtimedmutex.requirements
-[thread.thread.class]: #thread.thread.class
-[thread.thread.constr]: #thread.thread.constr
-[thread.thread.member]: #thread.thread.member
-[thread.threads]: #thread.threads
 [thread.timedmutex.requirements]: #thread.timedmutex.requirements
 [time]: utilities.md#time
 [time.clock]: utilities.md#time.clock

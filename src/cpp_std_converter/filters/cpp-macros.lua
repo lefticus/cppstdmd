@@ -1130,7 +1130,19 @@ function Meta(meta)
 end
 
 function Pandoc(doc)
-  -- Collect all references and sort them
+  -- Merge section_labels from cpp-sections.lua with our references
+  -- This ensures all section labels get link definitions, preventing duplicates (issue #2)
+  if doc.meta['section_labels'] then
+    for _, label in ipairs(doc.meta['section_labels']) do
+      -- Convert MetaInlines to string if needed
+      if type(label) == 'table' and label.t == 'MetaInlines' then
+        label = pandoc.utils.stringify(label)
+      end
+      references[label] = true
+    end
+  end
+
+  -- Collect all references (both from wikilinks and section labels) and sort them
   local refs = {}
   for ref, _ in pairs(references) do
     table.insert(refs, ref)
