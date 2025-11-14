@@ -177,7 +177,7 @@ convert_standard_version() {
 
     # Launch separate build in background
     info "Building separate markdown files with cross-file linking..."
-    cpp-std-convert --build-separate \
+    ./convert.py --build-separate \
         --draft-repo "$DRAFT_DIR" \
         --git-ref "$git_ref" \
         --toc-depth 3 \
@@ -186,7 +186,7 @@ convert_standard_version() {
 
     # Launch full build in background
     info "Building full standard file..."
-    cpp-std-convert --build-full \
+    ./convert.py --build-full \
         --draft-repo "$DRAFT_DIR" \
         --git-ref "$git_ref" \
         --toc-depth 3 \

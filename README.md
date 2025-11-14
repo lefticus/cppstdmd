@@ -70,31 +70,22 @@ pip install -e .
 
 ## Quick Start
 
+All tools run directly from the repository root:
+
 ```bash
-# Convert single file to stdout
-cpp-std-convert intro.tex
+# Convert LaTeX to Markdown
+./convert.py intro.tex -o intro.md
+./convert.py --build-separate -o n4950/ --git-ref n4950
+./convert.py --build-full -o full.md --git-ref n4950
+./convert.py --list-tags
 
-# Convert single file to output file
-cpp-std-convert intro.tex -o intro.md
+# Generate diffs between versions
+./generate_diffs.py n3337 n4950
+./generate_diffs.py --list
 
-# Convert all .tex files in directory
-cpp-std-convert /tmp/cplusplus-draft/source -o ./output
-
-# Build full standard from std.tex (all chapters concatenated)
-cpp-std-convert --build-full -o full_standard.md --git-ref n4950
-
-# Build separate markdown files for each chapter with cross-file linking
-# Uses stable names: expressions.tex → expr.md, statements.tex → stmt.md, etc.
-cpp-std-convert --build-separate -o output_dir/ --git-ref n4950
-
-# Convert specific C++ standard version (C++23)
-cpp-std-convert intro.tex --git-ref n4950 -o intro_cpp23.md
-
-# List available version tags
-cpp-std-convert --list-tags
-
-# Convert with verbose output
-cpp-std-convert intro.tex -o intro.md -v
+# Generate HTML site from diffs
+./generate_html_site.py --output site/
+./generate_html_site.py --test
 ```
 
 ## Development Status

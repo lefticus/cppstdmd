@@ -78,37 +78,28 @@ git clone https://github.com/cplusplus/draft.git cplusplus-draft
 
 ## CLI Usage
 
-**Note:** After running `./setup-and-build.sh`, the `cpp-std-convert` command will be available in your venv.
+All tools run directly from the repository root without installation. The `./setup-and-build.sh` script
+sets up dependencies and runs the full conversion pipeline automatically.
 
-The primary command is `cpp-std-convert` (entry point: `src/cpp_std_converter/converter.py:main`):
+**Main tools:**
+- `convert.py` - Convert C++ draft LaTeX to Markdown (entry point: `src/cpp_std_converter/converter.py:main`)
+- `generate_diffs.py` - Generate diffs between C++ standard versions
+- `generate_html_site.py` - Generate HTML site from diffs
 
 ```bash
-# Convert single file to stdout
-cpp-std-convert intro.tex
+# Convert LaTeX to Markdown
+./convert.py intro.tex -o intro.md
+./convert.py --build-separate -o n4950/ --git-ref n4950
+./convert.py --build-full -o full.md --git-ref n4950
+./convert.py --list-tags
 
-# Convert single file to output file
-cpp-std-convert intro.tex -o intro.md
+# Generate diffs between versions
+./generate_diffs.py n3337 n4950
+./generate_diffs.py --list
 
-# Convert directory of .tex files
-cpp-std-convert cplusplus-draft/source -o ./output
-
-# Build full standard (all chapters concatenated)
-cpp-std-convert --build-full --draft-repo cplusplus-draft -o full_standard.md --git-ref n4950
-
-# Build separate markdown files with cross-file linking
-cpp-std-convert --build-separate --draft-repo cplusplus-draft -o output_dir/ --git-ref n4950
-
-# Use custom draft repository location
-cpp-std-convert --build-full --draft-repo /path/to/draft -o output.md --git-ref n4950
-
-# Convert specific C++ standard version
-cpp-std-convert intro.tex --git-ref n4950 -o intro_cpp23.md
-
-# List available version tags
-cpp-std-convert --list-tags
-
-# Verbose output for debugging
-cpp-std-convert intro.tex -o intro.md -v
+# Generate HTML site from diffs
+./generate_html_site.py --output site/
+./generate_html_site.py --test
 ```
 
 ## Architecture
