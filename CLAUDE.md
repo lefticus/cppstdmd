@@ -136,6 +136,19 @@ Filters are applied in a specific order (defined in `converter.py:44-57`):
 
 **Order matters** - do not reorder filters without understanding dependencies.
 
+### Problem-Solving Approach: Check simplified_macros.tex First
+
+**IMPORTANT:** When fixing LaTeX parsing issues, ALWAYS check if `src/cpp_std_converter/filters/simplified_macros.tex` can solve it first.
+
+**Use simplified_macros.tex for:**
+- LaTeX typesetting commands with no semantic meaning (`\@`, `\-`, `\linebreak`)
+- Simple string replacements (`\Cpp` → `C++`)
+- Macros that should be removed entirely
+
+**Advantages:** One-line fix, happens before Pandoc parsing, cleaner than Lua filters or Python preprocessing.
+
+**Recent example (Issue #77):** Fixed malformed table rows with `\renewcommand{\@}{}` instead of complex Python preprocessing.
+
 ### Stable Names
 
 The tool automatically extracts "stable names" from `\rSec0` tags to generate consistent file names:
