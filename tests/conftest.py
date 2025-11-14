@@ -1,23 +1,27 @@
 """Pytest configuration and shared fixtures"""
-import pytest
+
 from pathlib import Path
-import subprocess
+
+import pytest
 
 # Add project root to path
 PROJECT_ROOT = Path(__file__).parent.parent
+
 
 @pytest.fixture
 def filter_dir():
     """Path to filters directory"""
     return PROJECT_ROOT / "src" / "cpp_std_converter" / "filters"
 
+
 @pytest.fixture
 def simplified_macros():
     """Load simplified macro definitions for Pandoc preprocessing"""
     macros_file = PROJECT_ROOT / "src" / "cpp_std_converter" / "filters" / "simplified_macros.tex"
     if macros_file.exists():
-        return macros_file.read_text(encoding='utf-8')
+        return macros_file.read_text(encoding="utf-8")
     return ""
+
 
 def inject_macros(latex_content, macros=None):
     """Inject simplified macro definitions into LaTeX content
@@ -26,15 +30,18 @@ def inject_macros(latex_content, macros=None):
     run with the same macro expansion behavior as production.
     """
     if macros is None:
-        macros_file = PROJECT_ROOT / "src" / "cpp_std_converter" / "filters" / "simplified_macros.tex"
+        macros_file = (
+            PROJECT_ROOT / "src" / "cpp_std_converter" / "filters" / "simplified_macros.tex"
+        )
         if macros_file.exists():
-            macros = macros_file.read_text(encoding='utf-8')
+            macros = macros_file.read_text(encoding="utf-8")
         else:
             macros = ""
 
     if macros:
         return macros + "\n\n" + latex_content
     return latex_content
+
 
 @pytest.fixture
 def cpp_draft_source():
@@ -50,6 +57,7 @@ def cpp_draft_source():
         return tmp_draft
 
     return None
+
 
 def pytest_configure(config):
     """Configure pytest"""

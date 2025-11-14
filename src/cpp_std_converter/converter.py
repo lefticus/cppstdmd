@@ -6,18 +6,18 @@ Converts C++ draft standard LaTeX sources to GitHub Flavored Markdown
 using Pandoc with custom Lua filters.
 """
 
+import re
 import subprocess
 import sys
 import tempfile
 from pathlib import Path
-from typing import Optional, List, Dict
-import click
-import re
 
-from .repo_manager import DraftRepoManager, RepoManagerError
-from .standard_builder import StandardBuilder
+import click
+
 from .label_indexer import LabelIndexer
+from .repo_manager import DraftRepoManager, RepoManagerError
 from .stable_name import extract_stable_name_from_tex
+from .standard_builder import StandardBuilder
 
 
 def unescape_wikilinks(markdown: str) -> str:
@@ -38,25 +38,26 @@ def unescape_wikilinks(markdown: str) -> str:
     """
     # Unescape wikilink patterns: \[\[ref\]\] → [[ref]]
     # This handles references that were escaped when inside bold/emphasis
-    markdown = re.sub(r'\\\[\\\[([^\]]+)\\\]\\\]', r'[[\1]]', markdown)
+    markdown = re.sub(r"\\\[\\\[([^\]]+)\\\]\\\]", r"[[\1]]", markdown)
 
     # Unescape opening brackets at start of notes/examples: \[*Note* → [*Note*
     # This handles the pattern where Pandoc escapes [ at line start
-    markdown = re.sub(r'^\\\[\*', r'[*', markdown, flags=re.MULTILINE)
-    markdown = re.sub(r'^\\\[\*\*', r'[**', markdown, flags=re.MULTILINE)
+    markdown = re.sub(r"^\\\[\*", r"[*", markdown, flags=re.MULTILINE)
+    markdown = re.sub(r"^\\\[\*\*", r"[**", markdown, flags=re.MULTILINE)
 
     return markdown
 
 
 class ConverterError(Exception):
     """Base exception for converter errors"""
+
     pass
 
 
 class Converter:
     """Main converter class that wraps Pandoc with custom filters"""
 
-    def __init__(self, filters_dir: Optional[Path] = None):
+    def __init__(self, filters_dir: Path | None = None):
         """
         Initialize converter
 
@@ -84,7 +85,8 @@ class Converter:
             self.filters_dir / "cpp-math.lua",
             self.filters_dir / "cpp-grammar.lua",
             self.filters_dir / "cpp-tables.lua",
-            self.filters_dir / "cpp-notes-examples.lua",  # Second pass: catch notes from cpp-macros.lua's pandoc.read()
+            self.filters_dir
+            / "cpp-notes-examples.lua",  # Second pass: catch notes from cpp-macros.lua's pandoc.read()
             self.filters_dir / "strip-metadata.lua",  # Must be LAST
         ]
 
@@ -95,11 +97,11 @@ class Converter:
     def convert_file(
         self,
         input_file: Path,
-        output_file: Optional[Path] = None,
+        output_file: Path | None = None,
         standalone: bool = True,
         verbose: bool = False,
-        current_file_stem: Optional[str] = None,
-        label_index_file: Optional[Path] = None,
+        current_file_stem: str | None = None,
+        label_index_file: Path | None = None,
     ) -> str:
         """
         Convert a single LaTeX file to Markdown
@@ -130,29 +132,22 @@ class Converter:
 
         if macros_file.exists():
             # Read input content
-            input_content = input_file.read_text(encoding='utf-8')
+            input_content = input_file.read_text(encoding="utf-8")
 
             # Fix n3337-specific LaTeX syntax errors before processing
             # Issue: n3337 has `[\textit{Example}` instead of `\enterexample`
             # This confuses Pandoc's LaTeX parser (different from filter issues)
-            input_content = re.sub(
-                r'\[\\textit\{Example\}',
-                r'\\enterexample',
-                input_content
-            )
+            input_content = re.sub(r"\[\\textit\{Example\}", r"\\enterexample", input_content)
 
             # Read macro definitions
-            macros_content = macros_file.read_text(encoding='utf-8')
+            macros_content = macros_file.read_text(encoding="utf-8")
 
             # Combine: macros first, then original content
             combined_content = macros_content + "\n\n" + input_content
 
             # Write to temporary file
             with tempfile.NamedTemporaryFile(
-                mode='w',
-                suffix='.tex',
-                delete=False,
-                encoding='utf-8'
+                mode="w", suffix=".tex", delete=False, encoding="utf-8"
             ) as tmp:
                 tmp.write(combined_content)
                 temp_input_file = Path(tmp.name)
@@ -217,9 +212,7 @@ class Converter:
                 return unescape_wikilinks(markdown)
 
         except subprocess.CalledProcessError as e:
-            raise ConverterError(
-                f"Pandoc conversion failed:\n{e.stderr}"
-            ) from e
+            raise ConverterError(f"Pandoc conversion failed:\n{e.stderr}") from e
         finally:
             # Cleanup: remove temporary file if created
             if temp_input_file and temp_input_file.exists():
@@ -232,7 +225,7 @@ class Converter:
         pattern: str = "*.tex",
         verbose: bool = False,
         fix_cross_file_links: bool = True,
-    ) -> List[Path]:
+    ) -> list[Path]:
         """
         Convert all .tex files in a directory
 
@@ -274,28 +267,22 @@ class Converter:
             if verbose:
                 stats = indexer.get_statistics()
                 click.echo(
-                    f"Indexed {stats['labels']} labels across {stats['files']} files",
-                    err=True
+                    f"Indexed {stats['labels']} labels across {stats['files']} files", err=True
                 )
-                if stats['duplicates'] > 0:
-                    click.echo(
-                        f"Warning: Found {stats['duplicates']} duplicate labels",
-                        err=True
-                    )
+                if stats["duplicates"] > 0:
+                    click.echo(f"Warning: Found {stats['duplicates']} duplicate labels", err=True)
 
         # Find all .tex files
         tex_files = sorted(input_dir.glob(pattern))
 
         if not tex_files:
-            raise ConverterError(
-                f"No files matching '{pattern}' found in {input_dir}"
-            )
+            raise ConverterError(f"No files matching '{pattern}' found in {input_dir}")
 
         output_files = []
 
         for tex_file in tex_files:
             # Skip common non-chapter files
-            if tex_file.stem in ['std', 'layout', 'setup', 'macros']:
+            if tex_file.stem in ["std", "layout", "setup", "macros"]:
                 if verbose:
                     click.echo(f"Skipping: {tex_file.name}", err=True)
                 continue
@@ -328,19 +315,19 @@ class Converter:
         # Fix cross-file links if requested
         if fix_cross_file_links and output_files:
             stats = self.fix_cross_file_links(output_files, verbose=verbose)
-            if verbose and stats['links_updated'] > 0:
+            if verbose and stats["links_updated"] > 0:
                 click.echo(
                     f"Fixed {stats['links_updated']} cross-file links in {stats['files_updated']} files",
-                    err=True
+                    err=True,
                 )
 
         return output_files
 
     def fix_cross_file_links(
         self,
-        output_files: List[Path],
+        output_files: list[Path],
         verbose: bool = False,
-    ) -> Dict[str, int]:
+    ) -> dict[str, int]:
         """
         Fix cross-file reference links in separately-converted markdown files.
 
@@ -359,7 +346,7 @@ class Converter:
             Dict with statistics: {'files_updated': N, 'links_updated': N}
         """
         if not output_files:
-            return {'files_updated': 0, 'links_updated': 0}
+            return {"files_updated": 0, "links_updated": 0}
 
         if verbose:
             click.echo("Building label-to-file mapping...", err=True)
@@ -367,27 +354,29 @@ class Converter:
         # Step 1: Build label-to-file mapping by scanning for <a id="label"> anchors
         label_to_file = {}
         for md_file in output_files:
-            content = md_file.read_text(encoding='utf-8')
+            content = md_file.read_text(encoding="utf-8")
             # Find all HTML anchors: <a id="label">
             for match in re.finditer(r'<a id="([^"]+)">', content):
                 label = match.group(1)
                 label_to_file[label] = md_file.stem  # Store filename without extension
 
         if verbose:
-            click.echo(f"Found {len(label_to_file)} labels across {len(output_files)} files", err=True)
+            click.echo(
+                f"Found {len(label_to_file)} labels across {len(output_files)} files", err=True
+            )
             click.echo("Updating cross-file link definitions...", err=True)
 
         # Step 2: Update link definitions in each file
-        stats = {'files_updated': 0, 'links_updated': 0}
+        stats = {"files_updated": 0, "links_updated": 0}
 
         for md_file in output_files:
-            content = md_file.read_text(encoding='utf-8')
+            content = md_file.read_text(encoding="utf-8")
             updated_content = content
             file_updated = False
 
             # Find all link definitions: [label]: #label
             # Use re.finditer to find all matches, then replace them
-            matches = list(re.finditer(r'\[([^\]]+)\]: #\1\b', content))
+            matches = list(re.finditer(r"\[([^\]]+)\]: #\1\b", content))
 
             for match in matches:
                 label = match.group(1)
@@ -398,96 +387,79 @@ class Converter:
 
                     if target_file != md_file.stem:
                         # Cross-file reference - update to relative path
-                        old_def = f'[{label}]: #{label}'
-                        new_def = f'[{label}]: {target_file}.md#{label}'
+                        old_def = f"[{label}]: #{label}"
+                        new_def = f"[{label}]: {target_file}.md#{label}"
 
                         # Replace this specific occurrence
                         updated_content = updated_content.replace(old_def, new_def, 1)
 
-                        stats['links_updated'] += 1
+                        stats["links_updated"] += 1
                         file_updated = True
 
                         if verbose:
                             click.echo(
-                                f"  {md_file.name}: [{label}] -> {target_file}.md#{label}",
-                                err=True
+                                f"  {md_file.name}: [{label}] -> {target_file}.md#{label}", err=True
                             )
 
             # Write back if updated
             if file_updated:
-                md_file.write_text(updated_content, encoding='utf-8')
-                stats['files_updated'] += 1
+                md_file.write_text(updated_content, encoding="utf-8")
+                stats["files_updated"] += 1
 
         if verbose:
             click.echo(
                 f"Updated {stats['links_updated']} cross-file links in {stats['files_updated']} files",
-                err=True
+                err=True,
             )
 
         return stats
 
 
 @click.command()
-@click.argument('input_path', type=click.Path(exists=True, path_type=Path), required=False)
+@click.argument("input_path", type=click.Path(exists=True, path_type=Path), required=False)
+@click.option("-o", "--output", type=click.Path(path_type=Path), help="Output file or directory")
 @click.option(
-    '-o', '--output',
-    type=click.Path(path_type=Path),
-    help='Output file or directory'
+    "--standalone/--no-standalone", default=True, help="Produce standalone document (default: yes)"
 )
+@click.option("-v", "--verbose", is_flag=True, help="Verbose output")
 @click.option(
-    '--standalone/--no-standalone',
-    default=True,
-    help='Produce standalone document (default: yes)'
-)
-@click.option(
-    '-v', '--verbose',
-    is_flag=True,
-    help='Verbose output'
-)
-@click.option(
-    '--filters-dir',
+    "--filters-dir",
     type=click.Path(exists=True, path_type=Path),
-    help='Directory containing Lua filters'
+    help="Directory containing Lua filters",
 )
 @click.option(
-    '--git-ref',
-    type=str,
-    help='Git reference (tag, branch, or SHA) to checkout before conversion'
+    "--git-ref", type=str, help="Git reference (tag, branch, or SHA) to checkout before conversion"
 )
 @click.option(
-    '--draft-repo',
+    "--draft-repo",
     type=click.Path(path_type=Path),
     default=None,
-    help='Path to cplusplus/draft repository (default: ~/cplusplus-draft)'
+    help="Path to cplusplus/draft repository (default: ~/cplusplus-draft)",
 )
+@click.option("--list-tags", is_flag=True, help="List available C++ standard version tags and exit")
 @click.option(
-    '--list-tags',
+    "--build-full",
     is_flag=True,
-    help='List available C++ standard version tags and exit'
+    help="Build full standard from std.tex driver file (concatenates all chapters)",
 )
 @click.option(
-    '--build-full',
+    "--build-separate",
     is_flag=True,
-    help='Build full standard from std.tex driver file (concatenates all chapters)'
+    help="Build separate markdown files for each chapter with cross-file linking",
 )
 @click.option(
-    '--build-separate',
-    is_flag=True,
-    help='Build separate markdown files for each chapter with cross-file linking'
-)
-@click.option(
-    '--toc-depth',
+    "--toc-depth",
     type=int,
     default=3,
-    help='Maximum heading depth for table of contents (1=H1 only, 2=H1+H2, etc. Default: 3)'
+    help="Maximum heading depth for table of contents (1=H1 only, 2=H1+H2, etc. Default: 3)",
 )
 def main(
-    input_path: Optional[Path],
-    output: Optional[Path],
+    input_path: Path | None,
+    output: Path | None,
     standalone: bool,
     verbose: bool,
-    filters_dir: Optional[Path],
-    git_ref: Optional[str],
+    filters_dir: Path | None,
+    git_ref: str | None,
     draft_repo: Path,
     list_tags: bool,
     build_full: bool,
@@ -558,7 +530,7 @@ def main(
                     ref_info = repo_manager.get_current_ref()
                     click.echo(
                         f"Building full standard from: {ref_info['ref']} ({ref_info['short_sha']})",
-                        err=True
+                        err=True,
                     )
 
             except RepoManagerError as e:
@@ -577,10 +549,7 @@ def main(
             click.echo("Building full standard from std.tex...", err=True)
             try:
                 content, chapters = builder.build_full_standard(
-                    converter,
-                    output_file,
-                    verbose=verbose,
-                    toc_depth=toc_depth
+                    converter, output_file, verbose=verbose, toc_depth=toc_depth
                 )
                 click.echo(f"\nSuccessfully built full standard to {output_file}", err=True)
                 click.echo(f"Converted {len(chapters)} chapters", err=True)
@@ -607,7 +576,7 @@ def main(
                     ref_info = repo_manager.get_current_ref()
                     click.echo(
                         f"Building separate chapters from: {ref_info['ref']} ({ref_info['short_sha']})",
-                        err=True
+                        err=True,
                     )
 
             except RepoManagerError as e:
@@ -631,7 +600,10 @@ def main(
                     verbose=verbose,
                     toc_depth=toc_depth,
                 )
-                click.echo(f"\nSuccessfully built {len(output_files)} chapter files to {output_dir}", err=True)
+                click.echo(
+                    f"\nSuccessfully built {len(output_files)} chapter files to {output_dir}",
+                    err=True,
+                )
             except Exception as e:
                 click.echo(f"Error building separate chapters: {e}", err=True)
                 sys.exit(1)
@@ -640,7 +612,10 @@ def main(
 
         # INPUT_PATH is required if not using --list-tags, --build-full, or --build-separate
         if not input_path:
-            click.echo("Error: INPUT_PATH required (unless using --list-tags, --build-full, or --build-separate)", err=True)
+            click.echo(
+                "Error: INPUT_PATH required (unless using --list-tags, --build-full, or --build-separate)",
+                err=True,
+            )
             sys.exit(1)
 
         # Handle git ref checkout if specified
@@ -652,7 +627,7 @@ def main(
                     ref_info = repo_manager.get_current_ref()
                     click.echo(
                         f"Using draft version: {ref_info['ref']} ({ref_info['short_sha']})",
-                        err=True
+                        err=True,
                     )
             except RepoManagerError as e:
                 click.echo(f"Repository error: {e}", err=True)
@@ -676,10 +651,7 @@ def main(
         elif input_path.is_dir():
             # Directory conversion
             if not output:
-                click.echo(
-                    "Error: --output required for directory conversion",
-                    err=True
-                )
+                click.echo("Error: --output required for directory conversion", err=True)
                 sys.exit(1)
 
             output_files = converter.convert_directory(

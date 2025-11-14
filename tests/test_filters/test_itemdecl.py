@@ -1,7 +1,8 @@
 """Tests for cpp-itemdecl.lua filter"""
+
 import subprocess
-from pathlib import Path
 import sys
+from pathlib import Path
 
 # Import inject_macros helper from conftest
 sys.path.insert(0, str(Path(__file__).parent.parent))
@@ -9,6 +10,7 @@ from conftest import inject_macros
 
 FILTER_PATH = Path("src/cpp_std_converter/filters/cpp-itemdecl.lua")
 NOTES_FILTER_PATH = Path("src/cpp_std_converter/filters/cpp-notes-examples.lua")
+
 
 def run_pandoc_with_filter(latex_content):
     """Helper to run Pandoc with itemdecl filter"""
@@ -29,6 +31,7 @@ def run_pandoc_with_filter(latex_content):
         text=True,
     )
     return result.stdout, result.returncode
+
 
 def run_pandoc_with_both_filters(latex_content):
     """Helper to run Pandoc with both itemdecl and notes-examples filters
@@ -51,6 +54,7 @@ def run_pandoc_with_both_filters(latex_content):
     )
     return result.stdout, result.returncode
 
+
 def test_mandates_label():
     r"""Test \mandates label conversion"""
     latex = r"""
@@ -66,6 +70,7 @@ The type \tcode{T} shall be copyable.
     assert "`T`" in output
     assert "copyable" in output
 
+
 def test_effects_label():
     r"""Test \effects label conversion"""
     latex = r"""
@@ -79,6 +84,7 @@ Increments the counter.
     assert "*Effects:*" in output
     assert "***Effects:***" not in output  # Should be italic, not bold-italic
     assert "Increments" in output
+
 
 def test_returns_label():
     r"""Test \returns label conversion"""
@@ -94,6 +100,7 @@ def test_returns_label():
     assert "***Returns:***" not in output  # Should be italic, not bold-italic
     assert "`true`" in output
 
+
 def test_complexity_label():
     r"""Test \complexity label conversion"""
     latex = r"""
@@ -107,6 +114,7 @@ Linear in \tcode{n}.
     assert "*Complexity:*" in output
     assert "***Complexity:***" not in output  # Should be italic, not bold-italic
     assert "`n`" in output
+
 
 def test_constraints_rendering():
     r"""Test \constraints macro expansion"""
@@ -127,6 +135,7 @@ Moves the value.
     assert "`is_move_constructible_v<T>`" in output
     assert "`is_move_assignable_v<T>`" in output
     assert "*Effects:*" in output
+
 
 def test_new_fundesc_labels():
     r"""Test newly added Fundesc labels: \recommended, \required, \default, \sync, \replaceable, \returntype, \ctype, \templalias, \implimits"""
@@ -172,6 +181,7 @@ Maximum recursion depth is 1024.
     assert "*Alias template:*" in output
     assert "*Implementation limits:*" in output
 
+
 def test_bigoh_expansion():
     r"""Test \bigoh{} macro expansion"""
     latex = r"""
@@ -188,6 +198,7 @@ def test_bigoh_expansion():
     assert "last - first" in output
     assert "applications" in output
 
+
 def test_bigoh_with_log():
     r"""Test \bigoh{} with \log expansion"""
     latex = r"""
@@ -202,6 +213,7 @@ def test_bigoh_with_log():
     assert "N" in output
     assert "comparisons" in output
 
+
 def test_tcode_conversion():
     r"""Test \tcode{} to \texttt{} conversion"""
     latex = r"""
@@ -213,6 +225,7 @@ The value \tcode{x + y}.
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
     assert "`x + y`" in output
+
 
 def test_range_conversion():
     r"""Test \range{}{} conversion (half-open range)"""
@@ -226,6 +239,7 @@ All elements in \range{first}{last}.
     assert code == 0
     assert "[`first`, `last`)" in output
 
+
 def test_crange_conversion():
     r"""Test \crange{}{} conversion (closed range)"""
     latex = r"""
@@ -237,8 +251,9 @@ In the range \crange{first}{last}, no modifications occur.
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
     # Pandoc may escape brackets in GFM
-    assert ("`first`, `last`]" in output or "`first`, `last`\\]" in output)
+    assert "`first`, `last`]" in output or "`first`, `last`\\]" in output
     assert "no modifications" in output
+
 
 def test_countedrange_conversion():
     r"""Test \countedrange{}{} conversion (counted range)"""
@@ -251,9 +266,10 @@ def test_countedrange_conversion():
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
     # Pandoc may escape brackets in GFM
-    assert ("`result`+[0" in output or "`result`+\\[0" in output)
-    assert ("`first`+[0" in output or "`first`+\\[0" in output)
+    assert "`result`+[0" in output or "`result`+\\[0" in output
+    assert "`first`+[0" in output or "`first`+\\[0" in output
     assert "does not overlap" in output
+
 
 def test_brange_conversion():
     r"""Test \brange{}{} conversion (both-exclusive range)"""
@@ -267,6 +283,7 @@ def test_brange_conversion():
     assert code == 0
     assert "(`first`, `last`)" in output
 
+
 def test_orange_conversion():
     r"""Test \orange{}{} conversion (open range - both exclusive, alias for brange)"""
     latex = r"""
@@ -278,6 +295,7 @@ All iterators in the range \orange{position}{last} are dereferenceable.
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
     assert "(`position`, `last`)" in output
+
 
 def test_codeblock_environment():
     r"""Test \begin{codeblock} conversion to fenced code block"""
@@ -298,6 +316,7 @@ return 0;
     assert "if (x > 0)" in output
     assert "return x" in output
 
+
 def test_codeblock_with_macros():
     """Test codeblock with nested \tcode{} macros"""
     latex = r"""
@@ -314,6 +333,7 @@ return U();
     assert code == 0
     assert "decay_t" in output
     assert "return U()" in output
+
 
 def test_at_escape_delimiters():
     r"""Test @ escape delimiter handling in code"""
@@ -332,6 +352,7 @@ return @\tcode{value}@;
     assert "value" in output
     # @ delimiters should be removed from the code block
     assert output.count("@") == 0
+
 
 def test_placeholdernc_in_code():
     r"""Test @\placeholdernc{} converts to plain text, not \textit"""
@@ -352,6 +373,7 @@ Equivalent to:
     assert "\\textit{" not in output
     assert "\\texttt{" not in output
 
+
 def test_note_environment():
     r"""Test \begin{note} processing in itemdescr"""
     latex = r"""
@@ -368,7 +390,8 @@ This may throw an exception.
     # Note: When run standalone, notes become divs. Full filter chain processes them.
     assert "exception" in output
     # Could be either formatted note or HTML div
-    assert ("Note" in output or "note" in output)
+    assert "Note" in output or "note" in output
+
 
 def test_example_environment():
     r"""Test \begin{example} processing in itemdescr"""
@@ -386,7 +409,8 @@ The sum.
     # Example: When run standalone, examples become divs. Full filter chain processes them.
     assert "`add(1, 2)`" in output
     assert "`3`" in output
-    assert ("Example" in output or "example" in output)
+    assert "Example" in output or "example" in output
+
 
 def test_multiple_spec_labels():
     """Test multiple specification labels in sequence"""
@@ -416,6 +440,7 @@ Constant time.
     assert "***Returns:***" not in output
     assert "***Complexity:***" not in output
 
+
 def test_ref_preservation():
     r"""Test \ref{} cross-reference preservation"""
     latex = r"""
@@ -427,8 +452,9 @@ As specified in \ref{intro.defs}.
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
     # Pandoc may escape the brackets in GFM output
-    assert ("intro.defs" in output)
-    assert ("[" in output or "\\[" in output)
+    assert "intro.defs" in output
+    assert "[" in output or "\\[" in output
+
 
 def test_iref_preservation():
     r"""Test \iref{} cross-reference preservation"""
@@ -441,7 +467,8 @@ See \iref{basic.types}.
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
     assert "basic.types" in output
-    assert ("[" in output or "\\[" in output)
+    assert "[" in output or "\\[" in output
+
 
 def test_tref_preservation():
     r"""Test \tref{} table reference preservation"""
@@ -454,7 +481,8 @@ As shown in \tref{tab.concepts}.
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
     assert "tab.concepts" in output
-    assert ("[" in output or "\\[" in output)
+    assert "[" in output or "\\[" in output
+
 
 def test_libconcept_conversion():
     r"""Test \libconcept{} conversion"""
@@ -468,6 +496,7 @@ The type satisfies \libconcept{copyable}.
     assert code == 0
     assert "`copyable`" in output
 
+
 def test_placeholder_conversion():
     r"""Test \placeholder{} conversion"""
     latex = r"""
@@ -479,6 +508,7 @@ The value \placeholder{result}.
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
     assert "*result*" in output
+
 
 def test_oldconcept_conversion():
     r"""Test \oldconcept{} conversion"""
@@ -493,6 +523,7 @@ Meets the \oldconcept{CopyConstructible} requirements.
     # \oldconcept{X} should expand to Cpp17X
     assert "*Cpp17CopyConstructible*" in output
 
+
 def test_bigoh_unicode():
     r"""Test \bigoh{} uses Unicode Mathematical Italic O"""
     latex = r"""
@@ -505,6 +536,7 @@ def test_bigoh_unicode():
     assert code == 0
     assert "𝑂(N log N)" in output
     assert "comparisons" in output
+
 
 def test_nested_placeholdernc_in_tcode():
     r"""Test nested \tcode{\placeholdernc{}} becomes italic, not code"""
@@ -521,6 +553,7 @@ Define \tcode{\placeholdernc{GENERALIZED_SUM}(op, a1, ..., aN)} as follows.
     # Should NOT have unparsed LaTeX commands
     assert "\\placeholdernc" not in output
     assert "\\tcode" not in output
+
 
 def test_nested_tcode_in_placeholdernc_with_math():
     r"""Test complex nested pattern from utilities.tex: \tcode{\placeholdernc{FUN}($\tcode{T}_j$)}"""
@@ -543,6 +576,7 @@ The overload \tcode{\placeholdernc{FUN}($\tcode{T}_j$)} selected by overload res
     assert "\\texttt" not in output
     assert "\\textit" not in output
 
+
 def test_phantom_extraction():
     r"""Test \phantom{} content extraction"""
     latex = r"""
@@ -559,6 +593,7 @@ def test_phantom_extraction():
     # \phantom command should be gone
     assert "\\phantom" not in output
 
+
 def test_indexlibrary_stripped():
     r"""Test \indexlibrary{} is completely removed"""
     latex = r"""
@@ -574,6 +609,7 @@ The result.
     # Index library markup should be completely gone
     assert "\\indexlibrary" not in output
     assert "test_name" not in output
+
 
 def test_generalized_sum_definition():
     r"""Test full GENERALIZED_SUM definition rendering"""
@@ -597,6 +633,7 @@ where \tcode{b1, ..., bN} may be any permutation.
 # ============================================================================
 # Regression Tests for Recent Features (commit cbec0bf9)
 # ============================================================================
+
 
 def test_placeholder_conversion_in_itemdescr():
     """Test that @@REF:label@@ placeholders are converted to [[label]] in itemdescr"""

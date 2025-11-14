@@ -23,15 +23,13 @@ import re
 import shutil
 import subprocess
 import sys
-from collections import defaultdict
 from concurrent.futures import ProcessPoolExecutor, as_completed
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
 
 try:
-    from jinja2 import Environment, FileSystemLoader
     from bs4 import BeautifulSoup
+    from jinja2 import Environment, FileSystemLoader
 except ImportError as e:
     print(f"Error: Missing required package: {e}")
     print("Please install required packages:")
@@ -41,45 +39,45 @@ except ImportError as e:
 
 # Version pairs (adjacent only) - these are the focus of the viewer
 VERSION_PAIRS = [
-    ('n3337', 'n4140', 'C++11', 'C++14', 'cpp11-to-cpp14'),
-    ('n4140', 'n4659', 'C++14', 'C++17', 'cpp14-to-cpp17'),
-    ('n4659', 'n4861', 'C++17', 'C++20', 'cpp17-to-cpp20'),
-    ('n4861', 'n4950', 'C++20', 'C++23', 'cpp20-to-cpp23'),
-    ('n4950', 'trunk', 'C++23', 'Trunk', 'cpp23-to-trunk'),
+    ("n3337", "n4140", "C++11", "C++14", "cpp11-to-cpp14"),
+    ("n4140", "n4659", "C++14", "C++17", "cpp14-to-cpp17"),
+    ("n4659", "n4861", "C++17", "C++20", "cpp17-to-cpp20"),
+    ("n4861", "n4950", "C++20", "C++23", "cpp20-to-cpp23"),
+    ("n4950", "trunk", "C++23", "Trunk", "cpp23-to-trunk"),
 ]
 
 # Author branding configuration
 # Update these URLs with your actual social media handles
 AUTHOR_INFO = {
-    'name': 'Jason Turner',
-    'tagline': 'Professional C++ training and code review services',
-    'links': {
-        'twitter': 'https://twitter.com/lefticus',
-        'mastodon': 'https://mastodon.social/@lefticus',  # UPDATE WITH YOUR HANDLE
-        'bluesky': 'https://bsky.app/profile/lefticus.bsky.social',  # UPDATE WITH YOUR HANDLE
-        'linkedin': 'https://linkedin.com/in/jasonturner',  # UPDATE WITH YOUR PROFILE
-        'youtube': 'https://youtube.com/@cppweekly',
-        'github': 'https://github.com/lefticus',
-        'project_github': 'https://github.com/lefticus/cppstdmd',
-        'website': 'https://emptycrate.com',
-    }
+    "name": "Jason Turner",
+    "tagline": "Professional C++ training and code review services",
+    "links": {
+        "twitter": "https://twitter.com/lefticus",
+        "mastodon": "https://mastodon.social/@lefticus",  # UPDATE WITH YOUR HANDLE
+        "bluesky": "https://bsky.app/profile/lefticus.bsky.social",  # UPDATE WITH YOUR HANDLE
+        "linkedin": "https://linkedin.com/in/jasonturner",  # UPDATE WITH YOUR PROFILE
+        "youtube": "https://youtube.com/@cppweekly",
+        "github": "https://github.com/lefticus",
+        "project_github": "https://github.com/lefticus/cppstdmd",
+        "website": "https://emptycrate.com",
+    },
 }
 
 # Font Awesome 7 Free icon mappings
 # See: https://fontawesome.com/search?o=r&m=free
 FONT_AWESOME_ICONS = {
-    'home': 'fa-solid fa-house',
-    'link': 'fa-solid fa-link',
-    'book': 'fa-solid fa-book',
-    'markdown': 'fa-brands fa-markdown',
-    'warning': 'fa-solid fa-triangle-exclamation',
-    'twitter': 'fa-brands fa-x-twitter',
-    'mastodon': 'fa-brands fa-mastodon',
-    'bluesky': 'fa-brands fa-bluesky',      # Butterfly icon! 🦋
-    'linkedin': 'fa-brands fa-linkedin',
-    'youtube': 'fa-brands fa-youtube',
-    'github': 'fa-brands fa-github',
-    'website': 'fa-solid fa-globe',
+    "home": "fa-solid fa-house",
+    "link": "fa-solid fa-link",
+    "book": "fa-solid fa-book",
+    "markdown": "fa-brands fa-markdown",
+    "warning": "fa-solid fa-triangle-exclamation",
+    "twitter": "fa-brands fa-x-twitter",
+    "mastodon": "fa-brands fa-mastodon",
+    "bluesky": "fa-brands fa-bluesky",  # Butterfly icon! 🦋
+    "linkedin": "fa-brands fa-linkedin",
+    "youtube": "fa-brands fa-youtube",
+    "github": "fa-brands fa-github",
+    "website": "fa-solid fa-globe",
 }
 
 
@@ -93,7 +91,9 @@ def create_icon(icon_name):
     Returns:
         str: HTML <i> element with Font Awesome classes
     """
-    icon_classes = FONT_AWESOME_ICONS.get(icon_name, 'fa-solid fa-question')  # Default to question mark
+    icon_classes = FONT_AWESOME_ICONS.get(
+        icon_name, "fa-solid fa-question"
+    )  # Default to question mark
     return f'<i class="{icon_classes}"></i>'
 
 
@@ -101,8 +101,9 @@ def check_dependencies():
     """Check if required external tools are available."""
     # Check for diff2html-cli or npx
     try:
-        result = subprocess.run(['diff2html', '--version'],
-                              capture_output=True, text=True, check=False)
+        result = subprocess.run(
+            ["diff2html", "--version"], capture_output=True, text=True, check=False
+        )
         if result.returncode == 0:
             return  # diff2html is available
     except FileNotFoundError:
@@ -110,8 +111,7 @@ def check_dependencies():
 
     # Try npx as fallback
     try:
-        result = subprocess.run(['npx', '--version'],
-                              capture_output=True, text=True, check=False)
+        result = subprocess.run(["npx", "--version"], capture_output=True, text=True, check=False)
         if result.returncode == 0:
             return  # npx is available
     except FileNotFoundError:
@@ -128,7 +128,7 @@ def check_dependencies():
     sys.exit(1)
 
 
-def extract_stable_name(diff_file: Path) -> Optional[str]:
+def extract_stable_name(diff_file: Path) -> str | None:
     """Extract stable name from diff header.
 
     Args:
@@ -138,12 +138,12 @@ def extract_stable_name(diff_file: Path) -> Optional[str]:
         Stable name string, or None if not found
     """
     try:
-        with open(diff_file, 'r', encoding='utf-8') as f:
+        with open(diff_file, encoding="utf-8") as f:
             for line in f:
-                if line.startswith('# Stable name:'):
-                    return line.split(':', 1)[1].strip()
+                if line.startswith("# Stable name:"):
+                    return line.split(":", 1)[1].strip()
                 # Only check first few lines
-                if not line.startswith('#'):
+                if not line.startswith("#"):
                     break
     except Exception as e:
         print(f"Warning: Could not read {diff_file}: {e}")
@@ -165,7 +165,7 @@ def get_dot_count(name: str) -> int:
         get_dot_count("string::append") -> 0  # Legacy C++11 notation
         get_dot_count("alg.all_of") -> 1  # Underscore is within name
     """
-    return name.count('.')
+    return name.count(".")
 
 
 def sanitize_filename(name: str) -> str:
@@ -178,45 +178,42 @@ def sanitize_filename(name: str) -> str:
         Safe filename (same as input for most stable names)
     """
     # Most stable names are already safe, but handle edge cases
-    return re.sub(r'[^\w.-]', '_', name)
+    return re.sub(r"[^\w.-]", "_", name)
 
 
 # Stable name prefix to chapter mapping for special cases
 STABLE_NAME_TO_CHAPTER = {
     # Top-level container types (no dots) map to containers chapter
-    'array': 'containers',
-    'vector': 'containers',
-    'deque': 'containers',
-    'list': 'containers',
-    'forwardlist': 'containers',
-    'map': 'containers',
-    'multimap': 'containers',
-    'set': 'containers',
-    'multiset': 'containers',
-    'unord': 'containers',
-    'stack': 'containers',
-    'queue': 'containers',
-    'priority': 'containers',
-
+    "array": "containers",
+    "vector": "containers",
+    "deque": "containers",
+    "list": "containers",
+    "forwardlist": "containers",
+    "map": "containers",
+    "multimap": "containers",
+    "set": "containers",
+    "multiset": "containers",
+    "unord": "containers",
+    "stack": "containers",
+    "queue": "containers",
+    "priority": "containers",
     # Container-related prefixes
-    'container': 'containers',
-    'sequence': 'containers',
-    'associative': 'containers',
-
+    "container": "containers",
+    "sequence": "containers",
+    "associative": "containers",
     # Algorithm-related prefixes
-    'alg': 'algorithms',
-    'algorithms': 'algorithms',
-
+    "alg": "algorithms",
+    "algorithms": "algorithms",
     # Other top-level stable names
-    'iterators': 'iterators',
-    'utilities': 'utilities',
-    'strings': 'strings',
-    'numerics': 'numerics',
-    'localization': 'localization',
-    'input': 'input.output',
-    'iostream': 'input.output',
-    'thread': 'thread',
-    'atomics': 'atomics',
+    "iterators": "iterators",
+    "utilities": "utilities",
+    "strings": "strings",
+    "numerics": "numerics",
+    "localization": "localization",
+    "input": "input.output",
+    "iostream": "input.output",
+    "thread": "thread",
+    "atomics": "atomics",
 }
 
 
@@ -243,7 +240,7 @@ def get_chapter_from_stable_name(stable_name: str) -> str:
         return STABLE_NAME_TO_CHAPTER[stable_name]
 
     # Extract prefix before first dot
-    prefix = stable_name.split('.')[0]
+    prefix = stable_name.split(".")[0]
 
     # Check prefix lookup
     if prefix in STABLE_NAME_TO_CHAPTER:
@@ -253,7 +250,7 @@ def get_chapter_from_stable_name(stable_name: str) -> str:
     return prefix
 
 
-def get_timsong_url(version: str, stable_name: str) -> Optional[str]:
+def get_timsong_url(version: str, stable_name: str) -> str | None:
     """Generate URL to timsong-cpp.github.io archived standard.
 
     Args:
@@ -267,15 +264,15 @@ def get_timsong_url(version: str, stable_name: str) -> Optional[str]:
         ('n3337', 'stmt.expr') → 'https://timsong-cpp.github.io/cppwp/n3337/stmt.expr'
     """
     # trunk is not published on timsong, skip it
-    if version == 'trunk':
+    if version == "trunk":
         return None
 
-    return f'https://timsong-cpp.github.io/cppwp/{version}/{stable_name}'
+    return f"https://timsong-cpp.github.io/cppwp/{version}/{stable_name}"
 
 
-def get_github_markdown_url(version: str, stable_name: str,
-                            repo_owner: str = 'lefticus',
-                            repo_name: str = 'cppstdmd') -> str:
+def get_github_markdown_url(
+    version: str, stable_name: str, repo_owner: str = "lefticus", repo_name: str = "cppstdmd"
+) -> str:
     """Generate GitHub URL to markdown source for a stable name.
 
     Args:
@@ -292,8 +289,10 @@ def get_github_markdown_url(version: str, stable_name: str,
             'https://github.com/lefticus/cppstdmd/blob/main/n4950/containers.md#array.overview'
     """
     chapter = get_chapter_from_stable_name(stable_name)
-    return (f'https://github.com/{repo_owner}/{repo_name}/blob/main/'
-            f'{version}/{chapter}.md#{stable_name}')
+    return (
+        f"https://github.com/{repo_owner}/{repo_name}/blob/main/"
+        f"{version}/{chapter}.md#{stable_name}"
+    )
 
 
 def get_file_size_kb(path: Path) -> float:
@@ -323,21 +322,21 @@ def count_diff_lines(diff_file: Path) -> int:
     """
     try:
         count = 0
-        with open(diff_file, 'r', encoding='utf-8') as f:
+        with open(diff_file, encoding="utf-8") as f:
             in_header = True
             for line in f:
-                if in_header and line.startswith('diff --git'):
+                if in_header and line.startswith("diff --git"):
                     in_header = False
-                if not in_header and (line.startswith('+') or
-                                     line.startswith('-') or
-                                     line.startswith('@@')):
+                if not in_header and (
+                    line.startswith("+") or line.startswith("-") or line.startswith("@@")
+                ):
                     count += 1
         return count
     except Exception:
         return 0
 
 
-def extract_diff_keywords(diff_file: Path) -> List[str]:
+def extract_diff_keywords(diff_file: Path) -> list[str]:
     """Extract C++ keywords, types, and identifiers from diff content.
 
     Args:
@@ -349,35 +348,52 @@ def extract_diff_keywords(diff_file: Path) -> List[str]:
     import re
 
     try:
-        content = diff_file.read_text(encoding='utf-8', errors='ignore')
+        content = diff_file.read_text(encoding="utf-8", errors="ignore")
     except Exception:
         return []
 
     keywords = set()
 
     # Extract changed lines only (+ or - markers)
-    for line in content.split('\n'):
-        if line.startswith('+') or line.startswith('-'):
+    for line in content.split("\n"):
+        if line.startswith("+") or line.startswith("-"):
             # Skip metadata lines
-            if line.startswith('+++') or line.startswith('---'):
+            if line.startswith("+++") or line.startswith("---"):
                 continue
 
             clean_line = line[1:].strip()
 
             # Extract C++ identifiers: [A-Za-z_][A-Za-z0-9_]*
-            identifiers = re.findall(r'\b[A-Za-z_][A-Za-z0-9_]*\b', clean_line)
+            identifiers = re.findall(r"\b[A-Za-z_][A-Za-z0-9_]*\b", clean_line)
             keywords.update(identifiers)
 
     # Filter out very common words and single characters
-    stop_words = {'the', 'and', 'for', 'this', 'that', 'with', 'from', 'have',
-                  'are', 'was', 'were', 'been', 'has', 'had', 'can', 'may', 'will'}
+    stop_words = {
+        "the",
+        "and",
+        "for",
+        "this",
+        "that",
+        "with",
+        "from",
+        "have",
+        "are",
+        "was",
+        "were",
+        "been",
+        "has",
+        "had",
+        "can",
+        "may",
+        "will",
+    }
     keywords = {k for k in keywords if len(k) > 2 and k.lower() not in stop_words}
 
     # Limit to 150 most frequent keywords
-    return sorted(list(keywords))[:150]
+    return sorted(keywords)[:150]
 
 
-def generate_search_index(stable_names: List[Dict], output_dir: Path, slug: str):
+def generate_search_index(stable_names: list[dict], output_dir: Path, slug: str):
     """Generate JSON search index with keywords for each stable name.
 
     Args:
@@ -387,24 +403,21 @@ def generate_search_index(stable_names: List[Dict], output_dir: Path, slug: str)
     """
     search_index = []
 
-    print(f"  Generating search index...")
+    print("  Generating search index...")
     for item in stable_names:
-        keywords = extract_diff_keywords(item['path'])
-        search_index.append({
-            'name': item['name'],
-            'keywords': keywords
-        })
+        keywords = extract_diff_keywords(item["path"])
+        search_index.append({"name": item["name"], "keywords": keywords})
 
     # Write JSON file
-    index_file = output_dir / f'{slug}_search_index.json'
-    index_file.write_text(json.dumps(search_index), encoding='utf-8')
+    index_file = output_dir / f"{slug}_search_index.json"
+    index_file.write_text(json.dumps(search_index), encoding="utf-8")
 
     # Report size
     size_kb = index_file.stat().st_size / 1024
     print(f"  ✓ Generated search index: {len(search_index)} sections, {size_kb:.1f} KB")
 
 
-def generate_diff_html(diff_file: Path, output_file: Path, context: Dict) -> bool:
+def generate_diff_html(diff_file: Path, output_file: Path, context: dict) -> bool:
     """Generate HTML for a single diff using diff2html.
 
     Args:
@@ -422,20 +435,18 @@ def generate_diff_html(diff_file: Path, output_file: Path, context: Dict) -> boo
         # Try diff2html first, fall back to npx
         diff2html_cmd = None
         try:
-            result = subprocess.run(['diff2html', '--version'],
-                                  capture_output=True, check=False)
+            result = subprocess.run(["diff2html", "--version"], capture_output=True, check=False)
             if result.returncode == 0:
-                diff2html_cmd = 'diff2html'
+                diff2html_cmd = "diff2html"
         except FileNotFoundError:
             pass
 
         if diff2html_cmd is None:
             # Try npx
             try:
-                result = subprocess.run(['npx', '--version'],
-                                      capture_output=True, check=False)
+                result = subprocess.run(["npx", "--version"], capture_output=True, check=False)
                 if result.returncode == 0:
-                    diff2html_cmd = 'npx'
+                    diff2html_cmd = "npx"
             except FileNotFoundError:
                 return False
 
@@ -443,18 +454,8 @@ def generate_diff_html(diff_file: Path, output_file: Path, context: Dict) -> boo
             return False
 
         # Build command
-        if diff2html_cmd == 'npx':
-            cmd = ['npx', 'diff2html']
-        else:
-            cmd = ['diff2html']
-
-        cmd.extend([
-            '-i', 'file',
-            '-F', str(output_file),
-            '-s', 'side',
-            '--',
-            str(diff_file)
-        ])
+        cmd = ["npx", "diff2html"] if diff2html_cmd == "npx" else ["diff2html"]
+        cmd.extend(["-i", "file", "-F", str(output_file), "-s", "side", "--", str(diff_file)])
 
         result = subprocess.run(cmd, capture_output=True, text=True, check=True)
 
@@ -476,36 +477,38 @@ def generate_diff_html(diff_file: Path, output_file: Path, context: Dict) -> boo
 
 def create_author_banner(soup):
     """Create the author banner that appears at the top of every page."""
-    banner = soup.new_tag('div', **{'class': 'author-banner'})
-    banner_content = soup.new_tag('div', **{'class': 'author-banner-content'})
+    banner = soup.new_tag("div", **{"class": "author-banner"})
+    banner_content = soup.new_tag("div", **{"class": "author-banner-content"})
 
     # Author name
-    author_name = soup.new_tag('span', **{'class': 'author-name'})
+    author_name = soup.new_tag("span", **{"class": "author-name"})
     author_name.string = f'From {AUTHOR_INFO["name"]}'
     banner_content.append(author_name)
 
     # Social links
-    author_links = soup.new_tag('div', **{'class': 'author-links'})
+    author_links = soup.new_tag("div", **{"class": "author-links"})
 
     icon_map = [
-        ('twitter', 'twitter', 'Twitter/X'),
-        ('mastodon', 'mastodon', 'Mastodon'),
-        ('bluesky', 'bluesky', 'Bluesky'),
-        ('linkedin', 'linkedin', 'LinkedIn'),
-        ('youtube', 'youtube', 'YouTube'),
-        ('github', 'github', 'GitHub'),
-        ('website', 'website', 'Website'),
+        ("twitter", "twitter", "Twitter/X"),
+        ("mastodon", "mastodon", "Mastodon"),
+        ("bluesky", "bluesky", "Bluesky"),
+        ("linkedin", "linkedin", "LinkedIn"),
+        ("youtube", "youtube", "YouTube"),
+        ("github", "github", "GitHub"),
+        ("website", "website", "Website"),
     ]
 
     for key, icon_name, title in icon_map:
-        icon_link = soup.new_tag('a',
-            href=AUTHOR_INFO['links'][key],
-            target='_blank',
-            rel='noopener noreferrer',
-            title=title)
+        icon_link = soup.new_tag(
+            "a",
+            href=AUTHOR_INFO["links"][key],
+            target="_blank",
+            rel="noopener noreferrer",
+            title=title,
+        )
 
-        icon_elem = soup.new_tag('i')
-        icon_elem['class'] = FONT_AWESOME_ICONS[icon_name].split()
+        icon_elem = soup.new_tag("i")
+        icon_elem["class"] = FONT_AWESOME_ICONS[icon_name].split()
         icon_link.append(icon_elem)
 
         author_links.append(icon_link)
@@ -516,7 +519,7 @@ def create_author_banner(soup):
     return banner
 
 
-def inject_navigation(html_file: Path, context: Dict, env: Environment) -> bool:
+def inject_navigation(html_file: Path, context: dict, env: Environment) -> bool:
     """Inject custom navigation into generated HTML.
 
     This post-processes the diff2html output to add:
@@ -534,61 +537,61 @@ def inject_navigation(html_file: Path, context: Dict, env: Environment) -> bool:
         True if successful, False otherwise
     """
     try:
-        with open(html_file, 'r', encoding='utf-8') as f:
-            soup = BeautifulSoup(f.read(), 'html.parser')
+        with open(html_file, encoding="utf-8") as f:
+            soup = BeautifulSoup(f.read(), "html.parser")
 
         # Create custom header
-        header = soup.new_tag('header', **{'class': 'custom-header'})
+        header = soup.new_tag("header", **{"class": "custom-header"})
 
         # Breadcrumbs
-        breadcrumb_nav = soup.new_tag('nav', **{'class': 'breadcrumb'})
+        breadcrumb_nav = soup.new_tag("nav", **{"class": "breadcrumb"})
 
         # Add home icon
-        home_icon = soup.new_tag('i')
-        home_icon['class'] = FONT_AWESOME_ICONS['home'].split()
+        home_icon = soup.new_tag("i")
+        home_icon["class"] = FONT_AWESOME_ICONS["home"].split()
         breadcrumb_nav.append(home_icon)
-        breadcrumb_nav.append(' ')
+        breadcrumb_nav.append(" ")
 
-        home_link = soup.new_tag('a', href='../../index.html')
-        home_link.string = 'Home'
+        home_link = soup.new_tag("a", href="../../index.html")
+        home_link.string = "Home"
         breadcrumb_nav.append(home_link)
-        breadcrumb_nav.append(' > ')
+        breadcrumb_nav.append(" > ")
 
-        version_link = soup.new_tag('a', href=f'../../versions/{context["version_slug"]}.html')
+        version_link = soup.new_tag("a", href=f'../../versions/{context["version_slug"]}.html')
         version_link.string = f'{context["from_version"]} → {context["to_version"]}'
         breadcrumb_nav.append(version_link)
-        breadcrumb_nav.append(' > ')
+        breadcrumb_nav.append(" > ")
 
-        stable_name_span = soup.new_tag('span', **{'class': 'current'})
+        stable_name_span = soup.new_tag("span", **{"class": "current"})
         stable_name_span.string = f'[{context["stable_name"]}]'
         breadcrumb_nav.append(stable_name_span)
 
         header.append(breadcrumb_nav)
 
         # Title section
-        title_section = soup.new_tag('div', **{'class': 'title-section'})
-        title_h1 = soup.new_tag('h1')
+        title_section = soup.new_tag("div", **{"class": "title-section"})
+        title_h1 = soup.new_tag("h1")
         title_h1.string = f'[{context["stable_name"]}]'
         title_section.append(title_h1)
 
         # Metadata
-        metadata_div = soup.new_tag('div', **{'class': 'metadata'})
+        metadata_div = soup.new_tag("div", **{"class": "metadata"})
 
-        version_badge = soup.new_tag('span', **{'class': 'badge version-badge'})
+        version_badge = soup.new_tag("span", **{"class": "badge version-badge"})
         version_badge.string = f'{context["from_version"]} → {context["to_version"]}'
         metadata_div.append(version_badge)
-        metadata_div.append(' ')
+        metadata_div.append(" ")
 
-        size_badge = soup.new_tag('span', **{'class': 'badge size-badge'})
-        size_kb = context.get('file_size_kb', 0)
-        size_badge.string = f'{size_kb} KB'
+        size_badge = soup.new_tag("span", **{"class": "badge size-badge"})
+        size_kb = context.get("file_size_kb", 0)
+        size_badge.string = f"{size_kb} KB"
         if size_kb > 100:
-            size_badge['class'] = 'badge size-badge large'
+            size_badge["class"] = "badge size-badge large"
         metadata_div.append(size_badge)
 
-        if context.get('line_count', 0) > 0:
-            metadata_div.append(' ')
-            line_badge = soup.new_tag('span', **{'class': 'badge line-badge'})
+        if context.get("line_count", 0) > 0:
+            metadata_div.append(" ")
+            line_badge = soup.new_tag("span", **{"class": "badge line-badge"})
             line_badge.string = f'{context["line_count"]} lines'
             metadata_div.append(line_badge)
 
@@ -596,132 +599,142 @@ def inject_navigation(html_file: Path, context: Dict, env: Environment) -> bool:
         header.append(title_section)
 
         # Version timeline navigation
-        timeline_nav = soup.new_tag('nav', **{'class': 'version-timeline'})
-        timeline_label = soup.new_tag('span', **{'class': 'timeline-label'})
-        timeline_label.string = 'Evolution Timeline: '
+        timeline_nav = soup.new_tag("nav", **{"class": "version-timeline"})
+        timeline_label = soup.new_tag("span", **{"class": "timeline-label"})
+        timeline_label.string = "Evolution Timeline: "
         timeline_nav.append(timeline_label)
 
         # Get availability lookup from context (pre-built to avoid race conditions)
-        availability = context.get('stable_name_availability', {})
+        availability = context.get("stable_name_availability", {})
 
-        for i, (from_tag, to_tag, from_name, to_name, slug) in enumerate(VERSION_PAIRS):
+        for i, (_from_tag, _to_tag, from_name, to_name, slug) in enumerate(VERSION_PAIRS):
             if i > 0:
-                timeline_nav.append(' | ')
+                timeline_nav.append(" | ")
 
             # Check if this version pair has this stable name (from pre-built lookup)
             is_available = availability.get(slug, False)
-            is_current = slug == context['version_slug']
+            is_current = slug == context["version_slug"]
 
             if is_available or is_current:
                 # Create link for available diffs or current version
-                timeline_link = soup.new_tag('a',
+                timeline_link = soup.new_tag(
+                    "a",
                     href=f'../{slug}/{context["stable_name_file"]}.html',
-                    **{'class': 'active' if is_current else ''})
-                timeline_link.string = f'{from_name}→{to_name}'
+                    **{"class": "active" if is_current else ""},
+                )
+                timeline_link.string = f"{from_name}→{to_name}"
                 timeline_nav.append(timeline_link)
             else:
                 # Create disabled span for non-existent diffs
-                disabled_span = soup.new_tag('span', **{'class': 'disabled'})
-                disabled_span.string = f'{from_name}→{to_name}'
+                disabled_span = soup.new_tag("span", **{"class": "disabled"})
+                disabled_span.string = f"{from_name}→{to_name}"
                 timeline_nav.append(disabled_span)
 
         header.append(timeline_nav)
 
         # External links
-        links_div = soup.new_tag('div', **{'class': 'external-links'})
+        links_div = soup.new_tag("div", **{"class": "external-links"})
 
         # Add link icon
-        link_icon = soup.new_tag('i')
-        link_icon['class'] = FONT_AWESOME_ICONS['link'].split()
+        link_icon = soup.new_tag("i")
+        link_icon["class"] = FONT_AWESOME_ICONS["link"].split()
         links_div.append(link_icon)
-        links_div.append(' ')
+        links_div.append(" ")
 
-        eelis_link = soup.new_tag('a',
+        eelis_link = soup.new_tag(
+            "a",
             href=f'https://eel.is/c++draft/{context["stable_name"]}',
-            target='_blank',
-            rel='noopener noreferrer')
-        eelis_link.string = 'Current Draft'
+            target="_blank",
+            rel="noopener noreferrer",
+        )
+        eelis_link.string = "Current Draft"
         links_div.append(eelis_link)
-        links_div.append(' | ')
+        links_div.append(" | ")
 
-        github_link = soup.new_tag('a',
-            href=f'https://github.com/cplusplus/draft',
-            target='_blank',
-            rel='noopener noreferrer')
-        github_link.string = 'LaTeX Source'
+        github_link = soup.new_tag(
+            "a",
+            href="https://github.com/cplusplus/draft",
+            target="_blank",
+            rel="noopener noreferrer",
+        )
+        github_link.string = "LaTeX Source"
         links_div.append(github_link)
 
         header.append(links_div)
 
         # Archived versions (timsong-cpp.github.io)
-        from_timsong = get_timsong_url(context['from_tag'], context['stable_name'])
-        to_timsong = get_timsong_url(context['to_tag'], context['stable_name'])
+        from_timsong = get_timsong_url(context["from_tag"], context["stable_name"])
+        to_timsong = get_timsong_url(context["to_tag"], context["stable_name"])
 
         if from_timsong or to_timsong:
-            archived_div = soup.new_tag('div', **{'class': 'external-links'})
+            archived_div = soup.new_tag("div", **{"class": "external-links"})
 
             # Add book icon
-            book_icon = soup.new_tag('i')
-            book_icon['class'] = FONT_AWESOME_ICONS['book'].split()
+            book_icon = soup.new_tag("i")
+            book_icon["class"] = FONT_AWESOME_ICONS["book"].split()
             archived_div.append(book_icon)
-            archived_div.append(' Archived: ')
+            archived_div.append(" Archived: ")
 
             if from_timsong:
-                from_archived_link = soup.new_tag('a',
-                    href=from_timsong,
-                    target='_blank',
-                    rel='noopener noreferrer')
-                from_archived_link.string = context['from_version']
+                from_archived_link = soup.new_tag(
+                    "a", href=from_timsong, target="_blank", rel="noopener noreferrer"
+                )
+                from_archived_link.string = context["from_version"]
                 archived_div.append(from_archived_link)
 
             if from_timsong and to_timsong:
-                archived_div.append(' | ')
+                archived_div.append(" | ")
 
             if to_timsong:
-                to_archived_link = soup.new_tag('a',
-                    href=to_timsong,
-                    target='_blank',
-                    rel='noopener noreferrer')
-                to_archived_link.string = context['to_version']
+                to_archived_link = soup.new_tag(
+                    "a", href=to_timsong, target="_blank", rel="noopener noreferrer"
+                )
+                to_archived_link.string = context["to_version"]
                 archived_div.append(to_archived_link)
 
             header.append(archived_div)
 
         # Markdown source links
-        md_links_div = soup.new_tag('div', **{'class': 'external-links'})
+        md_links_div = soup.new_tag("div", **{"class": "external-links"})
 
         # Add markdown icon
-        markdown_icon = soup.new_tag('i')
-        markdown_icon['class'] = FONT_AWESOME_ICONS['markdown'].split()
+        markdown_icon = soup.new_tag("i")
+        markdown_icon["class"] = FONT_AWESOME_ICONS["markdown"].split()
         md_links_div.append(markdown_icon)
-        md_links_div.append(' Markdown: ')
+        md_links_div.append(" Markdown: ")
 
-        from_md_link = soup.new_tag('a',
-            href=get_github_markdown_url(context['from_tag'], context['stable_name']),
-            target='_blank',
-            rel='noopener noreferrer')
-        from_md_link.string = context['from_version']
+        from_md_link = soup.new_tag(
+            "a",
+            href=get_github_markdown_url(context["from_tag"], context["stable_name"]),
+            target="_blank",
+            rel="noopener noreferrer",
+        )
+        from_md_link.string = context["from_version"]
         md_links_div.append(from_md_link)
-        md_links_div.append(' | ')
+        md_links_div.append(" | ")
 
-        to_md_link = soup.new_tag('a',
-            href=get_github_markdown_url(context['to_tag'], context['stable_name']),
-            target='_blank',
-            rel='noopener noreferrer')
-        to_md_link.string = context['to_version']
+        to_md_link = soup.new_tag(
+            "a",
+            href=get_github_markdown_url(context["to_tag"], context["stable_name"]),
+            target="_blank",
+            rel="noopener noreferrer",
+        )
+        to_md_link.string = context["to_version"]
         md_links_div.append(to_md_link)
 
         header.append(md_links_div)
 
         # Large file warning
         if size_kb > 100:
-            warning_div = soup.new_tag('div', **{'class': 'warning large-file-warning'})
+            warning_div = soup.new_tag("div", **{"class": "warning large-file-warning"})
 
             # Add warning icon
-            warning_icon = soup.new_tag('i')
-            warning_icon['class'] = FONT_AWESOME_ICONS['warning'].split()
+            warning_icon = soup.new_tag("i")
+            warning_icon["class"] = FONT_AWESOME_ICONS["warning"].split()
             warning_div.append(warning_icon)
-            warning_div.append(f' Large diff ({size_kb} KB) - rendering may be slow on some devices')
+            warning_div.append(
+                f" Large diff ({size_kb} KB) - rendering may be slow on some devices"
+            )
 
             header.append(warning_div)
 
@@ -732,16 +745,18 @@ def inject_navigation(html_file: Path, context: Dict, env: Environment) -> bool:
             soup.body.insert(0, author_banner)
 
             # Add main-content id to the diff div for skip-link
-            diff_div = soup.find('div', id='diff')
+            diff_div = soup.find("div", id="diff")
             if diff_div:
                 # Create a wrapper with main-content id
-                wrapper = soup.new_tag('div', id='main-content')
+                wrapper = soup.new_tag("div", id="main-content")
                 diff_div.wrap(wrapper)
 
         # Render footer from template
-        footer_template = env.get_template('_footer.html')
-        footer_html = footer_template.render(generated_date=context.get('generated_date', 'recently'))
-        footer_soup = BeautifulSoup(footer_html, 'html.parser')
+        footer_template = env.get_template("_footer.html")
+        footer_html = footer_template.render(
+            generated_date=context.get("generated_date", "recently")
+        )
+        footer_soup = BeautifulSoup(footer_html, "html.parser")
 
         # Insert footer at end of body
         if soup.body and footer_soup.footer:
@@ -749,83 +764,85 @@ def inject_navigation(html_file: Path, context: Dict, env: Environment) -> bool:
 
         # Update page title
         if soup.title:
-            soup.title.string = context.get('title', 'C++ Standard Diff')
+            soup.title.string = context.get("title", "C++ Standard Diff")
         elif soup.head:
-            title_tag = soup.new_tag('title')
-            title_tag.string = context.get('title', 'C++ Standard Diff')
+            title_tag = soup.new_tag("title")
+            title_tag.string = context.get("title", "C++ Standard Diff")
             soup.head.insert(0, title_tag)
 
         # Add meta tags
         if soup.head:
             # Theme color
-            theme_meta = soup.new_tag('meta', attrs={'name': 'theme-color', 'content': '#00a500'})
+            theme_meta = soup.new_tag("meta", attrs={"name": "theme-color", "content": "#00a500"})
             soup.head.append(theme_meta)
 
             # Canonical URL
-            canonical_url = f"https://cppstdmd.com/diffs/{context['version_slug']}/{Path(html_file).name}"
-            canonical_link = soup.new_tag('link', rel='canonical', href=canonical_url)
+            canonical_url = (
+                f"https://cppstdmd.com/diffs/{context['version_slug']}/{Path(html_file).name}"
+            )
+            canonical_link = soup.new_tag("link", rel="canonical", href=canonical_url)
             soup.head.append(canonical_link)
 
             # Open Graph
             og_tags = [
-                ('og:title', context.get('title', 'C++ Standard Diff')),
-                ('og:description', f"View changes in section {context['stable_name']} between {context['from_version']} and {context['to_version']}"),
-                ('og:type', 'website'),
-                ('og:url', canonical_url),
-                ('og:site_name', 'C++ Standard Evolution Viewer'),
+                ("og:title", context.get("title", "C++ Standard Diff")),
+                (
+                    "og:description",
+                    f"View changes in section {context['stable_name']} between {context['from_version']} and {context['to_version']}",
+                ),
+                ("og:type", "website"),
+                ("og:url", canonical_url),
+                ("og:site_name", "C++ Standard Evolution Viewer"),
             ]
             for prop, content_val in og_tags:
-                og_meta = soup.new_tag('meta', property=prop, content=content_val)
+                og_meta = soup.new_tag("meta", property=prop, content=content_val)
                 soup.head.append(og_meta)
 
             # Twitter Card
             twitter_tags = [
-                ('twitter:card', 'summary'),
-                ('twitter:title', context.get('title', 'C++ Standard Diff')),
-                ('twitter:description', f"Changes in {context['stable_name']} between {context['from_version']} and {context['to_version']}"),
-                ('twitter:creator', '@lefticus'),
+                ("twitter:card", "summary"),
+                ("twitter:title", context.get("title", "C++ Standard Diff")),
+                (
+                    "twitter:description",
+                    f"Changes in {context['stable_name']} between {context['from_version']} and {context['to_version']}",
+                ),
+                ("twitter:creator", "@lefticus"),
             ]
             for name, content_val in twitter_tags:
-                twitter_meta = soup.new_tag('meta', attrs={'name': name, 'content': content_val})
+                twitter_meta = soup.new_tag("meta", attrs={"name": name, "content": content_val})
                 soup.head.append(twitter_meta)
 
         # Add skip-to-content link at start of body
         if soup.body:
-            skip_link = soup.new_tag('a', href='#main-content', **{'class': 'skip-link'})
-            skip_link.string = 'Skip to main content'
+            skip_link = soup.new_tag("a", href="#main-content", **{"class": "skip-link"})
+            skip_link.string = "Skip to main content"
             soup.body.insert(0, skip_link)
 
         # Add CSS links to head
         if soup.head:
             # Add Font Awesome CSS
-            fa_css_link = soup.new_tag('link',
-                rel='stylesheet',
-                href='../../css/fontawesome.min.css')
+            fa_css_link = soup.new_tag(
+                "link", rel="stylesheet", href="../../css/fontawesome.min.css"
+            )
             soup.head.append(fa_css_link)
 
-            fa_solid_link = soup.new_tag('link',
-                rel='stylesheet',
-                href='../../css/solid.min.css')
+            fa_solid_link = soup.new_tag("link", rel="stylesheet", href="../../css/solid.min.css")
             soup.head.append(fa_solid_link)
 
-            fa_brands_link = soup.new_tag('link',
-                rel='stylesheet',
-                href='../../css/brands.min.css')
+            fa_brands_link = soup.new_tag("link", rel="stylesheet", href="../../css/brands.min.css")
             soup.head.append(fa_brands_link)
 
             # Add custom CSS
-            css_link = soup.new_tag('link',
-                rel='stylesheet',
-                href='../../css/custom.css')
+            css_link = soup.new_tag("link", rel="stylesheet", href="../../css/custom.css")
             soup.head.append(css_link)
 
         # Add navigation.js script before closing body
         if soup.body:
-            script_tag = soup.new_tag('script', src='../../js/navigation.js')
+            script_tag = soup.new_tag("script", src="../../js/navigation.js")
             soup.body.append(script_tag)
 
         # Write modified HTML
-        with open(html_file, 'w', encoding='utf-8') as f:
+        with open(html_file, "w", encoding="utf-8") as f:
             f.write(str(soup))
 
         return True
@@ -835,7 +852,9 @@ def inject_navigation(html_file: Path, context: Dict, env: Environment) -> bool:
         return False
 
 
-def collect_stable_names(diff_dir: Path, max_dots: Optional[int] = None, limit: Optional[int] = None) -> List[Dict]:
+def collect_stable_names(
+    diff_dir: Path, max_dots: int | None = None, limit: int | None = None
+) -> list[dict]:
     """Collect stable names from a diff directory.
 
     Args:
@@ -852,7 +871,7 @@ def collect_stable_names(diff_dir: Path, max_dots: Optional[int] = None, limit: 
         print(f"Warning: Directory not found: {diff_dir}")
         return stable_names
 
-    diff_files = sorted(diff_dir.glob('*.diff'))
+    diff_files = sorted(diff_dir.glob("*.diff"))
 
     for diff_file in diff_files:
         name = extract_stable_name(diff_file)
@@ -865,13 +884,15 @@ def collect_stable_names(diff_dir: Path, max_dots: Optional[int] = None, limit: 
         if max_dots is not None and get_dot_count(name) > max_dots:
             continue
 
-        stable_names.append({
-            'name': name,
-            'size_kb': get_file_size_kb(diff_file),
-            'line_count': count_diff_lines(diff_file),
-            'file': diff_file.stem,
-            'path': diff_file
-        })
+        stable_names.append(
+            {
+                "name": name,
+                "size_kb": get_file_size_kb(diff_file),
+                "line_count": count_diff_lines(diff_file),
+                "file": diff_file.stem,
+                "path": diff_file,
+            }
+        )
 
         if limit and len(stable_names) >= limit:
             break
@@ -879,9 +900,9 @@ def collect_stable_names(diff_dir: Path, max_dots: Optional[int] = None, limit: 
     return stable_names
 
 
-def build_stable_name_availability(stable_name: str,
-                                   version_pairs: List[Tuple],
-                                   base_diffs_path: Path) -> Dict[str, bool]:
+def build_stable_name_availability(
+    stable_name: str, version_pairs: list[tuple], base_diffs_path: Path
+) -> dict[str, bool]:
     """Check which version pairs have this stable name by scanning .diff files.
 
     This pre-builds a lookup table to avoid race conditions during parallel
@@ -900,14 +921,16 @@ def build_stable_name_availability(stable_name: str,
     availability = {}
     safe_name = sanitize_filename(stable_name)
 
-    for from_tag, to_tag, from_name, to_name, slug in version_pairs:
-        diff_file = base_diffs_path / f'{from_tag}_to_{to_tag}' / 'by_stable_name' / f'{safe_name}.diff'
+    for from_tag, to_tag, _from_name, _to_name, slug in version_pairs:
+        diff_file = (
+            base_diffs_path / f"{from_tag}_to_{to_tag}" / "by_stable_name" / f"{safe_name}.diff"
+        )
         availability[slug] = diff_file.exists()
 
     return availability
 
 
-def generate_single_diff(args: Tuple) -> Tuple[bool, str, str]:
+def generate_single_diff(args: tuple) -> tuple[bool, str, str]:
     """Worker function to generate a single diff HTML (for parallel execution).
 
     This function is designed to be called from ProcessPoolExecutor.
@@ -924,16 +947,17 @@ def generate_single_diff(args: Tuple) -> Tuple[bool, str, str]:
     """
     item, diff_output_dir, context, templates_dir = args
 
-    stable_name = item['name']
+    stable_name = item["name"]
     output_file = Path(diff_output_dir) / f'{item["file"]}.html'
 
     try:
         # Create Jinja2 environment for this worker
         from jinja2 import Environment, FileSystemLoader
+
         env = Environment(loader=FileSystemLoader(str(templates_dir)))
 
         # Generate HTML with diff2html
-        if not generate_diff_html(item['path'], output_file, context):
+        if not generate_diff_html(item["path"], output_file, context):
             return (False, stable_name, "diff2html failed")
 
         # Inject custom navigation
@@ -946,11 +970,18 @@ def generate_single_diff(args: Tuple) -> Tuple[bool, str, str]:
         return (False, stable_name, f"exception: {e}")
 
 
-def generate_version_pair(from_tag: str, to_tag: str, from_name: str,
-                         to_name: str, slug: str, output_path: Path,
-                         env: Environment, max_dots: Optional[int] = None,
-                         limit: Optional[int] = None,
-                         max_workers: Optional[int] = None) -> Dict:
+def generate_version_pair(
+    from_tag: str,
+    to_tag: str,
+    from_name: str,
+    to_name: str,
+    slug: str,
+    output_path: Path,
+    env: Environment,
+    max_dots: int | None = None,
+    limit: int | None = None,
+    max_workers: int | None = None,
+) -> dict:
     """Generate pages for one version pair.
 
     Args:
@@ -970,19 +1001,19 @@ def generate_version_pair(from_tag: str, to_tag: str, from_name: str,
     """
     print(f"\n📦 Processing {from_name} → {to_name}...")
 
-    diff_dir = Path(f'diffs/{from_tag}_to_{to_tag}/by_stable_name')
+    diff_dir = Path(f"diffs/{from_tag}_to_{to_tag}/by_stable_name")
 
     if not diff_dir.exists():
         print(f"  ⚠️  Directory not found: {diff_dir}")
         return {
-            'count': 0,
-            'total_size_kb': 0,
-            'total_lines': 0,
-            'avg_size_kb': 0,
-            'sections': [],
-            'from_name': from_name,
-            'to_name': to_name,
-            'slug': slug
+            "count": 0,
+            "total_size_kb": 0,
+            "total_lines": 0,
+            "avg_size_kb": 0,
+            "sections": [],
+            "from_name": from_name,
+            "to_name": to_name,
+            "slug": slug,
         }
 
     # Collect stable names
@@ -995,22 +1026,20 @@ def generate_version_pair(from_tag: str, to_tag: str, from_name: str,
 
     if not stable_names:
         return {
-            'count': 0,
-            'total_size_kb': 0,
-            'total_lines': 0,
-            'avg_size_kb': 0,
-            'sections': [],
-            'from_name': from_name,
-            'to_name': to_name,
-            'slug': slug
+            "count": 0,
+            "total_size_kb": 0,
+            "total_lines": 0,
+            "avg_size_kb": 0,
+            "sections": [],
+            "from_name": from_name,
+            "to_name": to_name,
+            "slug": slug,
         }
 
     # Generate overview page
-    template = env.get_template('version_overview.html')
-    generated_date = datetime.now().strftime('%Y-%m-%d')
-    stats = {
-        'generated_date': generated_date
-    }
+    template = env.get_template("version_overview.html")
+    generated_date = datetime.now().strftime("%Y-%m-%d")
+    stats = {"generated_date": generated_date}
     content = template.render(
         from_name=from_name,
         to_name=to_name,
@@ -1020,20 +1049,20 @@ def generate_version_pair(from_tag: str, to_tag: str, from_name: str,
         stable_names=stable_names,
         version_pairs=VERSION_PAIRS,
         stats=stats,
-        generated_date=generated_date
+        generated_date=generated_date,
     )
 
-    version_dir = output_path / 'versions'
+    version_dir = output_path / "versions"
     version_dir.mkdir(exist_ok=True, parents=True)
-    overview_file = version_dir / f'{slug}.html'
-    overview_file.write_text(content, encoding='utf-8')
+    overview_file = version_dir / f"{slug}.html"
+    overview_file.write_text(content, encoding="utf-8")
     print(f"  ✓ Generated overview: {overview_file}")
 
     # Generate search index
     generate_search_index(stable_names, version_dir, slug)
 
     # Generate individual diff pages in parallel
-    diff_output_dir = output_path / 'diffs' / slug
+    diff_output_dir = output_path / "diffs" / slug
     diff_output_dir.mkdir(parents=True, exist_ok=True)
 
     # Prepare tasks for parallel execution
@@ -1041,24 +1070,24 @@ def generate_version_pair(from_tag: str, to_tag: str, from_name: str,
     for item in stable_names:
         # Build availability lookup to avoid race conditions during parallel processing
         stable_name_availability = build_stable_name_availability(
-            stable_name=item['name'],
+            stable_name=item["name"],
             version_pairs=VERSION_PAIRS,
-            base_diffs_path=output_path.parent / 'diffs'
+            base_diffs_path=output_path.parent / "diffs",
         )
 
         context = {
-            'title': f'[{item["name"]}] - {from_name} → {to_name}',
-            'stable_name': item['name'],
-            'stable_name_file': item['file'],
-            'from_version': from_name,
-            'to_version': to_name,
-            'from_tag': from_tag,
-            'to_tag': to_tag,
-            'version_slug': slug,
-            'file_size_kb': item['size_kb'],
-            'line_count': item['line_count'],
-            'generated_date': datetime.now().strftime('%Y-%m-%d'),
-            'stable_name_availability': stable_name_availability
+            "title": f'[{item["name"]}] - {from_name} → {to_name}',
+            "stable_name": item["name"],
+            "stable_name_file": item["file"],
+            "from_version": from_name,
+            "to_version": to_name,
+            "from_tag": from_tag,
+            "to_tag": to_tag,
+            "version_slug": slug,
+            "file_size_kb": item["size_kb"],
+            "line_count": item["line_count"],
+            "generated_date": datetime.now().strftime("%Y-%m-%d"),
+            "stable_name_availability": stable_name_availability,
         }
         # Get templates directory from env.loader
         templates_dir = Path(env.loader.searchpath[0])
@@ -1071,8 +1100,7 @@ def generate_version_pair(from_tag: str, to_tag: str, from_name: str,
     with ProcessPoolExecutor(max_workers=max_workers) as executor:
         # Submit all tasks
         future_to_name = {
-            executor.submit(generate_single_diff, task): task[0]['name']
-            for task in tasks
+            executor.submit(generate_single_diff, task): task[0]["name"] for task in tasks
         }
 
         # Process completed tasks
@@ -1097,36 +1125,36 @@ def generate_version_pair(from_tag: str, to_tag: str, from_name: str,
     print(f"  ✓ Successfully generated {success_count}/{len(stable_names)} diffs")
 
     # Calculate statistics
-    total_size_kb = sum(item['size_kb'] for item in stable_names)
-    total_lines = sum(item['line_count'] for item in stable_names)
+    total_size_kb = sum(item["size_kb"] for item in stable_names)
+    total_lines = sum(item["line_count"] for item in stable_names)
     avg_size_kb = round(total_size_kb / len(stable_names), 1) if stable_names else 0
 
     # Build sections list for statistics
     sections = [
         {
-            'name': item['name'],
-            'size_kb': item['size_kb'],
-            'lines': item['line_count'],
-            'from_name': from_name,
-            'to_name': to_name,
-            'slug': slug
+            "name": item["name"],
+            "size_kb": item["size_kb"],
+            "lines": item["line_count"],
+            "from_name": from_name,
+            "to_name": to_name,
+            "slug": slug,
         }
         for item in stable_names
     ]
 
     return {
-        'count': success_count,
-        'total_size_kb': round(total_size_kb, 1),
-        'total_lines': total_lines,
-        'avg_size_kb': avg_size_kb,
-        'sections': sections,
-        'from_name': from_name,
-        'to_name': to_name,
-        'slug': slug
+        "count": success_count,
+        "total_size_kb": round(total_size_kb, 1),
+        "total_lines": total_lines,
+        "avg_size_kb": avg_size_kb,
+        "sections": sections,
+        "from_name": from_name,
+        "to_name": to_name,
+        "slug": slug,
     }
 
 
-def generate_landing_page(output_path: Path, env: Environment, stats: Dict):
+def generate_landing_page(output_path: Path, env: Environment, stats: dict):
     """Generate the landing page.
 
     Args:
@@ -1136,19 +1164,19 @@ def generate_landing_page(output_path: Path, env: Environment, stats: Dict):
     """
     print("\n📄 Generating landing page...")
 
-    template = env.get_template('index.html')
+    template = env.get_template("index.html")
     content = template.render(
         version_pairs=VERSION_PAIRS,
         stats=stats,
-        generated_date=stats.get('generated_date', 'recently')
+        generated_date=stats.get("generated_date", "recently"),
     )
 
-    index_file = output_path / 'index.html'
-    index_file.write_text(content, encoding='utf-8')
+    index_file = output_path / "index.html"
+    index_file.write_text(content, encoding="utf-8")
     print(f"  ✓ Generated: {index_file}")
 
 
-def generate_statistics_page(output_path: Path, env: Environment, stats: Dict):
+def generate_statistics_page(output_path: Path, env: Environment, stats: dict):
     """Generate the statistics page with metrics and insights.
 
     Args:
@@ -1166,54 +1194,52 @@ def generate_statistics_page(output_path: Path, env: Environment, stats: Dict):
         except (ValueError, TypeError):
             return str(value)
 
-    env.filters['format_number'] = format_number
+    env.filters["format_number"] = format_number
 
     # Calculate aggregate statistics
     all_sections = []
     total_size_kb = 0
     total_lines = 0
 
-    for pair_stats in stats.get('version_pairs', []):
-        total_size_kb += pair_stats.get('total_size_kb', 0)
-        total_lines += pair_stats.get('total_lines', 0)
+    for pair_stats in stats.get("version_pairs", []):
+        total_size_kb += pair_stats.get("total_size_kb", 0)
+        total_lines += pair_stats.get("total_lines", 0)
 
         # Collect all sections for top sections list
-        for section in pair_stats.get('sections', []):
+        for section in pair_stats.get("sections", []):
             all_sections.append(section)
 
     # Sort sections by size (descending)
-    top_sections = sorted(all_sections, key=lambda x: x['size_kb'], reverse=True)
+    top_sections = sorted(all_sections, key=lambda x: x["size_kb"], reverse=True)
 
     # Find largest single diff
     largest_diff = top_sections[0] if top_sections else None
 
     # Find most active transition (by count)
-    most_active = max(stats.get('version_pairs', []),
-                     key=lambda x: x.get('count', 0),
-                     default={})
+    most_active = max(stats.get("version_pairs", []), key=lambda x: x.get("count", 0), default={})
 
     # Find largest transition (by total size)
-    largest_transition = max(stats.get('version_pairs', []),
-                           key=lambda x: x.get('total_size_kb', 0),
-                           default={})
+    largest_transition = max(
+        stats.get("version_pairs", []), key=lambda x: x.get("total_size_kb", 0), default={}
+    )
 
     # Load template after adding filters
-    template = env.get_template('statistics.html')
+    template = env.get_template("statistics.html")
 
     content = template.render(
-        version_pairs=stats.get('version_pairs', []),
-        total_diffs=stats.get('total_diffs', 0),
+        version_pairs=stats.get("version_pairs", []),
+        total_diffs=stats.get("total_diffs", 0),
         total_size_mb=round(total_size_kb / 1024, 1),
         total_lines=total_lines,
         top_sections=top_sections,
         largest_diff=largest_diff,
         most_active=most_active,
         largest_transition=largest_transition,
-        generated_date=stats.get('generated_date', 'recently')
+        generated_date=stats.get("generated_date", "recently"),
     )
 
-    stats_file = output_path / 'statistics.html'
-    stats_file.write_text(content, encoding='utf-8')
+    stats_file = output_path / "statistics.html"
+    stats_file.write_text(content, encoding="utf-8")
     print(f"  ✓ Generated: {stats_file}")
 
 
@@ -1226,48 +1252,48 @@ def copy_static_assets(output_path: Path):
     print("\n📁 Copying static assets...")
 
     # Create directories
-    css_dir = output_path / 'css'
-    js_dir = output_path / 'js'
+    css_dir = output_path / "css"
+    js_dir = output_path / "js"
     css_dir.mkdir(exist_ok=True, parents=True)
     js_dir.mkdir(exist_ok=True, parents=True)
 
     # Copy Font Awesome CSS files (minified versions)
-    fa_css_files = ['fontawesome.min.css', 'solid.min.css', 'brands.min.css']
+    fa_css_files = ["fontawesome.min.css", "solid.min.css", "brands.min.css"]
     for css_file in fa_css_files:
-        src = Path(f'templates/css/{css_file}')
+        src = Path(f"templates/css/{css_file}")
         if src.exists():
             shutil.copy(src, css_dir / css_file)
             print(f"  ✓ Copied {css_file}")
 
     # Copy custom CSS if exists
-    if Path('templates/css/custom.css').exists():
-        shutil.copy('templates/css/custom.css', css_dir / 'custom.css')
-        print(f"  ✓ Copied custom.css")
+    if Path("templates/css/custom.css").exists():
+        shutil.copy("templates/css/custom.css", css_dir / "custom.css")
+        print("  ✓ Copied custom.css")
 
     # Copy JS if exists
-    if Path('templates/js/navigation.js').exists():
-        shutil.copy('templates/js/navigation.js', js_dir / 'navigation.js')
-        print(f"  ✓ Copied navigation.js")
+    if Path("templates/js/navigation.js").exists():
+        shutil.copy("templates/js/navigation.js", js_dir / "navigation.js")
+        print("  ✓ Copied navigation.js")
 
     # Copy Source Sans Pro and Source Code Pro fonts
-    fonts_src = Path('templates/fonts')
+    fonts_src = Path("templates/fonts")
     if fonts_src.exists():
-        fonts_dest = output_path / 'fonts'
+        fonts_dest = output_path / "fonts"
         fonts_dest.mkdir(exist_ok=True, parents=True)
 
         # Copy Source font files (keep pattern specific to avoid copying Nerd Fonts)
-        for font_file in fonts_src.glob('Source*.woff2'):
+        for font_file in fonts_src.glob("Source*.woff2"):
             shutil.copy(font_file, fonts_dest / font_file.name)
             print(f"  ✓ Copied {font_file.name}")
 
     # Copy Font Awesome webfonts
-    webfonts_src = Path('templates/webfonts')
+    webfonts_src = Path("templates/webfonts")
     if webfonts_src.exists():
-        webfonts_dest = output_path / 'webfonts'
+        webfonts_dest = output_path / "webfonts"
         webfonts_dest.mkdir(exist_ok=True, parents=True)
 
         # Copy Font Awesome font files
-        fa_fonts = ['fa-solid-900.woff2', 'fa-brands-400.woff2']
+        fa_fonts = ["fa-solid-900.woff2", "fa-brands-400.woff2"]
         for font_file in fa_fonts:
             src = webfonts_src / font_file
             if src.exists():
@@ -1275,23 +1301,24 @@ def copy_static_assets(output_path: Path):
                 print(f"  ✓ Copied {font_file}")
 
     # Copy 404 page
-    src_404 = Path('templates/404.html')
+    src_404 = Path("templates/404.html")
     if src_404.exists():
         # Need to render it with Jinja2 first
         from jinja2 import Environment, FileSystemLoader
-        env = Environment(loader=FileSystemLoader('templates'))
-        template = env.get_template('404.html')
+
+        env = Environment(loader=FileSystemLoader("templates"))
+        template = env.get_template("404.html")
         content = template.render()
-        (output_path / '404.html').write_text(content, encoding='utf-8')
-        print(f"  ✓ Generated 404.html")
+        (output_path / "404.html").write_text(content, encoding="utf-8")
+        print("  ✓ Generated 404.html")
 
     # Create .nojekyll file to disable Jekyll processing
-    nojekyll_file = output_path / '.nojekyll'
+    nojekyll_file = output_path / ".nojekyll"
     nojekyll_file.touch()
-    print(f"  ✓ Created .nojekyll")
+    print("  ✓ Created .nojekyll")
 
 
-def generate_seo_files(output_path: Path, stats: Dict, base_url: str = 'https://cppstdmd.com'):
+def generate_seo_files(output_path: Path, stats: dict, base_url: str = "https://cppstdmd.com"):
     """Generate robots.txt and sitemap.xml for SEO.
 
     Args:
@@ -1302,70 +1329,70 @@ def generate_seo_files(output_path: Path, stats: Dict, base_url: str = 'https://
     print("\n🔍 Generating SEO files...")
 
     # Generate robots.txt
-    robots_content = """# Allow all crawlers
+    robots_content = f"""# Allow all crawlers
 User-agent: *
 Allow: /
 
 # Sitemap location
 Sitemap: {base_url}/sitemap.xml
-""".format(base_url=base_url)
+"""
 
-    robots_file = output_path / 'robots.txt'
-    robots_file.write_text(robots_content, encoding='utf-8')
-    print(f"  ✓ Generated robots.txt")
+    robots_file = output_path / "robots.txt"
+    robots_file.write_text(robots_content, encoding="utf-8")
+    print("  ✓ Generated robots.txt")
 
     # Generate sitemap.xml
     sitemap_urls = []
 
     # Add homepage
-    sitemap_urls.append({
-        'loc': f'{base_url}/',
-        'priority': '1.0',
-        'changefreq': 'weekly'
-    })
+    sitemap_urls.append({"loc": f"{base_url}/", "priority": "1.0", "changefreq": "weekly"})
 
     # Add version overview pages
-    for from_tag, to_tag, from_name, to_name, slug in VERSION_PAIRS:
-        sitemap_urls.append({
-            'loc': f'{base_url}/versions/{slug}.html',
-            'priority': '0.8',
-            'changefreq': 'weekly'
-        })
+    for _from_tag, _to_tag, _from_name, _to_name, slug in VERSION_PAIRS:
+        sitemap_urls.append(
+            {"loc": f"{base_url}/versions/{slug}.html", "priority": "0.8", "changefreq": "weekly"}
+        )
 
     # Add all diff pages
-    for pair_stats in stats.get('version_pairs', []):
-        slug = pair_stats['slug']
-        diff_dir = output_path / 'diffs' / slug
+    for pair_stats in stats.get("version_pairs", []):
+        slug = pair_stats["slug"]
+        diff_dir = output_path / "diffs" / slug
         if diff_dir.exists():
-            for diff_file in sorted(diff_dir.glob('*.html')):
-                sitemap_urls.append({
-                    'loc': f'{base_url}/diffs/{slug}/{diff_file.name}',
-                    'priority': '0.6',
-                    'changefreq': 'monthly'
-                })
+            for diff_file in sorted(diff_dir.glob("*.html")):
+                sitemap_urls.append(
+                    {
+                        "loc": f"{base_url}/diffs/{slug}/{diff_file.name}",
+                        "priority": "0.6",
+                        "changefreq": "monthly",
+                    }
+                )
 
     # Build XML
     xml_lines = ['<?xml version="1.0" encoding="UTF-8"?>']
     xml_lines.append('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">')
 
     for url_data in sitemap_urls:
-        xml_lines.append('  <url>')
+        xml_lines.append("  <url>")
         xml_lines.append(f'    <loc>{url_data["loc"]}</loc>')
         xml_lines.append(f'    <priority>{url_data["priority"]}</priority>')
         xml_lines.append(f'    <changefreq>{url_data["changefreq"]}</changefreq>')
-        xml_lines.append('  </url>')
+        xml_lines.append("  </url>")
 
-    xml_lines.append('</urlset>')
+    xml_lines.append("</urlset>")
 
-    sitemap_content = '\n'.join(xml_lines)
-    sitemap_file = output_path / 'sitemap.xml'
-    sitemap_file.write_text(sitemap_content, encoding='utf-8')
+    sitemap_content = "\n".join(xml_lines)
+    sitemap_file = output_path / "sitemap.xml"
+    sitemap_file.write_text(sitemap_content, encoding="utf-8")
     print(f"  ✓ Generated sitemap.xml ({len(sitemap_urls)} URLs)")
 
 
-def generate_site(output_dir: str = 'site', max_dots: Optional[int] = None,
-                 limit: Optional[int] = None, test_mode: bool = False,
-                 max_workers: Optional[int] = None):
+def generate_site(
+    output_dir: str = "site",
+    max_dots: int | None = None,
+    limit: int | None = None,
+    test_mode: bool = False,
+    max_workers: int | None = None,
+):
     """Main generation logic.
 
     Args:
@@ -1379,7 +1406,7 @@ def generate_site(output_dir: str = 'site', max_dots: Optional[int] = None,
     check_dependencies()
 
     # Setup Jinja2 environment
-    templates_dir = Path('templates')
+    templates_dir = Path("templates")
     if not templates_dir.exists():
         print(f"Error: Templates directory not found: {templates_dir}")
         print("Please ensure templates/ directory exists with required templates.")
@@ -1395,17 +1422,17 @@ def generate_site(output_dir: str = 'site', max_dots: Optional[int] = None,
     if max_workers is None:
         max_workers = os.cpu_count()
 
-    print(f"🚀 C++ Standard Evolution Viewer - Site Generator")
+    print("🚀 C++ Standard Evolution Viewer - Site Generator")
     print(f"   Output directory: {output_path.absolute()}")
     if max_dots is not None:
         print(f"   Max dots: {max_dots} (0-{max_dots} dots)")
     else:
-        print(f"   Max dots: unlimited (all levels)")
+        print("   Max dots: unlimited (all levels)")
     print(f"   Workers: {max_workers} (parallel processing)")
     if limit:
         print(f"   Limit: {limit} diffs per version pair")
     if test_mode:
-        print(f"   Mode: TEST (first version pair, 10 diffs)")
+        print("   Mode: TEST (first version pair, 10 diffs)")
 
     # Test mode: only process first version pair with small limit
     pairs_to_process = VERSION_PAIRS[:1] if test_mode else VERSION_PAIRS
@@ -1413,20 +1440,27 @@ def generate_site(output_dir: str = 'site', max_dots: Optional[int] = None,
 
     # Generate pages for each version pair
     stats = {
-        'total_diffs': 0,
-        'version_pairs': [],
-        'generated_date': datetime.now().strftime('%Y-%m-%d')
+        "total_diffs": 0,
+        "version_pairs": [],
+        "generated_date": datetime.now().strftime("%Y-%m-%d"),
     }
 
     for from_tag, to_tag, from_name, to_name, slug in pairs_to_process:
         pair_stats = generate_version_pair(
-            from_tag, to_tag, from_name, to_name, slug,
-            output_path, env, max_dots=max_dots, limit=test_limit,
-            max_workers=max_workers
+            from_tag,
+            to_tag,
+            from_name,
+            to_name,
+            slug,
+            output_path,
+            env,
+            max_dots=max_dots,
+            limit=test_limit,
+            max_workers=max_workers,
         )
 
-        stats['total_diffs'] += pair_stats['count']
-        stats['version_pairs'].append(pair_stats)
+        stats["total_diffs"] += pair_stats["count"]
+        stats["version_pairs"].append(pair_stats)
 
     # Generate landing page
     generate_landing_page(output_path, env, stats)
@@ -1440,19 +1474,19 @@ def generate_site(output_dir: str = 'site', max_dots: Optional[int] = None,
     # Generate SEO files
     generate_seo_files(output_path, stats)
 
-    print(f"\n✅ Site generation complete!")
+    print("\n✅ Site generation complete!")
     print(f"   Total diffs generated: {stats['total_diffs']}")
     print(f"   Output directory: {output_path.absolute()}")
-    print(f"\nTo view the site:")
+    print("\nTo view the site:")
     print(f"   cd {output_path}")
-    print(f"   python3 -m http.server 8000")
-    print(f"   Then open: http://localhost:8000")
+    print("   python3 -m http.server 8000")
+    print("   Then open: http://localhost:8000")
 
 
 def main():
     """CLI entry point."""
     parser = argparse.ArgumentParser(
-        description='Generate static HTML site for C++ standard evolution viewer',
+        description="Generate static HTML site for C++ standard evolution viewer",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
@@ -1470,19 +1504,39 @@ Examples:
 
   # Use more workers for faster generation
   python3 generate_html_site.py --output site/ --workers 8
-        """
+        """,
     )
 
-    parser.add_argument('--output', '-o', default='site',
-                       help='Output directory for generated site (default: site/)')
-    parser.add_argument('--max-dots', type=int, metavar='N',
-                       help='Maximum number of dots in stable names (default: no limit, all levels)')
-    parser.add_argument('--limit', type=int, metavar='N',
-                       help='Limit number of diffs per version pair (for testing)')
-    parser.add_argument('--workers', '-w', type=int, metavar='N',
-                       help='Number of parallel workers (default: CPU count)')
-    parser.add_argument('--test', action='store_true',
-                       help='Test mode: only process first 10 diffs from one version pair')
+    parser.add_argument(
+        "--output",
+        "-o",
+        default="site",
+        help="Output directory for generated site (default: site/)",
+    )
+    parser.add_argument(
+        "--max-dots",
+        type=int,
+        metavar="N",
+        help="Maximum number of dots in stable names (default: no limit, all levels)",
+    )
+    parser.add_argument(
+        "--limit",
+        type=int,
+        metavar="N",
+        help="Limit number of diffs per version pair (for testing)",
+    )
+    parser.add_argument(
+        "--workers",
+        "-w",
+        type=int,
+        metavar="N",
+        help="Number of parallel workers (default: CPU count)",
+    )
+    parser.add_argument(
+        "--test",
+        action="store_true",
+        help="Test mode: only process first 10 diffs from one version pair",
+    )
 
     args = parser.parse_args()
 
@@ -1492,7 +1546,7 @@ Examples:
             max_dots=args.max_dots,
             limit=args.limit,
             test_mode=args.test,
-            max_workers=args.workers
+            max_workers=args.workers,
         )
     except KeyboardInterrupt:
         print("\n\n⚠️  Generation interrupted by user")
@@ -1500,9 +1554,10 @@ Examples:
     except Exception as e:
         print(f"\n❌ Error: {e}")
         import traceback
+
         traceback.print_exc()
         sys.exit(1)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

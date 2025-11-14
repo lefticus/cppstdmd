@@ -10,9 +10,10 @@ User-facing scripts are in the root directory and can be run directly:
 - generate_diffs.py - Diff generator
 - generate_html_site.py - HTML site generator
 """
-from setuptools import setup, find_packages
 
-with open("requirements.txt", "r", encoding="utf-8") as fh:
+from setuptools import find_packages, setup
+
+with open("requirements.txt", encoding="utf-8") as fh:
     requirements = [line.strip() for line in fh if line.strip() and not line.startswith("#")]
 
 setup(

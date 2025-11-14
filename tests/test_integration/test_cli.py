@@ -1,9 +1,10 @@
 """Integration tests for CLI functionality"""
-import pytest
-import subprocess
-from pathlib import Path
-import tempfile
 
+import subprocess
+import tempfile
+from pathlib import Path
+
+import pytest
 
 pytestmark = pytest.mark.integration
 
@@ -76,7 +77,7 @@ class TestCLIBasic:
         if not input_file.exists():
             pytest.skip(f"Input file not found: {input_file}")
 
-        with tempfile.NamedTemporaryFile(suffix='.md', delete=False) as tmp:
+        with tempfile.NamedTemporaryFile(suffix=".md", delete=False) as tmp:
             output_file = Path(tmp.name)
 
         try:
@@ -131,17 +132,13 @@ class TestCLIGitIntegration:
         if not input_file.exists():
             pytest.skip(f"Input file not found: {input_file}")
 
-        with tempfile.NamedTemporaryFile(suffix='.md', delete=False) as tmp:
+        with tempfile.NamedTemporaryFile(suffix=".md", delete=False) as tmp:
             output_file = Path(tmp.name)
 
         try:
             result = subprocess.run(
-                cli_command + [
-                    str(input_file),
-                    "--git-ref", "n4140",  # C++14
-                    "-o", str(output_file),
-                    "-v"
-                ],
+                cli_command
+                + [str(input_file), "--git-ref", "n4140", "-o", str(output_file), "-v"],  # C++14
                 capture_output=True,
                 text=True,
             )
@@ -166,10 +163,7 @@ class TestCLIDirectory:
             output_dir = Path(tmpdir)
 
             result = subprocess.run(
-                cli_command + [
-                    str(draft_source_dir),
-                    "-o", str(output_dir)
-                ],
+                cli_command + [str(draft_source_dir), "-o", str(output_dir)],
                 capture_output=True,
                 text=True,
                 timeout=300,  # 5 minutes max
@@ -182,7 +176,7 @@ class TestCLIDirectory:
             assert len(md_files) > 5, f"Too few files converted: {len(md_files)}"
 
             # Verify specific expected files
-            expected_files = ['intro.md', 'basic.md', 'expressions.md']
+            expected_files = ["intro.md", "basic.md", "expressions.md"]
             for expected in expected_files:
                 expected_path = output_dir / expected
                 if expected_path.exists():
@@ -219,9 +213,11 @@ class TestCLIErrorHandling:
             pytest.skip(f"Input file not found: {input_file}")
 
         result = subprocess.run(
-            cli_command + [
+            cli_command
+            + [
                 str(input_file),
-                "--git-ref", "nonexistent-tag-12345",
+                "--git-ref",
+                "nonexistent-tag-12345",
             ],
             capture_output=True,
             text=True,

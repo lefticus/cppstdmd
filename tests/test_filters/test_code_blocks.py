@@ -1,14 +1,15 @@
 """Tests for cpp-code-blocks.lua filter"""
+
 import subprocess
-import pytest
-from pathlib import Path
 import sys
+from pathlib import Path
 
 # Import inject_macros helper from conftest
 sys.path.insert(0, str(Path(__file__).parent.parent))
 from conftest import inject_macros
 
 FILTER_PATH = Path("src/cpp_std_converter/filters/cpp-code-blocks.lua")
+
 
 def run_pandoc_with_filter(latex_content, filter_name="cpp-code-blocks.lua"):
     """Helper to run Pandoc with a filter on LaTeX content"""
@@ -29,6 +30,7 @@ def run_pandoc_with_filter(latex_content, filter_name="cpp-code-blocks.lua"):
     )
     return result.stdout, result.returncode
 
+
 def test_basic_codeblock():
     """Test basic codeblock conversion"""
     latex = r"""
@@ -44,8 +46,9 @@ int main() {
     assert "int main()" in output
     assert "return 0" in output
 
+
 def test_codeblock_with_commentellip():
-    """Test @\commentellip@ expansion"""
+    r"""Test @\commentellip@ expansion"""
     latex = r"""
 \begin{codeblock}
 int a, b;
@@ -57,6 +60,7 @@ a = a + 32760 + b + 5;
     assert code == 0
     assert "..." in output
     assert "@" not in output  # @ should be removed
+
 
 def test_codeblock_with_tcode():
     """Test @\tcode{x}@ expansion"""
@@ -71,6 +75,7 @@ void foo(@\tcode{int}@ x) {
     assert "int" in output
     assert "@" not in output
 
+
 def test_codeblocktu():
     """Test codeblocktu (translation unit) environment"""
     latex = r"""
@@ -83,6 +88,7 @@ int main() { }
     assert "``` cpp" in output
     assert "int main()" in output
 
+
 def test_outputblock():
     """Test outputblock environment"""
     latex = r"""
@@ -94,6 +100,7 @@ Hello, World!
     assert code == 0
     assert "```" in output
     assert "Hello, World!" in output
+
 
 def test_codeblockdigitsep():
     """Test codeblockdigitsep environment"""
@@ -109,6 +116,7 @@ int y = 0b1010'1010;
     assert "1'000'000" in output
     assert "0b1010'1010" in output
 
+
 def test_libconcept_in_codeblock():
     r"""Test \libconcept{} macro inside code block"""
     latex = r"""
@@ -122,6 +130,7 @@ void process(I first, I last);
     assert "input_iterator" in output
     assert "libconcept" not in output.lower()
     assert "@" not in output
+
 
 def test_iref_in_codeblock():
     r"""Test \iref{} macro inside code block"""
@@ -137,6 +146,7 @@ int x;
     assert "iref" not in output.lower()
     assert "@" not in output
 
+
 def test_seebelow_in_codeblock():
     r"""Test \seebelow macro inside code block"""
     latex = r"""
@@ -150,6 +160,7 @@ auto result = function(); // returns @\seebelow@
     assert "seebelow" not in output.lower()
     assert "@" not in output
 
+
 def test_unspec_in_codeblock():
     r"""Test \unspec macro inside code block"""
     latex = r"""
@@ -161,6 +172,7 @@ int value = @\unspec@; // unspecified value
     assert code == 0
     assert "unspecified" in output
     assert "@" not in output
+
 
 def test_expos_in_codeblock():
     r"""Test \expos macro inside code block"""
@@ -176,6 +188,7 @@ struct S {
     assert "exposition only" in output
     assert "\\expos" not in output
     assert "@" not in output
+
 
 def test_exposidnc_in_codeblock():
     r"""Test @\exposidnc{}@ macro inside code block (ranges.md/iterators.md bug)"""
@@ -198,6 +211,7 @@ template<bool Const, class T>
     # Backslashes should be gone
     assert "\\" not in output
 
+
 def test_unsp_with_impldef_in_codeblock():
     r"""Test @\UNSP{\impldef{}}@ nested macros in code block"""
     latex = r"""
@@ -218,6 +232,7 @@ namespace std {
     # @ delimiters should be gone
     assert "@" not in output
 
+
 def test_unsp_simple_in_codeblock():
     r"""Test @\UNSP{text}@ without nested macros"""
     latex = r"""
@@ -230,6 +245,7 @@ auto x = @\UNSP{some value}@;
     assert "some value" in output
     assert "\\UNSP" not in output
     assert "@" not in output
+
 
 def test_defnlibxname_in_codeblock():
     r"""Test \defnlibxname{} macro expansion in code blocks"""
@@ -246,6 +262,7 @@ def test_defnlibxname_in_codeblock():
     assert "\\defnlibxname" not in output
     assert "@" not in output
 
+
 def test_xname_in_codeblock():
     r"""Test \xname{} macro expansion in code blocks"""
     latex = r"""
@@ -260,6 +277,7 @@ typedef @\xname{type}@ MyType;
     assert "__type" in output
     assert "\\xname" not in output
     assert "@" not in output
+
 
 def test_mname_in_codeblock():
     r"""Test \mname{} macro expansion in code blocks"""
@@ -277,6 +295,7 @@ def test_mname_in_codeblock():
     assert "__VA_ARGS__" in output
     assert "\\mname" not in output
     assert "@" not in output
+
 
 def test_libheader_in_codeblock():
     r"""Test \libheader{} macro expansion in code blocks (plain angle brackets)"""
@@ -296,6 +315,7 @@ def test_libheader_in_codeblock():
     assert "`<memory>`" not in output
     assert "\\libheader" not in output
     assert "@" not in output
+
 
 def test_texttt_in_codeblock():
     r"""Test \texttt{} in code comments"""

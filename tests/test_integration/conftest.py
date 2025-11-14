@@ -11,8 +11,10 @@ Race condition fix: Previously, each test module had its own module-scoped
 draft_repo fixture, causing concurrent git checkouts on the same repository
 when running with -n auto. Session scope ensures sequential setup.
 """
-import pytest
+
 from pathlib import Path
+
+import pytest
 
 from cpp_std_converter.converter import Converter
 from cpp_std_converter.repo_manager import DraftRepoManager

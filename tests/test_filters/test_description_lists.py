@@ -1,13 +1,15 @@
 """Tests for description list handling in cpp-macros.lua filter"""
+
 import subprocess
-from pathlib import Path
 import sys
+from pathlib import Path
 
 # Import inject_macros helper from conftest
 sys.path.insert(0, str(Path(__file__).parent.parent))
 from conftest import inject_macros
 
 FILTER_PATH = Path("src/cpp_std_converter/filters/cpp-macros.lua")
+
 
 def run_pandoc_with_filter(latex_content):
     """Helper to run Pandoc with macro filter"""
@@ -28,6 +30,7 @@ def run_pandoc_with_filter(latex_content):
     )
     return result.stdout, result.returncode
 
+
 def test_simple_description_list():
     """Test basic description list with two items"""
     latex = r"""
@@ -47,6 +50,7 @@ Description for term two.
     assert "Description for term one" in output
     assert "Description for term two" in output
 
+
 def test_description_with_mname():
     r"""Test description list with \mname{} macro"""
     latex = r"""
@@ -65,6 +69,7 @@ The presumed name of the current source file.
     assert "date of translation" in output
     assert "presumed name" in output
 
+
 def test_description_with_xname():
     r"""Test description list with \xname{} macro"""
     latex = r"""
@@ -77,6 +82,7 @@ The integer literal value.
     assert code == 0
     assert "**`__cplusplus`**" in output
     assert "integer literal" in output
+
 
 def test_description_with_index_commands():
     """Test that index commands are stripped from terms"""
@@ -104,6 +110,7 @@ The date of translation.
     assert "integer literal" in output
     assert "date of translation" in output
 
+
 def test_description_with_tcode():
     r"""Test description list with \tcode{} in description text"""
     latex = r"""
@@ -118,6 +125,7 @@ Use \tcode{__VA_ARGS__} in macros.
     assert "**`__VA_ARGS__`**" in output
     assert "`__VA_ARGS__`" in output
     assert "preprocessing tokens" in output
+
 
 def test_nested_description_note():
     r"""Test description list containing a note environment"""
@@ -136,6 +144,7 @@ This macro is not predefined in \Cpp{}.
     assert "`__STDC__`" in output
     # Note: The note environment would be processed by cpp-notes-examples.lua filter
     # This test just ensures description list parsing doesn't break on nested environments
+
 
 def test_multiple_description_lists():
     """Test multiple separate description lists in one document"""

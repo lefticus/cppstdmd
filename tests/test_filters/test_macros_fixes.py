@@ -1,14 +1,15 @@
 """Tests for macro filter improvements (impldef, tcode with special chars)"""
+
 import subprocess
-from pathlib import Path
 import sys
+from pathlib import Path
 
 # Import inject_macros helper from conftest
 sys.path.insert(0, str(Path(__file__).parent.parent))
 from conftest import inject_macros
-import pytest
 
 FILTER_PATH = Path("src/cpp_std_converter/filters/cpp-macros.lua")
+
 
 def run_pandoc_with_filter(latex_content):
     """Helper to run Pandoc with macros filter"""
@@ -29,6 +30,7 @@ def run_pandoc_with_filter(latex_content):
     )
     return result.stdout, result.returncode
 
+
 def test_impldef_simple():
     """Test \\impldef macro conversion"""
     latex = r"The value is \impldef{description text}."
@@ -37,6 +39,7 @@ def test_impldef_simple():
     assert "*implementation-defined*" in output
     # The description should not appear
     assert "description text" not in output
+
 
 def test_impldef_with_nested_tcode():
     """Test \\impldef with nested \\tcode macro"""
@@ -48,6 +51,7 @@ def test_impldef_with_nested_tcode():
     assert "search locations" not in output
     assert "<>" not in output
 
+
 def test_tcode_with_hash():
     """Test \\tcode{\\#} conversion"""
     latex = r"It does not begin with a \tcode{\#} at the start."
@@ -56,6 +60,7 @@ def test_tcode_with_hash():
     assert "`#`" in output
     assert "does not begin with a" in output
 
+
 def test_tcode_with_double_hash():
     """Test \\tcode{\\#\\#} conversion"""
     latex = r"The \tcode{\#\#} operator is used for concatenation."
@@ -63,6 +68,7 @@ def test_tcode_with_double_hash():
     assert code == 0
     assert "`##`" in output
     assert "operator" in output
+
 
 def test_tcode_in_sentence():
     """Test \\tcode with various special characters"""

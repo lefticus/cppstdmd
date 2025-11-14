@@ -1,13 +1,15 @@
 """Tests for cpp-sections.lua filter"""
+
 import subprocess
-from pathlib import Path
 import sys
+from pathlib import Path
 
 # Import inject_macros helper from conftest
 sys.path.insert(0, str(Path(__file__).parent.parent))
 from conftest import inject_macros
 
 FILTER_PATH = Path("src/cpp_std_converter/filters/cpp-sections.lua")
+
 
 def run_pandoc_with_filter(latex_content):
     """Helper to run Pandoc with sections filter"""
@@ -28,12 +30,14 @@ def run_pandoc_with_filter(latex_content):
     )
     return result.stdout, result.returncode
 
+
 def test_rsec0_basic():
     """Test basic \\rSec0 heading"""
     latex = r"\rSec0[intro.scope]{Scope}"
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
     assert "# Scope" in output
+
 
 def test_rsec1_nested():
     """Test nested \\rSec1 heading"""
@@ -42,6 +46,7 @@ def test_rsec1_nested():
     assert code == 0
     assert "## Implementation compliance" in output
 
+
 def test_rsec2_nested():
     """Test \\rSec2 heading"""
     latex = r"\rSec2[intro.compliance.general]{General}"
@@ -49,12 +54,14 @@ def test_rsec2_nested():
     assert code == 0
     assert "### General" in output
 
+
 def test_rsec3_deeply_nested():
     """Test \\rSec3 heading"""
     latex = r"\rSec3[some.deep.nested.section]{Deep Section}"
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
     assert "#### Deep Section" in output
+
 
 def test_multiple_sections():
     """Test multiple sections in sequence"""
@@ -77,6 +84,7 @@ Details about C.
     assert "## Normative references" in output
     assert "### C Standard" in output
 
+
 def test_section_with_complex_title():
     """Test section with complex title containing macros"""
     # Note: This tests the section structure, macros should be handled by cpp-macros.lua
@@ -84,6 +92,7 @@ def test_section_with_complex_title():
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
     assert "# Types and the program structure" in output
+
 
 def test_section_in_context():
     """Test section in a realistic document context"""
@@ -110,6 +119,7 @@ The following documents are referred to in the text.
 # ============================================================================
 # Regression Tests for Section Link Definition Generation (commit 59c30740)
 # ============================================================================
+
 
 def test_section_link_definitions_generated():
     """Test that link definitions are generated for all section labels"""

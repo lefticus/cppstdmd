@@ -5,10 +5,11 @@ Tests the DraftRepoManager class that handles git operations for the
 C++ draft standard repository.
 """
 
+import subprocess
 import tempfile
 from pathlib import Path
-from unittest.mock import Mock, patch, call
-import subprocess
+from unittest.mock import Mock, patch
+
 import pytest
 
 from cpp_std_converter.repo_manager import DraftRepoManager, RepoManagerError
@@ -66,7 +67,7 @@ def test_exists_false_no_git(temp_dir):
     assert manager.exists() is False
 
 
-@patch('subprocess.run')
+@patch("subprocess.run")
 def test_clone_success(mock_run, temp_dir):
     """Test successful repository cloning"""
     repo_dir = temp_dir / "new_repo"
@@ -87,7 +88,7 @@ def test_clone_success(mock_run, temp_dir):
     assert "--depth" not in args
 
 
-@patch('subprocess.run')
+@patch("subprocess.run")
 def test_clone_shallow(mock_run, temp_dir):
     """Test shallow clone"""
     repo_dir = temp_dir / "new_repo"
@@ -103,7 +104,7 @@ def test_clone_shallow(mock_run, temp_dir):
     assert "1" in args
 
 
-@patch('subprocess.run')
+@patch("subprocess.run")
 def test_clone_already_exists(mock_run, mock_repo):
     """Test that clone does nothing if repository already exists"""
     manager = DraftRepoManager(mock_repo)
@@ -114,7 +115,7 @@ def test_clone_already_exists(mock_run, mock_repo):
     mock_run.assert_not_called()
 
 
-@patch('subprocess.run')
+@patch("subprocess.run")
 def test_clone_failure(mock_run, temp_dir):
     """Test clone failure handling"""
     repo_dir = temp_dir / "new_repo"
@@ -132,7 +133,7 @@ def test_clone_failure(mock_run, temp_dir):
     assert "fatal: unable to access repository" in str(exc_info.value)
 
 
-@patch('subprocess.run')
+@patch("subprocess.run")
 def test_checkout_success(mock_run, mock_repo):
     """Test successful checkout when ref exists locally"""
     manager = DraftRepoManager(mock_repo)
@@ -150,7 +151,7 @@ def test_checkout_success(mock_run, mock_repo):
     assert "n4659" in call_args
 
 
-@patch('subprocess.run')
+@patch("subprocess.run")
 def test_checkout_no_repository(mock_run, temp_dir):
     """Test checkout fails if repository doesn't exist"""
     manager = DraftRepoManager(temp_dir / "nonexistent")
@@ -162,16 +163,20 @@ def test_checkout_no_repository(mock_run, temp_dir):
     mock_run.assert_not_called()
 
 
-@patch('subprocess.run')
+@patch("subprocess.run")
 def test_checkout_failure(mock_run, mock_repo):
     """Test checkout failure handling"""
     manager = DraftRepoManager(mock_repo)
 
     # Mock the sequence: local checkout fails, fetch succeeds, second checkout fails
     mock_run.side_effect = [
-        Mock(returncode=1, stderr="error: pathspec 'invalid' did not match"),  # local checkout fails
+        Mock(
+            returncode=1, stderr="error: pathspec 'invalid' did not match"
+        ),  # local checkout fails
         Mock(returncode=0),  # fetch succeeds
-        subprocess.CalledProcessError(1, "git checkout", stderr="error: pathspec 'invalid' did not match")  # checkout fails
+        subprocess.CalledProcessError(
+            1, "git checkout", stderr="error: pathspec 'invalid' did not match"
+        ),  # checkout fails
     ]
 
     with pytest.raises(RepoManagerError) as exc_info:
@@ -181,7 +186,7 @@ def test_checkout_failure(mock_run, mock_repo):
     assert "did not match" in str(exc_info.value)
 
 
-@patch('subprocess.run')
+@patch("subprocess.run")
 def test_get_current_ref_on_branch(mock_run, mock_repo):
     """Test get_current_ref when on a branch"""
     manager = DraftRepoManager(mock_repo)
@@ -199,7 +204,7 @@ def test_get_current_ref_on_branch(mock_run, mock_repo):
     assert result["short_sha"] == "abc123d"
 
 
-@patch('subprocess.run')
+@patch("subprocess.run")
 def test_get_current_ref_on_tag(mock_run, mock_repo):
     """Test get_current_ref when on a tag (detached HEAD)"""
     manager = DraftRepoManager(mock_repo)
@@ -218,7 +223,7 @@ def test_get_current_ref_on_tag(mock_run, mock_repo):
     assert result["short_sha"] == "abc123d"
 
 
-@patch('subprocess.run')
+@patch("subprocess.run")
 def test_get_current_ref_detached_no_tag(mock_run, mock_repo):
     """Test get_current_ref when detached HEAD with no tag"""
     manager = DraftRepoManager(mock_repo)
@@ -237,7 +242,7 @@ def test_get_current_ref_detached_no_tag(mock_run, mock_repo):
     assert result["short_sha"] == "abc123d"
 
 
-@patch('subprocess.run')
+@patch("subprocess.run")
 def test_get_current_ref_no_repository(mock_run, temp_dir):
     """Test get_current_ref fails if repository doesn't exist"""
     manager = DraftRepoManager(temp_dir / "nonexistent")
@@ -248,7 +253,7 @@ def test_get_current_ref_no_repository(mock_run, temp_dir):
     assert "does not exist" in str(exc_info.value)
 
 
-@patch('subprocess.run')
+@patch("subprocess.run")
 def test_get_tags_no_pattern(mock_run, mock_repo):
     """Test getting all tags"""
     manager = DraftRepoManager(mock_repo)
@@ -270,7 +275,7 @@ def test_get_tags_no_pattern(mock_run, mock_repo):
     assert "--list" in str(calls[1])
 
 
-@patch('subprocess.run')
+@patch("subprocess.run")
 def test_get_tags_with_pattern(mock_run, mock_repo):
     """Test getting tags with pattern filter"""
     manager = DraftRepoManager(mock_repo)
@@ -289,7 +294,7 @@ def test_get_tags_with_pattern(mock_run, mock_repo):
     assert "n*" in tag_args
 
 
-@patch('subprocess.run')
+@patch("subprocess.run")
 def test_get_tags_empty_result(mock_run, mock_repo):
     """Test getting tags when there are no tags"""
     manager = DraftRepoManager(mock_repo)
@@ -304,7 +309,7 @@ def test_get_tags_empty_result(mock_run, mock_repo):
     assert tags == []
 
 
-@patch('subprocess.run')
+@patch("subprocess.run")
 def test_get_tags_failure(mock_run, mock_repo):
     """Test get_tags failure handling"""
     manager = DraftRepoManager(mock_repo)
@@ -362,7 +367,7 @@ def test_get_source_files_no_source_dir(temp_dir):
     assert "Source directory not found" in str(exc_info.value)
 
 
-@patch('subprocess.run')
+@patch("subprocess.run")
 def test_ensure_ready_clone_and_checkout(mock_run, temp_dir):
     """Test ensure_ready clones and checks out ref"""
     repo_dir = temp_dir / "new_repo"
@@ -390,7 +395,7 @@ def test_ensure_ready_clone_and_checkout(mock_run, temp_dir):
     assert "--depth" in str(clone_call)
 
 
-@patch('subprocess.run')
+@patch("subprocess.run")
 def test_ensure_ready_only_checkout_if_exists(mock_run, mock_repo):
     """Test ensure_ready only checks out if repo already exists"""
     manager = DraftRepoManager(mock_repo)
@@ -407,7 +412,7 @@ def test_ensure_ready_only_checkout_if_exists(mock_run, mock_repo):
     assert "clone" not in call_args
 
 
-@patch('subprocess.run')
+@patch("subprocess.run")
 def test_ensure_ready_no_ref(mock_run, temp_dir):
     """Test ensure_ready with no ref just clones"""
     repo_dir = temp_dir / "new_repo"

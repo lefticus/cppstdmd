@@ -1,13 +1,15 @@
 """Tests for cpp-macros.lua filter"""
+
 import subprocess
-from pathlib import Path
 import sys
+from pathlib import Path
 
 # Import inject_macros helper from conftest
 sys.path.insert(0, str(Path(__file__).parent.parent))
 from conftest import inject_macros
 
 FILTER_PATH = Path("src/cpp_std_converter/filters/cpp-macros.lua")
+
 
 def run_pandoc_with_filter(latex_content):
     """Helper to run Pandoc with macro filter"""
@@ -27,12 +29,14 @@ def run_pandoc_with_filter(latex_content):
     )
     return result.stdout, result.returncode
 
+
 def test_cpp_macro():
-    """Test \Cpp{} expansion"""
+    r"""Test \Cpp{} expansion"""
     latex = r"This is \Cpp{} programming."
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
     assert "C++" in output
+
 
 def test_tcode_macro():
     """Test \tcode{} expansion"""
@@ -41,19 +45,22 @@ def test_tcode_macro():
     assert code == 0
     assert "`int`" in output
 
+
 def test_keyword_macro():
-    """Test \keyword{} expansion"""
+    r"""Test \keyword{} expansion"""
     latex = r"Use \keyword{const} for constants."
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
     assert "`const`" in output
 
+
 def test_grammarterm_macro():
-    """Test \grammarterm{} expansion"""
+    r"""Test \grammarterm{} expansion"""
     latex = r"A \grammarterm{constant-expression} is required."
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
     assert "*constant-expression*" in output
+
 
 def test_cpp_version_macros():
     """Test C++ version macro expansion"""
@@ -66,19 +73,22 @@ def test_cpp_version_macros():
     assert "C++20" in output
     assert "C++23" in output
 
+
 def test_isoc_macro():
-    """Test \IsoC{} expansion"""
+    r"""Test \IsoC{} expansion"""
     latex = r"As defined in \IsoC{}."
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
     assert "ISO/IEC 9899:2018" in output
 
+
 def test_libheader_macro():
-    """Test \libheader{} expansion"""
+    r"""Test \libheader{} expansion"""
     latex = r"Include \libheader{iostream} for I/O."
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
     assert "`<iostream>`" in output
+
 
 def test_ref_macro():
     """Test \ref{} expansion for cross-references - should create reference-style links"""
@@ -92,8 +102,9 @@ def test_ref_macro():
     assert "[expr.typeid]: #expr.typeid" in output
     assert "[dcl.type.simple]: #dcl.type.simple" in output
 
+
 def test_iref_macro():
-    """Test \iref{} expansion for inline cross-references - should create link definitions"""
+    r"""Test \iref{} expansion for inline cross-references - should create link definitions"""
     latex = r"The algorithm\iref{alg.find} is efficient."
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
@@ -101,6 +112,7 @@ def test_iref_macro():
     assert "[[alg.find]]" in output
     # Should have link definition at end (single brackets in definition)
     assert "[alg.find]: #alg.find" in output
+
 
 def test_tref_macro():
     """Test \tref{} expansion for table cross-references - should create link definitions"""
@@ -112,8 +124,9 @@ def test_tref_macro():
     # Should have link definition at end (single brackets in definition)
     assert "[tab.keywords]: #tab.keywords" in output
 
+
 def test_iref_comma_separated():
-    """Test \iref{} with comma-separated labels - should split into individual links"""
+    r"""Test \iref{} with comma-separated labels - should split into individual links"""
     latex = r"See\iref{basic.stc.static,basic.stc.thread,basic.stc.auto} for details."
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
@@ -127,6 +140,7 @@ def test_iref_comma_separated():
     assert "[basic.stc.auto]: #basic.stc.auto" in output
     # Should be formatted as "[[a]], [[b]], [[c]]" not "[[a,b,c]]"
     assert "[[basic.stc.static]], [[basic.stc.thread]], [[basic.stc.auto]]" in output
+
 
 def test_ref_comma_separated():
     """Test \ref{} with comma-separated labels - should split into individual links"""
@@ -142,22 +156,25 @@ def test_ref_comma_separated():
     # Should be formatted as "[[a]], [[b]]"
     assert "[[class.mem]], [[class.static]]" in output
 
+
 def test_defnx_macro():
-    """Test \defnx{plural}{singular} expansion"""
+    r"""Test \defnx{plural}{singular} expansion"""
     latex = r"These are \defnx{unevaluated operands}{unevaluated operand}."
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
     assert "*unevaluated operands*" in output
 
+
 def test_defnadj_macro():
-    """Test \defnadj{adjective}{noun} expansion"""
+    r"""Test \defnadj{adjective}{noun} expansion"""
     latex = r"The \defnadj{built-in}{operators} are used."
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
     assert "*built-in operators*" in output
 
+
 def test_indextext_stripping():
-    """Test that \indextext{} commands are stripped completely"""
+    r"""Test that \indextext{} commands are stripped completely"""
     latex = r"\indextext{\idxcode{operator new}|seealso{\tcode{new}}}"
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
@@ -166,8 +183,9 @@ def test_indextext_stripping():
     assert "new}}" not in output
     assert output.strip() == ""
 
+
 def test_index_stripping():
-    """Test that \index{} commands are stripped completely"""
+    r"""Test that \index{} commands are stripped completely"""
     latex = r"Some text \index{keyword} more text."
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
@@ -176,8 +194,9 @@ def test_index_stripping():
     assert "more text" in output
     assert "index" not in output
 
+
 def test_nested_keyword_in_tcode():
-    """Test nested \keyword{} inside \tcode{} is expanded"""
+    """Test nested \\keyword{} inside \tcode{} is expanded"""
     latex = r"The type \tcode{\keyword{unsigned} \keyword{char}} is used."
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
@@ -185,8 +204,9 @@ def test_nested_keyword_in_tcode():
     # Should NOT have literal \keyword in output
     assert "\\keyword" not in output
 
+
 def test_nested_ctype_in_tcode():
-    """Test nested \ctype{} inside \tcode{} is expanded"""
+    """Test nested \\ctype{} inside \tcode{} is expanded"""
     latex = r"Use \tcode{\ctype{size_t}} for sizes."
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
@@ -194,8 +214,9 @@ def test_nested_ctype_in_tcode():
     # Should NOT have literal \ctype in output
     assert "\\ctype" not in output
 
+
 def test_cv_braces_expansion():
-    """Test \cv{} with braces is expanded"""
+    r"""Test \cv{} with braces is expanded"""
     latex = r"A cv{} qualified type."
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
@@ -203,8 +224,9 @@ def test_cv_braces_expansion():
     # Should NOT have literal cv{} in output
     assert "cv{}" not in output
 
+
 def test_iref_macro_old():
-    """Test \iref{} expansion for inline references - NOW creates link definitions (bug fix)"""
+    r"""Test \iref{} expansion for inline references - NOW creates link definitions (bug fix)"""
     latex = r"As specified in \iref{lex.ext}."
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
@@ -213,8 +235,9 @@ def test_iref_macro_old():
     # CHANGED: \iref NOW creates link definitions (single brackets in definition)
     assert "[lex.ext]: #lex.ext" in output
 
+
 def test_iref_in_code_comment():
-    """Test \iref{} works in code comments too"""
+    r"""Test \iref{} works in code comments too"""
     latex = r"""Some code
 // See \iref{basic.scope}
 More text"""
@@ -222,12 +245,14 @@ More text"""
     assert code == 0
     assert "[basic.scope]" in output
 
+
 def test_libconcept_macro():
-    """Test \libconcept{} expansion"""
+    r"""Test \libconcept{} expansion"""
     latex = r"The \libconcept{equality_comparable} concept."
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
     assert "`equality_comparable`" in output
+
 
 def test_brk_stripping():
     """Test \brk{} line break hints are stripped"""
@@ -240,12 +265,14 @@ def test_brk_stripping():
     assert "Some text" in output
     assert "more text" in output
 
+
 def test_seebelow_macro():
     r"""Test \seebelow expansion"""
     latex = r"The return type is \seebelow."
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
     assert "*see below*" in output
+
 
 def test_unspec_macro():
     r"""Test \unspec expansion"""
@@ -254,12 +281,14 @@ def test_unspec_macro():
     assert code == 0
     assert "*unspecified*" in output
 
+
 def test_unspecnc_macro():
     r"""Test \unspecnc expansion"""
     latex = r"The order is \unspecnc for this case."
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
     assert "*unspecified*" in output
+
 
 def test_expos_macro():
     r"""Test \expos expansion"""
@@ -268,12 +297,14 @@ def test_expos_macro():
     assert code == 0
     assert "*exposition only*" in output
 
+
 def test_tcode_special_chars():
     r"""Test \tcode with escaped special characters"""
     latex = r"Use \tcode{\~} for the destructor."
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
     assert "`~`" in output or "`\\~`" in output  # Accept either format
+
 
 def test_textbackslash_macro():
     r"""Test \textbackslash expansion"""
@@ -282,6 +313,7 @@ def test_textbackslash_macro():
     assert code == 0
     assert "\\" in output
 
+
 def test_textbackslash_in_tcode():
     r"""Test \textbackslash within \tcode"""
     latex = r"\tcode{\textbackslash n} is a newline."
@@ -289,12 +321,14 @@ def test_textbackslash_in_tcode():
     assert code == 0
     assert "`\\n`" in output  # Should be \n not \ n (no space)
 
+
 def test_atsign_macro():
     r"""Test \atsign expansion"""
     latex = r"Use \atsign for special markers."
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
     assert "@" in output
+
 
 def test_mname_va_args():
     r"""Test \mname{VA_ARGS} expansion"""
@@ -305,6 +339,7 @@ def test_mname_va_args():
     assert "`__VA_ARGS__`" in output
     assert "\\_\\_" not in output
 
+
 def test_mname_va_opt():
     r"""Test \mname{VA_OPT} expansion"""
     latex = r"The \mname{VA_OPT} identifier is special."
@@ -313,6 +348,7 @@ def test_mname_va_opt():
     # Should convert to code span with backticks (no escaped underscores)
     assert "`__VA_OPT__`" in output
     assert "\\_\\_" not in output
+
 
 def test_mname_line():
     r"""Test \mname{LINE} expansion (macro name)"""
@@ -324,6 +360,7 @@ def test_mname_line():
     assert "`__FILE__`" in output
     assert "\\_\\_" not in output
 
+
 def test_xname_conversion():
     r"""Test \xname{} conversion (identifier with __ prefix)"""
     latex = r"The \xname{cpp_lib_optional} identifier is special."
@@ -332,6 +369,7 @@ def test_xname_conversion():
     # Should convert to code span
     assert "`__cpp_lib_optional`" in output
     assert "\\_\\_" not in output
+
 
 def test_itcorr_removal():
     r"""Test \itcorr[...] removal (italic correction markers)"""
@@ -346,6 +384,7 @@ def test_itcorr_removal():
 # ============================================================================
 # Tests for New Macros (added in various commits)
 # ============================================================================
+
 
 def test_libheaderref_macro():
     r"""Test \libheaderref{header} macro (commit 294c3b61)"""
@@ -397,6 +436,7 @@ def test_discretionary_hyphen():
 # Tests for Additional Missing Macros (15 high-usage macros)
 # ============================================================================
 
+
 def test_opt_macro():
     r"""Test \opt{} expansion (optional grammar element with Unicode subscript)"""
     latex = r"The parameter is \opt{noexcept} in this context."
@@ -431,7 +471,7 @@ def test_defnxname_macro():
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
     # GFM escapes underscores in italics, so check for escaped version
-    assert ("*__cpp_lib_optional*" in output or "*\\_\\_cpp_lib_optional*" in output)
+    assert "*__cpp_lib_optional*" in output or "*\\_\\_cpp_lib_optional*" in output
     assert "\\defnxname" not in output
 
 
@@ -441,7 +481,10 @@ def test_defnlibxname_macro():
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
     # GFM escapes underscores in italics, so check for escaped version
-    assert ("*__has_unique_object_representations*" in output or "*\\_\\_has_unique_object_representations*" in output)
+    assert (
+        "*__has_unique_object_representations*" in output
+        or "*\\_\\_has_unique_object_representations*" in output
+    )
     assert "\\defnlibxname" not in output
 
 
@@ -454,6 +497,7 @@ def test_impdefx_macro():
     assert "implementation-defined" in output
     assert "// whether an inline function is actually inlined" in output
     assert "\\impdefx" not in output
+
 
 def test_impdefx_with_nested_tcode():
     r"""Test \impdefx{} with nested \tcode{} macro"""
@@ -481,7 +525,7 @@ def test_change_macro():
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
     # Pandoc may escape asterisks in some contexts
-    assert ("**Change:**" in output or "\\*\\*Change:\\*\\*" in output)
+    assert "**Change:**" in output or "\\*\\*Change:\\*\\*" in output
     assert "\\change" not in output
 
 
@@ -491,7 +535,7 @@ def test_rationale_macro():
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
     # Pandoc may escape asterisks in some contexts
-    assert ("**Rationale:**" in output or "\\*\\*Rationale:\\*\\*" in output)
+    assert "**Rationale:**" in output or "\\*\\*Rationale:\\*\\*" in output
     assert "\\rationale" not in output
 
 
@@ -501,7 +545,10 @@ def test_effect_macro():
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
     # Pandoc may escape asterisks in some contexts
-    assert ("**Effect on original feature:**" in output or "\\*\\*Effect on original feature:\\*\\*" in output)
+    assert (
+        "**Effect on original feature:**" in output
+        or "\\*\\*Effect on original feature:\\*\\*" in output
+    )
     assert "\\effect" not in output
 
 
@@ -570,8 +617,8 @@ def test_firstlibchapter_macro():
     assert "\\lastlibchapter" not in output
 
 
-def test_cpp_macro():
-    r"""Test \Cpp{} macro expands to 'C++'"""
+def test_cpp_macro_in_sentence():
+    r"""Test \Cpp{} macro expands to 'C++' in a sentence"""
     latex = r"The \Cpp{} standard specifies requirements."
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
@@ -617,7 +664,7 @@ def test_textasciitilde_macro():
 
 
 def test_notdef_macro():
-    r"""Test \notdef macro expands to 'not defined' """
+    r"""Test \notdef macro expands to 'not defined'"""
     latex = r"The value is \notdef{} in this context."
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
@@ -632,7 +679,7 @@ def test_range_macro():
     assert code == 0
     # Should produce [first, last) with backticks
     # GFM escapes [ as \[ to prevent it from being interpreted as a link
-    assert ("[" in output or "\\[" in output)
+    assert "[" in output or "\\[" in output
     assert "first" in output
     assert "last" in output
     assert ")" in output
@@ -769,6 +816,7 @@ The type \tcode{$T_0$} is defined as \tcode{$T_1$}.
     assert "$T_1$" not in output
     assert "`$C_i$ \\& $C_j$`" not in output
 
+
 def test_doccite_with_nested_cpp_macro():
     r"""Test \doccite{} with nested \Cpp{} macro (back.md bug)"""
     latex = r"""
@@ -783,13 +831,14 @@ def test_doccite_with_nested_cpp_macro():
     # Should have properly expanded citations with C++
     assert "*The C++ Programming Language, second edition*" in output
     assert "*The Draft Standard C++ Library*" in output
-   
+
     # Should NOT have truncated content or unexpanded macros
     assert "\\Cpp{" not in output
     assert "*The \\Cpp{*" not in output
 
+
 def test_discretionary_hyphen_in_tcode():
-    """Test that discretionary hyphens (\-) are removed from \tcode{} content"""
+    """Test that discretionary hyphens (\\-) are removed from \tcode{} content"""
     latex = r"If \tcode{Forward\-Iter\-ator2} meets the requirements."
     output, code = run_pandoc_with_filter(latex)
     assert code == 0

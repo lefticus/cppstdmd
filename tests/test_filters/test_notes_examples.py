@@ -1,14 +1,15 @@
 """Tests for cpp-notes-examples.lua filter"""
+
 import subprocess
-from pathlib import Path
 import sys
+from pathlib import Path
 
 # Import inject_macros helper from conftest
 sys.path.insert(0, str(Path(__file__).parent.parent))
 from conftest import inject_macros
-import pytest
 
 FILTER_PATH = Path("src/cpp_std_converter/filters/cpp-notes-examples.lua")
+
 
 def run_pandoc_with_filter(latex_content):
     """Helper to run Pandoc with notes-examples filter"""
@@ -29,6 +30,7 @@ def run_pandoc_with_filter(latex_content):
     )
     return result.stdout, result.returncode
 
+
 def test_basic_note():
     """Test basic note conversion"""
     latex = r"""Some text before.
@@ -45,6 +47,7 @@ Some text after."""
     assert "*end note*" in output
     assert "[" in output and "]" in output
 
+
 def test_basic_example():
     """Test basic example conversion"""
     latex = r"""Some text before.
@@ -60,6 +63,7 @@ Some text after."""
     assert "This is an example with some content" in output
     assert "*end example*" in output
     assert "[" in output and "]" in output
+
 
 def test_note_with_code_block():
     """Test note containing a code block"""
@@ -82,6 +86,7 @@ This demonstrates the concept.
     assert "codeblock" in output or "int x" in output
     assert "*end note*" in output
 
+
 def test_example_with_code_block():
     """Test example containing a code block"""
     latex = r"""Some text.
@@ -103,6 +108,7 @@ The expression is an xvalue.
     # Code block will be a RawBlock
     assert "codeblock" in output or "struct A" in output
     assert "*end example*" in output
+
 
 def test_multiple_notes_and_examples():
     """Test multiple notes and examples with counter increments"""
@@ -136,6 +142,7 @@ Second example.
     assert "*Example 1*" in output
     assert "*Example 2*" in output
 
+
 def test_counter_reset_on_section():
     """Test that counters reset when encountering a new section"""
     latex = r"""\section{Section 1}
@@ -164,6 +171,7 @@ Example in subsection (should be Example 1 again).
     # Should have two "Example 1" instances
     assert output.count("*Example 1*") == 2
 
+
 def test_note_with_latex_commands():
     """Test note containing LaTeX commands like \\ref"""
     latex = r"""\begin{note}
@@ -176,6 +184,7 @@ This references \ref{expr.compound} and uses \tcode{operator+}.
     # LaTeX commands stay as raw when testing filter in isolation
     assert "tcode" in output or "ref" in output
 
+
 def test_example_with_cross_reference():
     """Test example containing cross-references"""
     latex = r"""\begin{example}
@@ -186,6 +195,7 @@ See \ref{intro.scope} for details.
     assert "*Example 1*" in output
     assert "*end example*" in output
 
+
 def test_empty_note():
     """Test note with minimal content"""
     latex = r"""\begin{note}
@@ -194,6 +204,7 @@ def test_empty_note():
     assert code == 0
     # Should still create note markers even if empty
     # (actual behavior may vary, but shouldn't crash)
+
 
 def test_nested_environments():
     """Test note containing multiple paragraphs and code"""
@@ -219,6 +230,7 @@ Final paragraph.
     assert "codeblock" in output or "int main" in output
     assert "*end note*" in output
 
+
 def test_example_with_at_escapes():
     r"""Test example with @ escaped \tcode{} in codeblock"""
     latex = r"""\begin{example}
@@ -242,6 +254,7 @@ The following code demonstrates macro replacement:
     assert "/* other stuff on this line" in output
     assert "*end example*" in output
 
+
 def test_example_line_continuation():
     r"""Test that \textbackslash preserves line breaks in code"""
     latex = r"""\begin{example}
@@ -262,6 +275,7 @@ Valid macro redefinition:
     # Should NOT have backslash followed by content on same line
     assert "\\ a" not in output and "\\                 a" not in output
     assert "*end example*" in output
+
 
 def test_example_with_two_codeblocks():
     r"""Test example with two codeblocks (regression test for tcode leak)"""
@@ -290,6 +304,7 @@ But the following redefinitions are invalid:
     assert "}@" not in output
     # Should NOT have @\tcode leaking into output
     assert "@\\tcode" not in output
+
 
 def test_counter_reset_on_subsubsection():
     """Test that counters reset at h3 (subsubsection) level"""
@@ -324,6 +339,7 @@ Note in another subsubsection (should be Note 1 again).
     assert output.count("*Note 1*") == 3
     # Should have two "Example 1" instances
     assert output.count("*Example 1*") == 2
+
 
 def test_counter_reset_on_paragraph_level():
     """Test that counters reset at h4 (paragraph) level"""
@@ -393,6 +409,7 @@ The sample (the \defn{selected items}) comes from the population.
     assert "(the )" not in output
     # Should NOT have unexpanded macro
     assert "\\defn" not in output
+
 
 def test_example_with_codeblocktu():
     r"""Test example with \begin{codeblocktu} nested inside (module.md bug)"""

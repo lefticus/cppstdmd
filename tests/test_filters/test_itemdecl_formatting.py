@@ -6,10 +6,8 @@ including blockquote indentation and italic (not bold-italic) labels.
 """
 
 import subprocess
-from pathlib import Path
 import sys
-
-import pytest
+from pathlib import Path
 
 # Import inject_macros helper from conftest
 sys.path.insert(0, str(Path(__file__).parent.parent))
@@ -135,11 +133,11 @@ The deallocation function.
     assert "deallocation function" in output
 
     # Verify no blockquote markers are present
-    lines = output.split('\n')
+    lines = output.split("\n")
     for line in lines:
-        if line.strip() and not line.startswith('```') and not line.startswith('void'):
+        if line.strip() and not line.startswith("```") and not line.startswith("void"):
             # Content lines should not start with >
-            assert not line.startswith('>')
+            assert not line.startswith(">")
 
 
 def test_multiple_labels_in_blockquote():

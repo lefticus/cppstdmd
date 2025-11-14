@@ -1,14 +1,16 @@
 """Tests for table handling in cpp-tables.lua filter"""
-import subprocess
-from pathlib import Path
-import sys
+
 import re
+import subprocess
+import sys
+from pathlib import Path
 
 # Import inject_macros helper from conftest
 sys.path.insert(0, str(Path(__file__).parent.parent))
 from conftest import inject_macros
 
 FILTER_PATH = Path("src/cpp_std_converter/filters/cpp-tables.lua")
+
 
 def run_pandoc_with_filter(latex_content):
     """Helper to run Pandoc with tables filter"""
@@ -29,24 +31,26 @@ def run_pandoc_with_filter(latex_content):
     )
     return result.stdout, result.returncode
 
+
 def normalize_table_whitespace(text):
     """Normalize whitespace in table rows for comparison.
 
     Collapses multiple spaces between | characters to single spaces,
     allowing tests to check table content regardless of column padding.
     """
-    lines = text.split('\n')
+    lines = text.split("\n")
     normalized_lines = []
     for line in lines:
-        if line.strip().startswith('|'):
+        if line.strip().startswith("|"):
             # Split by |, strip each cell, rejoin with single spaces
-            cells = line.split('|')
+            cells = line.split("|")
             normalized_cells = [cell.strip() for cell in cells]
-            normalized_line = '| ' + ' | '.join(normalized_cells[1:-1]) + ' |'
+            normalized_line = "| " + " | ".join(normalized_cells[1:-1]) + " |"
             normalized_lines.append(normalized_line)
         else:
             normalized_lines.append(line)
-    return '\n'.join(normalized_lines)
+    return "\n".join(normalized_lines)
+
 
 def test_simple_floattable():
     r"""Test basic floattable conversion"""
@@ -68,6 +72,7 @@ def test_simple_floattable():
     assert "| `value1` | `value2` |" in normalized
     assert "| `value3` | `value4` |" in normalized
 
+
 def test_floattable_with_xname():
     r"""Test floattable with \xname{} macro in caption"""
     latex = r"""
@@ -84,6 +89,7 @@ def test_floattable_with_xname():
     assert "**Table: __has_cpp_attribute values**" in output
     assert "| Attribute | Value |" in normalized
     assert "| `assume` | `202207L` |" in normalized
+
 
 def test_longtable_basic():
     r"""Test basic LongTable conversion with \defnxname macros
@@ -116,6 +122,7 @@ def test_longtable_basic():
     assert "| __cpp_concepts__ |" not in output
     assert "| __cpp_constexpr__ |" not in output
 
+
 def test_floattable_multiple_rows():
     r"""Test floattable with multiple rows"""
     latex = r"""
@@ -134,6 +141,7 @@ def test_floattable_multiple_rows():
     normalized = normalize_table_whitespace(output)
     # Check that all rows are present
     assert output.count("| `") == 8  # 4 rows * 2 cells per row
+
 
 def test_longtable_defnxname():
     r"""Test that \defnxname is correctly expanded
@@ -159,6 +167,7 @@ def test_longtable_defnxname():
     # Should NOT have markdown bold formatting or trailing underscores
     assert "__cpp_test_macro__" not in output
 
+
 def test_floattable_caption_with_nested_braces():
     r"""Test caption with nested braces is correctly extracted"""
     latex = r"""
@@ -175,6 +184,7 @@ def test_floattable_caption_with_nested_braces():
     # \xname should be expanded to __has_cpp_attribute
     assert "__has_cpp_attribute" in output
 
+
 def test_table_separator_row():
     r"""Test that separator row is correctly generated"""
     latex = r"""
@@ -189,7 +199,8 @@ def test_table_separator_row():
     assert code == 0
     normalized = normalize_table_whitespace(output)
     # Should have separator row with dashes
-    assert re.search(r'\| -+ \| -+ \|', normalized)
+    assert re.search(r"\| -+ \| -+ \|", normalized)
+
 
 def test_libsumtab_with_refs():
     r"""Test libsumtab with \ref{} macros in cells - should track references"""
@@ -216,6 +227,7 @@ def test_libsumtab_with_refs():
     assert "[support.dynamic]: #support.dynamic" in output
     assert "[support.exception]: #support.exception" in output
 
+
 def test_libsumtab_multiline_rows():
     r"""Test libsumtab with multi-line rows - rows spanning multiple lines should be parsed correctly"""
     latex = r"""
@@ -238,6 +250,7 @@ def test_libsumtab_multiline_rows():
     assert "[support.types]: #support.types" in output
     assert "[support.limits]: #support.limits" in output
     assert "[support.arith.types]: #support.arith.types" in output
+
 
 def test_floattable_with_keyword():
     r"""Test floattable with \keyword{} macros - should strip keyword markup"""
@@ -266,6 +279,7 @@ def test_floattable_with_keyword():
     # Should have 4 data rows - all with backticks
     assert output.count("| `") >= 3  # At least 3 cells with backticks
 
+
 def test_floattable_with_hline():
     r"""Test floattable with \\ \hline - should strip \hline from cells"""
     latex = r"""
@@ -284,6 +298,7 @@ def test_floattable_with_hline():
     # Should NOT have LaTeX commands leaking
     assert "\\hline" not in output
     assert "\\\\" not in output
+
 
 def test_floattable_with_cline():
     r"""Test floattable with \\ \cline{...} - should strip \cline from cells"""
@@ -304,6 +319,7 @@ def test_floattable_with_cline():
     assert "\\cline" not in output
     assert "\\\\" not in output
 
+
 def test_libsumtab_with_hline():
     r"""Test libsumtab with \\ \hline - should strip \hline from cells"""
     latex = r"""
@@ -322,6 +338,7 @@ def test_libsumtab_with_hline():
     # Should NOT have LaTeX commands leaking
     assert "\\hline" not in output
     assert "\\\\" not in output
+
 
 def test_libsumtab_with_rowsep_no_newline():
     r"""Test libsumtab with \\ \rowsep where next line starts immediately (real-world pattern)"""
@@ -346,6 +363,7 @@ def test_libsumtab_with_rowsep_no_newline():
     assert "\\rowsep" not in output
     assert "\\\\" not in output
 
+
 def test_floattable_no_headers():
     r"""Test floattable with no \lhdr/\rhdr headers (should generate dummy headers)"""
     latex = r"""
@@ -365,10 +383,11 @@ def test_floattable_no_headers():
     assert "`map<K, T, C2, A>`" in output
     assert "`multimap<K, T, C2, A>`" in output
     # Should have separator row (---) for valid markdown
-    assert re.search(r'\| -+ \| -+ \|', normalized)
+    assert re.search(r"\| -+ \| -+ \|", normalized)
     # Should NOT have LaTeX commands
     assert "\\rowsep" not in output
     assert "\\topline" not in output
+
 
 def test_floattable_with_hdstyle_headers():
     r"""Test floattable with \hdstyle{...} headers (alternate header format)"""
@@ -395,6 +414,7 @@ def test_floattable_with_hdstyle_headers():
     assert "\\hdstyle" not in output
     assert "\\capsep" not in output
 
+
 def test_floattable_trailing_blank_line():
     r"""Test that tables have trailing blank lines to separate from following content"""
     latex = r"""
@@ -412,11 +432,11 @@ This is text after the table.
     # Table should have trailing blank line (double newline at end)
     # The output should have the table ending, then blank line, then "This is text"
     # Check that the table ends with a newline and "This is text" is NOT on the same line
-    lines = output.split('\n')
+    lines = output.split("\n")
     # Find the last table row
     last_table_line_idx = None
     for i, line in enumerate(lines):
-        if line.strip().startswith('|') and '`b`' in line:
+        if line.strip().startswith("|") and "`b`" in line:
             last_table_line_idx = i
             break
 
@@ -424,11 +444,12 @@ This is text after the table.
     # Check that there's at least one blank line before "This is text"
     found_blank = False
     for i in range(last_table_line_idx + 1, len(lines)):
-        if lines[i].strip() == '':
+        if lines[i].strip() == "":
             found_blank = True
-        elif 'This is text' in lines[i]:
+        elif "This is text" in lines[i]:
             assert found_blank, "No blank line between table and following text"
             break
+
 
 def test_floattable_with_uname():
     r"""Test floattable with \uname{} for Unicode character names"""
@@ -450,6 +471,7 @@ def test_floattable_with_uname():
     # Should NOT have LaTeX commands
     assert "\\uname" not in output
 
+
 def test_floattable_with_unicode_macro():
     r"""Test floattable with \unicode{}{} macro for code point + description"""
     latex = r"""
@@ -468,6 +490,7 @@ def test_floattable_with_unicode_macro():
     assert "right curly bracket" in output
     # Should NOT have LaTeX commands
     assert "\\unicode" not in output
+
 
 def test_floattable_with_textbf():
     r"""Test floattable with \textbf{} for bold text"""
@@ -489,6 +512,7 @@ Output & Writable \\
     # Should NOT have LaTeX commands
     assert "\\textbf" not in output
 
+
 def test_floattable_with_libglobal():
     r"""Test floattable with \libglobal{} for library globals"""
     latex = r"""
@@ -506,6 +530,7 @@ def test_floattable_with_libglobal():
     assert "`is_integral`" in output
     # Should NOT have LaTeX commands
     assert "\\libglobal" not in output
+
 
 def test_floattable_with_escaped_special_chars():
     r"""Test floattable with escaped special characters in \texttt{}"""
@@ -530,6 +555,7 @@ def test_floattable_with_escaped_special_chars():
     assert "\\texttt{\\{" not in output
     assert "\\textasciitilde" not in output
 
+
 def test_floattable_with_special_char_macros():
     r"""Test floattable with \caret and \unun macros"""
     latex = r"""
@@ -550,6 +576,7 @@ def test_floattable_with_special_char_macros():
     # Should NOT have LaTeX commands
     assert "\\caret" not in output
     assert "\\unun" not in output
+
 
 def test_oldconcepttable_basic():
     r"""Test basic oldconcepttable conversion (Cpp17* requirements)"""
@@ -579,6 +606,7 @@ def test_oldconcepttable_basic():
     assert "\\capsep" not in output
     assert "\\oldconcepttable" not in output
 
+
 def test_oldconcepttable_with_extra():
     r"""Test oldconcepttable with extra text in caption"""
     latex = r"""
@@ -595,7 +623,10 @@ def test_oldconcepttable_with_extra():
     assert code == 0
     normalized = normalize_table_whitespace(output)
     # Caption should include EXTRA text
-    assert "**Table: Cpp17CopyConstructible requirements (in addition to MoveConstructible)**" in output
+    assert (
+        "**Table: Cpp17CopyConstructible requirements (in addition to MoveConstructible)**"
+        in output
+    )
     # Should have headers
     assert "| Expression | Post-condition |" in normalized
     # Should have data rows
@@ -603,6 +634,7 @@ def test_oldconcepttable_with_extra():
     assert "| `T(v)` |" in normalized
     # Should NOT have LaTeX commands
     assert "\\rowsep" not in output
+
 
 def test_oldconcepttable_multiple_columns():
     r"""Test oldconcepttable with 4 columns"""
@@ -621,11 +653,12 @@ def test_oldconcepttable_multiple_columns():
     # Should have 4 headers
     assert "| Expression | Return type | Return value | Post-condition |" in normalized
     # Should have 4-column separator
-    assert re.search(r'\| -+ \| -+ \| -+ \| -+ \|', normalized)
+    assert re.search(r"\| -+ \| -+ \| -+ \| -+ \|", normalized)
     # Should have all 4 cells in data row
     assert "| `t = rv` | `T&` | `t` |" in normalized
     # Caption should be Cpp17MoveAssignable
     assert "**Table: Cpp17MoveAssignable requirements**" in output
+
 
 def test_concepttable_basic():
     r"""Test basic concepttable conversion (C++20 concepts)"""
@@ -652,6 +685,7 @@ Parses format-spec for type \tcode{T} \\
     # Should NOT have LaTeX commands
     assert "\\hdstyle" not in output
     assert "\\capsep" not in output
+
 
 def test_simpletypetable_basic():
     r"""Test basic simpletypetable conversion"""
@@ -685,6 +719,7 @@ hexadecimal-literal & 16 \\
     assert "\\rhdr" not in output
     assert "\\simpletypetable" not in output
 
+
 def test_simpletypetable_with_code():
     r"""Test simpletypetable with \tcode{} and \keyword{} macros"""
     latex = r"""
@@ -714,6 +749,7 @@ none & \keyword{double} \\
     assert "\\keyword" not in output
     assert "\\tcode" not in output
 
+
 def test_oldconcepttable_with_lhdr_rhdr():
     r"""Test oldconcepttable with \lhdr and \rhdr headers instead of \hdstyle"""
     latex = r"""
@@ -738,6 +774,7 @@ def test_oldconcepttable_with_lhdr_rhdr():
     # Should NOT have LaTeX commands
     assert "\\lhdr" not in output
     assert "\\rhdr" not in output
+
 
 def test_floattable_with_nested_texttt():
     r"""Test floattable with nested \texttt{} (from cpp-macros.lua \keyword conversion)
@@ -769,6 +806,7 @@ def test_floattable_with_nested_texttt():
     # Should NOT have LaTeX commands leaking
     assert "\\texttt" not in output
 
+
 def test_oldconcepttable_with_multicolumn():
     r"""Test oldconcepttable with \multicolumn for spanning cells"""
     latex = r"""
@@ -792,6 +830,7 @@ def test_oldconcepttable_with_multicolumn():
     assert "`rv`'s state is unspecified" in output
     # Should NOT have LaTeX commands
     assert "\\multicolumn" not in output
+
 
 def test_oldconcepttable_with_itemize():
     r"""Test oldconcepttable with \begin{itemize} lists in cells"""
@@ -825,6 +864,7 @@ def test_oldconcepttable_with_itemize():
     assert "\\item" not in output
     assert "\\end{itemize}" not in output
 
+
 def test_oldconcepttable_with_tailnote():
     r"""Test oldconcepttable with \begin{tailnote} for footnotes"""
     latex = r"""
@@ -854,6 +894,7 @@ def test_oldconcepttable_with_tailnote():
     assert "\\end{tailnote}" not in output
     assert "\\oldconcept" not in output
 
+
 def test_floattable_with_br():
     r"""Test floattable with \br line breaks"""
     latex = r"""
@@ -870,6 +911,7 @@ def test_floattable_with_br():
     assert "`T()` <br> `T{}`" in output or "`T()`<br>`T{}`" in output
     # Should NOT have LaTeX commands
     assert "\\br" not in output
+
 
 def test_floattable_with_lhdrx_column_spanning():
     r"""Test floattable with \lhdrx{N}{text} column-spanning headers
@@ -899,16 +941,17 @@ def test_floattable_with_lhdrx_column_spanning():
     assert "| character |" in normalized
     assert "| glyph |" in normalized
     # Should have separator for 3 columns
-    assert re.search(r'\| -+ \| -+ \| -+ \|', normalized)
+    assert re.search(r"\| -+ \| -+ \| -+ \|", normalized)
     # Should have all data rows with 3 columns
     assert "| `U+0009` | character tabulation |  |" in normalized
     assert "| `U+000B` | line tabulation |  |" in normalized
     assert "| `U+0020` | space |  |" in normalized
     assert "| `U+0021` |  | ! |" in normalized
-    assert "| `U+0022` |  | \" |" in normalized
+    assert '| `U+0022` |  | " |' in normalized
     # Middle column should NOT be missing
     assert "character tabulation" in output
     assert "line tabulation" in output
+
 
 def test_floattable_with_multiline_headers():
     r"""Test floattable with headers split across multiple lines
@@ -936,12 +979,13 @@ def test_floattable_with_multiline_headers():
     # Should have both headers (not just Meaning)
     assert "| Name | Meaning |" in normalized
     # Should have 2-column separator
-    assert re.search(r'\| -+ \| -+ \|', normalized)
+    assert re.search(r"\| -+ \| -+ \|", normalized)
     # Should have data rows with both columns
     assert "| `replace` | `permissions` shall replace bits |" in normalized
     assert "| `add` | `permissions` shall add bits |" in normalized
     # Name column should NOT be missing
     assert "Name" in output
+
 
 def test_libefftab_basic():
     r"""Test libefftab (effects table for enum/bitmask types)"""
@@ -965,11 +1009,18 @@ Specifies that no sub-expressions shall be considered to be marked.
     # Should have implicit headers
     assert "| Element | Effect(s) if set |" in normalized
     # Should have data rows
-    assert "| `icase` | Specifies that matching shall be performed without regard to case. |" in normalized
-    assert "| `nosubs` | Specifies that no sub-expressions shall be considered to be marked. |" in normalized
+    assert (
+        "| `icase` | Specifies that matching shall be performed without regard to case. |"
+        in normalized
+    )
+    assert (
+        "| `nosubs` | Specifies that no sub-expressions shall be considered to be marked. |"
+        in normalized
+    )
     # Should NOT have LaTeX commands
     assert "\\tcode" not in output
     assert "\\rowsep" not in output
+
 
 def test_longlibefftab_basic():
     r"""Test longlibefftab (long effects table for enum/bitmask types)"""
@@ -1002,6 +1053,7 @@ The expression shall only match a sub-sequence that begins at first.
     # Should NOT have LaTeX commands
     assert "\\tcode" not in output
 
+
 def test_longliberrtab_basic():
     r"""Test longliberrtab (error value table)"""
     latex = r"""
@@ -1027,12 +1079,18 @@ The expression contains an invalid escaped character, or a trailing escape.
     # Should have implicit headers (different from libefftab!)
     assert "| Value | Error condition |" in normalized
     # Should have data rows
-    assert "| `error_collate` | The expression contains an invalid collating element name. |" in normalized
-    assert "| `error_ctype` | The expression contains an invalid character class name. |" in normalized
+    assert (
+        "| `error_collate` | The expression contains an invalid collating element name. |"
+        in normalized
+    )
+    assert (
+        "| `error_ctype` | The expression contains an invalid character class name. |" in normalized
+    )
     assert "| `error_escape` |" in normalized
     # Should NOT have LaTeX commands
     assert "\\tcode" not in output
     assert "\\rowsep" not in output
+
 
 def test_lib2dtab2_simple():
     r"""Test lib2dtab2 (2D comparison table with row headers)"""

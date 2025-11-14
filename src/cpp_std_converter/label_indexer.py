@@ -7,7 +7,6 @@ enabling automatic conversion of cross-chapter references to proper relative lin
 
 import re
 from pathlib import Path
-from typing import Dict, Set
 
 from .stable_name import extract_stable_name_from_tex
 
@@ -16,8 +15,19 @@ class LabelIndexer:
     """Build and manage mappings of section labels to their containing files."""
 
     # Files to skip during indexing (not chapter files)
-    SKIP_FILES = {'std', 'layout', 'macros', 'config', 'cover-reg', 'cover-wd',
-                  'xrefdelta', 'xrefindex', 'front', 'back', 'tabbing-def'}
+    SKIP_FILES = {
+        "std",
+        "layout",
+        "macros",
+        "config",
+        "cover-reg",
+        "cover-wd",
+        "xrefdelta",
+        "xrefindex",
+        "front",
+        "back",
+        "tabbing-def",
+    }
 
     def __init__(self, source_dir: Path):
         """
@@ -27,15 +37,13 @@ class LabelIndexer:
             source_dir: Directory containing C++ standard .tex files
         """
         self.source_dir = Path(source_dir)
-        self.label_to_file: Dict[str, str] = {}
-        self.file_labels: Dict[str, Set[str]] = {}
-        self.duplicate_labels: Dict[str, list] = {}
+        self.label_to_file: dict[str, str] = {}
+        self.file_labels: dict[str, set[str]] = {}
+        self.duplicate_labels: dict[str, list] = {}
 
     def build_index(
-        self,
-        use_stable_names: bool = True,
-        stable_name_map: Dict[str, str] | None = None
-    ) -> Dict[str, str]:
+        self, use_stable_names: bool = True, stable_name_map: dict[str, str] | None = None
+    ) -> dict[str, str]:
         """
         Build label→filename mapping from LaTeX sources.
 
@@ -55,7 +63,7 @@ class LabelIndexer:
             stable_name_map = {}
 
         # Step 2: Scan all files for labels
-        for tex_file in self.source_dir.glob('*.tex'):
+        for tex_file in self.source_dir.glob("*.tex"):
             if tex_file.stem in self.SKIP_FILES:
                 continue
 
@@ -78,7 +86,7 @@ class LabelIndexer:
 
         return self.label_to_file
 
-    def _extract_stable_names(self) -> Dict[str, str]:
+    def _extract_stable_names(self) -> dict[str, str]:
         """
         Extract stable names for all chapters.
 
@@ -88,7 +96,7 @@ class LabelIndexer:
         """
         stable_names = {}
 
-        for tex_file in self.source_dir.glob('*.tex'):
+        for tex_file in self.source_dir.glob("*.tex"):
             if tex_file.stem in self.SKIP_FILES:
                 continue
 
@@ -102,7 +110,7 @@ class LabelIndexer:
 
         return stable_names
 
-    def _extract_labels_from_file(self, tex_file: Path) -> Set[str]:
+    def _extract_labels_from_file(self, tex_file: Path) -> set[str]:
         """
         Extract all section labels from a .tex file.
 
@@ -115,17 +123,18 @@ class LabelIndexer:
         labels = set()
 
         try:
-            content = tex_file.read_text(encoding='utf-8', errors='ignore')
+            content = tex_file.read_text(encoding="utf-8", errors="ignore")
 
             # Find all \rSec patterns with labels
             # Matches: \rSec0[label], \rSec1[label], etc.
-            for match in re.finditer(r'\\rSec\d+\[([^\]]+)\]', content):
+            for match in re.finditer(r"\\rSec\d+\[([^\]]+)\]", content):
                 label = match.group(1)
                 labels.add(label)
 
         except Exception as e:
             # Log error but continue
             import sys
+
             print(f"Warning: Error reading {tex_file}: {e}", file=sys.stderr)
 
         return labels
@@ -142,7 +151,7 @@ class LabelIndexer:
         """
         return self.label_to_file.get(label)
 
-    def get_labels_for_file(self, filename: str) -> Set[str]:
+    def get_labels_for_file(self, filename: str) -> set[str]:
         """
         Get all labels defined in a file.
 
@@ -161,21 +170,21 @@ class LabelIndexer:
         Args:
             output_file: Path to write Lua table
         """
-        with open(output_file, 'w') as f:
-            f.write('-- Auto-generated label→file mapping for C++ standard\n')
-            f.write('-- Do not edit manually\n\n')
-            f.write('return {\n')
+        with open(output_file, "w") as f:
+            f.write("-- Auto-generated label→file mapping for C++ standard\n")
+            f.write("-- Do not edit manually\n\n")
+            f.write("return {\n")
 
             for label in sorted(self.label_to_file.keys()):
                 file = self.label_to_file[label]
                 # Escape special characters for Lua string
-                escaped_label = label.replace('\\', '\\\\').replace('"', '\\"')
-                escaped_file = file.replace('\\', '\\\\').replace('"', '\\"')
+                escaped_label = label.replace("\\", "\\\\").replace('"', '\\"')
+                escaped_file = file.replace("\\", "\\\\").replace('"', '\\"')
                 f.write(f'  ["{escaped_label}"] = "{escaped_file}",\n')
 
-            f.write('}\n')
+            f.write("}\n")
 
-    def get_statistics(self) -> Dict[str, int]:
+    def get_statistics(self) -> dict[str, int]:
         """
         Get statistics about the index.
 
@@ -183,7 +192,7 @@ class LabelIndexer:
             Dict with counts of files, labels, duplicates
         """
         return {
-            'files': len(self.file_labels),
-            'labels': len(self.label_to_file),
-            'duplicates': len(self.duplicate_labels),
+            "files": len(self.file_labels),
+            "labels": len(self.label_to_file),
+            "duplicates": len(self.duplicate_labels),
         }

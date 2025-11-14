@@ -5,16 +5,16 @@ Handles cloning, version switching, and metadata extraction from the
 cplusplus/draft repository.
 """
 
+import logging
 import subprocess
 from pathlib import Path
-from typing import Optional, List, Dict
-import logging
 
 logger = logging.getLogger(__name__)
 
 
 class RepoManagerError(Exception):
     """Exception raised for repository management errors"""
+
     pass
 
 
@@ -23,7 +23,7 @@ class DraftRepoManager:
 
     REPO_URL = "https://github.com/cplusplus/draft.git"
 
-    def __init__(self, repo_dir: Optional[Path] = None):
+    def __init__(self, repo_dir: Path | None = None):
         """
         Initialize repository manager
 
@@ -66,9 +66,7 @@ class DraftRepoManager:
             subprocess.run(cmd, check=True, capture_output=True, text=True)
             logger.info("Clone successful")
         except subprocess.CalledProcessError as e:
-            raise RepoManagerError(
-                f"Failed to clone repository:\n{e.stderr}"
-            ) from e
+            raise RepoManagerError(f"Failed to clone repository:\n{e.stderr}") from e
 
     def checkout(self, ref: str) -> None:
         """
@@ -129,11 +127,9 @@ class DraftRepoManager:
                 ) from fetch_error
 
         except subprocess.CalledProcessError as e:
-            raise RepoManagerError(
-                f"Failed to checkout {ref}:\n{e.stderr}"
-            ) from e
+            raise RepoManagerError(f"Failed to checkout {ref}:\n{e.stderr}") from e
 
-    def get_current_ref(self) -> Dict[str, str]:
+    def get_current_ref(self) -> dict[str, str]:
         """
         Get information about current git ref
 
@@ -147,9 +143,7 @@ class DraftRepoManager:
             RepoManagerError: If git commands fail
         """
         if not self.exists():
-            raise RepoManagerError(
-                f"Repository does not exist at {self.repo_dir}"
-            )
+            raise RepoManagerError(f"Repository does not exist at {self.repo_dir}")
 
         try:
             # Get SHA
@@ -193,11 +187,9 @@ class DraftRepoManager:
             }
 
         except subprocess.CalledProcessError as e:
-            raise RepoManagerError(
-                f"Failed to get current ref:\n{e.stderr}"
-            ) from e
+            raise RepoManagerError(f"Failed to get current ref:\n{e.stderr}") from e
 
-    def get_tags(self, pattern: Optional[str] = None) -> List[str]:
+    def get_tags(self, pattern: str | None = None) -> list[str]:
         """
         Get list of available tags
 
@@ -211,9 +203,7 @@ class DraftRepoManager:
             RepoManagerError: If git command fails
         """
         if not self.exists():
-            raise RepoManagerError(
-                f"Repository does not exist at {self.repo_dir}"
-            )
+            raise RepoManagerError(f"Repository does not exist at {self.repo_dir}")
 
         try:
             # Try to fetch latest tags (optional, works offline if tags already exist)
@@ -247,11 +237,9 @@ class DraftRepoManager:
             return sorted(tags)
 
         except subprocess.CalledProcessError as e:
-            raise RepoManagerError(
-                f"Failed to get tags:\n{e.stderr}"
-            ) from e
+            raise RepoManagerError(f"Failed to get tags:\n{e.stderr}") from e
 
-    def get_source_files(self, pattern: str = "*.tex") -> List[Path]:
+    def get_source_files(self, pattern: str = "*.tex") -> list[Path]:
         """
         Get list of source files in the repository
 
@@ -265,13 +253,11 @@ class DraftRepoManager:
             RepoManagerError: If source directory doesn't exist
         """
         if not self.source_dir.exists():
-            raise RepoManagerError(
-                f"Source directory not found: {self.source_dir}"
-            )
+            raise RepoManagerError(f"Source directory not found: {self.source_dir}")
 
         return sorted(self.source_dir.glob(pattern))
 
-    def ensure_ready(self, ref: Optional[str] = None, shallow: bool = False) -> None:
+    def ensure_ready(self, ref: str | None = None, shallow: bool = False) -> None:
         """
         Ensure repository is cloned and checked out to specified ref
 

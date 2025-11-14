@@ -13,30 +13,27 @@ Usage:
 """
 
 import argparse
-import os
 import re
 import subprocess
 import sys
 import tempfile
 from pathlib import Path
-from typing import List, Tuple, Dict, Set, Optional
-
 
 # Version metadata (in chronological order)
 VERSIONS = {
-    'n3337': 'C++11',
-    'n4140': 'C++14',
-    'n4659': 'C++17',
-    'n4861': 'C++20',
-    'n4950': 'C++23',
-    'trunk': 'C++26 (working draft)',
+    "n3337": "C++11",
+    "n4140": "C++14",
+    "n4659": "C++17",
+    "n4861": "C++20",
+    "n4950": "C++23",
+    "trunk": "C++26 (working draft)",
 }
 
 # Ordered list of version tags for generating pairs
-VERSION_ORDER = ['n3337', 'n4140', 'n4659', 'n4861', 'n4950', 'trunk']
+VERSION_ORDER = ["n3337", "n4140", "n4659", "n4861", "n4950", "trunk"]
 
 
-def generate_all_version_pairs() -> List[Tuple[str, str]]:
+def generate_all_version_pairs() -> list[tuple[str, str]]:
     """
     Generate all possible version pairs in chronological order.
 
@@ -45,7 +42,7 @@ def generate_all_version_pairs() -> List[Tuple[str, str]]:
     """
     pairs = []
     for i, from_version in enumerate(VERSION_ORDER):
-        for to_version in VERSION_ORDER[i + 1:]:
+        for to_version in VERSION_ORDER[i + 1 :]:
             pairs.append((from_version, to_version))
     return pairs
 
@@ -54,7 +51,7 @@ def generate_all_version_pairs() -> List[Tuple[str, str]]:
 DEFAULT_PAIRS = generate_all_version_pairs()
 
 
-def find_common_chapters(from_version: str, to_version: str) -> Tuple[Set[str], Set[str], Set[str]]:
+def find_common_chapters(from_version: str, to_version: str) -> tuple[set[str], set[str], set[str]]:
     """
     Find common, removed, and added chapters between two versions.
 
@@ -69,8 +66,8 @@ def find_common_chapters(from_version: str, to_version: str) -> Tuple[Set[str], 
     if not to_dir.exists():
         raise FileNotFoundError(f"Version directory not found: {to_dir}")
 
-    from_chapters = {f.stem for f in from_dir.glob('*.md')}
-    to_chapters = {f.stem for f in to_dir.glob('*.md')}
+    from_chapters = {f.stem for f in from_dir.glob("*.md")}
+    to_chapters = {f.stem for f in to_dir.glob("*.md")}
 
     common = from_chapters & to_chapters
     removed = from_chapters - to_chapters
@@ -79,28 +76,28 @@ def find_common_chapters(from_version: str, to_version: str) -> Tuple[Set[str], 
     return common, removed, added
 
 
-def get_file_stats(file_path: Path) -> Dict[str, int]:
+def get_file_stats(file_path: Path) -> dict[str, int]:
     """Get statistics for a markdown file."""
     if not file_path.exists():
-        return {'size': 0, 'lines': 0}
+        return {"size": 0, "lines": 0}
 
     size = file_path.stat().st_size
-    with open(file_path, 'r', encoding='utf-8') as f:
+    with open(file_path, encoding="utf-8") as f:
         lines = sum(1 for _ in f)
 
-    return {'size': size, 'lines': lines}
+    return {"size": size, "lines": lines}
 
 
 def format_size(bytes: int) -> str:
     """Format bytes as human-readable size."""
-    for unit in ['B', 'KB', 'MB']:
+    for unit in ["B", "KB", "MB"]:
         if bytes < 1024:
             return f"{bytes:.1f} {unit}"
         bytes /= 1024
     return f"{bytes:.1f} GB"
 
 
-def parse_stable_names(markdown_file: Path) -> Dict[str, Tuple[str, int, int]]:
+def parse_stable_names(markdown_file: Path) -> dict[str, tuple[str, int, int]]:
     """
     Parse markdown file and extract stable name sections.
 
@@ -112,7 +109,7 @@ def parse_stable_names(markdown_file: Path) -> Dict[str, Tuple[str, int, int]]:
 
     sections = {}
 
-    with open(markdown_file, 'r', encoding='utf-8') as f:
+    with open(markdown_file, encoding="utf-8") as f:
         lines = f.readlines()
 
     # Pattern to match headings with stable name anchors
@@ -133,7 +130,7 @@ def parse_stable_names(markdown_file: Path) -> Dict[str, Tuple[str, int, int]]:
             while current_sections and current_sections[-1][0] >= level:
                 old_level, old_name, old_start = current_sections.pop()
                 # Extract content from old_start to line_num - 1
-                content = ''.join(lines[old_start - 1:line_num - 1])
+                content = "".join(lines[old_start - 1 : line_num - 1])
                 sections[old_name] = (content, old_start, line_num - 1)
 
             # Start new section
@@ -142,7 +139,7 @@ def parse_stable_names(markdown_file: Path) -> Dict[str, Tuple[str, int, int]]:
     # Close remaining open sections
     while current_sections:
         level, stable_name, start_line = current_sections.pop()
-        content = ''.join(lines[start_line - 1:])
+        content = "".join(lines[start_line - 1 :])
         sections[stable_name] = (content, start_line, len(lines))
 
     return sections
@@ -157,11 +154,18 @@ def generate_chapter_diff(from_file: Path, to_file: Path, output_file: Path) -> 
     try:
         # Use git diff --no-index for better formatting
         result = subprocess.run(
-            ['git', 'diff', '--no-index', '--unified=3', '--ignore-all-space',
-             str(from_file), str(to_file)],
+            [
+                "git",
+                "diff",
+                "--no-index",
+                "--unified=3",
+                "--ignore-all-space",
+                str(from_file),
+                str(to_file),
+            ],
             capture_output=True,
             text=True,
-            timeout=60
+            timeout=60,
         )
 
         # git diff returns 1 when files differ (this is expected)
@@ -170,7 +174,7 @@ def generate_chapter_diff(from_file: Path, to_file: Path, output_file: Path) -> 
             return False
 
         # Write diff output
-        with open(output_file, 'w', encoding='utf-8') as f:
+        with open(output_file, "w", encoding="utf-8") as f:
             f.write(result.stdout)
 
         return True
@@ -182,8 +186,8 @@ def generate_chapter_diff(from_file: Path, to_file: Path, output_file: Path) -> 
 
 def generate_full_diff(from_version: str, to_version: str, output_file: Path) -> bool:
     """Generate diff for full standard files."""
-    from_file = Path('full') / f'{from_version}.md'
-    to_file = Path('full') / f'{to_version}.md'
+    from_file = Path("full") / f"{from_version}.md"
+    to_file = Path("full") / f"{to_version}.md"
 
     if not from_file.exists():
         print(f"Warning: Full file not found: {from_file}", file=sys.stderr)
@@ -195,8 +199,9 @@ def generate_full_diff(from_version: str, to_version: str, output_file: Path) ->
     return generate_chapter_diff(from_file, to_file, output_file)
 
 
-def generate_stable_name_diff(stable_name: str, from_content: Optional[str],
-                              to_content: Optional[str], output_file: Path) -> bool:
+def generate_stable_name_diff(
+    stable_name: str, from_content: str | None, to_content: str | None, output_file: Path
+) -> bool:
     """
     Generate diff for a single stable name section.
 
@@ -207,31 +212,34 @@ def generate_stable_name_diff(stable_name: str, from_content: Optional[str],
             tmp_path = Path(tmpdir)
 
             # Write content to temp files
-            from_file = tmp_path / 'from.md'
-            to_file = tmp_path / 'to.md'
+            from_file = tmp_path / "from.md"
+            to_file = tmp_path / "to.md"
 
             if from_content:
-                from_file.write_text(from_content, encoding='utf-8')
+                from_file.write_text(from_content, encoding="utf-8")
             else:
-                from_file.write_text("", encoding='utf-8')
+                from_file.write_text("", encoding="utf-8")
 
             if to_content:
-                to_file.write_text(to_content, encoding='utf-8')
+                to_file.write_text(to_content, encoding="utf-8")
             else:
-                to_file.write_text("", encoding='utf-8')
+                to_file.write_text("", encoding="utf-8")
 
             # Use git diff with high-quality options
             result = subprocess.run(
                 [
-                    'git', 'diff', '--no-index',
-                    '--patience',           # Better algorithm for moved sections
-                    '--unified=5',          # More context lines
-                    '--ignore-all-space',   # Ignore all whitespace differences
-                    str(from_file), str(to_file)
+                    "git",
+                    "diff",
+                    "--no-index",
+                    "--patience",  # Better algorithm for moved sections
+                    "--unified=5",  # More context lines
+                    "--ignore-all-space",  # Ignore all whitespace differences
+                    str(from_file),
+                    str(to_file),
                 ],
                 capture_output=True,
                 text=True,
-                timeout=30
+                timeout=30,
             )
 
             # git diff returns 1 when files differ (this is expected)
@@ -239,7 +247,7 @@ def generate_stable_name_diff(stable_name: str, from_content: Optional[str],
                 return False
 
             # Add header with stable name
-            with open(output_file, 'w', encoding='utf-8') as f:
+            with open(output_file, "w", encoding="utf-8") as f:
                 f.write(f"# Diff for [{stable_name}]\n")
                 f.write(f"# Stable name: {stable_name}\n\n")
                 f.write(result.stdout)
@@ -251,7 +259,9 @@ def generate_stable_name_diff(stable_name: str, from_content: Optional[str],
         return False
 
 
-def generate_stable_name_diffs(from_version: str, to_version: str, output_dir: Path, max_dots: Optional[int] = None) -> int:
+def generate_stable_name_diffs(
+    from_version: str, to_version: str, output_dir: Path, max_dots: int | None = None
+) -> int:
     """
     Generate diffs for all stable names across all chapters.
 
@@ -266,7 +276,7 @@ def generate_stable_name_diffs(from_version: str, to_version: str, output_dir: P
     if max_dots is not None:
         print(f"  Generating stable name diffs (max {max_dots} dots)...")
     else:
-        print(f"  Generating stable name diffs...")
+        print("  Generating stable name diffs...")
 
     # Collect all stable names from both versions
     from_stable_names = {}  # stable_name -> (chapter, content, start, end)
@@ -276,13 +286,13 @@ def generate_stable_name_diffs(from_version: str, to_version: str, output_dir: P
     from_dir = Path(from_version)
     to_dir = Path(to_version)
 
-    for chapter_file in sorted(from_dir.glob('*.md')):
+    for chapter_file in sorted(from_dir.glob("*.md")):
         chapter = chapter_file.stem
         sections = parse_stable_names(chapter_file)
         for stable_name, (content, start, end) in sections.items():
             from_stable_names[stable_name] = (chapter, content, start, end)
 
-    for chapter_file in sorted(to_dir.glob('*.md')):
+    for chapter_file in sorted(to_dir.glob("*.md")):
         chapter = chapter_file.stem
         sections = parse_stable_names(chapter_file)
         for stable_name, (content, start, end) in sections.items():
@@ -301,12 +311,12 @@ def generate_stable_name_diffs(from_version: str, to_version: str, output_dir: P
 
     # Filter by dot count if max_dots is specified
     if max_dots is not None:
-        filtered_names = {name for name in all_stable_names if name.count('.') <= max_dots}
+        filtered_names = {name for name in all_stable_names if name.count(".") <= max_dots}
         print(f"    Filtering to {len(filtered_names)} stable names (max {max_dots} dots)")
         all_stable_names = filtered_names
 
     # Create output directory
-    stable_name_dir = output_dir / 'by_stable_name'
+    stable_name_dir = output_dir / "by_stable_name"
     stable_name_dir.mkdir(parents=True, exist_ok=True)
 
     # Generate diff for each stable name
@@ -322,7 +332,7 @@ def generate_stable_name_diffs(from_version: str, to_version: str, output_dir: P
             continue
 
         # Generate safe filename from stable name
-        safe_name = stable_name.replace('/', '_').replace('\\', '_')
+        safe_name = stable_name.replace("/", "_").replace("\\", "_")
         output_file = stable_name_dir / f"{safe_name}.diff"
 
         if generate_stable_name_diff(stable_name, from_content, to_content, output_file):
@@ -330,35 +340,56 @@ def generate_stable_name_diffs(from_version: str, to_version: str, output_dir: P
             diff_sizes[stable_name] = output_file.stat().st_size
 
     # Generate README for stable name diffs
-    readme_path = stable_name_dir / 'README.md'
-    generate_stable_name_readme(from_version, to_version, readme_path,
-                                from_stable_names, to_stable_names,
-                                added_names, removed_names, diff_sizes)
+    readme_path = stable_name_dir / "README.md"
+    generate_stable_name_readme(
+        from_version,
+        to_version,
+        readme_path,
+        from_stable_names,
+        to_stable_names,
+        added_names,
+        removed_names,
+        diff_sizes,
+    )
 
     print(f"  Generated {success_count} stable name diffs")
     return success_count
 
 
-def generate_stable_name_readme(from_version: str, to_version: str, readme_path: Path,
-                                from_stable_names: Dict, to_stable_names: Dict,
-                                added_names: Set[str], removed_names: Set[str],
-                                diff_sizes: Dict[str, int]) -> None:
+def generate_stable_name_readme(
+    from_version: str,
+    to_version: str,
+    readme_path: Path,
+    from_stable_names: dict,
+    to_stable_names: dict,
+    added_names: set[str],
+    removed_names: set[str],
+    diff_sizes: dict[str, int],
+) -> None:
     """Generate README for stable name diffs directory."""
     from_name = VERSIONS.get(from_version, from_version)
     to_name = VERSIONS.get(to_version, to_version)
 
     lines = []
     lines.append(f"# Stable Name Diffs: {from_name} → {to_name}\n")
-    lines.append(f"Comparison of individual stable name sections between {from_version} and {to_version}.\n")
+    lines.append(
+        f"Comparison of individual stable name sections between {from_version} and {to_version}.\n"
+    )
     lines.append("## Overview\n")
-    lines.append("This directory contains focused diffs for each stable name (section) in the C++ standard. ")
-    lines.append("Unlike chapter-level diffs which can be thousands of lines, these diffs focus on specific ")
+    lines.append(
+        "This directory contains focused diffs for each stable name (section) in the C++ standard. "
+    )
+    lines.append(
+        "Unlike chapter-level diffs which can be thousands of lines, these diffs focus on specific "
+    )
     lines.append("sections like `[array]`, `[class.copy]`, or `[dcl.init]`.\n")
     lines.append("**Benefits:**\n")
     lines.append("- **Granular tracking**: See exactly how a specific feature evolved")
     lines.append("- **Reduced noise**: No shuffling between unrelated sections")
     lines.append("- **Educational**: Perfect for studying feature introduction and evolution")
-    lines.append("- **Cross-version analysis**: Easy to compare same stable name across multiple versions\n")
+    lines.append(
+        "- **Cross-version analysis**: Easy to compare same stable name across multiple versions\n"
+    )
 
     # Statistics
     lines.append("## Statistics\n")
@@ -375,7 +406,7 @@ def generate_stable_name_readme(from_version: str, to_version: str, readme_path:
         lines.append("Top 20 stable names by diff size:\n")
         sorted_by_size = sorted(diff_sizes.items(), key=lambda x: x[1], reverse=True)[:20]
         for i, (stable_name, size) in enumerate(sorted_by_size, 1):
-            safe_name = stable_name.replace('/', '_').replace('\\', '_')
+            safe_name = stable_name.replace("/", "_").replace("\\", "_")
             size_kb = size / 1024
             lines.append(f"{i}. [`[{stable_name}]`]({safe_name}.diff) - {size_kb:.1f} KB")
         lines.append("")
@@ -385,7 +416,7 @@ def generate_stable_name_readme(from_version: str, to_version: str, readme_path:
         lines.append(f"## New Stable Names in {to_name}\n")
         lines.append(f"Stable names that didn't exist in {from_name}:\n")
         for stable_name in sorted(added_names)[:50]:  # Show first 50
-            safe_name = stable_name.replace('/', '_').replace('\\', '_')
+            safe_name = stable_name.replace("/", "_").replace("\\", "_")
             # Get chapter
             chapter = to_stable_names.get(stable_name, (None,))[0]
             lines.append(f"- [`[{stable_name}]`]({safe_name}.diff) (from {chapter}.md)")
@@ -398,7 +429,7 @@ def generate_stable_name_readme(from_version: str, to_version: str, readme_path:
         lines.append(f"## Removed Stable Names in {to_name}\n")
         lines.append(f"Stable names that existed in {from_name} but not in {to_name}:\n")
         for stable_name in sorted(removed_names)[:50]:
-            safe_name = stable_name.replace('/', '_').replace('\\', '_')
+            safe_name = stable_name.replace("/", "_").replace("\\", "_")
             chapter = from_stable_names.get(stable_name, (None,))[0]
             lines.append(f"- [`[{stable_name}]`]({safe_name}.diff) (was in {chapter}.md)")
         if len(removed_names) > 50:
@@ -420,15 +451,25 @@ def generate_stable_name_readme(from_version: str, to_version: str, readme_path:
     lines.append("# View a specific ranges section")
     lines.append("less ranges.general.diff")
     lines.append("```\n")
-    lines.append("**Diff Quality**: Generated with `git diff --patience --unified=5 --ignore-all-space` ")
-    lines.append("for best section matching and readability, ignoring all whitespace differences.\n")
+    lines.append(
+        "**Diff Quality**: Generated with `git diff --patience --unified=5 --ignore-all-space` "
+    )
+    lines.append(
+        "for best section matching and readability, ignoring all whitespace differences.\n"
+    )
 
-    with open(readme_path, 'w', encoding='utf-8') as f:
-        f.write('\n'.join(lines))
+    with open(readme_path, "w", encoding="utf-8") as f:
+        f.write("\n".join(lines))
 
 
-def generate_summary(from_version: str, to_version: str, diff_dir: Path,
-                     common: Set[str], removed: Set[str], added: Set[str]) -> str:
+def generate_summary(
+    from_version: str,
+    to_version: str,
+    diff_dir: Path,
+    common: set[str],
+    removed: set[str],
+    added: set[str],
+) -> str:
     """Generate summary markdown for a version pair."""
     from_name = VERSIONS.get(from_version, from_version)
     to_name = VERSIONS.get(to_version, to_version)
@@ -443,18 +484,18 @@ def generate_summary(from_version: str, to_version: str, diff_dir: Path,
         for chapter in sorted(added):
             to_file = Path(to_version) / f"{chapter}.md"
             stats = get_file_stats(to_file)
-            size_str = format_size(stats['size'])
+            size_str = format_size(stats["size"])
             lines.append(f"- **{chapter}.md** ({size_str}, {stats['lines']:,} lines)")
 
             # Try to infer what the chapter is about from first heading
             try:
-                with open(to_file, 'r', encoding='utf-8') as f:
+                with open(to_file, encoding="utf-8") as f:
                     for line in f:
-                        if line.startswith('# '):
+                        if line.startswith("# "):
                             title = line[2:].strip()
                             lines.append(f"  - {title}")
                             break
-            except:
+            except Exception:
                 pass
         lines.append("")
 
@@ -464,7 +505,7 @@ def generate_summary(from_version: str, to_version: str, diff_dir: Path,
         for chapter in sorted(removed):
             from_file = Path(from_version) / f"{chapter}.md"
             stats = get_file_stats(from_file)
-            size_str = format_size(stats['size'])
+            size_str = format_size(stats["size"])
             lines.append(f"- **{chapter}.md** ({size_str}, {stats['lines']:,} lines)")
         lines.append("")
 
@@ -480,13 +521,19 @@ def generate_summary(from_version: str, to_version: str, diff_dir: Path,
         from_stats = get_file_stats(from_file)
         to_stats = get_file_stats(to_file)
 
-        size_change = to_stats['size'] - from_stats['size']
-        size_pct = ((to_stats['size'] / from_stats['size'] - 1) * 100) if from_stats['size'] > 0 else 0
-        line_change = to_stats['lines'] - from_stats['lines']
-        line_pct = ((to_stats['lines'] / from_stats['lines'] - 1) * 100) if from_stats['lines'] > 0 else 0
+        size_change = to_stats["size"] - from_stats["size"]
+        size_pct = (
+            ((to_stats["size"] / from_stats["size"] - 1) * 100) if from_stats["size"] > 0 else 0
+        )
+        line_change = to_stats["lines"] - from_stats["lines"]
+        line_pct = (
+            ((to_stats["lines"] / from_stats["lines"] - 1) * 100) if from_stats["lines"] > 0 else 0
+        )
 
         # Format changes
-        size_change_str = f"+{format_size(size_change)}" if size_change >= 0 else format_size(size_change)
+        size_change_str = (
+            f"+{format_size(size_change)}" if size_change >= 0 else format_size(size_change)
+        )
         size_pct_str = f"+{size_pct:.1f}%" if size_pct >= 0 else f"{size_pct:.1f}%"
         line_change_str = f"+{line_change:,}" if line_change >= 0 else f"{line_change:,}"
         line_pct_str = f"+{line_pct:.1f}%" if line_pct >= 0 else f"{line_pct:.1f}%"
@@ -505,17 +552,23 @@ def generate_summary(from_version: str, to_version: str, diff_dir: Path,
 
     # Stable name diffs section
     lines.append("## Stable Name Diffs (NEW!)\n")
-    lines.append(f"**[Browse diffs by stable name](by_stable_name/)** - Focused diffs for individual sections\n")
-    lines.append("Instead of viewing entire chapter diffs, you can now view changes for specific stable names:")
+    lines.append(
+        "**[Browse diffs by stable name](by_stable_name/)** - Focused diffs for individual sections\n"
+    )
+    lines.append(
+        "Instead of viewing entire chapter diffs, you can now view changes for specific stable names:"
+    )
     lines.append("- Example: Track how `[array]` evolved from C++11 to C++23")
     lines.append("- Example: See all changes to `[class.copy]` or `[dcl.init]`")
     lines.append("- **Benefits**: Reduced noise, granular tracking, perfect for educational use\n")
-    lines.append(f"The `by_stable_name/` directory contains {len(common)} diffs organized by section.\n")
+    lines.append(
+        f"The `by_stable_name/` directory contains {len(common)} diffs organized by section.\n"
+    )
 
     # Full standard comparison
     lines.append("## Full Standard Comparison\n")
-    lines.append(f"- [View complete diff](full_standard.diff) (all chapters concatenated)")
-    lines.append(f"- Note: This file may be large and is best viewed locally\n")
+    lines.append("- [View complete diff](full_standard.diff) (all chapters concatenated)")
+    lines.append("- Note: This file may be large and is best viewed locally\n")
 
     # Usage instructions
     lines.append("## How to Use These Diffs\n")
@@ -524,20 +577,22 @@ def generate_summary(from_version: str, to_version: str, diff_dir: Path,
     lines.append("- Per-chapter diffs render well in GitHub's web interface\n")
     lines.append("**Locally:**")
     lines.append("```bash")
-    lines.append(f"# View specific chapter diff")
+    lines.append("# View specific chapter diff")
     lines.append(f"git diff --no-index {from_version}/class.md {to_version}/class.md")
     lines.append("")
-    lines.append(f"# View with side-by-side comparison")
+    lines.append("# View with side-by-side comparison")
     lines.append(f"diff -y {from_version}/class.md {to_version}/class.md | less")
     lines.append("")
-    lines.append(f"# View full standard diff")
+    lines.append("# View full standard diff")
     lines.append(f"less diffs/{from_version}_to_{to_version}/full_standard.diff")
     lines.append("```\n")
 
-    return '\n'.join(lines)
+    return "\n".join(lines)
 
 
-def generate_diff_pair(from_version: str, to_version: str, output_base: Path, max_dots: Optional[int] = None) -> None:
+def generate_diff_pair(
+    from_version: str, to_version: str, output_base: Path, max_dots: int | None = None
+) -> None:
     """Generate all diffs for a version pair.
 
     Args:
@@ -579,19 +634,20 @@ def generate_diff_pair(from_version: str, to_version: str, output_base: Path, ma
     print("  Generating full standard diff...")
     full_diff_file = output_base / "full_standard.diff"
     if generate_full_diff(from_version, to_version, full_diff_file):
-        print(f"  Generated full standard diff")
+        print("  Generated full standard diff")
     else:
-        print(f"  Warning: Could not generate full standard diff")
+        print("  Warning: Could not generate full standard diff")
 
     # Generate stable name diffs
-    stable_name_count = generate_stable_name_diffs(from_version, to_version, output_base, max_dots=max_dots)
+    generate_stable_name_diffs(from_version, to_version, output_base, max_dots=max_dots)
 
     # Generate summary
     print("  Generating summary...")
     summary_file = output_base / "README.md"
-    summary_content = generate_summary(from_version, to_version, output_base,
-                                      common, removed, added)
-    with open(summary_file, 'w', encoding='utf-8') as f:
+    summary_content = generate_summary(
+        from_version, to_version, output_base, common, removed, added
+    )
+    with open(summary_file, "w", encoding="utf-8") as f:
         f.write(summary_content)
 
     print(f"✓ Completed: {from_name} → {to_name}")
@@ -599,7 +655,7 @@ def generate_diff_pair(from_version: str, to_version: str, output_base: Path, ma
 
 def main():
     parser = argparse.ArgumentParser(
-        description='Generate diffs between C++ standard versions',
+        description="Generate diffs between C++ standard versions",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
@@ -612,14 +668,18 @@ By default, generates all possible pairs (15 total):
   - Adjacent versions: C++11→C++14, C++14→C++17, etc.
   - Intermediate spans: C++11→C++17, C++14→C++20, etc.
   - Major evolution: C++11→C++23, C++17→C++26, etc.
-        """
+        """,
     )
-    parser.add_argument('from_version', nargs='?', help='Source version (e.g., n3337)')
-    parser.add_argument('to_version', nargs='?', help='Target version (e.g., n4950)')
-    parser.add_argument('--list', action='store_true', help='List available versions')
-    parser.add_argument('--output', '-o', default='diffs', help='Output directory (default: diffs)')
-    parser.add_argument('--max-dots', type=int, metavar='N',
-                       help='Maximum number of dots in stable names (default: no limit, all levels)')
+    parser.add_argument("from_version", nargs="?", help="Source version (e.g., n3337)")
+    parser.add_argument("to_version", nargs="?", help="Target version (e.g., n4950)")
+    parser.add_argument("--list", action="store_true", help="List available versions")
+    parser.add_argument("--output", "-o", default="diffs", help="Output directory (default: diffs)")
+    parser.add_argument(
+        "--max-dots",
+        type=int,
+        metavar="N",
+        help="Maximum number of dots in stable names (default: no limit, all levels)",
+    )
 
     args = parser.parse_args()
 
@@ -650,12 +710,12 @@ By default, generates all possible pairs (15 total):
             continue
 
     print(f"\n✓ All diffs generated in {output_root}/")
-    print(f"\nView summaries:")
+    print("\nView summaries:")
     for from_v, to_v in pairs:
         print(f"  {output_root}/{from_v}_to_{to_v}/README.md")
 
     return 0
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     sys.exit(main())

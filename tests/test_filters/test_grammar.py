@@ -1,13 +1,15 @@
 """Tests for cpp-grammar.lua filter"""
+
 import subprocess
-from pathlib import Path
 import sys
+from pathlib import Path
 
 # Import inject_macros helper from conftest
 sys.path.insert(0, str(Path(__file__).parent.parent))
 from conftest import inject_macros
 
 FILTER_PATH = Path("src/cpp_std_converter/filters/cpp-grammar.lua")
+
 
 def run_pandoc_with_filter(latex_content):
     """Helper to run Pandoc with grammar filter"""
@@ -28,6 +30,7 @@ def run_pandoc_with_filter(latex_content):
     )
     return result.stdout, result.returncode
 
+
 def test_ncbnf_basic():
     """Test basic ncbnf grammar block"""
     latex = r"""
@@ -42,6 +45,7 @@ typedef-name:\br
     assert "typedef-name:" in output
     assert "identifier" in output
 
+
 def test_ncbnf_with_terminal():
     r"""Test \terminal{} in grammar"""
     latex = r"""
@@ -54,6 +58,7 @@ string-literal:\br
     assert code == 0
     assert "'R'" in output  # \terminal{R} should become 'R'
 
+
 def test_ncbnf_with_opt():
     r"""Test \opt{} in grammar"""
     latex = r"""
@@ -65,6 +70,7 @@ string:\br
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
     assert "encodingₒₚₜ" in output  # \opt{} should become contentₒₚₜ
+
 
 def test_ncsimplebnf():
     """Test ncsimplebnf environment"""
@@ -79,6 +85,7 @@ expression:\br
     assert "``` bnf" in output
     assert "expression:" in output
 
+
 def test_ncrebnf():
     """Test ncrebnf environment"""
     latex = r"""
@@ -91,6 +98,7 @@ pattern:\br
     assert code == 0
     assert "``` bnf" in output
     assert "pattern:" in output
+
 
 def test_nontermdef():
     r"""Test \nontermdef{} command"""
@@ -106,6 +114,7 @@ def test_nontermdef():
     assert "class-name:" in output
     assert "identifier" in output
     assert "simple-template-id" in output
+
 
 def test_keyword():
     r"""Test \keyword{} command"""
@@ -125,6 +134,7 @@ def test_keyword():
     assert "struct" in output
     assert "union" in output
 
+
 def test_bnfindent():
     r"""Test \bnfindent indentation"""
     latex = r"""
@@ -141,6 +151,7 @@ def test_bnfindent():
     # \bnfindent should be converted to spaces, \opt{} to Unicode subscript
     assert "  parameter-listₒₚₜ" in output or "parameter-listₒₚₜ" in output
 
+
 def test_grammarterm():
     r"""Test \grammarterm{} command"""
     latex = r"""
@@ -155,6 +166,7 @@ def test_grammarterm():
     assert "expr:" in output
     assert "id-expression" in output
     assert "literal" in output
+
 
 def test_textnormal():
     r"""Test \textnormal{} command"""
@@ -171,6 +183,7 @@ def test_textnormal():
     assert "one of" in output
     assert "'0'" in output
 
+
 def test_unicode():
     r"""Test \unicode{} command"""
     latex = r"""
@@ -184,6 +197,7 @@ def test_unicode():
     assert "special:" in output
     # \unicode{2026} is horizontal ellipsis …
     assert "…" in output
+
 
 def test_tcode_in_bnf():
     r"""Test \tcode{} in BNF blocks"""
@@ -199,6 +213,7 @@ def test_tcode_in_bnf():
     assert "type-spec:" in output
     assert "int" in output
     assert "char" in output
+
 
 def test_texttt_in_bnf():
     r"""Test \texttt{} in BNF blocks (module.md bug - Pandoc converts \keyword{} to \texttt{})"""
@@ -216,6 +231,7 @@ def test_texttt_in_bnf():
     assert "\\texttt" not in output
     assert "'{'" in output
 
+
 def test_caret():
     r"""Test \caret{} command"""
     latex = r"""
@@ -228,6 +244,7 @@ def test_caret():
     assert code == 0
     assert "xor-expr:" in output
     assert "^" in output
+
 
 def test_complex_bnf():
     """Test complex BNF with multiple commands"""
@@ -246,6 +263,7 @@ def test_complex_bnf():
     assert "declarator" in output
     assert "brace-or-equal-initializerₒₚₜ" in output  # \opt{} uses Unicode subscript
     assert "':'" in output
+
 
 def test_terminal_with_escaped_chars():
     r"""Test that \terminal{} properly unescapes LaTeX special characters"""

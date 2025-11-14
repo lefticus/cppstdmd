@@ -23,10 +23,10 @@ def extract_stable_name_from_tex(tex_file: Path) -> str | None:
         Stable name if found, otherwise None
     """
     try:
-        content = tex_file.read_text(encoding='utf-8', errors='ignore')
+        content = tex_file.read_text(encoding="utf-8", errors="ignore")
 
         # Look for \renewcommand{\stablenamestart}{name}
-        match = re.search(r'\\renewcommand\{\\stablenamestart\}\{([^}]+)\}', content)
+        match = re.search(r"\\renewcommand\{\\stablenamestart\}\{([^}]+)\}", content)
         if match:
             return match.group(1)
 

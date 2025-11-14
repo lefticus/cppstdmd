@@ -1,12 +1,10 @@
 """Integration tests for converting full C++ standard chapters"""
-import pytest
-from pathlib import Path
-import tempfile
+
 import re
+import tempfile
+from pathlib import Path
 
-from cpp_std_converter.converter import Converter
-from cpp_std_converter.repo_manager import DraftRepoManager
-
+import pytest
 
 # Mark all tests in this module as integration tests
 pytestmark = pytest.mark.integration
@@ -24,7 +22,7 @@ class TestChapterConversion:
         if not source_file.exists():
             pytest.skip(f"Source file not found: {source_file}")
 
-        with tempfile.NamedTemporaryFile(mode='w', suffix='.md', delete=False) as tmp:
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".md", delete=False) as tmp:
             output_file = Path(tmp.name)
 
         try:
@@ -37,36 +35,46 @@ class TestChapterConversion:
             assert len(content) > 1000, "Output file too small"
 
             # Verify section headings converted (with visible stable names)
-            assert re.search(r'^# Scope <a id="intro\.scope">\[\[intro\.scope\]\]</a>$', content, re.MULTILINE), "Missing expected heading with anchor"
-            assert re.search(r'^## ', content, re.MULTILINE), "No level 2 headings found"
+            assert re.search(
+                r'^# Scope <a id="intro\.scope">\[\[intro\.scope\]\]</a>$', content, re.MULTILINE
+            ), "Missing expected heading with anchor"
+            assert re.search(r"^## ", content, re.MULTILINE), "No level 2 headings found"
             # Verify HTML anchors are present with visible stable names
-            assert '<a id="intro.scope">[[intro.scope]]</a>' in content, "Missing HTML anchor with visible stable name for intro.scope"
+            assert (
+                '<a id="intro.scope">[[intro.scope]]</a>' in content
+            ), "Missing HTML anchor with visible stable name for intro.scope"
 
             # Verify no unconverted macros
-            assert '\\Cpp{}' not in content, "Unconverted \\Cpp{} macro found"
-            assert '\\tcode{' not in content, "Unconverted \\tcode{} macro found"
-            assert '\\keyword{' not in content, "Unconverted \\keyword{} macro found"
+            assert "\\Cpp{}" not in content, "Unconverted \\Cpp{} macro found"
+            assert "\\tcode{" not in content, "Unconverted \\tcode{} macro found"
+            assert "\\keyword{" not in content, "Unconverted \\keyword{} macro found"
 
             # Verify definitions are converted correctly (intro.defs section)
-            definition_count = len(re.findall(r'^#### \d+\s+\w', content, re.MULTILINE))
+            definition_count = len(re.findall(r"^#### \d+\s+\w", content, re.MULTILINE))
             assert definition_count == 68, f"Expected 68 definitions, found {definition_count}"
 
             # Verify specific definitions
-            assert '#### 1 access' in content, "Missing definition 1 (access)"
-            assert '#### 27 implementation-defined strict total order over pointers' in content, "Missing definition 27"
-            assert '#### 68 well-formed program' in content, "Missing definition 68"
+            assert "#### 1 access" in content, "Missing definition 1 (access)"
+            assert (
+                "#### 27 implementation-defined strict total order over pointers" in content
+            ), "Missing definition 27"
+            assert "#### 68 well-formed program" in content, "Missing definition 68"
 
             # Verify definition context labels
-            assert '⟨execution-time action⟩' in content, "Missing context label for 'access' definition"
-            assert '⟨library⟩' in content, "Missing library context labels"
+            assert (
+                "⟨execution-time action⟩" in content
+            ), "Missing context label for 'access' definition"
+            assert "⟨library⟩" in content, "Missing library context labels"
 
             # Verify definition anchors
-            assert '<a id="defns.access">[defns.access]</a>' in content, "Missing anchor for 'access' definition"
+            assert (
+                '<a id="defns.access">[defns.access]</a>' in content
+            ), "Missing anchor for 'access' definition"
 
             # Verify no unconverted definition macros
-            assert '\\definition{' not in content, "Unconverted \\definition{} macro found"
-            assert '\\defncontext{' not in content, "Unconverted \\defncontext{} macro found"
-            assert '\\begin{defnote}' not in content, "Unconverted \\begin{defnote} found"
+            assert "\\definition{" not in content, "Unconverted \\definition{} macro found"
+            assert "\\defncontext{" not in content, "Unconverted \\defncontext{} macro found"
+            assert "\\begin{defnote}" not in content, "Unconverted \\begin{defnote} found"
 
         finally:
             if output_file.exists():
@@ -78,7 +86,7 @@ class TestChapterConversion:
         if not source_file.exists():
             pytest.skip(f"Source file not found: {source_file}")
 
-        with tempfile.NamedTemporaryFile(mode='w', suffix='.md', delete=False) as tmp:
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".md", delete=False) as tmp:
             output_file = Path(tmp.name)
 
         try:
@@ -89,11 +97,11 @@ class TestChapterConversion:
             assert len(content) > 5000, "Output file too small"
 
             # Check for code blocks
-            code_block_count = content.count('``` cpp')
+            code_block_count = content.count("``` cpp")
             assert code_block_count > 10, f"Too few code blocks found: {code_block_count}"
 
             # Verify headings
-            assert re.search(r'^# ', content, re.MULTILINE), "No level 1 headings"
+            assert re.search(r"^# ", content, re.MULTILINE), "No level 1 headings"
 
         finally:
             if output_file.exists():
@@ -105,7 +113,7 @@ class TestChapterConversion:
         if not source_file.exists():
             pytest.skip(f"Source file not found: {source_file}")
 
-        with tempfile.NamedTemporaryFile(mode='w', suffix='.md', delete=False) as tmp:
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".md", delete=False) as tmp:
             output_file = Path(tmp.name)
 
         try:
@@ -116,11 +124,11 @@ class TestChapterConversion:
             assert len(content) > 10000, "Output file too small"
 
             # Expressions chapter in n4950 has ~90 code blocks
-            code_block_count = content.count('``` cpp')
+            code_block_count = content.count("``` cpp")
             assert code_block_count >= 85, f"Too few code blocks: {code_block_count} (expected ≥85)"
 
             # Verify inline code
-            inline_code_count = len(re.findall(r'`[^`]+`', content))
+            inline_code_count = len(re.findall(r"`[^`]+`", content))
             assert inline_code_count > 100, "Too few inline code elements"
 
         finally:
@@ -133,7 +141,7 @@ class TestChapterConversion:
         if not source_file.exists():
             pytest.skip(f"Source file not found: {source_file}")
 
-        with tempfile.NamedTemporaryFile(mode='w', suffix='.md', delete=False) as tmp:
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".md", delete=False) as tmp:
             output_file = Path(tmp.name)
 
         try:
@@ -144,7 +152,7 @@ class TestChapterConversion:
             assert len(content) > 10000, "Output file too small"
 
             # Classes chapter in n4950 has ~137 code blocks
-            code_block_count = content.count('``` cpp')
+            code_block_count = content.count("``` cpp")
             assert code_block_count >= 130, f"Too few code blocks: {code_block_count}"
 
         finally:
@@ -157,7 +165,7 @@ class TestChapterConversion:
         if not source_file.exists():
             pytest.skip(f"Source file not found: {source_file}")
 
-        with tempfile.NamedTemporaryFile(mode='w', suffix='.md', delete=False) as tmp:
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".md", delete=False) as tmp:
             output_file = Path(tmp.name)
 
         try:
@@ -169,7 +177,7 @@ class TestChapterConversion:
             assert len(content) > 500, "Output file too small"
 
             # Grammar chapter in n4950 has 6 BNF code blocks
-            bnf_block_count = content.count('``` bnf')
+            bnf_block_count = content.count("``` bnf")
             assert bnf_block_count >= 5, f"Too few BNF blocks: {bnf_block_count}"
 
         finally:
@@ -182,14 +190,14 @@ class TestQualityChecks:
 
     def test_no_empty_output(self, converter, draft_repo):
         """Verify all core chapters produce non-empty output"""
-        chapters = ['intro.tex', 'lex.tex', 'basic.tex', 'expressions.tex']
+        chapters = ["intro.tex", "lex.tex", "basic.tex", "expressions.tex"]
 
         for chapter_name in chapters:
             source_file = draft_repo.source_dir / chapter_name
             if not source_file.exists():
                 continue
 
-            with tempfile.NamedTemporaryFile(mode='w', suffix='.md', delete=False) as tmp:
+            with tempfile.NamedTemporaryFile(mode="w", suffix=".md", delete=False) as tmp:
                 output_file = Path(tmp.name)
 
             try:
@@ -197,7 +205,9 @@ class TestQualityChecks:
                 content = output_file.read_text()
 
                 # Minimum size check (1KB)
-                assert len(content) >= 1024, f"{chapter_name} output too small: {len(content)} bytes"
+                assert (
+                    len(content) >= 1024
+                ), f"{chapter_name} output too small: {len(content)} bytes"
 
             finally:
                 if output_file.exists():
@@ -209,7 +219,7 @@ class TestQualityChecks:
         if not source_file.exists():
             pytest.skip(f"Source file not found: {source_file}")
 
-        with tempfile.NamedTemporaryFile(mode='w', suffix='.md', delete=False) as tmp:
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".md", delete=False) as tmp:
             output_file = Path(tmp.name)
 
         try:
@@ -218,10 +228,10 @@ class TestQualityChecks:
 
             # Check that common macros don't appear unexpanded
             problematic_patterns = [
-                r'\\Cpp\{\}',
-                r'\\tcode\{[^}]+\}(?!`)',  # \tcode not followed by backtick
-                r'\\keyword\{[^}]+\}',
-                r'\\rSec\d',
+                r"\\Cpp\{\}",
+                r"\\tcode\{[^}]+\}(?!`)",  # \tcode not followed by backtick
+                r"\\keyword\{[^}]+\}",
+                r"\\rSec\d",
             ]
 
             for pattern in problematic_patterns:

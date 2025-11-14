@@ -7,23 +7,23 @@ Builds a complete C++ standard document from std.tex by:
 3. Concatenating with merged cross-reference link definitions
 """
 
-from pathlib import Path
-from typing import List, Tuple, Dict
+import os
 import re
 import sys
 import tempfile
-import os
 from concurrent.futures import ProcessPoolExecutor, as_completed
-from pylatexenc.latexwalker import LatexWalker, LatexMacroNode
+from pathlib import Path
+
+from pylatexenc.latexwalker import LatexMacroNode, LatexWalker
 
 
 def _convert_chapter_worker(
-    work_unit: Dict,
+    work_unit: dict,
     draft_dir: Path,
     output_dir: Path,
     label_index_file: Path,
-    verbose: bool = False
-) -> Dict:
+    verbose: bool = False,
+) -> dict:
     """
     Worker function for parallel chapter conversion.
 
@@ -51,7 +51,7 @@ def _convert_chapter_worker(
 
     draft_dir = Path(draft_dir)
     output_dir = Path(output_dir)
-    stable_name = work_unit['stable_name']
+    stable_name = work_unit["stable_name"]
 
     try:
         # Create converter instance for this worker
@@ -60,9 +60,9 @@ def _convert_chapter_worker(
         # Determine input file(s)
         temp_files = []
 
-        if work_unit['type'] == 'collision':
+        if work_unit["type"] == "collision":
             # Merge multiple files
-            chapters = work_unit['chapters']
+            chapters = work_unit["chapters"]
             chapter_files = []
             for ch in chapters:
                 ch_file = draft_dir / f"{ch}.tex"
@@ -72,59 +72,49 @@ def _convert_chapter_worker(
             # Merge files into temporary file
             merged_content = []
             for tex_file in chapter_files:
-                content = tex_file.read_text(encoding='utf-8')
+                content = tex_file.read_text(encoding="utf-8")
                 merged_content.append(content)
 
             # Create temporary merged file
             tmp = tempfile.NamedTemporaryFile(
-                mode='w',
-                suffix='.tex',
-                delete=False,
-                encoding='utf-8'
+                mode="w", suffix=".tex", delete=False, encoding="utf-8"
             )
-            tmp.write('\n\n'.join(merged_content))
+            tmp.write("\n\n".join(merged_content))
             tmp.close()
             file_to_convert = Path(tmp.name)
             temp_files.append(file_to_convert)
 
         else:
             # Single file conversion
-            chapter = work_unit['chapter']
+            chapter = work_unit["chapter"]
             chapter_file = draft_dir / f"{chapter}.tex"
 
             if not chapter_file.exists():
                 return {
-                    'success': False,
-                    'stable_name': stable_name,
-                    'error': f"{chapter}.tex not found"
+                    "success": False,
+                    "stable_name": stable_name,
+                    "error": f"{chapter}.tex not found",
                 }
 
             file_to_convert = chapter_file
 
             # Expand \input{} commands for front/back
-            if chapter in ['front', 'back']:
-                content = chapter_file.read_text(encoding='utf-8')
+            if chapter in ["front", "back"]:
+                content = chapter_file.read_text(encoding="utf-8")
                 base_dir = chapter_file.parent
 
                 def expand_input(match):
                     filename = match.group(1)
                     input_file = base_dir / f"{filename}.tex"
                     if input_file.exists():
-                        return input_file.read_text(encoding='utf-8')
+                        return input_file.read_text(encoding="utf-8")
                     else:
                         return match.group(0)
 
-                expanded = re.sub(
-                    r'\\input\s*\{([^}]+)\}',
-                    expand_input,
-                    content
-                )
+                expanded = re.sub(r"\\input\s*\{([^}]+)\}", expand_input, content)
 
                 tmp = tempfile.NamedTemporaryFile(
-                    mode='w',
-                    suffix='.tex',
-                    delete=False,
-                    encoding='utf-8'
+                    mode="w", suffix=".tex", delete=False, encoding="utf-8"
                 )
                 tmp.write(expanded)
                 tmp.close()
@@ -149,11 +139,7 @@ def _convert_chapter_worker(
             except Exception:
                 pass
 
-        return {
-            'success': True,
-            'output_file': output_file,
-            'stable_name': stable_name
-        }
+        return {"success": True, "output_file": output_file, "stable_name": stable_name}
 
     except Exception as e:
         # Cleanup temporary files on error
@@ -163,11 +149,7 @@ def _convert_chapter_worker(
             except Exception:
                 pass
 
-        return {
-            'success': False,
-            'stable_name': stable_name,
-            'error': str(e)
-        }
+        return {"success": False, "stable_name": stable_name, "error": str(e)}
 
 
 class StandardBuilder:
@@ -182,10 +164,8 @@ class StandardBuilder:
         self.std_tex = self.draft_dir / "std.tex"
 
     def extract_chapter_order(
-        self,
-        include_frontmatter: bool = True,
-        include_backmatter: bool = True
-    ) -> List[str]:
+        self, include_frontmatter: bool = True, include_backmatter: bool = True
+    ) -> list[str]:
         r"""
         Parse std.tex to extract ordered list of chapter filenames.
 
@@ -201,7 +181,7 @@ class StandardBuilder:
         if not self.std_tex.exists():
             raise FileNotFoundError(f"std.tex not found at {self.std_tex}")
 
-        content = self.std_tex.read_text(encoding='utf-8')
+        content = self.std_tex.read_text(encoding="utf-8")
 
         # Use pylatexenc to parse the LaTeX
         walker = LatexWalker(content)
@@ -218,39 +198,34 @@ class StandardBuilder:
 
             if isinstance(node, LatexMacroNode):
                 # Track document sections
-                if node.macroname == 'frontmatter':
+                if node.macroname == "frontmatter":
                     in_frontmatter = True
-                elif node.macroname == 'mainmatter':
+                elif node.macroname == "mainmatter":
                     in_frontmatter = False
                     in_mainmatter = True
-                elif node.macroname == 'backmatter':
+                elif node.macroname == "backmatter":
                     in_mainmatter = False
                     in_backmatter = True
-                elif node.macroname == 'include':
+                elif node.macroname == "include":
                     # Decide whether to include based on section
                     should_include = False
-                    if in_frontmatter and include_frontmatter:
-                        should_include = True
-                    elif in_mainmatter:
-                        should_include = True
-                    elif in_backmatter and include_backmatter:
+                    if in_frontmatter and include_frontmatter or in_mainmatter or in_backmatter and include_backmatter:
                         should_include = True
 
                     if should_include:
                         # Extract the filename from the argument
                         if node.nodeargd and node.nodeargd.argnlist:
                             arg = node.nodeargd.argnlist[0]
-                            if arg and hasattr(arg, 'nodelist'):
+                            if arg and hasattr(arg, "nodelist"):
                                 # Get the text content
-                                filename = ''.join(
-                                    n.chars if hasattr(n, 'chars') else ''
-                                    for n in arg.nodelist
+                                filename = "".join(
+                                    n.chars if hasattr(n, "chars") else "" for n in arg.nodelist
                                 )
                                 if filename:
                                     chapters.append(filename.strip())
 
             # Recursively visit child nodes
-            if hasattr(node, 'nodelist') and node.nodelist:
+            if hasattr(node, "nodelist") and node.nodelist:
                 for child in node.nodelist:
                     visit_node(child)
 
@@ -272,7 +247,7 @@ class StandardBuilder:
         Returns:
             Path to temporary file with expanded content
         """
-        content = tex_file.read_text(encoding='utf-8')
+        content = tex_file.read_text(encoding="utf-8")
         base_dir = tex_file.parent
 
         # Find all \input{filename} commands
@@ -282,26 +257,17 @@ class StandardBuilder:
 
             if input_file.exists():
                 # Read and return the input file content
-                return input_file.read_text(encoding='utf-8')
+                return input_file.read_text(encoding="utf-8")
             else:
                 # If file doesn't exist, keep the \input command
                 return match.group(0)
 
         # Replace \input{filename} with file content
         # Handle both \input{filename} and \input {filename}
-        expanded = re.sub(
-            r'\\input\s*\{([^}]+)\}',
-            expand_input,
-            content
-        )
+        expanded = re.sub(r"\\input\s*\{([^}]+)\}", expand_input, content)
 
         # Create temporary file with expanded content
-        tmp = tempfile.NamedTemporaryFile(
-            mode='w',
-            suffix='.tex',
-            delete=False,
-            encoding='utf-8'
-        )
+        tmp = tempfile.NamedTemporaryFile(mode="w", suffix=".tex", delete=False, encoding="utf-8")
         tmp.write(expanded)
         tmp.close()
 
@@ -331,10 +297,10 @@ class StandardBuilder:
             # Find the first \rSec0[label] line in the file
             # This is the top-level section that defines the stable name
             rsec0_line = None
-            with tex_file.open('r', encoding='utf-8') as f:
+            with tex_file.open("r", encoding="utf-8") as f:
                 for line in f:
                     # Look for \rSec0[label]{Title} pattern
-                    if r'\rSec0[' in line:
+                    if r"\rSec0[" in line:
                         rsec0_line = line.strip()
                         break
 
@@ -345,22 +311,16 @@ class StandardBuilder:
             # Create temporary file with just the \rSec0 line
             # This avoids issues with unclosed LaTeX environments when truncating
             tmp = tempfile.NamedTemporaryFile(
-                mode='w',
-                suffix='.tex',
-                delete=False,
-                encoding='utf-8'
+                mode="w", suffix=".tex", delete=False, encoding="utf-8"
             )
-            tmp.write(rsec0_line + '\n')
+            tmp.write(rsec0_line + "\n")
             tmp.close()
             tmp_path = Path(tmp.name)
 
             try:
                 # Convert with Pandoc (cpp-sections.lua extracts the label)
                 markdown = converter.convert_file(
-                    tmp_path,
-                    output_file=None,
-                    standalone=False,
-                    verbose=False
+                    tmp_path, output_file=None, standalone=False, verbose=False
                 )
 
                 # Extract first <a id="..."> anchor created by cpp-sections.lua
@@ -372,14 +332,14 @@ class StandardBuilder:
                     # "expr.prim" → "expr"
                     # "stmt.stmt" → "stmt"
                     # "intro.scope" → "intro"
-                    stable_name = label.split('.')[0] if '.' in label else label
+                    stable_name = label.split(".")[0] if "." in label else label
                     return stable_name
 
             finally:
                 # Clean up temp file
                 tmp_path.unlink(missing_ok=True)
 
-        except Exception as e:
+        except Exception:
             # If extraction fails, fall back to filename
             # This handles files that don't have \rSec tags or conversion errors
             pass
@@ -388,11 +348,8 @@ class StandardBuilder:
         return tex_file.stem
 
     def detect_stable_name_collisions(
-        self,
-        chapters: List[str],
-        chapter_to_stable: Dict[str, str],
-        verbose: bool = False
-    ) -> Dict[str, List[str]]:
+        self, chapters: list[str], chapter_to_stable: dict[str, str], verbose: bool = False
+    ) -> dict[str, list[str]]:
         """
         Detect stable name collisions and group chapters that need to be merged.
 
@@ -448,11 +405,7 @@ class StandardBuilder:
 
         return collision_groups
 
-    def _merge_tex_files(
-        self,
-        chapter_files: List[Path],
-        verbose: bool = False
-    ) -> Path:
+    def _merge_tex_files(self, chapter_files: list[Path], verbose: bool = False) -> Path:
         r"""
         Merge multiple LaTeX files into a single temporary file.
 
@@ -475,29 +428,20 @@ class StandardBuilder:
         # Concatenate file contents with separators
         merged_content = []
         for tex_file in chapter_files:
-            content = tex_file.read_text(encoding='utf-8')
+            content = tex_file.read_text(encoding="utf-8")
             merged_content.append(content)
 
         # Create temporary file with merged content
-        tmp = tempfile.NamedTemporaryFile(
-            mode='w',
-            suffix='.tex',
-            delete=False,
-            encoding='utf-8'
-        )
+        tmp = tempfile.NamedTemporaryFile(mode="w", suffix=".tex", delete=False, encoding="utf-8")
         # Join with double newline to ensure proper spacing
-        tmp.write('\n\n'.join(merged_content))
+        tmp.write("\n\n".join(merged_content))
         tmp.close()
 
         return Path(tmp.name)
 
     def build_full_standard(
-        self,
-        converter,
-        output_file: Path,
-        verbose: bool = False,
-        toc_depth: int = 1
-    ) -> Tuple[str, List[str]]:
+        self, converter, output_file: Path, verbose: bool = False, toc_depth: int = 1
+    ) -> tuple[str, list[str]]:
         """
         Build complete standard by converting chapters in order and concatenating.
 
@@ -534,7 +478,7 @@ class StandardBuilder:
             # Expand \input{} commands for chapters that use them
             # (front.tex and back.tex contain \input{} references)
             file_to_convert = chapter_file
-            if chapter in ['front', 'back']:
+            if chapter in ["front", "back"]:
                 try:
                     file_to_convert = self._expand_input_commands(chapter_file)
                     temp_files.append(file_to_convert)
@@ -547,8 +491,8 @@ class StandardBuilder:
                 markdown = converter.convert_file(
                     file_to_convert,
                     output_file=None,  # Return as string
-                    standalone=False,   # Don't include standalone wrappers
-                    verbose=False
+                    standalone=False,  # Don't include standalone wrappers
+                    verbose=False,
                 )
 
                 # Extract link definitions and content separately
@@ -563,6 +507,7 @@ class StandardBuilder:
                 print(f"ERROR: Failed to convert {chapter}.tex: {e}", file=sys.stderr)
                 if verbose:
                     import traceback
+
                     traceback.print_exc()
                 continue
 
@@ -581,7 +526,7 @@ class StandardBuilder:
             full_content += "\n\n" + link_defs
 
         # Write to output file
-        output_file.write_text(full_content, encoding='utf-8')
+        output_file.write_text(full_content, encoding="utf-8")
 
         # Cleanup temporary files
         for temp_file in temp_files:
@@ -617,8 +562,7 @@ class StandardBuilder:
         # Pattern to match headings with embedded anchors
         # Matches: ## Title <a id="label">[[label]]</a>
         heading_pattern = re.compile(
-            r'^(#{1,6})\s+(.+?)\s+<a id="([^"]+)">\[\[([^\]]+)\]\]</a>\s*$',
-            re.MULTILINE
+            r'^(#{1,6})\s+(.+?)\s+<a id="([^"]+)">\[\[([^\]]+)\]\]</a>\s*$', re.MULTILINE
         )
 
         # Track section numbers at each level
@@ -643,52 +587,47 @@ class StandardBuilder:
                 continue
 
             # Build section number string (e.g., "1.2.3")
-            section_num = '.'.join(
-                str(section_numbers[i])
-                for i in range(level + 1)
-            )
+            section_num = ".".join(str(section_numbers[i]) for i in range(level + 1))
 
             # Create TOC entry with indentation
-            indent = '  ' * level
+            indent = "  " * level
             list_marker = "- "
-            toc_entry = f"{indent}{list_marker}{section_num} {title} [[{stable_name}]](#{stable_name})"
+            toc_entry = (
+                f"{indent}{list_marker}{section_num} {title} [[{stable_name}]](#{stable_name})"
+            )
             toc_lines.append(toc_entry)
 
-        return '\n'.join(toc_lines)
+        return "\n".join(toc_lines)
 
-    def _split_content_and_references(self, markdown: str) -> Tuple[str, dict]:
+    def _split_content_and_references(self, markdown: str) -> tuple[str, dict]:
         """
         Split markdown into content and link reference definitions.
 
         Returns:
             Tuple of (content, dict of references)
         """
-        lines = markdown.split('\n')
+        lines = markdown.split("\n")
         content_lines = []
         references = {}
         in_references = False
 
         for line in lines:
-            if '<!-- Link reference definitions -->' in line:
+            if "<!-- Link reference definitions -->" in line:
                 in_references = True
                 continue
 
             if in_references:
                 # Match [ref]: #ref pattern
-                match = re.match(r'\[([^\]]+)\]:\s*#\1', line)
+                match = re.match(r"\[([^\]]+)\]:\s*#\1", line)
                 if match:
                     references[match.group(1)] = True
                     continue
 
             content_lines.append(line)
 
-        return '\n'.join(content_lines).strip(), references
+        return "\n".join(content_lines).strip(), references
 
-    def _generate_toc_for_separate_files(
-        self,
-        output_files: List[Path],
-        max_depth: int = 1
-    ) -> str:
+    def _generate_toc_for_separate_files(self, output_files: list[Path], max_depth: int = 1) -> str:
         """
         Generate a Table of Contents with links to separate markdown files.
 
@@ -708,8 +647,7 @@ class StandardBuilder:
         # Pattern to match headings with embedded anchors
         # Matches: ## Title <a id="label">[[label]]</a>
         heading_pattern = re.compile(
-            r'^(#{1,6})\s+(.+?)\s+<a id="([^"]+)">\[\[([^\]]+)\]\]</a>\s*$',
-            re.MULTILINE
+            r'^(#{1,6})\s+(.+?)\s+<a id="([^"]+)">\[\[([^\]]+)\]\]</a>\s*$', re.MULTILINE
         )
 
         # Track section numbers at each level
@@ -717,7 +655,7 @@ class StandardBuilder:
 
         # Process files in order
         for md_file in output_files:
-            content = md_file.read_text(encoding='utf-8')
+            content = md_file.read_text(encoding="utf-8")
             filename = md_file.stem
 
             for match in heading_pattern.finditer(content):
@@ -739,19 +677,16 @@ class StandardBuilder:
                     continue
 
                 # Build section number string (e.g., "1.2.3")
-                section_num = '.'.join(
-                    str(section_numbers[i])
-                    for i in range(level + 1)
-                )
+                section_num = ".".join(str(section_numbers[i]) for i in range(level + 1))
 
                 # Create TOC entry with cross-file link
-                indent = '  ' * level
+                indent = "  " * level
                 list_marker = "- "
                 # Format: - section_num title [[stable_name]](filename.md#anchor)
                 toc_entry = f"{indent}{list_marker}{section_num} {title} [[{stable_name}]]({filename}.md#{anchor_id})"
                 toc_lines.append(toc_entry)
 
-        return '\n'.join(toc_lines)
+        return "\n".join(toc_lines)
 
     def build_separate_chapters(
         self,
@@ -759,7 +694,7 @@ class StandardBuilder:
         output_dir: Path,
         verbose: bool = False,
         toc_depth: int = 1,
-    ) -> List[Path]:
+    ) -> list[Path]:
         """
         Build separate markdown files for each chapter with cross-file linking.
 
@@ -802,20 +737,16 @@ class StandardBuilder:
                     print(f"  {chapter}.tex → {stable_name}.md")
 
         # Detect stable name collisions
-        collision_groups = self.detect_stable_name_collisions(
-            chapters, chapter_to_stable, verbose
-        )
+        collision_groups = self.detect_stable_name_collisions(chapters, chapter_to_stable, verbose)
 
         # Build label index for cross-file references
         if verbose:
             print("\nBuilding label index for cross-file references...")
 
         from .label_indexer import LabelIndexer
+
         indexer = LabelIndexer(self.draft_dir)
-        label_index = indexer.build_index(
-            use_stable_names=True,
-            stable_name_map=chapter_to_stable
-        )
+        label_index = indexer.build_index(use_stable_names=True, stable_name_map=chapter_to_stable)
 
         # Write Lua table file
         label_index_file = output_dir / "cpp_std_labels.lua"
@@ -824,7 +755,7 @@ class StandardBuilder:
         if verbose:
             stats = indexer.get_statistics()
             print(f"Indexed {stats['labels']} labels across {stats['files']} files")
-            if stats['duplicates'] > 0:
+            if stats["duplicates"] > 0:
                 print(f"Warning: Found {stats['duplicates']} duplicate labels")
 
         # Create work units for parallel processing
@@ -850,19 +781,23 @@ class StandardBuilder:
             if stable_name in collision_groups:
                 # Collision group - create work unit for merged files
                 chapters_to_merge = collision_groups[stable_name]
-                work_units.append({
-                    'type': 'collision',
-                    'stable_name': stable_name,
-                    'chapters': chapters_to_merge,
-                })
+                work_units.append(
+                    {
+                        "type": "collision",
+                        "stable_name": stable_name,
+                        "chapters": chapters_to_merge,
+                    }
+                )
                 processed_chapters.update(chapters_to_merge)
             else:
                 # Normal single-file conversion
-                work_units.append({
-                    'type': 'single',
-                    'stable_name': stable_name,
-                    'chapter': chapter,
-                })
+                work_units.append(
+                    {
+                        "type": "single",
+                        "stable_name": stable_name,
+                        "chapter": chapter,
+                    }
+                )
                 processed_chapters.add(chapter)
 
         # Process work units in parallel
@@ -882,7 +817,7 @@ class StandardBuilder:
                     self.draft_dir,
                     output_dir,
                     label_index_file,
-                    verbose=False  # Workers don't print progress
+                    verbose=False,  # Workers don't print progress
                 )
                 future_to_unit[future] = work_unit
 
@@ -896,26 +831,32 @@ class StandardBuilder:
                 try:
                     result = future.result()
 
-                    if result['success']:
+                    if result["success"]:
                         # Store result by stable_name for ordering later
-                        results_by_stable_name[result['stable_name']] = result['output_file']
+                        results_by_stable_name[result["stable_name"]] = result["output_file"]
                         if verbose:
-                            print(f"[{completed}/{len(work_units)}] Completed {result['stable_name']}.md")
+                            print(
+                                f"[{completed}/{len(work_units)}] Completed {result['stable_name']}.md"
+                            )
                     else:
                         # Print conversion errors
-                        print(f"ERROR: Failed to convert {result['stable_name']}: {result.get('error', 'Unknown error')}", file=sys.stderr)
+                        print(
+                            f"ERROR: Failed to convert {result['stable_name']}: {result.get('error', 'Unknown error')}",
+                            file=sys.stderr,
+                        )
 
                 except Exception as e:
                     # Handle worker exceptions
-                    stable_name = work_unit.get('stable_name', 'unknown')
+                    stable_name = work_unit.get("stable_name", "unknown")
                     print(f"ERROR: Worker exception for {stable_name}: {e}", file=sys.stderr)
                     if verbose:
                         import traceback
+
                         traceback.print_exc()
 
         # Reconstruct output_files in correct chapter order
         for work_unit in work_units:
-            stable_name = work_unit['stable_name']
+            stable_name = work_unit["stable_name"]
             if stable_name in results_by_stable_name:
                 output_files.append(results_by_stable_name[stable_name])
 
@@ -923,7 +864,7 @@ class StandardBuilder:
         # The old post-processing approach (fix_cross_file_links) is no longer needed
 
         # Generate TOC and append to front.md (or its stable name equivalent)
-        front_stable_name = chapter_to_stable.get('front', 'front')
+        front_stable_name = chapter_to_stable.get("front", "front")
         front_file = output_dir / f"{front_stable_name}.md"
         if front_file.exists() and output_files:
             if verbose:
@@ -932,14 +873,14 @@ class StandardBuilder:
             toc = self._generate_toc_for_separate_files(output_files, max_depth=toc_depth)
 
             # Append TOC to front.md
-            front_content = front_file.read_text(encoding='utf-8')
+            front_content = front_file.read_text(encoding="utf-8")
 
             # Add separator and TOC
             updated_front = front_content + "\n\n---\n\n" + toc
-            front_file.write_text(updated_front, encoding='utf-8')
+            front_file.write_text(updated_front, encoding="utf-8")
 
             if verbose:
-                print(f"Added table of contents to front.md")
+                print("Added table of contents to front.md")
 
         # Cleanup temporary files
         for temp_file in temp_files:

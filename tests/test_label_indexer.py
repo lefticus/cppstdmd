@@ -6,6 +6,7 @@ Tests the LabelIndexer class that builds label→file mappings for cross-file li
 
 import tempfile
 from pathlib import Path
+
 import pytest
 
 from cpp_std_converter.label_indexer import LabelIndexer
@@ -18,38 +19,48 @@ def temp_source_dir():
         source = Path(tmpdir)
 
         # Create a basic chapter file with sections
-        (source / "basic.tex").write_text(r"""
+        (source / "basic.tex").write_text(
+            r"""
 \renewcommand{\stablenamestart}{basic}
 \rSec0[basic]{Basic concepts}
 \rSec1[basic.def]{Definitions}
 \rSec1[basic.types]{Types}
-        """)
+        """
+        )
 
         # Create another chapter
-        (source / "expressions.tex").write_text(r"""
+        (source / "expressions.tex").write_text(
+            r"""
 \renewcommand{\stablenamestart}{expr}
 \rSec0[expr]{Expressions}
 \rSec1[expr.prim]{Primary expressions}
 \rSec2[expr.prim.lambda]{Lambda expressions}
-        """)
+        """
+        )
 
         # File without stable name (uses filename)
-        (source / "utilities.tex").write_text(r"""
+        (source / "utilities.tex").write_text(
+            r"""
 \rSec0[utilities]{Utilities}
 \rSec1[forward]{Forward declarations}
 \rSec1[declval]{The declval function}
-        """)
+        """
+        )
 
         # Skip file (should be ignored)
-        (source / "std.tex").write_text(r"""
+        (source / "std.tex").write_text(
+            r"""
 \rSec0[std]{Document metadata}
-        """)
+        """
+        )
 
         # File with duplicate label
-        (source / "duplicates.tex").write_text(r"""
+        (source / "duplicates.tex").write_text(
+            r"""
 \rSec0[dup]{Duplicates}
 \rSec1[basic.def]{Duplicate of basic.def}
-        """)
+        """
+        )
 
         yield source
 
@@ -145,13 +156,10 @@ def test_build_index_with_provided_stable_name_map(temp_source_dir):
     custom_map = {
         "basic": "basics",  # Different from what's in file
         "expressions": "exprs",  # Different from what's in file
-        "utilities": "utils"
+        "utilities": "utils",
     }
 
-    result = indexer.build_index(
-        use_stable_names=True,
-        stable_name_map=custom_map
-    )
+    result = indexer.build_index(use_stable_names=True, stable_name_map=custom_map)
 
     # Check labels use provided mapping
     assert result["basic"] == "basics"
@@ -226,7 +234,7 @@ def test_write_lua_table(temp_source_dir):
     indexer = LabelIndexer(temp_source_dir)
     indexer.build_index(use_stable_names=True)
 
-    with tempfile.NamedTemporaryFile(mode='w', suffix='.lua', delete=False) as f:
+    with tempfile.NamedTemporaryFile(mode="w", suffix=".lua", delete=False) as f:
         output_file = Path(f.name)
 
     try:
@@ -253,15 +261,17 @@ def test_write_lua_table(temp_source_dir):
 def test_lua_table_escaping(temp_source_dir):
     """Test that special characters are escaped in Lua table"""
     # Create file with label containing special characters
-    (temp_source_dir / "special.tex").write_text(r"""
+    (temp_source_dir / "special.tex").write_text(
+        r"""
 \rSec0[test"quote]{Test with quote}
 \rSec1[test\backslash]{Test with backslash}
-    """)
+    """
+    )
 
     indexer = LabelIndexer(temp_source_dir)
     indexer.build_index(use_stable_names=False)
 
-    with tempfile.NamedTemporaryFile(mode='w', suffix='.lua', delete=False) as f:
+    with tempfile.NamedTemporaryFile(mode="w", suffix=".lua", delete=False) as f:
         output_file = Path(f.name)
 
     try:
@@ -270,7 +280,7 @@ def test_lua_table_escaping(temp_source_dir):
 
         # Check escaping
         assert '\\"' in content  # Quote should be escaped
-        assert '\\\\' in content  # Backslash should be escaped
+        assert "\\\\" in content  # Backslash should be escaped
 
     finally:
         output_file.unlink()
@@ -284,13 +294,13 @@ def test_get_statistics(temp_source_dir):
     stats = indexer.get_statistics()
 
     # We have basic, expr, utilities, duplicates = 4 files (std is skipped)
-    assert stats['files'] == 4
+    assert stats["files"] == 4
 
     # Total unique labels (first occurrence only)
-    assert stats['labels'] > 0
+    assert stats["labels"] > 0
 
     # We have one duplicate (basic.def)
-    assert stats['duplicates'] == 1
+    assert stats["duplicates"] == 1
 
 
 def test_skip_files_are_skipped(temp_source_dir):
@@ -318,6 +328,7 @@ def test_error_handling_for_unreadable_file(temp_source_dir):
     """Test that indexer handles file read errors gracefully"""
     # Create a file, then make it unreadable (if supported by OS)
     import sys
+
     if sys.platform != "win32":  # chmod not reliable on Windows
         bad_file = temp_source_dir / "unreadable.tex"
         bad_file.write_text(r"\rSec0[bad]{Bad}")
@@ -334,14 +345,16 @@ def test_error_handling_for_unreadable_file(temp_source_dir):
 
 def test_complex_label_patterns(temp_source_dir):
     """Test extraction of labels with various formats"""
-    (temp_source_dir / "complex.tex").write_text(r"""
+    (temp_source_dir / "complex.tex").write_text(
+        r"""
 \rSec0[simple]{Simple}
 \rSec1[with.dots.multiple]{With multiple dots}
 \rSec2[with-dashes]{With dashes}
 \rSec3[with_underscores]{With underscores}
 \rSec4[MixedCase]{Mixed case}
 \rSec5[with123numbers]{With numbers}
-    """)
+    """
+    )
 
     indexer = LabelIndexer(temp_source_dir)
     labels = indexer._extract_labels_from_file(temp_source_dir / "complex.tex")
@@ -356,10 +369,12 @@ def test_complex_label_patterns(temp_source_dir):
 
 def test_empty_label(temp_source_dir):
     """Test handling of empty labels"""
-    (temp_source_dir / "empty_label.tex").write_text(r"""
+    (temp_source_dir / "empty_label.tex").write_text(
+        r"""
 \rSec0[]{Empty label}
 \rSec1[  ]{Whitespace label}
-    """)
+    """
+    )
 
     indexer = LabelIndexer(temp_source_dir)
     labels = indexer._extract_labels_from_file(temp_source_dir / "empty_label.tex")

@@ -1,6 +1,6 @@
 """Tests for nested content structures (examples in notes, footnotes, etc.)"""
+
 import subprocess
-import pytest
 
 
 def test_example_nested_in_note():
@@ -41,7 +41,7 @@ fails.
         input=latex,
         capture_output=True,
         text=True,
-        cwd="/home/jason/notes/cpp_standard_tools/converted/cppstdmd"
+        cwd="/home/jason/notes/cpp_standard_tools/converted/cppstdmd",
     )
 
     output = result.stdout
@@ -100,7 +100,7 @@ T(*b)();            //  declaration
         input=latex,
         capture_output=True,
         text=True,
-        cwd="/home/jason/notes/cpp_standard_tools/converted/cppstdmd"
+        cwd="/home/jason/notes/cpp_standard_tools/converted/cppstdmd",
     )
 
     output = result.stdout
@@ -147,16 +147,18 @@ In other words, the \keyword{else} is associated with the nearest un-elsed
         input=latex,
         capture_output=True,
         text=True,
-        cwd="/home/jason/notes/cpp_standard_tools/converted/cppstdmd"
+        cwd="/home/jason/notes/cpp_standard_tools/converted/cppstdmd",
     )
 
     output = result.stdout
 
     # Should contain the main text (keywords may be \texttt or backticks depending on context)
-    assert ("In the second form of `if` statement" in output or
-            "In the second form of \\texttt{if} statement" in output)
+    assert (
+        "In the second form of `if` statement" in output
+        or "In the second form of \\texttt{if} statement" in output
+    )
     # Check for else keyword (may have newline between keyword and "part")
-    assert ("`else`" in output or "\\texttt{else}" in output)
+    assert "`else`" in output or "\\texttt{else}" in output
     assert "part" in output  # Separately check for "part" word
 
     # Should contain GFM footnote reference marker
@@ -198,7 +200,7 @@ The transfer from the condition of a \keyword{switch} statement to a
         input=latex,
         capture_output=True,
         text=True,
-        cwd="/home/jason/notes/cpp_standard_tools/converted/cppstdmd"
+        cwd="/home/jason/notes/cpp_standard_tools/converted/cppstdmd",
     )
 
     output = result.stdout
