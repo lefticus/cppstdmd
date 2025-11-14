@@ -104,7 +104,8 @@ function CodeBlock(elem)
 
   -- Check if this code block has LaTeX commands that need cleaning
   if code:match("\\rlap") or code:match("\\llap") or code:match("\\clap") or
-     code:match("\\normalfont") or code:match("\\itshape") or code:match("\\rmfamily") or code:match("\\bfseries") or
+     code:match("\\normalfont") or code:match("\\itshape") or
+     code:match("\\rmfamily") or code:match("\\bfseries") or
      code:match("\\texttt{") or code:match("\\textit{") then
 
     -- Remove font switch commands

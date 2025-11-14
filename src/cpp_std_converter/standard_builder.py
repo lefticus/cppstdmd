@@ -7,6 +7,7 @@ Builds a complete C++ standard document from std.tex by:
 3. Concatenating with merged cross-reference link definitions
 """
 
+import contextlib
 import os
 import re
 import sys
@@ -134,20 +135,16 @@ def _convert_chapter_worker(
 
         # Cleanup temporary files
         for temp_file in temp_files:
-            try:
+            with contextlib.suppress(Exception):
                 temp_file.unlink()
-            except Exception:
-                pass
 
         return {"success": True, "output_file": output_file, "stable_name": stable_name}
 
     except Exception as e:
         # Cleanup temporary files on error
         for temp_file in temp_files:
-            try:
+            with contextlib.suppress(Exception):
                 temp_file.unlink()
-            except Exception:
-                pass
 
         return {"success": False, "stable_name": stable_name, "error": str(e)}
 
@@ -212,17 +209,16 @@ class StandardBuilder:
                     if in_frontmatter and include_frontmatter or in_mainmatter or in_backmatter and include_backmatter:
                         should_include = True
 
-                    if should_include:
+                    if should_include and node.nodeargd and node.nodeargd.argnlist:
                         # Extract the filename from the argument
-                        if node.nodeargd and node.nodeargd.argnlist:
-                            arg = node.nodeargd.argnlist[0]
-                            if arg and hasattr(arg, "nodelist"):
-                                # Get the text content
-                                filename = "".join(
-                                    n.chars if hasattr(n, "chars") else "" for n in arg.nodelist
-                                )
-                                if filename:
-                                    chapters.append(filename.strip())
+                        arg = node.nodeargd.argnlist[0]
+                        if arg and hasattr(arg, "nodelist"):
+                            # Get the text content
+                            filename = "".join(
+                                n.chars if hasattr(n, "chars") else "" for n in arg.nodelist
+                            )
+                            if filename:
+                                chapters.append(filename.strip())
 
             # Recursively visit child nodes
             if hasattr(node, "nodelist") and node.nodelist:
@@ -530,10 +526,8 @@ class StandardBuilder:
 
         # Cleanup temporary files
         for temp_file in temp_files:
-            try:
+            with contextlib.suppress(Exception):
                 temp_file.unlink()
-            except Exception:
-                pass  # Ignore cleanup errors
 
         if verbose:
             print(f"\nWrote complete standard to {output_file}")
@@ -571,7 +565,7 @@ class StandardBuilder:
         for match in heading_pattern.finditer(markdown_content):
             hashes = match.group(1)
             title = match.group(2).strip()
-            anchor_id = match.group(3)
+            match.group(3)
             stable_name = match.group(4)
 
             level = len(hashes) - 1  # H1=0, H2=1, etc.
@@ -746,7 +740,7 @@ class StandardBuilder:
         from .label_indexer import LabelIndexer
 
         indexer = LabelIndexer(self.draft_dir)
-        label_index = indexer.build_index(use_stable_names=True, stable_name_map=chapter_to_stable)
+        indexer.build_index(use_stable_names=True, stable_name_map=chapter_to_stable)
 
         # Write Lua table file
         label_index_file = output_dir / "cpp_std_labels.lua"
@@ -884,10 +878,8 @@ class StandardBuilder:
 
         # Cleanup temporary files
         for temp_file in temp_files:
-            try:
+            with contextlib.suppress(Exception):
                 temp_file.unlink()
-            except Exception:
-                pass  # Ignore cleanup errors
 
         if verbose:
             print(f"\nWrote {len(output_files)} chapter files to {output_dir}")

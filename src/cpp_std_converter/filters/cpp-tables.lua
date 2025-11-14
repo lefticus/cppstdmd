@@ -51,13 +51,16 @@ local function expand_table_macros(text)
   text = expand_balanced_command(text, "uname", function(content) return content end)
 
   -- \textbf{X} → **X** (bold text in markdown)
-  text = expand_balanced_command(text, "textbf", function(content) return "**" .. content .. "**" end)
+  text = expand_balanced_command(text, "textbf",
+                                  function(content) return "**" .. content .. "**" end)
 
   -- \textit{X} → X (strip italic wrapper - tailnotes are already italicized)
-  text = expand_balanced_command(text, "textit", function(content) return content end)
+  text = expand_balanced_command(text, "textit",
+                                  function(content) return content end)
 
   -- \libglobal{X} → `X` (library global identifiers)
-  text = expand_balanced_command(text, "libglobal", function(content) return "`" .. content .. "`" end)
+  text = expand_balanced_command(text, "libglobal",
+                                  function(content) return "`" .. content .. "`" end)
 
   -- Special characters
   text = convert_special_chars(text)
@@ -103,11 +106,13 @@ local function expand_table_macros(text)
     local start_pos = text:find("\\unicode{", 1, true)
     if not start_pos then break end
 
-    local args, end_pos = extract_multi_arg_macro(text, start_pos, 8, 2)  -- \unicode is 8 chars, 2 args
+    -- \unicode is 8 chars, 2 args
+    local args, end_pos = extract_multi_arg_macro(text, start_pos, 8, 2)
     if not args then break end
 
     -- Replace \unicode{XXXX}{desc} with U+XXXX (desc)
-    text = text:sub(1, start_pos - 1) .. "U+" .. args[1] .. " (" .. args[2] .. ")" .. text:sub(end_pos)
+    text = text:sub(1, start_pos - 1) .. "U+" .. args[1] .. " (" .. args[2] ..
+           ")" .. text:sub(end_pos)
   end
 
   -- \multicolumn{N}{alignment}{content} → content
@@ -167,7 +172,9 @@ local function expand_table_macros(text)
 
     -- Join with semicolons for readability
     local replacement = table.concat(items, "; ")
-    text = text:sub(1, itemize_start - 1) .. replacement .. text:sub(itemize_end + 14)  -- +14 for "\end{itemize}"
+    -- +14 for "\end{itemize}"
+    text = text:sub(1, itemize_start - 1) .. replacement ..
+           text:sub(itemize_end + 14)
   end
 
   -- \begin{tailnote} ... \end{tailnote} → italic text
@@ -179,7 +186,8 @@ local function expand_table_macros(text)
     local note_end = text:find("\\end{tailnote}", note_start, true)
     if not note_end then break end
 
-    local note_content = text:sub(note_start + 16, note_end - 1)  -- +16 for "\begin{tailnote}"
+    -- +16 for "\begin{tailnote}"
+    local note_content = text:sub(note_start + 16, note_end - 1)
 
     -- Recursively expand any macros in the note
     note_content = expand_table_macros(note_content)
@@ -187,7 +195,8 @@ local function expand_table_macros(text)
 
     -- Wrap in italic markers
     local replacement = "*" .. note_content .. "*"
-    text = text:sub(1, note_start - 1) .. replacement .. text:sub(note_end + 15)  -- +15 for "\end{tailnote}"
+    -- +15 for "\end{tailnote}"
+    text = text:sub(1, note_start - 1) .. replacement .. text:sub(note_end + 15)
   end
 
   -- \br → <br> (line break within table cell)
@@ -256,12 +265,14 @@ local function parse_row(row_text)
 end
 
 -- Helper function to normalize table row endings
--- Converts LaTeX row endings (\\ with various suffixes) to a standard @@ROWEND@@ marker
+-- Converts LaTeX row endings (\\ with various suffixes) to standard @@ROWEND@@
 -- CRITICAL: Must be called BEFORE removing formatting commands like \rowsep
 local function normalize_table_rows(text)
   -- Process patterns in order - more specific patterns first
-  local normalized = text:gsub("\\\\%s*\\rowsep%s*\n", "@@ROWEND@@\n")  -- \\ \rowsep with newline
-  normalized = normalized:gsub("\\\\%s*\\rowsep", "@@ROWEND@@")  -- \\ \rowsep without immediate newline
+  -- \\ \rowsep with newline
+  local normalized = text:gsub("\\\\%s*\\rowsep%s*\n", "@@ROWEND@@\n")
+  -- \\ \rowsep without immediate newline
+  normalized = normalized:gsub("\\\\%s*\\rowsep", "@@ROWEND@@")
   normalized = normalized:gsub("\\\\%s*\\hline", "@@ROWEND@@")
   normalized = normalized:gsub("\\\\%s*\\cline{[^}]*}", "@@ROWEND@@")
   normalized = normalized:gsub("\\\\%s*\n", "@@ROWEND@@\n")  -- \\ with newline
@@ -580,11 +591,11 @@ function RawBlock(elem)
           -- \lhdrx{N}{text} creates N columns with text in first
           -- Other macros create single columns
 
-          local pos = 1
-          while pos <= #header_line do
+          local header_pos = 1
+          while header_pos <= #header_line do
             -- Check for \lhdrx{N}{text} - column-spanning header
-            local lhdrx_start = header_line:find("\\lhdrx{", pos, true)
-            if lhdrx_start and lhdrx_start == pos then
+            local lhdrx_start = header_line:find("\\lhdrx{", header_pos, true)
+            if lhdrx_start and lhdrx_start == header_pos then
               -- Extract span count - point to the '{' character
               -- "\lhdrx" is 6 chars, so '{' is at lhdrx_start + 6
               local span_count, pos1 = extract_braced(header_line, lhdrx_start + 6)
@@ -598,62 +609,62 @@ function RawBlock(elem)
                   for i = 2, tonumber(span_count) or 1 do
                     table.insert(headers, "")
                   end
-                  pos = pos2
+                  header_pos = pos2
                   goto continue
                 end
               end
             end
 
             -- Check for \lhdr{text}
-            local lhdr_start = header_line:find("\\lhdr{", pos, true)
-            if lhdr_start and lhdr_start == pos then
+            local lhdr_start = header_line:find("\\lhdr{", header_pos, true)
+            if lhdr_start and lhdr_start == header_pos then
               -- "\lhdr" is 5 chars, so '{' is at lhdr_start + 5
-              local lhdr_match, end_pos = extract_braced(header_line, lhdr_start + 5)
+              local lhdr_match, lhdr_end_pos = extract_braced(header_line, lhdr_start + 5)
               if lhdr_match then
                 table.insert(headers, expand_table_macros(lhdr_match))
-                pos = end_pos
+                header_pos = lhdr_end_pos
                 goto continue
               end
             end
 
             -- Check for \chdr{text}
-            local chdr_start = header_line:find("\\chdr{", pos, true)
-            if chdr_start and chdr_start == pos then
+            local chdr_start = header_line:find("\\chdr{", header_pos, true)
+            if chdr_start and chdr_start == header_pos then
               -- "\chdr" is 5 chars, so '{' is at chdr_start + 5
-              local chdr_match, end_pos = extract_braced(header_line, chdr_start + 5)
+              local chdr_match, chdr_end_pos = extract_braced(header_line, chdr_start + 5)
               if chdr_match then
                 table.insert(headers, expand_table_macros(chdr_match))
-                pos = end_pos
+                header_pos = chdr_end_pos
                 goto continue
               end
             end
 
             -- Check for \rhdr{text}
-            local rhdr_start = header_line:find("\\rhdr{", pos, true)
-            if rhdr_start and rhdr_start == pos then
+            local rhdr_start = header_line:find("\\rhdr{", header_pos, true)
+            if rhdr_start and rhdr_start == header_pos then
               -- "\rhdr" is 5 chars, so '{' is at rhdr_start + 5
-              local rhdr_match, end_pos = extract_braced(header_line, rhdr_start + 5)
+              local rhdr_match, rhdr_end_pos = extract_braced(header_line, rhdr_start + 5)
               if rhdr_match then
                 table.insert(headers, expand_table_macros(rhdr_match))
-                pos = end_pos
+                header_pos = rhdr_end_pos
                 goto continue
               end
             end
 
             -- Check for \hdstyle{text}
-            local hdstyle_start = header_line:find("\\hdstyle{", pos, true)
-            if hdstyle_start and hdstyle_start == pos then
+            local hdstyle_start = header_line:find("\\hdstyle{", header_pos, true)
+            if hdstyle_start and hdstyle_start == header_pos then
               -- "\hdstyle" is 8 chars, so '{' is at hdstyle_start + 8
-              local hdstyle_match, end_pos = extract_braced(header_line, hdstyle_start + 8)
+              local hdstyle_match, hdstyle_end_pos = extract_braced(header_line, hdstyle_start + 8)
               if hdstyle_match then
                 table.insert(headers, expand_table_macros(hdstyle_match))
-                pos = end_pos
+                header_pos = hdstyle_end_pos
                 goto continue
               end
             end
 
             -- Skip other characters (whitespace, &, etc.)
-            pos = pos + 1
+            header_pos = header_pos + 1
             ::continue::
           end
         end
@@ -664,21 +675,28 @@ function RawBlock(elem)
           if h1 and h2 then
             headers = {expand_table_macros(h1), expand_table_macros(h2)}
           else
-            h1, h2 = table_content:match("\\lhdr{([^}]*)}%s*&%s*\\rhdr{([^}]*)}")
+            h1, h2 = table_content:match(
+              "\\lhdr{([^}]*)}%s*&%s*\\rhdr{([^}]*)}")
             if h1 and h2 then
-              headers = {expand_table_macros(h1), expand_table_macros(h2)}
+              headers = {expand_table_macros(h1),
+                         expand_table_macros(h2)}
             end
           end
         end
 
-        -- Final fallback: handle multi-row headers with \multicolumn and plain \tcode{} content
-        -- Example: "File open modes" table
-        -- Row 1: \multicolumn{6}{|c}{\tcode{ios_base} flag combination} & \tcode{stdio} equivalent \\
-        -- Row 2: \tcode{binary} & \tcode{in} & \tcode{out} & \tcode{trunc} & \tcode{app} & \tcode{noreplace} \\ \capsep
-        if #headers == 0 and header_line and header_line:find("\\multicolumn{", 1, true) then
+        -- Final fallback: handle multi-row headers with \multicolumn and
+        -- plain \tcode{} content. Example: "File open modes" table
+        -- Row 1: \multicolumn{6}{|c}{\tcode{ios_base} flag combination} &
+        --        \tcode{stdio} equivalent \\
+        -- Row 2: \tcode{binary} & \tcode{in} & \tcode{out} & \tcode{trunc} &
+        --        \tcode{app} & \tcode{noreplace} \\ \capsep
+        if #headers == 0 and header_line and
+           header_line:find("\\multicolumn{", 1, true) then
           -- Extract the header from the row after \multicolumn
-          -- Get the part after \multicolumn{...}{...}{...} from first row (may have extra column header)
-          local remaining_first_row = header_line:match("\\multicolumn{.-}{.-}{.-}%s*&%s*(.-)%s*\\\\")
+          -- Get part after \multicolumn{...}{...}{...} from first row
+          -- (may have extra column header)
+          local remaining_first_row =
+            header_line:match("\\multicolumn{.-}{.-}{.-}%s*&%s*(.-)%s*\\\\")
 
           -- Get the second row before \\ \capsep (actual column headers)
           local second_row = header_line:match("\n([^\n]*)\\\\%s*$")
@@ -788,13 +806,14 @@ function RawBlock(elem)
             local rowhdr_start = trimmed:find("\\rowhdr{", 1, true)
             if rowhdr_start == 1 then
               -- Use extract_braced to handle nested braces correctly
-              local row_header, end_pos = extract_braced(trimmed, rowhdr_start + 7) -- +7 for "\rowhdr"
+              -- +7 for "\rowhdr"
+              local row_header, row_end_pos = extract_braced(trimmed, rowhdr_start + 7)
               if row_header then
                 row_header = expand_table_macros(row_header)
 
                 -- Extract the remaining cells (after \rowhdr{...})
                 -- Skip leading whitespace and the first & separator
-                local rest = trimmed:sub(end_pos + 1)
+                local rest = trimmed:sub(row_end_pos + 1)
                 rest = rest:match("^%s*&?%s*(.*)$") or rest
 
                 -- Parse the remaining cells using parse_row helper (handles & separators)
@@ -1073,15 +1092,15 @@ function RawBlock(elem)
 
         -- If no \hdstyle, try \lhdr, \chdr, \rhdr combination
         if #headers == 0 then
-          local header_line = table_content:match("\\lhdr{.-}.-\\\\ *\\capsep")
-          if header_line then
-            for hdr in header_line:gmatch("\\lhdr{([^}]*)}") do
+          local lhdr_line = table_content:match("\\lhdr{.-}.-\\\\ *\\capsep")
+          if lhdr_line then
+            for hdr in lhdr_line:gmatch("\\lhdr{([^}]*)}") do
               table.insert(headers, expand_table_macros(hdr))
             end
-            for hdr in header_line:gmatch("\\chdr{([^}]*)}") do
+            for hdr in lhdr_line:gmatch("\\chdr{([^}]*)}") do
               table.insert(headers, expand_table_macros(hdr))
             end
-            for hdr in header_line:gmatch("\\rhdr{([^}]*)}") do
+            for hdr in lhdr_line:gmatch("\\rhdr{([^}]*)}") do
               table.insert(headers, expand_table_macros(hdr))
             end
           end
@@ -1134,15 +1153,15 @@ function RawBlock(elem)
 
         -- If no \hdstyle, try \lhdr, \chdr, \rhdr combination
         if #headers == 0 then
-          local header_line = table_content:match("\\lhdr{.-}.-\\\\ *\\capsep")
-          if header_line then
-            for hdr in header_line:gmatch("\\lhdr{([^}]*)}") do
+          local lhdr_line2 = table_content:match("\\lhdr{.-}.-\\\\ *\\capsep")
+          if lhdr_line2 then
+            for hdr in lhdr_line2:gmatch("\\lhdr{([^}]*)}") do
               table.insert(headers, expand_table_macros(hdr))
             end
-            for hdr in header_line:gmatch("\\chdr{([^}]*)}") do
+            for hdr in lhdr_line2:gmatch("\\chdr{([^}]*)}") do
               table.insert(headers, expand_table_macros(hdr))
             end
-            for hdr in header_line:gmatch("\\rhdr{([^}]*)}") do
+            for hdr in lhdr_line2:gmatch("\\rhdr{([^}]*)}") do
               table.insert(headers, expand_table_macros(hdr))
             end
           end
@@ -1203,16 +1222,16 @@ function RawBlock(elem)
 
         -- If no \hdstyle, try \lhdr, \chdr, \rhdr combination
         if #headers == 0 then
-          local header_line = table_content:match("\\lhdr{.-}.-\\\\ *\\capsep")
-          if header_line then
+          local lhdr_line3 = table_content:match("\\lhdr{.-}.-\\\\ *\\capsep")
+          if lhdr_line3 then
             -- Extract individual headers
-            for hdr in header_line:gmatch("\\lhdr{([^}]*)}") do
+            for hdr in lhdr_line3:gmatch("\\lhdr{([^}]*)}") do
               table.insert(headers, expand_table_macros(hdr))
             end
-            for hdr in header_line:gmatch("\\chdr{([^}]*)}") do
+            for hdr in lhdr_line3:gmatch("\\chdr{([^}]*)}") do
               table.insert(headers, expand_table_macros(hdr))
             end
-            for hdr in header_line:gmatch("\\rhdr{([^}]*)}") do
+            for hdr in lhdr_line3:gmatch("\\rhdr{([^}]*)}") do
               table.insert(headers, expand_table_macros(hdr))
             end
           end

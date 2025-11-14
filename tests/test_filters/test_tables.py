@@ -138,7 +138,7 @@ def test_floattable_multiple_rows():
 """
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
-    normalized = normalize_table_whitespace(output)
+    normalize_table_whitespace(output)
     # Check that all rows are present
     assert output.count("| `") == 8  # 4 rows * 2 cells per row
 
@@ -160,7 +160,7 @@ def test_longtable_defnxname():
 """
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
-    normalized = normalize_table_whitespace(output)
+    normalize_table_whitespace(output)
     # \defnxname should produce `__name` (with backticks, no trailing underscores)
     assert "`__cpp_test_macro`" in output
     assert "`202000L`" in output
@@ -180,7 +180,7 @@ def test_floattable_caption_with_nested_braces():
 """
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
-    normalized = normalize_table_whitespace(output)
+    normalize_table_whitespace(output)
     # \xname should be expanded to __has_cpp_attribute
     assert "__has_cpp_attribute" in output
 
@@ -213,7 +213,7 @@ def test_libsumtab_with_refs():
 """
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
-    normalized = normalize_table_whitespace(output)
+    normalize_table_whitespace(output)
     # \ref{}, \iref{}, and \tref{} should be converted to [x]
     assert "[[support.arith.types]]" in output
     assert "[[support.dynamic]]" in output
@@ -267,7 +267,7 @@ def test_floattable_with_keyword():
 """
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
-    normalized = normalize_table_whitespace(output)
+    normalize_table_whitespace(output)
     # All rows should be present (including first row with signed char)
     assert "`signed char`" in output
     assert "`short int`" in output
@@ -330,7 +330,7 @@ def test_libsumtab_with_hline():
 """
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
-    normalized = normalize_table_whitespace(output)
+    normalize_table_whitespace(output)
     assert "[test.sub1]" in output
     assert "[test.sub2]" in output
     assert "Description 1" in output
@@ -352,7 +352,7 @@ def test_libsumtab_with_rowsep_no_newline():
 """
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
-    normalized = normalize_table_whitespace(output)
+    normalize_table_whitespace(output)
     # All three rows should be present
     assert "[container.requirements]" in output
     assert "[sequences]" in output
@@ -428,7 +428,7 @@ This is text after the table.
 """
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
-    normalized = normalize_table_whitespace(output)
+    normalize_table_whitespace(output)
     # Table should have trailing blank line (double newline at end)
     # The output should have the table ending, then blank line, then "This is text"
     # Check that the table ends with a newline and "This is text" is NOT on the same line
@@ -464,7 +464,7 @@ def test_floattable_with_uname():
 """
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
-    normalized = normalize_table_whitespace(output)
+    normalize_table_whitespace(output)
     # \uname should be stripped, leaving plain text
     assert "character tabulation" in output
     assert "space" in output
@@ -484,7 +484,7 @@ def test_floattable_with_unicode_macro():
 """
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
-    normalized = normalize_table_whitespace(output)
+    normalize_table_whitespace(output)
     # \unicode{XXXX}{desc} should become U+XXXX (desc)
     assert "U+007d" in output or "U+007D" in output
     assert "right curly bracket" in output
@@ -505,7 +505,7 @@ Output & Writable \\
 """
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
-    normalized = normalize_table_whitespace(output)
+    normalize_table_whitespace(output)
     # \textbf should become markdown bold
     assert "**Category**" in output
     assert "**Requirements**" in output
@@ -525,7 +525,7 @@ def test_floattable_with_libglobal():
 """
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
-    normalized = normalize_table_whitespace(output)
+    normalize_table_whitespace(output)
     # \libglobal should become backticked code
     assert "`is_integral`" in output
     # Should NOT have LaTeX commands
@@ -546,7 +546,7 @@ def test_floattable_with_escaped_special_chars():
 """
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
-    normalized = normalize_table_whitespace(output)
+    normalize_table_whitespace(output)
     # Escaped special chars should be rendered correctly
     assert "`{`" in output
     assert "`}`" in output
@@ -569,7 +569,7 @@ def test_floattable_with_special_char_macros():
 """
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
-    normalized = normalize_table_whitespace(output)
+    normalize_table_whitespace(output)
     # Macros should expand to actual characters
     assert "^" in output
     assert "__" in output
@@ -736,7 +736,7 @@ none & \keyword{double} \\
 """
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
-    normalized = normalize_table_whitespace(output)
+    normalize_table_whitespace(output)
     # Should have caption
     assert "**Table: Types of floating-point-literals**" in output
     # \keyword{} should render as inline code
@@ -794,7 +794,7 @@ def test_floattable_with_nested_texttt():
 """
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
-    normalized = normalize_table_whitespace(output)
+    normalize_table_whitespace(output)
     # Should have single backticked spans, not broken adjacent backticks
     assert "`signed char`" in output
     assert "`short int`" in output
@@ -822,7 +822,7 @@ def test_oldconcepttable_with_multicolumn():
 """
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
-    normalized = normalize_table_whitespace(output)
+    normalize_table_whitespace(output)
     # Should have caption
     assert "**Table: Cpp17MoveConstructible requirements**" in output
     # Should expand multicolumn content with span indicator
@@ -850,7 +850,7 @@ def test_oldconcepttable_with_itemize():
 """
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
-    normalized = normalize_table_whitespace(output)
+    normalize_table_whitespace(output)
     # Should have caption
     assert "**Table: Cpp17EqualityComparable requirements**" in output
     # Should convert itemize to semicolon-separated list
@@ -882,7 +882,7 @@ def test_oldconcepttable_with_tailnote():
 """
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
-    normalized = normalize_table_whitespace(output)
+    normalize_table_whitespace(output)
     # Should have caption
     assert "**Table: Cpp17Destructible requirements**" in output
     # Should convert tailnote to italic
@@ -906,7 +906,7 @@ def test_floattable_with_br():
 """
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
-    normalized = normalize_table_whitespace(output)
+    normalize_table_whitespace(output)
     # Should convert \br to <br>
     assert "`T()` <br> `T{}`" in output or "`T()`<br>`T{}`" in output
     # Should NOT have LaTeX commands

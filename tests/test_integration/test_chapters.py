@@ -27,7 +27,7 @@ class TestChapterConversion:
 
         try:
             # Convert
-            result = converter.convert_file(source_file, output_file, standalone=True)
+            converter.convert_file(source_file, output_file, standalone=True)
 
             # Verify output file exists and has content
             assert output_file.exists()
@@ -90,7 +90,7 @@ class TestChapterConversion:
             output_file = Path(tmp.name)
 
         try:
-            result = converter.convert_file(source_file, output_file, standalone=True)
+            converter.convert_file(source_file, output_file, standalone=True)
 
             assert output_file.exists()
             content = output_file.read_text()
@@ -117,7 +117,7 @@ class TestChapterConversion:
             output_file = Path(tmp.name)
 
         try:
-            result = converter.convert_file(source_file, output_file, standalone=True)
+            converter.convert_file(source_file, output_file, standalone=True)
 
             assert output_file.exists()
             content = output_file.read_text()
@@ -145,7 +145,7 @@ class TestChapterConversion:
             output_file = Path(tmp.name)
 
         try:
-            result = converter.convert_file(source_file, output_file, standalone=True)
+            converter.convert_file(source_file, output_file, standalone=True)
 
             assert output_file.exists()
             content = output_file.read_text()
@@ -169,7 +169,7 @@ class TestChapterConversion:
             output_file = Path(tmp.name)
 
         try:
-            result = converter.convert_file(source_file, output_file, standalone=True)
+            converter.convert_file(source_file, output_file, standalone=True)
 
             assert output_file.exists()
             content = output_file.read_text()
@@ -201,7 +201,7 @@ class TestQualityChecks:
                 output_file = Path(tmp.name)
 
             try:
-                result = converter.convert_file(source_file, output_file, standalone=True)
+                converter.convert_file(source_file, output_file, standalone=True)
                 content = output_file.read_text()
 
                 # Minimum size check (1KB)
@@ -223,7 +223,7 @@ class TestQualityChecks:
             output_file = Path(tmp.name)
 
         try:
-            result = converter.convert_file(source_file, output_file, standalone=True)
+            converter.convert_file(source_file, output_file, standalone=True)
             content = output_file.read_text()
 
             # Check that common macros don't appear unexpanded

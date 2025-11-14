@@ -269,10 +269,12 @@ local function replace_code_macro_special_chars(text, macro_name)
   for _, char in ipairs(special_chars) do
     if char.type == "escaped" then
       -- \tcode{\{} → `{`
-      text = text:gsub("\\" .. macro_name .. "{" .. char.pattern .. "}", "`" .. char.replacement .. "`")
+      text = text:gsub("\\" .. macro_name .. "{" .. char.pattern .. "}",
+                       "`" .. char.replacement .. "`")
     elseif char.type == "macro" then
       -- \tcode{\caret} → `^`
-      text = text:gsub("\\" .. macro_name .. "{" .. char.pattern .. "}", "`" .. char.replacement .. "`")
+      text = text:gsub("\\" .. macro_name .. "{" .. char.pattern .. "}",
+                       "`" .. char.replacement .. "`")
     end
   end
   return text
@@ -302,7 +304,8 @@ local function process_code_macro(text, macro_name)
 
     -- Handle special characters inside code
     content = unescape_latex_chars(content)  -- Handles \{, \}, \#, \&, \%, \$, \_
-    content = convert_special_chars(content)  -- Handles \caret, \textasciitilde, \textbackslash, \unun, \atsign
+    -- Handles \caret, \textasciitilde, \textbackslash, \unun, \atsign
+    content = convert_special_chars(content)
     content = content:gsub("`", "")  -- Strip any backticks from nested processing
 
     -- Strip any nested \texttt{} and \tcode{} from content (handles cpp-macros.lua conversions)
@@ -387,7 +390,8 @@ local function expand_impdefx_in_text(text, pattern, prefix_len, suffix_char)
     local start_pos = text:find(pattern, 1, true)
     if not start_pos then break end
 
-    local description, end_pos = extract_impdefx_description(text, start_pos, prefix_len, suffix_char)
+    local description, end_pos = extract_impdefx_description(text, start_pos,
+                                                              prefix_len, suffix_char)
 
     if description then
       local replacement = "implementation-defined  // " .. description
@@ -424,7 +428,8 @@ local function parse_impdefx_description_to_inlines(description)
       end
 
       -- Extract \tcode content
-      local tcode_content, next_pos = extract_braced_content(description, tcode_start, 6)  -- "\tcode" is 6 chars
+      -- "\tcode" is 6 chars
+      local tcode_content, next_pos = extract_braced_content(description, tcode_start, 6)
 
       if tcode_content then
         tcode_content = tcode_content:gsub("\\#", "#"):gsub("\\&", "&")
@@ -524,7 +529,8 @@ local function expand_library_spec_macros(text, has_at_delimiters)
   text = text:gsub("\\seebelow", "see below")
   text = text:gsub("\\unspec", "unspecified")
   text = text:gsub("\\unspecnc", "unspecified")
-  -- Use pattern that requires \expos to NOT be followed by 'i' to avoid matching \exposid or \exposidnc
+  -- Use pattern that requires \expos to NOT be followed by 'i'
+  -- to avoid matching \exposid or \exposidnc
   text = text:gsub("\\expos([^i])", "exposition only%1")
   text = text:gsub("\\expos$", "exposition only")
 
@@ -532,7 +538,8 @@ local function expand_library_spec_macros(text, has_at_delimiters)
   text = expand_impdefx_in_text(text, "\\impdefx{", 9, nil)
 
   -- Process remaining \impdef variants
-  -- Use pattern that requires \impdefnc and \impdef to be followed by non-letter to avoid partial matches
+  -- Use pattern that requires \impdefnc and \impdef to be followed by
+  -- non-letter to avoid partial matches
   text = text:gsub("\\impdefnc([^%w])", "implementation-defined%1")
   text = text:gsub("\\impdefnc$", "implementation-defined")
   text = text:gsub("\\impdef([^%w])", "implementation-defined%1")
@@ -570,7 +577,8 @@ local function extract_multi_arg_macro(text, start_pos, macro_len, num_args)
       return nil, nil
     end
 
-    local content, next_pos = extract_braced_content(text, pos - 1, 1)  -- pos-1 to include the brace, macro_len=1 for just "{"
+    -- pos-1 to include the brace, macro_len=1 for just "{"
+    local content, next_pos = extract_braced_content(text, pos - 1, 1)
     if not content then
       return nil, nil
     end
@@ -764,7 +772,9 @@ local function convert_math_in_code(text)
 
     -- Convert subscripts: \tcode{\placeholder{X}}_{n} → Xₙ
     -- Or: \tcode{\placeholder{X}_{n}} → Xₙ
-    math_content = math_content:gsub("\\tcode{\\placeholder{([^}]*)}}_{{?([%w]+)}?}", function(name, sub)
+    math_content = math_content:gsub(
+      "\\tcode{\\placeholder{([^}]*)}}_{{?([%w]+)}?}",
+      function(name, sub)
       if subscripts[sub] then
         return name .. subscripts[sub]
       else
@@ -858,8 +868,8 @@ local function clean_code_common(code, handle_textbackslash)
   -- \commentellip represents "..."
   code = code:gsub("@\\commentellip@", "...")
 
-  -- Special case for cpp-notes-examples.lua: preserve newlines after \textbackslash in @\tcode{}@ blocks
-  -- This must be handled BEFORE the general macro expansion
+  -- Special case for cpp-notes-examples.lua: preserve newlines after
+  -- \textbackslash in @\tcode{}@ blocks. Must be handled BEFORE general expansion
   if handle_textbackslash then
     code = code:gsub("@\\tcode{([^@]-)\\textbackslash}@\n", function(content)
       return content .. "\\\n"
@@ -1097,7 +1107,8 @@ end
 --   options: Table of options controlling behavior:
 --     .skip_special_chars: Skip special character conversion (for BNF blocks)
 --     .spec_labels: Convert specification labels (expects, requires, etc.) to \textit{}
---     .ref_format: "wikilink" for [[ref]], "placeholder" for @@REF:ref@@, or function(refs) for custom
+--     .ref_format: "wikilink" for [[ref]], "placeholder" for @@REF:ref@@,
+--                  or function(refs) for custom
 --     .escape_at_macros: Handle @ escaped macros for code blocks
 --     .convert_to_latex: Use \textit{} and \texttt{} instead of markdown *x* and `x`
 --     .minimal: Only expand minimal set (for notes/examples context)
@@ -1333,7 +1344,8 @@ local function expand_macros_common(text, options)
     end
 
     -- Process \ref, \iref, \tref with space handling
-    -- Three patterns for each: preceded by non-space (add space), preceded by space (keep space), at start
+    -- Three patterns for each: preceded by non-space (add space),
+    -- preceded by space (keep space), at start
     text = text:gsub("([^%s])\\ref{([^}]*)}", function(before, refs)
       return before .. " " .. process_refs(refs)
     end)
@@ -1368,9 +1380,8 @@ local function expand_macros_common(text, options)
     text = text:gsub("\\ref{([^}]*)}", "@@REF:%1@@")
     text = text:gsub("\\iref{([^}]*)}", "@@REF:%1@@")
     text = text:gsub("\\tref{([^}]*)}", "@@REF:%1@@")
-  elseif options.ref_format == "wikilink" and not options.minimal then
-    -- Default [[ref]] format - but we need a split function
-    -- This is incomplete without the split function, so skip for now
+  -- Note: wikilink format is handled by the custom ref_format function path above
+  -- No additional processing needed for this format here
   end
 
   -- Tier 15: Empty braces cleanup (cpp-macros context only)

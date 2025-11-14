@@ -18,6 +18,25 @@ globals = {
     "PANDOC_STATE",
     "FORMAT",
     "PANDOC_WRITER_OPTIONS",
+    -- Pandoc filter functions (element handlers - these are assigned by filters)
+    "Str",
+    "RawBlock",
+    "RawInline",
+    "CodeBlock",
+    "Header",
+    "Para",
+    "Blocks",
+    "BulletList",
+    "OrderedList",
+    "Pandoc",
+    "Meta",
+    "Math",
+    "Code",
+    "emph",
+    "_",  -- Lodash-style utility or placeholder variable
+    -- Custom globals used across filters
+    "references",  -- Cross-reference tracking table (shared across filter files)
+    "process_single_block",  -- Shared function across filters
 }
 
 -- Read-only pandoc globals (don't allow modification)

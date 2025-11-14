@@ -17,8 +17,10 @@ local function clean_leading_whitespace(inlines)
 
       -- Skip over RawInline
       i = i + 1
-      -- If this macro will be stripped and next element is SoftBreak or Space, remove it
-      if is_stripped_macro and i <= #inlines and (inlines[i].t == "SoftBreak" or inlines[i].t == "Space") then
+      -- If this macro will be stripped and next element is SoftBreak or Space,
+      -- remove it
+      if is_stripped_macro and i <= #inlines and
+         (inlines[i].t == "SoftBreak" or inlines[i].t == "Space") then
         table.remove(inlines, i)
         -- Don't increment i since we just removed an element
       end
@@ -49,7 +51,6 @@ local function merge_item_blocks(item)
   -- Item has multiple blocks - try to merge them into one Plain block
   local merged_content = {}
   local has_non_mergeable = false
-  local had_text_block = false  -- Track if we've seen Para/Plain blocks
 
   for j, block in ipairs(item) do
     if block.t == "Para" or block.t == "Plain" then
@@ -61,7 +62,6 @@ local function merge_item_blocks(item)
       for _, inline in ipairs(block.content) do
         table.insert(merged_content, inline)
       end
-      had_text_block = true
     elseif block.t == "RawBlock" and block.format == "latex" then
       -- Check if this is a footnote or other block-level environment
       -- These should not be merged into the list item content

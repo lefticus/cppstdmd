@@ -78,7 +78,8 @@ local function load_label_index(file_path)
 
   local chunk, err = loadfile(file_path)
   if not chunk then
-    io.stderr:write("Warning: Could not load label index from " .. file_path .. ": " .. tostring(err) .. "\n")
+    io.stderr:write("Warning: Could not load label index from " .. file_path ..
+                    ": " .. tostring(err) .. "\n")
     return {}
   end
 
@@ -228,7 +229,8 @@ function RawInline(elem)
             table.insert(inlines, pandoc.Str(text_before))
           end
           -- Extract \tcode content
-          local tcode_content, next_pos = extract_braced_content(content, tcode_start, 6)  -- "\tcode" is 6 chars
+          -- "\tcode" is 6 chars
+          local tcode_content, next_pos = extract_braced_content(content, tcode_start, 6)
           if tcode_content then
             tcode_content = tcode_content:gsub("\\#", "#"):gsub("\\&", "&")
             -- Convert inline math with subscripts to Unicode
@@ -299,7 +301,8 @@ function RawInline(elem)
           end
 
           -- Extract macro content
-          local macro_content, macro_next_pos = extract_braced_content(content, next_macro_pos, next_macro_name[2])
+          local macro_content, macro_next_pos =
+            extract_braced_content(content, next_macro_pos, next_macro_name[2])
           if macro_content then
             macro_content = unescape_latex_chars(macro_content)
 
@@ -362,8 +365,10 @@ function RawInline(elem)
     -- Clean up ~{} from LaTeX \~{} (tilde with spacing braces)
     code = code:gsub("~{}", "~")
     -- Expand nested macros in code content
-    -- NOTE: \keyword{} handled in simplified_macros.tex but must be stripped when nested in \tcode{}
-    code = code:gsub("\\texttt{([^}]*)}", "%1")  -- Strip \texttt{} from \keyword{} preprocessing
+    -- NOTE: \keyword{} handled in simplified_macros.tex but must be stripped
+    -- when nested in \tcode{}
+    -- Strip \texttt{} from \keyword{} preprocessing
+    code = code:gsub("\\texttt{([^}]*)}", "%1")
     code = code:gsub("\\ctype{([^}]*)}", "%1")
     code = code:gsub("\\term{([^}]*)}", "%1")
     code = code:gsub("\\grammarterm{([^}]*)}", "%1")
@@ -373,8 +378,10 @@ function RawInline(elem)
     code = code:gsub("\\placeholdernc{([^}]*)}", "%1")
     code = code:gsub("\\exposid{([^}]*)}", "%1")
     code = code:gsub("\\mathit{([^}]*)}", "%1")
-    code = code:gsub("\\mathrm{([^}]*)}", "%1")  -- Restored: different meaning in math mode
-    code = code:gsub("\\textit{([^}]*)}", "%1")  -- Strip \textit{} from simplified_macros.tex preprocessing
+    -- Restored: different meaning in math mode
+    code = code:gsub("\\mathrm{([^}]*)}", "%1")
+    -- Strip \textit{} from simplified_macros.tex preprocessing
+    code = code:gsub("\\textit{([^}]*)}", "%1")
     code = code:gsub("\\colcol{}", "::")  -- Restored: context-dependent
     -- Handle special characters
     code = convert_special_chars(code)
@@ -458,12 +465,15 @@ function RawInline(elem)
   -- Returns Emph + Str if suffix present, otherwise just Emph
   local grammarterm_start = text:find("\\grammarterm{", 1, true)
   if grammarterm_start and grammarterm_start == 1 then  -- Must be at start
-    local term, pos_after_term = extract_braced_content(text, grammarterm_start, 12)  -- \grammarterm is 12 chars
+    -- \grammarterm is 12 chars
+    local term, pos_after_term = extract_braced_content(text, grammarterm_start, 12)
     if term then
       -- Check if there's a second argument (suffix)
-      if pos_after_term and pos_after_term <= #text and text:sub(pos_after_term, pos_after_term) == "{" then
+      if pos_after_term and pos_after_term <= #text and
+         text:sub(pos_after_term, pos_after_term) == "{" then
         local suffix, pos_after_suffix = extract_braced_content(text, pos_after_term, 0)
-        if suffix and pos_after_suffix and pos_after_suffix - 1 == #text then  -- Suffix must end the string
+        -- Suffix must end the string
+        if suffix and pos_after_suffix and pos_after_suffix - 1 == #text then
           -- Return list of Inlines: Emph + Str for the suffix
           -- Pandoc will splice these into the document
           return {pandoc.Emph({pandoc.Str(term)}), pandoc.Str(suffix)}
@@ -520,17 +530,17 @@ function RawInline(elem)
       local pos = 1
       while pos <= #plural do
         -- Look for \tcode{...}
-        local tcode_start, tcode_end = plural:find("\\tcode{", pos, true)
-        if tcode_start then
+        local inner_tcode_start, tcode_end = plural:find("\\tcode{", pos, true)
+        if inner_tcode_start then
           -- Add text before \tcode
-          if tcode_start > pos then
-            local text_before = plural:sub(pos, tcode_start - 1)
+          if inner_tcode_start > pos then
+            local text_before = plural:sub(pos, inner_tcode_start - 1)
             text_before = expand_macros(text_before)  -- Expand macros like \Cpp{}
             text_before = unescape_latex_chars(text_before)
             table.insert(inlines, pandoc.Str(text_before))
           end
           -- Extract \tcode content using brace-balanced extraction
-          local tcode_content, tcode_next_pos = extract_braced_content(plural, tcode_start, 6)
+          local tcode_content, tcode_next_pos = extract_braced_content(plural, inner_tcode_start, 6)
           if tcode_content then
             tcode_content = unescape_latex_chars(tcode_content)
             table.insert(inlines, pandoc.Code(tcode_content))
@@ -647,8 +657,9 @@ function RawInline(elem)
   -- Use brace-balanced extraction to handle nested braces
   local range_start = text:find("\\range{", 1, true)
   if range_start and range_start == 1 then
-    local args, end_pos = extract_multi_arg_macro(text, range_start, 6, 2)  -- \range is 6 chars, 2 args
-    if args and end_pos and end_pos - 1 == #text then
+    -- \range is 6 chars, 2 args
+    local args, range_end_pos = extract_multi_arg_macro(text, range_start, 6, 2)
+    if args and range_end_pos and range_end_pos - 1 == #text then
       local first = expand_macros(args[1])
       local last = expand_macros(args[2])
       return pandoc.RawInline('markdown', '[`' .. first .. '`, `' .. last .. '`)')
@@ -723,11 +734,13 @@ function CodeBlock(elem)
     local start_pos = text:find("\\unicode{", 1, true)
     if not start_pos then break end
 
-    local args, end_pos = extract_multi_arg_macro(text, start_pos, 8, 2)  -- \unicode is 8 chars, 2 args
+    -- \unicode is 8 chars, 2 args
+    local args, end_pos = extract_multi_arg_macro(text, start_pos, 8, 2)
     if not args then break end
 
     -- Replace \unicode{XXXX}{desc} with U+XXXX (desc)
-    text = text:sub(1, start_pos - 1) .. "U+" .. args[1] .. " (" .. args[2] .. ")" .. text:sub(end_pos)
+    text = text:sub(1, start_pos - 1) .. "U+" .. args[1] .. " (" .. args[2] ..
+           ")" .. text:sub(end_pos)
   end
 
   -- Handle \mname{} macros
@@ -787,16 +800,18 @@ function RawBlock(elem)
       local pos = 1
       while pos <= #plural do
         -- Look for \tcode{...}
-        local tcode_start, tcode_end = plural:find("\\tcode{", pos, true)
-        if tcode_start then
+        local inner_tcode_start2, tcode_end = plural:find("\\tcode{", pos, true)
+        if inner_tcode_start2 then
           -- Add text before \tcode
-          if tcode_start > pos then
-            local text_before = plural:sub(pos, tcode_start - 1)
+          if inner_tcode_start2 > pos then
+            local text_before = plural:sub(pos, inner_tcode_start2 - 1)
             text_before = text_before:gsub("\\#", "#"):gsub("\\&", "&")
             table.insert(inlines, pandoc.Str(text_before))
           end
           -- Extract \tcode content
-          local tcode_content, tcode_next_pos = extract_braced_content(plural, tcode_start, 6)  -- "\tcode" is 6 chars
+          -- "\tcode" is 6 chars
+          local tcode_content, tcode_next_pos =
+            extract_braced_content(plural, inner_tcode_start2, 6)
           if tcode_content then
             tcode_content = tcode_content:gsub("\\#", "#"):gsub("\\&", "&")
             table.insert(inlines, pandoc.Code(tcode_content))
@@ -853,10 +868,10 @@ function RawBlock(elem)
 
     -- Helper function to find next \item or \stage that's not inside a nested environment
     local function find_next_item_or_stage(content, start_pos)
-      local pos = start_pos
-      while pos <= #content do
-        local item_pos = content:find("\\item%s*", pos)
-        local stage_pos = content:find("\\stage{[^}]*}", pos)
+      local search_pos = start_pos
+      while search_pos <= #content do
+        local item_pos = content:find("\\item%s*", search_pos)
+        local stage_pos = content:find("\\stage{[^}]*}", search_pos)
 
         -- Find which comes first
         local candidate_pos, candidate_end, is_stage
@@ -919,17 +934,17 @@ function RawBlock(elem)
         end
 
         -- Otherwise, skip this one and keep searching
-        pos = candidate_end + 1
+        search_pos = candidate_end + 1
       end
 
       return nil, nil, nil
     end
 
     -- Split content by \item or \stage{N}
-    local pos = 1
+    local item_pos = 1
     while true do
       -- Look for either \item or \stage{...} that's not inside nested environments
-      local start_pos, end_pos, is_stage = find_next_item_or_stage(desc_content, pos)
+      local start_pos, end_pos, is_stage = find_next_item_or_stage(desc_content, item_pos)
 
       if not start_pos then
         break -- No more items
@@ -962,7 +977,7 @@ function RawBlock(elem)
         table.insert(items, item_content)
       end
 
-      pos = end_pos + 1
+      item_pos = end_pos + 1
       if not next_start then break end
     end
 
@@ -1014,9 +1029,9 @@ function RawBlock(elem)
         for _, block in ipairs(parsed.blocks) do
           -- Process RawBlocks that contain code blocks (since cpp-code-blocks.lua already ran)
           if block.tag == "RawBlock" and block.format == "latex" then
-            local text = block.text
+            local block_text = block.text
             -- Check if this is a codeblock environment
-            local code = text:match("\\begin{codeblock}(.-)\\end{codeblock}")
+            local code = block_text:match("\\begin{codeblock}(.-)\\end{codeblock}")
             if code then
               -- Clean up code: remove leading/trailing whitespace
               code = code:gsub("^%s+", ""):gsub("%s+$", "")
@@ -1024,7 +1039,7 @@ function RawBlock(elem)
             end
             -- Check for outputblock
             if not code then
-              code = text:match("\\begin{outputblock}(.-)\\end{outputblock}")
+              code = block_text:match("\\begin{outputblock}(.-)\\end{outputblock}")
               if code then
                 code = code:gsub("^%s+", ""):gsub("%s+$", "")
                 block = pandoc.CodeBlock(code, {class = "text"})
@@ -1032,7 +1047,7 @@ function RawBlock(elem)
             end
             -- Check for codeblocktu
             if not code then
-              code = text:match("\\begin{codeblocktu}{[^}]*}(.-)\\end{codeblocktu}")
+              code = block_text:match("\\begin{codeblocktu}{[^}]*}(.-)\\end{codeblocktu}")
               if code then
                 code = code:gsub("^%s+", ""):gsub("%s+$", "")
                 block = pandoc.CodeBlock(code, {class = "cpp"})
@@ -1091,10 +1106,12 @@ function Meta(meta)
       end
       if lastlib then
         LASTLIB = lastlib
-        io.stderr:write("cpp-macros.lua: Loaded lastlibchapter = " .. LASTLIB .. "\n")
+        io.stderr:write("cpp-macros.lua: Loaded lastlibchapter = " .. LASTLIB ..
+                        "\n")
       end
     else
-      io.stderr:write("cpp-macros.lua: Warning - could not open " .. config_path .. ", using defaults\n")
+      io.stderr:write("cpp-macros.lua: Warning - could not open " ..
+                      config_path .. ", using defaults\n")
     end
   end
 

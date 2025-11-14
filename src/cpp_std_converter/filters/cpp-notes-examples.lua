@@ -83,7 +83,8 @@ local function process_codeblock_div(block, codeblocks, titles)
     end
   end
 
-  -- Handle BulletList and OrderedList blocks - recursively process items for placeholders (Issue #18)
+  -- Handle BulletList and OrderedList blocks - recursively process items
+  -- for placeholders (Issue #18)
   if (block.t == "BulletList" or block.t == "OrderedList") and codeblocks then
     local modified = false
     local new_items = {}
@@ -135,9 +136,12 @@ local function extract_codeblocks(content)
 
     -- Try each pattern and find which one matches earliest
     local patterns = {
-      {name = "codeblock", start_pat = "\\begin{codeblock}",  end_pat = "\\end{codeblock}"},
-      {name = "codeblockdigitsep", start_pat = "\\begin{codeblockdigitsep}", end_pat = "\\end{codeblockdigitsep}"},
-      {name = "outputblock", start_pat = "\\begin{outputblock}", end_pat = "\\end{outputblock}"},
+      {name = "codeblock", start_pat = "\\begin{codeblock}",
+       end_pat = "\\end{codeblock}"},
+      {name = "codeblockdigitsep", start_pat = "\\begin{codeblockdigitsep}",
+       end_pat = "\\end{codeblockdigitsep}"},
+      {name = "outputblock", start_pat = "\\begin{outputblock}",
+       end_pat = "\\end{outputblock}"},
     }
 
     for _, p in ipairs(patterns) do
@@ -194,7 +198,8 @@ local function extract_codeblocks(content)
 
       -- Replace with placeholder
       local placeholder = "\n\n__CODEBLOCK_" .. counter .. "__\n\n"
-      modified_content = modified_content:sub(1, earliest_start - 1) .. placeholder .. modified_content:sub(earliest_end + 1)
+      modified_content = modified_content:sub(1, earliest_start - 1) ..
+                         placeholder .. modified_content:sub(earliest_end + 1)
 
       -- Continue from after the placeholder
       pos = earliest_start + #placeholder
@@ -419,7 +424,8 @@ local function process_single_block(block, codeblocks, titles)
       local note_content_end = text:find("\\end{note}", note_start)
       if note_content_end then
         note_counter = note_counter + 1
-        local note_content = text:sub(note_start + 12, note_content_end - 1)  -- 12 = length of "\begin{note}"
+        -- 12 = length of "\begin{note}"
+        local note_content = text:sub(note_start + 12, note_content_end - 1)
         note_content = trim(note_content)
         note_content = expand_macros(note_content)
 
@@ -460,7 +466,8 @@ local function process_single_block(block, codeblocks, titles)
       local example_content_end = text:find("\\end{example}", example_start)
       if example_content_end then
         example_counter = example_counter + 1
-        local example_content = text:sub(example_start + 15, example_content_end - 1)  -- 15 = length of "\begin{example}"
+        -- 15 = length of "\begin{example}"
+        local example_content = text:sub(example_start + 15, example_content_end - 1)
         example_content = trim(example_content)
         example_content = expand_macros(example_content)
 
@@ -500,7 +507,8 @@ local function process_single_block(block, codeblocks, titles)
     if footnote_start then
       local footnote_content_end = text:find("\\end{footnote}", footnote_start)
       if footnote_content_end then
-        local footnote_content = text:sub(footnote_start + 16, footnote_content_end - 1)  -- 16 = length of "\begin{footnote}"
+        -- 16 = length of "\begin{footnote}"
+        local footnote_content = text:sub(footnote_start + 16, footnote_content_end - 1)
         footnote_content = trim(footnote_content)
         footnote_content = expand_macros(footnote_content)
 
@@ -649,7 +657,8 @@ function Blocks(blocks)
       local example_content = text:match("\\begin{example}([%s%S]-)\\end{example}")
       if example_content then
         local blocks_to_insert
-        blocks_to_insert, example_counter = process_environment(example_content, "example", example_counter)
+        blocks_to_insert, example_counter =
+          process_environment(example_content, "example", example_counter)
         for _, b in ipairs(blocks_to_insert) do
           table.insert(result, b)
         end
@@ -782,8 +791,8 @@ function Blocks(blocks)
 
           -- Output all blocks from div content
           for _, div_block in ipairs(block.content) do
-            local blocks = process_codeblock_div(div_block, nil, nil)
-            for _, b in ipairs(blocks) do
+            local processed_blocks = process_codeblock_div(div_block, nil, nil)
+            for _, b in ipairs(processed_blocks) do
               table.insert(result, b)
             end
           end
@@ -851,8 +860,8 @@ function Blocks(blocks)
 
           -- Output all blocks from div content
           for _, div_block in ipairs(block.content) do
-            local blocks = process_codeblock_div(div_block, nil, nil)
-            for _, b in ipairs(blocks) do
+            local processed_blocks2 = process_codeblock_div(div_block, nil, nil)
+            for _, b in ipairs(processed_blocks2) do
               table.insert(result, b)
             end
           end
@@ -906,12 +915,15 @@ function Blocks(blocks)
         goto continue
       end
 
-      -- Handle other div classes (like "indented", "center", "ncbnf") - unwrap by outputting content as blockquote
-      -- This preserves content from LaTeX environments like \begin{indented} that would otherwise be lost
+      -- Handle other div classes (like "indented", "center", "ncbnf")
+      -- unwrap by outputting content as blockquote. This preserves content
+      -- from LaTeX environments like \begin{indented} that would be lost
       if block.classes[1] then
         -- Skip table-related Div blocks - let cpp-tables.lua handle them
-        if block.classes[1] == "libtab2" or block.classes[1] == "lib2dtab2" or
-           block.classes[1] == "libtab3" or block.classes[1] == "lib2dtab3" then
+        if block.classes[1] == "libtab2" or
+           block.classes[1] == "lib2dtab2" or
+           block.classes[1] == "libtab3" or
+           block.classes[1] == "lib2dtab3" then
           table.insert(result, block)
           goto continue
         end

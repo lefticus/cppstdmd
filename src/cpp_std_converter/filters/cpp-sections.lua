@@ -61,7 +61,7 @@ function Para(elem)
           section_labels[label] = true
 
           -- Extract title content from the Span or remaining elements
-          local title_content = {}
+          local title_content
 
           if content[i + 2].t == "Span" and content[i + 2].content then
             title_content = content[i + 2].content
@@ -76,7 +76,9 @@ function Para(elem)
 
             -- Append visible anchor with stable name to heading
             table.insert(title_content, pandoc.Space())
-            table.insert(title_content, pandoc.RawInline('html', '<a id="' .. label .. '">[[' .. label .. ']]</a>'))
+            table.insert(title_content,
+                         pandoc.RawInline('html', '<a id="' .. label .. '">[[' ..
+                                          label .. ']]</a>'))
 
             -- Create the heading with embedded anchor
             local header = pandoc.Header(heading_level, title_content)

@@ -331,8 +331,10 @@ local function process_notes_examples_blocks(blocks)
       local note_content = text:match("\\begin{note}([%s%S]-)\\end{note}")
       if note_content then
         local note_counter_ref = {itemdescr_note_counter}
-        -- Pass true for already_expanded since content comes from RawBlock after macro expansion
-        local blocks_to_insert = process_itemdescr_environment(note_content, "note", note_counter_ref, true)
+        -- Pass true for already_expanded since content comes from RawBlock
+        -- after macro expansion
+        local blocks_to_insert = process_itemdescr_environment(
+          note_content, "note", note_counter_ref, true)
         itemdescr_note_counter = note_counter_ref[1]
         for _, b in ipairs(blocks_to_insert) do
           table.insert(result, b)
@@ -344,8 +346,10 @@ local function process_notes_examples_blocks(blocks)
       local example_content = text:match("\\begin{example}([%s%S]-)\\end{example}")
       if example_content then
         local example_counter_ref = {itemdescr_example_counter}
-        -- Pass true for already_expanded since content comes from RawBlock after macro expansion
-        local blocks_to_insert = process_itemdescr_environment(example_content, "example", example_counter_ref, true)
+        -- Pass true for already_expanded since content comes from RawBlock
+        -- after macro expansion
+        local blocks_to_insert = process_itemdescr_environment(
+          example_content, "example", example_counter_ref, true)
         itemdescr_example_counter = example_counter_ref[1]
         for _, b in ipairs(blocks_to_insert) do
           table.insert(result, b)
@@ -365,21 +369,27 @@ end
 
 -- Helper function to expand macros in itemdescr text before Pandoc processing
 -- (Forward declared earlier, defined here)
--- Uses hybrid approach: specialized logic FIRST, then expand_macros_common for standard processing
+-- Uses hybrid approach: specialized logic FIRST,
+-- then expand_macros_common for standard processing
 expand_itemdescr_macros = function(text)
-  -- PHASE 1: Itemdecl-specific specialized logic that must run BEFORE expand_macros_common
-  -- These transformations need to see the raw LaTeX before other macros are expanded
+  -- PHASE 1: Itemdecl-specific specialized logic that must run BEFORE
+  -- expand_macros_common. Transformations need to see the raw LaTeX before
+  -- other macros are expanded
 
-  -- COMPLEXITY #1: Handle \tcode{\placeholdernc{...}...} special case with proper brace balancing
-  -- When \tcode wraps \placeholdernc, the placeholder dominates and we want italic, not code
-  -- This pattern can contain nested \tcode{} inside, like: \tcode{\placeholdernc{FUN}($\tcode{T}_j$)}
-  -- We need to strip ALL \tcode{} wrappers while converting \placeholdernc{} -> \textit{}
+  -- COMPLEXITY #1: Handle \tcode{\placeholdernc{...}...} special case
+  -- with proper brace balancing
+  -- When \tcode wraps \placeholdernc, the placeholder dominates and we want
+  -- italic, not code. This pattern can contain nested \tcode{} inside, like:
+  -- \tcode{\placeholdernc{FUN}($\tcode{T}_j$)}
+  -- We need to strip ALL \tcode{} wrappers while converting
+  -- \placeholdernc{} -> \textit{}
   while true do
     local start_pos = text:find("\\tcode{\\placeholdernc{", 1, true)
     if not start_pos then break end
 
     -- Extract the full \tcode{...} content using brace-balancing
-    local tcode_content, end_pos = extract_braced_content(text, start_pos, 6)  -- "\tcode" is 6 chars
+    -- "\tcode" is 6 chars
+    local tcode_content, end_pos = extract_braced_content(text, start_pos, 6)
     if tcode_content then
       -- Remove nested \tcode{} wrappers while preserving content
       -- Example: \placeholdernc{FUN}($\tcode{T}_j$) -> \placeholdernc{FUN}($T_j$)
@@ -395,19 +405,24 @@ expand_itemdescr_macros = function(text)
     end
   end
 
-  -- COMPLEXITY #2: Process \tcode{} blocks to strip nested \texttt{} from simplified_macros.tex preprocessing
-  -- This prevents nested backticks like `const_cast``<X ``const``&>` in the final markdown
-  -- Example: \tcode{\texttt{const_cast}<X \texttt{const}\&>} -> \texttt{const_cast<X const\&>}
-  -- When simplified_macros.tex converts \keyword{} to \texttt{}, we need to strip those
-  -- inner \texttt{} wrappers before pandoc.read() sees them (to avoid double conversion)
+  -- COMPLEXITY #2: Process \tcode{} blocks to strip nested \texttt{} from
+  -- simplified_macros.tex preprocessing. This prevents nested backticks like
+  -- `const_cast``<X ``const``&>` in the final markdown
+  -- Example: \tcode{\texttt{const_cast}<X \texttt{const}\&>}
+  --       -> \texttt{const_cast<X const\&>}
+  -- When simplified_macros.tex converts \keyword{} to \texttt{}, we need to
+  -- strip those inner \texttt{} wrappers before pandoc.read() sees them
+  -- (to avoid double conversion)
   while true do
     local start_pos = text:find("\\tcode{", 1, true)
     if not start_pos then break end
 
     -- Extract the full \tcode{...} content using brace-balancing
-    local tcode_content, end_pos = extract_braced_content(text, start_pos, 6)  -- "\tcode" is 6 chars
+    -- "\tcode" is 6 chars
+    local tcode_content, end_pos = extract_braced_content(text, start_pos, 6)
     if tcode_content then
-      -- Strip all \texttt{} wrappers that came from simplified_macros.tex (\keyword{}, \libconcept{}, etc.)
+      -- Strip all \texttt{} wrappers that came from simplified_macros.tex
+      -- (\keyword{}, \libconcept{}, etc.)
       -- Use remove_macro to recursively remove all \texttt{} macros
       local cleaned = remove_macro(tcode_content, "texttt", true)
 

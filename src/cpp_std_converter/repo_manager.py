@@ -175,10 +175,7 @@ class DraftRepoManager:
                     capture_output=True,
                     text=True,
                 )
-                if result.returncode == 0:
-                    ref = result.stdout.strip()
-                else:
-                    ref = "detached"
+                ref = result.stdout.strip() if result.returncode == 0 else "detached"
 
             return {
                 "sha": sha,

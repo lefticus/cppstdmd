@@ -68,9 +68,9 @@ function Blocks(blocks)
         local parsed = pandoc.read(note_content, "latex+raw_tex")
         local note_inlines = {}
         -- Extract all inlines from the parsed document
-        for _, block in ipairs(parsed.blocks) do
-          if block.t == "Para" and block.content then
-            for _, inline in ipairs(block.content) do
+        for _, parsed_block in ipairs(parsed.blocks) do
+          if parsed_block.t == "Para" and parsed_block.content then
+            for _, inline in ipairs(parsed_block.content) do
               table.insert(note_inlines, inline)
             end
           end
@@ -115,9 +115,9 @@ function Blocks(blocks)
         skip_first_span = true
       end
 
-      for i, inline in ipairs(block.content) do
+      for item_idx, inline in ipairs(block.content) do
         -- Skip the first Span if we extracted label from it
-        if skip_first_span and i == 1 and inline.t == "Span" then
+        if skip_first_span and item_idx == 1 and inline.t == "Span" then
           goto skip_inline
         end
         if inline.t == "RawInline" and inline.format == "latex" then
@@ -134,10 +134,9 @@ function Blocks(blocks)
           elseif text:match("\\defncontext%s*{([^}]*)}") then
             context = text:match("\\defncontext%s*{([^}]*)}")
             -- Don't add to new_content (remove it)
-          -- Check for \indexdefn (remove it)
-          elseif text:match("\\indexdefn") then
-            -- Don't add to new_content (remove it)
-          else
+          -- Check for \indexdefn (remove it - combined with above to avoid empty branch)
+          elseif not text:match("\\indexdefn") then
+            -- Keep inline if it's not an indexdefn command
             table.insert(new_content, inline)
           end
         elseif inline.t ~= "SoftBreak" or #new_content > 0 then

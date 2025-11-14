@@ -189,9 +189,11 @@ local function is_complex_math(text)
     local content = subscript:sub(2, -2)  -- Remove braces
     -- Check if it's simple arithmetic: single char, +/-, single char
     local is_simple_arithmetic = content:match("^%w[-+]%w$")
-    -- If content has more than one character (excluding whitespace) or contains backslash, it's complex
-    -- UNLESS it's simple arithmetic which we can convert
-    if not is_simple_arithmetic and (content:match("%S.*%S") or content:match("\\")) then
+    -- If content has more than one character (excluding whitespace) or
+    -- contains backslash, it's complex UNLESS it's simple arithmetic
+    -- which we can convert
+    if not is_simple_arithmetic and
+       (content:match("%S.*%S") or content:match("\\")) then
       return true
     end
   end

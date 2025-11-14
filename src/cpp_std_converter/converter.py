@@ -6,6 +6,7 @@ Converts C++ draft standard LaTeX sources to GitHub Flavored Markdown
 using Pandoc with custom Lua filters.
 """
 
+import contextlib
 import re
 import subprocess
 import sys
@@ -258,7 +259,7 @@ class Converter:
                 click.echo("Building label index for cross-file references...", err=True)
 
             indexer = LabelIndexer(input_dir)
-            label_index = indexer.build_index(use_stable_names=True)
+            indexer.build_index(use_stable_names=True)
 
             # Write Lua table file
             label_index_file = output_dir / "cpp_std_labels.lua"
@@ -292,10 +293,8 @@ class Converter:
             # Extract stable name for this file (e.g., "mem" from memory.tex)
             # This is used for cross-file link resolution
             stable_name = None
-            try:
+            with contextlib.suppress(Exception):
                 stable_name = extract_stable_name_from_tex(tex_file)
-            except Exception:
-                pass  # If extraction fails, use filename as-is
 
             try:
                 self.convert_file(

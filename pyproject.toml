@@ -90,6 +90,8 @@ ignore = [
     "B904",  # Allow raising exceptions without from e
     "ARG001", # Unused function argument (common in CLI callbacks)
     "ARG002", # Unused method argument (common in overrides)
+    "SIM115", # tempfile.NamedTemporaryFile with delete=False is intentional
+    "SIM113", # enumerate not applicable with concurrent.futures.as_completed
 ]
 
 # Allow autofix for all enabled rules

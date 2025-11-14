@@ -343,7 +343,7 @@ class TestStandardBuilder:
             # so we don't restrict to only the 3 chapters being built
             if len(cross_file_links_intro) > 0:
                 # Verify format: [label]: filename.md#label
-                for label, filename in cross_file_links_intro:
+                for _label, filename in cross_file_links_intro:
                     # Just verify it's a valid chapter filename (any chapter in the standard)
                     assert (
                         len(filename) > 0 and filename.isalpha()
@@ -398,7 +398,7 @@ class TestStandardBuilder:
 
             # Verify cross-file links exist
             # expressions.md should reference intro.md labels
-            cross_file_to_intro = re.findall(
+            re.findall(
                 r"\[intro\.[a-z.]+\]:\s*intro\.md#intro\.[a-z.]+", expr_content
             )
             # It's likely (but not guaranteed) that expressions references intro
