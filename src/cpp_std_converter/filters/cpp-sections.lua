@@ -152,6 +152,10 @@ function RawInline(elem)
   end
 
   local text = elem.text
+  -- Pattern: \rSecN[label]{title}
+  -- NOTE: Using ([^}]*) here is acceptable because section titles in the C++ standard
+  -- are simple text without nested braces. The main Para() handler above processes
+  -- the majority of sections; this is just a fallback for edge cases.
   local level, label, title = text:match("\\rSec(%d)%[([^%]]*)%]%{([^}]*)%}")
 
   if level and label and title then
@@ -170,6 +174,8 @@ function RawBlock(elem)
   end
 
   local text = elem.text
+  -- Pattern: \rSecN[label]{title}
+  -- NOTE: Using ([^}]*) here is acceptable - same reason as RawInline() above
   local level, label, title = text:match("\\rSec(%d)%[([^%]]*)%]%{([^}]*)%}")
 
   if level and label and title then

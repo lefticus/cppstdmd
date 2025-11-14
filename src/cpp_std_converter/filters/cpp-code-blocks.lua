@@ -115,8 +115,13 @@ function CodeBlock(elem)
     code = handle_overlap_commands(code)
 
     -- Strip \texttt{} and \textit{} from simplified_macros.tex preprocessing
-    code = code:gsub("\\texttt{([^}]*)}", "%1")
-    code = code:gsub("\\textit{([^}]*)}", "%1")
+    -- Use process_macro_with_replacement for proper brace-balancing (fixes ([^}]*) anti-pattern)
+    code = common.process_macro_with_replacement(code, "texttt", function(content)
+      return content
+    end)
+    code = common.process_macro_with_replacement(code, "textit", function(content)
+      return content
+    end)
 
     -- Return updated code block
     return pandoc.CodeBlock(code, elem.attr)

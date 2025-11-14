@@ -326,16 +326,28 @@ local function try_unicode_conversion(text)
   local result = text
 
   -- Convert \mathtt{X} -> X (already monospace in markdown code)
-  result = result:gsub("\\mathtt{([^}]*)}", "%1")
+  -- Use process_macro_with_replacement for proper brace-balancing (fixes ([^}]*) anti-pattern)
+  result = common.process_macro_with_replacement(result, "mathtt", function(content)
+    return content
+  end)
 
   -- Convert \mathrm{text} -> text
-  result = result:gsub("\\mathrm{([^}]*)}", "%1")
+  -- Use process_macro_with_replacement for proper brace-balancing (fixes ([^}]*) anti-pattern)
+  result = common.process_macro_with_replacement(result, "mathrm", function(content)
+    return content
+  end)
 
   -- Convert \mathit{text} -> text (we'll use plain text)
-  result = result:gsub("\\mathit{([^}]*)}", "%1")
+  -- Use process_macro_with_replacement for proper brace-balancing (fixes ([^}]*) anti-pattern)
+  result = common.process_macro_with_replacement(result, "mathit", function(content)
+    return content
+  end)
 
   -- Convert \mathsf{text} -> text (sans-serif font)
-  result = result:gsub("\\mathsf{([^}]*)}", "%1")
+  -- Use process_macro_with_replacement for proper brace-balancing (fixes ([^}]*) anti-pattern)
+  result = common.process_macro_with_replacement(result, "mathsf", function(content)
+    return content
+  end)
 
   -- Convert \cv{} (cv-qualifiers) to plain text
   result = result:gsub("\\cv{}", "cv")
@@ -354,7 +366,10 @@ local function try_unicode_conversion(text)
   result = result:gsub("(%w)%^{rd}", "%1ʳᵈ")
 
   -- Convert \text{text} -> text (text mode in math)
-  result = result:gsub("\\text{([^}]*)}", "%1")
+  -- Use process_macro_with_replacement for proper brace-balancing (fixes ([^}]*) anti-pattern)
+  result = common.process_macro_with_replacement(result, "text", function(content)
+    return content
+  end)
 
   -- Strip sizing commands (they don't affect the output, just LaTeX presentation)
   result = result:gsub("\\bigl%s*", "")
@@ -574,7 +589,10 @@ function Math(elem)
           local content = part.content
           if part.macro_type == "tcode" then
             -- Remove \placeholder{} wrappers
-            content = content:gsub("\\placeholder{([^}]*)}", "%1")
+            -- Use process_macro_with_replacement for proper brace-balancing (fixes ([^}]*) anti-pattern)
+            content = common.process_macro_with_replacement(content, "placeholder", function(c)
+              return c
+            end)
           end
 
           -- Add subscript if present

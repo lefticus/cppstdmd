@@ -321,6 +321,32 @@ local function process_code_macro(text, macro_name)
   return text
 end
 
+-- Helper function to process a macro with a custom replacement function
+-- Uses extract_braced_content for proper nested brace handling
+-- Parameters:
+--   text: The text to process
+--   macro_name: The macro name without backslash (e.g., "tcode")
+--   replacement_func: Function that takes content and returns replacement
+-- Returns:
+--   Modified text with all instances of \macro{content} replaced
+local function process_macro_with_replacement(text, macro_name, replacement_func)
+  local macro_pattern = "\\" .. macro_name .. "{"
+  local macro_len = #macro_name + 1  -- +1 for backslash
+
+  while true do
+    local macro_start = text:find(macro_pattern, 1, true)
+    if not macro_start then break end
+
+    local content, end_pos = extract_braced_content(text, macro_start, macro_len)
+    if not content then break end
+
+    local replacement = replacement_func(content)
+    text = text:sub(1, macro_start - 1) .. replacement .. text:sub(end_pos)
+  end
+
+  return text
+end
+
 -- Helper function to extract and clean description from \impdefx macro
 -- Used by cpp-macros.lua and expand_impdefx_in_text()
 -- Extracts the description argument, handling nested braces properly
@@ -365,9 +391,14 @@ local function extract_impdefx_description(text, start_pos, prefix_len, suffix_c
   -- Extract description
   local description = text:sub(desc_start, pos - 1)
 
-  -- Clean nested macros (simple pattern replacement for non-nested cases)
-  description = description:gsub("\\tcode{([^}]*)}", "%1")
-  description = description:gsub("\\placeholder{([^}]*)}", "%1")
+  -- Clean nested macros using process_macro_with_replacement for proper brace-balancing
+  -- (fixes ([^}]*) anti-pattern)
+  description = process_macro_with_replacement(description, "tcode", function(content)
+    return content
+  end)
+  description = process_macro_with_replacement(description, "placeholder", function(content)
+    return content
+  end)
 
   -- Calculate end position (after brace and optional suffix)
   local end_pos = suffix_char and (pos + 2) or (pos + 1)
@@ -472,14 +503,24 @@ end
 --   text: The text to process
 --   has_at_delimiters: Whether to handle @...@ delimited versions (used in code blocks)
 local function expand_concept_macros(text, has_at_delimiters)
+  -- Note: @...@ delimited versions are kept as simple patterns since @ delimiters
+  -- prevent brace nesting in the C++ standard's usage. Only non-@ versions need
+  -- proper brace-balancing via process_macro_with_replacement.
   if has_at_delimiters then
     text = text:gsub("@\\libconcept{([^}]*)}@", "%1")
     text = text:gsub("@\\exposconcept{([^}]*)}@", "%1")
     text = text:gsub("@\\oldconcept{([^}]*)}@", "Cpp17%1")
   end
-  text = text:gsub("\\libconcept{([^}]*)}", "%1")
-  text = text:gsub("\\exposconcept{([^}]*)}", "%1")
-  text = text:gsub("\\oldconcept{([^}]*)}", "Cpp17%1")
+  -- Use process_macro_with_replacement for non-@ versions (fixes ([^}]*) anti-pattern)
+  text = process_macro_with_replacement(text, "libconcept", function(content)
+    return content
+  end)
+  text = process_macro_with_replacement(text, "exposconcept", function(content)
+    return content
+  end)
+  text = process_macro_with_replacement(text, "oldconcept", function(content)
+    return "Cpp17" .. content
+  end)
   return text
 end
 
@@ -490,12 +531,20 @@ end
 --   text: The text to process
 --   has_at_delimiters: Whether to handle @...@ delimited versions (used in code blocks)
 local function convert_cross_references_in_code(text, has_at_delimiters)
+  -- Note: @...@ delimited versions are kept as simple patterns since @ delimiters
+  -- prevent brace nesting in the C++ standard's usage. Only non-@ versions need
+  -- proper brace-balancing via process_macro_with_replacement.
   if has_at_delimiters then
     text = text:gsub("@\\iref{([^}]*)}@", "[%1]")
     text = text:gsub("@\\ref{([^}]*)}@", "[%1]")
   end
-  text = text:gsub("\\iref{([^}]*)}", "[%1]")
-  text = text:gsub("\\ref{([^}]*)}", "[%1]")
+  -- Use process_macro_with_replacement for non-@ versions (fixes ([^}]*) anti-pattern)
+  text = process_macro_with_replacement(text, "iref", function(content)
+    return "[" .. content .. "]"
+  end)
+  text = process_macro_with_replacement(text, "ref", function(content)
+    return "[" .. content .. "]"
+  end)
   return text
 end
 
@@ -601,24 +650,6 @@ end
 --
 -- Returns:
 --   The processed text with all \macro_name{content} replaced
-local function process_macro_with_replacement(text, macro_name, replacement_func)
-  local macro_pattern = "\\" .. macro_name .. "{"
-  local macro_len = #macro_name + 1  -- +1 for backslash
-
-  while true do
-    local macro_start = text:find(macro_pattern, 1, true)
-    if not macro_start then break end
-
-    local content, end_pos = extract_braced_content(text, macro_start, macro_len)
-    if not content then break end
-
-    local replacement = replacement_func(content)
-    text = text:sub(1, macro_start - 1) .. replacement .. text:sub(end_pos)
-  end
-
-  return text
-end
-
 -- Helper function to expand nested macros recursively with multiple passes
 -- Generalizes the multi-pass expansion pattern used in clean_code() functions
 -- Handles cases like \tcode{\keyword{noexcept}(\keyword{true})}
@@ -702,6 +733,12 @@ end
 
 -- Shared code block macro patterns for nested expansion
 -- Used by cpp-code-blocks.lua and cpp-notes-examples.lua
+--
+-- NOTE: These patterns use ([^}]*) for simplicity and historical reasons.
+-- The @...@ delimited versions are safe because @ delimiters prevent nesting
+-- in the C++ standard's actual usage. The bare versions are used in a multi-pass
+-- expansion loop (expand_nested_macros_recursive) which handles simple nesting.
+-- For truly complex nested braces, use process_macro_with_replacement instead.
 local code_block_macro_patterns = {
   -- \tcode{x} represents inline code (just extract the content)
   -- Handle both @\tcode{x}@ and bare \tcode{x} (in comments)
@@ -772,6 +809,8 @@ local function convert_math_in_code(text)
 
     -- Convert subscripts: \tcode{\placeholder{X}}_{n} → Xₙ
     -- Or: \tcode{\placeholder{X}_{n}} → Xₙ
+    -- NOTE: Using ([^}]*) here is acceptable because this is within @$...$@ context
+    -- where the @ delimiters prevent complex nesting in actual C++ standard usage
     math_content = math_content:gsub(
       "\\tcode{\\placeholder{([^}]*)}}_{{?([%w]+)}?}",
       function(name, sub)
@@ -783,8 +822,10 @@ local function convert_math_in_code(text)
     end)
 
     -- Convert subscripts in simpler form: \tcode{\placeholder{X}}_{n} without nested braces
+    -- NOTE: Using ([^}]*) here is acceptable - same reason as above
     math_content = math_content:gsub("\\tcode{([^}]*)}_{{?([%w]+)}?}", function(name, sub)
       -- Remove \placeholder{} wrapper if present
+      -- NOTE: Using ([^}]*) here is acceptable - same reason as above
       name = name:gsub("\\placeholder{([^}]*)}", "%1")
       if subscripts[sub] then
         return name .. subscripts[sub]
@@ -804,6 +845,7 @@ local function convert_math_in_code(text)
     end)
 
     -- Remove remaining \tcode{} and \placeholder{} wrappers
+    -- NOTE: Using ([^}]*) here is acceptable - same reason as above
     math_content = math_content:gsub("\\tcode{([^}]*)}", "%1")
     math_content = math_content:gsub("\\placeholder{([^}]*)}", "%1")
 
@@ -818,6 +860,8 @@ local function convert_math_in_code(text)
        math_content:match("\\leftarrow") or math_content:match("\\ldots") then
 
       -- Convert \mathtt{...} to plain text
+      -- NOTE: Using ([^}]*) here is acceptable because plain $...$ (without @) in code
+      -- comments typically contains simple math without complex nesting
       math_content = math_content:gsub("\\mathtt{([^}]*)}", "%1")
       math_content = math_content:gsub("\\mathrm{([^}]*)}", "%1")
       math_content = math_content:gsub("\\mathit{([^}]*)}", "%1")
@@ -913,10 +957,14 @@ local function clean_code_common(code, handle_textbackslash)
   code = convert_cross_references_in_code(code, true)
 
   -- \defn{x} definition terms
+  -- NOTE: Both @...@ and bare versions use simple ([^}]*) pattern because:
+  -- 1) @ delimiters prevent nesting in actual C++ standard usage
+  -- 2) Definition terms in code are typically simple text without nested braces
   code = code:gsub("@\\defn{([^}]*)}@", "%1")
   code = code:gsub("\\defn{([^}]*)}", "%1")
 
   -- \defexposconcept{x} exposition-only concept definition
+  -- NOTE: Same reasoning as \defn - simple patterns are acceptable here
   code = code:gsub("@\\defexposconcept{([^}]*)}@", "%1")
   code = code:gsub("\\defexposconcept{([^}]*)}", "%1")
 
@@ -933,22 +981,29 @@ local function clean_code_common(code, handle_textbackslash)
 
   -- \defnlibxname{X} represents __X (used for feature test macro names like __cpp_lib_*)
   -- This expands to \xname{X} in the LaTeX, which should become __X
+  -- NOTE: Both @...@ and bare versions use simple ([^}]*) pattern because:
+  -- 1) @ delimiters prevent nesting in actual C++ standard usage
+  -- 2) Macro names are simple identifiers without nested braces
   code = code:gsub("@\\defnlibxname{([^}]*)}@", "__%1")
   code = code:gsub("\\defnlibxname{([^}]*)}", "__%1")
 
   -- \xname{X} represents __X (special identifiers with underscore prefix)
+  -- NOTE: Same reasoning - simple patterns acceptable
   code = code:gsub("@\\xname{([^}]*)}@", "__%1")
   code = code:gsub("\\xname{([^}]*)}", "__%1")
 
   -- \mname{X} represents __X__ (preprocessor macro names with underscore wrapper)
+  -- NOTE: Same reasoning - simple patterns acceptable
   code = code:gsub("@\\mname{([^}]*)}@", "__%1__")
   code = code:gsub("\\mname{([^}]*)}", "__%1__")
 
   -- \libheader{X} represents <X> in code blocks (without backticks, plain angle brackets)
+  -- NOTE: Same reasoning - header names are simple
   code = code:gsub("@\\libheader{([^}]*)}@", "<%1>")
   code = code:gsub("\\libheader{([^}]*)}", "<%1>")
 
   -- \ucode{XXXX} represents Unicode code point U+XXXX (process before \textrm to handle nesting)
+  -- NOTE: Same reasoning - code points are simple hex values
   code = code:gsub("@\\ucode{([^}]*)}@", "U+%1")
   code = code:gsub("\\ucode{([^}]*)}", "U+%1")
 
@@ -959,8 +1014,13 @@ local function clean_code_common(code, handle_textbackslash)
   code = code:gsub("\\brk{}", "")
 
   -- Math formatting in code comments
-  code = code:gsub("\\mathit{([^}]*)}", "%1")
-  code = code:gsub("\\mathrm{([^}]*)}", "%1")
+  -- Use process_macro_with_replacement for proper brace-balancing (fixes ([^}]*) anti-pattern)
+  code = process_macro_with_replacement(code, "mathit", function(content)
+    return content
+  end)
+  code = process_macro_with_replacement(code, "mathrm", function(content)
+    return content
+  end)
 
   -- Text formatting in code comments - strip the commands but keep content
   -- Handle @\textrm{}@, @\textit{}@, and @\texttt{}@ with nested braces
@@ -989,13 +1049,33 @@ local function clean_code_common(code, handle_textbackslash)
   end
 
   -- \ref{x} cross-references
-  code = code:gsub("\\ref{([^}]*)}", "[%1]")
+  -- Use process_macro_with_replacement for proper brace-balancing (fixes ([^}]*) anti-pattern)
+  code = process_macro_with_replacement(code, "ref", function(content)
+    return "[" .. content .. "]"
+  end)
 
   -- \tref{x} table cross-references (also use [label] format)
-  code = code:gsub("\\tref{([^}]*)}", "[%1]")
+  -- Use process_macro_with_replacement for proper brace-balancing (fixes ([^}]*) anti-pattern)
+  code = process_macro_with_replacement(code, "tref", function(content)
+    return "[" .. content .. "]"
+  end)
 
   -- \range{first}{last} macro for half-open ranges
-  code = code:gsub("\\range{([^}]*)}{([^}]*)}", "[%1, %2)")
+  -- Use extract_braced_content twice for 2-argument macro (fixes ([^}]*) anti-pattern)
+  local range_pattern = "\\range{"
+  local range_len = 6  -- length of "\range"
+  while true do
+    local range_start = code:find(range_pattern, 1, true)
+    if not range_start then break end
+
+    local first, pos1 = extract_braced_content(code, range_start, range_len)
+    if not first then break end
+
+    local second, pos2 = extract_braced_content(code, pos1 - 1, 1)  -- pos1-1 to include the brace
+    if not second then break end
+
+    code = code:sub(1, range_start - 1) .. "[" .. first .. ", " .. second .. ")" .. code:sub(pos2)
+  end
 
   -- Strip indexing commands (these should not appear in code blocks but handle defensively)
   code = code:gsub("\\indexlibrary[^{]*{[^}]*}", "")
@@ -1003,7 +1083,10 @@ local function clean_code_common(code, handle_textbackslash)
 
   -- \impldef{description} -> "implementation-defined" (used in @\UNSP{\impldef{}}@)
   -- Handle this before \UNSP{} so nested macros get expanded
-  code = code:gsub("\\impldef{([^}]*)}", "implementation-defined")
+  -- Use process_macro_with_replacement for proper brace-balancing (fixes ([^}]*) anti-pattern)
+  code = process_macro_with_replacement(code, "impldef", function(content)
+    return "implementation-defined"
+  end)
 
   -- \UNSP{x} represents unspecified value (italic monospace in LaTeX)
   -- In code blocks, just extract the content (may contain nested macros)
@@ -1095,6 +1178,7 @@ local function convert_mname(text)
   text = text:gsub("\\mname{VA_ARGS}", "__VA_ARGS__")
   text = text:gsub("\\mname{VA_OPT}", "__VA_OPT__")
   -- Then handle generic case
+  -- NOTE: Using ([^}]*) is acceptable - macro names are simple identifiers without nested braces
   text = text:gsub("\\mname{([^}]*)}", "__%1__")
   return text
 end
@@ -1215,12 +1299,22 @@ local function expand_macros_common(text, options)
       text = text:gsub("\\placeholder{", "\\textit{")
       text = text:gsub("\\placeholdernc{", "\\textit{")
       text = text:gsub("\\exposid{", "\\textit{")
-      text = text:gsub("\\oldconcept{([^}]*)}", "\\textit{Cpp17%1}")
+      -- Use process_macro_with_replacement for proper brace-balancing (fixes ([^}]*) anti-pattern)
+      text = process_macro_with_replacement(text, "oldconcept", function(content)
+        return "\\textit{Cpp17" .. content .. "}"
+      end)
     else
       -- Use *italic* markdown (cpp-macros.lua behavior)
-      text = text:gsub("\\grammarterm{([^}]*)}", "*%1*")
-      text = text:gsub("\\placeholder{([^}]*)}", "*%1*")
-      text = text:gsub("\\placeholdernc{([^}]*)}", "*%1*")
+      -- Use process_macro_with_replacement for proper brace-balancing (fixes ([^}]*) anti-pattern)
+      text = process_macro_with_replacement(text, "grammarterm", function(content)
+        return "*" .. content .. "*"
+      end)
+      text = process_macro_with_replacement(text, "placeholder", function(content)
+        return "*" .. content .. "*"
+      end)
+      text = process_macro_with_replacement(text, "placeholdernc", function(content)
+        return "*" .. content .. "*"
+      end)
     end
   end
 
@@ -1248,7 +1342,10 @@ local function expand_macros_common(text, options)
 
     -- \stage{N} -> Stage N: (skip when convert_to_latex=true to preserve for Pandoc)
     if not options.convert_to_latex then
-      text = text:gsub("\\stage{([^}]*)}", "Stage %1:")
+      -- Use process_macro_with_replacement for proper brace-balancing (fixes ([^}]*) anti-pattern)
+      text = process_macro_with_replacement(text, "stage", function(content)
+        return "Stage " .. content .. ":"
+      end)
     end
   end
 
@@ -1282,12 +1379,15 @@ local function expand_macros_common(text, options)
     text = convert_mname(text)
 
     -- \xname{X} -> __X (special identifiers with underscore prefix)
+    -- NOTE: Using ([^}]*) is acceptable - identifiers are simple without nested braces
     text = text:gsub("\\xname{([^}]*)}", "__%1")
 
     -- \NTS{text} -> UPPERCASE
+    -- NOTE: Using ([^}]*) is acceptable - text content is simple
     text = text:gsub("\\NTS{([^}]*)}", function(s) return s:upper() end)
 
     -- \ucode{XXXX} -> `U+XXXX`
+    -- NOTE: Using ([^}]*) is acceptable - code points are simple hex values
     text = text:gsub("\\ucode{([^}]*)}", "`U+%1`")
 
     -- \colcol{} -> ::
@@ -1300,8 +1400,13 @@ local function expand_macros_common(text, options)
 
   -- Tier 10: Math formatting
   if not options.minimal then
-    text = text:gsub("\\mathit{([^}]*)}", "*%1*")
-    text = text:gsub("\\mathrm{([^}]*)}", "%1")
+    -- Use process_macro_with_replacement for proper brace-balancing (fixes ([^}]*) anti-pattern)
+    text = process_macro_with_replacement(text, "mathit", function(content)
+      return "*" .. content .. "*"
+    end)
+    text = process_macro_with_replacement(text, "mathrm", function(content)
+      return content
+    end)
 
     -- \bigoh{x} -> 𝑂(x) (only for itemdecl context)
     -- Use process_macro_with_replacement for proper brace-balancing
@@ -1317,12 +1422,30 @@ local function expand_macros_common(text, options)
   end
 
   -- Tier 11: Range macros (itemdecl context only)
+  -- Use extract_multi_arg_macro for 2-argument macros (fixes ([^}]*) anti-pattern)
   if options.convert_to_latex then
-    text = text:gsub("\\range{([^}]*)}{([^}]*)}", "[\\texttt{%1}, \\texttt{%2})")
-    text = text:gsub("\\crange{([^}]*)}{([^}]*)}", "[\\texttt{%1}, \\texttt{%2}]")
-    text = text:gsub("\\countedrange{([^}]*)}{([^}]*)}", "\\texttt{%1}+[0, \\texttt{%2})")
-    text = text:gsub("\\brange{([^}]*)}{([^}]*)}", "(\\texttt{%1}, \\texttt{%2})")
-    text = text:gsub("\\orange{([^}]*)}{([^}]*)}", "(\\texttt{%1}, \\texttt{%2})")
+    local range_macros = {
+      {name = "range", template = function(a, b) return "[\\texttt{" .. a .. "}, \\texttt{" .. b .. "})" end},
+      {name = "crange", template = function(a, b) return "[\\texttt{" .. a .. "}, \\texttt{" .. b .. "}]" end},
+      {name = "countedrange", template = function(a, b) return "\\texttt{" .. a .. "}+[0, \\texttt{" .. b .. "})" end},
+      {name = "brange", template = function(a, b) return "(\\texttt{" .. a .. "}, \\texttt{" .. b .. "})" end},
+      {name = "orange", template = function(a, b) return "(\\texttt{" .. a .. "}, \\texttt{" .. b .. "})" end},
+    }
+
+    for _, macro in ipairs(range_macros) do
+      local pattern = "\\" .. macro.name .. "{"
+      local macro_len = #macro.name + 1  -- +1 for backslash
+      while true do
+        local start_pos = text:find(pattern, 1, true)
+        if not start_pos then break end
+
+        local args, end_pos = extract_multi_arg_macro(text, start_pos, macro_len, 2)
+        if not args then break end
+
+        local replacement = macro.template(args[1], args[2])
+        text = text:sub(1, start_pos - 1) .. replacement .. text:sub(end_pos)
+      end
+    end
   end
 
   -- Tier 12: \impldef handling (itemdecl context)
@@ -1334,7 +1457,10 @@ local function expand_macros_common(text, options)
 
   -- Tier 13: \phantom{} spacing (itemdecl context)
   if options.convert_to_latex then
-    text = text:gsub("\\phantom{([^}]*)}", "%1")
+    -- Use process_macro_with_replacement for proper brace-balancing (fixes ([^}]*) anti-pattern)
+    text = process_macro_with_replacement(text, "phantom", function(content)
+      return content
+    end)
   end
 
   -- Tier 14: Cross-references
