@@ -175,20 +175,31 @@ convert_standard_version() {
     mkdir -p "$output_dir"
     mkdir -p full
 
-    # Launch separate build in background
+    # Checkout git ref ONCE before parallel builds to avoid race condition
+    info "Checking out $git_ref..."
+    cd "$DRAFT_DIR"
+    if ! git checkout "$git_ref" 2>/dev/null; then
+        # If local checkout fails, try fetching first
+        if timeout 10 git fetch --tags 2>/dev/null; then
+            git checkout "$git_ref" 2>/dev/null || warn "Could not checkout $git_ref"
+        else
+            warn "Could not checkout $git_ref (offline or fetch failed)"
+        fi
+    fi
+    cd "$SCRIPT_DIR"
+
+    # Launch separate build in background (skip git checkout with empty --git-ref)
     info "Building separate markdown files with cross-file linking..."
     ./convert.py --build-separate \
         --draft-repo "$DRAFT_DIR" \
-        --git-ref "$git_ref" \
         --toc-depth 3 \
         -o "$output_dir/" &
     local separate_pid=$!
 
-    # Launch full build in background
+    # Launch full build in background (skip git checkout with empty --git-ref)
     info "Building full standard file..."
     ./convert.py --build-full \
         --draft-repo "$DRAFT_DIR" \
-        --git-ref "$git_ref" \
         --toc-depth 3 \
         -o "full/$output_dir.md" &
     local full_pid=$!
