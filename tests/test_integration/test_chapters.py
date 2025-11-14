@@ -242,3 +242,58 @@ class TestQualityChecks:
         finally:
             if output_file.exists():
                 output_file.unlink()
+
+    def test_time_chapter_table_parsing(self, converter, draft_repo):
+        """Test time.tex chapter - regression test for issue #77 (malformed %z table rows)"""
+        source_file = draft_repo.source_dir / "time.tex"
+        if not source_file.exists():
+            pytest.skip(f"Source file not found: {source_file}")
+
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".md", delete=False) as tmp:
+            output_file = Path(tmp.name)
+
+        try:
+            converter.convert_file(source_file, output_file, standalone=True)
+            content = output_file.read_text()
+
+            # Verify basic conversion
+            assert len(content) > 10000, "time.md output too small"
+
+            # Regression test for issue #77: Check that %z table rows are correctly formed
+            # Before fix: rows were malformed with missing specifier column
+            # After fix: rows should have 2 columns with %z in first column
+
+            # Find table rows containing "offset" (both %z rows mention "offset from UTC")
+            # These should be proper 2-column rows, not single-column malformed rows
+            lines = content.split('\n')
+
+            # Look for rows that mention "offset from UTC" - these are the %z rows
+            offset_rows = [line for line in lines if 'offset from UTC' in line and line.startswith('|')]
+
+            # Should find at least 2 %z rows (formatting and parsing tables)
+            assert len(offset_rows) >= 2, f"Expected at least 2 table rows with 'offset from UTC', found {len(offset_rows)}"
+
+            for row in offset_rows:
+                # Key test: The row should have %z as the first column
+                # Correct format: | `%z` | Description... | or | `%z`      | Description... | (with alignment spaces)
+                # Malformed format would be: | . If the offset... |
+
+                # Strip to check structure (tables may have alignment spaces)
+                row_stripped = '|'.join(part.strip() for part in row.split('|'))
+
+                # First cell should contain %z
+                assert row_stripped.startswith('| `%z` |') or row.startswith('| `%z`'), \
+                    f"Row should contain `%z` in first column, got: {row[:80]}"
+
+                # Verify it's not a malformed single-column row starting with ". "
+                assert not row.strip().startswith('| .'), \
+                    f"Row should not be malformed starting with '| .'"
+
+            # Also verify that malformed single-column rows starting with ". If the offset" don't exist
+            malformed_pattern = r'^\|\s*\.\s+(If the offset|The modified commands).*\|$'
+            malformed_matches = re.findall(malformed_pattern, content, re.MULTILINE)
+            assert len(malformed_matches) == 0, f"Found {len(malformed_matches)} malformed rows"
+
+        finally:
+            if output_file.exists():
+                output_file.unlink()

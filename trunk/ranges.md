@@ -13730,7 +13730,7 @@ constexpr iterator(iterator<!Const> i)
 constexpr iterator_t<Base> base() &&;
 ```
 
-*Returns:* `std::move(`*`current_)`*.
+*Returns:* `std::move(`*`current_`*`)`.
 
 ``` cpp
 constexpr const iterator_t<Base>& base() const & noexcept;

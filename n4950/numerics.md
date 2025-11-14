@@ -538,7 +538,7 @@ template<class T> complex<T> proj(const complex<T>& x);
 template<class T> complex<T> polar(const T& rho, const T& theta = T());
 ```
 
-*Preconditions:* `rho` is non-negative and non-NaN`theta` is finite.
+*Preconditions:* `rho` is non-negative and non-NaN. `theta` is finite.
 
 *Returns:* The `complex` value corresponding to a complex number whose
 magnitude is `rho` and whose phase angle is `theta`.
