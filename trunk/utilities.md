@@ -3513,6 +3513,8 @@ template<class U>
 *Effects:* Equivalent to:
 *`convert-ref-init-val`*`(std::forward<U>(u))`.
 
+*Returns:* `*`*`val`*.
+
 #### Swap <a id="optional.ref.swap">[[optional.ref.swap]]</a>
 
 ``` cpp

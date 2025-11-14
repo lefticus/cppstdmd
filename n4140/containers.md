@@ -4225,7 +4225,7 @@ whose key is equivalent to *`k`*, the first operator inserts the value
 *Returns:* A reference to `x.second`, where `x` is the (unique) element
 whose key is equivalent to *`k`*.
 
-*Complexity:* Average case 𝑂(1), worst case 𝑂(`size())`.
+*Complexity:* Average case 𝑂(1), worst case 𝑂(`size()`).
 
 ``` cpp
 mapped_type& at(const key_type& k);

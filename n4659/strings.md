@@ -3205,7 +3205,7 @@ constexpr basic_string_view(const charT* str);
 *Effects:* Constructs a `basic_string_view`, with the postconditions in
 Table  [[tab:string.view.ctr.2]].
 
-*Complexity:* 𝑂(`traits::length(str))`.
+*Complexity:* 𝑂(`traits::length(str)`).
 
 ``` cpp
 constexpr basic_string_view(const charT* str, size_type len);
@@ -3388,7 +3388,7 @@ Let `rlen` be the smaller of `n` and `size() - pos`.
 
 *Returns:* `rlen`.
 
-*Complexity:* 𝑂(`rlen)`.
+*Complexity:* 𝑂(`rlen`).
 
 ``` cpp
 constexpr basic_string_view substr(size_type pos = 0, size_type n = npos) const;
@@ -3413,7 +3413,7 @@ Let `rlen` be the smaller of `size()` and `str.size()`.
 compare. The function then compares the two strings by calling
 `traits::compare(data(), str.data(), rlen)`.
 
-*Complexity:* 𝑂(`rlen)`.
+*Complexity:* 𝑂(`rlen`).
 
 *Returns:* The nonzero result if the result of the comparison is
 nonzero. Otherwise, returns a value as indicated in

@@ -4166,7 +4166,7 @@ whose key is equivalent to *`k`*, the first operator inserts the value
 *Returns:* A reference to `x.second`, where `x` is the (unique) element
 whose key is equivalent to *`k`*.
 
-*Complexity:* Average case 𝑂(1), worst case 𝑂(`size())`.
+*Complexity:* Average case 𝑂(1), worst case 𝑂(`size()`).
 
 ``` cpp
 mapped_type& at(const key_type& k);
@@ -4196,7 +4196,7 @@ is no element in the container with key equivalent to the key of
 whether the insertion took place and the iterator component points to
 the element with key equivalent to the key of `value_type(obj)`.
 
-*Complexity:* Average case 𝑂(1), worst case 𝑂(`size())`.
+*Complexity:* Average case 𝑂(1), worst case 𝑂(`size()`).
 
 *Remarks:* This signature shall not participate in overload resolution
 unless `P` is implicitly convertible to `value_type`.
@@ -4216,7 +4216,7 @@ search should start.
 *Returns:* An iterator that points to the element with key equivalent to
 the key of `value_type(obj)`.
 
-*Complexity:* Average case 𝑂(1), worst case 𝑂(`size())`.
+*Complexity:* Average case 𝑂(1), worst case 𝑂(`size()`).
 
 *Remarks:* This signature shall not participate in overload resolution
 unless `P` is implicitly convertible to `value_type`.
@@ -4431,7 +4431,7 @@ template <class P>
 *Returns:* An iterator that points to the element with key equivalent to
 the key of `value_type(obj)`.
 
-*Complexity:* Average case 𝑂(1), worst case 𝑂(`size())`.
+*Complexity:* Average case 𝑂(1), worst case 𝑂(`size()`).
 
 *Remarks:* This signature shall not participate in overload resolution
 unless `P` is implicitly convertible to `value_type`.
@@ -4449,7 +4449,7 @@ is a hint pointing to where the search should start.
 *Returns:* An iterator that points to the element with key equivalent to
 the key of `value_type(obj)`.
 
-*Complexity:* Average case 𝑂(1), worst case 𝑂(`size())`.
+*Complexity:* Average case 𝑂(1), worst case 𝑂(`size()`).
 
 *Remarks:* This signature shall not participate in overload resolution
 unless `P` is implicitly convertible to `value_type`.

@@ -1304,8 +1304,9 @@ local function expand_macros_common(text, options)
     text = text:gsub("\\mathrm{([^}]*)}", "%1")
 
     -- \bigoh{x} -> 𝑂(x) (only for itemdecl context)
+    -- Use process_macro_with_replacement for proper brace-balancing
     if options.convert_to_latex then
-      text = text:gsub("\\bigoh{([^}]*)}", function(content)
+      text = process_macro_with_replacement(text, "bigoh", function(content)
         content = content:gsub("\\log", "log")
         content = content:gsub("\\min", "min")
         content = content:gsub("\\max", "max")

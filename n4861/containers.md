@@ -2151,7 +2151,7 @@ now behave as iterators into `*this`, not into `x`.
 
 *Throws:* Nothing.
 
-*Complexity:* 𝑂(`distance(x.begin(), x.end()))`
+*Complexity:* 𝑂(`distance(x.begin(), x.end())`)
 
 ``` cpp
 void splice_after(const_iterator position, forward_list& x, const_iterator i);
@@ -2194,7 +2194,7 @@ members of `*this`. Iterators referring to the moved elements will
 continue to refer to their elements, but they now behave as iterators
 into `*this`, not into `x`.
 
-*Complexity:* 𝑂(`distance(first, last))`
+*Complexity:* 𝑂(`distance(first, last)`)
 
 ``` cpp
 size_type remove(const T& value);

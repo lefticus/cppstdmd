@@ -1953,12 +1953,12 @@ function. If the time of translation is not available, an
 | `__cpp_char8_t`                         | `202207L` |
 | `__cpp_concepts`                        | `202002L` |
 | `__cpp_conditional_explicit`            | `201806L` |
+| `__cpp_consteval`                       | `202211L` |
 | `__cpp_constexpr`                       | `202406L` |
 | `__cpp_constexpr_dynamic_alloc`         | `201907L` |
 | `__cpp_constexpr_exceptions`            | `202411L` |
 | `__cpp_constexpr_in_decltype`           | `201711L` |
 | `__cpp_constexpr_virtual_inheritance`   | `202506L` |
-| `__cpp_consteval`                       | `202211L` |
 | `__cpp_constinit`                       | `201907L` |
 | `__cpp_contracts`                       | `202502L` |
 | `__cpp_decltype`                        | `200707L` |
@@ -1978,8 +1978,8 @@ function. If the time of translation is not available, an
 | `__cpp_if_constexpr`                    | `201606L` |
 | `__cpp_impl_coroutine`                  | `201902L` |
 | `__cpp_impl_destroying_delete`          | `201806L` |
-| `__cpp_impl_three_way_comparison`       | `201907L` |
 | `__cpp_impl_reflection`                 | `202506L` |
+| `__cpp_impl_three_way_comparison`       | `201907L` |
 | `__cpp_implicit_move`                   | `202207L` |
 | `__cpp_inheriting_constructors`         | `201511L` |
 | `__cpp_init_captures`                   | `201803L` |

@@ -1048,3 +1048,23 @@ def test_nested_keyword_in_tcode_itemdescr():
 
     # Should have the Returns label
     assert "*Returns:*" in output
+
+
+def test_bigoh_with_nested_braces():
+    r"""Test \bigoh{} macro with nested \text{} braces (regression test for trunk)"""
+    latex = r"""
+\begin{itemdescr}
+\complexity
+\bigoh{$\text{size of state}$} operations.
+\end{itemdescr}
+"""
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0, f"Pandoc failed with code {code}"
+
+    # Should preserve math delimiters and nested content
+    assert "𝑂($" in output or "𝑂(\\$" in output  # Math delimiter
+    assert "size of state" in output
+    assert "operations" in output
+
+    # Should not have malformed delimiters
+    assert ")$}" not in output  # This would indicate the bug

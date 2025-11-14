@@ -572,13 +572,14 @@ unnamed bit-field [[class.bit]] is a member of the class, and each such
 *member-declaration* shall either declare at least one member name of
 the class or declare at least one unnamed bit-field.
 
-A *data member* is a non-function member introduced by a
-*member-declarator*. A *member function* is a member that is a function.
-Nested types are classes [[class.name]], [[class.nest]] and enumerations
-[[dcl.enum]] declared in the class and arbitrary types declared as
-members by use of a typedef declaration [[dcl.typedef]] or
-*alias-declaration*. The enumerators of an unscoped enumeration
-[[dcl.enum]] defined in the class are members of the class.
+A *data member* is either a non-function member introduced by a
+*member-declarator* or an anonymous union member. A *member function* is
+a member that is a function. Nested types are classes
+[[class.name]], [[class.nest]] and enumerations [[dcl.enum]] declared in
+the class and arbitrary types declared as members by use of a typedef
+declaration [[dcl.typedef]] or *alias-declaration*. The enumerators of
+an unscoped enumeration [[dcl.enum]] defined in the class are members of
+the class.
 
 A data member or member function may be declared `static` in its
 *member-declaration*, in which case it is a *static member* (see 
@@ -1036,8 +1037,8 @@ which:
   constraints, if any, are satisfied is more constrained
   [[temp.constr.order]].
 
-For a class, its non-static data members, its non-virtual direct base
-classes, and, if the class is not abstract [[class.abstract]], its
+For a class, its direct non-static data members, its non-virtual direct
+base classes, and, if the class is not abstract [[class.abstract]], its
 virtual base classes are called its *potentially constructed
 subobjects*.
 
@@ -4548,7 +4549,7 @@ single identifier refers to the class member. A *mem-initializer-id* for
 the hidden base class can be specified using a qualified
 name. — *end note*\]
 
-Unless the *mem-initializer-id* names the constructor’s class, a
+Unless the *mem-initializer-id* names the constructor’s class, a direct
 non-static data member of the constructor’s class, or a direct or
 virtual base of that class, the *mem-initializer* is ill-formed.
 

@@ -1683,7 +1683,7 @@ conditions hold: `*i == *(i + 1), pred(*i, *(i + 1)) != false`. Returns
 *Complexity:* For the overloads with no `ExecutionPolicy`, exactly
 `min((i - first) + 1, (last - first) - 1)` applications of the
 corresponding predicate, where `i` is `adjacent_find`’s return value.
-For the overloads with an `ExecutionPolicy`, 𝑂(`last - first)`
+For the overloads with an `ExecutionPolicy`, 𝑂(`last - first`)
 applications of the corresponding predicate.
 
 ### Count <a id="alg.count">[[alg.count]]</a>
@@ -1839,7 +1839,7 @@ Otherwise, returns `false`.
   - if `ForwardIterator1` and `ForwardIterator2` meet the requirements
     of random access iterators and `last1 - first1 != last2 - first2`,
     then no applications of the corresponding predicate; otherwise,
-  - 𝑂(min(`last1 - first1), ``last2 - first2``)` applications of the
+  - 𝑂(min(`last1 - first1`, `last2 - first2`)) applications of the
     corresponding predicate.
 
 ### Is permutation <a id="alg.is_permutation">[[alg.is_permutation]]</a>
@@ -2665,7 +2665,7 @@ sampling* and *reservoir sampling*. — *end note*\]
 
 *Returns:* The end of the resulting sample range.
 
-*Complexity:* 𝑂(`last - first)`.
+*Complexity:* 𝑂(`last - first`).
 
 *Remarks:*
 
@@ -3269,7 +3269,7 @@ that do not.
 *Returns:* An iterator `mid` such that `all_of(first, mid, pred)` and
 `none_of(mid, last, pred)` are both `true`.
 
-*Complexity:* 𝑂(log(`last - first))` applications of `pred`.
+*Complexity:* 𝑂(log(`last - first`)) applications of `pred`.
 
 ### Merge <a id="alg.merge">[[alg.merge]]</a>
 

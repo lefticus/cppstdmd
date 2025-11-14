@@ -546,7 +546,7 @@ constexpr basic_string_view(const charT* str);
 *Effects:* Constructs a `basic_string_view`, initializing `data_` with
 `str` and initializing `size_` with `traits::length(str)`.
 
-*Complexity:* 𝑂(`traits::length(str))`.
+*Complexity:* 𝑂(`traits::length(str)`).
 
 ``` cpp
 constexpr basic_string_view(const charT* str, size_type len);
@@ -786,7 +786,7 @@ Let `rlen` be the smaller of `n` and `size() - pos`.
 
 *Throws:* `out_of_range` if `pos > size()`.
 
-*Complexity:* 𝑂(`rlen)`.
+*Complexity:* 𝑂(`rlen`).
 
 ``` cpp
 constexpr basic_string_view substr(size_type pos = 0, size_type n = npos) const;
@@ -824,7 +824,7 @@ nonzero. Otherwise, returns a value as indicated in
 | `size() > str.size()`  | `> 0`        |
 
 
-*Complexity:* 𝑂(`rlen)`.
+*Complexity:* 𝑂(`rlen`).
 
 ``` cpp
 constexpr int compare(size_type pos1, size_type n1, basic_string_view str) const;

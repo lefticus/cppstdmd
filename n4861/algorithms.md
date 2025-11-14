@@ -3364,7 +3364,7 @@ such iterator is found.
 $$\min(\texttt{(i - first) + 1}, \ \texttt{(last - first) - 1})$$
 applications of the corresponding predicate, where `i` is
 `adjacent_find`’s return value. For the overloads with an
-`ExecutionPolicy`, 𝑂(`last - first)` applications of the corresponding
+`ExecutionPolicy`, 𝑂(`last - first`) applications of the corresponding
 predicate, and no more than twice as many applications of any
 projection.
 
@@ -3587,9 +3587,8 @@ corresponding predicate and each projection; otherwise,
 - For the overloads with no `ExecutionPolicy`, at most
   \min(`last1 - first1`, \ `last2 - first2`) applications of the
   corresponding predicate and any projections.
-- For the overloads with an `ExecutionPolicy`,
-  𝑂(min(`last1 - first1),  ``last2 - first2``)` applications of the
-  corresponding predicate.
+- For the overloads with an `ExecutionPolicy`, 𝑂(min(`last1 - first1`,
+   `last2 - first2`)) applications of the corresponding predicate.
 
 ### Is permutation <a id="alg.is.permutation">[[alg.is.permutation]]</a>
 
@@ -4943,7 +4942,7 @@ sampling* and *reservoir sampling*. — *end note*\]
 
 *Returns:* The end of the resulting sample range.
 
-*Complexity:* 𝑂(`last - first)`.
+*Complexity:* 𝑂(`last - first`).
 
 *Remarks:*
 
@@ -5893,7 +5892,7 @@ with respect to E(`e`).
 iterators `i` in \[`first`, `mid`), and `false` for all iterators `i` in
 \[`mid`, `last`).
 
-*Complexity:* 𝑂(log(`last - first))` applications of `pred` and `proj`.
+*Complexity:* 𝑂(log(`last - first`)) applications of `pred` and `proj`.
 
 ### Merge <a id="alg.merge">[[alg.merge]]</a>
 
@@ -7512,7 +7511,7 @@ are convertible to `T`.
 *Returns:* *GENERALIZED_SUM*(binary_op, init, \*i, ...) for every `i` in
 \[`first`, `last`).
 
-*Complexity:* 𝑂(`last - first)` applications of `binary_op`.
+*Complexity:* 𝑂(`last - first`) applications of `binary_op`.
 
 [*Note 1*: The difference between `reduce` and `accumulate` is that
 `reduce` applies `binary_op` in an unspecified order, which yields a
@@ -7622,7 +7621,7 @@ GENERALIZED_SUM(binary_op1, init, binary_op2(*i, *(first2 + (i - first1))), ...)
 
 for every iterator `i` in \[`first1`, `last1`).
 
-*Complexity:* 𝑂(`last1 - first1)` applications each of `binary_op1` and
+*Complexity:* 𝑂(`last1 - first1`) applications each of `binary_op1` and
 `binary_op2`.
 
 ``` cpp
@@ -7662,7 +7661,7 @@ GENERALIZED_SUM(binary_op, init, unary_op(*i), ...)
 
 for every iterator `i` in \[`first`, `last`).
 
-*Complexity:* 𝑂(`last - first)` applications each of `unary_op` and
+*Complexity:* 𝑂(`last - first`) applications each of `unary_op` and
 `binary_op`.
 
 [*Note 1*: `transform_reduce` does not apply `unary_op` to
@@ -7774,7 +7773,7 @@ GENERALIZED_NONCOMMUTATIVE_SUM(
 
 *Returns:* The end of the resulting range beginning at `result`.
 
-*Complexity:* 𝑂(`last - first)` applications of `binary_op`.
+*Complexity:* 𝑂(`last - first`) applications of `binary_op`.
 
 *Remarks:* `result` may be equal to `first`.
 
@@ -7869,7 +7868,7 @@ through `result + K` the value of
 
 *Returns:* The end of the resulting range beginning at `result`.
 
-*Complexity:* 𝑂(`last - first)` applications of `binary_op`.
+*Complexity:* 𝑂(`last - first`) applications of `binary_op`.
 
 *Remarks:* `result` may be equal to `first`.
 
@@ -7924,7 +7923,7 @@ GENERALIZED_NONCOMMUTATIVE_SUM(
 
 *Returns:* The end of the resulting range beginning at `result`.
 
-*Complexity:* 𝑂(`last - first)` applications each of `unary_op` and
+*Complexity:* 𝑂(`last - first`) applications each of `unary_op` and
 `binary_op`.
 
 *Remarks:* `result` may be equal to `first`.
@@ -8007,7 +8006,7 @@ through `result + K` the value of
 
 *Returns:* The end of the resulting range beginning at `result`.
 
-*Complexity:* 𝑂(`last - first)` applications each of `unary_op` and
+*Complexity:* 𝑂(`last - first`) applications each of `unary_op` and
 `binary_op`.
 
 *Remarks:* `result` may be equal to `first`.

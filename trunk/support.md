@@ -487,8 +487,8 @@ of these macros with greater values. — *end note*\]
 #define __cpp_lib_flat_map                          202207L // also in <flat_map>
 #define __cpp_lib_flat_set                          202207L // also in <flat_set>
 #define __cpp_lib_format                            202311L // also in <format>
-#define __cpp_lib_format_ranges                     202207L // also in <format>
 #define __cpp_lib_format_path                       202506L // also in <filesystem>
+#define __cpp_lib_format_ranges                     202207L // also in <format>
 #define __cpp_lib_format_uchar                      202311L // also in <format>
 #define __cpp_lib_formatters                        202302L // also in <stacktrace>, <thread>
 #define __cpp_lib_forward_like                      202207L // freestanding, also in <utility>

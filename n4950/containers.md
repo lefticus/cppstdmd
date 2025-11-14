@@ -2573,7 +2573,7 @@ X(n, hf, eq)
 *Effects:* Constructs an empty container with at least `n` buckets,
 using `hf` as the hash function and `eq` as the key equality predicate.
 
-*Complexity:* 𝑂(`n)`
+*Complexity:* 𝑂(`n`)
 
 ``` cpp
 X(n, hf)
@@ -2586,7 +2586,7 @@ requirements.
 using `hf` as the hash function and `key_equal()` as the key equality
 predicate.
 
-*Complexity:* 𝑂(`n)`
+*Complexity:* 𝑂(`n`)
 
 ``` cpp
 X(n)
@@ -2599,7 +2599,7 @@ X(n)
 using `hasher()` as the hash function and `key_equal()` as the key
 equality predicate.
 
-*Complexity:* 𝑂(`n)`
+*Complexity:* 𝑂(`n`)
 
 ``` cpp
 X a = X();
@@ -2829,7 +2829,7 @@ container with key equivalent to the key of `t`.
 only if the insertion takes place, and the iterator component of the
 pair points to the element with key equivalent to the key of `t`.
 
-*Complexity:* Average case 𝑂(1), worst case 𝑂(`a_uniq.size())`.
+*Complexity:* Average case 𝑂(1), worst case 𝑂(`a_uniq.size()`).
 
 ``` cpp
 a_eq.emplace(args)
@@ -2845,7 +2845,7 @@ from `args`.
 
 *Returns:* An iterator pointing to the newly inserted element.
 
-*Complexity:* Average case 𝑂(1), worst case 𝑂(`a_eq.size())`.
+*Complexity:* Average case 𝑂(1), worst case 𝑂(`a_eq.size()`).
 
 ``` cpp
 a.emplace_hint(p, args)
@@ -2863,7 +2863,7 @@ to the newly inserted element. The `const_iterator` `p` is a hint
 pointing to where the search should start. Implementations are permitted
 to ignore the hint.
 
-*Complexity:* Average case 𝑂(1), worst case 𝑂(`a.size())`.
+*Complexity:* Average case 𝑂(1), worst case 𝑂(`a.size()`).
 
 ``` cpp
 a_uniq.insert(t)
@@ -2882,7 +2882,7 @@ container with key equivalent to the key of `t`.
 the insertion takes place, and the `iterator` component points to the
 element with key equivalent to the key of `t`.
 
-*Complexity:* Average case 𝑂(1), worst case 𝑂(`a_uniq.size())`.
+*Complexity:* Average case 𝑂(1), worst case 𝑂(`a_uniq.size()`).
 
 ``` cpp
 a_eq.insert(t)
@@ -2898,7 +2898,7 @@ a_eq.insert(t)
 
 *Returns:* An iterator pointing to the newly inserted element.
 
-*Complexity:* Average case 𝑂(1), worst case 𝑂(`a_eq.size())`.
+*Complexity:* Average case 𝑂(1), worst case 𝑂(`a_eq.size()`).
 
 ``` cpp
 a.insert(p, t)
@@ -2917,7 +2917,7 @@ to ignore the hint.
 *Returns:* An iterator pointing to the element with the key equivalent
 to that of `t`.
 
-*Complexity:* Average case 𝑂(1), worst case 𝑂(`a.size())`.
+*Complexity:* Average case 𝑂(1), worst case 𝑂(`a.size()`).
 
 ``` cpp
 a.insert(i, j)
@@ -2931,7 +2931,7 @@ from `*i`. Neither `i` nor `j` are iterators into `a`.
 *Effects:* Equivalent to `a.insert(t)` for each element in `[i,j)`.
 
 *Complexity:* Average case 𝑂(N), where N is `distance(i, j)`, worst case
-𝑂(N(`a.size()) + 1)`.
+𝑂(N(`a.size()` + 1)).
 
 ``` cpp
 a.insert_range(rg)
@@ -2945,7 +2945,7 @@ from `*ranges::begin(rg)`. `rg` and `a` do not overlap.
 *Effects:* Equivalent to `a.insert(t)` for each element `t` in `rg`.
 
 *Complexity:* Average case 𝑂(N), where N is `ranges::distance(rg)`,
-worst case 𝑂(N(`a.size()) + 1)`.
+worst case 𝑂(N(`a.size()` + 1)).
 
 ``` cpp
 a.insert(il)
@@ -2973,7 +2973,7 @@ container with a key equivalent to `nh.key()`.
 has the previous value of `nh`, and `position` points to an element with
 a key equivalent to `nh.key()`.
 
-*Complexity:* Average case 𝑂(1), worst case 𝑂(`a_uniq.size())`.
+*Complexity:* Average case 𝑂(1), worst case 𝑂(`a_uniq.size()`).
 
 ``` cpp
 a_eq.insert(nh)
@@ -2990,7 +2990,7 @@ pointing to the newly inserted element.
 
 *Ensures:* `nh` is empty.
 
-*Complexity:* Average case 𝑂(1), worst case 𝑂(`a_eq.size())`.
+*Complexity:* Average case 𝑂(1), worst case 𝑂(`a_eq.size()`).
 
 ``` cpp
 a.insert(q, nh)
@@ -3014,7 +3014,7 @@ fails.
 *Returns:* An iterator pointing to the element with key equivalent to
 `nh.key()`.
 
-*Complexity:* Average case 𝑂(1), worst case 𝑂(`a.size())`.
+*Complexity:* Average case 𝑂(1), worst case 𝑂(`a.size()`).
 
 ``` cpp
 a.extract(k)
@@ -3028,7 +3028,7 @@ a.extract(k)
 *Returns:* A `node_type` owning the element if found, otherwise an empty
 `node_type`.
 
-*Complexity:* Average case 𝑂(1), worst case 𝑂(`a.size())`.
+*Complexity:* Average case 𝑂(1), worst case 𝑂(`a.size()`).
 
 ``` cpp
 a_tran.extract(kx)
@@ -3042,7 +3042,7 @@ a_tran.extract(kx)
 *Returns:* A `node_type` owning the element if found, otherwise an empty
 `node_type`.
 
-*Complexity:* Average case 𝑂(1), worst case 𝑂(`a_tran.size())`.
+*Complexity:* Average case 𝑂(1), worst case 𝑂(`a_tran.size()`).
 
 ``` cpp
 a.extract(q)
@@ -3054,7 +3054,7 @@ a.extract(q)
 
 *Returns:* A `node_type` owning that element.
 
-*Complexity:* Average case 𝑂(1), worst case 𝑂(`a.size())`.
+*Complexity:* Average case 𝑂(1), worst case 𝑂(`a.size()`).
 
 ``` cpp
 a.merge(a2)
@@ -3077,7 +3077,7 @@ invalidated, but iterators to elements remaining in `a2` will remain
 valid.
 
 *Complexity:* Average case 𝑂(N), where N is `a2.size()`, worst case
-𝑂(N`*a.size() + N)`.
+𝑂(N`*a.size() + N`).
 
 ``` cpp
 a.erase(k)
@@ -3089,7 +3089,7 @@ a.erase(k)
 
 *Returns:* The number of elements erased.
 
-*Complexity:* Average case 𝑂(`a.count(k))`, worst case 𝑂(`a.size())`.
+*Complexity:* Average case 𝑂(`a.count(k)`), worst case 𝑂(`a.size()`).
 
 ``` cpp
 a_tran.erase(kx)
@@ -3101,8 +3101,8 @@ a_tran.erase(kx)
 
 *Returns:* The number of elements erased.
 
-*Complexity:* Average case 𝑂(`a_tran.count(kx))`, worst case
-𝑂(`a_tran.size())`.
+*Complexity:* Average case 𝑂(`a_tran.count(kx)`), worst case
+𝑂(`a_tran.size()`).
 
 ``` cpp
 a.erase(q)
@@ -3114,7 +3114,7 @@ a.erase(q)
 
 *Returns:* The iterator immediately following `q` prior to the erasure.
 
-*Complexity:* Average case 𝑂(1), worst case 𝑂(`a.size())`.
+*Complexity:* Average case 𝑂(1), worst case 𝑂(`a.size()`).
 
 ``` cpp
 a.erase(r)
@@ -3126,7 +3126,7 @@ a.erase(r)
 
 *Returns:* The iterator immediately following `r` prior to the erasure.
 
-*Complexity:* Average case 𝑂(1), worst case 𝑂(`a.size())`.
+*Complexity:* Average case 𝑂(1), worst case 𝑂(`a.size()`).
 
 ``` cpp
 a.erase(q1, q2)
@@ -3140,7 +3140,7 @@ a.erase(q1, q2)
 to the erasure.
 
 *Complexity:* Average case linear in `distance(q1, q2)`, worst case
-𝑂(`a.size())`.
+𝑂(`a.size()`).
 
 ``` cpp
 a.clear()
@@ -3163,7 +3163,7 @@ b.find(k)
 *Returns:* An iterator pointing to an element with key equivalent to
 `k`, or `b.end()` if no such element exists.
 
-*Complexity:* Average case 𝑂(1), worst case 𝑂(`b.size())`.
+*Complexity:* Average case 𝑂(1), worst case 𝑂(`b.size()`).
 
 ``` cpp
 a_tran.find(ke)
@@ -3174,7 +3174,7 @@ a_tran.find(ke)
 *Returns:* An iterator pointing to an element with key equivalent to
 `ke`, or `a_tran.end()` if no such element exists.
 
-*Complexity:* Average case 𝑂(1), worst case 𝑂(`a_tran.size())`.
+*Complexity:* Average case 𝑂(1), worst case 𝑂(`a_tran.size()`).
 
 ``` cpp
 b.count(k)
@@ -3184,7 +3184,7 @@ b.count(k)
 
 *Returns:* The number of elements with key equivalent to `k`.
 
-*Complexity:* Average case 𝑂(`b.count(k))`, worst case 𝑂(`b.size())`.
+*Complexity:* Average case 𝑂(`b.count(k)`), worst case 𝑂(`b.size()`).
 
 ``` cpp
 a_tran.count(ke)
@@ -3194,8 +3194,8 @@ a_tran.count(ke)
 
 *Returns:* The number of elements with key equivalent to `ke`.
 
-*Complexity:* Average case 𝑂(`a_tran.count(ke))`, worst case
-𝑂(`a_tran.size())`.
+*Complexity:* Average case 𝑂(`a_tran.count(ke)`), worst case
+𝑂(`a_tran.size()`).
 
 ``` cpp
 b.contains(k)
@@ -3219,7 +3219,7 @@ b.equal_range(k)
 *Returns:* A range containing all elements with keys equivalent to `k`.
 Returns `make_pair(b.end(), b.end())` if no such elements exist.
 
-*Complexity:* Average case 𝑂(`b.count(k))`, worst case 𝑂(`b.size())`.
+*Complexity:* Average case 𝑂(`b.count(k)`), worst case 𝑂(`b.size()`).
 
 ``` cpp
 a_tran.equal_range(ke)
@@ -3232,8 +3232,8 @@ a_tran.equal_range(ke)
 Returns `make_pair(a_tran.end(), a_tran.end())` if no such elements
 exist.
 
-*Complexity:* Average case 𝑂(`a_tran.count(ke))`, worst case
-𝑂(`a_tran.size())`.
+*Complexity:* Average case 𝑂(`a_tran.count(ke)`), worst case
+𝑂(`a_tran.size()`).
 
 ``` cpp
 b.bucket_count()
@@ -3280,7 +3280,7 @@ b.bucket_size(n)
 
 *Returns:* The number of elements in the `n`^\text{th} bucket.
 
-*Complexity:* 𝑂(`b.bucket_size(n))`
+*Complexity:* 𝑂(`b.bucket_size(n)`)
 
 ``` cpp
 b.begin(n)
@@ -4724,7 +4724,7 @@ now behave as iterators into `*this`, not into `x`.
 
 *Throws:* Nothing.
 
-*Complexity:* 𝑂(`distance(x.begin(), x.end()))`
+*Complexity:* 𝑂(`distance(x.begin(), x.end())`)
 
 ``` cpp
 void splice_after(const_iterator position, forward_list& x, const_iterator i);
@@ -4767,7 +4767,7 @@ members of `*this`. Iterators referring to the moved elements will
 continue to refer to their elements, but they now behave as iterators
 into `*this`, not into `x`.
 
-*Complexity:* 𝑂(`distance(first, last))`
+*Complexity:* 𝑂(`distance(first, last)`)
 
 ``` cpp
 size_type remove(const T& value);
