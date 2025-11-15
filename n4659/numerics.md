@@ -4169,6 +4169,8 @@ v0[valarray<size_t>(vi, 5)] = v1;
 
 #### `valarray` unary operators <a id="valarray.unary">[[valarray.unary]]</a>
 
+\indexlibrarymember{operator~}{valarray}
+
 ``` cpp
 valarray operator+() const;
 valarray operator-() const;

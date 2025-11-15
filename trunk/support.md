@@ -337,6 +337,8 @@ constexpr byte operator^(byte l, byte r) noexcept;
 return static_cast<byte>(static_cast<unsigned int>(l) ^ static_cast<unsigned int>(r));
 ```
 
+\indexlibrarymember{operator~}{byte}
+
 ``` cpp
 constexpr byte operator~(byte b) noexcept;
 ```

@@ -1130,8 +1130,8 @@ unqualified-id:
     operator-function-id
     conversion-function-id
     literal-operator-id
-    '\~' type-name
-    '\~' computed-type-specifier
+    '~' type-name
+    '~' computed-type-specifier
     template-id
 ```
 
@@ -4113,7 +4113,7 @@ unary-expression:
 %% Ed. note: character protrusion would misalign operators.
 
 unary-operator: one of
-    '*  &  +  -  !  \~'
+    '*  &  +  -  !  ~'
 ```
 
 #### Unary operators <a id="expr.unary.op">[[expr.unary.op]]</a>

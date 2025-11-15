@@ -670,7 +670,7 @@ struct D : public A, public B {
     // D::D() potentially-throwing, as the new operator may throw bad_alloc or bad_array_new_length
     // D::D(const D&) non-throwing
     // D::D(D&&) potentially-throwing, as the default argument for B's constructor may throw
-    // D::\~D() potentially-throwing
+    // D::~D() potentially-throwing
 };
 ```
 

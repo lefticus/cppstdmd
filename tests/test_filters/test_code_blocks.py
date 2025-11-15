@@ -477,3 +477,40 @@ def test_libmember_in_codeblock():
     assert "\\libmember" not in output
     # Should NOT have @ delimiters
     assert "@" not in output
+
+
+def test_escaped_tilde_in_destructor():
+    r"""Test \~ (escaped tilde) converts to ~ in destructor syntax (Issue #8)"""
+    latex = r"""
+\begin{codeblock}
+  D::\~D();                           // destructor
+  location->\~T();                    // template destructor
+  A<T>::\~{}A();                      // with empty braces (also works)
+\end{codeblock}
+"""
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    # Should have plain tilde ~ for destructor
+    assert "D::~D()" in output
+    assert "location->~T()" in output
+    # \~{} converts to ~ and braces are removed
+    assert "A<T>::~A()" in output
+    # Should NOT have escaped tilde \~
+    assert "\\~" not in output
+
+
+def test_escaped_tilde_standalone():
+    r"""Test standalone \~ in code converts to plain ~"""
+    latex = r"""
+\begin{codeblock}
+  int x = \~y;      // bitwise NOT operator
+  return \~0;       // bitwise complement
+\end{codeblock}
+"""
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    # Should have plain tilde ~
+    assert "int x = ~y;" in output
+    assert "return ~0;" in output
+    # Should NOT have escaped tilde \~
+    assert "\\~" not in output

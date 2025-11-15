@@ -885,7 +885,7 @@ specified whether `rv` has been moved from or not. — *end note*]
 
 | Expression | Post-condition                                                        |
 | ---------- | --------------------------------------------------------------------- |
-| `u.\~T()`  | All resources owned by `u` are reclaimed, no exception is propagated. |
+| `u.~T()`   | All resources owned by `u` are reclaimed, no exception is propagated. |
 
 
 #### `Swappable` requirements <a id="swappable.requirements">[[swappable.requirements]]</a>

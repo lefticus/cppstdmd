@@ -862,9 +862,9 @@ signatures is called using the default argument ([[dcl.fct.default]]).
 
 **Table: `Destructible` requirements**
 
-|           |                                                                       |
-| --------- | --------------------------------------------------------------------- |
-| `u.\~T()` | All resources owned by `u` are reclaimed, no exception is propagated. |
+|          |                                                                       |
+| -------- | --------------------------------------------------------------------- |
+| `u.~T()` | All resources owned by `u` are reclaimed, no exception is propagated. |
 
 
 #### `Swappable` requirements <a id="swappable.requirements">[[swappable.requirements]]</a>

@@ -2240,7 +2240,7 @@ distinct.
 | `op_square_brackets`        | `operator[]`                         | `[]`                 |
 | `op_arrow`                  | `operator->`                         | `->`                 |
 | `op_arrow_star`             | `operator->*`                        | `->*`                |
-| `op_tilde`                  | `operator\~`                         | `\~`                 |
+| `op_tilde`                  | `operator~`                          | `~`                  |
 | `op_exclamation`            | `operator!`                          | `!`                  |
 | `op_plus`                   | `operator+`                          | `+`                  |
 | `op_minus`                  | `operator-`                          | `-`                  |

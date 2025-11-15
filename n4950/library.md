@@ -1019,7 +1019,7 @@ signatures is called using the default argument [[dcl.fct.default]].
 
 | Expression | Post-condition                                                        |
 | ---------- | --------------------------------------------------------------------- |
-| `u.\~T()`  | All resources owned by `u` are reclaimed, no exception is propagated. |
+| `u.~T()`   | All resources owned by `u` are reclaimed, no exception is propagated. |
 | *[spans 2 columns]*  *Array types and non-object types are not Cpp17Destructible.* |
 
 

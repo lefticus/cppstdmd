@@ -905,3 +905,26 @@ def test_libglobal_in_tcode():
     assert "\\libglobal" not in output
 
 
+def test_escaped_tilde_in_inline_code():
+    r"""Test \~ (escaped tilde) converts to ~ in inline code (Issue #8)
+
+    This tests inline code contexts like:
+    - Grammar productions: '\~ type-name'
+    - Table cells: `u.\~T()`
+    - Prose text: `\~Q`
+    """
+    latex = r"""
+In the grammar, we have '\tcode{\~}' type-name.
+The destructor syntax is \tcode{u.\~T()}.
+Lookup is performed as if \tcode{\~Q} appeared.
+"""
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    # All tildes should be converted
+    assert "`~`" in output
+    assert "`u.~T()`" in output
+    assert "`~Q`" in output
+    # No escaped tildes should remain
+    assert "\\~" not in output
+
+

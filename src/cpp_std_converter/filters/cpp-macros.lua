@@ -1144,6 +1144,10 @@ function Code(elem)
   -- Process \libglobal{name} - extract name
   text = text:gsub("\\libglobal{([^}]*)}", "%1")
 
+  -- Convert escaped tilde to plain tilde (issue #8)
+  text = text:gsub("\\~{([^}]*)}", "~%1")  -- \~{identifier} → ~identifier (remove braces)
+  text = text:gsub("\\~", "~")  -- any remaining \~ → ~
+
   if text ~= elem.text then
     return pandoc.Code(text, elem.attr)
   end

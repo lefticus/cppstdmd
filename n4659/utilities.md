@@ -2308,10 +2308,10 @@ optional<T>& operator=(const optional& rhs);
 
 **Table: `optional::operator=(const optional&)` effects**
 
-|                                | `*this` contains a value                                | `*this` does not contain a value                                                                     |
-| ------------------------------ | ------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
-| `rhs` contains a value         | assigns `*rhs` to the contained value                   | initializes the contained value as if direct-non-list-initializing an object of type `T` with `*rhs` |
-| `rhs` does not contain a value | destroys the contained value by calling `val->T::\~T()` | no effect                                                                                            |
+|                                | `*this` contains a value                               | `*this` does not contain a value                                                                     |
+| ------------------------------ | ------------------------------------------------------ | ---------------------------------------------------------------------------------------------------- |
+| `rhs` contains a value         | assigns `*rhs` to the contained value                  | initializes the contained value as if direct-non-list-initializing an object of type `T` with `*rhs` |
+| `rhs` does not contain a value | destroys the contained value by calling `val->T::~T()` | no effect                                                                                            |
 
 
 *Returns:* `*this`.
@@ -2336,10 +2336,10 @@ expression `bool(rhs)` remains unchanged.
 
 **Table: `optional::operator=(optional&&)` effects**
 
-|                                | `*this` contains a value                                | `*this` does not contain a value                                                                                |
-| ------------------------------ | ------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
-| `rhs` contains a value         | assigns `std::move(*rhs)` to the contained value        | initializes the contained value as if direct-non-list-initializing an object of type `T` with `std::move(*rhs)` |
-| `rhs` does not contain a value | destroys the contained value by calling `val->T::\~T()` | no effect                                                                                                       |
+|                                | `*this` contains a value                               | `*this` does not contain a value                                                                                |
+| ------------------------------ | ------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------- |
+| `rhs` contains a value         | assigns `std::move(*rhs)` to the contained value       | initializes the contained value as if direct-non-list-initializing an object of type `T` with `std::move(*rhs)` |
+| `rhs` does not contain a value | destroys the contained value by calling `val->T::~T()` | no effect                                                                                                       |
 
 
 *Returns:* `*this`.
@@ -2395,10 +2395,10 @@ template <class U> optional<T>& operator=(const optional<U>& rhs);
 
 **Table: `optional::operator=(const optional<U>&)` effects**
 
-|                                | `*this` contains a value                                | `*this` does not contain a value                                                                     |
-| ------------------------------ | ------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
-| `rhs` contains a value         | assigns `*rhs` to the contained value                   | initializes the contained value as if direct-non-list-initializing an object of type `T` with `*rhs` |
-| `rhs` does not contain a value | destroys the contained value by calling `val->T::\~T()` | no effect                                                                                            |
+|                                | `*this` contains a value                               | `*this` does not contain a value                                                                     |
+| ------------------------------ | ------------------------------------------------------ | ---------------------------------------------------------------------------------------------------- |
+| `rhs` contains a value         | assigns `*rhs` to the contained value                  | initializes the contained value as if direct-non-list-initializing an object of type `T` with `*rhs` |
+| `rhs` does not contain a value | destroys the contained value by calling `val->T::~T()` | no effect                                                                                            |
 
 
 *Returns:* `*this`.
@@ -2438,10 +2438,10 @@ the expression `bool(rhs)` remains unchanged.
 
 **Table: `optional::operator=(optional<U>&&)` effects**
 
-|                                | `*this` contains a value                                | `*this` does not contain a value                                                                                |
-| ------------------------------ | ------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
-| `rhs` contains a value         | assigns `std::move(*rhs)` to the contained value        | initializes the contained value as if direct-non-list-initializing an object of type `T` with `std::move(*rhs)` |
-| `rhs` does not contain a value | destroys the contained value by calling `val->T::\~T()` | no effect                                                                                                       |
+|                                | `*this` contains a value                               | `*this` does not contain a value                                                                                |
+| ------------------------------ | ------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------- |
+| `rhs` contains a value         | assigns `std::move(*rhs)` to the contained value       | initializes the contained value as if direct-non-list-initializing an object of type `T` with `std::move(*rhs)` |
+| `rhs` does not contain a value | destroys the contained value by calling `val->T::~T()` | no effect                                                                                                       |
 
 
 *Returns:* `*this`.
@@ -2525,10 +2525,10 @@ void swap(optional& rhs) noexcept(see below);
 
 **Table: `optional::swap(optional&)` effects**
 
-|                                | `*this` contains a value                                                                                                                                                                                                                                    | `*this` does not contain a value                                                                                                                                                                                                                              |
-| ------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `rhs` contains a value         | calls `swap(*(*this), *rhs)`                                                                                                                                                                                                                                | initializes the contained value of `*this` as if direct-non-list-initializing an object of type `T` with the expression `std::move(*rhs)`, followed by `rhs.val->T::\~T()`; postcondition is that `*this` contains a value and `rhs` does not contain a value |
-| `rhs` does not contain a value | initializes the contained value of `rhs` as if direct-non-list-initializing an object of type `T` with the expression `std::move(*(*this))`, followed by `val->T::\~T()`; postcondition is that `*this` does not contain a value and `rhs` contains a value | no effect                                                                                                                                                                                                                                                     |
+|                                | `*this` contains a value                                                                                                                                                                                                                                   | `*this` does not contain a value                                                                                                                                                                                                                             |
+| ------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `rhs` contains a value         | calls `swap(*(*this), *rhs)`                                                                                                                                                                                                                               | initializes the contained value of `*this` as if direct-non-list-initializing an object of type `T` with the expression `std::move(*rhs)`, followed by `rhs.val->T::~T()`; postcondition is that `*this` contains a value and `rhs` does not contain a value |
+| `rhs` does not contain a value | initializes the contained value of `rhs` as if direct-non-list-initializing an object of type `T` with the expression `std::move(*(*this))`, followed by `val->T::~T()`; postcondition is that `*this` does not contain a value and `rhs` contains a value | no effect                                                                                                                                                                                                                                                    |
 
 
 *Throws:* Any exceptions thrown by the operations in the relevant part
@@ -4770,6 +4770,8 @@ position.
 *Effects:* Resets the bit at position `pos` in `*this`.
 
 *Returns:* `*this`.
+
+\indexlibrarymember{operator~}{bitset}
 
 ``` cpp
 bitset<N> operator~() const noexcept;

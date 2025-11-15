@@ -1065,7 +1065,7 @@ template<class T> auto i(T)     // identity
   -> T;
 template<class T> auto f(T)     // #1
   -> decltype(i(h<T>()));       // forces completion of A<T> and implicitly uses
-                                // A<T>::\~{A()} for the temporary introduced by the
+                                // A<T>::~A() for the temporary introduced by the
                                 // use of h(). (A temporary is not introduced
                                 // as a result of the use of i().)
 template<class T> auto f(T)     // #2
@@ -1076,7 +1076,7 @@ auto g() -> void {
                                 // is implicitly used in its decltype-specifier)
 }
 template<class T> auto q(T)
-  -> decltype((h<T>()));        // does not force completion of A<T>; A<T>::\~{A()} is
+  -> decltype((h<T>()));        // does not force completion of A<T>; A<T>::~A() is
                                 // not implicitly used within the context of this decltype-specifier
 void r() {
   q(42);                        // Error: deduction against q succeeds, so overload resolution

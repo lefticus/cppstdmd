@@ -641,7 +641,7 @@ struct D : public A, public B {
     // Implicit declaration of D::D();
     // Implicit declaration of D::D(const D&) noexcept(true);
     // Implicit declaration of D::D(D&&) throw(Y);
-    // Implicit declaration of D::\~D() throw(X, Y);
+    // Implicit declaration of D::~D() throw(X, Y);
 };
 ```
 

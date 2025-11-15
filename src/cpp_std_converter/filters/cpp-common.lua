@@ -75,6 +75,9 @@ local special_chars = {
   {pattern = "\\textasciitilde", replacement = "~", type = "macro", preserve_space = true},
   {pattern = "\\atsign", replacement = "@", type = "macro", preserve_space = true},
   {pattern = "\\unun", replacement = "__", type = "macro", preserve_space = true},
+  -- \~ is a tilde accent macro that becomes plain tilde in code (issue #8)
+  -- Must handle \~{identifier} → ~identifier (remove braces) for destructor syntax
+  {pattern = "\\~", replacement = "~", type = "macro", preserve_space = false},
 }
 
 -- Helper function to unescape LaTeX escaped characters
@@ -946,6 +949,9 @@ local function clean_code_common(code, handle_textbackslash)
   code = code:gsub("\\$", "$")
   code = code:gsub("\\{", "{")
   code = code:gsub("\\}", "}")
+  -- Tilde (issue #8) - \~ is LaTeX tilde accent, convert to plain tilde
+  code = code:gsub("\\~{([^}]*)}", "~%1")  -- \~{identifier} → ~identifier (remove braces)
+  code = code:gsub("\\~", "~")  -- any remaining \~ → ~
 
   -- Remove LaTeX spacing commands that should not appear in code
   code = code:gsub("\\;", "")  -- \; is a medium space in LaTeX

@@ -1726,7 +1726,7 @@ enumeration type shall represent an *enumerator* of that enumeration.
 In a *qualified-id* of the form:
 
 ``` bnf
-nested-name-specifierₒₚₜ type-name '::' '\~' type-name
+nested-name-specifierₒₚₜ type-name '::' '~' type-name
 ```
 
 the second *type-name* is looked up in the same scope as the first.
