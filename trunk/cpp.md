@@ -1963,7 +1963,7 @@ function. If the time of translation is not available, an
 | `__cpp_contracts`                       | `202502L` |
 | `__cpp_decltype`                        | `200707L` |
 | `__cpp_decltype_auto`                   | `201304L` |
-| `__cpp_deduction_guides`                | `201907L` |
+| `__cpp_deduction_guides`                | `202207L` |
 | `__cpp_delegating_constructors`         | `200604L` |
 | `__cpp_deleted_function`                | `202403L` |
 | `__cpp_designated_initializers`         | `201707L` |

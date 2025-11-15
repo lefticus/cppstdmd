@@ -49,6 +49,7 @@ local common = require("cpp-common")
 local convert_special_chars = common.convert_special_chars
 local trim = common.trim
 local process_macro_with_replacement = common.process_macro_with_replacement
+local subscripts = common.subscripts
 
 -- Helper function to clean up grammar content
 local function clean_grammar(grammar)
@@ -141,6 +142,24 @@ local function clean_grammar(grammar)
   -- These must be converted here since cpp-macros doesn't process BNF RawBlocks
   grammar = grammar:gsub("\\tref{([^}]*)}", "[[%1]]")
   grammar = grammar:gsub("\\iref{([^}]*)}", "[[%1]]")
+
+  -- Convert inline math subscripts to Unicode (Issue #3)
+  -- Pattern: $_n$ or $_{n}$ where n is a single character
+  grammar = grammar:gsub("%$_(%w)%$", function(sub)
+    if subscripts[sub] then
+      return subscripts[sub]
+    else
+      return "$_" .. sub .. "$"  -- Preserve if not convertible
+    end
+  end)
+
+  grammar = grammar:gsub("%$_{(%w)}%$", function(sub)
+    if subscripts[sub] then
+      return subscripts[sub]
+    else
+      return "$_{" .. sub .. "}$"  -- Preserve if not convertible
+    end
+  end)
 
   -- Clean up extra whitespace
   grammar = trim(grammar)

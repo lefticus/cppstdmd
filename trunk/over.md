@@ -429,7 +429,7 @@ the unique name *call-function* and having the form
 
 ``` bnf
 'R' *call-function* '(' conversion-type-id \ %
-'F, P$_1$ a$_1$, $\dotsc$, P$_n$ a$_n$)' \terminal{\ return \terminal{F (a$_1$, $\dotsc$, a$_n$); \}}
+'F, P₁ a₁, $\dotsc$, Pₙ aₙ)' \terminal{\ return \terminal{F (a₁, $\dotsc$, aₙ); \}}
 ```
 
 is also considered as a candidate function. Similarly, surrogate call

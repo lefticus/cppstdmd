@@ -11384,8 +11384,7 @@ template<class NoThrowForwardIterator>
 
 ``` cpp
 for (; first != last; ++first)
-  ::new (voidify(*first))
-    typename iterator_traits<NoThrowForwardIterator>::value_type;
+  ::new (voidify(*first)) iterator_traits<NoThrowForwardIterator>::value_type;
 ```
 
 ``` cpp
@@ -11417,8 +11416,7 @@ template<class NoThrowForwardIterator, class Size>
 
 ``` cpp
 for (; n > 0; (void)++first, --n)
-  ::new (voidify(*first))
-    typename iterator_traits<NoThrowForwardIterator>::value_type;
+  ::new (voidify(*first)) iterator_traits<NoThrowForwardIterator>::value_type;
 return first;
 ```
 
@@ -11449,8 +11447,7 @@ template<class NoThrowForwardIterator>
 
 ``` cpp
 for (; first != last; ++first)
-  ::new (voidify(*first))
-    typename iterator_traits<NoThrowForwardIterator>::value_type();
+  ::new (voidify(*first)) iterator_traits<NoThrowForwardIterator>::value_type();
 ```
 
 ``` cpp
@@ -11482,8 +11479,7 @@ template<class NoThrowForwardIterator, class Size>
 
 ``` cpp
 for (; n > 0; (void)++first, --n)
-  ::new (voidify(*first))
-    typename iterator_traits<NoThrowForwardIterator>::value_type();
+  ::new (voidify(*first)) iterator_traits<NoThrowForwardIterator>::value_type();
 return first;
 ```
 
@@ -11517,8 +11513,7 @@ template<class InputIterator, class NoThrowForwardIterator>
 
 ``` cpp
 for (; first != last; ++result, (void)++first)
-  ::new (voidify(*result))
-    typename iterator_traits<NoThrowForwardIterator>::value_type(*first);
+  ::new (voidify(*result)) iterator_traits<NoThrowForwardIterator>::value_type(*first);
 ```
 
 *Returns:* `result`.
@@ -11561,8 +11556,7 @@ template<class InputIterator, class Size, class NoThrowForwardIterator>
 
 ``` cpp
 for (; n > 0; ++result, (void)++first, --n)
-  ::new (voidify(*result))
-    typename iterator_traits<NoThrowForwardIterator>::value_type(*first);
+  ::new (voidify(*result)) iterator_traits<NoThrowForwardIterator>::value_type(*first);
 ```
 
 *Returns:* `result`.
@@ -11603,7 +11597,7 @@ template<class InputIterator, class NoThrowForwardIterator>
 ``` cpp
 for (; first != last; (void)++result, ++first)
   ::new (voidify(*result))
-    typename iterator_traits<NoThrowForwardIterator>::value_type(deref-move(first));
+    iterator_traits<NoThrowForwardIterator>::value_type(deref-move(first));
 return result;
 ```
 
@@ -11651,7 +11645,7 @@ template<class InputIterator, class Size, class NoThrowForwardIterator>
 ``` cpp
 for (; n > 0; ++result, (void)++first, --n)
   ::new (voidify(*result))
-    typename iterator_traits<NoThrowForwardIterator>::value_type(deref-move(first));
+    iterator_traits<NoThrowForwardIterator>::value_type(deref-move(first));
 return {first, result};
 ```
 
@@ -11691,8 +11685,7 @@ template<class NoThrowForwardIterator, class T>
 
 ``` cpp
 for (; first != last; ++first)
-  ::new (voidify(*first))
-    typename iterator_traits<NoThrowForwardIterator>::value_type(x);
+  ::new (voidify(*first)) iterator_traits<NoThrowForwardIterator>::value_type(x);
 ```
 
 ``` cpp
@@ -11724,8 +11717,7 @@ template<class NoThrowForwardIterator, class Size, class T>
 
 ``` cpp
 for (; n--; ++first)
-  ::new (voidify(*first))
-    typename iterator_traits<NoThrowForwardIterator>::value_type(x);
+  ::new (voidify(*first)) iterator_traits<NoThrowForwardIterator>::value_type(x);
 return first;
 ```
 

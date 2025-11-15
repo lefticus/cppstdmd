@@ -332,3 +332,41 @@ def test_textnormal_with_nested_tref():
     assert "any identifier listed in [[lex.key]]" in output
     # Should NOT have unconverted \tref
     assert r"\tref" not in output
+
+
+def test_math_subscripts_in_bnf():
+    r"""Test that $_1$ subscripts in BNF are converted to Unicode (Issue #3)"""
+    latex = r"""
+\begin{ncbnf}
+\nontermdef{selection-statement}\br
+    \keyword{if} \keyword{consteval} compound-statement$_1$ \keyword{else} statement$_2$
+\end{ncbnf}
+"""
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "``` bnf" in output
+    # $_1$ should become ₁ and $_2$ should become ₂
+    assert "compound-statement₁" in output
+    assert "statement₂" in output
+    # Should NOT have raw LaTeX math
+    assert "$_1$" not in output
+    assert "$_2$" not in output
+
+
+def test_math_subscripts_with_braces():
+    r"""Test that $_{n}$ subscripts in BNF are converted to Unicode (Issue #3)"""
+    latex = r"""
+\begin{ncbnf}
+\nontermdef{test-expr}\br
+    expr$_{0}$ \terminal{+} expr$_{1}$
+\end{ncbnf}
+"""
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "``` bnf" in output
+    # $_{0}$ should become ₀ and $_{1}$ should become ₁
+    assert "expr₀" in output
+    assert "expr₁" in output
+    # Should NOT have raw LaTeX math
+    assert "$_{0}$" not in output
+    assert "$_{1}$" not in output

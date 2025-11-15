@@ -5508,7 +5508,7 @@ reference if the initializer is an lvalue and an rvalue reference
 otherwise, variables are introduced with unique names `rᵢ` as follows:
 
 ``` bnf
-*S* 'U$_i$ r$_i$ =' initializer ';'
+*S* 'Uᵢ rᵢ =' initializer ';'
 ```
 
 Each `vᵢ` is the name of an lvalue of type `Tᵢ` that refers to the

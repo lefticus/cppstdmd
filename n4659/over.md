@@ -465,7 +465,7 @@ returning `R`”, a *surrogate call function* with the unique name
 
 ``` bnf
 'R' call-function '(' conversion-type-id \ %
-'F, P$_1$ a$_1$, $\dotsc$, P$_n$ a$_n$)' '{ return F (a$_1$, $\dotsc$, a$_n$); }'
+'F, P₁ a₁, $\dotsc$, Pₙ aₙ)' '{ return F (a₁, $\dotsc$, aₙ); }'
 ```
 
 is also considered as a candidate function. Similarly, surrogate call

@@ -319,14 +319,14 @@ if consteval \terminal{\ \terminal{\}} else compound-statement
 An `if` statement of the form
 
 ``` bnf
-if '!' consteval compound-statement$_1$ else statement$_2$
+if '!' consteval compound-statement₁ else statement₂
 ```
 
 is not itself a consteval if statement, but is equivalent to the
 consteval if statement
 
 ``` bnf
-if consteval statement$_2$ else compound-statement$_1$
+if consteval statement₂ else compound-statement₁
 ```
 
 ### The `switch` statement <a id="stmt.switch">[[stmt.switch]]</a>
