@@ -174,7 +174,9 @@ See [tests/README.md](tests/README.md) for detailed test documentation.
 
 ## License
 
-MIT License
+This project is released into the public domain under the [Unlicense](https://unlicense.org/).
+
+See [LICENSE.txt](LICENSE.txt) for the full license text.
 
 ## Contributing
 

@@ -82,9 +82,9 @@ All tools run directly from the repository root without installation. The `./set
 sets up dependencies and runs the full conversion pipeline automatically.
 
 **Main tools:**
-- `convert.py` - Convert C++ draft LaTeX to Markdown (entry point: `src/cpp_std_converter/converter.py:main`)
-- `generate_diffs.py` - Generate diffs between C++ standard versions
-- `generate_html_site.py` - Generate HTML site from diffs
+- `./convert.py` - Convert C++ draft LaTeX to Markdown (wrapper for `src/cpp_std_converter/converter.py:main`)
+- `./generate_diffs.py` - Generate diffs between C++ standard versions
+- `./generate_html_site.py` - Generate HTML site from diffs
 
 ```bash
 # Convert LaTeX to Markdown
@@ -228,7 +228,7 @@ make lint    # Same as ./lint.sh
 ### Debugging Conversion Issues
 
 1. Run `./setup-and-build.sh` first to ensure environment is correct
-2. Use `-v` flag for verbose output: `cpp-std-convert intro.tex -o intro.md -v`
+2. Use `-v` flag for verbose output: `./convert.py intro.tex -o intro.md -v`
 3. Test with small LaTeX snippets in unit tests first
 4. Check filter order - later filters don't see earlier transformations
 5. Integration tests use n4950 as the stable baseline
