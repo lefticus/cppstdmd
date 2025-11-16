@@ -457,11 +457,11 @@ of the form
 
 where *cv-qualifier* is the same cv-qualification as, or a greater
 cv-qualification than, cv, and where *conversion-type-id* denotes the
-type “pointer to function of (`P₁`, \dotsc, `Pₙ`) returning `R`”, or the
-type “reference to pointer to function of (`P₁`, \dotsc, `Pₙ`) returning
-`R`”, or the type “reference to function of (`P₁`, \dotsc, `Pₙ`)
-returning `R`”, a *surrogate call function* with the unique name
-*call-function* and having the form
+type “pointer to function of (`P₁`, …, `Pₙ`) returning `R`”, or the type
+“reference to pointer to function of (`P₁`, …, `Pₙ`) returning `R`”, or
+the type “reference to function of (`P₁`, …, `Pₙ`) returning `R`”, a
+*surrogate call function* with the unique name *call-function* and
+having the form
 
 ``` bnf
 'R' call-function '(' conversion-type-id \ %
@@ -1958,10 +1958,9 @@ that implement these operators. Operator functions are inherited in the
 same manner as other base class functions.
 
 The identities among certain predefined operators applied to basic types
-(for example, `++a` $\equiv$ `a+=1`) need not hold for operator
-functions. Some predefined operators, such as `+=`, require an operand
-to be an lvalue when applied to basic types; this is not required by
-operator functions.
+(for example, `++a` ≡ `a+=1`) need not hold for operator functions. Some
+predefined operators, such as `+=`, require an operand to be an lvalue
+when applied to basic types; this is not required by operator functions.
 
 An operator function cannot have default arguments (
 [[dcl.fct.default]]), except where explicitly stated below. Operator

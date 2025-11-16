@@ -421,11 +421,11 @@ operator conversion-type-id '( )' cv-qualifier-seqₒₚₜ ref-qualifierₒₚ�
 
 where the optional *cv-qualifier-seq* is the same cv-qualification as,
 or a greater cv-qualification than, cv, and where *conversion-type-id*
-denotes the type “pointer to function of (`P₁`, \dotsc, `Pₙ`) returning
-`R`”, or the type “reference to pointer to function of
-(`P₁`, \dotsc, `Pₙ`) returning `R`”, or the type “reference to function
-of (`P₁`, \dotsc, `Pₙ`) returning `R`”, a *surrogate call function* with
-the unique name *call-function* and having the form
+denotes the type “pointer to function of (`P₁`, …, `Pₙ`) returning `R`”,
+or the type “reference to pointer to function of (`P₁`, …, `Pₙ`)
+returning `R`”, or the type “reference to function of (`P₁`, …, `Pₙ`)
+returning `R`”, a *surrogate call function* with the unique name
+*call-function* and having the form
 
 ``` bnf
 'R' *call-function* '(' conversion-type-id \ %
@@ -913,7 +913,7 @@ eᵢ be the corresponding aggregate element of `C` or of one of its
 If there is no such aggregate element eᵢ for any xᵢ, the aggregate
 deduction candidate is not added to the set. The aggregate deduction
 candidate is derived as above from a hypothetical constructor
-`C`(`T₁`, \dotsc, `Tₙ`), where
+`C`(`T₁`, …, `Tₙ`), where
 
 - if eᵢ is of array type and xᵢ is a *braced-init-list*, `Tᵢ` is an
   rvalue reference to the declared type of eᵢ, and
@@ -2570,7 +2570,7 @@ subscripting, class member access, increment, or decrement operator
 function.
 
 [*Note 3*: The identities among certain predefined operators applied to
-fundamental types (for example, `++a` $\equiv$ `a+=1`) need not hold for
+fundamental types (for example, `++a` ≡ `a+=1`) need not hold for
 operator functions. Some predefined operators, such as `+=`, require an
 operand to be an lvalue when applied to fundamental types; this is not
 required by operator functions. — *end note*]

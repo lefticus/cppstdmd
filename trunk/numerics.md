@@ -2191,7 +2191,7 @@ The textual representation consists of the textual representation of
 
 In addition to its behavior pursuant to subclause  [[rand.req.adapt]],
 each constructor that is not a copy constructor initializes
-`V[0]`, \dotsc, `V[k - 1]` and Y, in that order, with values returned by
+`V[0]`, …, `V[k - 1]` and Y, in that order, with values returned by
 successive invocations of `e()`.
 
 ### Engines and engine adaptors with predefined parameters <a id="rand.predef">[[rand.predef]]</a>

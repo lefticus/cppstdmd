@@ -216,13 +216,40 @@ function Math(elem)
         result = result:gsub("\\geq", "≥")
         result = result:gsub("\\leq", "≤")
         result = result:gsub("\\neq", "≠")
+        -- Convert ellipsis operators
+        result = result:gsub("\\dotsc", "…")
+        result = result:gsub("\\dotsb", "…")
+        result = result:gsub("\\dotsm", "…")
+        result = result:gsub("\\dotsi", "…")
+        result = result:gsub("\\dotso", "…")
+        result = result:gsub("\\ldots", "…")
+        result = result:gsub("\\cdots", "⋯")
 
         return pandoc.RawInline('markdown', result)
       end
     end
 
+    -- Preprocess: Convert \tcode{} and \texttt{} to backticks before Unicode conversion
+    -- This handles mixed cases like $\tcode{P}_1, \dotsc, \tcode{P}_n$
+    -- which would otherwise fail because try_unicode_conversion() rejects LaTeX commands
+    local preprocessed = text
+
+    -- Convert \tcode{content} → `content`
+    preprocessed = common.process_macro_with_replacement(preprocessed, "tcode", function(content)
+      -- Also strip any \placeholder{} wrappers inside
+      content = common.process_macro_with_replacement(content, "placeholder", function(c)
+        return c
+      end)
+      return "`" .. content .. "`"
+    end)
+
+    -- Convert \texttt{content} → `content`
+    preprocessed = common.process_macro_with_replacement(preprocessed, "texttt", function(content)
+      return "`" .. content .. "`"
+    end)
+
     -- Regular math conversion
-    local converted = try_unicode_conversion(text)
+    local converted = try_unicode_conversion(preprocessed)
 
     if converted then
       -- All-or-nothing approach: Check if 100% converted to Unicode

@@ -5064,10 +5064,10 @@ task<void> g3(int a, ...) {     // error: variable parameter list not allowed
 
 The *promise type* of a coroutine is
 `std::coroutine_traits<R, P_1, \dotsc, P_n>::promise_type`, where `R` is
-the return type of the function, and `P₁` \dotsc `Pₙ` are the sequence
-of types of the function parameters, preceded by the type of the
-implicit object parameter [[over.match.funcs]] if the coroutine is a
-non-static member function. The promise type shall be a class type.
+the return type of the function, and `P₁` … `Pₙ` are the sequence of
+types of the function parameters, preceded by the type of the implicit
+object parameter [[over.match.funcs]] if the coroutine is a non-static
+member function. The promise type shall be a class type.
 
 In the following, `pᵢ` is an lvalue of type `Pᵢ`, where `p₁` denotes
 `*this` and `p_i+1` denotes the $i^\textrm{th}$ function parameter for a
@@ -5110,7 +5110,7 @@ where
   exposition only [[stmt.return.coroutine]], and
 - *promise-constructor-arguments* is determined as follows: overload
   resolution is performed on a promise constructor call created by
-  assembling an argument list with lvalues `p₁` \dotsc `pₙ`. If a viable
+  assembling an argument list with lvalues `p₁` … `pₙ`. If a viable
   constructor is found [[over.match.viable]], then
   *promise-constructor-arguments* is `(p_1, \dotsc, p_n)`, otherwise
   *promise-constructor-arguments* is empty.
@@ -5145,8 +5145,8 @@ allocation function’s name is looked up in the global scope. If the
 lookup finds an allocation function in the scope of the promise type,
 overload resolution is performed on a function call created by
 assembling an argument list. The first argument is the amount of space
-requested, and has type `std::size_t`. The lvalues `p₁` \dotsc `pₙ` are
-the succeeding arguments. If no viable function is found
+requested, and has type `std::size_t`. The lvalues `p₁` … `pₙ` are the
+succeeding arguments. If no viable function is found
 [[over.match.viable]], overload resolution is performed again on a
 function call created by passing just the amount of space required as an
 argument of type `std::size_t`.
@@ -5262,7 +5262,7 @@ potentially-throwing [[except.spec]].
 ## Structured binding declarations <a id="dcl.struct.bind">[[dcl.struct.bind]]</a>
 
 A structured binding declaration introduces the *identifier*s `v₀`,
-`v₁`, `v₂`, \dotsc of the *identifier-list* as names
+`v₁`, `v₂`, … of the *identifier-list* as names
 [[basic.scope.declarative]] of *structured binding*s. Let cv denote the
 *cv-qualifier*s in the *decl-specifier-seq* and *S* consist of the
 *storage-class-specifier*s of the *decl-specifier-seq* (if any). A cv
@@ -5347,9 +5347,9 @@ of `E` or of the same base class of `E`, well-formed when named as
 anonymous union member, and the number of elements in the
 *identifier-list* shall be equal to the number of non-static data
 members of `E`. Designating the non-static data members of `E` as `m₀`,
-`m₁`, `m₂`, \dotsc (in declaration order), each `v`ᵢ is the name of an
-lvalue that refers to the member `m`ᵢ of *e* and whose type is cv `Tᵢ`,
-where `Tᵢ` is the declared type of that member; the referenced type is
+`m₁`, `m₂`, … (in declaration order), each `v`ᵢ is the name of an lvalue
+that refers to the member `m`ᵢ of *e* and whose type is cv `Tᵢ`, where
+`Tᵢ` is the declared type of that member; the referenced type is
 cv `Tᵢ`. The lvalue is a bit-field if that member is a bit-field.
 
 [*Example 2*:

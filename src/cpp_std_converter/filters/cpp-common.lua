@@ -860,6 +860,25 @@ local math_operators = {
   ["\\mid"] = "|",     -- Divides / bitwise OR
   ["\\sim"] = "~",     -- Similar to / tilde operator (ASCII)
   ["\\backslash"] = "\\", -- Backslash character (ASCII)
+  -- Additional math operators
+  ["\\infty"] = "∞",   -- Infinity
+  ["\\equiv"] = "≡",   -- Equivalence
+  ["\\approx"] = "≈",  -- Approximately equal
+  ["\\pm"] = "±",      -- Plus-minus
+  ["\\mp"] = "∓",      -- Minus-plus
+  -- Set theory operators
+  ["\\cap"] = "∩",     -- Intersection
+  ["\\cup"] = "∪",     -- Union
+  ["\\in"] = "∈",      -- Element of
+  ["\\notin"] = "∉",   -- Not element of
+  ["\\subset"] = "⊂",  -- Subset
+  ["\\supset"] = "⊃",  -- Superset
+  ["\\subseteq"] = "⊆", -- Subset or equal
+  ["\\supseteq"] = "⊇", -- Superset or equal
+  ["\\emptyset"] = "∅", -- Empty set
+  -- Logic operators
+  ["\\exists"] = "∃",  -- There exists
+  ["\\forall"] = "∀",  -- For all
   ["<"] = "<",
   [">"] = ">",
   ["="] = "=",
@@ -1165,12 +1184,37 @@ local function try_unicode_conversion(text)
     result = plain_replace(result, latex, unicode)
   end
 
-  -- Convert operators using plain replacement for special characters
+  -- Convert ellipsis operators EARLY (before complexity check)
+  -- This prevents them from being flagged as complex math
+  result = plain_replace(result, "\\dotsc", "…")   -- Dots for series/commas
+  result = plain_replace(result, "\\dotsb", "…")   -- Dots for binary operators
+  result = plain_replace(result, "\\dotsm", "…")   -- Dots for multiplication
+  result = plain_replace(result, "\\dotsi", "…")   -- Dots for integrals
+  result = plain_replace(result, "\\dotso", "…")   -- Dots for other purposes
+  result = plain_replace(result, "\\ldots", "…")   -- Generic dots
+  result = plain_replace(result, "\\cdots", "⋯")   -- Centered dots
+  result = plain_replace(result, "\\cdot", "⋅")    -- Centered dot (single)
+
+  -- EARLY check for complex math BEFORE other operator conversions
+  -- This prevents partial matches like \in matching prefix of \int
+  if is_complex_math(result) then
+    return nil
+  end
+
+  -- Convert remaining operators using plain replacement
   -- IMPORTANT: Sort by length (longest first) to avoid partial matches
-  -- For example, \cdots must be replaced before \cdot to prevent leaving 's' behind
+  -- Ellipsis operators already converted above
+  local ellipsis_ops = {
+    ["\\dotsc"] = true, ["\\dotsb"] = true, ["\\dotsm"] = true,
+    ["\\dotsi"] = true, ["\\dotso"] = true, ["\\ldots"] = true,
+    ["\\cdots"] = true, ["\\cdot"] = true
+  }
+
   local sorted_operators = {}
   for latex, unicode in pairs(math_operators) do
-    table.insert(sorted_operators, {latex = latex, unicode = unicode})
+    if not ellipsis_ops[latex] then
+      table.insert(sorted_operators, {latex = latex, unicode = unicode})
+    end
   end
   table.sort(sorted_operators, function(a, b) return #a.latex > #b.latex end)
 

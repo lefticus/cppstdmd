@@ -796,3 +796,38 @@ def test_ordinal_without_text_st_nd_rd():
     assert "2ⁿᵈ" in output
     assert "3ʳᵈ" in output
     assert "$" not in output
+
+
+def test_tcode_with_subscript_in_math():
+    """Test \\tcode{} with subscript in math mode: $\\tcode{T}_i$ → `Tᵢ`"""
+    latex = r"Type $\tcode{T}_i$ and $\tcode{P}_n$ in sequence."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "`Tᵢ`" in output
+    assert "`Pₙ`" in output
+    assert "$" not in output
+
+
+def test_tcode_with_dotsc():
+    """Test \\tcode{} with \\dotsc: $\\tcode{P}_1, \\dotsc, \\tcode{P}_n$ → `P₁`, …, `Pₙ`"""
+    latex = r"of ($\tcode{P}_1, \dotsc, \tcode{P}_n$) returning"
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "`P₁`" in output
+    assert "`Pₙ`" in output
+    assert "…" in output  # ellipsis converted
+    assert "dotsc" not in output  # LaTeX not present
+    assert "$" not in output  # No math delimiters
+
+
+def test_missing_operators():
+    """Test newly added operators: \\infty, \\equiv, \\pm, \\approx, \\in"""
+    latex = r"$x \to \infty$, $a \equiv b$, $c \pm d$, $e \approx f$, $g \in H$."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "x → ∞" in output
+    assert "a ≡ b" in output
+    assert "c ± d" in output
+    assert "e ≈ f" in output
+    assert "g ∈ H" in output
+    assert "$" not in output

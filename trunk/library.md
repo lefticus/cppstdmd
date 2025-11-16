@@ -621,9 +621,9 @@ overloaded function templates. The name of these function templates
 designates the corresponding algorithm function object.
 
 For an algorithm function object `o`, let S be the corresponding set of
-function templates. Then for any sequence of arguments `args` \dotsc,
-`o(args` \dotsc `)` is expression-equivalent to `s(args` \dotsc `)`,
-where the result of name lookup for `s` is the overload set S.
+function templates. Then for any sequence of arguments `args` …,
+`o(args` … `)` is expression-equivalent to `s(args` … `)`, where the
+result of name lookup for `s` is the overload set S.
 
 [*Note 1*:
 

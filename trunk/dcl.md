@@ -5886,7 +5886,7 @@ task<void> g3(int a, ...) {     // error: variable parameter list not allowed
 
 The *promise type* of a coroutine is
 `std::coroutine_traits<R, P_1, \dotsc, P_n>::promise_type`, where `R` is
-the return type of the function, and `P₁` \dotsc `Pₙ` is the sequence of
+the return type of the function, and `P₁` … `Pₙ` is the sequence of
 types of the non-object function parameters, preceded by the type of the
 object parameter [[dcl.fct]] if the coroutine is a non-static member
 function. The promise type shall be a class type.
@@ -5938,9 +5938,9 @@ where
   exposition only [[stmt.return.coroutine]], and
 - *promise-constructor-arguments* is determined as follows: overload
   resolution is performed on a promise constructor call created by
-  assembling an argument list `q₁` \dotsc `qₙ`. If a viable constructor
-  is found [[over.match.viable]], then *promise-constructor-arguments*
-  is `(\tcode{q}_1, \dotsc, \tcode{q}_n)`, otherwise
+  assembling an argument list `q₁` … `qₙ`. If a viable constructor is
+  found [[over.match.viable]], then *promise-constructor-arguments* is
+  `(\tcode{q}_1, \dotsc, \tcode{q}_n)`, otherwise
   *promise-constructor-arguments* is empty, and
 - a coroutine is suspended at the *initial suspend point* if it is
   suspended at the initial await expression, and
@@ -5983,7 +5983,7 @@ of the promise type.
 - If the search finds any declarations, overload resolution is performed
   on a function call created by assembling an argument list. The first
   argument is the amount of space requested, and is a prvalue of type
-  `std::size_t`. The lvalues `p₁` \dotsc `pₙ` with their original types
+  `std::size_t`. The lvalues `p₁` … `pₙ` with their original types
   (including cv-qualifiers) are the successive arguments. If no viable
   function is found [[over.match.viable]], overload resolution is
   performed again on a function call created by passing just the amount
@@ -6132,7 +6132,7 @@ function with no linkage. — *end note*]
 ## Structured binding declarations <a id="dcl.struct.bind">[[dcl.struct.bind]]</a>
 
 A structured binding declaration introduces the *identifier*s `v₀`,
-`v₁`, `v₂`, \dotsc, `v_N-1` of the *sb-identifier-list* as names. An
+`v₁`, `v₂`, …, `v_N-1` of the *sb-identifier-list* as names. An
 *sb-identifier* that contains an ellipsis introduces a structured
 binding pack [[temp.variadic]]. A *structured binding* is either an
 *sb-identifier* that does not contain an ellipsis or an element of a
@@ -6274,12 +6274,12 @@ of `E` or of the same base class of `E`, well-formed when named as
 `e.name` in the context of the structured binding, `E` shall not have an
 anonymous union member, and the structured binding size of `E` is equal
 to the number of non-static data members of `E`. Designating the
-non-static data members of `E` as `m₀`, `m₁`, `m₂`, \dotsc (in
-declaration order), each $\textrm{SB}_i$ is the name of an lvalue that
-refers to the member `m`ᵢ of *e* and whose type is that of
-`e.\tcode{m}_i` [[expr.ref]]; the referenced type is the declared type
-of `mᵢ` if that type is a reference type, or the type of `e.\tcode{m}_i`
-otherwise. The lvalue is a bit-field if that member is a bit-field.
+non-static data members of `E` as `m₀`, `m₁`, `m₂`, … (in declaration
+order), each $\textrm{SB}_i$ is the name of an lvalue that refers to the
+member `m`ᵢ of *e* and whose type is that of `e.\tcode{m}_i`
+[[expr.ref]]; the referenced type is the declared type of `mᵢ` if that
+type is a reference type, or the type of `e.\tcode{m}_i` otherwise. The
+lvalue is a bit-field if that member is a bit-field.
 
 [*Example 3*:
 

@@ -1604,10 +1604,9 @@ that implement these operators. Operator functions are inherited in the
 same manner as other base class functions.
 
 The identities among certain predefined operators applied to basic types
-(for example, `++a` $\equiv$ `a+=1`) need not hold for operator
-functions. Some predefined operators, such as `+=`, require an operand
-to be an lvalue when applied to basic types; this is not required by
-operator functions.
+(for example, `++a` ≡ `a+=1`) need not hold for operator functions. Some
+predefined operators, such as `+=`, require an operand to be an lvalue
+when applied to basic types; this is not required by operator functions.
 
 An operator function cannot have default arguments (
 [[dcl.fct.default]]), except where explicitly stated below. Operator

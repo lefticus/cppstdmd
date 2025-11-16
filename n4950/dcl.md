@@ -5229,7 +5229,7 @@ task<void> g3(int a, ...) {     // error: variable parameter list not allowed
 
 The *promise type* of a coroutine is
 `std::coroutine_traits<R, P_1, \dotsc, P_n>::promise_type`, where `R` is
-the return type of the function, and `P₁` \dotsc `Pₙ` is the sequence of
+the return type of the function, and `P₁` … `Pₙ` is the sequence of
 types of the non-object function parameters, preceded by the type of the
 object parameter [[dcl.fct]] if the coroutine is a non-static member
 function. The promise type shall be a class type.
@@ -5277,9 +5277,9 @@ where
   exposition only [[stmt.return.coroutine]], and
 - *promise-constructor-arguments* is determined as follows: overload
   resolution is performed on a promise constructor call created by
-  assembling an argument list `q₁` \dotsc `qₙ`. If a viable constructor
-  is found [[over.match.viable]], then *promise-constructor-arguments*
-  is `(\tcode{q}_1, \dotsc, \tcode{q}_n)`, otherwise
+  assembling an argument list `q₁` … `qₙ`. If a viable constructor is
+  found [[over.match.viable]], then *promise-constructor-arguments* is
+  `(\tcode{q}_1, \dotsc, \tcode{q}_n)`, otherwise
   *promise-constructor-arguments* is empty, and
 - a coroutine is suspended at the *initial suspend point* if it is
   suspended at the initial await expression, and
@@ -5317,11 +5317,10 @@ looked up by searching for it in the scope of the promise type.
 - If the search finds any declarations, overload resolution is performed
   on a function call created by assembling an argument list. The first
   argument is the amount of space requested, and is a prvalue of type
-  `std::size_t`. The lvalues `p₁` \dotsc `pₙ` are the successive
-  arguments. If no viable function is found [[over.match.viable]],
-  overload resolution is performed again on a function call created by
-  passing just the amount of space required as a prvalue of type
-  `std::size_t`.
+  `std::size_t`. The lvalues `p₁` … `pₙ` are the successive arguments.
+  If no viable function is found [[over.match.viable]], overload
+  resolution is performed again on a function call created by passing
+  just the amount of space required as a prvalue of type `std::size_t`.
 - If the search finds no declarations, a search is performed in the
   global scope. Overload resolution is performed on a function call
   created by passing the amount of space required as a prvalue of type
@@ -5436,7 +5435,7 @@ potentially-throwing [[except.spec]].
 ## Structured binding declarations <a id="dcl.struct.bind">[[dcl.struct.bind]]</a>
 
 A structured binding declaration introduces the *identifier*s `v₀`,
-`v₁`, `v₂`, \dotsc of the *identifier-list* as names of *structured
+`v₁`, `v₂`, … of the *identifier-list* as names of *structured
 binding*s. Let cv denote the *cv-qualifier*s in the *decl-specifier-seq*
 and *S* consist of the *storage-class-specifier*s of the
 *decl-specifier-seq* (if any). A cv that includes `volatile` is
@@ -5520,8 +5519,8 @@ of `E` or of the same base class of `E`, well-formed when named as
 anonymous union member, and the number of elements in the
 *identifier-list* shall be equal to the number of non-static data
 members of `E`. Designating the non-static data members of `E` as `m₀`,
-`m₁`, `m₂`, \dotsc (in declaration order), each `vᵢ` is the name of an
-lvalue that refers to the member `m`ᵢ of *e* and whose type is that of
+`m₁`, `m₂`, … (in declaration order), each `vᵢ` is the name of an lvalue
+that refers to the member `m`ᵢ of *e* and whose type is that of
 `e.\tcode{m}_i` [[expr.ref]]; the referenced type is the declared type
 of `mᵢ` if that type is a reference type, or the type of `e.\tcode{m}_i`
 otherwise. The lvalue is a bit-field if that member is a bit-field.
