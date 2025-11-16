@@ -5421,8 +5421,8 @@ sometype::sometype() = delete;  // ill-formed; not first declaration
 
 ## Structured binding declarations <a id="dcl.struct.bind">[[dcl.struct.bind]]</a>
 
-A structured binding declaration introduces the *identifier*s `v`_0,
-`v`_1, `v`_2, ... of the *identifier-list* as names (
+A structured binding declaration introduces the *identifier*s `v`₀,
+`v`₁, `v`₂, ... of the *identifier-list* as names (
 [[basic.scope.declarative]]), called *structured binding*s. Let cv
 denote the *cv-qualifier*s in the *decl-specifier-seq*. First, a
 variable with a unique name `e` is introduced. If the
@@ -5446,7 +5446,7 @@ from the corresponding structured binding declaration. The type of the
 
 If `E` is an array type with element type `T`, the number of elements in
 the *identifier-list* shall be equal to the number of elements of `E`.
-Each `v`_i is the name of an lvalue that refers to the element i of the
+Each `v`ᵢ is the name of an lvalue that refers to the element i of the
 array and whose type is `T`; the referenced type is `T`.
 
 [*Note 2*: The top-level cv-qualifiers of `T` are cv. — *end note*]
@@ -5477,7 +5477,7 @@ not performed. — *end note*]
 
 In either case, `e` is an lvalue if the type of the entity `e` is an
 lvalue reference and an xvalue otherwise. Given the type `Tᵢ` designated
-by `std::tuple_element<i, E>::type`, each `v`_i is a variable of type
+by `std::tuple_element<i, E>::type`, each `v`ᵢ is a variable of type
 “reference to `Tᵢ`” initialized with the initializer, where the
 reference is an lvalue reference if the initializer is an lvalue and an
 rvalue reference otherwise; the referenced type is `Tᵢ`.
@@ -5486,9 +5486,9 @@ Otherwise, all of `E`’s non-static data members shall be public direct
 members of `E` or of the same unambiguous public base class of `E`, `E`
 shall not have an anonymous union member, and the number of elements in
 the *identifier-list* shall be equal to the number of non-static data
-members of `E`. Designating the non-static data members of `E` as `m`_0,
-`m`_1, `m`_2, ... (in declaration order), each `v`_i is the name of an
-lvalue that refers to the member `m`_i of `e` and whose type is cv `Tᵢ`,
+members of `E`. Designating the non-static data members of `E` as `m`₀,
+`m`₁, `m`₂, ... (in declaration order), each `v`ᵢ is the name of an
+lvalue that refers to the member `m`ᵢ of `e` and whose type is cv `Tᵢ`,
 where `Tᵢ` is the declared type of that member; the referenced type is
 cv `Tᵢ`. The lvalue is a bit-field if that member is a bit-field.
 

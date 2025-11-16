@@ -7713,7 +7713,7 @@ overload. Let `traits` be `char_traits<charT>` for the first overload.
 *Constraints:* The expression
 
 ``` cpp
-from_stream(declval<basic_istream<charT, traits>&>(), $F$, tp)
+from_stream(declval<basic_istream<charT, traits>&>(), F, tp)
 ```
 
 is well-formed when treated as an unevaluated
@@ -7739,7 +7739,7 @@ overload.
 *Constraints:* The expression
 
 ``` cpp
-from_stream(declval<basic_istream<charT, traits>&>(), $F$, tp, addressof(abbrev))
+from_stream(declval<basic_istream<charT, traits>&>(), F, tp, addressof(abbrev))
 ```
 
 is well-formed when treated as an unevaluated
@@ -7767,7 +7767,7 @@ overload. Let `traits` be `char_traits<charT>` and `Alloc` be
 
 ``` cpp
 from_stream(declval<basic_istream<charT, traits>&>(),
-            $F$, tp,
+            F, tp,
             declval<basic_string<charT, traits, Alloc>*>(),
             &offset)
 ```
@@ -7780,7 +7780,7 @@ operand [[term.unevaluated.operand]].
 
 ``` cpp
 from_stream(is,
-            $F$, tp,
+            F, tp,
             static_cast<basic_string<charT, traits, Alloc>*>(nullptr),
             &offset)
 ```
@@ -7803,7 +7803,7 @@ overload.
 
 ``` cpp
 from_stream(declval<basic_istream<charT, traits>&>(),
-            $F$, tp, addressof(abbrev), &offset)
+            F, tp, addressof(abbrev), &offset)
 ```
 
 is well-formed when treated as an unevaluated

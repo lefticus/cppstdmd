@@ -50,6 +50,8 @@ local convert_special_chars = common.convert_special_chars
 local trim = common.trim
 local process_macro_with_replacement = common.process_macro_with_replacement
 local subscripts = common.subscripts
+local try_unicode_conversion = common.try_unicode_conversion
+
 
 -- Helper function to clean up grammar content
 local function clean_grammar(grammar)
@@ -143,21 +145,16 @@ local function clean_grammar(grammar)
   grammar = grammar:gsub("\\tref{([^}]*)}", "[[%1]]")
   grammar = grammar:gsub("\\iref{([^}]*)}", "[[%1]]")
 
-  -- Convert inline math subscripts to Unicode (Issue #3)
-  -- Pattern: $_n$ or $_{n}$ where n is a single character
-  grammar = grammar:gsub("%$_(%w)%$", function(sub)
-    if subscripts[sub] then
-      return subscripts[sub]
+  -- Convert inline math to Unicode (comprehensive conversion)
+  -- Processes all $...$ patterns with full math-to-Unicode conversion
+  -- Handles subscripts, superscripts, Greek letters, operators, arrows, etc.
+  grammar = grammar:gsub("%$([^$]+)%$", function(math_content)
+    local converted = try_unicode_conversion(math_content)
+    if converted then
+      return converted
     else
-      return "$_" .. sub .. "$"  -- Preserve if not convertible
-    end
-  end)
-
-  grammar = grammar:gsub("%$_{(%w)}%$", function(sub)
-    if subscripts[sub] then
-      return subscripts[sub]
-    else
-      return "$_{" .. sub .. "}$"  -- Preserve if not convertible
+      -- Conversion failed or incomplete, preserve original $...$ delimiters
+      return "$" .. math_content .. "$"
     end
   end)
 

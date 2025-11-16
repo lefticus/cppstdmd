@@ -880,11 +880,11 @@ this subclause shall be declared `explicit`.
 #### Seed sequence requirements <a id="rand.req.seedseq">[[rand.req.seedseq]]</a>
 
 A is an object that consumes a sequence of integer-valued data and
-produces a requested number of unsigned integer values i,
-$0 \le i < 2^{32}$, based on the consumed data. Such an object provides
-a mechanism to avoid replication of streams of random variates. This can
-be useful, for example, in applications requiring large numbers of
-random number engines.
+produces a requested number of unsigned integer values i, 0 ≤ i < 2³²,
+based on the consumed data. Such an object provides a mechanism to avoid
+replication of streams of random variates. This can be useful, for
+example, in applications requiring large numbers of random number
+engines.
 
 A class `S` satisfies the requirements of a seed sequence if the
 expressions shown in Table  [[tab:SeedSequence]] are valid and have the
@@ -1478,7 +1478,7 @@ linear_congruential_engine<result_type,
 ```
 
 Then, to set each Xₖ, obtain new values z₀, …, zₙ₋₁ from n = ⌈ w/32 ⌉
-successive invocations of `e` taken modulo $2^{32}$. Set Xₖ to
+successive invocations of `e` taken modulo 2³². Set Xₖ to
 $\left( \sum_{j=0}^{n-1} z_j \cdot 2^{32j}\right) \bmod m$.
 
 *Complexity:* Exactly n \cdot `r` invocations of `e`.
@@ -1954,7 +1954,7 @@ type.
 
 ``` cpp
 for( InputIterator s = begin; s != end; ++s)
- v.push_back((*s)$\bmod 2^{32}$);
+ v.push_back((*s) mod  2³²);
 ```
 
 ``` cpp
@@ -1971,7 +1971,7 @@ unsigned integer type capable of accommodating 32-bit quantities.
 *Effects:* Does nothing if `begin == end`. Otherwise, with
 s = `v.size()` and n = `end` - `begin`, fills the supplied range
 [`begin`,`end`) according to the following algorithm in which each
-operation is to be carried out modulo $2^{32}$, each indexing operator
+operation is to be carried out modulo 2³², each indexing operator
 applied to `begin` is to be taken modulo n, and T(x) is defined as
 $x \, \xor \, (x \, \rightshift \, 27)$:
 
@@ -4522,7 +4522,7 @@ number to the number of strides, to a single index k. It is useful for
 building multidimensional array classes using the `valarray` template,
 which is one-dimensional. The set of one-dimensional index values
 specified by a `gslice` are $$k = s + \sum_ji_jd_j$$ where the
-multidimensional indices iⱼ range in value from 0 to $l_{ij} - 1$.
+multidimensional indices iⱼ range in value from 0 to lᵢⱼ - 1.
 
 The `gslice` specification
 

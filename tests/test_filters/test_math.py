@@ -96,12 +96,13 @@ def test_superscript_unavailable_letter():
 
 
 def test_complex_superscript_unchanged():
-    """Test complex superscripts remain as LaTeX"""
+    """Test multi-char superscripts convert when possible"""
     latex = r"Value $x^{text}$ and $2^{i+1}$."
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
-    # Complex superscripts should remain
-    assert "$x^{text}$" in output
+    # Multi-char word-only superscripts now convert
+    assert "xᵗᵉˣᵗ" in output
+    # But complex expressions with operators remain as LaTeX
     assert "$2^{i+1}$" in output
 
 
@@ -122,8 +123,8 @@ def test_subscript_with_braces():
     latex = r"Index $a_{10}$ works."
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
-    # Multi-digit subscript can't be converted, should stay as LaTeX
-    assert "$a_{10}$" in output
+    # Multi-digit subscripts now convert with multi-char support
+    assert "a₁₀" in output
 
 
 def test_subscript_letters():
@@ -160,14 +161,16 @@ def test_subscript_unavailable_letters():
 
 
 def test_complex_subscript_unchanged():
-    """Test complex subscripts remain as LaTeX"""
+    """Test multi-char subscripts convert when possible"""
     latex = r"Values $x_{tail}$, $x_{i+1}$, $x_{\mathrm{max}}$."
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
-    assert "$x_{tail}$" in output
-    # Note: x_{i+1} is now converted to Unicode since we support arithmetic subscripts
+    # Multi-char word-only subscripts now convert
+    assert "xₜₐᵢₗ" in output
+    # Arithmetic subscripts convert
     assert "xᵢ₊₁" in output
-    assert "$x_{\\mathrm{max}}$" in output
+    # \mathrm{} is stripped and multi-char converts
+    assert "xₘₐₓ" in output
 
 
 def test_mixed_sub_and_super():
@@ -362,12 +365,12 @@ def test_mathtt_conversion():
 
 
 def test_mathrm_conversion():
-    """Test mathrm conversion"""
-    latex = r"$x_{\mathrm{max}}$ stays as LaTeX."
+    """Test mathrm conversion with multi-char subscript"""
+    latex = r"$x_{\mathrm{max}}$ converts."
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
-    # Complex subscript, should stay
-    assert r"$x_{\mathrm{max}}$" in output
+    # \mathrm{} is stripped, then multi-char subscript converts
+    assert "xₘₐₓ" in output
 
 
 def test_mathit_conversion():

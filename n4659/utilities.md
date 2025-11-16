@@ -1445,7 +1445,7 @@ tuple& operator=(tuple&& u) noexcept(see below);
 <span class="smallcaps">and</span> of the following expressions:
 
 ``` cpp
-is_nothrow_move_assignable_v<T_i>
+is_nothrow_move_assignable_v<Tᵢ>
 ```
 
 where Tᵢ is the iᵗʰ type in `Types`.
@@ -1525,7 +1525,7 @@ corresponding element in `rhs`.
 <span class="smallcaps">and</span> of the following expressions:
 
 ``` cpp
-is_nothrow_swappable_v<T_i>
+is_nothrow_swappable_v<Tᵢ>
 ```
 
 where Tᵢ is the iᵗʰ type in `Types`.
@@ -1536,7 +1536,7 @@ exception.
 #### Tuple creation functions <a id="tuple.creation">[[tuple.creation]]</a>
 
 In the function descriptions that follow, the members of a parameter
-pack `XTypes` are denoted by `X`_i for i in \[`0`,
+pack `XTypes` are denoted by `X`ᵢ for i in \[`0`,
 `sizeof...(`*X*`Types)`) in order, where indexing is zero-based.
 
 ``` cpp
@@ -1544,10 +1544,10 @@ template<class... TTypes>
   constexpr tuple<VTypes...> make_tuple(TTypes&&... t);
 ```
 
-The pack `VTypes` is defined as follows. Let `U`_i be `decay_t<T`_i`>`
-for each `T`_i in `TTypes`. If `U`_i is a specialization of
-`reference_wrapper`, then `V`_i in `VTypes` is `U`_i`::type&`, otherwise
-`V`_i is `U`_i.
+The pack `VTypes` is defined as follows. Let `U`ᵢ be `decay_t<T`ᵢ`>` for
+each `T`ᵢ in `TTypes`. If `U`ᵢ is a specialization of
+`reference_wrapper`, then `V`ᵢ in `VTypes` is `U`ᵢ`::type&`, otherwise
+`V`ᵢ is `U`ᵢ.
 
 *Returns:* `tuple<VTypes...>(std::forward<TTypes>(t)...)`.
 
@@ -1604,7 +1604,7 @@ template <class... Tuples>
 ```
 
 In the following paragraphs, let `Tᵢ` be the iᵗʰ type in `Tuples`, `Uᵢ`
-be `remove_reference_t<T`_i`>`, and `tpᵢ` be the iᵗʰ parameter in the
+be `remove_reference_t<T`ᵢ`>`, and `tpᵢ` be the iᵗʰ parameter in the
 function parameter pack `tpls`, where all indexing is zero-based.
 
 *Requires:* For all i, `Uᵢ` shall be the type cvᵢ `tuple<``Argsᵢ``...>`,
@@ -1627,7 +1627,7 @@ corresponding to the type sequence `Argsᵢ`.
 ${k_i}^\text{th}$ type element `e_ik` in `eᵢ``...` with
 
 ``` cpp
-get<$k_i$>(std::forward<$T_i$>($tp_i$))
+get<kᵢ>(std::forward<$T_i$>($tp_i$))
 ```
 
 for each valid kᵢ and each group `eᵢ` in order.
@@ -1861,10 +1861,10 @@ expressions returning types that are convertible to `bool`.
 
 *Returns:* The result of a lexicographical comparison between `t` and
 `u`. The result is defined as:
-`(bool)(get<0>(t) < get<0>(u)) || (!(bool)(get<0>(u) < get<0>(t)) && t`$_{tail}$` < u`$_{tail}$`)`,
-where `r`$_{tail}$ for some tuple `r` is a tuple containing all but the
-first element of `r`. For any two zero-length tuples `e` and `f`,
-`e < f` returns `false`.
+`(bool)(get<0>(t) < get<0>(u)) || (!(bool)(get<0>(u) < get<0>(t)) && t`ₜₐᵢₗ` < u`ₜₐᵢₗ`)`,
+where `r`ₜₐᵢₗ for some tuple `r` is a tuple containing all but the first
+element of `r`. For any two zero-length tuples `e` and `f`, `e < f`
+returns `false`.
 
 ``` cpp
 template<class... TTypes, class... UTypes>
@@ -3545,7 +3545,7 @@ constructor for the argument.
 The expression inside `noexcept` is equivalent to:
 
 ``` cpp
-is_nothrow_assignable_v<T$_j$&, T> && is_nothrow_constructible_v<T$_j$, T>
+is_nothrow_assignable_v<Tⱼ&, T> && is_nothrow_constructible_v<Tⱼ, T>
 ```
 
 - If an exception is thrown during the assignment of

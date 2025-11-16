@@ -10470,7 +10470,7 @@ namespace std {
                                  const allocator_type& a)
       : unordered_multiset(il, n, hasher(), key_equal(), a) { }
     constexpr unordered_multiset(initializer_list<value_type> il, size_type n, const hasher& hf,
-                       const allocator_type& a)
+                                 const allocator_type& a)
       : unordered_multiset(il, n, hf, key_equal(), a) { }
     constexpr ~unordered_multiset();
     constexpr unordered_multiset& operator=(const unordered_multiset&);
@@ -18323,7 +18323,7 @@ constexpr auto layout_left::mapping<Extents>::submdspan-mapping-impl(
   `index_type`. — *end note*]
 - otherwise,
   ``` cpp
-  submdspan_mapping_result{layout_left_padded<S_static>::mapping(sub_ext, stride($u$ + 1)),
+  submdspan_mapping_result{layout_left_padded<S_static>::mapping(sub_ext, stride(u + 1)),
                            offset}
   ```
 
@@ -18375,7 +18375,7 @@ constexpr auto layout_right::mapping<Extents>::submdspan-mapping-impl(
 - otherwise,
   ``` cpp
   submdspan_mapping_result{layout_right_padded<S_static>::mapping(sub_ext,
-                               stride(rank_ - $u$ - 2)), offset}
+                               stride(rank_ - u - 2)), offset}
   ```
 
   if for a value u for which $\textit{rank_} - u - 2$ is the largest
@@ -18440,7 +18440,7 @@ constexpr auto layout_left_padded::mapping<Extents>::submdspan-mapping-impl(
   - S₀ is a unit-stride slice for `mapping`;
 - otherwise,
   ``` cpp
-  submdspan_mapping_result{layout_left_padded<S_static>::mapping(sub_ext, stride($u$ + 1)),
+  submdspan_mapping_result{layout_left_padded<S_static>::mapping(sub_ext, stride(u + 1)),
                            offset}
   ```
 
@@ -18487,7 +18487,7 @@ constexpr auto layout_right_padded::mapping<Extents>::submdspan-mapping-impl(
 - otherwise,
   ``` cpp
   submdspan_mapping_result{layout_right_padded<S_static>::mapping(sub_ext,
-                               stride(rank_ - $u$ - 2)), offset}
+                               stride(rank_ - u - 2)), offset}
   ```
 
   if for a value u for which *`rank_`*` - `u` - 2` is the largest value

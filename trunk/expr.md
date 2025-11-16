@@ -2798,7 +2798,7 @@ the following order:
   ``` cpp
   requires {
     { E1 } -> C;
-    { E2 } -> D<A$_1$, $\cdots$, A$_n$>;
+    { E2 } -> D<A₁, ⋯, Aₙ>;
   };
   ```
 
@@ -2806,7 +2806,7 @@ the following order:
   ``` cpp
   requires {
     E1; requires C<decltype((E1))>;
-    E2; requires D<decltype((E2)), A$_1$, $\cdots$, A$_n$>;
+    E2; requires D<decltype((E2)), A₁, ⋯, Aₙ>;
   };
   ```
 
@@ -5567,7 +5567,7 @@ similar [[conv.qual]], the behavior is undefined.
 ``` cpp
 int arr[5] = {1, 2, 3, 4, 5};
 unsigned int *p = reinterpret_cast<unsigned int*>(arr + 1);
-unsigned int k = *p;            // OK, value of k is $2$[conv.lval]
+unsigned int k = *p;            // OK, value of k is 2[conv.lval]
 unsigned int *q = p + 1;        // undefined behavior: p points to an int, not an unsigned int object
 ```
 

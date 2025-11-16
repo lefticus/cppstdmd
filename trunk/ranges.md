@@ -7214,8 +7214,8 @@ constexpr iterator& operator++();
 *Effects:* Let i be *`it_`*`.index()`. Equivalent to:
 
 ``` cpp
-++std::get<$i$>(it_);
-satisfy<$i$>();
+++std::get<i>(it_);
+satisfy<i>();
 return *this;
 ```
 
@@ -7252,7 +7252,7 @@ constexpr iterator& operator--()
 *Effects:* Let i be *`it_`*`.index()`. Equivalent to:
 
 ``` cpp
-prev<$i$>();
+prev<i>();
 return *this;
 ```
 
@@ -7280,9 +7280,9 @@ constexpr iterator& operator+=(difference_type n)
 
 ``` cpp
 if (n > 0) {
-  advance-fwd<$i$>(std::get<$i$>(it_) - ranges::begin(std::get<$i$>(parent_->views_)), n);
+  advance-fwd<i>(std::get<i>(it_) - ranges::begin(std::get<i>(parent_->views_)), n);
 } else if (n < 0) {
-  advance-bwd<$i$>(std::get<$i$>(it_) - ranges::begin(std::get<$i$>(parent_->views_)), -n);
+  advance-bwd<i>(std::get<i>(it_) - ranges::begin(std::get<i>(parent_->views_)), -n);
 }
 return *this;
 ```
@@ -7360,7 +7360,7 @@ Let op be the operator.
 *Effects:* Equivalent to:
 
 ``` cpp
-return x.it_ $op$ y.it_;
+return x.it_ op y.it_;
 ```
 
 ``` cpp
@@ -7420,7 +7420,7 @@ friend constexpr difference_type operator-(const iterator& x, const iterator& y)
   the range \[i_`y`` + 1`, i_`x`) if there is any, and `0` otherwise, of
   type `difference_type`, equivalent to:
   ``` cpp
-  return $d_y$ + $s$ + $d_x$;
+  return $d_y$ + s + $d_x$;
   ```
 - otherwise, if i_`x`` < `i_`y` is `true`, equivalent to:
   ``` cpp
@@ -7446,7 +7446,7 @@ the range \[i_`x`` + 1`, `sizeof...(Views)`) if there is any, and `0`
 otherwise, of type difference_type, equivalent to:
 
 ``` cpp
-return -($d_x$ + $s$);
+return -($d_x$ + s);
 ```
 
 *Remarks:* Let `Fs` be the pack that consists of all elements of `Views`
@@ -9191,14 +9191,14 @@ friend constexpr void iter_swap(const iterator& l, const iterator& r) noexcept(s
 *Effects:* For every integer 0 ≤ i < `sizeof...(Views)`, performs:
 
 ``` cpp
-ranges::iter_swap(std::get<$i$>(l.current_), std::get<$i$>(r.current_))
+ranges::iter_swap(std::get<i>(l.current_), std::get<i>(r.current_))
 ```
 
 *Remarks:* The exception specification is equivalent to the logical of
 the following expressions:
 
 ``` cpp
-noexcept(ranges::iter_swap(std::get<$i$>(l.current_), std::get<$i$>(r.current_)))
+noexcept(ranges::iter_swap(std::get<i>(l.current_), std::get<i>(r.current_)))
 ```
 
 for every integer 0 ≤ i < `sizeof...(Views)`.
@@ -13292,7 +13292,7 @@ friend constexpr void iter_swap(const iterator& l, const iterator& r) noexcept(s
 *Effects:* For every integer 0 \le i \le `sizeof...(Vs)`, performs:
 
 ``` cpp
-ranges::iter_swap(std::get<$i$>(l.current_), std::get<$i$>(r.current_))
+ranges::iter_swap(std::get<i>(l.current_), std::get<i>(r.current_))
 ```
 
 *Remarks:* The exception specification is equivalent to the logical of

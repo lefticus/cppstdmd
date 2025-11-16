@@ -10547,7 +10547,7 @@ are convertible to `T`.
 *Returns:*
 
 ``` cpp
-GENERALIZED_SUM(binary_op1, init, binary_op2(*i, *(first2 + (i - first1))), $\dotsc$)
+GENERALIZED_SUM(binary_op1, init, binary_op2(*i, *(first2 + (i - first1))), …)
 ```
 
 for every iterator `i` in \[`first1`, `last1`).
@@ -10587,7 +10587,7 @@ are convertible to `T`.
 *Returns:*
 
 ``` cpp
-GENERALIZED_SUM(binary_op, init, unary_op(*i), $\dotsc$)
+GENERALIZED_SUM(binary_op, init, unary_op(*i), …)
 ```
 
 for every iterator `i` in \[`first`, `last`).
@@ -10699,7 +10699,7 @@ through `result + K` the value of:
 
 ``` cpp
 GENERALIZED_NONCOMMUTATIVE_SUM(
-    binary_op, init, *(first + 0), *(first + 1), $\dotsc$, *(first + K - 1))
+    binary_op, init, *(first + 0), *(first + 1), …, *(first + K - 1))
 ```
 
 *Returns:* The end of the resulting range beginning at `result`.
@@ -10848,7 +10848,7 @@ through `result + K` the value of:
 ``` cpp
 GENERALIZED_NONCOMMUTATIVE_SUM(
     binary_op, init,
-    unary_op(*(first + 0)), unary_op(*(first + 1)), $\dotsc$, unary_op(*(first + K - 1)))
+    unary_op(*(first + 0)), unary_op(*(first + 1)), …, unary_op(*(first + K - 1)))
 ```
 
 *Returns:* The end of the resulting range beginning at `result`.

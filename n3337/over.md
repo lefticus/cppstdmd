@@ -877,16 +877,16 @@ short s = 0;
 
 void f() {
   Fcn(&i, s);                   // is ambiguous because
-                                // &i $\to$ int* is better than &i $\to$ const int*
-                                // but s $\to$ short is also better than s $\to$ int
+                                // &i → int* is better than &i → const int*
+                                // but s → short is also better than s → int
 
   Fcn(&i, 1L);                  // calls Fcn(int*, int), because
-                                // &i $\to$ int* is better than &i $\to$ const int*
-                                // and 1L $\to$ short and 1L $\to$ int are indistinguishable
+                                // &i → int* is better than &i → const int*
+                                // and 1L → short and 1L → int are indistinguishable
 
   Fcn(&i,'c');                  // calls Fcn(int*, int), because
-                                // &i $\to$ int* is better than &i $\to$ const int*
-                                // and c $\to$ int is better than c $\to$ short
+                                // &i → int* is better than &i → const int*
+                                // and c → int is better than c → short
 }
 ```
 
@@ -1386,8 +1386,8 @@ conversion sequences unless one of the following rules applies:
   } a;
   int f(int);
   int f(float);
-  int i = f(a);                   // calls f(int), because short $\to$ int is
-                                  // better than short $\to$ float.
+  int i = f(a);                   // calls f(int), because short → int is
+                                  // better than short → float.
   ```
 - List-initialization sequence `L1` is a better conversion sequence than
   list-initialization sequence `L2` if `L1` converts to

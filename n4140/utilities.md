@@ -1062,7 +1062,7 @@ The expression inside `noexcept` is equivalent to the logical
 <span class="smallcaps">and</span> of the following expressions:
 
 ``` cpp
-is_nothrow_move_assignable<$T_i$>::value
+is_nothrow_move_assignable<Tᵢ>::value
 ```
 
 where Tᵢ is the iᵗʰ type in `Types`.
@@ -1140,7 +1140,7 @@ The expression inside `noexcept` is equivalent to the logical
 <span class="smallcaps">and</span> of the following expressions:
 
 ``` cpp
-noexcept(swap(declval<$T_i$&>>(), declval<$T_i$&>()))
+noexcept(swap(declval<Tᵢ&>>(), declval<Tᵢ&>()))
 ```
 
 where Tᵢ is the iᵗʰ type in `Types`.
@@ -1228,12 +1228,10 @@ parameter pack `tpls`, where all indexing is zero-based.
 *Requires:* For all i, Uᵢ shall be the type cvᵢ `tuple<`Argsᵢ...`>`,
 where cvᵢ is the (possibly empty) iᵗʰ cv-qualifier-seq and Argsᵢ is the
 parameter pack representing the element types in Uᵢ. Let ${A_{ik}}$ be
-the ${k_i}^{th}$ type in Argsᵢ. For all $A_{ik}$ the following
-requirements shall be satisfied: If Tᵢ is deduced as an lvalue reference
-type, then
-`is_constructible<`$A_{ik}$`, `cvᵢ` `$A_{ik}$`&>::value == true`,
-otherwise
-`is_constructible<`$A_{ik}$`, `$cv_i A_{ik}$`&&>::value == true`.
+the ${k_i}^{th}$ type in Argsᵢ. For all Aᵢₖ the following requirements
+shall be satisfied: If Tᵢ is deduced as an lvalue reference type, then
+`is_constructible<`Aᵢₖ`, `cvᵢ` `Aᵢₖ`&>::value == true`, otherwise
+`is_constructible<`Aᵢₖ`, `cvᵢ Aᵢₖ`&&>::value == true`.
 
 *Remarks:* The types in *`Ctypes`* shall be equal to the ordered
 sequence of the extended types Args₀`..., `Args₁`...,` ... Argsₙ₋₁`...`,
@@ -1242,7 +1240,7 @@ sequence of tuple elements of the resulting `tuple` object corresponding
 to the type sequence Argsᵢ.
 
 *Returns:* A `tuple` object constructed by initializing the ${k_i}^{th}$
-type element $e_{ik}$ in eᵢ`...` with  
+type element eᵢₖ in eᵢ`...` with  
 `get<`kᵢ`>(std::forward<`Tᵢ`>(`tpᵢ`))` for each valid kᵢ and each group
 eᵢ in order.
 
@@ -1409,10 +1407,10 @@ expressions returning types that are convertible to `bool`.
 
 *Returns:* The result of a lexicographical comparison between `t` and
 `u`. The result is defined as:
-`(bool)(get<0>(t) < get<0>(u)) || (!(bool)(get<0>(u) < get<0>(t)) && t`$_{tail}$` < u`$_{tail}$`)`,
-where `r`$_{tail}$ for some tuple `r` is a tuple containing all but the
-first element of `r`. For any two zero-length tuples `e` and `f`,
-`e < f` returns `false`.
+`(bool)(get<0>(t) < get<0>(u)) || (!(bool)(get<0>(u) < get<0>(t)) && t`ₜₐᵢₗ` < u`ₜₐᵢₗ`)`,
+where `r`ₜₐᵢₗ for some tuple `r` is a tuple containing all but the first
+element of `r`. For any two zero-length tuples `e` and `f`, `e < f`
+returns `false`.
 
 ``` cpp
 template<class... TTypes, class... UTypes>

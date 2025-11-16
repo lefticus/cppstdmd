@@ -1359,7 +1359,7 @@ template<class T> auto q(T)
                                 // used within the context of this decltype-specifier
 void r() {
   q(42);                        // error: deduction against q succeeds, so overload resolution selects
-                                // the specialization ``q(T) -> decltype((h<T>()))'' with T$=$int;
+                                // the specialization ``q(T) -> decltype((h<T>()))'' with T=int;
                                 // the return type is A<int>, so a temporary is introduced and its
                                 // destructor is used, so the program is ill-formed
 }
@@ -5521,7 +5521,7 @@ anonymous union member, and the number of elements in the
 *identifier-list* shall be equal to the number of non-static data
 members of `E`. Designating the non-static data members of `E` as `m₀`,
 `m₁`, `m₂`, \dotsc (in declaration order), each `vᵢ` is the name of an
-lvalue that refers to the member `m`_i of *e* and whose type is that of
+lvalue that refers to the member `m`ᵢ of *e* and whose type is that of
 `e.\tcode{m}_i` [[expr.ref]]; the referenced type is the declared type
 of `mᵢ` if that type is a reference type, or the type of `e.\tcode{m}_i`
 otherwise. The lvalue is a bit-field if that member is a bit-field.

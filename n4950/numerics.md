@@ -961,7 +961,7 @@ subclause shall be declared `explicit`.
 
 A *seed sequence* is an object that consumes a sequence of
 integer-valued data and produces a requested number of unsigned integer
-values i, $0 \le i < 2^{32}$, based on the consumed data.
+values i, 0 ≤ i < 2³², based on the consumed data.
 
 [*Note 1*: Such an object provides a mechanism to avoid replication of
 streams of random variates. This can be useful, for example, in
@@ -2085,7 +2085,7 @@ requirements [[input.iterators]].
 
 ``` cpp
 for (InputIterator s = begin; s != end; ++s)
- v.push_back((*s)$\bmod 2^{32}$);
+ v.push_back((*s) mod  2³²);
 ```
 
 ``` cpp
@@ -2103,7 +2103,7 @@ the requirements of a mutable iterator.
 *Effects:* Does nothing if `begin == end`. Otherwise, with
 s = `v.size()` and n = `end` - `begin`, fills the supplied range
 [`begin`,`end`) according to the following algorithm in which each
-operation is to be carried out modulo $2^{32}$, each indexing operator
+operation is to be carried out modulo 2³², each indexing operator
 applied to `begin` is to be taken modulo n, and T(x) is defined as
 $x \xor (x \rightshift 27)$:
 
@@ -5053,7 +5053,7 @@ number to the number of strides, to a single index k. It is useful for
 building multidimensional array classes using the `valarray` template,
 which is one-dimensional. The set of one-dimensional index values
 specified by a `gslice` are $$k = s + \sum_j i_j d_j$$ where the
-multidimensional indices iⱼ range in value from 0 to $l_{ij} - 1$.
+multidimensional indices iⱼ range in value from 0 to lᵢⱼ - 1.
 
 [*Example 1*:
 
@@ -6433,10 +6433,10 @@ namespace std::numbers {
 
 The library-defined partial specializations of mathematical constant
 variable templates are initialized with the nearest representable values
-of e, log₂ e, $\log_{10} \mathrm{e}$, π, $\frac{1}{\pi}$,
-$\frac{1}{\sqrt{\pi}}$, $\ln 2$, $\ln 10$, $\sqrt{2}$, $\sqrt{3}$,
-$\frac{1}{\sqrt{3}}$, the Euler-Mascheroni γ constant, and the golden
-ratio φ constant $\frac{1+\sqrt{5}}{2}$, respectively.
+of e, log₂ e, log₁₀ e, π, $\frac{1}{\pi}$, $\frac{1}{\sqrt{\pi}}$,
+$\ln 2$, $\ln 10$, $\sqrt{2}$, $\sqrt{3}$, $\frac{1}{\sqrt{3}}$, the
+Euler-Mascheroni γ constant, and the golden ratio φ constant
+$\frac{1+\sqrt{5}}{2}$, respectively.
 
 Pursuant to [[namespace.std]], a program may partially or explicitly
 specialize a mathematical constant variable template provided that the

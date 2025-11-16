@@ -8212,14 +8212,14 @@ friend constexpr void iter_swap(const iterator& l, const iterator& r) noexcept(s
 *Effects:* For every integer 0 ≤ i < `sizeof...(Views)`, performs:
 
 ``` cpp
-ranges::iter_swap(std::get<$i$>(l.current_), std::get<$i$>(r.current_))
+ranges::iter_swap(std::get<i>(l.current_), std::get<i>(r.current_))
 ```
 
 *Remarks:* The exception specification is equivalent to the logical of
 the following expressions:
 
 ``` cpp
-noexcept(ranges::iter_swap(std::get<$i$>(l.current_), std::get<$i$>(r.current_)))
+noexcept(ranges::iter_swap(std::get<i>(l.current_), std::get<i>(r.current_)))
 ```
 
 for every integer 0 ≤ i < `sizeof...(Views)`.
@@ -12211,7 +12211,7 @@ friend constexpr void iter_swap(const iterator& l, const iterator& r) noexcept(s
 *Effects:* For every integer 0 \le i \le `sizeof...(Vs)`, performs:
 
 ``` cpp
-ranges::iter_swap(std::get<$i$>(l.current_), std::get<$i$>(r.current_))
+ranges::iter_swap(std::get<i>(l.current_), std::get<i>(r.current_))
 ```
 
 *Remarks:* The exception specification is equivalent to the logical of

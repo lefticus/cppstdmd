@@ -1279,7 +1279,7 @@ template<typename T>
 
 template<typename T>
   requires (sizeof(T) > 1) && (get_value<T>())
-    void f(T);      // has associated constraint sizeof(T) > 1 $\land$ get_value<T>()
+    void f(T);      // has associated constraint sizeof(T) > 1 ∧ get_value<T>()
 
 void f(int);
 
@@ -1626,9 +1626,9 @@ subsumes every conjunctive clause Qⱼ in the conjunctive normal form[^5]
 of Q, where
 
 - a disjunctive clause Pᵢ subsumes a conjunctive clause Qⱼ if and only
-  if there exists an atomic constraint $P_{ia}$ in Pᵢ for which there
-  exists an atomic constraint $Q_{jb}$ in Qⱼ such that $P_{ia}$ subsumes
-  $Q_{jb}$, and
+  if there exists an atomic constraint Pᵢₐ in Pᵢ for which there exists
+  an atomic constraint $Q_{jb}$ in Qⱼ such that Pᵢₐ subsumes $Q_{jb}$,
+  and
 - an atomic constraint A subsumes another atomic constraint B if and
   only if A and B are identical using the rules described in
   [[temp.constr.atomic]].

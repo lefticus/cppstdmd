@@ -729,7 +729,7 @@ follows:
   }
   ```
 
-  and Eᵢ is the $i^{\text{th}}$ element of the *expression-list*.
+  and Eᵢ is the iᵗʰ element of the *expression-list*.
 - Otherwise, if S is an iterating expansion statement, S is equivalent
   to:
   ``` cpp

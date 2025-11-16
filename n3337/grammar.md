@@ -612,7 +612,7 @@ logical-and-expression:
 ``` bnf
 logical-or-expression:
     logical-and-expression
-    logical-or-expression '$||$' logical-and-expression
+    logical-or-expression '||' logical-and-expression
 ```
 
 ``` bnf

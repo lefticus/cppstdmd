@@ -1890,7 +1890,7 @@ void h()
   AB::f('c');       // as above but resolution chooses B::f(char)
 
   AB::x++;          // x is not declared directly in AB, and is not declared in A or B, so the rules
-                    // are applied recursively to Y and Z, S is ${ }$ so the program is ill-formed
+                    // are applied recursively to Y and Z, S is { } so the program is ill-formed
 
   AB::i++;          // i is not declared directly in AB so the rules are applied recursively to A and B,
                     // S is ${ A::i, B::i }$ so the use is ambiguous and the program is ill-formed

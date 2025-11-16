@@ -1364,18 +1364,18 @@ is as if the enumeration had a single enumerator with value 0.
 For an enumeration whose underlying type is fixed, the values of the
 enumeration are the values of the underlying type. Otherwise, for an
 enumeration where eₘin is the smallest enumerator and eₘax is the
-largest, the values of the enumeration are the values in the range
-$b_{min}$ to $b_{max}$, defined as follows: Let K be 1 for a two’s
-complement representation and 0 for a one’s complement or sign-magnitude
-representation. $b_{max}$ is the smallest value greater than or equal to
-$max(|e_{min}| - K, |e_{max}|)$ and equal to $2^M-1$, where M is a
-non-negative integer. $b_{min}$ is zero if $e_{min}$ is non-negative and
-$-(b_{max}+K)$ otherwise. The size of the smallest bit-field large
-enough to hold all the values of the enumeration type is max(M,1) if
-$b_{min}$ is zero and M+1 otherwise. It is possible to define an
-enumeration that has values not defined by any of its enumerators. If
-the *enumerator-list* is empty, the values of the enumeration are as if
-the enumeration had a single enumerator with value 0.[^5]
+largest, the values of the enumeration are the values in the range bₘᵢₙ
+to bₘₐₓ, defined as follows: Let K be 1 for a two’s complement
+representation and 0 for a one’s complement or sign-magnitude
+representation. bₘₐₓ is the smallest value greater than or equal to
+max(|eₘᵢₙ| - K, |eₘₐₓ|) and equal to $2^M-1$, where M is a non-negative
+integer. bₘᵢₙ is zero if eₘᵢₙ is non-negative and -(bₘₐₓ+K) otherwise.
+The size of the smallest bit-field large enough to hold all the values
+of the enumeration type is max(M,1) if bₘᵢₙ is zero and M+1 otherwise.
+It is possible to define an enumeration that has values not defined by
+any of its enumerators. If the *enumerator-list* is empty, the values of
+the enumeration are as if the enumeration had a single enumerator with
+value 0.[^5]
 
 Two enumeration types are layout-compatible if they have the same
 *underlying type*.

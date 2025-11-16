@@ -370,3 +370,113 @@ def test_math_subscripts_with_braces():
     # Should NOT have raw LaTeX math
     assert "$_{0}$" not in output
     assert "$_{1}$" not in output
+
+
+def test_math_superscripts_in_bnf():
+    r"""Test superscripts in BNF grammar"""
+    latex = r"""
+\begin{ncbnf}
+\nontermdef{pattern}\br
+    expr$^n$\br
+    value$^{2}$
+\end{ncbnf}
+"""
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    # Superscripts should be converted to Unicode
+    assert "exprⁿ" in output
+    assert "value²" in output
+    # Should NOT have raw LaTeX math
+    assert "$^n$" not in output
+    assert "$^{2}$" not in output
+
+
+def test_math_operators_in_bnf():
+    r"""Test math operators like \times, \le in BNF"""
+    latex = r"""
+\begin{ncbnf}
+\nontermdef{complexity}\br
+    $n \times m$ operations\br
+    $i \le n$
+\end{ncbnf}
+"""
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    # Operators should be converted to Unicode
+    assert "n × m operations" in output
+    assert "i ≤ n" in output
+    # Should NOT have raw LaTeX
+    assert r"\times" not in output
+    assert r"\le" not in output
+
+
+def test_greek_letters_in_bnf():
+    r"""Test Greek letters in BNF grammar"""
+    latex = r"""
+\begin{ncbnf}
+\nontermdef{theorem}\br
+    $\alpha$ production\br
+    $\beta$ reduction
+\end{ncbnf}
+"""
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    # Greek letters should be converted to Unicode
+    assert "α production" in output
+    assert "β reduction" in output
+    # Should NOT have raw LaTeX
+    assert r"\alpha" not in output
+    assert r"\beta" not in output
+
+
+def test_arrows_in_bnf():
+    r"""Test arrows in BNF grammar"""
+    latex = r"""
+\begin{ncbnf}
+\nontermdef{transition}\br
+    state$_1$ $\rightarrow$ state$_2$\br
+    $A \Rightarrow B$
+\end{ncbnf}
+"""
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    # Arrows and subscripts should be converted
+    assert "state₁ → state₂" in output
+    assert "A ⇒ B" in output
+    # Should NOT have raw LaTeX
+    assert r"\rightarrow" not in output
+    assert r"\Rightarrow" not in output
+
+
+def test_combined_math_in_bnf():
+    r"""Test combined math expressions in BNF"""
+    latex = r"""
+\begin{ncbnf}
+\nontermdef{complex-rule}\br
+    expr$_i^n$ $\le$ bound$_{max}$\br
+    $\alpha \cdot \beta \to \gamma$
+\end{ncbnf}
+"""
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    # Combined subscript/superscript
+    assert "exprᵢⁿ ≤ boundₘₐₓ" in output
+    # Greek letters with operators and arrow
+    assert "α ⋅ β → γ" in output
+    # Should NOT have raw LaTeX
+    assert "$_i^n$" not in output
+    assert r"\alpha" not in output
+
+
+def test_unconvertible_math_preserved():
+    r"""Test that complex/unconvertible math is preserved as LaTeX"""
+    latex = r"""
+\begin{ncbnf}
+\nontermdef{complex}\br
+    pattern with $\frac{a}{b}$ fraction
+\end{ncbnf}
+"""
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    # Fractions can't be converted, should preserve $...$ delimiters
+    assert r"$\frac{a}{b}$" in output or "$" in output

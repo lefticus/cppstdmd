@@ -1291,7 +1291,7 @@ struct on-stop-request {
 ```
 
 ``` cpp
-template<class T_0, class T_1, \dotsc$, class T$_n>
+template<class T_0, class T_1, \dotsc, class T_n>
 struct product-type {       // exposition only
   T_0 t_0;                // exposition only
   T_1 t_1;                // exposition only
@@ -2168,7 +2168,7 @@ expression whose type satisfies `valid-completion-signatures`;
 otherwise, it is the following expression:
 
 ``` cpp
-($e$, throw $except$, completion_signatures())
+(e, throw except, completion_signatures())
 ```
 
 Let *`get-complsigs`*`<Sndr, Env...>()` be expression-equivalent to

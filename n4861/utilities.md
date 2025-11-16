@@ -1323,7 +1323,7 @@ constexpr tuple& operator=(tuple&& u) noexcept(see below);
 <span class="smallcaps">and</span> of the following expressions:
 
 ``` cpp
-is_nothrow_move_assignable_v<T_i>
+is_nothrow_move_assignable_v<Tᵢ>
 ```
 
 where Tᵢ is the iᵗʰ type in `Types`.
@@ -1405,7 +1405,7 @@ corresponding element in `rhs`.
 <span class="smallcaps">and</span> of the following expressions:
 
 ``` cpp
-is_nothrow_swappable_v<T_i>
+is_nothrow_swappable_v<Tᵢ>
 ```
 
 where Tᵢ is the iᵗʰ type in `Types`.
@@ -1416,7 +1416,7 @@ exception.
 ### Tuple creation functions <a id="tuple.creation">[[tuple.creation]]</a>
 
 In the function descriptions that follow, the members of a template
-parameter pack `XTypes` are denoted by `X`_i for i in \[`0`,
+parameter pack `XTypes` are denoted by `X`ᵢ for i in \[`0`,
 `sizeof...(`*X*`Types)`) in order, where indexing is zero-based.
 
 ``` cpp
@@ -1480,7 +1480,7 @@ template<class... Tuples>
 ```
 
 In the following paragraphs, let `Tᵢ` be the iᵗʰ type in `Tuples`, `Uᵢ`
-be `remove_reference_t<T`_i`>`, and `tpᵢ` be the iᵗʰ parameter in the
+be `remove_reference_t<T`ᵢ`>`, and `tpᵢ` be the iᵗʰ parameter in the
 function parameter pack `tpls`, where all indexing is zero-based.
 
 *Preconditions:* For all i, `Uᵢ` is the type cvᵢ `tuple<``Argsᵢ``...>`,
@@ -1503,7 +1503,7 @@ corresponding to the type sequence `Argsᵢ`.
 ${k_i}^\text{th}$ type element `e_ik` in `eᵢ``...` with
 
 ``` cpp
-get<$k_i$>(std::forward<$T_i$>($tp_i$))
+get<kᵢ>(std::forward<$T_i$>($tp_i$))
 ```
 
 for each valid kᵢ and each group `eᵢ` in order.
@@ -3312,7 +3312,7 @@ selected by the imaginary function overload resolution described above.
 *Remarks:* The expression inside `noexcept` is equivalent to:
 
 ``` cpp
-is_nothrow_assignable_v<T$_j$&, T> && is_nothrow_constructible_v<T$_j$, T>
+is_nothrow_assignable_v<Tⱼ&, T> && is_nothrow_constructible_v<Tⱼ, T>
 ```
 
 - If an exception is thrown during the assignment of
@@ -3335,7 +3335,7 @@ occurs exactly once in `Types`.
 *Effects:* Equivalent to:
 
 ``` cpp
-return emplace<$I$>(std::forward<Args>(args)...);
+return emplace<I>(std::forward<Args>(args)...);
 ```
 
 where I is the zero-based index of `T` in `Types`.
@@ -3350,7 +3350,7 @@ template<class T, class U, class... Args> T& emplace(initializer_list<U> il, Arg
 *Effects:* Equivalent to:
 
 ``` cpp
-return emplace<$I$>(il, std::forward<Args>(args)...);
+return emplace<I>(il, std::forward<Args>(args)...);
 ```
 
 where I is the zero-based index of `T` in `Types`.
@@ -3674,7 +3674,7 @@ if (v.valueless_by_exception() && w.valueless_by_exception())
 if (v.valueless_by_exception()) return strong_ordering::less;
 if (w.valueless_by_exception()) return strong_ordering::greater;
 if (auto c = v.index() <=> w.index(); c != 0) return c;
-return get<$i$>(v) <=> get<$i$>(w);
+return get<i>(v) <=> get<i>(w);
 ```
 
 with i being `v.index()`.
@@ -3709,7 +3709,7 @@ for the second form.
 such expressions are of the same type and value category.
 
 *Returns:* e(`m`), where `m` is the pack for which `mᵢ` is
-`vars`_i`.index()` for all 0 ≤ i < n. The return type is
+`vars`ᵢ`.index()` for all 0 ≤ i < n. The return type is
 `decltype(`e(`m`)`)` for the first form.
 
 *Throws:* `bad_variant_access` if any `variant` in `vars` is
@@ -10623,14 +10623,14 @@ expression-equivalent [[defns.expression-equivalent]] to
 
 ``` cpp
 INVOKE(static_cast<$V_fd$>($v_fd$),
-       static_cast<$V_1$>($v_1$), static_cast<$V_2$>($v_2$), $\dotsc$, static_cast<$V_N$>($v_N$))
+       static_cast<$V_1$>($v_1$), static_cast<$V_2$>($v_2$), …, static_cast<$V_N$>($v_N$))
 ```
 
 for the first overload, and
 
 ``` cpp
 INVOKE<R>(static_cast<$V_fd$>($v_fd$),
-          static_cast<$V_1$>($v_1$), static_cast<$V_2$>($v_2$), $\dotsc$, static_cast<$V_N$>($v_N$))
+          static_cast<$V_1$>($v_1$), static_cast<$V_2$>($v_2$), …, static_cast<$V_N$>($v_N$))
 ```
 
 for the second overload, where the values and types of the target

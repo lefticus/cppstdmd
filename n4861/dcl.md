@@ -1400,7 +1400,7 @@ template<class T> auto q(T)
                                 // used within the context of this decltype-specifier
 void r() {
   q(42);                        // error: deduction against q succeeds, so overload resolution selects
-                                // the specialization ``q(T) -> decltype((h<T>()))'' with T$=$int;
+                                // the specialization ``q(T) -> decltype((h<T>()))'' with T=int;
                                 // the return type is A<int>, so a temporary is introduced and its
                                 // destructor is used, so the program is ill-formed
 }
@@ -4844,19 +4844,19 @@ explicitly defaulted shall
   [[over.binary]], and
 - not have default arguments.
 
-The type `T`_1 of an explicitly defaulted special member function `F` is
-allowed to differ from the type `T`_2 it would have had if it were
+The type `T`₁ of an explicitly defaulted special member function `F` is
+allowed to differ from the type `T`₂ it would have had if it were
 implicitly declared, as follows:
 
-- `T`_1 and `T`_2 may have differing *ref-qualifier*s;
-- `T`_1 and `T`_2 may have differing exception specifications; and
-- if `T`_2 has a parameter of type `const C&`, the corresponding
-  parameter of `T`_1 may be of type `C&`.
+- `T`₁ and `T`₂ may have differing *ref-qualifier*s;
+- `T`₁ and `T`₂ may have differing exception specifications; and
+- if `T`₂ has a parameter of type `const C&`, the corresponding
+  parameter of `T`₁ may be of type `C&`.
 
-If `T`_1 differs from `T`_2 in any other way, then:
+If `T`₁ differs from `T`₂ in any other way, then:
 
-- if `F` is an assignment operator, and the return type of `T`_1 differs
-  from the return type of `T`_2 or `T`_1’s parameter type is not a
+- if `F` is an assignment operator, and the return type of `T`₁ differs
+  from the return type of `T`₂ or `T`₁’s parameter type is not a
   reference, the program is ill-formed;
 - otherwise, if `F` is explicitly defaulted on its first declaration, it
   is defined as deleted;
@@ -5295,7 +5295,7 @@ structured binding declaration, the program is ill-formed.
 
 If `E` is an array type with element type `T`, the number of elements in
 the *identifier-list* shall be equal to the number of elements of `E`.
-Each `v`_i is the name of an lvalue that refers to the element i of the
+Each `v`ᵢ is the name of an lvalue that refers to the element i of the
 array and whose type is `T`; the referenced type is `T`.
 
 [*Note 2*: The top-level cv-qualifiers of `T` are cv. — *end note*]
@@ -5347,8 +5347,8 @@ of `E` or of the same base class of `E`, well-formed when named as
 anonymous union member, and the number of elements in the
 *identifier-list* shall be equal to the number of non-static data
 members of `E`. Designating the non-static data members of `E` as `m₀`,
-`m₁`, `m₂`, \dotsc (in declaration order), each `v`_i is the name of an
-lvalue that refers to the member `m`_i of *e* and whose type is cv `Tᵢ`,
+`m₁`, `m₂`, \dotsc (in declaration order), each `v`ᵢ is the name of an
+lvalue that refers to the member `m`ᵢ of *e* and whose type is cv `Tᵢ`,
 where `Tᵢ` is the declared type of that member; the referenced type is
 cv `Tᵢ`. The lvalue is a bit-field if that member is a bit-field.
 

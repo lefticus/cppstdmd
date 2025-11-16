@@ -2272,7 +2272,7 @@ properties proceed in the following order:
     ``` cpp
     requires {
       { E1 } -> C;
-      { E2 } -> D<A$_1$, $\cdots$, A$_n$>;
+      { E2 } -> D<A₁, ⋯, Aₙ>;
     };
     ```
 
@@ -2280,7 +2280,7 @@ properties proceed in the following order:
     ``` cpp
     requires {
       E1; requires C<decltype((E1))>;
-      E2; requires D<decltype((E2)), A$_1$, $\cdots$, A$_n$>;
+      E2; requires D<decltype((E2)), A₁, ⋯, Aₙ>;
     };
     ```
 

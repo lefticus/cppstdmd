@@ -630,7 +630,7 @@ struct D : public A, public B {
     // Implicit declaration of D::D();
     // Implicit declaration of D::D(const D&) throw();
     // Implicit declaration of D::D(D&&) throw(Y);
-    // Implicit declaration of D::$\sim$D() throw(X, Y);
+    // Implicit declaration of D::~D() throw(X, Y);
 };
 ```
 

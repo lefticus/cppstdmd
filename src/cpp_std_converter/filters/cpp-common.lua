@@ -828,6 +828,600 @@ local function handle_overlap_commands(text)
   return text
 end
 
+-- ============================================================================
+-- Comprehensive Math-to-Unicode Conversion
+-- Shared by: cpp-math.lua, cpp-grammar.lua, convert_math_in_code()
+-- Strategy: All-or-nothing - only convert if 100% successful, else preserve $...$
+-- ============================================================================
+
+-- Unicode conversion tables
+local math_operators = {
+  ["\\leq"] = "≤",
+  ["\\geq"] = "≥",
+  ["\\neq"] = "≠",
+  ["\\times"] = "×",
+  ["\\cdot"] = "⋅",
+  ["\\cdots"] = "⋯",
+  ["\\ldots"] = "…",   -- Horizontal ellipsis
+  ["\\vdots"] = "⋮",   -- Vertical ellipsis
+  ["\\dotsc"] = "…",   -- Dots for series/commas
+  ["\\dotsb"] = "…",   -- Dots for binary operators
+  ["\\land"] = "∧",
+  ["\\lor"] = "∨",
+  ["\\le"] = "≤",      -- Short form of \leq
+  ["\\ge"] = "≥",      -- Short form of \geq
+  ["\\to"] = "→",      -- Short form of \rightarrow
+  -- Bitwise/set operators
+  ["\\oplus"] = "⊕",   -- XOR / exclusive or
+  ["\\ll"] = "<<",     -- Much less than / left shift
+  ["\\gg"] = ">>",     -- Much greater than / right shift
+  ["\\wedge"] = "∧",   -- AND (synonym for \land)
+  ["\\vee"] = "∨",     -- OR (synonym for \lor)
+  ["\\mid"] = "|",     -- Divides / bitwise OR
+  ["\\sim"] = "~",     -- Similar to / tilde operator (ASCII)
+  ["\\backslash"] = "\\", -- Backslash character (ASCII)
+  ["<"] = "<",
+  [">"] = ">",
+  ["="] = "=",
+  ["+"] = "+",
+  ["-"] = "-",
+  ["*"] = "*",
+  ["/"] = "/",
+}
+
+local greek_letters = {
+  ["\\alpha"] = "α",
+  ["\\beta"] = "β",
+  ["\\gamma"] = "γ",
+  ["\\delta"] = "δ",
+  ["\\epsilon"] = "ε",
+  ["\\zeta"] = "ζ",
+  ["\\lambda"] = "λ",
+  ["\\mu"] = "μ",
+  ["\\pi"] = "π",
+  ["\\rho"] = "ρ",
+  ["\\sigma"] = "σ",
+  ["\\theta"] = "θ",
+  ["\\phi"] = "φ",
+  ["\\ell"] = "ℓ",
+}
+
+local arrows = {
+  ["\\rightarrow"] = "→",
+  ["\\leftarrow"] = "←",
+  ["\\Rightarrow"] = "⇒",
+  ["\\Leftarrow"] = "⇐",
+  ["\\mapsto"] = "↦",
+}
+
+-- Floor and ceiling delimiters
+local delimiters = {
+  ["\\lfloor"] = "⌊",
+  ["\\rfloor"] = "⌋",
+  ["\\lceil"] = "⌈",
+  ["\\rceil"] = "⌉",
+}
+
+-- Math functions (convert to plain text)
+local math_functions = {
+  ["\\min"] = "min",
+  ["\\max"] = "max",
+  ["\\log"] = "log",
+  ["\\bmod"] = " mod ",
+  ["\\exp"] = "exp",
+}
+
+-- Superscript mappings (limited Unicode support)
+local superscripts = {
+  -- Digits
+  ["0"] = "⁰",
+  ["1"] = "¹",
+  ["2"] = "²",
+  ["3"] = "³",
+  ["4"] = "⁴",
+  ["5"] = "⁵",
+  ["6"] = "⁶",
+  ["7"] = "⁷",
+  ["8"] = "⁸",
+  ["9"] = "⁹",
+  -- Lowercase letters
+  ["a"] = "ᵃ",
+  ["b"] = "ᵇ",
+  ["c"] = "ᶜ",
+  ["d"] = "ᵈ",
+  ["e"] = "ᵉ",
+  ["f"] = "ᶠ",
+  ["g"] = "ᵍ",
+  ["h"] = "ʰ",
+  ["i"] = "ⁱ",
+  ["j"] = "ʲ",
+  ["k"] = "ᵏ",
+  ["l"] = "ˡ",
+  ["m"] = "ᵐ",
+  ["n"] = "ⁿ",
+  ["o"] = "ᵒ",
+  ["p"] = "ᵖ",
+  ["r"] = "ʳ",
+  ["s"] = "ˢ",
+  ["t"] = "ᵗ",
+  ["u"] = "ᵘ",
+  ["v"] = "ᵛ",
+  ["w"] = "ʷ",
+  ["x"] = "ˣ",
+  ["y"] = "ʸ",
+  ["z"] = "ᶻ",
+  -- Uppercase letters (limited Unicode support)
+  ["N"] = "ᴺ",
+  -- Operators
+  ["+"] = "⁺",
+  ["-"] = "⁻",
+  ["="] = "⁼",
+  ["("] = "⁽",
+  [")"] = "⁾",
+}
+
+-- Plain string replacement (not pattern-based)
+local function plain_replace(text, find_str, replace_str)
+  local start_pos = 1
+  while true do
+    local find_start, find_end = text:find(find_str, start_pos, true)  -- true = plain text search
+    if not find_start then
+      break
+    end
+    text = text:sub(1, find_start - 1) .. replace_str .. text:sub(find_end + 1)
+    start_pos = find_start + #replace_str
+  end
+  return text
+end
+
+-- Check if a string contains complex LaTeX that can't be converted
+local function is_complex_math(text)
+  -- Patterns that indicate complex math
+  local complex_patterns = {
+    "\\frac",      -- fractions
+    "\\int",       -- integrals
+    "\\sum",       -- summations
+    "\\prod",      -- products
+    "\\lim",       -- limits
+    "\\sqrt",      -- square roots
+    "\\binom",     -- binomial coefficients
+    "\\left",      -- large delimiters
+    "\\right",
+    "\\begin",     -- environments
+    "\\operatorname",
+    "\\mathcal",   -- special fonts we can't represent
+    "\\mathbb",
+    "\\mathfrak",
+    "\\hat",       -- accents
+    "\\bar",
+    "\\tilde",
+    "\\dot",
+  }
+
+  for _, pattern in ipairs(complex_patterns) do
+    if text:find(pattern, 1, true) then
+      return true
+    end
+  end
+
+  -- Check for complex subscripts/superscripts (more than one character in braces)
+  -- Pattern: _{...} or ^{...} where ... has length > 1
+  -- UPDATED: Now allow multi-character subscripts/superscripts if they can be converted
+  for subscript in text:gmatch("_(%b{})") do
+    local content = subscript:sub(2, -2)  -- Remove braces
+    -- Skip if contains backslash (LaTeX commands)
+    if content:match("\\") then
+      return true
+    end
+    -- Check if it's simple arithmetic: single char, +/-, single char
+    local is_simple_arithmetic = content:match("^%w[-+]%w$")
+    -- Check if it's all word characters (could be multi-char like "max")
+    local is_word_chars_only = content:match("^%w+$")
+    -- Complex if:
+    --   - Has multiple chars AND
+    --   - Is NOT simple arithmetic AND
+    --   - Is NOT all word characters (which convert_subscript_string can handle)
+    if content:match("%S.*%S") and not is_simple_arithmetic and not is_word_chars_only then
+      return true
+    end
+  end
+
+  for superscript in text:gmatch("%^(%b{})") do
+    local content = superscript:sub(2, -2)  -- Remove braces
+    -- Skip if contains backslash (LaTeX commands)
+    if content:match("\\") then
+      return true
+    end
+    -- Check if it's all word characters (could be multi-char like "max")
+    local is_word_chars_only = content:match("^%w+$")
+    -- Complex if has multiple chars AND is NOT all word characters
+    if content:match("%S.*%S") and not is_word_chars_only then
+      return true
+    end
+  end
+
+  return false
+end
+
+-- Convert simple subscript
+local function convert_subscript_char(char)
+  return subscripts[char] or nil
+end
+
+-- Convert simple superscript
+local function convert_superscript_char(char)
+  return superscripts[char] or nil
+end
+
+-- Convert multi-character string to subscript (each char individually)
+local function convert_subscript_string(str)
+  local result = ""
+  for i = 1, #str do
+    local char = str:sub(i, i)
+    local unicode_char = subscripts[char]
+    if not unicode_char then
+      return nil  -- Can't convert this character
+    end
+    result = result .. unicode_char
+  end
+  return result
+end
+
+-- Convert multi-character string to superscript (each char individually)
+local function convert_superscript_string(str)
+  local result = ""
+  for i = 1, #str do
+    local char = str:sub(i, i)
+    local unicode_char = superscripts[char]
+    if not unicode_char then
+      return nil  -- Can't convert this character
+    end
+    result = result .. unicode_char
+  end
+  return result
+end
+
+-- Try to convert math to Unicode (all-or-nothing strategy)
+-- Returns: converted text if 100% successful, nil otherwise
+local function try_unicode_conversion(text)
+  -- Trim whitespace
+  text = text:gsub("^%s+", ""):gsub("%s+$", "")
+
+  -- Start conversion
+  local result = text
+
+  -- Convert \mathtt{X} -> X (already monospace in markdown code)
+  result = process_macro_with_replacement(result, "mathtt", function(content)
+    return content
+  end)
+
+  -- Convert \mathrm{text} -> text
+  result = process_macro_with_replacement(result, "mathrm", function(content)
+    return content
+  end)
+
+  -- Convert \mathit{text} -> text (we'll use plain text)
+  result = process_macro_with_replacement(result, "mathit", function(content)
+    return content
+  end)
+
+  -- Convert \mathsf{text} -> text (sans-serif font)
+  result = process_macro_with_replacement(result, "mathsf", function(content)
+    return content
+  end)
+
+  -- Convert \cv{} (cv-qualifiers) to plain text
+  result = result:gsub("\\cv{}", "cv")
+
+  -- Convert ordinal superscripts BEFORE \text{} conversion
+  -- Patterns like $i^\text{th}$ -> iᵗʰ, $1^\text{st}$ -> 1ˢᵗ
+  result = result:gsub("%^\\text{th}", "ᵗʰ")
+  result = result:gsub("%^\\text{st}", "ˢᵗ")
+  result = result:gsub("%^\\text{nd}", "ⁿᵈ")
+  result = result:gsub("%^\\text{rd}", "ʳᵈ")
+
+  -- Also handle ordinals without \text{} wrapper: $i^{th}$ -> iᵗʰ
+  result = result:gsub("(%w)%^{th}", "%1ᵗʰ")
+  result = result:gsub("(%w)%^{st}", "%1ˢᵗ")
+  result = result:gsub("(%w)%^{nd}", "%1ⁿᵈ")
+  result = result:gsub("(%w)%^{rd}", "%1ʳᵈ")
+
+  -- Convert \text{text} -> text (text mode in math)
+  result = process_macro_with_replacement(result, "text", function(content)
+    return content
+  end)
+
+  -- Strip sizing commands (they don't affect the output, just LaTeX presentation)
+  result = result:gsub("\\bigl%s*", "")
+  result = result:gsub("\\bigr%s*", "")
+  result = result:gsub("\\Bigl%s*", "")
+  result = result:gsub("\\Bigr%s*", "")
+  result = result:gsub("\\big%s*", "")
+  result = result:gsub("\\Big%s*", "")
+
+  -- Convert spacing commands to spaces
+  result = result:gsub("\\quad", "  ")    -- quad = wider space
+  result = result:gsub("\\qquad", "    ") -- qquad = even wider space
+  result = result:gsub("\\,", " ")         -- thin space
+  result = result:gsub("\\;", " ")         -- medium space
+  result = result:gsub("\\!", "")          -- negative thin space (just remove)
+  result = result:gsub("\\ ", " ")         -- control space (backslash-space)
+
+  -- Convert known simple patterns FIRST (before checking for complex math)
+  -- This prevents false positives like \rightarrow being flagged as complex due to \right
+
+  -- Convert arrows using plain replacement
+  for latex, unicode in pairs(arrows) do
+    result = plain_replace(result, latex, unicode)
+  end
+
+  -- Convert floor/ceil delimiters using plain replacement
+  for latex, unicode in pairs(delimiters) do
+    result = plain_replace(result, latex, unicode)
+  end
+
+  -- Convert Greek letters using plain replacement
+  for latex, unicode in pairs(greek_letters) do
+    result = plain_replace(result, latex, unicode)
+  end
+
+  -- Convert operators using plain replacement for special characters
+  -- IMPORTANT: Sort by length (longest first) to avoid partial matches
+  -- For example, \cdots must be replaced before \cdot to prevent leaving 's' behind
+  local sorted_operators = {}
+  for latex, unicode in pairs(math_operators) do
+    table.insert(sorted_operators, {latex = latex, unicode = unicode})
+  end
+  table.sort(sorted_operators, function(a, b) return #a.latex > #b.latex end)
+
+  for _, op in ipairs(sorted_operators) do
+    result = plain_replace(result, op.latex, op.unicode)
+  end
+
+  -- Convert math functions using plain replacement
+  for latex, text_replacement in pairs(math_functions) do
+    result = plain_replace(result, latex, text_replacement)
+  end
+
+  -- Strip empty braces (used for spacing in LaTeX, e.g., cv{}_i)
+  -- Do this AFTER all macro conversions but BEFORE complexity check
+  -- so empty braces don't cause unnecessary conversion failures
+  result = result:gsub("{}", "")
+
+  -- NOW check if this is complex math that shouldn't be converted
+  -- (after simple conversions, so we don't have false positives)
+  if is_complex_math(result) then
+    return nil
+  end
+
+  -- Convert simple superscripts: x^2 or x^{n}
+  -- First pass: check if all superscripts are convertible
+  local has_unconvertible_super = false
+  result:gsub("(%w)%^(%w)", function(base, exp)
+    if not convert_superscript_char(exp) then
+      has_unconvertible_super = true
+    end
+  end)
+  result:gsub("(%w)%^{(%w)}", function(base, exp)
+    if not convert_superscript_char(exp) then
+      has_unconvertible_super = true
+    end
+  end)
+
+  -- Check bare superscripts: ^n, ^{n} (without base identifier)
+  result:gsub("^%^(%w)$", function(exp)
+    if not convert_superscript_char(exp) then
+      has_unconvertible_super = true
+    end
+  end)
+  result:gsub("^%^{(%w)}$", function(exp)
+    if not convert_superscript_char(exp) then
+      has_unconvertible_super = true
+    end
+  end)
+
+  if has_unconvertible_super then
+    return nil  -- Abort conversion if any superscript can't be converted
+  end
+
+  -- IMPORTANT: Handle bare subscript + superscript combinations FIRST (before individual conversions)
+  -- Pattern: _i^n → ᵢⁿ, _{i}^{n} → ᵢⁿ
+  -- This must run before individual superscript conversion to avoid `_i^n` → `_iⁿ`
+  result = result:gsub("_(%w)%^(%w)", function(sub, super)
+    local unicode_sub = convert_subscript_char(sub)
+    local unicode_super = convert_superscript_char(super)
+    return unicode_sub .. unicode_super
+  end)
+  result = result:gsub("_{(%w)}%^{(%w)}", function(sub, super)
+    local unicode_sub = convert_subscript_char(sub)
+    local unicode_super = convert_superscript_char(super)
+    return unicode_sub .. unicode_super
+  end)
+  result = result:gsub("_(%w)%^{(%w)}", function(sub, super)
+    local unicode_sub = convert_subscript_char(sub)
+    local unicode_super = convert_superscript_char(super)
+    return unicode_sub .. unicode_super
+  end)
+  result = result:gsub("_{(%w)}%^(%w)", function(sub, super)
+    local unicode_sub = convert_subscript_char(sub)
+    local unicode_super = convert_superscript_char(super)
+    return unicode_sub .. unicode_super
+  end)
+
+  -- Second pass: actually convert
+  result = result:gsub("(%w)%^(%w)", function(base, exp)
+    local unicode_exp = convert_superscript_char(exp)
+    return base .. unicode_exp
+  end)
+
+  result = result:gsub("(%w)%^{(%w)}", function(base, exp)
+    local unicode_exp = convert_superscript_char(exp)
+    return base .. unicode_exp
+  end)
+
+  -- Convert bare superscripts: ^n → ⁿ, ^{n} → ⁿ (without base identifier)
+  result = result:gsub("^%^(%w)$", function(exp)
+    local unicode_exp = convert_superscript_char(exp)
+    return unicode_exp or ("^" .. exp)
+  end)
+
+  result = result:gsub("^%^{(%w)}$", function(exp)
+    local unicode_exp = convert_superscript_char(exp)
+    return unicode_exp or ("^{" .. exp .. "}")
+  end)
+
+  -- Convert simple subscripts: x_i or x_{0}
+  -- First pass: check if all subscripts are convertible
+  local has_unconvertible_sub = false
+  result:gsub("(%w)_(%w)", function(base, sub)
+    if not convert_subscript_char(sub) then
+      has_unconvertible_sub = true
+    end
+  end)
+  result:gsub("(%w)_{(%w)}", function(base, sub)
+    if not convert_subscript_char(sub) then
+      has_unconvertible_sub = true
+    end
+  end)
+
+  -- Check bare subscripts: _n, _{n} (without base identifier)
+  result:gsub("^_(%w)$", function(sub)
+    if not convert_subscript_char(sub) then
+      has_unconvertible_sub = true
+    end
+  end)
+  result:gsub("^_{(%w)}$", function(sub)
+    if not convert_subscript_char(sub) then
+      has_unconvertible_sub = true
+    end
+  end)
+
+  -- Check arithmetic subscripts: x_{n-1}, x_{i+1}
+  result:gsub("(%w)_{(%w)([-+])(%w)}", function(base, sub1, op, sub2)
+    if not convert_subscript_char(sub1) or not convert_subscript_char(op) or not convert_subscript_char(sub2) then
+      has_unconvertible_sub = true
+    end
+  end)
+
+  if has_unconvertible_sub then
+    return nil  -- Abort conversion if any subscript can't be converted
+  end
+
+  -- Second pass: actually convert arithmetic subscripts first (before simple ones)
+  -- Pattern: x_{n-1} → xₙ₋₁, p_{i+1} → pᵢ₊₁
+  result = result:gsub("(%w)_{(%w)([-+])(%w)}", function(base, sub1, op, sub2)
+    local unicode_sub1 = convert_subscript_char(sub1)
+    local unicode_op = convert_subscript_char(op)
+    local unicode_sub2 = convert_subscript_char(sub2)
+    return base .. unicode_sub1 .. unicode_op .. unicode_sub2
+  end)
+
+  -- Then convert simple subscripts (but leave subscripts that are part of sub+super combinations like _i^n)
+  -- Handle subscripts NOT followed by superscript
+  result = result:gsub("(%w)_(%w)([^%^])", function(base, sub, after)
+    local unicode_sub = convert_subscript_char(sub)
+    return base .. unicode_sub .. after
+  end)
+  result = result:gsub("(%w)_(%w)$", function(base, sub)
+    local unicode_sub = convert_subscript_char(sub)
+    return base .. unicode_sub
+  end)
+
+  result = result:gsub("(%w)_{(%w)}([^%^])", function(base, sub, after)
+    local unicode_sub = convert_subscript_char(sub)
+    return base .. unicode_sub .. after
+  end)
+  result = result:gsub("(%w)_{(%w)}$", function(base, sub)
+    local unicode_sub = convert_subscript_char(sub)
+    return base .. unicode_sub
+  end)
+
+  -- Convert bare subscripts: _n → ₙ, _{n} → ₙ (without base identifier)
+  result = result:gsub("^_(%w)$", function(sub)
+    local unicode_sub = convert_subscript_char(sub)
+    return unicode_sub or ("_" .. sub)
+  end)
+
+  result = result:gsub("^_{(%w)}$", function(sub)
+    local unicode_sub = convert_subscript_char(sub)
+    return unicode_sub or ("_{" .. sub .. "}")
+  end)
+
+  -- Handle subscripts after Unicode superscripts (e.g., xⁱ_j → xⁱⱼ, cvʲ_i → cvʲᵢ)
+  -- This needs to run AFTER superscript conversion
+  -- Match any Unicode superscript character followed by _char or _{char}
+  local superscript_chars = "[⁰¹²³⁴⁵⁶⁷⁸⁹ᵃᵇᶜᵈᵉᶠᵍʰⁱʲᵏˡᵐⁿᵒᵖʳˢᵗᵘᵛʷˣʸᶻᴺ⁺⁻⁼⁽⁾]"
+
+  result = result:gsub("(" .. superscript_chars .. ")_(%w)", function(super_char, sub_char)
+    local unicode_sub = convert_subscript_char(sub_char)
+    if unicode_sub then
+      return super_char .. unicode_sub
+    else
+      return super_char .. "_" .. sub_char  -- Keep original if conversion fails
+    end
+  end)
+
+  result = result:gsub("(" .. superscript_chars .. ")_{(%w)}", function(super_char, sub_char)
+    local unicode_sub = convert_subscript_char(sub_char)
+    if unicode_sub then
+      return super_char .. unicode_sub
+    else
+      return super_char .. "_{" .. sub_char .. "}"  -- Keep original if conversion fails
+    end
+  end)
+
+  -- Handle multi-character subscripts: _{max} → ₘₐₓ, x_{max} → xₘₐₓ
+  -- Pattern: _{word+} where each character is converted individually
+  -- First pass: check if all characters are convertible
+  local has_unconvertible_multi_sub = false
+  result:gsub("(%w?)_{(%w%w+)}", function(base, sub_str)
+    if not convert_subscript_string(sub_str) then
+      has_unconvertible_multi_sub = true
+    end
+  end)
+
+  if has_unconvertible_multi_sub then
+    return nil  -- Abort conversion if any multi-char subscript can't be converted
+  end
+
+  -- Second pass: actually convert multi-character subscripts
+  result = result:gsub("(%w?)_{(%w%w+)}", function(base, sub_str)
+    local unicode_sub = convert_subscript_string(sub_str)
+    return base .. unicode_sub
+  end)
+
+  -- Handle multi-character superscripts: ^{max} → ᵐᵃˣ, x^{max} → xᵐᵃˣ
+  -- First pass: check if all characters are convertible
+  local has_unconvertible_multi_super = false
+  result:gsub("(%w?)%^{(%w%w+)}", function(base, super_str)
+    if not convert_superscript_string(super_str) then
+      has_unconvertible_multi_super = true
+    end
+  end)
+
+  if has_unconvertible_multi_super then
+    return nil  -- Abort conversion if any multi-char superscript can't be converted
+  end
+
+  -- Second pass: actually convert multi-character superscripts
+  result = result:gsub("(%w?)%^{(%w%w+)}", function(base, super_str)
+    local unicode_super = convert_superscript_string(super_str)
+    return base .. unicode_super
+  end)
+
+  -- If we still have LaTeX commands, we can't fully convert
+  if result:match("\\[a-zA-Z]") then
+    return nil
+  end
+
+  -- If we still have ^{ or _{ patterns, we couldn't convert them
+  if result:match("[%^_]{") then
+    return nil
+  end
+
+  return result
+end
+
 -- Helper function to convert math patterns in code
 -- Used by clean_code_common() for code block cleaning
 local function convert_math_in_code(text)
@@ -883,31 +1477,14 @@ local function convert_math_in_code(text)
   end)
 
   -- Also process plain $...$ patterns (inline math in code comments without @ delimiters)
-  -- Only convert if they contain LaTeX commands like \mathtt, \mathrm, \rightarrow
+  -- Use comprehensive math-to-Unicode conversion (all-or-nothing strategy)
   text = text:gsub("%$([^$]+)%$", function(math_content)
-    -- Only process if it contains LaTeX commands
-    if math_content:match("\\math") or math_content:match("\\rightarrow") or
-       math_content:match("\\leftarrow") or math_content:match("\\ldots") then
-
-      -- Convert \mathtt{...} to plain text
-      -- NOTE: Using ([^}]*) here is acceptable because plain $...$ (without @) in code
-      -- comments typically contains simple math without complex nesting
-      math_content = math_content:gsub("\\mathtt{([^}]*)}", "%1")
-      math_content = math_content:gsub("\\mathrm{([^}]*)}", "%1")
-      math_content = math_content:gsub("\\mathit{([^}]*)}", "%1")
-
-      -- Convert arrows to Unicode
-      math_content = math_content:gsub("\\rightarrow", "→")
-      math_content = math_content:gsub("\\leftarrow", "←")
-      math_content = math_content:gsub("\\Rightarrow", "⇒")
-      math_content = math_content:gsub("\\Leftarrow", "⇐")
-
-      -- Convert \ldots to Unicode ellipsis
-      math_content = math_content:gsub("\\ldots", "…")
-
-      return math_content
+    -- Try comprehensive Unicode conversion
+    local converted = try_unicode_conversion(math_content)
+    if converted then
+      return converted
     else
-      -- Not LaTeX math, return unchanged with $ delimiters
+      -- Conversion failed or incomplete, preserve original $...$ delimiters
       return "$" .. math_content .. "$"
     end
   end)
@@ -1586,4 +2163,5 @@ return {
   convert_latex_spacing = convert_latex_spacing,
   convert_mname = convert_mname,
   expand_macros_common = expand_macros_common,
+  try_unicode_conversion = try_unicode_conversion,
 }

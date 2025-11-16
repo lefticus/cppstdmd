@@ -1275,9 +1275,9 @@ A template template parameter `P` and a *template-argument* `A` are
 *compatible* if
 
 - `A` denotes a class template or an alias template and `P` is a type
-  template parameter,
+  template template parameter,
 - `A` denotes a variable template and `P` is a variable template
-  parameter, or
+  template parameter, or
 - `A` denotes a concept and `P` is a concept template parameter.
 
 A template *template-argument* `A` matches a template template parameter
@@ -1449,7 +1449,7 @@ template<typename T>
 
 template<typename T>
   requires (sizeof(T) > 1) && (get_value<T>())
-    void f(T);      // has associated constraint sizeof(T) > 1 $\land$ get_value<T>()
+    void f(T);      // has associated constraint sizeof(T) > 1 ∧ get_value<T>()
 
 void f(int);
 
@@ -1983,9 +1983,8 @@ form[^4]
 of Q, where
 
 - a disjunctive clause Pᵢ subsumes a conjunctive clause Qⱼ if and only
-  if there exists an atomic constraint $P_{ia}$ in Pᵢ for which there
-  exists an atomic constraint $Q_{jb}$ in Qⱼ such that $P_{ia}$ subsumes
-  $Q_{jb}$,
+  if there exists an atomic constraint Pᵢₐ in Pᵢ for which there exists
+  an atomic constraint $Q_{jb}$ in Qⱼ such that Pᵢₐ subsumes $Q_{jb}$,
 - an atomic constraint A subsumes another atomic constraint B if and
   only if A and B are identical using the rules described in
   [[temp.constr.atomic]], and

@@ -1659,7 +1659,7 @@ constexpr tuple& operator=(tuple&& u) noexcept(see below);
 the following expressions:
 
 ``` cpp
-is_nothrow_move_assignable_v<T_i>
+is_nothrow_move_assignable_v<Tᵢ>
 ```
 
 where Tᵢ is the iᵗʰ type in `Types`.
@@ -1671,7 +1671,7 @@ constexpr const tuple& operator=(tuple&& u) const;
 *Constraints:* `(is_assignable_v<const Types&, Types> && ...)` is
 `true`.
 
-*Effects:* For all i, assigns `std::forward<T`_i`>(get<`i`>(u))` to
+*Effects:* For all i, assigns `std::forward<T`ᵢ`>(get<`i`>(u))` to
 `get<`i`>(*this)`.
 
 *Returns:* `*this`.
@@ -1727,7 +1727,7 @@ template<class... UTypes> constexpr const tuple& operator=(tuple<UTypes...>&& u)
 - `sizeof...(Types)` equals `sizeof...(UTypes)` and
 - `(is_assignable_v<const Types&, UTypes> && ...)` is `true`.
 
-*Effects:* For all i, assigns `std::forward<U`_i`>(get<`i`>(u))` to
+*Effects:* For all i, assigns `std::forward<U`ᵢ`>(get<`i`>(u))` to
 `get<`i`>(*this)`.
 
 *Returns:* `*this`.
@@ -3968,7 +3968,7 @@ selected by the imaginary function overload resolution described above.
 *Remarks:* The exception specification is equivalent to:
 
 ``` cpp
-is_nothrow_assignable_v<T$_j$&, T> && is_nothrow_constructible_v<T$_j$, T>
+is_nothrow_assignable_v<Tⱼ&, T> && is_nothrow_constructible_v<Tⱼ, T>
 ```
 
 - If an exception is thrown during the assignment of
@@ -3991,7 +3991,7 @@ occurs exactly once in `Types`.
 *Effects:* Equivalent to:
 
 ``` cpp
-return emplace<$I$>(std::forward<Args>(args)...);
+return emplace<I>(std::forward<Args>(args)...);
 ```
 
 where I is the zero-based index of `T` in `Types`.
@@ -4007,7 +4007,7 @@ template<class T, class U, class... Args>
 *Effects:* Equivalent to:
 
 ``` cpp
-return emplace<$I$>(il, std::forward<Args>(args)...);
+return emplace<I>(il, std::forward<Args>(args)...);
 ```
 
 where I is the zero-based index of `T` in `Types`.
@@ -4332,7 +4332,7 @@ if (v.valueless_by_exception() && w.valueless_by_exception())
 if (v.valueless_by_exception()) return strong_ordering::less;
 if (w.valueless_by_exception()) return strong_ordering::greater;
 if (auto c = v.index() <=> w.index(); c != 0) return c;
-return get<$i$>(v) <=> get<$i$>(w);
+return get<i>(v) <=> get<i>(w);
 ```
 
 with i being `v.index()`.
@@ -4373,13 +4373,13 @@ Let m be a pack of n values of type `size_t`. Such a pack is valid if
 For each valid pack m, let e(m) denote the expression:
 
 ``` cpp
-INVOKE(std::forward<Visitor>(vis), get<$m$>(std::forward<V>(vars))...)  // see REF:func.require
+INVOKE(std::forward<Visitor>(vis), get<m>(std::forward<V>(vars))...)  // see REF:func.require
 ```
 
 for the first form and
 
 ``` cpp
-INVOKE<R>(std::forward<Visitor>(vis), get<$m$>(std::forward<V>(vars))...)  // see REF:func.require
+INVOKE<R>(std::forward<Visitor>(vis), get<m>(std::forward<V>(vars))...)  // see REF:func.require
 ```
 
 for the second form.
@@ -4388,7 +4388,7 @@ for the second form.
 expressions are of the same type and value category.
 
 *Returns:* e(m), where m is the pack for which mᵢ is
-*`as-variant`*`(vars`_i`).index()` for all 0 ≤ i < n. The return type is
+*`as-variant`*`(vars`ᵢ`).index()` for all 0 ≤ i < n. The return type is
 `decltype(`e(m)`)` for the first form.
 
 *Throws:* `bad_variant_access` if
@@ -8807,14 +8807,14 @@ expression-equivalent [[defns.expression.equivalent]] to
 
 ``` cpp
 INVOKE(static_cast<$V_fd$>($v_fd$),
-       static_cast<$V_1$>($v_1$), static_cast<$V_2$>($v_2$), $\dotsc$, static_cast<$V_N$>($v_N$))
+       static_cast<$V_1$>($v_1$), static_cast<$V_2$>($v_2$), …, static_cast<$V_N$>($v_N$))
 ```
 
 for the first overload, and
 
 ``` cpp
 INVOKE<R>(static_cast<$V_fd$>($v_fd$),
-          static_cast<$V_1$>($v_1$), static_cast<$V_2$>($v_2$), $\dotsc$, static_cast<$V_N$>($v_N$))
+          static_cast<$V_1$>($v_1$), static_cast<$V_2$>($v_2$), …, static_cast<$V_N$>($v_N$))
 ```
 
 for the second overload, where the values and types of the target

@@ -2510,10 +2510,10 @@ constant.
 *Effects:* Equivalent to:
 
 ``` cpp
-if constexpr (is_annotation($R$)) {
-  return $C$;
+if constexpr (is_annotation(R)) {
+  return C;
 } else {
-  return reflect_constant([: $R$ :]);
+  return reflect_constant([: R :]);
 }
 ```
 

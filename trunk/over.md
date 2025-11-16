@@ -429,7 +429,7 @@ the unique name *call-function* and having the form
 
 ``` bnf
 'R' *call-function* '(' conversion-type-id \ %
-'F, P₁ a₁, $\dotsc$, Pₙ aₙ)' \terminal{\ return \terminal{F (a₁, $\dotsc$, aₙ); \}}
+'F, P₁ a₁, …, Pₙ aₙ)' \terminal{\ return \terminal{F (a₁, …, aₙ); \}}
 ```
 
 is also considered as a candidate function. Similarly, surrogate call
@@ -1512,14 +1512,14 @@ int i;
 short s = 0;
 
 void f() {
-  Fcn(&i, s);       // is ambiguous because &i $\to$ int* is better than &i $\to$ const int*
-                    // but s $\to$ short is also better than s $\to$ int
+  Fcn(&i, s);       // is ambiguous because &i → int* is better than &i → const int*
+                    // but s → short is also better than s → int
 
-  Fcn(&i, 1L);      // calls Fcn(int*, int), because &i $\to$ int* is better than &i $\to$ const int*
-                    // and 1L $\to$ short and 1L $\to$ int are indistinguishable
+  Fcn(&i, 1L);      // calls Fcn(int*, int), because &i → int* is better than &i → const int*
+                    // and 1L → short and 1L → int are indistinguishable
 
-  Fcn(&i, 'c');     // calls Fcn(int*, int), because &i $\to$ int* is better than &i $\to$ const int*
-                    // and 'c' $\to$ int is better than 'c' $\to$ short
+  Fcn(&i, 'c');     // calls Fcn(int*, int), because &i → int* is better than &i → const int*
+                    // and 'c' → int is better than 'c' → short
 }
 ```
 
@@ -1673,8 +1673,8 @@ class C { C (B&); };
 void f(A) { }
 void f(C) { }
 B b;
-f(b);               // error: ambiguous because there is a conversion b $\to$ C (via constructor)
-                    // and an (ambiguous) conversion b $\to$ A (via constructor or conversion function)
+f(b);               // error: ambiguous because there is a conversion b → C (via constructor)
+                    // and an (ambiguous) conversion b → A (via constructor or conversion function)
 void f(B) { }
 f(b);               // OK, unambiguous
 ```
@@ -2260,8 +2260,8 @@ conversion sequences unless one of the following rules applies:
   } a;
   int f(int);
   int f(float);
-  int i = f(a);                   // calls f(int), because short $\to$ int is
-                                  // better than short $\to$ float.
+  int i = f(a);                   // calls f(int), because short → int is
+                                  // better than short → float.
   ```
 
   — *end example*]
@@ -2625,14 +2625,14 @@ y, the operator function is selected by overload resolution
 interpreted as
 
 ``` bnf
-$x$ '.' operator '@' '(' $y$ ')'
+x '.' operator '@' '(' y ')'
 ```
 
 Otherwise, if a non-member function is selected, the expression is
 interpreted as
 
 ``` bnf
-operator '@' '(' $x$ ',' $y$ ')'
+operator '@' '(' x ',' y ')'
 ```
 
 An *equality operator function* is an operator function for an equality
@@ -2714,7 +2714,7 @@ corresponding conversion operator function on the *postfix-expression*;
 the expression is interpreted as
 
 ``` bnf
-$e$ '(' expression-listₒₚₜ ')'
+e '(' expression-listₒₚₜ ')'
 ```
 
 Otherwise, the expression is interpreted as

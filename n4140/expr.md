@@ -2954,7 +2954,7 @@ with the second expression.
 ``` bnf
 logical-or-expression:
     logical-and-expression
-    logical-or-expression '$||$' logical-and-expression
+    logical-or-expression '||' logical-and-expression
 ```
 
 The `||` operator groups left-to-right. The operands are both

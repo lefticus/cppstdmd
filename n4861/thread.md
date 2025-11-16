@@ -5256,8 +5256,8 @@ other. — *end note*]
 void operator()(ArgTypes... args);
 ```
 
-*Effects:* As if by *INVOKE*\<R\>(f, t_1, t_2, …, t_N) [[func.require]],
-where `f` is the stored task of `*this` and `t`_1`, t`_2`, `…`, t`_N are
+*Effects:* As if by *INVOKE*\<R\>(f, t₁, t₂, …, t$_N$) [[func.require]],
+where `f` is the stored task of `*this` and `t`₁`, t`₂`, `…`, t`$_N$ are
 the values in `args...`. If the task returns normally, the return value
 is stored as the asynchronous result in the shared state of `*this`,
 otherwise the exception thrown by the task is stored. The shared state
@@ -5277,8 +5277,8 @@ or the stored task has already been invoked.
 void make_ready_at_thread_exit(ArgTypes... args);
 ```
 
-*Effects:* As if by *INVOKE*\<R\>(f, t_1, t_2, …, t_N) [[func.require]],
-where `f` is the stored task and `t`_1`, t`_2`, `…`, t`_N are the values
+*Effects:* As if by *INVOKE*\<R\>(f, t₁, t₂, …, t$_N$) [[func.require]],
+where `f` is the stored task and `t`₁`, t`₂`, `…`, t`$_N$ are the values
 in `args...`. If the task returns normally, the return value is stored
 as the asynchronous result in the shared state of `*this`, otherwise the
 exception thrown by the task is stored. In either case, this is done
