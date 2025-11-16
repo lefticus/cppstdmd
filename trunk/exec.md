@@ -5159,9 +5159,8 @@ template<class Env, class QueryTag>
     };
 ```
 
-Let *fe* be the first element of $\textit{envs}_0$, $\textit{envs}_1$,
-…, $\textit{envs}_{n-1}$ such that the expression *`fe`*`.query(q)` is
-well-formed.
+Let *fe* be the first element of envs₀, envs₁, …, envsₙ₋₁ such that the
+expression *`fe`*`.query(q)` is well-formed.
 
 *Constraints:* `(has-query<Envs, QueryTag> || ...)` is `true`.
 

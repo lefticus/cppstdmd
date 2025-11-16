@@ -2063,7 +2063,7 @@ that `!c(r, kx) && !c(kx, r)` is `true`.
 *Returns:* A `node_type` owning the element if found, otherwise an empty
 `node_type`.
 
-*Complexity:* log(`aₜran.size()`)
+*Complexity:* log(`a_tran.size()`)
 
 ``` cpp
 a.extract(q)
@@ -2124,7 +2124,7 @@ a_tran.erase(kx)
 
 *Returns:* The number of erased elements.
 
-*Complexity:* log(`aₜran.size())` + `aₜran.count(kx)`
+*Complexity:* log(`a_tran.size())` + `a_tran.count(kx)`
 
 ``` cpp
 a.erase(q)
@@ -2221,7 +2221,7 @@ a_tran.count(ke)
 *Returns:* The number of elements with key `r` such that
 `!c(r, ke) && !c(ke, r)`.
 
-*Complexity:* log (`aₜran.size()`) + `aₜran.count(ke)`
+*Complexity:* log (`a_tran.size()`) + `a_tran.count(ke)`
 
 ``` cpp
 b.contains(k)
@@ -15134,14 +15134,13 @@ namespace std {
 Each specialization of `extents` models `regular` and is trivially
 copyable.
 
-Let $E_r$ be the rᵗʰ element of `Extents`. $E_r$ is a *dynamic extent*
-if it is equal to `dynamic_extent`, otherwise $E_r$ is a
-*static extent*. Let $D_r$ be the value of
-`dynamic-extents[dynamic-index(r)]` if $E_r$ is a dynamic extent,
-otherwise $E_r$.
+Let Eᵣ be the rᵗʰ element of `Extents`. Eᵣ is a *dynamic extent* if it
+is equal to `dynamic_extent`, otherwise Eᵣ is a *static extent*. Let Dᵣ
+be the value of `dynamic-extents[dynamic-index(r)]` if Eᵣ is a dynamic
+extent, otherwise Eᵣ.
 
 The rᵗʰ interval of the multidimensional index space represented by an
-`extents` object is $[0, D_r)$.
+`extents` object is [0, Dᵣ).
 
 ##### Exposition-only helpers <a id="mdspan.extents.expo">[[mdspan.extents.expo]]</a>
 
@@ -15151,7 +15150,7 @@ static constexpr rank_type dynamic-index(rank_type i) noexcept;
 
 *Preconditions:* `i <= rank()` is `true`.
 
-*Returns:* The number of $E_r$ with r < `i` for which $E_r$ is a dynamic
+*Returns:* The number of Eᵣ with r < `i` for which Eᵣ is a dynamic
 extent.
 
 ``` cpp
@@ -15214,8 +15213,8 @@ template<class OtherIndexType, size_t... OtherExtents>
 
 *Preconditions:*
 
-- `other.extent(`r`)` equals $E_r$ for each r for which $E_r$ is a
-  static extent, and
+- `other.extent(`r`)` equals Eᵣ for each r for which Eᵣ is a static
+  extent, and
 - either
   - `sizeof...(OtherExtents)` is zero, or
   - `other.extent(`r`)` is representable as a value of type `index_type`
@@ -15251,8 +15250,8 @@ Let `N` be `sizeof...(OtherIndexTypes)`, and let `exts_arr` be
 
 *Preconditions:*
 
-- If `N != rank_dynamic()` is `true`, `exts_arr[`r`]` equals $E_r$ for
-  each r for which $E_r$ is a static extent, and
+- If `N != rank_dynamic()` is `true`, `exts_arr[`r`]` equals Eᵣ for each
+  r for which Eᵣ is a static extent, and
 - either
   - `sizeof...(exts) == 0` is `true`, or
   - each element of `exts` is representable as a nonnegative value of
@@ -15278,8 +15277,8 @@ template<class OtherIndexType, size_t N>
 
 *Preconditions:*
 
-- If `N != rank_dynamic()` is `true`, `exts[`r`]` equals $E_r$ for each
-  r for which $E_r$ is a static extent, and
+- If `N != rank_dynamic()` is `true`, `exts[`r`]` equals Eᵣ for each r
+  for which Eᵣ is a static extent, and
 - either
   - `N` is zero, or
   - `exts[`r`]` is representable as a nonnegative value of type
@@ -15288,9 +15287,9 @@ template<class OtherIndexType, size_t N>
 *Effects:*
 
 - If `N` equals `rank_dynamic()`, for all d in the range
-  $[0, \texttt{rank_dynamic()})$, direct-non-list-initializes
+  [0, `rank_dynamic()`), direct-non-list-initializes
   *`dynamic-extents`*`[`d`]` with `as_const(exts[`d`])`.
-- Otherwise, for all d in the range $[0, \texttt{rank_dynamic()})$,
+- Otherwise, for all d in the range [0, `rank_dynamic()`),
   direct-non-list-initializes *dynamic-extents*`[`d`]` with
   `as_const(exts[`*`dynamic-index-inv`*`(`d`)])`.
 
@@ -15369,7 +15368,7 @@ In [[mdspan.layout.reqmts]] and [[mdspan.layout.policy.reqmts]]:
   \[*Note 10*: The type of each element of the packs can be a different
   integer type. — *end note*]
 - `r` is a (possibly const) rank index of `typename M::extents_type`.
-- $\tcode{d}_r$ is a pack of (possibly const) integers for which
+- `dᵣ` is a pack of (possibly const) integers for which
   `sizeof...(\tcode{d}_r) == M::extents_type::rank()` is `true`, the rᵗʰ
   element is equal to 1, and all other elements are equal to 0.
 
@@ -15402,8 +15401,8 @@ In [[mdspan.layout.reqmts]] through [[mdspan.layout.stride]]:
   where `is-layout-right-padded-mapping-of<Mapping>` is `true` if and
   only if `Mapping` denotes a specialization of
   `layout_right_padded<S>::mapping` for some value `S` of type `size_t`.
-- For nonnegative integers x and y, let
-  $\textit{LEAST-MULTIPLE-AT-LEAST}(x, y)$ denote
+- For nonnegative integers x and y, let LEAST-MULTIPLE-AT-LEAST(x, y)
+  denote
   - y if x is zero,
   - otherwise, the least multiple of x that is greater than or equal to
     y.
@@ -15499,7 +15498,7 @@ m.is_exhaustive()
 *Result:* `bool`
 
 *Returns:* `true` only if for all k in the range
-[0, `m.requiredₛpanₛize()`) there exists an `i` such that `m(i...)`
+[0, `m.required_span_size()`) there exists an `i` such that `m(i...)`
 equals k.
 
 [*Note 2*: A mapping can return `false` even if the condition is met.
@@ -15513,9 +15512,9 @@ m.is_strided()
 *Result:* `bool`
 
 *Returns:* `true` only if for every rank index r of `m.extents()` there
-exists an integer $s_r$ such that, for all `i` where $(\texttt{i}+d_r)$
-is a multidimensional index in `m.extents()`[[mdspan.overview]],
-`m((i + `$d_r$`)...) - m(i...)` equals $s_r$.
+exists an integer sᵣ such that, for all `i` where (`i`+dᵣ) is a
+multidimensional index in `m.extents()`[[mdspan.overview]],
+`m((i + `dᵣ`)...) - m(i...)` equals sᵣ.
 
 [*Note 3*: This implies that for a strided layout
 m(i₀, …, iₖ) = m(0, …, 0) + i₀ × s₀ + … + iₖ × sₖ. — *end note*]
@@ -15532,7 +15531,7 @@ m.stride(r)
 
 *Result:* `typename M::index_type`
 
-*Returns:* $s_r$ as defined in `m.is_strided()` above.
+*Returns:* sᵣ as defined in `m.is_strided()` above.
 
 [*Note 5*: It is not required for `m.stride(r)` to be well-formed if
 `m.extents().rank()` is zero, even if `m.is_always_strided()` is
@@ -15795,7 +15794,7 @@ template<class OtherExtents>
 *Preconditions:*
 
 - If `extents_type::rank() > 0` is `true`, then for all r in the range
-  [0, `extentsₜype::rank()`), `other.stride(`r`)` equals
+  [0, `extents_type::rank()`), `other.stride(`r`)` equals
   `other.extents().`*`fwd-prod-of-extents`*`(`r`)`, and
 - `other.required_span_size()` is representable as a value of type
   `index_type`[[basic.fundamental]].
@@ -16033,7 +16032,7 @@ template<class OtherExtents>
 *Preconditions:*
 
 - If `extents_type::rank() > 0` is `true`, then for all r in the range
-  [0, `extentsₜype::rank()`), `other.stride(`r`)` equals
+  [0, `extents_type::rank()`), `other.stride(`r`)` equals
   `other.extents().`*`rev-prod-of-extents`*`(`r`)`.
 - `other.required_span_size()` is representable as a value of type
   `index_type`[[basic.fundamental]].
@@ -16264,19 +16263,19 @@ template<class OtherIndexType>
 *Preconditions:*
 
 - The result of converting `s[`i`]` to `index_type` is greater than `0`
-  for all i in the range $[0, \textit{rank_})$.
+  for all i in the range [0, rank_).
 - *`REQUIRED-SPAN-SIZE`*`(e, s)` is representable as a value of type
   `index_type`[[basic.fundamental]].
 - If *rank\_* is greater than 0, then there exists a permutation P of
-  the integers in the range $[0, \textit{rank_})$, such that
+  the integers in the range [0, rank_), such that
   `s[`pᵢ`] >= s[`pᵢ₋₁`] * e.extent(p`$_{i-1}$`)` is `true` for all i in
-  the range $[1, \textit{rank_})$, where pᵢ is the iᵗʰ element of P.
+  the range [1, rank_), where pᵢ is the iᵗʰ element of P.
   \[*Note 11*: For `layout_stride`, this condition is necessary and
   sufficient for `is_unique()` to be `true`. — *end note*]
 
 *Effects:* Direct-non-list-initializes *extents\_* with `e`, and for all
-d in the range $[0, \textit{rank_})$, direct-non-list-initializes
-`strides_[`d`]` with `as_const(s[`d`])`.
+d in the range [0, rank_), direct-non-list-initializes `strides_[`d`]`
+with `as_const(s[`d`])`.
 
 ``` cpp
 template<class StridedLayoutMapping>
@@ -16304,7 +16303,7 @@ template<class StridedLayoutMapping>
 - *`OFFSET`*`(other) == 0` is `true`.
 
 *Effects:* Direct-non-list-initializes *extents\_* with
-`other.extents()`, and for all d in the range $[0, \textit{rank_})$,
+`other.extents()`, and for all d in the range [0, rank_),
 direct-non-list-initializes *`strides_`*`[`d`]` with
 `other.stride(`d`)`.
 
@@ -16361,10 +16360,9 @@ constexpr bool is_exhaustive() const noexcept;
 
 - `true` if *rank\_* is 0.
 - Otherwise, `true` if there is a permutation P of the integers in the
-  range $[0, \textit{rank_})$ such that `stride(`p₀`)` equals 1, and
-  `stride(`pᵢ`)` equals `stride(`pᵢ₋₁`) * extents().extent(`pᵢ₋₁`)` for
-  i in the range $[1, \textit{rank_})$, where pᵢ is the iᵗʰ element of
-  P.
+  range [0, rank_) such that `stride(`p₀`)` equals 1, and `stride(`pᵢ`)`
+  equals `stride(`pᵢ₋₁`) * extents().extent(`pᵢ₋₁`)` for i in the range
+  [1, rank_), where pᵢ is the iᵗʰ element of P.
 - Otherwise, `false`.
 
 ``` cpp
@@ -17842,7 +17840,7 @@ constexpr mdspan(data_handle_type p, const mapping_type& m);
 
 *Constraints:* `is_default_constructible_v<accessor_type>` is `true`.
 
-*Preconditions:* [0, `m.requiredₛpanₛize()`) is an accessible range of
+*Preconditions:* [0, `m.required_span_size()`) is an accessible range of
 `p` and *acc\_* for the value of *acc\_* after the invocation of this
 constructor.
 
@@ -17856,7 +17854,7 @@ constructor.
 constexpr mdspan(data_handle_type p, const mapping_type& m, const accessor_type& a);
 ```
 
-*Preconditions:* [0, `m.requiredₛpanₛize()`) is an accessible range of
+*Preconditions:* [0, `m.required_span_size()`) is an accessible range of
 `p` and `a`.
 
 *Effects:*
@@ -18203,8 +18201,8 @@ following is true:
 following are `true`:
 
 - if Sₖ is a specialization of `strided_slice`
-  - `$sₖ$.extent` = 0, or
-  - `$sₖ$.stride` > 0
+  - `$s_k$.extent` = 0, or
+  - `$s_k$.stride` > 0
 - $0 \le \texttt{\textit{first_}<IndexType, $k$>(slices...)}$
   $\le \texttt{\textit{last_}<$k$>(src, slices...)}$ ≤ `src.extent($k$)`
 
@@ -18378,9 +18376,9 @@ constexpr auto layout_right::mapping<Extents>::submdspan-mapping-impl(
                                stride(rank_ - u - 2)), offset}
   ```
 
-  if for a value u for which $\textit{rank_} - u - 2$ is the largest
-  value p smaller than *`rank_`*` - 1` for which Sₚ is a unit-stride
-  slice for `mapping`, the following conditions are met:
+  if for a value u for which rank_ - u - 2 is the largest value p
+  smaller than *`rank_`*` - 1` for which Sₚ is a unit-stride slice for
+  `mapping`, the following conditions are met:
   - for k equal to *`rank_`*` - 1`, Sₖ is a unit-stride slice for
     `mapping`; and
   - for each k in the range
@@ -18558,11 +18556,11 @@ lookup [[basic.lookup.argdep]]. — *end note*]
 - For each rank index k of `src.extents()`, all of the following are
   `true`:
   - if Sₖ is a specialization of `strided_slice`
-    - `$sₖ$.extent` = 0, or
-    - `$sₖ$.stride` > 0
+    - `$s_k$.extent` = 0, or
+    - `$s_k$.stride` > 0
   - $0 \le \texttt{\textit{first_}<index_type, $k$>(slices...)}$
     $\le \texttt{\textit{last_}<$k$>(src.extents(), slices...)}$
-    ≤ `src.extent($k$)`
+    $\le \texttt{{}src.extent($k$)}$
 - `sub_map_offset.mapping.extents() == submdspan_extents(src.mapping(), slices...)`
   is `true`; and
 - for each integer pack `I` which is a multidimensional index in

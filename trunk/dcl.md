@@ -5891,7 +5891,7 @@ object parameter [[dcl.fct]] if the coroutine is a non-static member
 function. The promise type shall be a class type.
 
 In the following, `pᵢ` is an lvalue of type `Pᵢ`, where `p₁` denotes the
-object parameter and `pᵢ+1` denotes the iᵗʰ non-object function
+object parameter and `p_i+1` denotes the iᵗʰ non-object function
 parameter for an implicit object member function, and `pᵢ` denotes the
 iᵗʰ function parameter otherwise. For an implicit object member
 function, `q₁` is an lvalue that denotes `*this`; any other `qᵢ` is an
@@ -6131,20 +6131,19 @@ function with no linkage. — *end note*]
 ## Structured binding declarations <a id="dcl.struct.bind">[[dcl.struct.bind]]</a>
 
 A structured binding declaration introduces the *identifier*s `v₀`,
-`v₁`, $\tcode{v}_2, \dotsc, \tcode{v}_{N-1}$ of the *sb-identifier-list*
-as names. An *sb-identifier* that contains an ellipsis introduces a
-structured binding pack [[temp.variadic]]. A *structured binding* is
-either an *sb-identifier* that does not contain an ellipsis or an
-element of a structured binding pack. The optional
-*attribute-specifier-seq* of an *sb-identifier* appertains to the
-associated structured bindings. Let cv denote the *cv-qualifier*s in the
-*decl-specifier-seq* and *S* consist of each *decl-specifier* of the
-*decl-specifier-seq* that is `constexpr`, `constinit`, or a
-*storage-class-specifier*. A cv that includes `volatile` is deprecated;
-see  [[depr.volatile.type]]. First, a variable with a unique name *e* is
-introduced. If the *assignment-expression* in the *initializer* has
-array type cv-qualifiercv1 `A` and no *ref-qualifier* is present, *e* is
-defined by
+`v₁`, `v₂`, …, `v_N-1` of the *sb-identifier-list* as names. An
+*sb-identifier* that contains an ellipsis introduces a structured
+binding pack [[temp.variadic]]. A *structured binding* is either an
+*sb-identifier* that does not contain an ellipsis or an element of a
+structured binding pack. The optional *attribute-specifier-seq* of an
+*sb-identifier* appertains to the associated structured bindings. Let cv
+denote the *cv-qualifier*s in the *decl-specifier-seq* and *S* consist
+of each *decl-specifier* of the *decl-specifier-seq* that is
+`constexpr`, `constinit`, or a *storage-class-specifier*. A cv that
+includes `volatile` is deprecated; see  [[depr.volatile.type]]. First, a
+variable with a unique name *e* is introduced. If the
+*assignment-expression* in the *initializer* has array type
+cv-qualifiercv1 `A` and no *ref-qualifier* is present, *e* is defined by
 
 ``` bnf
 attribute-specifier-seqₒₚₜ *S* cv 'A' \textit{e} ';'

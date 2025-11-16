@@ -1227,8 +1227,8 @@ type. — *end note*]
 
 The range of representable values of an integer-class type is the
 continuous set of values over which it is defined. For any integer-class
-type, its range of representable values is either $-2^{N-1}$ to
-$2^{N-1}-1$ (inclusive) for some integer N, in which case it is a
+type, its range of representable values is either -2ᴺ⁻¹ to 2ᴺ⁻¹-1
+(inclusive) for some integer N, in which case it is a
 *signed-integer-class type*, or 0 to 2ᴺ-1 (inclusive) for some integer
 N, in which case it is an *unsigned-integer-class type*. In both cases,
 N is called the *width* of the integer-class type. The width of an

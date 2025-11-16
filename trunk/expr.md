@@ -7201,19 +7201,18 @@ During the evaluation V of an expression E as a core constant
 expression, the evaluation context of an evaluation X
 [[intro.execution]] consists of the following points:
 
-- The program point $\textit{EVAL-PT}(L)$, where L is the point at which
-  E appears, and where $\textit{EVAL-PT}(P)$, for a point P, is a point
-  R determined as follows:
+- The program point EVAL-PT(L), where L is the point at which E appears,
+  and where EVAL-PT(P), for a point P, is a point R determined as
+  follows:
   - If a potentially-evaluated subexpression [[intro.execution]] of a
     default member initializer I appears at P, and a (possibly
-    aggregate) initialization during V is using I, then R is
-    $\textit{EVAL-PT}(Q)$ where Q is the point at which that
-    initialization appears.
+    aggregate) initialization during V is using I, then R is EVAL-PT(Q)
+    where Q is the point at which that initialization appears.
   - Otherwise, if a potentially-evaluated subexpression of a default
     argument [[dcl.fct.default]] appears at P, and an invocation of a
     function [[expr.call]] during V is using that default argument, then
-    R is $\textit{EVAL-PT}(Q)$ where Q is the point at which that
-    invocation appears.
+    R is EVAL-PT(Q) where Q is the point at which that invocation
+    appears.
   - Otherwise, R is P.
 - Each synthesized point corresponding to an injected declaration
   produced by any evaluation sequenced before X [[intro.execution]].

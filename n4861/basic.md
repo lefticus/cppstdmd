@@ -3977,8 +3977,8 @@ list, each type provides at least as much storage as those preceding it
 in the list. There may also be *implementation-defined*
 *extended signed integer types*. The standard and extended signed
 integer types are collectively called *signed integer types*. The range
-of representable values for a signed integer type is $-2^{N-1}$ to
-$2^{N-1}-1$ (inclusive), where *N* is called the *width* of the type.
+of representable values for a signed integer type is -2ᴺ⁻¹ to 2ᴺ⁻¹-1
+(inclusive), where *N* is called the *width* of the type.
 
 [*Note 1*: Plain `int`s are intended to have the natural width
 suggested by the architecture of the execution environment; the other

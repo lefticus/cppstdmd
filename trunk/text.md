@@ -4989,7 +4989,7 @@ Let
 *Constraints:* `Out` satisfies `output_iterator<const charT&>`.
 
 *Preconditions:* `Out` models `output_iterator<const charT&>`, and
-`formatter<`$\texttt{remove_cvref_t<T}_i$`>, charT>` meets the
+`formatter<``remove_cvref_t<Tᵢ``>, charT>` meets the
 requirements [[formatter.requirements]] for each `Tᵢ` in `Args`.
 
 *Effects:* Places the first `M` characters of the character
@@ -5014,9 +5014,8 @@ template<class... Args>
 
 Let `charT` be `decltype(fmt.`*`str`*`)::value_type`.
 
-*Preconditions:* `formatter<`$\texttt{remove_cvref_t<T}_i$`>, charT>`
-meets the requirements [[formatter.requirements]] for each `Tᵢ` in
-`Args`.
+*Preconditions:* `formatter<``remove_cvref_t<Tᵢ``>, charT>` meets the
+requirements [[formatter.requirements]] for each `Tᵢ` in `Args`.
 
 *Returns:* The number of characters in the character representation of
 formatting arguments `args` formatted according to specifications given

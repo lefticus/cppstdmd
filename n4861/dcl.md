@@ -5069,7 +5069,7 @@ object parameter [[over.match.funcs]] if the coroutine is a non-static
 member function. The promise type shall be a class type.
 
 In the following, `pᵢ` is an lvalue of type `Pᵢ`, where `p₁` denotes
-`*this` and `pᵢ+1` denotes the $i^\textrm{th}$ function parameter for a
+`*this` and `p_i+1` denotes the $i^\textrm{th}$ function parameter for a
 non-static member function, and `pᵢ` denotes the $i^\textrm{th}$
 function parameter otherwise.
 

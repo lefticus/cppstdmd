@@ -5844,10 +5844,9 @@ template<input_range R1, random_access_range R2, class Comp = ranges::less,
                               Proj1 proj1 = {}, Proj2 proj2 = {});
 ```
 
-Let N be
-$\min(\texttt{last - first}, \ \texttt{result_last - result_first})$.
-Let `comp` be `less{}`, and `proj1` and `proj2` be `identity{}` for the
-overloads with no parameters by those names.
+Let N be min(`last - first`,  `result_last - result_first`). Let `comp`
+be `less{}`, and `proj1` and `proj2` be `identity{}` for the overloads
+with no parameters by those names.
 
 *Mandates:* For the overloads in namespace `std`, the expression
 `*first` is writable [[iterator.requirements.general]] to

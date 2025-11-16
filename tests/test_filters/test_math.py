@@ -102,8 +102,8 @@ def test_complex_superscript_unchanged():
     assert code == 0
     # Multi-char word-only superscripts now convert
     assert "xᵗᵉˣᵗ" in output
-    # But complex expressions with operators remain as LaTeX
-    assert "$2^{i+1}$" in output
+    # Arithmetic expressions also convert now
+    assert "2ⁱ⁺¹" in output
 
 
 # Subscript tests
@@ -830,4 +830,183 @@ def test_missing_operators():
     assert "c ± d" in output
     assert "e ≈ f" in output
     assert "g ∈ H" in output
+    assert "$" not in output
+
+
+# Backtick-aware conversion tests
+def test_backtick_preserves_underscores():
+    """Test that underscores inside backticks are NOT converted to subscripts"""
+    # This is the regression we're fixing: `numeric_limits` was becoming `numericₗimits`
+    latex = r"use $\tcode{numeric\_limits<T>}$"
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "`numeric_limits<T>`" in output
+    assert "numericₗimits" not in output  # Should NOT have subscript ₗ
+    assert "$" not in output
+
+
+def test_backtick_subscript_after_code():
+    """Test that subscripts AFTER backticks are still converted"""
+    # Pattern: `P`_1 should become `P`₁
+    latex = r"Type $\tcode{P}_1$ is defined"
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "`P₁`" in output
+    assert "`P`_1" not in output  # Subscript should be converted
+    assert "$" not in output
+
+
+def test_backtick_operators_between_code():
+    """Test that operators BETWEEN backticks are still converted"""
+    # Pattern: `a` ≤ `b` should work (operators between code are converted)
+    latex = r"$\tcode{a} \leq \tcode{b}$ and $\tcode{b} - \tcode{a} \leq \tcode{numeric\_limits<RealType>}$"
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "`a` ≤ `b`" in output
+    assert "`b` - `a` ≤" in output
+    assert "`numeric_limits<RealType>`" in output
+    assert "numericₗimits" not in output  # Should NOT have subscript
+    assert "$" not in output
+
+
+def test_backtick_complex_expression():
+    """Test complex expression with backticks, operators, and subscripts"""
+    # The actual failing case from numerics.tex
+    latex = r"$\tcode{a} \leq \tcode{b}$ and $\tcode{b} - \tcode{a} \leq \tcode{numeric\_limits<RealType>::max()}$"
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "`a` ≤ `b`" in output
+    assert "`b` - `a` ≤ `numeric_limits<RealType>::max()`" in output
+    assert "numericₗimits" not in output
+    assert "$" not in output
+
+
+# Tests for newly added subscript letters (r, u, v)
+def test_new_subscript_letters():
+    """Test newly added subscript letters: r, u, v"""
+    latex = r"Values $x_r$, $y_u$, and $z_v$."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "xᵣ" in output
+    assert "yᵤ" in output
+    assert "zᵥ" in output
+    assert "$" not in output
+
+
+def test_subscript_r_in_context():
+    """Test subscript r in realistic context: E_r, D_r"""
+    latex = r"Extent $E_r$ and dimension $D_r$."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "Eᵣ" in output
+    assert "Dᵣ" in output
+    assert "$" not in output
+
+
+# Tests for \mathrel{} and \mathbin{} stripping
+def test_mathrel_stripped():
+    """Test that \\mathrel{} wrapper is stripped and content is converted"""
+    latex = r"$\tcode{v}_i \mathrel{\neq} 0$."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    # \mathrel{} should be stripped, \neq should convert to ≠
+    assert "`vᵢ` ≠ 0" in output
+    assert "$" not in output
+    assert "mathrel" not in output
+
+
+def test_mathbin_stripped():
+    """Test that \\mathbin{} wrapper is stripped"""
+    latex = r"$a \mathbin{+} b$."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "a + b" in output
+    assert "$" not in output
+    assert "mathbin" not in output
+
+
+# Tests for \textit{} and \exposid{} underscore protection
+def test_textit_underscore_protected():
+    """Test that underscores inside \\textit{} are protected from subscript conversion"""
+    latex = r"$\textit{current_} > 0$."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "current_" in output  # Underscore should be preserved
+    assert "currentₗ" not in output  # Should NOT have subscript
+    assert "$" not in output
+
+
+def test_exposid_underscore_protected():
+    """Test that underscores inside \\exposid{} are protected from subscript conversion"""
+    latex = r"$\exposid{rank_} \times \exposid{extent_}$."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "rank_" in output
+    assert "extent_" in output
+    assert "rankₗ" not in output  # Should NOT have subscript
+    assert "extentₗ" not in output
+    assert "$" not in output
+
+
+def test_textit_subscript_after():
+    """Test that subscripts AFTER \\textit{} are still converted"""
+    latex = r"$\textit{var}_i$ and $\textit{val}_n$."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    # The subscript _i and _n should be converted (they're AFTER \textit{})
+    assert "varᵢ" in output
+    assert "valₙ" in output
+    assert "$" not in output
+
+
+# Tests for arithmetic superscripts
+def test_arithmetic_superscript_minus():
+    """Test arithmetic superscripts with minus: 2^{N-1} → 2ᴺ⁻¹"""
+    latex = r"$2^{N-1}$ to $2^{N-1}-1$."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "2ᴺ⁻¹" in output
+    assert "2ᴺ⁻¹-1" in output
+    assert "$" not in output
+
+
+def test_arithmetic_superscript_plus():
+    """Test arithmetic superscripts with plus: 2^{i+1} → 2ⁱ⁺¹"""
+    latex = r"$2^{i+1}$ and $x^{n+1}$."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "2ⁱ⁺¹" in output
+    assert "xⁿ⁺¹" in output
+    assert "$" not in output
+
+
+def test_arithmetic_superscript_with_digits():
+    """Test arithmetic superscripts with digits: 2^{1-1}, 10^{9+1}"""
+    latex = r"$2^{1-1}$ and $10^{9+1}$."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "2¹⁻¹" in output
+    assert "10⁹⁺¹" in output
+    assert "$" not in output
+
+
+def test_arithmetic_superscript_unconvertible():
+    """Test that unconvertible arithmetic superscripts stay as LaTeX"""
+    # Lowercase q doesn't have a superscript equivalent
+    latex = r"$x^{q-1}$ and $y^{q+1}$."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    # Should stay as LaTeX since q has no superscript form
+    assert "$x^{q-1}$" in output
+    assert "$y^{q+1}$" in output
+
+
+def test_mixed_arithmetic_and_simple_superscripts():
+    """Test mixed simple and arithmetic superscripts"""
+    latex = r"$2^n$ and $2^{n-1}$ and $2^{n+1}$."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "2ⁿ" in output
+    assert "2ⁿ⁻¹" in output
+    assert "2ⁿ⁺¹" in output
     assert "$" not in output

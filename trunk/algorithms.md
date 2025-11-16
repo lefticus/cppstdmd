@@ -5819,7 +5819,7 @@ template<execution-policy Ep, sized-random-access-range R, sized-random-access-r
 Let `result_last` be `result + (last - first)` for the overload in
 namespace `std`.
 
-Let N be min(`last - first`,  `resultₗast - result`).
+Let N be min(`last - first`,  `result_last - result`).
 
 *Preconditions:* The ranges \[`first`, `last`) and \[`result`,
 `result + `N) do not overlap.
@@ -5861,7 +5861,7 @@ Let M be max(0,  `n`).
 Let `result_last` be `result + `M for the overloads with no parameter
 `result_last`.
 
-Let N be min(`resultₗast - result`, M).
+Let N be min(`result_last - result`, M).
 
 *Mandates:* The type `Size` is convertible to an integral
 type [[conv.integral,class.conv]].
@@ -5924,7 +5924,7 @@ Let:
   which the condition E(`i`) holds;
 - `result_last` be `result + `M for the overloads with no parameter
   `result_last` or `result_r`;
-- N be min(M,  `resultₗast - result`).
+- N be min(M,  `result_last - result`).
 
 *Preconditions:* The ranges \[`first`, `last`) and \[`result`,
 `result + `N) do not overlap.
@@ -6056,7 +6056,7 @@ Let E(n) be:
 Let `result_last` be `result + (last - first)` for the overloads in
 namespace `std`.
 
-Let N be min(`last - first`,  `resultₗast - result`).
+Let N be min(`last - first`,  `result_last - result`).
 
 *Preconditions:* The ranges \[`first`, `last`) and \[`result`,
 `result + `N) do not overlap.
@@ -6280,7 +6280,7 @@ Let:
   min(`last1 - first1`,  `last2 - first2`) for binary transforms;
 - `result_last` be `result + `M for the overloads with no parameter
   `result_last` or `result_r`;
-- N be min(M,  `resultₗast - result`);
+- N be min(M,  `result_last - result`);
 - E(`i`) be
   - `op(*(first1 + (i - result)))` for unary transforms defined in
     namespace `std`;
@@ -6517,7 +6517,7 @@ Let:
 
 - `result_last` be `result + (last - first)` for the overloads with no
   parameter `result_last` or `result_r`;
-- N be min(`last - first`,  `resultₗast - result`).
+- N be min(`last - first`,  `result_last - result`).
 
 *Mandates:* The results of the expressions `*first` and `new_value` are
 writable [[iterator.requirements.general]] to `result`.
@@ -6833,7 +6833,7 @@ Let:
   E(`i`) is `false`;
 - `result_last` be `result + `M for the overloads with no parameter
   `result_last` or `result_r`;
-- N be min(M,  `resultₗast - result`).
+- N be min(M,  `result_last - result`).
 
 *Mandates:* `*first` is writable [[iterator.requirements.general]] to
 `result`.
@@ -6997,7 +6997,7 @@ Let:
   for which E(`i`) is `false`;
 - `result_last` be `result + `M` + 1` for the overloads with no
   parameter `result_last` or `result_r`;
-- N be min(M + 1,  `resultₗast - result`).
+- N be min(M + 1,  `result_last - result`).
 
 *Mandates:* `*first` is writable [[iterator.requirements.general]] to
 `result`.
@@ -7132,7 +7132,7 @@ template<execution-policy Ep, sized-random-access-range R, sized-random-access-r
     ranges::reverse_copy(Ep&& exec, R&& r, OutR&& result_r);
 ```
 
-Let N be min(`last - first`,  `resultₗast - result`), and let
+Let N be min(`last - first`,  `result_last - result`), and let
 *NEW_FIRST* be `first + (last - first) - `N.
 
 *Preconditions:* The ranges \[`first`, `last`) and \[`result`,
@@ -7250,7 +7250,7 @@ template<execution-policy Ep, random_access_iterator I, sized_sentinel_for<I> S,
     ranges::rotate_copy(Ep&& exec, I first, I middle, S last, O result, OutS result_last);
 ```
 
-Let M be `last - first` and N be min(M,  `resultₗast - result`).
+Let M be `last - first` and N be min(M,  `result_last - result`).
 
 *Preconditions:* \[`first`, `middle`) and \[`middle`, `last`) are valid
 ranges. The ranges \[`first`, `last`) and \[`result`, `result + `N) do
@@ -7827,10 +7827,9 @@ template<execution-policy Ep, sized-random-access-range R1, sized-random-access-
                               Proj1 proj1 = {}, Proj2 proj2 = {});
 ```
 
-Let N be
-$\min(\texttt{last - first}, \ \texttt{result_last - result_first})$.
-Let `comp` be `less{}`, and `proj1` and `proj2` be `identity{}` for the
-overloads with no parameters by those names.
+Let N be min(`last - first`,  `result_last - result_first`). Let `comp`
+be `less{}`, and `proj1` and `proj2` be `identity{}` for the overloads
+with no parameters by those names.
 
 *Mandates:* For the overloads in namespace `std`, the expression
 `*first` is writable [[iterator.requirements.general]] to
@@ -8598,7 +8597,7 @@ Let:
 - N be:
   - `(last1 - first1) + (last2 - first2)` for the overloads with no
     parameter `result_last` or `result_r`;
-  - min(`(last1 - first1) + (last2 - first2)`,  `resultₗast - result`)
+  - min(`(last1 - first1) + (last2 - first2)`,  `result_last - result`)
     for the overloads with parameters `result_last` or `result_r`;
 - `comp` be `less{}`, `proj1` be `identity{}`, and `proj2` be
   `identity{}`, for the overloads with no parameters by those names;
@@ -8873,7 +8872,7 @@ Let:
   `last2`) that are not present in \[`first1`, `last1`);
 - `result_last` be `result + `M for the overloads with no parameter
   `result_last` or `result_r`;
-- N be min(M,  `resultₗast - result`).
+- N be min(M,  `result_last - result`).
 
 *Preconditions:* The ranges \[`first1`, `last1`) and \[`first2`,
 `last2`) are sorted with respect to `comp` and `proj1` or `proj2`,
@@ -8976,7 +8975,7 @@ Let:
   in \[`first2`, `last2`);
 - `result_last` be `result + `M for the overloads with no parameter
   `result_last` or `result_r`;
-- N be min(M,  `resultₗast - result`).
+- N be min(M,  `result_last - result`).
 
 *Preconditions:* The ranges \[`first1`, `last1`) and \[`first2`,
 `last2`) are sorted with respect to `comp` and `proj1` or `proj2`,
@@ -9076,7 +9075,7 @@ Let:
   present in \[`first2`, `last2`);
 - `result_last` be `result + `M for the overloads with no parameter
   `result_last` or `result_r`;
-- N be min(M,  `resultₗast - result`).
+- N be min(M,  `result_last - result`).
 
 *Preconditions:* The ranges \[`first1`, `last1`) and \[`first2`,
 `last2`) are sorted with respect to `comp` and `proj1` or `proj2`,
@@ -9180,7 +9179,7 @@ Let:
   present in \[`first1`, `last1`).
 - `result_last` be `result + `M` + `K for the overloads with no
   parameter `result_last` or `result_r`;
-- N be min(K + M,  `resultₗast - result`).
+- N be min(K + M,  `result_last - result`).
 
 *Preconditions:* The ranges \[`first1`, `last1`) and \[`first2`,
 `last2`) are sorted with respect to `comp` and `proj1` or `proj2`,

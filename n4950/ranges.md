@@ -2815,7 +2815,7 @@ constexpr iterator& operator--();
 ```
 
 *Preconditions:* If `Bound` is not `unreachable_sentinel_t`,
-$\textit{current_} > 0$.
+current_ > 0.
 
 *Effects:* Equivalent to:
 
@@ -2841,7 +2841,7 @@ constexpr iterator& operator+=(difference_type n);
 ```
 
 *Preconditions:* If `Bound` is not `unreachable_sentinel_t`,
-$\textit{current_} + \texttt{n} \ge 0$.
+current_ + `n` ≥ 0.
 
 *Effects:* Equivalent to:
 
@@ -2855,7 +2855,7 @@ constexpr iterator& operator-=(difference_type n);
 ```
 
 *Preconditions:* If `Bound` is not `unreachable_sentinel_t`,
-$\textit{current_} - \texttt{n} \ge 0$.
+current_ - `n` ≥ 0.
 
 *Effects:* Equivalent to:
 
@@ -11972,15 +11972,15 @@ template<class Tuple>
 
 Let:
 
-- $\textit{scaled-size}(N)$ be the product of
+- scaled-size(N) be the product of
   `static_cast<difference_type>(ranges::size(std::get<`N`>(`*`parent_`*`->`*`bases_`*`)))`
-  and $\textit{scaled-size}(N+1)$ if N ≤ `sizeof...(Vs)`, otherwise
+  and scaled-size(N+1) if N ≤ `sizeof...(Vs)`, otherwise
   `static_cast<difference_type>(1)`;
-- $\textit{scaled-distance}(N)$ be the product of
+- scaled-distance(N) be the product of
   `static_cast<difference_type>(std::get<`N`>(`*`current_`*`) - std::get<`N`>(t))`
-  and $\textit{scaled-size}(N+1)$; and
-- *scaled-sum* be the sum of $\textit{scaled-distance}(N)$ for every
-  integer 0 ≤ N ≤ `sizeof...(Vs)`.
+  and scaled-size(N+1); and
+- *scaled-sum* be the sum of scaled-distance(N) for every integer
+  0 ≤ N ≤ `sizeof...(Vs)`.
 
 *Preconditions:* *scaled-sum* can be represented by `difference_type`.
 

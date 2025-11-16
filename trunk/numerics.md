@@ -1635,7 +1635,7 @@ equivalent) of length n ⋅ k, invokes `q.generate(`a+0`, `a+n ⋅ k`)` and
 then, iteratively for i = -n,…,-1, sets Xᵢ to
 $\left(\sum_{j=0}^{k-1}a_{k(i+n)+j} \cdot 2^{32j} \right) \bmod 2^w$.
 Finally, if the most significant w-r bits of $X_{-n}$ are zero, and if
-each of the other resulting Xᵢ is 0, changes $X_{-n}$ to $2^{w-1}$.
+each of the other resulting Xᵢ is 0, changes $X_{-n}$ to 2ʷ⁻¹.
 
 #### Class template `subtract_with_carry_engine` <a id="rand.eng.sub">[[rand.eng.sub]]</a>
 
@@ -1650,7 +1650,7 @@ or 1.
 
 The state transition is performed as follows:
 
-- Let $Y = X_{i-s} - X_{i-r} - c$.
+- Let Y = Xᵢ₋ₛ - Xᵢ₋ᵣ - c.
 - Set Xᵢ to y = Y  mod  m. Set c to 1 if Y < 0, otherwise set c to 0.
 
 [*Note 1*: This algorithm corresponds to a modular linear function of
@@ -1709,8 +1709,8 @@ namespace std {
 The following relations shall hold: `0u < s`, `s < r`, `0 < w`, and
 `w <= numeric_limits<UIntType>::digits`.
 
-The textual representation consists of the values of
-$X_{i-r}, \dotsc, X_{i-1}$, in that order, followed by c.
+The textual representation consists of the values of Xᵢ₋ᵣ, …, Xᵢ₋₁, in
+that order, followed by c.
 
 ``` cpp
 explicit subtract_with_carry_engine(result_type value);
@@ -2741,7 +2741,7 @@ explicit uniform_real_distribution(RealType a, RealType b = 1.0);
 ```
 
 *Preconditions:* `a` ≤ `b` and
-`b` - `a` ≤ `numericₗimits<RealType>::max()`.
+`b` - `a` ≤ `numeric_limits<RealType>::max()`.
 
 *Remarks:* `a` and `b` correspond to the respective parameters of the
 distribution.
@@ -14034,7 +14034,7 @@ template<class type1, class type2, class type3>
 ```
 
 *Mandates:* Each of the types `type1`, `type2`, and `type3` is a
-cv-unqualified signed or unsigned integer type.
+cv-unqualified signed or unsigned integer type [[basic.fundamental]].
 
 *Remarks:* Each function template has the same semantics as the
 corresponding type-generic macro with the same name specified in .

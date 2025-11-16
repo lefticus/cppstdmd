@@ -2200,7 +2200,7 @@ if (auto c = synth-three-way(get<0>(t), get<0>(u)); c != 0) return c;
 return $t_tail$ <=> $u_tail$;
 ```
 
-where `rₜail` for some `r` is a tuple containing all but the first
+where `r_tail` for some `r` is a tuple containing all but the first
 element of `r`.
 
 *Remarks:* The second overload is to be found via argument-dependent
@@ -2219,10 +2219,10 @@ In the descriptions that follow:
 
 - Let `TTypes` be a pack formed by the sequence of
   `tuple_element_t<i, TTuple>` for every integer
-  $0 \leq i < \tcode{tuple_size_v<TTuple>}$.
+  0 ≤ i < `tuple_size_v<TTuple>`.
 - Let `UTypes` be a pack formed by the sequence of
   `tuple_element_t<i, UTuple>` for every integer
-  $0 \leq i < \tcode{tuple_size_v<UTuple>}$.
+  0 ≤ i < `tuple_size_v<UTuple>`.
 
 ``` cpp
 template<tuple-like TTuple, tuple-like UTuple,
@@ -3816,18 +3816,18 @@ template<size_t I, class... Args> constexpr explicit variant(in_place_index_t<I>
 *Constraints:*
 
 - `I` is less than `sizeof...(Types)` and
-- `is_constructible_v<`$\texttt{T}_I$`, Args...>` is `true`.
+- `is_constructible_v<``T_I``, Args...>` is `true`.
 
-*Effects:* Direct-non-list-initializes the contained value of type
-$\texttt{T}_I$ with `std::forward<Args>(args)...`.
+*Effects:* Direct-non-list-initializes the contained value of type `T_I`
+with `std::forward<Args>(args)...`.
 
 *Ensures:* `index()` is `I`.
 
 *Throws:* Any exception thrown by calling the selected constructor of
-$\texttt{T}_I$.
+`T_I`.
 
-*Remarks:* If $\texttt{T}_I$’s selected constructor is a constexpr
-constructor, this constructor is a constexpr constructor.
+*Remarks:* If `T_I`’s selected constructor is a constexpr constructor,
+this constructor is a constexpr constructor.
 
 ``` cpp
 template<size_t I, class U, class... Args>
@@ -3837,16 +3837,16 @@ template<size_t I, class U, class... Args>
 *Constraints:*
 
 - `I` is less than `sizeof...(Types)` and
-- `is_constructible_v<`$\texttt{T}_I$`, initializer_list<U>&, Args...>`
-  is `true`.
+- `is_constructible_v<``T_I``, initializer_list<U>&, Args...>` is
+  `true`.
 
-*Effects:* Direct-non-list-initializes the contained value of type
-$\texttt{T}_I$ with `il, std::forward<Args>(args)...`.
+*Effects:* Direct-non-list-initializes the contained value of type `T_I`
+with `il, std::forward<Args>(args)...`.
 
 *Ensures:* `index()` is `I`.
 
-*Remarks:* If $\texttt{T}_I$’s selected constructor is a constexpr
-constructor, this constructor is a constexpr constructor.
+*Remarks:* If `T_I`’s selected constructor is a constexpr constructor,
+this constructor is a constexpr constructor.
 
 #### Destructor <a id="variant.dtor">[[variant.dtor]]</a>
 
@@ -4019,12 +4019,11 @@ template<size_t I, class... Args>
 
 *Mandates:* `I` < `sizeof...(Types)`.
 
-*Constraints:* `is_constructible_v<`$\texttt{T}_I$`, Args...>` is
-`true`.
+*Constraints:* `is_constructible_v<``T_I``, Args...>` is `true`.
 
 *Effects:* Destroys the currently contained value if
 `valueless_by_exception()` is `false`. Then direct-non-list-initializes
-the contained value of type $\texttt{T}_I$ with the arguments
+the contained value of type `T_I` with the arguments
 `std::forward<Args>(args)...`.
 
 *Ensures:* `index()` is `I`.
@@ -4046,12 +4045,11 @@ template<size_t I, class U, class... Args>
 *Mandates:* `I` < `sizeof...(Types)`.
 
 *Constraints:*
-`is_constructible_v<`$\texttt{T}_I$`, initializer_list<U>&, Args...>` is
-`true`.
+`is_constructible_v<``T_I``, initializer_list<U>&, Args...>` is `true`.
 
 *Effects:* Destroys the currently contained value if
 `valueless_by_exception()` is `false`. Then direct-non-list-initializes
-the contained value of type $\texttt{T}_I$ with
+the contained value of type `T_I` with
 `il, std::forward<Args>(args)...`.
 
 *Ensures:* `index()` is `I`.
@@ -4169,7 +4167,7 @@ variant_alternative<I, variant<Types...>>::type
 
 *Mandates:* `I` < `sizeof...(Types)`.
 
-*Type:* The type $\texttt{T}_I$.
+*Type:* The type `T_I`.
 
 ### Value access <a id="variant.get">[[variant.get]]</a>
 
@@ -4371,9 +4369,8 @@ type
 Let `V` denote the pack of types `Vᵢ`.
 
 Let m be a pack of n values of type `size_t`. Such a pack is valid if
-$0 \leq m_i < \texttt{variant_size_v<remove_reference_t<V}_i\texttt{>>}$
-for all 0 ≤ i < n. For each valid pack m, let e(m) denote the
-expression:
+0 ≤ mᵢ < `variant_size_v<remove_reference_t<Vᵢ``>>` for all 0 ≤ i < n.
+For each valid pack m, let e(m) denote the expression:
 
 ``` cpp
 INVOKE(std::forward<Visitor>(vis), get<m>(std::forward<V>(vars))...)  // see REF:func.require
@@ -8800,12 +8797,12 @@ template<class R, class F, class... BoundArgs>
 *Preconditions:* `FD` and each `TDᵢ` meet the *Cpp17MoveConstructible*
 and *Cpp17Destructible* requirements. *INVOKE*(fd, w₁, w₂, …,
 $w_N$) [[func.require]] is a valid expression for some values `w₁`,
-`w₂`, …, $\texttt{w}_N$, where N has the value `sizeof...(bound_args)`.
+`w₂`, …, `w_N`, where N has the value `sizeof...(bound_args)`.
 
 *Returns:* An argument forwarding call wrapper `g`[[func.require]]. A
 program that attempts to invoke a volatile-qualified `g` is ill-formed.
 When `g` is not volatile-qualified, invocation of
-`g(``u₁``, ``u₂``, `…`, `$\texttt{u}_M$`)` is
+`g(``u₁``, ``u₂``, `…`, ``u_M``)` is
 expression-equivalent [[defns.expression.equivalent]] to
 
 ``` cpp
@@ -8821,8 +8818,8 @@ INVOKE<R>(static_cast<$V_fd$>($v_fd$),
 ```
 
 for the second overload, where the values and types of the target
-argument `v`_`fd` and of the bound arguments `v₁`, `v₂`, …,
-$\texttt{v}_N$ are determined as specified below.
+argument `v`_`fd` and of the bound arguments `v₁`, `v₂`, …, `v_N` are
+determined as specified below.
 
 *Throws:* Any exception thrown by the initialization of the state
 entities of `g`.
@@ -8831,10 +8828,10 @@ entities of `g`.
 *Cpp17CopyConstructible*, then the return type meets the requirements of
 *Cpp17CopyConstructible*. — *end note*]
 
-The values of the *bound arguments* `v₁`, `v₂`, …, $\tcode{v}_N$ and
-their corresponding types `V₁`, `V₂`, …, $\tcode{V}_N$ depend on the
-types `TDᵢ` derived from the call to `bind` and the cv-qualifiers cv of
-the call wrapper `g` as follows:
+The values of the *bound arguments* `v₁`, `v₂`, …, `v_N` and their
+corresponding types `V₁`, `V₂`, …, `V_N` depend on the types `TDᵢ`
+derived from the call to `bind` and the cv-qualifiers cv of the call
+wrapper `g` as follows:
 
 - if `TDᵢ` is `reference_wrapper<T>`, the argument is
   `\tcode{td}_i.get()` and its type `Vᵢ` is `T&`;
@@ -11107,7 +11104,7 @@ Let
 *Constraints:* `Out` satisfies `output_iterator<const charT&>`.
 
 *Preconditions:* `Out` models `output_iterator<const charT&>`, and
-`formatter<`$\texttt{remove_cvref_t<T}_i$`>, charT>` meets the
+`formatter<``remove_cvref_t<Tᵢ``>, charT>` meets the
 requirements [[formatter.requirements]] for each `Tᵢ` in `Args`.
 
 *Effects:* Places the first `M` characters of the character
@@ -11132,9 +11129,8 @@ template<class... Args>
 
 Let `charT` be `decltype(fmt.`*`str`*`)::value_type`.
 
-*Preconditions:* `formatter<`$\texttt{remove_cvref_t<T}_i$`>, charT>`
-meets the requirements [[formatter.requirements]] for each `Tᵢ` in
-`Args`.
+*Preconditions:* `formatter<``remove_cvref_t<Tᵢ``>, charT>` meets the
+requirements [[formatter.requirements]] for each `Tᵢ` in `Args`.
 
 *Returns:* The number of characters in the character representation of
 formatting arguments `args` formatted according to specifications given

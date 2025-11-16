@@ -5234,7 +5234,7 @@ object parameter [[dcl.fct]] if the coroutine is a non-static member
 function. The promise type shall be a class type.
 
 In the following, `pᵢ` is an lvalue of type `Pᵢ`, where `p₁` denotes the
-object parameter and `pᵢ+1` denotes the iᵗʰ non-object function
+object parameter and `p_i+1` denotes the iᵗʰ non-object function
 parameter for a non-static member function, and `pᵢ` denotes the iᵗʰ
 function parameter otherwise. For a non-static member function, `q₁` is
 an lvalue that denotes `*this`; any other `qᵢ` is an lvalue that denotes

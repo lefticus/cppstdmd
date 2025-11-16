@@ -1447,7 +1447,7 @@ length n ⋅ k, invokes `q.generate(`a+0`, `a+n ⋅ k`)` and then,
 iteratively for i = -n,…,-1, sets Xᵢ to
 $\left(\sum_{j=0}^{k-1}a_{k(i+n)+j} \cdot 2^{32j} \right) \bmod 2^w$.
 Finally, if the most significant w-r bits of $X_{-n}$ are zero, and if
-each of the other resulting Xᵢ is 0, changes $X_{-n}$ to $2^{w-1}$.
+each of the other resulting Xᵢ is 0, changes $X_{-n}$ to 2ʷ⁻¹.
 
 #### Class template `subtract_with_carry_engine` <a id="rand.eng.sub">[[rand.eng.sub]]</a>
 
@@ -1500,8 +1500,8 @@ public:
 The following relations shall hold: `0u < s`, `s < r`, `0 < w`, and
 `w <= numeric_limits<UIntType>::digits`.
 
-The textual representation consists of the values of
-$X_{i-r}, \ldots, X_{i-1}$, in that order, followed by c.
+The textual representation consists of the values of Xᵢ₋ᵣ, …, Xᵢ₋₁, in
+that order, followed by c.
 
 ``` cpp
 explicit subtract_with_carry_engine(result_type value = default_seed);
@@ -2208,7 +2208,7 @@ public:
 explicit uniform_real_distribution(RealType a = 0.0, RealType b = 1.0);
 ```
 
-*Requires:* `a` ≤ `b` and `b` - `a` ≤ `numericₗimits<RealType>::max()`.
+*Requires:* `a` ≤ `b` and `b` - `a` ≤ `numeric_limits<RealType>::max()`.
 
 *Effects:* Constructs a `uniform_real_distribution` object; `a` and `b`
 correspond to the respective parameters of the distribution.

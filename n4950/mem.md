@@ -1386,7 +1386,7 @@ object, but not that of any of the array elements.
 to the initial element of an array of `count` `T` and `count` ≥ `n`.
 
 *Throws:* `bad_array_new_length` if
-`numericₗimits<sizeₜ>::max() / sizeof(T)` < `n`, or `bad_alloc` if the
+`numeric_limits<size_t>::max() / sizeof(T)` < `n`, or `bad_alloc` if the
 storage cannot be obtained.
 
 *Remarks:* The storage for the array is obtained by calling

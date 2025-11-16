@@ -66,8 +66,11 @@ local subscripts = {
   ["m"] = "ₘ",
   ["n"] = "ₙ",
   ["p"] = "ₚ",
+  ["r"] = "ᵣ",
   ["s"] = "ₛ",
   ["t"] = "ₜ",
+  ["u"] = "ᵤ",
+  ["v"] = "ᵥ",
   ["i"] = "ᵢ",
   ["j"] = "ⱼ",
   ["+"] = "₊",  -- Subscript plus sign for arithmetic like x_{i+1}
@@ -1051,10 +1054,15 @@ local function is_complex_math(text)
     if content:match("\\") then
       return true
     end
+    -- Check if it's simple arithmetic: single char, +/-, single char
+    local is_simple_arithmetic = content:match("^%w[-+]%w$")
     -- Check if it's all word characters (could be multi-char like "max")
     local is_word_chars_only = content:match("^%w+$")
-    -- Complex if has multiple chars AND is NOT all word characters
-    if content:match("%S.*%S") and not is_word_chars_only then
+    -- Complex if:
+    --   - Has multiple chars AND
+    --   - Is NOT simple arithmetic AND
+    --   - Is NOT all word characters (which convert_superscript_string can handle)
+    if content:match("%S.*%S") and not is_simple_arithmetic and not is_word_chars_only then
       return true
     end
   end
@@ -1106,6 +1114,20 @@ local function try_unicode_conversion(text)
   -- Trim whitespace
   text = text:gsub("^%s+", ""):gsub("%s+$", "")
 
+  -- STEP 1: Extract backtick pairs to protect them from subscript/superscript conversions
+  -- We preserve operators BETWEEN backticks (e.g., `a` ≤ `b`)
+  -- but prevent conversions INSIDE backticks (e.g., `numeric_limits` should stay as-is)
+  -- Use hyphen instead of underscore to avoid subscript conversion on the placeholder itself
+  local backtick_regions = {}
+  local backtick_count = 0
+
+  text = text:gsub("`([^`]*)`", function(content)
+    backtick_count = backtick_count + 1
+    local placeholder = "@@BACKTICK-" .. backtick_count .. "@@"
+    backtick_regions[placeholder] = content
+    return placeholder
+  end)
+
   -- Start conversion
   local result = text
 
@@ -1129,6 +1151,17 @@ local function try_unicode_conversion(text)
     return content
   end)
 
+  -- Strip typesetting hint macros (they don't affect semantic meaning)
+  -- \mathrel{...} -> ... (relational operator spacing)
+  result = process_macro_with_replacement(result, "mathrel", function(content)
+    return content
+  end)
+
+  -- \mathbin{...} -> ... (binary operator spacing)
+  result = process_macro_with_replacement(result, "mathbin", function(content)
+    return content
+  end)
+
   -- Convert \cv{} (cv-qualifiers) to plain text
   result = result:gsub("\\cv{}", "cv")
 
@@ -1148,6 +1181,22 @@ local function try_unicode_conversion(text)
   -- Convert \text{text} -> text (text mode in math)
   result = process_macro_with_replacement(result, "text", function(content)
     return content
+  end)
+
+  -- Handle \textit{...} and \exposid{...} with special underscore protection
+  -- If underscore appears INSIDE these macros, it's part of an identifier name, not a subscript
+  -- Pattern: \textit{identifier_name} or \exposid{current_}
+  -- We replace underscores inside with a placeholder to protect them from subscript conversion
+  result = process_macro_with_replacement(result, "textit", function(content)
+    -- Replace underscores with placeholder inside identifier names
+    local protected_content = content:gsub("_", "@@UNDERSCORE@@")
+    return protected_content
+  end)
+
+  result = process_macro_with_replacement(result, "exposid", function(content)
+    -- Replace underscores with placeholder inside identifier names
+    local protected_content = content:gsub("_", "@@UNDERSCORE@@")
+    return protected_content
   end)
 
   -- Strip sizing commands (they don't affect the output, just LaTeX presentation)
@@ -1264,6 +1313,13 @@ local function try_unicode_conversion(text)
     end
   end)
 
+  -- Check arithmetic superscripts: x^{N-1}, 2^{i+1}
+  result:gsub("(%w)%^{(%w)([-+])(%w)}", function(base, super1, op, super2)
+    if not convert_superscript_char(super1) or not convert_superscript_char(op) or not convert_superscript_char(super2) then
+      has_unconvertible_super = true
+    end
+  end)
+
   if has_unconvertible_super then
     return nil  -- Abort conversion if any superscript can't be converted
   end
@@ -1312,6 +1368,15 @@ local function try_unicode_conversion(text)
   result = result:gsub("^%^{(%w)}$", function(exp)
     local unicode_exp = convert_superscript_char(exp)
     return unicode_exp or ("^{" .. exp .. "}")
+  end)
+
+  -- Convert arithmetic superscripts: x^{N-1} → xᴺ⁻¹, 2^{i+1} → 2ⁱ⁺¹
+  -- Pattern: x^{N-1}, 2^{i+1}
+  result = result:gsub("(%w)%^{(%w)([-+])(%w)}", function(base, super1, op, super2)
+    local unicode_super1 = convert_superscript_char(super1)
+    local unicode_op = convert_superscript_char(op)
+    local unicode_super2 = convert_superscript_char(super2)
+    return base .. unicode_super1 .. unicode_op .. unicode_super2
   end)
 
   -- Convert simple subscripts: x_i or x_{0}
@@ -1427,7 +1492,7 @@ local function try_unicode_conversion(text)
     -- Handle subscripts after Unicode subscripts (e.g., c₁_2 → c₁₂, x₀_n → x₀ₙ)
     -- This fixes consecutive subscripts like c_1c_2...c_k → c₁c₂...cₖ
     -- Match any Unicode subscript character followed by _char or _{char}
-    local subscript_chars = "[₀₁₂₃₄₅₆₇₈₉ₐₑₒₓₕₖₗₘₙₚₛₜᵢⱼ₊₋₌₍₎]"
+    local subscript_chars = "[₀₁₂₃₄₅₆₇₈₉ₐₑₒᵣₓₕₖₗₘₙₚₛₜᵤᵥᵢⱼ₊₋₌₍₎]"
 
     result = result:gsub("(" .. subscript_chars .. ")_(%w)", function(sub_char, next_sub)
       local unicode_sub = convert_subscript_char(next_sub)
@@ -1497,6 +1562,22 @@ local function try_unicode_conversion(text)
   if result:match("[%^_]{") then
     return nil
   end
+
+  -- FINAL STEP: Restore backtick regions (preserve original content inside backticks)
+  -- Use literal string replacement (not pattern-based) to avoid issues with special characters
+  -- Unescape \_ to _ inside backticks (LaTeX escaped underscores should be literal in code)
+  for placeholder, content in pairs(backtick_regions) do
+    local start_pos = result:find(placeholder, 1, true)  -- true = plain text search
+    if start_pos then
+      local end_pos = start_pos + #placeholder - 1
+      -- Unescape LaTeX escaped characters inside code
+      local unescaped_content = content:gsub("\\_", "_")
+      result = result:sub(1, start_pos - 1) .. "`" .. unescaped_content .. "`" .. result:sub(end_pos + 1)
+    end
+  end
+
+  -- Restore protected underscores from \textit{} and \exposid{} identifiers
+  result = result:gsub("@@UNDERSCORE@@", "_")
 
   return result
 end
