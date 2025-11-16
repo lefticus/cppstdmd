@@ -1316,59 +1316,94 @@ local function try_unicode_conversion(text)
     return base .. unicode_sub1 .. unicode_op .. unicode_sub2
   end)
 
-  -- Then convert simple subscripts (but leave subscripts that are part of sub+super combinations like _i^n)
-  -- Handle subscripts NOT followed by superscript
-  result = result:gsub("(%w)_(%w)([^%^])", function(base, sub, after)
-    local unicode_sub = convert_subscript_char(sub)
-    return base .. unicode_sub .. after
-  end)
-  result = result:gsub("(%w)_(%w)$", function(base, sub)
-    local unicode_sub = convert_subscript_char(sub)
-    return base .. unicode_sub
-  end)
+  -- Iterate subscript conversion until no more changes occur
+  -- This handles consecutive subscripts like c_1c_2...c_k → c₁c₂...cₖ
+  local max_iterations = 10
+  local iteration = 0
+  local prev_result
 
-  result = result:gsub("(%w)_{(%w)}([^%^])", function(base, sub, after)
-    local unicode_sub = convert_subscript_char(sub)
-    return base .. unicode_sub .. after
-  end)
-  result = result:gsub("(%w)_{(%w)}$", function(base, sub)
-    local unicode_sub = convert_subscript_char(sub)
-    return base .. unicode_sub
-  end)
+  repeat
+    prev_result = result
+    iteration = iteration + 1
 
-  -- Convert bare subscripts: _n → ₙ, _{n} → ₙ (without base identifier)
-  result = result:gsub("^_(%w)$", function(sub)
-    local unicode_sub = convert_subscript_char(sub)
-    return unicode_sub or ("_" .. sub)
-  end)
+    -- Then convert simple subscripts (but leave subscripts that are part of sub+super combinations like _i^n)
+    -- Handle subscripts NOT followed by superscript
+    result = result:gsub("(%w)_(%w)([^%^])", function(base, sub, after)
+      local unicode_sub = convert_subscript_char(sub)
+      return base .. unicode_sub .. after
+    end)
+    result = result:gsub("(%w)_(%w)$", function(base, sub)
+      local unicode_sub = convert_subscript_char(sub)
+      return base .. unicode_sub
+    end)
 
-  result = result:gsub("^_{(%w)}$", function(sub)
-    local unicode_sub = convert_subscript_char(sub)
-    return unicode_sub or ("_{" .. sub .. "}")
-  end)
+    result = result:gsub("(%w)_{(%w)}([^%^])", function(base, sub, after)
+      local unicode_sub = convert_subscript_char(sub)
+      return base .. unicode_sub .. after
+    end)
+    result = result:gsub("(%w)_{(%w)}$", function(base, sub)
+      local unicode_sub = convert_subscript_char(sub)
+      return base .. unicode_sub
+    end)
 
-  -- Handle subscripts after Unicode superscripts (e.g., xⁱ_j → xⁱⱼ, cvʲ_i → cvʲᵢ)
-  -- This needs to run AFTER superscript conversion
-  -- Match any Unicode superscript character followed by _char or _{char}
-  local superscript_chars = "[⁰¹²³⁴⁵⁶⁷⁸⁹ᵃᵇᶜᵈᵉᶠᵍʰⁱʲᵏˡᵐⁿᵒᵖʳˢᵗᵘᵛʷˣʸᶻᴺ⁺⁻⁼⁽⁾]"
+    -- Convert bare subscripts: _n → ₙ, _{n} → ₙ (without base identifier)
+    result = result:gsub("^_(%w)$", function(sub)
+      local unicode_sub = convert_subscript_char(sub)
+      return unicode_sub or ("_" .. sub)
+    end)
 
-  result = result:gsub("(" .. superscript_chars .. ")_(%w)", function(super_char, sub_char)
-    local unicode_sub = convert_subscript_char(sub_char)
-    if unicode_sub then
-      return super_char .. unicode_sub
-    else
-      return super_char .. "_" .. sub_char  -- Keep original if conversion fails
-    end
-  end)
+    result = result:gsub("^_{(%w)}$", function(sub)
+      local unicode_sub = convert_subscript_char(sub)
+      return unicode_sub or ("_{" .. sub .. "}")
+    end)
 
-  result = result:gsub("(" .. superscript_chars .. ")_{(%w)}", function(super_char, sub_char)
-    local unicode_sub = convert_subscript_char(sub_char)
-    if unicode_sub then
-      return super_char .. unicode_sub
-    else
-      return super_char .. "_{" .. sub_char .. "}"  -- Keep original if conversion fails
-    end
-  end)
+    -- Handle subscripts after Unicode superscripts (e.g., xⁱ_j → xⁱⱼ, cvʲ_i → cvʲᵢ)
+    -- This needs to run AFTER superscript conversion
+    -- Match any Unicode superscript character followed by _char or _{char}
+    local superscript_chars = "[⁰¹²³⁴⁵⁶⁷⁸⁹ᵃᵇᶜᵈᵉᶠᵍʰⁱʲᵏˡᵐⁿᵒᵖʳˢᵗᵘᵛʷˣʸᶻᴺ⁺⁻⁼⁽⁾]"
+
+    result = result:gsub("(" .. superscript_chars .. ")_(%w)", function(super_char, sub_char)
+      local unicode_sub = convert_subscript_char(sub_char)
+      if unicode_sub then
+        return super_char .. unicode_sub
+      else
+        return super_char .. "_" .. sub_char  -- Keep original if conversion fails
+      end
+    end)
+
+    result = result:gsub("(" .. superscript_chars .. ")_{(%w)}", function(super_char, sub_char)
+      local unicode_sub = convert_subscript_char(sub_char)
+      if unicode_sub then
+        return super_char .. unicode_sub
+      else
+        return super_char .. "_{" .. sub_char .. "}"  -- Keep original if conversion fails
+      end
+    end)
+
+    -- Handle subscripts after Unicode subscripts (e.g., c₁_2 → c₁₂, x₀_n → x₀ₙ)
+    -- This fixes consecutive subscripts like c_1c_2...c_k → c₁c₂...cₖ
+    -- Match any Unicode subscript character followed by _char or _{char}
+    local subscript_chars = "[₀₁₂₃₄₅₆₇₈₉ₐₑₒₓₕₖₗₘₙₚₛₜᵢⱼ₊₋₌₍₎]"
+
+    result = result:gsub("(" .. subscript_chars .. ")_(%w)", function(sub_char, next_sub)
+      local unicode_sub = convert_subscript_char(next_sub)
+      if unicode_sub then
+        return sub_char .. unicode_sub
+      else
+        return sub_char .. "_" .. next_sub  -- Keep original if conversion fails
+      end
+    end)
+
+    result = result:gsub("(" .. subscript_chars .. ")_{(%w)}", function(sub_char, next_sub)
+      local unicode_sub = convert_subscript_char(next_sub)
+      if unicode_sub then
+        return sub_char .. unicode_sub
+      else
+        return sub_char .. "_{" .. next_sub .. "}"  -- Keep original if conversion fails
+      end
+    end)
+
+  until result == prev_result or iteration >= max_iterations
 
   -- Handle multi-character subscripts: _{max} → ₘₐₓ, x_{max} → xₘₐₓ
   -- Pattern: _{word+} where each character is converted individually

@@ -127,6 +127,17 @@ def test_subscript_with_braces():
     assert "a₁₀" in output
 
 
+def test_consecutive_subscripts():
+    """Test consecutive subscripts convert properly"""
+    latex = r"Sequence $c_1c_2...c_k$ works."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    # All three subscripts should convert
+    assert "c₁c₂...cₖ" in output
+    # Should NOT have any unconverted subscripts
+    assert "c_2" not in output
+
+
 def test_subscript_letters():
     """Test available subscript letters"""
     latex = r"Values $x_i$, $x_n$, and $T_k$."

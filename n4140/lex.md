@@ -1101,8 +1101,8 @@ a call of the form
 operator "" X<'c₁', 'c₂', ... 'cₖ'>()
 ```
 
-where *n* is the source character sequence c₁c_2...cₖ. The sequence
-c₁c_2...cₖ can only contain characters from the basic source character
+where *n* is the source character sequence c₁c₂...cₖ. The sequence
+c₁c₂...cₖ can only contain characters from the basic source character
 set.
 
 If *L* is a *user-defined-floating-literal*, let *f* be the literal
@@ -1129,8 +1129,8 @@ a call of the form
 operator "" X<'c₁', 'c₂', ... 'cₖ'>()
 ```
 
-where *f* is the source character sequence c₁c_2...cₖ. The sequence
-c₁c_2...cₖ can only contain characters from the basic source character
+where *f* is the source character sequence c₁c₂...cₖ. The sequence
+c₁c₂...cₖ can only contain characters from the basic source character
 set.
 
 If *L* is a *user-defined-string-literal*, let *str* be the literal

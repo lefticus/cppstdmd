@@ -18130,7 +18130,7 @@ template<class IndexType, size_t k, class... SliceSpecifiers>
 
 *Mandates:* `IndexType` is a signed or unsigned integer type.
 
-Let φ_k denote the following value:
+Let φₖ denote the following value:
 
 - sₖ if Sₖ models `convertible_to<IndexType>`;
 - otherwise, `get<0>(`sₖ`)` if Sₖ models `index-pair-like<IndexType>`;
@@ -18138,9 +18138,9 @@ Let φ_k denote the following value:
   `strided_slice`;
 - otherwise, `0`.
 
-*Preconditions:* φ_k is representable as a value of type `IndexType`.
+*Preconditions:* φₖ is representable as a value of type `IndexType`.
 
-*Returns:* `extents<IndexType>::`*`index-cast`*`(`φ_k`)`.
+*Returns:* `extents<IndexType>::`*`index-cast`*`(`φₖ`)`.
 
 ``` cpp
 template<size_t k, class Extents, class... SliceSpecifiers>
