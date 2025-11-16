@@ -1165,6 +1165,20 @@ local function try_unicode_conversion(text)
   -- Convert \cv{} (cv-qualifiers) to plain text
   result = result:gsub("\\cv{}", "cv")
 
+  -- Strip outer grouping braces before ordinal superscripts
+  -- This handles patterns like {k_i}^\text{th} -> k_i^\text{th}
+  -- allowing the subscript conversion to work properly
+  result = result:gsub("{([^}]+)}%^\\text{th}", "%1^\\text{th}")
+  result = result:gsub("{([^}]+)}%^\\text{st}", "%1^\\text{st}")
+  result = result:gsub("{([^}]+)}%^\\text{nd}", "%1^\\text{nd}")
+  result = result:gsub("{([^}]+)}%^\\text{rd}", "%1^\\text{rd}")
+
+  -- Also handle non-\text{} variants: {k_i}^{th} -> k_i^{th}
+  result = result:gsub("{([^}]+)}%^{th}", "%1^{th}")
+  result = result:gsub("{([^}]+)}%^{st}", "%1^{st}")
+  result = result:gsub("{([^}]+)}%^{nd}", "%1^{nd}")
+  result = result:gsub("{([^}]+)}%^{rd}", "%1^{rd}")
+
   -- Convert ordinal superscripts BEFORE \text{} conversion
   -- Patterns like $i^\text{th}$ -> iᵗʰ, $1^\text{st}$ -> 1ˢᵗ
   result = result:gsub("%^\\text{th}", "ᵗʰ")

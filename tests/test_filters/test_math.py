@@ -1010,3 +1010,33 @@ def test_mixed_arithmetic_and_simple_superscripts():
     assert "2ⁿ⁻¹" in output
     assert "2ⁿ⁺¹" in output
     assert "$" not in output
+
+
+def test_grouped_subscript_with_ordinal():
+    """Test grouped subscript expressions with ordinal superscripts: {k_i}^\text{th}"""
+    latex = r"${k_i}^\text{th}$ element and ${x_1}^\text{st}$ item."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "kᵢᵗʰ" in output
+    assert "x₁ˢᵗ" in output
+    assert "$" not in output
+
+
+def test_grouped_expression_with_ordinal():
+    """Test simple grouped expressions with ordinals: {k}^\text{th}"""
+    latex = r"${k}^\text{th}$ element and ${n}^\text{nd}$ value."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "kᵗʰ" in output
+    assert "nⁿᵈ" in output
+    assert "$" not in output
+
+
+def test_grouped_subscript_with_ordinal_no_text():
+    """Test grouped subscript with ordinal (non-\\text variant): {k_i}^{th}"""
+    latex = r"${k_i}^{th}$ and ${x_2}^{rd}$."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "kᵢᵗʰ" in output
+    assert "x₂ʳᵈ" in output
+    assert "$" not in output

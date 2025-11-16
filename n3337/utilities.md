@@ -1110,8 +1110,8 @@ function parameter pack `tpls`, where all indexing is zero-based.
 *Requires:* For all i, Uᵢ shall be the type cvᵢ `tuple<`Argsᵢ...`>`,
 where cvᵢ is the (possibly empty) iᵗʰ cv-qualifier-seq and Argsᵢ is the
 parameter pack representing the element types in Uᵢ. Let ${A_{ik}}$ be
-the ${k_i}^{th}$ type in Argsᵢ. For all Aᵢₖ the following requirements
-shall be satisfied: If Tᵢ is deduced as an lvalue reference type, then
+the kᵢᵗʰ type in Argsᵢ. For all Aᵢₖ the following requirements shall be
+satisfied: If Tᵢ is deduced as an lvalue reference type, then
 `is_constructible<`Aᵢₖ`, `cvᵢ` `Aᵢₖ`&>::value == true`, otherwise
 `is_constructible<`Aᵢₖ`, `cvᵢ Aᵢₖ`&&>::value == true`.
 
@@ -1121,8 +1121,8 @@ where n is equal to `sizeof...(Tuples)`. Let eᵢ`...` be the iᵗʰ ordered
 sequence of tuple elements of the resulting `tuple` object corresponding
 to the type sequence Argsᵢ.
 
-*Returns:* A `tuple` object constructed by initializing the ${k_i}^{th}$
-type element eᵢₖ in eᵢ`...` with  
+*Returns:* A `tuple` object constructed by initializing the kᵢᵗʰ type
+element eᵢₖ in eᵢ`...` with  
 `get<`kᵢ`>(std::forward<`Tᵢ`>(`tpᵢ`))` for each valid kᵢ and each group
 eᵢ in order.
 
