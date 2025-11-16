@@ -1609,22 +1609,22 @@ function parameter pack `tpls`, where all indexing is zero-based.
 
 *Requires:* For all i, `Uᵢ` shall be the type cvᵢ `tuple<``Argsᵢ``...>`,
 where cvᵢ is the (possibly empty) iᵗʰ *cv-qualifier-seq* and `Argsᵢ` is
-the parameter pack representing the element types in `Uᵢ`. Let `A_ik` be
-the ${k}^\text{th}$ type in `Argsᵢ`. For all `A_ik` the following
+the parameter pack representing the element types in `Uᵢ`. Let `Aᵢk` be
+the ${k}^\text{th}$ type in `Argsᵢ`. For all `Aᵢk` the following
 requirements shall be satisfied:
 
 - If `Tᵢ` is deduced as an lvalue reference type, then
-  `is_constructible_v<``A_ik``, `cv_i\;`A_ik``&> == true`, otherwise
-- `is_constructible_v<``A_ik``, `cv_i\;`A_ik``&&> == true`.
+  `is_constructible_v<``Aᵢk``, `cvᵢ `Aᵢk``&> == true`, otherwise
+- `is_constructible_v<``Aᵢk``, `cvᵢ `Aᵢk``&&> == true`.
 
 *Remarks:* The types in `CTypes` shall be equal to the ordered sequence
-of the extended types `Args₀``..., ``Args₁``..., `…`, ``Args_n-1``...`,
+of the extended types `Args₀``..., ``Args₁``..., `…`, ``Argsₙ-1``...`,
 where n is equal to `sizeof...(Tuples)`. Let `eᵢ``...` be the iᵗʰ
 ordered sequence of tuple elements of the resulting `tuple` object
 corresponding to the type sequence `Argsᵢ`.
 
 *Returns:* A `tuple` object constructed by initializing the
-${k_i}^\text{th}$ type element `e_ik` in `eᵢ``...` with
+${k_i}^\text{th}$ type element `eᵢk` in `eᵢ``...` with
 
 ``` cpp
 get<kᵢ>(std::forward<$T_i$>($tp_i$))
@@ -3360,22 +3360,22 @@ template <size_t I, class... Args> constexpr explicit variant(in_place_index_t<I
 ```
 
 *Effects:* Initializes the contained value as if
-direct-non-list-initializing an object of type `T_I` with the arguments
-`std::forward<Args>(args)...`.
+direct-non-list-initializing an object of type $\texttt{T}_I$ with the
+arguments `std::forward<Args>(args)...`.
 
 *Postconditions:* `index()` is `I`.
 
 *Throws:* Any exception thrown by calling the selected constructor of
-`T_I`.
+$\texttt{T}_I$.
 
 *Remarks:* This function shall not participate in overload resolution
 unless
 
 - `I` is less than `sizeof...(Types)` and
-- `is_constructible_v<``T_I``, Args...>` is `true`.
+- `is_constructible_v<`$\texttt{T}_I$`, Args...>` is `true`.
 
-If `T_I`’s selected constructor is a constexpr constructor, this
-constructor shall be a constexpr constructor.
+If $\texttt{T}_I$’s selected constructor is a constexpr constructor,
+this constructor shall be a constexpr constructor.
 
 ``` cpp
 template <size_t I, class U, class... Args>
@@ -3383,8 +3383,8 @@ template <size_t I, class U, class... Args>
 ```
 
 *Effects:* Initializes the contained value as if
-direct-non-list-initializing an object of type `T_I` with the arguments
-`il, std::forward<Args>(args)...`.
+direct-non-list-initializing an object of type $\texttt{T}_I$ with the
+arguments `il, std::forward<Args>(args)...`.
 
 *Postconditions:* `index()` is `I`.
 
@@ -3392,11 +3392,11 @@ direct-non-list-initializing an object of type `T_I` with the arguments
 unless
 
 - `I` is less than `sizeof...(Types)` and
-- `is_constructible_v<``T_I``, initializer_list<U>&, Args...>` is
-  `true`.
+- `is_constructible_v<`$\texttt{T}_I$`, initializer_list<U>&, Args...>`
+  is `true`.
 
-If `T_I`’s selected constructor is a constexpr constructor, this
-constructor shall be a constexpr constructor.
+If $\texttt{T}_I$’s selected constructor is a constexpr constructor,
+this constructor shall be a constexpr constructor.
 
 ``` cpp
 // allocator-extended constructors
@@ -3593,8 +3593,8 @@ template <size_t I, class... Args>
 
 *Effects:* Destroys the currently contained value if
 `valueless_by_exception()` is `false`. Then initializes the contained
-value as if direct-non-list-initializing a value of type `T_I` with the
-arguments `std::forward<Args>(args)...`.
+value as if direct-non-list-initializing a value of type $\texttt{T}_I$
+with the arguments `std::forward<Args>(args)...`.
 
 *Postconditions:* `index()` is `I`.
 
@@ -3604,9 +3604,9 @@ arguments `std::forward<Args>(args)...`.
 contained value.
 
 *Remarks:* This function shall not participate in overload resolution
-unless `is_constructible_v<``T_I``, Args...>` is `true`. If an exception
-is thrown during the initialization of the contained value, the
-`variant` might not hold a value.
+unless `is_constructible_v<`$\texttt{T}_I$`, Args...>` is `true`. If an
+exception is thrown during the initialization of the contained value,
+the `variant` might not hold a value.
 
 ``` cpp
 template <size_t I, class U, class... Args>
@@ -3617,8 +3617,8 @@ template <size_t I, class U, class... Args>
 
 *Effects:* Destroys the currently contained value if
 `valueless_by_exception()` is `false`. Then initializes the contained
-value as if direct-non-list-initializing a value of type `T_I` with the
-arguments `il, std::forward<Args>(args)...`.
+value as if direct-non-list-initializing a value of type $\texttt{T}_I$
+with the arguments `il, std::forward<Args>(args)...`.
 
 *Postconditions:* `index()` is `I`.
 
@@ -3628,7 +3628,8 @@ arguments `il, std::forward<Args>(args)...`.
 contained value.
 
 *Remarks:* This function shall not participate in overload resolution
-unless `is_constructible_v<``T_I``, initializer_list<U>&, Args...>` is
+unless
+`is_constructible_v<`$\texttt{T}_I$`, initializer_list<U>&, Args...>` is
 `true`. If an exception is thrown during the initialization of the
 contained value, the `variant` might not hold a value.
 
@@ -3745,7 +3746,7 @@ variant_alternative<I, variant<Types...>>::type
 
 *Requires:* `I < sizeof...(Types)`.
 
-*Value:* The type `T_I`.
+*Value:* The type $\texttt{T}_I$.
 
 ### Value access <a id="variant.get">[[variant.get]]</a>
 
@@ -10680,22 +10681,23 @@ template<class F, class... BoundArgs>
 *Requires:* `is_constructible_v<FD, F>` shall be `true`. For each `Tᵢ`
 in `BoundArgs`, `is_constructible_v<``TDᵢ``, ``Tᵢ``>` shall be `true`.
 *INVOKE*(fd, w₁, w₂, …, $w_N$) ([[func.require]]) shall be a valid
-expression for some values `w₁`, `w₂`, …, `w_N`, where N has the value
-`sizeof...(bound_args)`. The cv-qualifiers cv of the call wrapper `g`,
-as specified below, shall be neither `volatile` nor `const volatile`.
+expression for some values `w₁`, `w₂`, …, $\texttt{w}_N$, where N has
+the value `sizeof...(bound_args)`. The cv-qualifiers cv of the call
+wrapper `g`, as specified below, shall be neither `volatile` nor
+`const volatile`.
 
 *Returns:* A forwarding call wrapper `g` ([[func.require]]). The effect
-of `g(``u₁``, ``u₂``, …, ``u_M``)` shall be
+of `g(``u₁``, ``u₂``, …, `$\texttt{u}_M$`)` shall be
 
 ``` cpp
 INVOKE(fd, std::forward<$V_1$>($v_1$), std::forward<$V_2$>($v_2$), … , std::forward<$V_N$>($v_N$))
 ```
 
-where the values and types of the bound arguments `v₁`, `v₂`, …, `v_N`
-are determined as specified below. The copy constructor and move
-constructor of the forwarding call wrapper shall throw an exception if
-and only if the corresponding constructor of `FD` or of any of the types
-`TDᵢ` throws an exception.
+where the values and types of the bound arguments `v₁`, `v₂`, …,
+$\texttt{v}_N$ are determined as specified below. The copy constructor
+and move constructor of the forwarding call wrapper shall throw an
+exception if and only if the corresponding constructor of `FD` or of any
+of the types `TDᵢ` throws an exception.
 
 *Throws:* Nothing unless the construction of `fd` or of one of the
 values `tdᵢ` throws an exception.
@@ -10716,22 +10718,22 @@ template<class R, class F, class... BoundArgs>
 *Requires:* `is_constructible_v<FD, F>` shall be `true`. For each `Tᵢ`
 in `BoundArgs`, `is_constructible_v<``TDᵢ``, ``Tᵢ``>` shall be `true`.
 *INVOKE*(fd, w₁, w₂, …, $w_N$) shall be a valid expression for some
-values `w₁`, `w₂`, …, `w_N`, where N has the value
+values `w₁`, `w₂`, …, $\texttt{w}_N$, where N has the value
 `sizeof...(bound_args)`. The cv-qualifiers cv of the call wrapper `g`,
 as specified below, shall be neither `volatile` nor `const volatile`.
 
 *Returns:* A forwarding call wrapper `g` ([[func.require]]). The effect
-of `g(``u₁``, ``u₂``, …, ``u_M``)` shall be
+of `g(``u₁``, ``u₂``, …, `$\texttt{u}_M$`)` shall be
 
 ``` cpp
 INVOKE<R>(fd, std::forward<$V_1$>($v_1$), std::forward<$V_2$>($v_2$), … , std::forward<$V_N$>($v_N$))
 ```
 
-where the values and types of the bound arguments `v₁`, `v₂`, …, `v_N`
-are determined as specified below. The copy constructor and move
-constructor of the forwarding call wrapper shall throw an exception if
-and only if the corresponding constructor of `FD` or of any of the types
-`TDᵢ` throws an exception.
+where the values and types of the bound arguments `v₁`, `v₂`, …,
+$\texttt{v}_N$ are determined as specified below. The copy constructor
+and move constructor of the forwarding call wrapper shall throw an
+exception if and only if the corresponding constructor of `FD` or of any
+of the types `TDᵢ` throws an exception.
 
 *Throws:* Nothing unless the construction of `fd` or of one of the
 values `tdᵢ` throws an exception.
@@ -10744,9 +10746,10 @@ requirements of `CopyConstructible`.
 [*Note 2*: This implies that all of `FD` and `TDᵢ` are
 `MoveConstructible`. — *end note*]
 
-The values of the `v₁`, `v₂`, …, `v_N` and their corresponding types
-`V₁`, `V₂`, …, `V_N` depend on the types `TDᵢ` derived from the call to
-`bind` and the cv-qualifiers cv of the call wrapper `g` as follows:
+The values of the `v₁`, `v₂`, …, $\tcode{v}_N$ and their corresponding
+types `V₁`, `V₂`, …, $\tcode{V}_N$ depend on the types `TDᵢ` derived
+from the call to `bind` and the cv-qualifiers cv of the call wrapper `g`
+as follows:
 
 - if `TDᵢ` is `reference_wrapper<T>`, the argument is
   `\tcode{td}_i.get()` and its type `Vᵢ` is `T&`;

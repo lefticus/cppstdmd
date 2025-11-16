@@ -2959,8 +2959,8 @@ namespace std {
 The `moneypunct<>` facet defines monetary formatting parameters used by
 `money_get<>` and `money_put<>`. A monetary format is a sequence of four
 components, specified by a `pattern` value `p`, such that the `part`
-value `static_cast<part>(p.field[i])` determines the `i`^\text{th}
-component of the format[^19]
+value `static_cast<part>(p.field[i])` determines the `i`ᵗʰ component of
+the format[^19]
 
 In the `field` member of a `pattern` object, each value `symbol`,
 `sign`, `value`, and either `space` or `none` appears exactly once. The

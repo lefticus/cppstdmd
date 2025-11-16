@@ -1486,21 +1486,21 @@ function parameter pack `tpls`, where all indexing is zero-based.
 *Preconditions:* For all i, `Uᵢ` is the type cvᵢ `tuple<``Argsᵢ``...>`,
 where cvᵢ is the (possibly empty) iᵗʰ *cv-qualifier-seq* and `Argsᵢ` is
 the template parameter pack representing the element types in `Uᵢ`. Let
-`A_ik` be the ${k}^\text{th}$ type in `Argsᵢ`. For all `A_ik` the
+`Aᵢk` be the ${k}^\text{th}$ type in `Argsᵢ`. For all `Aᵢk` the
 following requirements are met:
 
 - If `Tᵢ` is deduced as an lvalue reference type, then
-  `is_constructible_v<``A_ik``, `cv{}_i\;`A_ik``&> == true`, otherwise
-- `is_constructible_v<``A_ik``, `cv{}_i\;`A_ik``&&> == true`.
+  `is_constructible_v<``Aᵢk``, `cvᵢ `Aᵢk``&> == true`, otherwise
+- `is_constructible_v<``Aᵢk``, `cvᵢ `Aᵢk``&&> == true`.
 
 *Remarks:* The types in `CTypes` are equal to the ordered sequence of
-the extended types `Args₀``..., ``Args₁``..., `…`, ``Args_n-1``...`,
+the extended types `Args₀``..., ``Args₁``..., `…`, ``Argsₙ-1``...`,
 where n is equal to `sizeof...(Tuples)`. Let `eᵢ``...` be the iᵗʰ
 ordered sequence of tuple elements of the resulting `tuple` object
 corresponding to the type sequence `Argsᵢ`.
 
 *Returns:* A `tuple` object constructed by initializing the
-${k_i}^\text{th}$ type element `e_ik` in `eᵢ``...` with
+${k_i}^\text{th}$ type element `eᵢk` in `eᵢ``...` with
 
 ``` cpp
 get<kᵢ>(std::forward<$T_i$>($tp_i$))
@@ -1586,8 +1586,8 @@ template<size_t I, class... Types>
 
 *Mandates:* `I` < `sizeof...(Types)`.
 
-*Type:* `TI` is the type of the `I`^\text{th} element of `Types`, where
-indexing is zero-based.
+*Type:* `TI` is the type of the `I`ᵗʰ element of `Types`, where indexing
+is zero-based.
 
 ``` cpp
 template<class T> struct tuple_size<const T>;
@@ -1650,8 +1650,8 @@ template<size_t I, class... Types>
 
 *Mandates:* `I` < `sizeof...(Types)`.
 
-*Returns:* A reference to the `I`^\text{th} element of `t`, where
-indexing is zero-based.
+*Returns:* A reference to the `I`ᵗʰ element of `t`, where indexing is
+zero-based.
 
 [*Note 1*: \[Note A\]If a type `T` in `Types` is some reference type
 `X&`, the return type is `X&`, not `X&&`. However, if the element type
@@ -1729,8 +1729,8 @@ if (auto c = synth-three-way(get<0>(t), get<0>(u)); c != 0) return c;
 return $t_tail$ <=> $u_tail$;
 ```
 
-where `r_tail` for some tuple `r` is a tuple containing all but the
-first element of `r`.
+where `rₜail` for some tuple `r` is a tuple containing all but the first
+element of `r`.
 
 [*Note 1*: The above definition does not require `t_{tail}` (or
 `u_{tail}`) to be constructed. It may not even be possible, as `t` and
@@ -3158,19 +3158,19 @@ template<size_t I, class... Args> constexpr explicit variant(in_place_index_t<I>
 *Constraints:*
 
 - `I` is less than `sizeof...(Types)` and
-- `is_constructible_v<``T_I``, Args...>` is `true`.
+- `is_constructible_v<`$\texttt{T}_I$`, Args...>` is `true`.
 
 *Effects:* Initializes the contained value as if
-direct-non-list-initializing an object of type `T_I` with the arguments
-`std::forward<Args>(args)...`.
+direct-non-list-initializing an object of type $\texttt{T}_I$ with the
+arguments `std::forward<Args>(args)...`.
 
 *Ensures:* `index()` is `I`.
 
 *Throws:* Any exception thrown by calling the selected constructor of
-`T_I`.
+$\texttt{T}_I$.
 
-*Remarks:* If `T_I`’s selected constructor is a constexpr constructor,
-this constructor is a constexpr constructor.
+*Remarks:* If $\texttt{T}_I$’s selected constructor is a constexpr
+constructor, this constructor is a constexpr constructor.
 
 ``` cpp
 template<size_t I, class U, class... Args>
@@ -3180,17 +3180,17 @@ template<size_t I, class U, class... Args>
 *Constraints:*
 
 - `I` is less than `sizeof...(Types)` and
-- `is_constructible_v<``T_I``, initializer_list<U>&, Args...>` is
-  `true`.
+- `is_constructible_v<`$\texttt{T}_I$`, initializer_list<U>&, Args...>`
+  is `true`.
 
 *Effects:* Initializes the contained value as if
-direct-non-list-initializing an object of type `T_I` with the arguments
-`il, std::forward<Args>(args)...`.
+direct-non-list-initializing an object of type $\texttt{T}_I$ with the
+arguments `il, std::forward<Args>(args)...`.
 
 *Ensures:* `index()` is `I`.
 
-*Remarks:* If `T_I`’s selected constructor is a constexpr constructor,
-this constructor is a constexpr constructor.
+*Remarks:* If $\texttt{T}_I$’s selected constructor is a constexpr
+constructor, this constructor is a constexpr constructor.
 
 #### Destructor <a id="variant.dtor">[[variant.dtor]]</a>
 
@@ -3362,12 +3362,13 @@ template<size_t I, class... Args>
 
 *Mandates:* `I` < `sizeof...(Types)`.
 
-*Constraints:* `is_constructible_v<``T_I``, Args...>` is `true`.
+*Constraints:* `is_constructible_v<`$\texttt{T}_I$`, Args...>` is
+`true`.
 
 *Effects:* Destroys the currently contained value if
 `valueless_by_exception()` is `false`. Then initializes the contained
-value as if direct-non-list-initializing a value of type `T_I` with the
-arguments `std::forward<Args>(args)...`.
+value as if direct-non-list-initializing a value of type $\texttt{T}_I$
+with the arguments `std::forward<Args>(args)...`.
 
 *Ensures:* `index()` is `I`.
 
@@ -3387,12 +3388,13 @@ template<size_t I, class U, class... Args>
 *Mandates:* `I` < `sizeof...(Types)`.
 
 *Constraints:*
-`is_constructible_v<``T_I``, initializer_list<U>&, Args...>` is `true`.
+`is_constructible_v<`$\texttt{T}_I$`, initializer_list<U>&, Args...>` is
+`true`.
 
 *Effects:* Destroys the currently contained value if
 `valueless_by_exception()` is `false`. Then initializes the contained
-value as if direct-non-list-initializing a value of type `T_I` with the
-arguments `il, std::forward<Args>(args)...`.
+value as if direct-non-list-initializing a value of type $\texttt{T}_I$
+with the arguments `il, std::forward<Args>(args)...`.
 
 *Ensures:* `index()` is `I`.
 
@@ -3509,7 +3511,7 @@ variant_alternative<I, variant<Types...>>::type
 
 *Mandates:* `I` < `sizeof...(Types)`.
 
-*Type:* The type `T_I`.
+*Type:* The type $\texttt{T}_I$.
 
 ### Value access <a id="variant.get">[[variant.get]]</a>
 
@@ -3689,9 +3691,10 @@ template<class R, class Visitor, class... Variants>
 ```
 
 Let n be `sizeof...(Variants)`. Let `m` be a pack of n values of type
-`size_t`. Such a pack is called valid if 0 ≤
-`mᵢ` < `variant_size_v<remove_reference_t<Variantsᵢ``>>` for all
-0 ≤ i < n. For each valid pack `m`, let e(`m`) denote the expression:
+`size_t`. Such a pack is called valid if $0 \leq
+\texttt{m}_i < \texttt{variant_size_v<remove_reference_t<Variants}_i\texttt{>>}$
+for all 0 ≤ i < n. For each valid pack `m`, let e(`m`) denote the
+expression:
 
 ``` cpp
 INVOKE(std::forward<Visitor>(vis), get<m>(std::forward<Variants>(vars))...) // see REF:func.require
@@ -10613,12 +10616,12 @@ template<class R, class F, class... BoundArgs>
 *Preconditions:* `FD` and each `TDᵢ` meet the *Cpp17MoveConstructible*
 and *Cpp17Destructible* requirements. *INVOKE*(fd, w₁, w₂, …,
 $w_N$) [[func.require]] is a valid expression for some values `w₁`,
-`w₂`, …, `w_N`, where N has the value `sizeof...(bound_args)`.
+`w₂`, …, $\texttt{w}_N$, where N has the value `sizeof...(bound_args)`.
 
 *Returns:* An argument forwarding call wrapper `g`[[func.require]]. A
 program that attempts to invoke a volatile-qualified `g` is ill-formed.
 When `g` is not volatile-qualified, invocation of
-`g(``u₁``, ``u₂``, `…`, ``u_M``)` is
+`g(``u₁``, ``u₂``, `…`, `$\texttt{u}_M$`)` is
 expression-equivalent [[defns.expression-equivalent]] to
 
 ``` cpp
@@ -10634,8 +10637,8 @@ INVOKE<R>(static_cast<$V_fd$>($v_fd$),
 ```
 
 for the second overload, where the values and types of the target
-argument `v`_`fd` and of the bound arguments `v₁`, `v₂`, …, `v_N` are
-determined as specified below.
+argument `v`_`fd` and of the bound arguments `v₁`, `v₂`, …,
+$\texttt{v}_N$ are determined as specified below.
 
 *Throws:* Any exception thrown by the initialization of the state
 entities of `g`.
@@ -10644,10 +10647,10 @@ entities of `g`.
 *Cpp17CopyConstructible*, then the return type meets the requirements of
 *Cpp17CopyConstructible*. — *end note*]
 
-The values of the *bound arguments* `v₁`, `v₂`, …, `v_N` and their
-corresponding types `V₁`, `V₂`, …, `V_N` depend on the types `TDᵢ`
-derived from the call to `bind` and the cv-qualifiers cv of the call
-wrapper `g` as follows:
+The values of the *bound arguments* `v₁`, `v₂`, …, $\tcode{v}_N$ and
+their corresponding types `V₁`, `V₂`, …, $\tcode{V}_N$ depend on the
+types `TDᵢ` derived from the call to `bind` and the cv-qualifiers cv of
+the call wrapper `g` as follows:
 
 - if `TDᵢ` is `reference_wrapper<T>`, the argument is
   `\tcode{td}_i.get()` and its type `Vᵢ` is `T&`;
@@ -12292,10 +12295,11 @@ template<class... B> struct conjunction : see below { };
 The class template `conjunction` forms the logical conjunction of its
 template type arguments.
 
-For a specialization `conjunction<``B₁``, `…`, ``B_N``>`, if there is a
-template type argument `Bᵢ` for which `bool(``Bᵢ``::value)` is `false`,
-then instantiating `conjunction<``B₁``, `…`, ``B_N``>::value` does not
-require the instantiation of `Bⱼ``::value` for j > i.
+For a specialization `conjunction<``B₁``, `…`, `$\texttt{B}_{N}$`>`, if
+there is a template type argument `Bᵢ` for which `bool(``Bᵢ``::value)`
+is `false`, then instantiating
+`conjunction<``B₁``, `…`, `$\texttt{B}_{N}$`>::value` does not require
+the instantiation of `Bⱼ``::value` for j > i.
 
 [*Note 1*: This is analogous to the short-circuiting behavior of the
 built-in operator `&&`. — *end note*]
@@ -12305,11 +12309,12 @@ shall be usable as a base class and shall have a member `value` which is
 convertible to `bool`, is not hidden, and is unambiguously available in
 the type.
 
-The specialization `conjunction<``B₁``, `…`, ``B_N``>` has a public and
-unambiguous base that is either
+The specialization `conjunction<``B₁``, `…`, `$\texttt{B}_{N}$`>` has a
+public and unambiguous base that is either
 
-- the first type `Bᵢ` in the list `true_type, ``B₁``, `…`, ``B_N` for
-  which `bool(``Bᵢ``::value)` is `false`, or
+- the first type `Bᵢ` in the list
+  `true_type, ``B₁``, `…`, `$\texttt{B}_{N}$ for which
+  `bool(``Bᵢ``::value)` is `false`, or
 - if there is no such `Bᵢ`, the last type in the list.
 
 [*Note 2*: This means a specialization of `conjunction` does not
@@ -12327,10 +12332,11 @@ template<class... B> struct disjunction : see below { };
 The class template `disjunction` forms the logical disjunction of its
 template type arguments.
 
-For a specialization `disjunction<``B₁``, `…`, ``B_N``>`, if there is a
-template type argument `Bᵢ` for which `bool(``Bᵢ``::value)` is `true`,
-then instantiating `disjunction<``B₁``, `…`, ``B_N``>::value` does not
-require the instantiation of `Bⱼ``::value` for j > i.
+For a specialization `disjunction<``B₁``, `…`, `$\texttt{B}_{N}$`>`, if
+there is a template type argument `Bᵢ` for which `bool(``Bᵢ``::value)`
+is `true`, then instantiating
+`disjunction<``B₁``, `…`, `$\texttt{B}_{N}$`>::value` does not require
+the instantiation of `Bⱼ``::value` for j > i.
 
 [*Note 3*: This is analogous to the short-circuiting behavior of the
 built-in operator `||`. — *end note*]
@@ -12340,11 +12346,12 @@ shall be usable as a base class and shall have a member `value` which is
 convertible to `bool`, is not hidden, and is unambiguously available in
 the type.
 
-The specialization `disjunction<``B₁``, `…`, ``B_N``>` has a public and
-unambiguous base that is either
+The specialization `disjunction<``B₁``, `…`, `$\texttt{B}_{N}$`>` has a
+public and unambiguous base that is either
 
-- the first type `Bᵢ` in the list `false_type, ``B₁``, `…`, ``B_N` for
-  which `bool(``Bᵢ``::value)` is `true`, or
+- the first type `Bᵢ` in the list
+  `false_type, ``B₁``, `…`, `$\texttt{B}_{N}$ for which
+  `bool(``Bᵢ``::value)` is `true`, or
 - if there is no such `Bᵢ`, the last type in the list.
 
 [*Note 4*: This means a specialization of `disjunction` does not

@@ -1363,10 +1363,11 @@ template<class... B> struct conjunction : see below { };
 The class template `conjunction` forms the logical conjunction of its
 template type arguments.
 
-For a specialization `conjunction<``B₁``, `…`, ``B_N``>`, if there is a
-template type argument `Bᵢ` for which `bool(``Bᵢ``::value)` is `false`,
-then instantiating `conjunction<``B₁``, `…`, ``B_N``>::value` does not
-require the instantiation of `Bⱼ``::value` for j > i.
+For a specialization `conjunction<``B₁``, `…`, `$\texttt{B}_{N}$`>`, if
+there is a template type argument `Bᵢ` for which `bool(``Bᵢ``::value)`
+is `false`, then instantiating
+`conjunction<``B₁``, `…`, `$\texttt{B}_{N}$`>::value` does not require
+the instantiation of `Bⱼ``::value` for j > i.
 
 [*Note 1*: This is analogous to the short-circuiting behavior of the
 built-in operator `&&`. — *end note*]
@@ -1376,11 +1377,12 @@ shall be usable as a base class and shall have a member `value` which is
 convertible to `bool`, is not hidden, and is unambiguously available in
 the type.
 
-The specialization `conjunction<``B₁``, `…`, ``B_N``>` has a public and
-unambiguous base that is either
+The specialization `conjunction<``B₁``, `…`, `$\texttt{B}_{N}$`>` has a
+public and unambiguous base that is either
 
-- the first type `Bᵢ` in the list `true_type, ``B₁``, `…`, ``B_N` for
-  which `bool(``Bᵢ``::value)` is `false`, or
+- the first type `Bᵢ` in the list
+  `true_type, ``B₁``, `…`, `$\texttt{B}_{N}$ for which
+  `bool(``Bᵢ``::value)` is `false`, or
 - if there is no such `Bᵢ`, the last type in the list.
 
 [*Note 2*: This means a specialization of `conjunction` does not
@@ -1398,10 +1400,11 @@ template<class... B> struct disjunction : see below { };
 The class template `disjunction` forms the logical disjunction of its
 template type arguments.
 
-For a specialization `disjunction<``B₁``, `…`, ``B_N``>`, if there is a
-template type argument `Bᵢ` for which `bool(``Bᵢ``::value)` is `true`,
-then instantiating `disjunction<``B₁``, `…`, ``B_N``>::value` does not
-require the instantiation of `Bⱼ``::value` for j > i.
+For a specialization `disjunction<``B₁``, `…`, `$\texttt{B}_{N}$`>`, if
+there is a template type argument `Bᵢ` for which `bool(``Bᵢ``::value)`
+is `true`, then instantiating
+`disjunction<``B₁``, `…`, `$\texttt{B}_{N}$`>::value` does not require
+the instantiation of `Bⱼ``::value` for j > i.
 
 [*Note 3*: This is analogous to the short-circuiting behavior of the
 built-in operator `||`. — *end note*]
@@ -1411,11 +1414,12 @@ shall be usable as a base class and shall have a member `value` which is
 convertible to `bool`, is not hidden, and is unambiguously available in
 the type.
 
-The specialization `disjunction<``B₁``, `…`, ``B_N``>` has a public and
-unambiguous base that is either
+The specialization `disjunction<``B₁``, `…`, `$\texttt{B}_{N}$`>` has a
+public and unambiguous base that is either
 
-- the first type `Bᵢ` in the list `false_type, ``B₁``, `…`, ``B_N` for
-  which `bool(``Bᵢ``::value)` is `true`, or
+- the first type `Bᵢ` in the list
+  `false_type, ``B₁``, `…`, `$\texttt{B}_{N}$ for which
+  `bool(``Bᵢ``::value)` is `true`, or
 - if there is no such `Bᵢ`, the last type in the list.
 
 [*Note 4*: This means a specialization of `disjunction` does not
@@ -3303,10 +3307,11 @@ Let *`DESIGNATING-CLS`*`(r, ctx)` be:
 *Returns:*
 
 - If `r` represents an unnamed bit-field F, then
-  `is_accessible(``r_H``, ctx)`, where `r_H` represents a hypothetical
-  non-static data member of the class represented by *`PARENT-CLS`*`(r)`
-  with the same access as F. \[*Note 5*: Unnamed bit-fields are treated
-  as class members for the purpose of `is_accessible`. — *end note*]
+  `is_accessible(`$\texttt{r}_H$`, ctx)`, where $\texttt{r}_H$
+  represents a hypothetical non-static data member of the class
+  represented by *`PARENT-CLS`*`(r)` with the same access as F.
+  \[*Note 5*: Unnamed bit-fields are treated as class members for the
+  purpose of `is_accessible`. — *end note*]
 - Otherwise, if `r` does not represent a class member or a direct base
   class relationship, then `true`.
 - Otherwise, if `r` represents

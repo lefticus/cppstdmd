@@ -772,7 +772,7 @@ follows:
   ``` cpp
   {
     init-statement
-    constexprₒₚₜ auto&& [u₀, u₁, \dotsc, u_N-1}] = expansion-initializer;
+    constexprₒₚₜ auto&& [u₀, u₁, …, u_N-1}] = expansion-initializer;
     S₀
     ⋮
     S_N-1}

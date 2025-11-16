@@ -1291,7 +1291,7 @@ struct on-stop-request {
 ```
 
 ``` cpp
-template<class T_0, class T_1, \dotsc, class T_n>
+template<class T_0, class T_1, …, class T_n>
 struct product-type {       // exposition only
   T_0 t_0;                // exposition only
   T_1 t_1;                // exposition only
@@ -3805,7 +3805,7 @@ object equivalent to the following lambda expression:
 }
 ```
 
-The member *`impls-for`\<when_all_t\>::*complete** is initialized with a
+The member `impls-for<when_all_t>::complete` is initialized with a
 callable object equivalent to the following lambda expression:
 
 ``` cpp

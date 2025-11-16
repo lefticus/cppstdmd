@@ -212,20 +212,16 @@ function Math(elem)
           result = result .. text:sub(last_pos)
         end
 
-        -- Convert operators to Unicode
-        result = result:gsub("\\geq", "≥")
-        result = result:gsub("\\leq", "≤")
-        result = result:gsub("\\neq", "≠")
-        -- Convert ellipsis operators
-        result = result:gsub("\\dotsc", "…")
-        result = result:gsub("\\dotsb", "…")
-        result = result:gsub("\\dotsm", "…")
-        result = result:gsub("\\dotsi", "…")
-        result = result:gsub("\\dotso", "…")
-        result = result:gsub("\\ldots", "…")
-        result = result:gsub("\\cdots", "⋯")
+        -- Use try_unicode_conversion for all operator conversions
+        -- This eliminates code duplication and ensures consistent behavior
+        local converted = try_unicode_conversion(result)
 
-        return pandoc.RawInline('markdown', result)
+        if converted and is_fully_converted(converted) then
+          return pandoc.RawInline('markdown', converted)
+        else
+          -- Conversion failed, revert to original LaTeX for MathJax
+          return pandoc.RawInline('markdown', "$" .. original_text .. "$")
+        end
       end
     end
 

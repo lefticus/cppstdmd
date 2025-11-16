@@ -1833,7 +1833,7 @@ Otherwise, returns `false`.
     random access iterators ([[random.access.iterators]]) and
     `last1 - first1 != last2 - first2`, then no applications of the
     corresponding predicate; otherwise,
-  - at most \min(`last1 - first1`, `last2 - first2`) applications of the
+  - at most min(`last1 - first1`, `last2 - first2`) applications of the
     corresponding predicate.
 - For the overloads with no `ExecutionPolicy`,
   - if `ForwardIterator1` and `ForwardIterator2` meet the requirements
@@ -3040,7 +3040,7 @@ such that for every iterator `j` in the range \[`first`, `i`) the
 following corresponding conditions hold: `*j < value` or
 `comp(*j, value) != false`.
 
-*Complexity:* At most \log_2(`last - first`) + 𝑂(1) comparisons.
+*Complexity:* At most log₂(`last - first`) + 𝑂(1) comparisons.
 
 #### `upper_bound` <a id="upper.bound">[[upper.bound]]</a>
 
@@ -3064,7 +3064,7 @@ such that for every iterator `j` in the range \[`first`, `i`) the
 following corresponding conditions hold: `!(value < *j)` or
 `comp(value, *j) == false`.
 
-*Complexity:* At most \log_2(`last - first`) + 𝑂(1) comparisons.
+*Complexity:* At most log₂(`last - first`) + 𝑂(1) comparisons.
 
 #### `equal_range` <a id="equal.range">[[equal.range]]</a>
 
@@ -3101,7 +3101,7 @@ make_pair(lower_bound(first, last, value, comp),
           upper_bound(first, last, value, comp))
 ```
 
-*Complexity:* At most 2 * \log_2(`last - first`) + 𝑂(1) comparisons.
+*Complexity:* At most 2 * log₂(`last - first`) + 𝑂(1) comparisons.
 
 #### `binary_search` <a id="binary.search">[[binary.search]]</a>
 
@@ -3126,7 +3126,7 @@ implies `!comp(value, e)`.
 `!(*i < value) && !(value < *i)` or
 `comp(*i, value) == false && comp(value, *i) == false`.
 
-*Complexity:* At most \log_2(`last - first`) + 𝑂(1) comparisons.
+*Complexity:* At most log₂(`last - first`) + 𝑂(1) comparisons.
 
 ### Partitions <a id="alg.partitions">[[alg.partitions]]</a>
 
@@ -3648,7 +3648,7 @@ type of `*first` shall satisfy the `MoveConstructible` requirements
 *Effects:* Places the value in the location `last - 1` into the
 resulting heap \[`first`, `last`).
 
-*Complexity:* At most \log(`last - first`) comparisons.
+*Complexity:* At most log(`last - first`) comparisons.
 
 #### `pop_heap` <a id="pop.heap">[[pop.heap]]</a>
 
@@ -3671,7 +3671,7 @@ shall satisfy the requirements of `MoveConstructible`
 *Effects:* Swaps the value in the location `first` with the value in the
 location `last - 1` and makes \[`first`, `last - 1`) into a heap.
 
-*Complexity:* At most 2 \log(`last - first`) comparisons.
+*Complexity:* At most 2 log(`last - first`) comparisons.
 
 #### `make_heap` <a id="make.heap">[[make.heap]]</a>
 
@@ -3898,7 +3898,7 @@ that for every iterator `j` in the range \[`first`, `last`) the
 following corresponding conditions hold: `!(*j < *i)` or
 `comp(*j, *i) == false`. Returns `last` if `first == last`.
 
-*Complexity:* Exactly \max(`last - first - 1`, 0) applications of the
+*Complexity:* Exactly max(`last - first - 1`, 0) applications of the
 corresponding comparisons.
 
 ``` cpp
@@ -3922,7 +3922,7 @@ that for every iterator `j` in the range \[`first`, `last`) the
 following corresponding conditions hold: `!(*i < *j)` or
 `comp(*i, *j) == false`. Returns `last` if `first == last`.
 
-*Complexity:* Exactly \max(`last - first - 1`, 0) applications of the
+*Complexity:* Exactly max(`last - first - 1`, 0) applications of the
 corresponding comparisons.
 
 ``` cpp
@@ -4005,7 +4005,7 @@ template<class ExecutionPolicy, class ForwardIterator1, class ForwardIterator2, 
 elements defined by the range \[`first2`, `last2`) and `false`
 otherwise.
 
-*Complexity:* At most 2 \min(`last1 - first1`, \ `last2 - first2`)
+*Complexity:* At most 2 min(`last1 - first1`,  `last2 - first2`)
 applications of the corresponding comparison.
 
 *Remarks:* If two sequences have the same number of elements and their

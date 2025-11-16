@@ -2665,7 +2665,7 @@ constexpr explicit repeat_view(const T& value, Bound bound = Bound())
 ```
 
 *Preconditions:* If `Bound` is not `unreachable_sentinel_t`,
-`bound` \ge 0.
+`bound` ≥ 0.
 
 *Effects:* Initializes *value\_* with `value` and *bound\_* with
 `bound`.
@@ -2675,7 +2675,7 @@ constexpr explicit repeat_view(T&& value, Bound bound = Bound());
 ```
 
 *Preconditions:* If `Bound` is not `unreachable_sentinel_t`,
-`bound` \ge 0.
+`bound` ≥ 0.
 
 *Effects:* Initializes *value\_* with `std::move(value)` and *bound\_*
 with `bound`.
@@ -2777,7 +2777,7 @@ denotes `IOTA-DIFF-T(index-type)` [[range.iota.view]].
 constexpr explicit iterator(const T* value, index-type b = index-type());
 ```
 
-*Preconditions:* If `Bound` is not `unreachable_sentinel_t`, `b` \ge 0.
+*Preconditions:* If `Bound` is not `unreachable_sentinel_t`, `b` ≥ 0.
 
 *Effects:* Initializes *value\_* with `value` and *current\_* with `b`.
 
@@ -2841,7 +2841,7 @@ constexpr iterator& operator+=(difference_type n);
 ```
 
 *Preconditions:* If `Bound` is not `unreachable_sentinel_t`,
-\textit{current_} + `n` \ge 0.
+$\textit{current_} + \texttt{n} \ge 0$.
 
 *Effects:* Equivalent to:
 
@@ -2855,7 +2855,7 @@ constexpr iterator& operator-=(difference_type n);
 ```
 
 *Preconditions:* If `Bound` is not `unreachable_sentinel_t`,
-\textit{current_} - `n` \ge 0.
+$\textit{current_} - \texttt{n} \ge 0$.
 
 *Effects:* Equivalent to:
 
@@ -11974,13 +11974,13 @@ Let:
 
 - $\textit{scaled-size}(N)$ be the product of
   `static_cast<difference_type>(ranges::size(std::get<`N`>(`*`parent_`*`->`*`bases_`*`)))`
-  and $\textit{scaled-size}(N+1)$ if N \le `sizeof...(Vs)`, otherwise
+  and $\textit{scaled-size}(N+1)$ if N ≤ `sizeof...(Vs)`, otherwise
   `static_cast<difference_type>(1)`;
 - $\textit{scaled-distance}(N)$ be the product of
   `static_cast<difference_type>(std::get<`N`>(`*`current_`*`) - std::get<`N`>(t))`
   and $\textit{scaled-size}(N+1)$; and
 - *scaled-sum* be the sum of $\textit{scaled-distance}(N)$ for every
-  integer 0 \le N \le `sizeof...(Vs)`.
+  integer 0 ≤ N ≤ `sizeof...(Vs)`.
 
 *Preconditions:* *scaled-sum* can be represented by `difference_type`.
 
@@ -12082,8 +12082,8 @@ Let `ret` be:
 - Otherwise, `orig`.
 
 *Preconditions:* `x` is in the range
-[`ranges::distance(*this, ranges::begin(*\textit{parent_}))`,
-`ranges::distance(*this, ranges::end(*\textit{parent_}))`].
+$[\texttt{ranges::distance(*this, ranges::begin(*\textit{parent_}))},$
+$\texttt{ranges::distance(*this, ranges::end(*\textit{parent_}))}]$.
 
 *Effects:* Sets the value of `*this` to `ret`.
 
@@ -12123,8 +12123,7 @@ friend constexpr bool operator==(const iterator& x, default_sentinel_t);
 
 *Returns:* `true` if
 `std::get<`i`>(x.`*`current_`*`) == ranges::end(std::get<`i`>(x.`*`parent_`*`->`*`bases_`*`))`
-is `true` for any integer 0 \le i \le `sizeof...(Vs)`; otherwise,
-`false`.
+is `true` for any integer 0 ≤ i ≤ `sizeof...(Vs)`; otherwise, `false`.
 
 ``` cpp
 friend constexpr auto operator<=>(const iterator& x, const iterator& y)
@@ -12175,7 +12174,7 @@ Let *end-tuple* be an object of a type that is a specialization of
   `ranges::end(std::get<0>(i.`*`parent_`*`->`*`bases_`*`))`;
 - `std::get<`N`>(`*`end-tuple`*`)` has the same value as
   `ranges::begin(std::get<`N`>(i.`*`parent_`*`->`*`bases_`*`))` for
-  every integer 1 \le N \le `sizeof...(Vs)`.
+  every integer 1 ≤ N ≤ `sizeof...(Vs)`.
 
 *Effects:* Equivalent to:
 `return i.`*`distance-from`*`(`*`end-tuple`*`);`
@@ -12198,7 +12197,7 @@ friend constexpr auto iter_move(const iterator& i) noexcept(see below);
 the following expressions:
 
 - `noexcept(ranges::iter_move(std::get<`N`>(i.`*`current_`*`)))` for
-  every integer0 \le N \le `sizeof...(Vs)`,
+  every integer0 ≤ N ≤ `sizeof...(Vs)`,
 - `is_nothrow_move_constructible_v<range_rvalue_reference_t<`*`maybe-const`*`<Const, T>>>`
   for every type `T` in `First, Vs...`.
 
@@ -12208,7 +12207,7 @@ friend constexpr void iter_swap(const iterator& l, const iterator& r) noexcept(s
         indirectly_swappable<iterator_t<maybe-const<Const, Vs>>>);
 ```
 
-*Effects:* For every integer 0 \le i \le `sizeof...(Vs)`, performs:
+*Effects:* For every integer 0 ≤ i ≤ `sizeof...(Vs)`, performs:
 
 ``` cpp
 ranges::iter_swap(std::get<i>(l.current_), std::get<i>(r.current_))
@@ -12218,7 +12217,7 @@ ranges::iter_swap(std::get<i>(l.current_), std::get<i>(r.current_))
 the following expressions:
 
 - `noexcept(ranges::iter_swap(std::get<`i`>(l.`*`current_`*`), std::get<`i`>(r.`*`current_`*`)))`
-  forevery integer 0 \le i \le `sizeof...(Vs)`.
+  forevery integer 0 ≤ i ≤ `sizeof...(Vs)`.
 
 ## Range generators <a id="coro.generator">[[coro.generator]]</a>
 

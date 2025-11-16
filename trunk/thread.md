@@ -3327,7 +3327,7 @@ of
 - `is_move_constructible_v<T>`,
 - `is_copy_assignable_v<T>`,
 - `is_move_assignable_v<T>`, or
-- `same_as<T, remove_cv_t<T>>`,
+- `is_same_v<T, remove_cv_t<T>>`,
 
 is `false`.
 

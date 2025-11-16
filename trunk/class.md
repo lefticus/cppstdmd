@@ -5606,11 +5606,11 @@ Let `R` be the declared return type of a defaulted three-way comparison
 operator function, and let `xᵢ` be the elements of the expanded list of
 subobjects for an object `x` of type `C`.
 
-- If `R` is `auto`, then let cv{}_i~`Rᵢ` be the type of the expression
+- If `R` is `auto`, then let cvᵢ~`Rᵢ` be the type of the expression
   `xᵢ`` <=> ``xᵢ`. The operator function is defined as deleted if that
   expression is not usable or if `Rᵢ` is not a comparison category type
   [[cmp.categories.pre]] for any i. The return type is deduced as the
-  common comparison type (see below) of `R₀`, `R₁`, …, `R_n-1`.
+  common comparison type (see below) of `R₀`, `R₁`, …, `Rₙ-1`.
 - Otherwise, `R` shall not contain a placeholder type. If the
   synthesized three-way comparison of type `R` between any objects `xᵢ`
   and `xᵢ` is not defined, the operator function is defined as deleted.
@@ -5621,12 +5621,12 @@ determined by comparing corresponding elements `xᵢ` and `yᵢ` in the
 expanded lists of subobjects for `x` and `y` (in increasing index order)
 until the first index i where the synthesized three-way comparison of
 type `R` between `xᵢ` and `yᵢ` yields a result value `vᵢ` where
-`vᵢ` \mathrel{`!=`} 0, contextually converted to `bool`, yields `true`.
-The return value is a copy of `vᵢ` if such an index exists and
-`static_cast<R>(std::strong_ordering::equal)` otherwise.
+$\tcode{v}_i \mathrel{\tcode{!=}} 0$, contextually converted to `bool`,
+yields `true`. The return value is a copy of `vᵢ` if such an index
+exists and `static_cast<R>(std::strong_ordering::equal)` otherwise.
 
 The *common comparison type* `U` of a possibly-empty list of n
-comparison category types `T₀`, `T₁`, …, `T_n-1` is defined as follows:
+comparison category types `T₀`, `T₁`, …, `Tₙ-1` is defined as follows:
 
 - If at least one `Tᵢ` is `std::partial_ordering`, `U` is
   `std::partial_ordering` [[cmp.partialord]].

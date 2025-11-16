@@ -1578,7 +1578,7 @@ The *normal form* of an *expression* `E` is a constraint
   ```
 
   Normalization of `B`'s *constraint-expression* is valid and results in
-  `T::value` (with the mapping `T` \mapsto `U*`) ∨ `true` (with an empty
+  `T::value` (with the mapping `T` ↦ `U*`) ∨ `true` (with an empty
   mapping), despite the expression `T::value` being ill-formed for a
   pointer type `T`. Normalization of `C`'s *constraint-expression*
   results in the program being ill-formed, because it would form the
@@ -1610,11 +1610,11 @@ template<C4 U> void f3(U);      // #3
 ```
 
 The associated constraints of \#1 are `sizeof(T) == 1` (with mapping
-`T` \mapsto `U`) ∧ `1 == 2`.  
+`T` ↦ `U`) ∧ `1 == 2`.  
 The associated constraints of \#2 are `requires { typename T::type; }`
-(with mapping `T` \mapsto `U`).  
+(with mapping `T` ↦ `U`).  
 The associated constraints of \#3 are `requires (T x) { ++x; }` (with
-mapping `T` \mapsto `U`).
+mapping `T` ↦ `U`).
 
 — *end example*]
 

@@ -1945,7 +1945,7 @@ if there is no element with key equivalent to the key of that element in
 containers with unique keys; always inserts that element in containers
 with equivalent keys.
 
-*Complexity:* N \log (`a.size()` + N), where N has the value
+*Complexity:* N log (`a.size()` + N), where N has the value
 `distance(i, j)`.
 
 ``` cpp
@@ -1962,7 +1962,7 @@ element with key equivalent to the key of that element in containers
 with unique keys; always inserts that element in containers with
 equivalent keys.
 
-*Complexity:* N \log (`a.size()` + N), where N has the value
+*Complexity:* N log (`a.size()` + N), where N has the value
 `ranges::distance(rg)`.
 
 ``` cpp
@@ -2049,7 +2049,7 @@ equivalent to `k`.
 *Returns:* A `node_type` owning the element if found, otherwise an empty
 `node_type`.
 
-*Complexity:* \log (`a.size()`)
+*Complexity:* log (`a.size()`)
 
 ``` cpp
 a_tran.extract(kx)
@@ -2063,7 +2063,7 @@ that `!c(r, kx) && !c(kx, r)` is `true`.
 *Returns:* A `node_type` owning the element if found, otherwise an empty
 `node_type`.
 
-*Complexity:* \log(`a_tran.size()`)
+*Complexity:* log(`aₜran.size()`)
 
 ``` cpp
 a.extract(q)
@@ -2098,7 +2098,7 @@ as iterators into `a`, not into `a2`.
 
 *Throws:* Nothing unless the comparison object throws.
 
-*Complexity:* N \log(`a.size()+` N), where N has the value `a2.size()`.
+*Complexity:* N log(`a.size()+` N), where N has the value `a2.size()`.
 
 ``` cpp
 a.erase(k)
@@ -2111,7 +2111,7 @@ a.erase(k)
 
 *Returns:* The number of erased elements.
 
-*Complexity:* \log (`a.size()`) + `a.count(k)`
+*Complexity:* log (`a.size()`) + `a.count(k)`
 
 ``` cpp
 a_tran.erase(kx)
@@ -2124,7 +2124,7 @@ a_tran.erase(kx)
 
 *Returns:* The number of erased elements.
 
-*Complexity:* \log(`a_tran.size())` + `a_tran.count(kx)`
+*Complexity:* log(`aₜran.size())` + `aₜran.count(kx)`
 
 ``` cpp
 a.erase(q)
@@ -2166,7 +2166,7 @@ a.erase(q1, q2)
 to any elements being erased. If no such element exists, `a.end()` is
 returned.
 
-*Complexity:* \log(`a.size()`) + N, where N has the value
+*Complexity:* log(`a.size()`) + N, where N has the value
 `distance(q1, q2)`.
 
 ``` cpp
@@ -2210,7 +2210,7 @@ b.count(k)
 
 *Returns:* The number of elements with key equivalent to `k`.
 
-*Complexity:* \log (`b.size()`) + `b.count(k)`
+*Complexity:* log (`b.size()`) + `b.count(k)`
 
 ``` cpp
 a_tran.count(ke)
@@ -2221,7 +2221,7 @@ a_tran.count(ke)
 *Returns:* The number of elements with key `r` such that
 `!c(r, ke) && !c(ke, r)`.
 
-*Complexity:* \log (`a_tran.size()`) + `a_tran.count(ke)`
+*Complexity:* log (`aₜran.size()`) + `aₜran.count(ke)`
 
 ``` cpp
 b.contains(k)
@@ -3310,7 +3310,7 @@ b.bucket_size(n)
 
 *Preconditions:* `n` shall be in the range \[`0`, `b.bucket_count()`).
 
-*Returns:* The number of elements in the `n`^\text{th} bucket.
+*Returns:* The number of elements in the `n`ᵗʰ bucket.
 
 *Complexity:* 𝑂(`b.bucket_size(n)`)
 
@@ -3792,8 +3792,8 @@ template<size_t I, class T, size_t N>
 
 *Mandates:* `I < N` is `true`.
 
-*Returns:* A reference to the `I`^\text{th} element of `a`, where
-indexing is zero-based.
+*Returns:* A reference to the `I`ᵗʰ element of `a`, where indexing is
+zero-based.
 
 ### Header `<deque>` synopsis <a id="deque.syn">[[deque.syn]]</a>
 
@@ -7192,8 +7192,8 @@ distance to the end of the vector.
 *Remarks:* If an exception is thrown other than by the copy constructor,
 move constructor, assignment operator, or move assignment operator of
 `T` or by any `InputIterator` operation, there are no effects.
-Otherwise, if an exception is thrown, then `size()` \ge n and elements
-in the range `begin() + ``[``0, `n`)` are not modified.
+Otherwise, if an exception is thrown, then `size()` ≥ n and elements in
+the range `begin() + ``[``0, `n`)` are not modified.
 
 ``` cpp
 constexpr reference push_back(const T& x);
@@ -15288,9 +15288,9 @@ template<class OtherIndexType, size_t N>
 *Effects:*
 
 - If `N` equals `rank_dynamic()`, for all d in the range
-  [0, `rank_dynamic()`), direct-non-list-initializes
+  $[0, \texttt{rank_dynamic()})$, direct-non-list-initializes
   *`dynamic-extents`*`[`d`]` with `as_const(exts[`d`])`.
-- Otherwise, for all d in the range [0, `rank_dynamic()`),
+- Otherwise, for all d in the range $[0, \texttt{rank_dynamic()})$,
   direct-non-list-initializes *dynamic-extents*`[`d`]` with
   `as_const(exts[`*`dynamic-index-inv`*`(`d`)])`.
 
@@ -15369,7 +15369,7 @@ In [[mdspan.layout.reqmts]] and [[mdspan.layout.policy.reqmts]]:
   \[*Note 10*: The type of each element of the packs can be a different
   integer type. — *end note*]
 - `r` is a (possibly const) rank index of `typename M::extents_type`.
-- `d_r` is a pack of (possibly const) integers for which
+- $\tcode{d}_r$ is a pack of (possibly const) integers for which
   `sizeof...(\tcode{d}_r) == M::extents_type::rank()` is `true`, the rᵗʰ
   element is equal to 1, and all other elements are equal to 0.
 
@@ -15499,7 +15499,7 @@ m.is_exhaustive()
 *Result:* `bool`
 
 *Returns:* `true` only if for all k in the range
-[0, `m.required_span_size()`) there exists an `i` such that `m(i...)`
+[0, `m.requiredₛpanₛize()`) there exists an `i` such that `m(i...)`
 equals k.
 
 [*Note 2*: A mapping can return `false` even if the condition is met.
@@ -15513,8 +15513,8 @@ m.is_strided()
 *Result:* `bool`
 
 *Returns:* `true` only if for every rank index r of `m.extents()` there
-exists an integer $s_r$ such that, for all `i` where (`i`+d_r) is a
-multidimensional index in `m.extents()`[[mdspan.overview]],
+exists an integer $s_r$ such that, for all `i` where $(\texttt{i}+d_r)$
+is a multidimensional index in `m.extents()`[[mdspan.overview]],
 `m((i + `$d_r$`)...) - m(i...)` equals $s_r$.
 
 [*Note 3*: This implies that for a strided layout
@@ -15795,7 +15795,7 @@ template<class OtherExtents>
 *Preconditions:*
 
 - If `extents_type::rank() > 0` is `true`, then for all r in the range
-  [0, `extents_type::rank()`), `other.stride(`r`)` equals
+  [0, `extentsₜype::rank()`), `other.stride(`r`)` equals
   `other.extents().`*`fwd-prod-of-extents`*`(`r`)`, and
 - `other.required_span_size()` is representable as a value of type
   `index_type`[[basic.fundamental]].
@@ -16033,7 +16033,7 @@ template<class OtherExtents>
 *Preconditions:*
 
 - If `extents_type::rank() > 0` is `true`, then for all r in the range
-  [0, `extents_type::rank()`), `other.stride(`r`)` equals
+  [0, `extentsₜype::rank()`), `other.stride(`r`)` equals
   `other.extents().`*`rev-prod-of-extents`*`(`r`)`.
 - `other.required_span_size()` is representable as a value of type
   `index_type`[[basic.fundamental]].
@@ -16582,7 +16582,7 @@ constexpr mapping(const extents_type& ext, OtherIndexType pad);
 *Preconditions:*
 
 - `pad` is representable as a value of type `index_type`.
-- `extents_type::index-cast(pad)` is greater than zero.
+- `extents_type::`*`index-cast`*`(pad)` is greater than zero.
 - If *rank\_* is greater than one, then
   *`LEAST-MULTIPLE-AT-LEAST`*`(pad, ext.extent(0))` is representable as
   a value of type `index_type.`
@@ -17756,8 +17756,8 @@ constexpr mdspan();
 - `is_default_constructible_v<mapping_type>` is `true`.
 - `is_default_constructible_v<accessor_type>` is `true`.
 
-*Preconditions:* [0, `\textit{map_}.required_span_size()`) is an
-accessible range of *ptr\_* and *acc\_* for the values of *map\_* and
+*Preconditions:* $[0, \texttt{\textit{map_}.required_span_size()})$ is
+an accessible range of *ptr\_* and *acc\_* for the values of *map\_* and
 *acc\_* after the invocation of this constructor.
 
 *Effects:* Value-initializes *ptr\_*, *map\_*, and *acc\_*.
@@ -17778,8 +17778,8 @@ Let `N` be `sizeof...(OtherIndexTypes)`.
 - `is_constructible_v<mapping_type, extents_type>` is `true`, and
 - `is_default_constructible_v<accessor_type>` is `true`.
 
-*Preconditions:* [0, `\textit{map_}.required_span_size()`) is an
-accessible range of `p` and *acc\_* for the values of *map\_* and
+*Preconditions:* $[0, \texttt{\textit{map_}.required_span_size()})$ is
+an accessible range of `p` and *acc\_* for the values of *map\_* and
 *acc\_* after the invocation of this constructor.
 
 *Effects:*
@@ -17807,8 +17807,8 @@ template<class OtherIndexType, size_t N>
 - `is_constructible_v<mapping_type, extents_type>` is `true`, and
 - `is_default_constructible_v<accessor_type>` is `true`.
 
-*Preconditions:* [0, `\textit{map_}.required_span_size()`) is an
-accessible range of `p` and *acc\_* for the values of *map\_* and
+*Preconditions:* $[0, \texttt{\textit{map_}.required_span_size()})$ is
+an accessible range of `p` and *acc\_* for the values of *map\_* and
 *acc\_* after the invocation of this constructor.
 
 *Effects:*
@@ -17826,8 +17826,8 @@ constexpr mdspan(data_handle_type p, const extents_type& ext);
 - `is_constructible_v<mapping_type, const extents_type&>` is `true`, and
 - `is_default_constructible_v<accessor_type>` is `true`.
 
-*Preconditions:* [0, `\textit{map_}.required_span_size()`) is an
-accessible range of `p` and *acc\_* for the values of *map\_* and
+*Preconditions:* $[0, \texttt{\textit{map_}.required_span_size()})$ is
+an accessible range of `p` and *acc\_* for the values of *map\_* and
 *acc\_* after the invocation of this constructor.
 
 *Effects:*
@@ -17842,7 +17842,7 @@ constexpr mdspan(data_handle_type p, const mapping_type& m);
 
 *Constraints:* `is_default_constructible_v<accessor_type>` is `true`.
 
-*Preconditions:* [0, `m.required_span_size()`) is an accessible range of
+*Preconditions:* [0, `m.requiredₛpanₛize()`) is an accessible range of
 `p` and *acc\_* for the value of *acc\_* after the invocation of this
 constructor.
 
@@ -17856,7 +17856,7 @@ constructor.
 constexpr mdspan(data_handle_type p, const mapping_type& m, const accessor_type& a);
 ```
 
-*Preconditions:* [0, `m.required_span_size()`) is an accessible range of
+*Preconditions:* [0, `m.requiredₛpanₛize()`) is an accessible range of
 `p` and `a`.
 
 *Effects:*
@@ -17885,9 +17885,9 @@ template<class OtherElementType, class OtherExtents,
   is`true`, and
 - `is_constructible_v<extents_type, OtherExtents>` is `true`.
 
-*Preconditions:* [0, `\textit{map_}.required_span_size()`) is an
-accessible range of *ptr\_* and *acc\_* for values of *ptr\_*, *map\_*,
-and *acc\_* after the invocation of this constructor.
+*Preconditions:* $[0, \texttt{\textit{map_}.required_span_size()})$ is
+an accessible range of *ptr\_* and *acc\_* for values of *ptr\_*,
+*map\_*, and *acc\_* after the invocation of this constructor.
 
 For each rank index `r` of `extents_type`,
 `static_extent(r) == dynamic_extent || static_extent(r) == other.extent(r)`
@@ -18203,10 +18203,10 @@ following is true:
 following are `true`:
 
 - if Sₖ is a specialization of `strided_slice`
-  - `$s_k$.extent` = 0, or
-  - `$s_k$.stride` > 0
-- 0 \le `\textit{first_}<IndexType, $k$>(slices...)`
-  \le `\textit{last_}<$k$>(src, slices...)` \le `src.extent($k$)`
+  - `$sₖ$.extent` = 0, or
+  - `$sₖ$.stride` > 0
+- $0 \le \texttt{\textit{first_}<IndexType, $k$>(slices...)}$
+  $\le \texttt{\textit{last_}<$k$>(src, slices...)}$ ≤ `src.extent($k$)`
 
 Let `SubExtents` be a specialization of `extents` such that:
 
@@ -18260,9 +18260,9 @@ following are `true`:
 
 - if Sₖ is a specialization of `strided_slice`, `sₖ.extent` is equal to
   zero or `sₖ.stride` is greater than zero; and
-- 0            ≤ `\textit{first_}<index_type, $k$>(slices...)` \\
-  \hphantom{0 } ≤ `\textit{last_}<$k$>(extents(), slices...)` \\
-  \hphantom{0 } ≤ `extents().extent($k$)`
+- $0            \leq \tcode{\textit{first_}<index_type, $k$>(slices...)} \\
+  \hphantom{0 } \leq \tcode{\textit{last_}<$k$>(extents(), slices...)} \\
+  \hphantom{0 } \leq \tcode{extents().extent($k$)}$
 
 Let `sub_ext` be the result of `submdspan_extents(extents(), slices...)`
 and let `SubExtents` be `decltype(sub_ext)`.
@@ -18370,7 +18370,7 @@ constexpr auto layout_right::mapping<Extents>::submdspan-mapping-impl(
     slice for `mapping`;
 
   \[*Note 14*: If the above conditions are true, all Sₖ with
-  k < `\textit{rank_} - SubExtents::rank()` are convertible to
+  $k < \texttt{\textit{rank_} - SubExtents::rank()}$ are convertible to
   `index_type`. — *end note*]
 - otherwise,
   ``` cpp
@@ -18558,11 +18558,11 @@ lookup [[basic.lookup.argdep]]. — *end note*]
 - For each rank index k of `src.extents()`, all of the following are
   `true`:
   - if Sₖ is a specialization of `strided_slice`
-    - `$s_k$.extent` = 0, or
-    - `$s_k$.stride` > 0
-  - 0 \le `\textit{first_}<index_type, $k$>(slices...)`
-    \le `\textit{last_}<$k$>(src.extents(), slices...)`
-    \le `{}src.extent($k$)`
+    - `$sₖ$.extent` = 0, or
+    - `$sₖ$.stride` > 0
+  - $0 \le \texttt{\textit{first_}<index_type, $k$>(slices...)}$
+    $\le \texttt{\textit{last_}<$k$>(src.extents(), slices...)}$
+    ≤ `src.extent($k$)`
 - `sub_map_offset.mapping.extents() == submdspan_extents(src.mapping(), slices...)`
   is `true`; and
 - for each integer pack `I` which is a multidimensional index in

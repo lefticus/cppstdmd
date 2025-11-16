@@ -1507,8 +1507,14 @@ local function convert_math_in_code(text)
   -- Process @$...$@ patterns (math mode in code blocks)
   -- These contain subscripts, placeholders, and math symbols
   text = text:gsub("@%$(.-)%$@", function(math_content)
-    -- Convert \ldots to Unicode ellipsis
+    -- Convert all ellipsis operators to Unicode for consistency
+    math_content = math_content:gsub("\\dotsc", "…")
+    math_content = math_content:gsub("\\dotsb", "…")
+    math_content = math_content:gsub("\\dotsm", "…")
+    math_content = math_content:gsub("\\dotsi", "…")
+    math_content = math_content:gsub("\\dotso", "…")
     math_content = math_content:gsub("\\ldots", "…")
+    math_content = math_content:gsub("\\cdots", "⋯")
 
     -- Convert subscripts: \tcode{\placeholder{X}}_{n} → Xₙ
     -- Or: \tcode{\placeholder{X}_{n}} → Xₙ

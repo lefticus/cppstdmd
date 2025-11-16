@@ -5141,7 +5141,7 @@ Let E be:
 - `!invoke(pred, invoke(proj1, *(first1 + n)), invoke(proj2, *(first2 + n)))`
   for the overloads with both parameters `pred` and `proj1`.
 
-Let N be \min(`last1 - first1`, \ `last2 - first2`).
+Let N be min(`last1 - first1`,  `last2 - first2`).
 
 *Returns:* `{ first1 + n, first2 + n }`, where `n` is the smallest
 integer in \[`0`, N) such that E holds, or N if no such integer exists.
@@ -5819,7 +5819,7 @@ template<execution-policy Ep, sized-random-access-range R, sized-random-access-r
 Let `result_last` be `result + (last - first)` for the overload in
 namespace `std`.
 
-Let N be \min(`last - first`, \ `result_last - result`).
+Let N be min(`last - first`,  `resultₗast - result`).
 
 *Preconditions:* The ranges \[`first`, `last`) and \[`result`,
 `result + `N) do not overlap.
@@ -5856,12 +5856,12 @@ template<execution-policy Ep, random_access_iterator I, random_access_iterator O
     ranges::copy_n(Ep&& exec, I first, iter_difference_t<I> n, O result, OutS result_last);
 ```
 
-Let M be \max(0, \ `n`).
+Let M be max(0,  `n`).
 
 Let `result_last` be `result + `M for the overloads with no parameter
 `result_last`.
 
-Let N be \min(`result_last - result`, M).
+Let N be min(`resultₗast - result`, M).
 
 *Mandates:* The type `Size` is convertible to an integral
 type [[conv.integral,class.conv]].
@@ -5924,7 +5924,7 @@ Let:
   which the condition E(`i`) holds;
 - `result_last` be `result + `M for the overloads with no parameter
   `result_last` or `result_r`;
-- N be \min(M, \ `result_last - result`).
+- N be min(M,  `resultₗast - result`).
 
 *Preconditions:* The ranges \[`first`, `last`) and \[`result`,
 `result + `N) do not overlap.
@@ -6056,7 +6056,7 @@ Let E(n) be:
 Let `result_last` be `result + (last - first)` for the overloads in
 namespace `std`.
 
-Let N be \min(`last - first`, \ `result_last - result`).
+Let N be min(`last - first`,  `resultₗast - result`).
 
 *Preconditions:* The ranges \[`first`, `last`) and \[`result`,
 `result + `N) do not overlap.
@@ -6148,7 +6148,7 @@ Let:
 
 - `last2` be `first2 + (last1 - first1)` for the overloads in namespace
   `std` with no parameter named `last2`;
-- M be \min(`last1 - first1`, \ `last2 - first2`).
+- M be min(`last1 - first1`,  `last2 - first2`).
 
 *Preconditions:* The two ranges \[`first1`, `last1`) and \[`first2`,
 `last2`) do not overlap. For the overloads in namespace `std`,
@@ -6277,10 +6277,10 @@ Let:
 - `last2` be `first2 + (last1 - first1)` for the overloads in namespace
   `std` with parameter `first2` but no parameter `last2`;
 - M be `last1 - first1` for unary transforms, or
-  \min(`last1 - first1`, \ `last2 - first2`) for binary transforms;
+  min(`last1 - first1`,  `last2 - first2`) for binary transforms;
 - `result_last` be `result + `M for the overloads with no parameter
   `result_last` or `result_r`;
-- N be \min(M, \ `result_last - result`);
+- N be min(M,  `resultₗast - result`);
 - E(`i`) be
   - `op(*(first1 + (i - result)))` for unary transforms defined in
     namespace `std`;
@@ -6517,7 +6517,7 @@ Let:
 
 - `result_last` be `result + (last - first)` for the overloads with no
   parameter `result_last` or `result_r`;
-- N be \min(`last - first`, \ `result_last - result`).
+- N be min(`last - first`,  `resultₗast - result`).
 
 *Mandates:* The results of the expressions `*first` and `new_value` are
 writable [[iterator.requirements.general]] to `result`.
@@ -6578,8 +6578,8 @@ template<execution-policy Ep, random_access_iterator O, class T = iter_value_t<O
   O ranges::fill_n(Ep&& exec, O first, iter_difference_t<O> n, const T& value);
 ```
 
-Let N be \max(0, `n`) for the `fill_n` algorithms, and `last - first`
-for the `fill` algorithms.
+Let N be max(0, `n`) for the `fill_n` algorithms, and `last - first` for
+the `fill` algorithms.
 
 *Mandates:* The expression `value` is
 writable [[iterator.requirements.general]] to the output iterator. The
@@ -6632,8 +6632,8 @@ template<execution-policy Ep, random_access_iterator O, copy_constructible F>
   O ranges::generate_n(Ep&& exec, O first, iter_difference_t<O> n, F gen);
 ```
 
-Let N be \max(0, `n`) for the `generate_n` algorithms, and
-`last - first` for the `generate` algorithms.
+Let N be max(0, `n`) for the `generate_n` algorithms, and `last - first`
+for the `generate` algorithms.
 
 *Mandates:* `Size` is convertible to an integral
 type [[conv.integral,class.conv]].
@@ -6833,7 +6833,7 @@ Let:
   E(`i`) is `false`;
 - `result_last` be `result + `M for the overloads with no parameter
   `result_last` or `result_r`;
-- N be \min(M, \ `result_last - result`).
+- N be min(M,  `resultₗast - result`).
 
 *Mandates:* `*first` is writable [[iterator.requirements.general]] to
 `result`.
@@ -6997,7 +6997,7 @@ Let:
   for which E(`i`) is `false`;
 - `result_last` be `result + `M` + 1` for the overloads with no
   parameter `result_last` or `result_r`;
-- N be \min(M + 1, \ `result_last - result`).
+- N be min(M + 1,  `resultₗast - result`).
 
 *Mandates:* `*first` is writable [[iterator.requirements.general]] to
 `result`.
@@ -7132,7 +7132,7 @@ template<execution-policy Ep, sized-random-access-range R, sized-random-access-r
     ranges::reverse_copy(Ep&& exec, R&& r, OutR&& result_r);
 ```
 
-Let N be \min(`last - first`, \ `result_last - result`), and let
+Let N be min(`last - first`,  `resultₗast - result`), and let
 *NEW_FIRST* be `first + (last - first) - `N.
 
 *Preconditions:* The ranges \[`first`, `last`) and \[`result`,
@@ -7250,7 +7250,7 @@ template<execution-policy Ep, random_access_iterator I, sized_sentinel_for<I> S,
     ranges::rotate_copy(Ep&& exec, I first, I middle, S last, O result, OutS result_last);
 ```
 
-Let M be `last - first` and N be \min(M, \ `result_last - result`).
+Let M be `last - first` and N be min(M,  `resultₗast - result`).
 
 *Preconditions:* \[`first`, `middle`) and \[`middle`, `last`) are valid
 ranges. The ranges \[`first`, `last`) and \[`result`, `result + `N) do
@@ -7335,9 +7335,9 @@ overload in namespace `std`:
 - `remove_reference_t<UniformRandomBitGenerator>` meets the requirements
   of a uniform random bit generator type [[rand.req.urng]].
 
-*Effects:* Copies \min(`last - first`, \ `n`) elements (the *sample*)
-from \[`first`, `last`) (the *population*) to `out` such that each
-possible sample has equal probability of appearance.
+*Effects:* Copies min(`last - first`,  `n`) elements (the *sample*) from
+\[`first`, `last`) (the *population*) to `out` such that each possible
+sample has equal probability of appearance.
 
 [*Note 1*: Algorithms that obtain such effects include *selection
 sampling* and *reservoir sampling*. — *end note*]
@@ -7827,8 +7827,9 @@ template<execution-policy Ep, sized-random-access-range R1, sized-random-access-
                               Proj1 proj1 = {}, Proj2 proj2 = {});
 ```
 
-Let N be \min(`last - first`, \ `result_last - result_first`). Let
-`comp` be `less{}`, and `proj1` and `proj2` be `identity{}` for the
+Let N be
+$\min(\texttt{last - first}, \ \texttt{result_last - result_first})$.
+Let `comp` be `less{}`, and `proj1` and `proj2` be `identity{}` for the
 overloads with no parameters by those names.
 
 *Mandates:* For the overloads in namespace `std`, the expression
@@ -8120,7 +8121,7 @@ with respect to the expression
 such that for every iterator `j` in the range \[`first`, `i`),
 `bool(invoke(comp, invoke(proj, *j), value))` is `true`.
 
-*Complexity:* At most \log_2(`last - first`) + 𝑂(1) comparisons and
+*Complexity:* At most log₂(`last - first`) + 𝑂(1) comparisons and
 projections.
 
 #### `upper_bound` <a id="upper.bound">[[upper.bound]]</a>
@@ -8160,7 +8161,7 @@ with respect to the expression
 such that for every iterator `j` in the range \[`first`, `i`),
 `!bool(invoke(comp, value, invoke(proj, *j)))` is `true`.
 
-*Complexity:* At most \log_2(`last - first`) + 𝑂(1) comparisons and
+*Complexity:* At most log₂(`last - first`) + 𝑂(1) comparisons and
 projections.
 
 #### `equal_range` <a id="equal.range">[[equal.range]]</a>
@@ -8214,7 +8215,7 @@ with respect to the expressions
    ranges::upper_bound(first, last, value, comp, proj)}
   ```
 
-*Complexity:* At most 2 * \log_2(`last - first`) + 𝑂(1) comparisons and
+*Complexity:* At most 2 * log₂(`last - first`) + 𝑂(1) comparisons and
 projections.
 
 #### `binary_search` <a id="binary.search">[[binary.search]]</a>
@@ -8259,7 +8260,7 @@ with respect to the expressions
 `!bool(invoke(comp, invoke(proj, *i), value)) && !bool(invoke(comp, value, invoke(proj, *i)))`
 is `true`.
 
-*Complexity:* At most \log_2(`last - first`) + 𝑂(1) comparisons and
+*Complexity:* At most log₂(`last - first`) + 𝑂(1) comparisons and
 projections.
 
 ### Partitions <a id="alg.partitions">[[alg.partitions]]</a>
@@ -8476,7 +8477,7 @@ Let:
 - `i2` be the iterator in \[`first`, `last`) for which E(`*i2`) is
   `false` and there are exactly K iterators `j` in \[`first`, `i2`) for
   which E(`*j`) is `false`, or `last` if no such iterator exists;
-- N be \min(`i1 - first`, \ `i2 - first`).
+- N be min(`i1 - first`,  `i2 - first`).
 
 *Mandates:* For the overloads in namespace `std`, the expression
 `*first` is writable [[iterator.requirements.general]] to `out_true` and
@@ -8597,7 +8598,7 @@ Let:
 - N be:
   - `(last1 - first1) + (last2 - first2)` for the overloads with no
     parameter `result_last` or `result_r`;
-  - \min(`(last1 - first1) + (last2 - first2)`, \ `result_last - result`)
+  - min(`(last1 - first1) + (last2 - first2)`,  `resultₗast - result`)
     for the overloads with parameters `result_last` or `result_r`;
 - `comp` be `less{}`, `proj1` be `identity{}`, and `proj2` be
   `identity{}`, for the overloads with no parameters by those names;
@@ -8872,7 +8873,7 @@ Let:
   `last2`) that are not present in \[`first1`, `last1`);
 - `result_last` be `result + `M for the overloads with no parameter
   `result_last` or `result_r`;
-- N be \min(M, \ `result_last - result`).
+- N be min(M,  `resultₗast - result`).
 
 *Preconditions:* The ranges \[`first1`, `last1`) and \[`first2`,
 `last2`) are sorted with respect to `comp` and `proj1` or `proj2`,
@@ -8975,7 +8976,7 @@ Let:
   in \[`first2`, `last2`);
 - `result_last` be `result + `M for the overloads with no parameter
   `result_last` or `result_r`;
-- N be \min(M, \ `result_last - result`).
+- N be min(M,  `resultₗast - result`).
 
 *Preconditions:* The ranges \[`first1`, `last1`) and \[`first2`,
 `last2`) are sorted with respect to `comp` and `proj1` or `proj2`,
@@ -9075,7 +9076,7 @@ Let:
   present in \[`first2`, `last2`);
 - `result_last` be `result + `M for the overloads with no parameter
   `result_last` or `result_r`;
-- N be \min(M, \ `result_last - result`).
+- N be min(M,  `resultₗast - result`).
 
 *Preconditions:* The ranges \[`first1`, `last1`) and \[`first2`,
 `last2`) are sorted with respect to `comp` and `proj1` or `proj2`,
@@ -9179,7 +9180,7 @@ Let:
   present in \[`first1`, `last1`).
 - `result_last` be `result + `M` + `K for the overloads with no
   parameter `result_last` or `result_r`;
-- N be \min(K + M, \ `result_last - result`).
+- N be min(K + M,  `resultₗast - result`).
 
 *Preconditions:* The ranges \[`first1`, `last1`) and \[`first2`,
 `last2`) are sorted with respect to `comp` and `proj1` or `proj2`,
@@ -9269,7 +9270,7 @@ resulting heap \[`first`, `last`).
 
 *Returns:* `last` for the overloads in namespace `ranges`.
 
-*Complexity:* At most \log(`last - first`) comparisons and twice as many
+*Complexity:* At most log(`last - first`) comparisons and twice as many
 projections.
 
 #### `pop_heap` <a id="pop.heap">[[pop.heap]]</a>
@@ -9309,7 +9310,7 @@ respect to `comp` and `proj`.
 
 *Returns:* `last` for the overloads in namespace `ranges`.
 
-*Complexity:* At most 2 \log(`last - first`) comparisons and twice as
+*Complexity:* At most 2 log(`last - first`) comparisons and twice as
 many projections.
 
 #### `make_heap` <a id="make.heap">[[make.heap]]</a>
@@ -9730,7 +9731,7 @@ bool(invoke(comp, invoke(proj, *j), invoke(proj, *i)))
 
 is `false`. Returns `last` if `first == last`.
 
-*Complexity:* Exactly \max(`last - first - 1`, 0) comparisons and twice
+*Complexity:* Exactly max(`last - first - 1`, 0) comparisons and twice
 as many projections.
 
 ``` cpp
@@ -9779,7 +9780,7 @@ bool(invoke(comp, invoke(proj, *i), invoke(proj, *j)))
 
 is `false`. Returns `last` if `first == last`.
 
-*Complexity:* Exactly \max(`last - first - 1`, 0) comparisons and twice
+*Complexity:* Exactly max(`last - first - 1`, 0) comparisons and twice
 as many projections.
 
 ``` cpp
@@ -9923,7 +9924,7 @@ template<execution-policy Ep, sized-random-access-range R1, sized-random-access-
 range \[`first1`, `last1`) is lexicographically less than the sequence
 of elements defined by the range \[`first2`, `last2`).
 
-*Complexity:* At most 2 \min(`last1 - first1`, \ `last2 - first2`)
+*Complexity:* At most 2 min(`last1 - first1`,  `last2 - first2`)
 applications of the corresponding comparison and each projection, if
 any.
 
@@ -9964,7 +9965,7 @@ template<class InputIterator1, class InputIterator2, class Cmp>
       -> decltype(comp(*b1, *b2));
 ```
 
-Let N be \min(`e1 - b1`, `e2 - b2`). Let E(n) be
+Let N be min(`e1 - b1`, `e2 - b2`). Let E(n) be
 `comp(*(b1 + `n`), *(b2 + `n`))`.
 
 *Mandates:* `decltype(comp(*b1, *b2))` is a comparison category type.
@@ -11168,9 +11169,9 @@ template<class T>
 *Constraints:* `T` is a signed or unsigned integer
 type [[basic.fundamental]].
 
-*Returns:* If `x` \times `y` is representable as a value of type `T`,
-`x` \times `y`; otherwise, either the largest or smallest representable
-value of type `T`, whichever is closer to the value of `x` \times `y`.
+*Returns:* If `x` × `y` is representable as a value of type `T`,
+`x` × `y`; otherwise, either the largest or smallest representable value
+of type `T`, whichever is closer to the value of `x` × `y`.
 
 ``` cpp
 template<class T>

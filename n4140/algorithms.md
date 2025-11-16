@@ -1881,7 +1881,7 @@ such that for every iterator `j` in the range \[`first`, `i`) the
 following corresponding conditions hold: `*j < value` or
 `comp(*j, value) != false`.
 
-*Complexity:* At most \log_2(`last - first`) + 𝑂(1) comparisons.
+*Complexity:* At most log₂(`last - first`) + 𝑂(1) comparisons.
 
 #### `upper_bound` <a id="upper.bound">[[upper.bound]]</a>
 
@@ -1905,7 +1905,7 @@ such that for every iterator `j` in the range \[`first`, `i`) the
 following corresponding conditions hold: `!(value < *j)` or
 `comp(value, *j) == false`.
 
-*Complexity:* At most \log_2(`last - first`) + 𝑂(1) comparisons.
+*Complexity:* At most log₂(`last - first`) + 𝑂(1) comparisons.
 
 #### `equal_range` <a id="equal.range">[[equal.range]]</a>
 
@@ -1942,7 +1942,7 @@ make_pair(lower_bound(first, last, value, comp),
           upper_bound(first, last, value, comp))
 ```
 
-*Complexity:* At most 2 * \log_2(`last - first`) + 𝑂(1) comparisons.
+*Complexity:* At most 2 * log₂(`last - first`) + 𝑂(1) comparisons.
 
 #### `binary_search` <a id="binary.search">[[binary.search]]</a>
 
@@ -1967,7 +1967,7 @@ implies `!comp(value, e)`.
 `!(*i < value) && !(value < *i)` or
 `comp(*i, value) == false && comp(value, *i) == false`.
 
-*Complexity:* At most \log_2(`last - first`) + 𝑂(1) comparisons.
+*Complexity:* At most log₂(`last - first`) + 𝑂(1) comparisons.
 
 ### Merge <a id="alg.merge">[[alg.merge]]</a>
 

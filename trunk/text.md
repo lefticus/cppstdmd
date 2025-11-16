@@ -3204,8 +3204,8 @@ namespace std {
 The `moneypunct<>` facet defines monetary formatting parameters used by
 `money_get<>` and `money_put<>`. A monetary format is a sequence of four
 components, specified by a `pattern` value `p`, such that the `part`
-value `static_cast<part>(p.field[i])` determines the `i`^\text{th}
-component of the format.[^18]
+value `static_cast<part>(p.field[i])` determines the `i`ᵗʰ component of
+the format.[^18]
 
 In the `field` member of a `pattern` object, each value `symbol`,
 `sign`, `value`, and either `space` or `none` appears exactly once. The
@@ -4989,7 +4989,7 @@ Let
 *Constraints:* `Out` satisfies `output_iterator<const charT&>`.
 
 *Preconditions:* `Out` models `output_iterator<const charT&>`, and
-`formatter<``remove_cvref_t<Tᵢ``>, charT>` meets the
+`formatter<`$\texttt{remove_cvref_t<T}_i$`>, charT>` meets the
 requirements [[formatter.requirements]] for each `Tᵢ` in `Args`.
 
 *Effects:* Places the first `M` characters of the character
@@ -5014,8 +5014,9 @@ template<class... Args>
 
 Let `charT` be `decltype(fmt.`*`str`*`)::value_type`.
 
-*Preconditions:* `formatter<``remove_cvref_t<Tᵢ``>, charT>` meets the
-requirements [[formatter.requirements]] for each `Tᵢ` in `Args`.
+*Preconditions:* `formatter<`$\texttt{remove_cvref_t<T}_i$`>, charT>`
+meets the requirements [[formatter.requirements]] for each `Tᵢ` in
+`Args`.
 
 *Returns:* The number of characters in the character representation of
 formatting arguments `args` formatted according to specifications given
@@ -5439,7 +5440,7 @@ template<class... Ts>
   constexpr void check_dynamic_spec(size_t id) noexcept;
 ```
 
-*Mandates:* `sizeof...(Ts)` \ge 1. The types in `Ts...` are unique. Each
+*Mandates:* `sizeof...(Ts)` ≥ 1. The types in `Ts...` are unique. Each
 type in `Ts...` is one of `bool`, `char_type`, `int`, `unsigned int`,
 `long long int`, `unsigned long long int`, `float`, `double`,
 `long double`, `const char_type*`, `basic_string_view<char_type>`, or

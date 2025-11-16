@@ -1303,7 +1303,7 @@ The *typedef-name* P in a *pack-index-specifier* shall denote a pack.
 
 The *constant-expression* shall be a converted constant expression
 [[expr.const]] of type `std::size_t` whose value V, termed the index, is
-such that 0 \le V < `sizeof...($P$)`.
+such that 0 ≤ V < `sizeof...($P$)`.
 
 A *pack-index-specifier* is a pack expansion [[temp.variadic]].
 
@@ -2965,14 +2965,13 @@ converted to a pointer to a 2-dimensional array with rank 5 × 7 that
 points to the first element of `x3d`. Then `i` is added, which on
 typical implementations involves multiplying `i` by the length of the
 object to which the pointer points, which is `sizeof(int)`× 5 × 7. The
-result of the addition and indirection is an lvalue denoting the
-`i`^\text{th} array element of `x3d` (an array of five arrays of seven
-integers). If there is another subscript, the same argument applies
-again, so `x3d[i][j]` is an lvalue denoting the `j`^\text{th} array
-element of the `i`^\text{th} array element of `x3d` (an array of seven
-integers), and `x3d[i][j][k]` is an lvalue denoting the `k`^\text{th}
-array element of the `j`^\text{th} array element of the `i`^\text{th}
-array element of `x3d` (an integer).
+result of the addition and indirection is an lvalue denoting the `i`ᵗʰ
+array element of `x3d` (an array of five arrays of seven integers). If
+there is another subscript, the same argument applies again, so
+`x3d[i][j]` is an lvalue denoting the `j`ᵗʰ array element of the `i`ᵗʰ
+array element of `x3d` (an array of seven integers), and `x3d[i][j][k]`
+is an lvalue denoting the `k`ᵗʰ array element of the `j`ᵗʰ array element
+of the `i`ᵗʰ array element of `x3d` (an integer).
 
 — *end example*]
 
@@ -5892,7 +5891,7 @@ object parameter [[dcl.fct]] if the coroutine is a non-static member
 function. The promise type shall be a class type.
 
 In the following, `pᵢ` is an lvalue of type `Pᵢ`, where `p₁` denotes the
-object parameter and `p_i+1` denotes the iᵗʰ non-object function
+object parameter and `pᵢ+1` denotes the iᵗʰ non-object function
 parameter for an implicit object member function, and `pᵢ` denotes the
 iᵗʰ function parameter otherwise. For an implicit object member
 function, `q₁` is an lvalue that denotes `*this`; any other `qᵢ` is an
@@ -6132,19 +6131,20 @@ function with no linkage. — *end note*]
 ## Structured binding declarations <a id="dcl.struct.bind">[[dcl.struct.bind]]</a>
 
 A structured binding declaration introduces the *identifier*s `v₀`,
-`v₁`, `v₂`, …, `v_N-1` of the *sb-identifier-list* as names. An
-*sb-identifier* that contains an ellipsis introduces a structured
-binding pack [[temp.variadic]]. A *structured binding* is either an
-*sb-identifier* that does not contain an ellipsis or an element of a
-structured binding pack. The optional *attribute-specifier-seq* of an
-*sb-identifier* appertains to the associated structured bindings. Let cv
-denote the *cv-qualifier*s in the *decl-specifier-seq* and *S* consist
-of each *decl-specifier* of the *decl-specifier-seq* that is
-`constexpr`, `constinit`, or a *storage-class-specifier*. A cv that
-includes `volatile` is deprecated; see  [[depr.volatile.type]]. First, a
-variable with a unique name *e* is introduced. If the
-*assignment-expression* in the *initializer* has array type
-cv-qualifiercv1 `A` and no *ref-qualifier* is present, *e* is defined by
+`v₁`, $\tcode{v}_2, \dotsc, \tcode{v}_{N-1}$ of the *sb-identifier-list*
+as names. An *sb-identifier* that contains an ellipsis introduces a
+structured binding pack [[temp.variadic]]. A *structured binding* is
+either an *sb-identifier* that does not contain an ellipsis or an
+element of a structured binding pack. The optional
+*attribute-specifier-seq* of an *sb-identifier* appertains to the
+associated structured bindings. Let cv denote the *cv-qualifier*s in the
+*decl-specifier-seq* and *S* consist of each *decl-specifier* of the
+*decl-specifier-seq* that is `constexpr`, `constinit`, or a
+*storage-class-specifier*. A cv that includes `volatile` is deprecated;
+see  [[depr.volatile.type]]. First, a variable with a unique name *e* is
+introduced. If the *assignment-expression* in the *initializer* has
+array type cv-qualifiercv1 `A` and no *ref-qualifier* is present, *e* is
+defined by
 
 ``` bnf
 attribute-specifier-seqₒₚₜ *S* cv 'A' \textit{e} ';'

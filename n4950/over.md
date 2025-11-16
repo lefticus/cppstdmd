@@ -1239,20 +1239,20 @@ function (see  [[over.ics.ref]]).
 
 #### General <a id="over.match.best.general">[[over.match.best.general]]</a>
 
-Define \text{ICS}^i(`F`) as the implicit conversion sequence that
-converts the iᵗʰ argument in the list to the type of the iᵗʰ parameter
-of viable function `F`. [[over.best.ics]] defines the implicit
-conversion sequences and [[over.ics.rank]] defines what it means for one
-implicit conversion sequence to be a better conversion sequence or worse
+Define ICSⁱ(`F`) as the implicit conversion sequence that converts the
+iᵗʰ argument in the list to the type of the iᵗʰ parameter of viable
+function `F`. [[over.best.ics]] defines the implicit conversion
+sequences and [[over.ics.rank]] defines what it means for one implicit
+conversion sequence to be a better conversion sequence or worse
 conversion sequence than another.
 
 Given these definitions, a viable function `F₁` is defined to be a
 *better* function than another viable function `F₂` if for all arguments
-i, \text{ICS}^i(`F₁`) is not a worse conversion sequence than
-\text{ICS}^i(`F₂`), and then
+i, ICSⁱ(`F₁`) is not a worse conversion sequence than ICSⁱ(`F₂`), and
+then
 
-- for some argument j, \text{ICS}^j(`F₁`) is a better conversion
-  sequence than \text{ICS}^j(`F₂`), or, if not that,
+- for some argument j, ICSʲ(`F₁`) is a better conversion sequence than
+  ICSʲ(`F₂`), or, if not that,
 - the context is an initialization by user-defined conversion (see 
   [[dcl.init]], [[over.match.conv]], and  [[over.match.ref]]) and the
   standard conversion sequence from the return type of `F₁` to the

@@ -718,9 +718,9 @@ template<class T> complex<T> pow(const complex<T>& x, const T& y);
 template<class T> complex<T> pow(const T& x, const complex<T>& y);
 ```
 
-*Returns:* The complex power of base `x` raised to the `y`^\text{th}
-power, defined as `exp(y * log(x))`. The value returned for `pow(0, 0)`
-is *implementation-defined*.
+*Returns:* The complex power of base `x` raised to the `y`ᵗʰ power,
+defined as `exp(y * log(x))`. The value returned for `pow(0, 0)` is
+*implementation-defined*.
 
 *Remarks:* The branch cuts are along the negative real axis.
 
@@ -1484,8 +1484,9 @@ externally-supplied quantities known as the *parameters of the
 distribution*. Such distribution parameters are identified in this
 context by writing, for example, p(z | a,b) or P(zᵢ | a,b), to name
 specific parameters, or by writing, for example,
-p(z\,|\left\{`p`\right\}) or P(z_i\,|\left\{`p`\right\}), to denote a
-distribution’s parameters `p` taken as a whole.
+$p(z\,|\left\{\tcode{p}\right\})$ or
+$P(z_i\,|\left\{\tcode{p}\right\})$, to denote a distribution’s
+parameters `p` taken as a whole.
 
 A class `D` meets the requirements of a *random number distribution* if
 the expressions shown in [[rand.req.dist]] are valid and have the
@@ -1656,8 +1657,8 @@ The textual representation consists of the value of .
 explicit linear_congruential_engine(result_type s);
 ```
 
-*Effects:* If c  mod  m is 0 and `s` \bmod m is 0, sets the engine’s
-state to 1, otherwise sets the engine’s state to `s` \bmod m.
+*Effects:* If c  mod  m is 0 and `s`  mod  m is 0, sets the engine’s
+state to 1, otherwise sets the engine’s state to `s`  mod  m.
 
 ``` cpp
 template<class Sseq> explicit linear_congruential_engine(Sseq& q);
@@ -1757,7 +1758,7 @@ $X_{i - n}, \dotsc, X_{i - 1}$, in that order.
 explicit mersenne_twister_engine(result_type value);
 ```
 
-*Effects:* Sets $X_{-n}$ to `value` \bmod 2^w. Then, iteratively for
+*Effects:* Sets $X_{-n}$ to `value`  mod  2ʷ. Then, iteratively for
 i = 1 - n, …, -1, sets Xᵢ to $$%
  \bigl[f \cdot
        \bigl(X_{i-1} \xor \bigl(X_{i-1} \rightshift (w-2)\bigr)
@@ -1858,7 +1859,7 @@ Then, to set each Xₖ, obtain new values z₀, …, zₙ₋₁ from n = ⌈ w/3
 successive invocations of `e` taken modulo 2³². Set Xₖ to
 $\left( \sum_{j=0}^{n-1} z_j \cdot 2^{32j}\right) \bmod m$.
 
-*Complexity:* Exactly n \cdot `r` invocations of `e`.
+*Complexity:* Exactly n ⋅ `r` invocations of `e`.
 
 ``` cpp
 template<class Sseq> explicit subtract_with_carry_engine(Sseq& q);
@@ -1987,8 +1988,8 @@ following integral constants:
 holds. — *end note*]
 
 The transition algorithm is carried out by invoking `e()` as often as
-needed to obtain n₀ values less than y_0 + `e.min()` and n - n₀ values
-less than y_1 + `e.min()`.
+needed to obtain n₀ values less than y₀ + `e.min()` and n - n₀ values
+less than y₁ + `e.min()`.
 
 The generation algorithm uses the values produced while advancing the
 state as described above to yield a quantity S obtained as if by the
@@ -2260,7 +2261,7 @@ double entropy() const noexcept;
 
 *Returns:* If the implementation employs a random number engine, returns
 0.0. Otherwise, returns an entropy estimate[^4] for the random numbers
-returned by `operator()`, in the range `min()` to \log_2( `max()`+1).
+returned by `operator()`, in the range `min()` to log₂( `max()`+1).
 
 ``` cpp
 result_type operator()();
@@ -2591,7 +2592,7 @@ explicit uniform_real_distribution(RealType a, RealType b = 1.0);
 ```
 
 *Preconditions:* `a` ≤ `b` and
-`b` - `a` ≤ `numeric_limits<RealType>::max()`.
+`b` - `a` ≤ `numericₗimits<RealType>::max()`.
 
 *Remarks:* `a` and `b` correspond to the respective parameters of the
 distribution.
@@ -3548,8 +3549,8 @@ is `true`.
 
 *Preconditions:* `InputIterator` meets the *Cpp17InputIterator*
 requirements [[input.iterators]]. If `firstW == lastW`, let n = 1 and
-w₀ = 1. Otherwise, \bigl[`firstW`, `lastW`\bigr) forms a sequence w of
-length n > 0.
+w₀ = 1. Otherwise, [`firstW`, `lastW`) forms a sequence w of length
+n > 0.
 
 *Effects:* Constructs a `discrete_distribution` object with
 probabilities given by the formula above.
@@ -3569,12 +3570,12 @@ template<class UnaryOperation>
 `true`.
 
 *Preconditions:* If `nw` = 0, let n = 1, otherwise let n = `nw`. The
-relation 0 < \delta = (`xmax` - `xmin`) / n holds.
+relation 0 < δ = (`xmax` - `xmin`) / n holds.
 
 *Effects:* Constructs a `discrete_distribution` object with
 probabilities given by the formula above, using the following values: If
-`nw` = 0, let w₀ = 1. Otherwise, let
-w_k = `fw`(`xmin` + k \cdot \delta + \delta / 2) for k = 0, …, n - 1.
+`nw` = 0, let w₀ = 1. Otherwise, let wₖ = `fw`(`xmin` + k ⋅ δ + δ / 2)
+for k = 0, …, n - 1.
 
 *Complexity:* The number of invocations of `fw` does not exceed n.
 
@@ -3663,9 +3664,9 @@ are `true`.
 *Preconditions:* `InputIteratorB` and `InputIteratorW` each meet the
 *Cpp17InputIterator* requirements [[input.iterators]]. If
 `firstB == lastB` or `++firstB == lastB`, let n = 1, w₀ = 1, b₀ = 0, and
-b₁ = 1. Otherwise, \bigl[`firstB`, `lastB`\bigr) forms a sequence b of
-length n+1, the length of the sequence w starting from `firstW` is at
-least n, and any wₖ for k ≥ n are ignored by the distribution.
+b₁ = 1. Otherwise, [`firstB`, `lastB`) forms a sequence b of length n+1,
+the length of the sequence w starting from `firstW` is at least n, and
+any wₖ for k ≥ n are ignored by the distribution.
 
 *Effects:* Constructs a `piecewise_constant_distribution` object with
 parameters as specified above.
@@ -3681,8 +3682,8 @@ template<class UnaryOperation>
 *Effects:* Constructs a `piecewise_constant_distribution` object with
 parameters taken or calculated from the following values: If
 `bl.size()` < 2, let n = 1, w₀ = 1, b₀ = 0, and b₁ = 1. Otherwise, let
-\bigl[`bl.begin()`, `bl.end()`\bigr) form a sequence b₀, …, bₙ, and let
-w_k = `fw`\bigl(\bigl(b_{k+1} + b_k\bigr) / 2\bigr) for k = 0, …, n - 1.
+[`bl.begin()`, `bl.end()`) form a sequence b₀, …, bₙ, and let
+wₖ = `fw`((bₖ₊₁ + bₖ) / 2) for k = 0, …, n - 1.
 
 *Complexity:* The number of invocations of `fw` does not exceed n.
 
@@ -3695,12 +3696,12 @@ template<class UnaryOperation>
 `true`.
 
 *Preconditions:* If `nw` = 0, let n = 1, otherwise let n = `nw`. The
-relation 0 < \delta = (`xmax` - `xmin`) / n holds.
+relation 0 < δ = (`xmax` - `xmin`) / n holds.
 
 *Effects:* Constructs a `piecewise_constant_distribution` object with
 parameters taken or calculated from the following values: Let
-b_k = `xmin` + k \cdot \delta for k = 0, …, n, and
-w_k = `fw`(b_k + \delta / 2) for k = 0, …, n - 1.
+bₖ = `xmin` + k ⋅ δ for k = 0, …, n, and wₖ = `fw`(bₖ + δ / 2) for
+k = 0, …, n - 1.
 
 *Complexity:* The number of invocations of `fw` does not exceed n.
 
@@ -3794,10 +3795,9 @@ template<class InputIteratorB, class InputIteratorW>
 *Preconditions:* `InputIteratorB` and `InputIteratorW` each meet the
 *Cpp17InputIterator* requirements [[input.iterators]]. If
 `firstB == lastB` or `++firstB == lastB`, let n = 1, ρ₀ = ρ₁ = 1,
-b₀ = 0, and b₁ = 1. Otherwise, \bigl[`firstB`, `lastB`\bigr) forms a
-sequence b of length n+1, the length of the sequence w starting from
-`firstW` is at least n+1, and any wₖ for k ≥ n + 1 are ignored by the
-distribution.
+b₀ = 0, and b₁ = 1. Otherwise, [`firstB`, `lastB`) forms a sequence b of
+length n+1, the length of the sequence w starting from `firstW` is at
+least n+1, and any wₖ for k ≥ n + 1 are ignored by the distribution.
 
 *Effects:* Constructs a `piecewise_linear_distribution` object with
 parameters as specified above.
@@ -3813,8 +3813,8 @@ template<class UnaryOperation>
 *Effects:* Constructs a `piecewise_linear_distribution` object with
 parameters taken or calculated from the following values: If
 `bl.size()` < 2, let n = 1, ρ₀ = ρ₁ = 1, b₀ = 0, and b₁ = 1. Otherwise,
-let \bigl[`bl.begin(),` `bl.end()`\bigr) form a sequence b₀, …, bₙ, and
-let w_k = `fw`(b_k) for k = 0, …, n.
+let [`bl.begin(),` `bl.end()`) form a sequence b₀, …, bₙ, and let
+wₖ = `fw`(bₖ) for k = 0, …, n.
 
 *Complexity:* The number of invocations of `fw` does not exceed n+1.
 
@@ -3827,12 +3827,11 @@ template<class UnaryOperation>
 `true`.
 
 *Preconditions:* If `nw` = 0, let n = 1, otherwise let n = `nw`. The
-relation 0 < \delta = (`xmax` - `xmin`) / n holds.
+relation 0 < δ = (`xmax` - `xmin`) / n holds.
 
 *Effects:* Constructs a `piecewise_linear_distribution` object with
 parameters taken or calculated from the following values: Let
-b_k = `xmin` + k \cdot \delta for k = 0, …, n, and w_k = `fw`(b_k) for
-k = 0, …, n.
+bₖ = `xmin` + k ⋅ δ for k = 0, …, n, and wₖ = `fw`(bₖ) for k = 0, …, n.
 
 *Complexity:* The number of invocations of `fw` does not exceed n+1.
 

@@ -240,13 +240,12 @@ function type.
 nonmodifiable lvalue or through an rvalue is ill-formed
 [[expr.assign]], [[expr.post.incr]], [[expr.pre.incr]]. — *end note*]
 
-An object of dynamic type `T`_\text{obj} is *type-accessible* through a
-glvalue of type `T`_\text{ref} if `T`_\text{ref} is similar
-[[conv.qual]] to:
+An object of dynamic type `T`_obj is *type-accessible* through a glvalue
+of type `T`_ref if `T`_ref is similar [[conv.qual]] to:
 
-- `T`_\text{obj},
-- a type that is the signed or unsigned type corresponding to
-  `T`_\text{obj}, or
+- `T`_obj,
+- a type that is the signed or unsigned type corresponding to `T`_obj,
+  or
 - a `char`, `unsigned char`, or `std::byte` type.
 
 If a program attempts to access [[defns.access]] the stored value of an
@@ -1487,7 +1486,7 @@ The *id-expression* P in a *pack-index-expression* shall be an
 
 The *constant-expression* shall be a converted constant expression
 [[expr.const]] of type `std::size_t` whose value V, termed the index, is
-such that 0 \le V < `sizeof...($P$)`.
+such that 0 ≤ V < `sizeof...($P$)`.
 
 A *pack-index-expression* is a pack expansion [[temp.variadic]].
 
@@ -3094,13 +3093,12 @@ member access), the function call destroys the object of scalar type
 denoted by the object expression of the class member access
 [[expr.ref]], [[basic.life]].
 
-A type `T`_\text{call} is *call-compatible* with a function type
-`T`_\text{func} if `T`_\text{call} is the same type as `T`_\text{func}
-or if the type “pointer to `T`_\text{func}” can be converted to type
-“pointer to `T`_\text{call}” via a function pointer conversion
-[[conv.fctptr]]. Calling a function through an expression whose function
-type is not call-compatible with the type of the called function’s
-definition results in undefined behavior.
+A type `T`_call is *call-compatible* with a function type `T`_func if
+`T`_call is the same type as `T`_func or if the type “pointer to
+`T`_func” can be converted to type “pointer to `T`_call” via a function
+pointer conversion [[conv.fctptr]]. Calling a function through an
+expression whose function type is not call-compatible with the type of
+the called function’s definition results in undefined behavior.
 
 [*Note 4*: This requirement allows the case when the expression has the
 type of a potentially-throwing function, but the called function has a
@@ -5590,9 +5588,8 @@ the promoted left operand. The behavior is undefined if the right
 operand is negative, or greater than or equal to the width of the
 promoted left operand.
 
-The value of `E1 << E2` is the unique value congruent to
-`E1` \times 2^`E2` modulo 2ᴺ, where N is the width of the type of the
-result.
+The value of `E1 << E2` is the unique value congruent to `E1` × 2^`E2`
+modulo 2ᴺ, where N is the width of the type of the result.
 
 [*Note 1*: `E1` is left-shifted `E2` bit positions; vacated bits are
 zero-filled. — *end note*]

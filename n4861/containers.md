@@ -1429,8 +1429,8 @@ template<size_t I, class T, size_t N>
 
 *Mandates:* `I < N` is `true`.
 
-*Returns:* A reference to the `I`^\text{th} element of `a`, where
-indexing is zero-based.
+*Returns:* A reference to the `I`ᵗʰ element of `a`, where indexing is
+zero-based.
 
 ### Class template `deque` <a id="deque">[[deque]]</a>
 

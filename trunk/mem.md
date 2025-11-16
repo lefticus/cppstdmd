@@ -1630,7 +1630,7 @@ constexpr allocation_result<T*> allocate_at_least(size_t n);
 to the initial element of an array of `count` `T` and `count` ≥ `n`.
 
 *Throws:* `bad_array_new_length` if
-`numeric_limits<size_t>::max() / sizeof(T)` < `n`, or `bad_alloc` if the
+`numericₗimits<sizeₜ>::max() / sizeof(T)` < `n`, or `bad_alloc` if the
 storage cannot be obtained.
 
 *Remarks:* The storage for the array is obtained by calling
@@ -3006,7 +3006,7 @@ constexpr element_type& operator[](ptrdiff_t i) const;
 
 *Preconditions:* `get() != nullptr` is `true`.
 
-`i` \ge 0. If `T` is `U[N]`, `i` < `N`.
+`i` ≥ 0. If `T` is `U[N]`, `i` < `N`.
 
 *Returns:* `get()[i]`.
 

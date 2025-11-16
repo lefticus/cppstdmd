@@ -4574,9 +4574,8 @@ promoted left operand. The behavior is undefined if the right operand is
 negative, or greater than or equal to the width of the promoted left
 operand.
 
-The value of `E1 << E2` is the unique value congruent to
-`E1` \times 2^`E2` modulo 2ᴺ, where N is the width of the type of the
-result.
+The value of `E1 << E2` is the unique value congruent to `E1` × 2^`E2`
+modulo 2ᴺ, where N is the width of the type of the result.
 
 [*Note 1*: `E1` is left-shifted `E2` bit positions; vacated bits are
 zero-filled. — *end note*]

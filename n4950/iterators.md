@@ -2300,8 +2300,7 @@ template<input_or_output_iterator I, sentinel_for<I> S>
 *Effects:*
 
 - If `S` and `I` model `sized_sentinel_for<S, I>`:
-  - If |`n`| \ge |`bound - i`|, equivalent to
-    `ranges::advance(i, bound)`.
+  - If |`n`| ≥ |`bound - i`|, equivalent to `ranges::advance(i, bound)`.
   - Otherwise, equivalent to `ranges::advance(i, n)`.
 - Otherwise,
   - if `n` is non-negative, while `bool(i != bound)` is `true`,

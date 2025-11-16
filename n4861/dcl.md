@@ -2604,14 +2604,13 @@ converted to a pointer to a 2-dimensional array with rank 5 × 7 that
 points to the first element of `x3d`. Then `i` is added, which on
 typical implementations involves multiplying `i` by the length of the
 object to which the pointer points, which is `sizeof(int)`× 5 × 7. The
-result of the addition and indirection is an lvalue denoting the
-`i`^\text{th} array element of `x3d` (an array of five arrays of seven
-integers). If there is another subscript, the same argument applies
-again, so `x3d[i][j]` is an lvalue denoting the `j`^\text{th} array
-element of the `i`^\text{th} array element of `x3d` (an array of seven
-integers), and `x3d[i][j][k]` is an lvalue denoting the `k`^\text{th}
-array element of the `j`^\text{th} array element of the `i`^\text{th}
-array element of `x3d` (an integer).
+result of the addition and indirection is an lvalue denoting the `i`ᵗʰ
+array element of `x3d` (an array of five arrays of seven integers). If
+there is another subscript, the same argument applies again, so
+`x3d[i][j]` is an lvalue denoting the `j`ᵗʰ array element of the `i`ᵗʰ
+array element of `x3d` (an array of seven integers), and `x3d[i][j][k]`
+is an lvalue denoting the `k`ᵗʰ array element of the `j`ᵗʰ array element
+of the `i`ᵗʰ array element of `x3d` (an integer).
 
 — *end example*]
 
@@ -5070,7 +5069,7 @@ object parameter [[over.match.funcs]] if the coroutine is a non-static
 member function. The promise type shall be a class type.
 
 In the following, `pᵢ` is an lvalue of type `Pᵢ`, where `p₁` denotes
-`*this` and `p_i+1` denotes the $i^\textrm{th}$ function parameter for a
+`*this` and `pᵢ+1` denotes the $i^\textrm{th}$ function parameter for a
 non-static member function, and `pᵢ` denotes the $i^\textrm{th}$
 function parameter otherwise.
 
