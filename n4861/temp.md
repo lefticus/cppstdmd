@@ -258,9 +258,9 @@ constrain a contextually-determined type or template type parameter pack
 the form `C<A_1, \cdots, A_n>`, then let `E'` be
 `C<T, A_1, \cdots, A_n>`. Otherwise, let `E'` be `C<T>`. If `T` is not a
 pack, then `E` is `E'`, otherwise `E` is `(E' && ...)`. This
-*constraint-expression* `E` is called the
-*immediately-declared constraint* of `Q` for `T`. The concept designated
-by a *type-constraint* shall be a type concept [[temp.concept]].
+*constraint-expression* `E` is called the *immediately-declared
+constraint* of `Q` for `T`. The concept designated by a
+*type-constraint* shall be a type concept [[temp.concept]].
 
 A *type-parameter* that starts with a *type-constraint* introduces the
 immediately-declared constraint of the *type-constraint* for the
@@ -2247,7 +2247,7 @@ f(2, 1.0);                      // args contains two arguments: int and double
 
 — *end example*]
 
-An *\*init-capture\* pack* is a lambda capture that introduces an
+An **init-capture* pack* is a lambda capture that introduces an
 *init-capture* for each of the elements in the pack expansion of its
 *initializer*.
 
@@ -2630,18 +2630,18 @@ any other scope.
 
 A *primary class template* declaration is one in which the class
 template name is an identifier. A template declaration in which the
-class template name is a *simple-template-id* is a
-*partial specialization* of the class template named in the
-*simple-template-id*. A partial specialization of a class template
-provides an alternative definition of the template that is used instead
-of the primary definition when the arguments in a specialization match
-those given in the partial specialization [[temp.class.spec.match]]. The
-primary template shall be declared before any specializations of that
-template. A partial specialization shall be declared before the first
-use of a class template specialization that would make use of the
-partial specialization as the result of an implicit or explicit
-instantiation in every translation unit in which such a use occurs; no
-diagnostic is required.
+class template name is a *simple-template-id* is a *partial
+specialization* of the class template named in the *simple-template-id*.
+A partial specialization of a class template provides an alternative
+definition of the template that is used instead of the primary
+definition when the arguments in a specialization match those given in
+the partial specialization [[temp.class.spec.match]]. The primary
+template shall be declared before any specializations of that template.
+A partial specialization shall be declared before the first use of a
+class template specialization that would make use of the partial
+specialization as the result of an implicit or explicit instantiation in
+every translation unit in which such a use occurs; no diagnostic is
+required.
 
 Each class template partial specialization is a distinct template and
 definitions shall be provided for the members of a template partial
@@ -7103,9 +7103,9 @@ with the type referred to above):
 
 Function template `F` is *at least as specialized as* function template
 `G` if, for each pair of types used to determine the ordering, the type
-from `F` is at least as specialized as the type from `G`. `F` is
-*more specialized than* `G` if `F` is at least as specialized as `G` and
-`G` is not at least as specialized as `F`.
+from `F` is at least as specialized as the type from `G`. `F` is *more
+specialized than* `G` if `F` is at least as specialized as `G` and `G`
+is not at least as specialized as `F`.
 
 If, after considering the above, function template `F` is at least as
 specialized as function template `G` and vice-versa, and if `G` has a

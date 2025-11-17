@@ -189,9 +189,8 @@ a pointer `p` of type `T*`, an expression `v` of type (possibly const)
 `std::allocator<T>` — no allocator object needs to be created and user
 specializations of `std::allocator<T>` are not instantiated:
 
-- `T` is *`DefaultInsertable` into `X`* DefaultInsertable into
-  X@`DefaultInsertable` into `X` means that the following expression is
-  well-formed:
+- `T` is *`DefaultInsertable` into `X`* means that the following
+  expression is well-formed:
   ``` cpp
   allocator_traits<A>::construct(m, p)
   ```
@@ -203,9 +202,8 @@ specializations of `std::allocator<T>` are not instantiated:
 
   where `p` is the address of the uninitialized storage for the element
   allocated within `X`.
-- `T` is *`MoveInsertable` into `X`* MoveInsertable into
-  X@`MoveInsertable` into `X` means that the following expression is
-  well-formed:
+- `T` is *`MoveInsertable` into `X`* means that the following expression
+  is well-formed:
   ``` cpp
   allocator_traits<A>::construct(m, p, rv)
   ```
@@ -213,24 +211,22 @@ specializations of `std::allocator<T>` are not instantiated:
   and its evaluation causes the following postcondition to hold: The
   value of `*p` is equivalent to the value of `rv` before the
   evaluation. rv remains a valid object. Its state is unspecified
-- `T` is *`CopyInsertable` into `X`* CopyInsertable into
-  X@`CopyInsertable` into `X` means that, in addition to `T` being
-  `MoveInsertable` into `X`, the following expression is well-formed:
+- `T` is *`CopyInsertable` into `X`* means that, in addition to `T`
+  being `MoveInsertable` into `X`, the following expression is
+  well-formed:
   ``` cpp
   allocator_traits<A>::construct(m, p, v)
   ```
 
   and its evaluation causes the following postcondition to hold: The
   value of `v` is unchanged and is equivalent to `*p`.
-- `T` is *`EmplaceConstructible` into `X` from `args`*
-  EmplaceConstructible into X from args@`EmplaceConstructible` into `X`
-  from `args`, for zero or more arguments `args`, means that the
-  following expression is well-formed:
+- `T` is *`EmplaceConstructible` into `X` from `args`*, for zero or more
+  arguments `args`, means that the following expression is well-formed:
   ``` cpp
   allocator_traits<A>::construct(m, p, args)
   ```
-- `T` is *`Erasable` from `X`* Erasable from X@`Erasable` from `X` means
-  that the following expression is well-formed:
+- `T` is *`Erasable` from `X`* means that the following expression is
+  well-formed:
   ``` cpp
   allocator_traits<A>::destroy(m, p)
   ```

@@ -56,10 +56,10 @@ immediately after the *class-name* is seen. The *class-name* is also
 inserted into the scope of the class itself; this is known as the
 *injected-class-name*. For purposes of access checking, the
 injected-class-name is treated as if it were a public member name. A
-*class-specifier* is commonly referred to as a *class
-definition*. A class is considered defined after the closing brace of
-its *class-specifier* has been seen even though its member functions are
-in general not yet defined. The optional *attribute-specifier-seq*
+*class-specifier* is commonly referred to as a *class definition*. A
+class is considered defined after the closing brace of its
+*class-specifier* has been seen even though its member functions are in
+general not yet defined. The optional *attribute-specifier-seq*
 appertains to the class; the attributes in the *attribute-specifier-seq*
 are thereafter considered attributes of the class whenever it is named.
 
@@ -670,9 +670,9 @@ of `A` and `E` is empty.
 
 — *end example*]
 
-Two standard-layout struct [[class.prop]] types are
-*layout-compatible classes* if their common initial sequence comprises
-all members and bit-fields of both classes [[basic.types]].
+Two standard-layout struct [[class.prop]] types are *layout-compatible
+classes* if their common initial sequence comprises all members and
+bit-fields of both classes [[basic.types]].
 
 Two standard-layout unions are layout-compatible if they have the same
 number of non-static data members and corresponding non-static data
@@ -1759,9 +1759,9 @@ Otherwise, the destructor is *non-trivial*.
 A defaulted destructor is a constexpr destructor if it satisfies the
 requirements for a constexpr destructor [[dcl.constexpr]].
 
-A destructor that is defaulted and not defined as deleted is
-*implicitly defined* when it is odr-used [[basic.def.odr]] or when it is
-explicitly defaulted after its first declaration.
+A destructor that is defaulted and not defined as deleted is *implicitly
+defined* when it is odr-used [[basic.def.odr]] or when it is explicitly
+defaulted after its first declaration.
 
 Before a defaulted destructor for a class is implicitly defined, all the
 non-user-provided destructors for its base classes and its non-static
@@ -1929,10 +1929,10 @@ A destructor shall not be a coroutine.
 ### Conversions <a id="class.conv">[[class.conv]]</a>
 
 Type conversions of class objects can be specified by constructors and
-by conversion functions. These conversions are called
-*user-defined conversions* and are used for implicit type conversions
-[[conv]], for initialization [[dcl.init]], and for explicit type
-conversions ([[expr.type.conv]], [[expr.cast]], [[expr.static.cast]]).
+by conversion functions. These conversions are called *user-defined
+conversions* and are used for implicit type conversions [[conv]], for
+initialization [[dcl.init]], and for explicit type conversions (
+[[expr.type.conv]], [[expr.cast]], [[expr.static.cast]]).
 
 User-defined conversions are applied only where they are unambiguous (
 [[class.member.lookup]], [[class.conv.fct]]). Conversions obey the
@@ -2719,12 +2719,12 @@ associated with any particular object.
 is described in  [[dcl.init.aggr]]. — *end note*]
 
 A *union-like class* is a union or a class that has an anonymous union
-as a direct member. A union-like class `X` has a set of
-*variant members*. If `X` is a union, a non-static data member of `X`
-that is not an anonymous union is a variant member of `X`. In addition,
-a non-static data member of an anonymous union that is a member of `X`
-is also a variant member of `X`. At most one variant member of a union
-may have a default member initializer.
+as a direct member. A union-like class `X` has a set of *variant
+members*. If `X` is a union, a non-static data member of `X` that is not
+an anonymous union is a variant member of `X`. In addition, a non-static
+data member of an anonymous union that is a member of `X` is also a
+variant member of `X`. At most one variant member of a union may have a
+default member initializer.
 
 [*Example 3*:
 

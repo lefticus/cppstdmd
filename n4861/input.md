@@ -7087,8 +7087,8 @@ systems for purposes of exposition.[^41]
 ### Requirements <a id="fs.req">[[fs.req]]</a>
 
 Throughout subclause  [[filesystems]], `char`, `wchar_t`, `char8_t`,
-`char16_t`, and `char32_t` are collectively called
-*encoded character types*.
+`char16_t`, and `char32_t` are collectively called *encoded character
+types*.
 
 Functions with template parameters named `EcharT` shall not participate
 in overload resolution unless `EcharT` is one of the encoded character
@@ -7399,11 +7399,9 @@ Pathnames are formatted according to the generic pathname format grammar
 [[fs.path.generic]] or according to an operating system dependent
 *native pathname format* accepted by the host operating system.
 
-*Pathname resolution*
-
-is the operating system dependent mechanism for resolving a pathname to
-a particular file in a file hierarchy. There may be multiple pathnames
-that resolve to the same file.
+*Pathname resolution* is the operating system dependent mechanism for
+resolving a pathname to a particular file in a file hierarchy. There may
+be multiple pathnames that resolve to the same file.
 
 [*Example 1*: POSIX specifies the mechanism in section 4.11, Pathname
 resolution. — *end example*]

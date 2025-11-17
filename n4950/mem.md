@@ -856,14 +856,13 @@ constructed with an allocator where either:
 
 #### Uses-allocator construction <a id="allocator.uses.construction">[[allocator.uses.construction]]</a>
 
-*Uses-allocator construction*
-
-with allocator `alloc` and constructor arguments `args...` refers to the
-construction of an object of type `T` such that `alloc` is passed to the
-constructor of `T` if `T` uses an allocator type compatible with
-`alloc`. When applied to the construction of an object of type `T`, it
-is equivalent to initializing it with the value of the expression
-`make_obj_using_allocator<T>(alloc, args...)`, described below.
+*Uses-allocator construction* with allocator `alloc` and constructor
+arguments `args...` refers to the construction of an object of type `T`
+such that `alloc` is passed to the constructor of `T` if `T` uses an
+allocator type compatible with `alloc`. When applied to the construction
+of an object of type `T`, it is equivalent to initializing it with the
+value of the expression `make_obj_using_allocator<T>(alloc, args...)`,
+described below.
 
 The following utility functions support three conventions for passing
 `alloc` to a constructor:

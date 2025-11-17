@@ -162,13 +162,13 @@ range [D800, DFFF] (hexadecimal). A control character is a character
 whose code point is in either of the ranges [0, 1F] or [7F, 9F]
 (hexadecimal). — *end note*]
 
-The *basic execution character set* and the
-*basic execution wide-character set* shall each contain all the members
-of the basic source character set, plus control characters representing
-alert, backspace, and carriage return, plus a *null character*
-(respectively, *null wide character*), whose value is 0. For each basic
-execution character set, the values of the members shall be non-negative
-and distinct from one another. In both the source and execution basic
+The *basic execution character set* and the *basic execution
+wide-character set* shall each contain all the members of the basic
+source character set, plus control characters representing alert,
+backspace, and carriage return, plus a *null character* (respectively,
+*null wide character*), whose value is 0. For each basic execution
+character set, the values of the members shall be non-negative and
+distinct from one another. In both the source and execution basic
 character sets, the value of each character after `0` in the above list
 of decimal digits shall be one greater than the value of the previous.
 The *execution character set* and the *execution wide-character set* are

@@ -379,9 +379,9 @@ The expression is evaluated and its result (if any) is discarded.
 ### General <a id="conv.general">[[conv.general]]</a>
 
 Standard conversions are implicit conversions with built-in meaning.
-[[conv]] enumerates the full set of such conversions. A
-*standard conversion sequence* is a sequence of standard conversions in
-the following order:
+[[conv]] enumerates the full set of such conversions. A *standard
+conversion sequence* is a sequence of standard conversions in the
+following order:
 
 - Zero or one conversion from the following set: lvalue-to-rvalue
   conversion, array-to-pointer conversion, and function-to-pointer
@@ -785,11 +785,11 @@ pointer to the base class subobject of the derived class object.
 A null pointer constant [[conv.ptr]] can be converted to a
 pointer-to-member type; the result is the *null member pointer value* of
 that type and is distinguishable from any pointer to member not created
-from a null pointer constant. Such a conversion is called a
-*null member pointer conversion*. The conversion of a null pointer
-constant to a pointer to member of cv-qualified type is a single
-conversion, and not the sequence of a pointer-to-member conversion
-followed by a qualification conversion [[conv.qual]].
+from a null pointer constant. Such a conversion is called a *null member
+pointer conversion*. The conversion of a null pointer constant to a
+pointer to member of cv-qualified type is a single conversion, and not
+the sequence of a pointer-to-member conversion followed by a
+qualification conversion [[conv.qual]].
 
 A prvalue of type “pointer to member of `B` of type cv `T`”, where `B`
 is a class type, can be converted to a prvalue of type “pointer to
@@ -4781,8 +4781,8 @@ plus any padding necessary to align the allocated objects within the
 allocated memory.
 
 The *new-placement* syntax is used to supply additional arguments to an
-allocation function; such an expression is called a
-*placement \*new-expression\**.
+allocation function; such an expression is called a *placement
+*new-expression**.
 
 Overload resolution is performed on a function call created by
 assembling an argument list. The first argument is the amount of space

@@ -208,8 +208,7 @@ defined. If `X` is not allocator-aware, the terms below are defined as
 if `A` were `allocator<T>` — no allocator object needs to be created and
 user specializations of `allocator<T>` are not instantiated:
 
-- `T` is *\textit{Cpp17DefaultInsertable} into `X`* into
-  X@*Cpp17DefaultInsertable* into `X` means that the following
+- `T` is **Cpp17DefaultInsertable* into `X`* means that the following
   expression is well-formed:
   ``` cpp
   allocator_traits<A>::construct(m, p)
@@ -222,9 +221,8 @@ user specializations of `allocator<T>` are not instantiated:
 
   where `p` is the address of the uninitialized storage for the element
   allocated within `X`.
-- `T` is *\textit{Cpp17MoveInsertable} into `X`* into
-  X@*Cpp17MoveInsertable* into `X` means that the following expression
-  is well-formed:
+- `T` is **Cpp17MoveInsertable* into `X`* means that the following
+  expression is well-formed:
   ``` cpp
   allocator_traits<A>::construct(m, p, rv)
   ```
@@ -234,9 +232,8 @@ user specializations of `allocator<T>` are not instantiated:
   evaluation.
   \[*Note 2*: `rv` remains a valid object. Its state is
   unspecified — *end note*]
-- `T` is *\textit{Cpp17CopyInsertable} into `X`* into
-  X@*Cpp17CopyInsertable* into `X` means that, in addition to `T` being
-  *Cpp17MoveInsertable* into `X`, the following expression is
+- `T` is **Cpp17CopyInsertable* into `X`* means that, in addition to `T`
+  being *Cpp17MoveInsertable* into `X`, the following expression is
   well-formed:
   ``` cpp
   allocator_traits<A>::construct(m, p, v)
@@ -244,15 +241,14 @@ user specializations of `allocator<T>` are not instantiated:
 
   and its evaluation causes the following postcondition to hold: The
   value of `v` is unchanged and is equivalent to `*p`.
-- `T` is *\textit{Cpp17EmplaceConstructible} into `X` from `args`* into
-  X from args@*Cpp17EmplaceConstructible* into `X` from `args`, for zero
-  or more arguments `args`, means that the following expression is
+- `T` is **Cpp17EmplaceConstructible* into `X` from `args`*, for zero or
+  more arguments `args`, means that the following expression is
   well-formed:
   ``` cpp
   allocator_traits<A>::construct(m, p, args)
   ```
-- `T` is *\textit{Cpp17Erasable} from `X`* from X@*Cpp17Erasable* from
-  `X` means that the following expression is well-formed:
+- `T` is **Cpp17Erasable* from `X`* means that the following expression
+  is well-formed:
   ``` cpp
   allocator_traits<A>::destroy(m, p)
   ```

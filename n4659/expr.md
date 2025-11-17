@@ -2728,8 +2728,8 @@ plus any padding necessary to align the allocated objects within the
 allocated memory.
 
 The *new-placement* syntax is used to supply additional arguments to an
-allocation function; such an expression is called a
-*placement \*new-expression\**
+allocation function; such an expression is called a *placement
+*new-expression**.
 
 Overload resolution is performed on a function call created by
 assembling an argument list. The first argument is the amount of space
@@ -3852,8 +3852,8 @@ Certain contexts require expressions that satisfy additional
 requirements as detailed in this subclause; other contexts have
 different semantics depending on whether or not an expression satisfies
 these requirements. Expressions that satisfy these requirements,
-assuming that copy elision is performed, are called
-*constant expressions*.
+assuming that copy elision is performed, are called *constant
+expressions*.
 
 [*Note 1*: Constant expressions can be evaluated during
 translation. — *end note*]

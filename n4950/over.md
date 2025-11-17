@@ -2321,10 +2321,10 @@ void (*p2)(B*) = &g;            // error
 A declaration whose *declarator-id* is an *operator-function-id* shall
 declare a function or function template or an explicit instantiation or
 specialization of a function template. A function so declared is an
-*operator function*. A function template so declared is an
-*operator function template*. A specialization of an operator function
-template is also an operator function. An operator function is said to
-*implement* the operator named in its *operator-function-id*.
+*operator function*. A function template so declared is an *operator
+function template*. A specialization of an operator function template is
+also an operator function. An operator function is said to *implement*
+the operator named in its *operator-function-id*.
 
 ``` bnf
 operator-function-id:
@@ -2943,9 +2943,9 @@ A declaration whose *declarator-id* is a *literal-operator-id* shall
 declare a function or function template that belongs to a namespace (it
 could be a friend function [[class.friend]]) or an explicit
 instantiation or specialization of a function template. A function
-declared with a *literal-operator-id* is a *literal
-operator*. A function template declared with a *literal-operator-id* is
-a *literal operator template*.
+declared with a *literal-operator-id* is a *literal operator*. A
+function template declared with a *literal-operator-id* is a *literal
+operator template*.
 
 The declaration of a literal operator shall have a
 *parameter-declaration-clause* equivalent to one of the following:

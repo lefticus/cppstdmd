@@ -1466,12 +1466,12 @@ associated with any particular object.
 is described in  [[dcl.init.aggr]]. — *end note*]
 
 A *union-like class* is a union or a class that has an anonymous union
-as a direct member. A union-like class `X` has a set of
-*variant members*. If `X` is a union, a non-static data member of `X`
-that is not an anonymous union is a variant member of `X`. In addition,
-a non-static data member of an anonymous union that is a member of `X`
-is also a variant member of `X`. At most one variant member of a union
-may have a default member initializer.
+as a direct member. A union-like class `X` has a set of *variant
+members*. If `X` is a union, a non-static data member of `X` that is not
+an anonymous union is a variant member of `X`. In addition, a non-static
+data member of an anonymous union that is a member of `X` is also a
+variant member of `X`. At most one variant member of a union may have a
+default member initializer.
 
 [*Example 3*:
 

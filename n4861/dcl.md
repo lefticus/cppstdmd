@@ -181,9 +181,9 @@ If the *decl-specifier-seq* contains the `typedef` specifier, the
 declaration is called a *typedef declaration* and the name of each
 *init-declarator* is declared to be a *typedef-name*, synonymous with
 its associated type [[dcl.typedef]]. If the *decl-specifier-seq*
-contains no `typedef` specifier, the declaration is called a
-*function declaration* if the type associated with the name is a
-function type [[dcl.fct]] and an *object declaration* otherwise.
+contains no `typedef` specifier, the declaration is called a *function
+declaration* if the type associated with the name is a function type
+[[dcl.fct]] and an *object declaration* otherwise.
 
 Syntactic components beyond those found in the general form of
 declaration are added to a function declaration to make a
@@ -1631,10 +1631,8 @@ int (*p)(int) = f;              // instantiates f<int> to determine its return t
 
 ##### Placeholder type deduction <a id="dcl.type.auto.deduct">[[dcl.type.auto.deduct]]</a>
 
-*Placeholder type deduction*
-
-is the process by which a type containing a placeholder type is replaced
-by a deduced type.
+*Placeholder type deduction* is the process by which a type containing a
+placeholder type is replaced by a deduced type.
 
 A type `T` containing a placeholder type, and a corresponding
 initializer E, are determined as follows:
@@ -1866,7 +1864,7 @@ auto j = 2.0;           // OK: j deduced to have type double
 The optional *requires-clause* [[temp.pre]] in an *init-declarator* or
 *member-declarator* shall be present only if the declarator declares a
 templated function [[dcl.fct]]. When present after a declarator, the
-*requires-clause* is called the *trailing \*requires-clause\**. The
+*requires-clause* is called the *trailing *requires-clause**. The
 trailing *requires-clause* introduces the *constraint-expression* that
 results from interpreting its *constraint-logical-or-expression* as a
 *constraint-expression*.
@@ -2487,9 +2485,9 @@ and the type of the contained *declarator-id* in the declaration `T`
 `D1` is “*derived-declarator-type-list* `T`”, the type of the
 *declarator-id* in `D` is “*derived-declarator-type-list* array of `N`
 `T`”. The *constant-expression* shall be a converted constant expression
-of type `std::size_t` [[expr.const]]. Its value `N` specifies the
-*array bound*, i.e., the number of elements in the array; `N` shall be
-greater than zero.
+of type `std::size_t` [[expr.const]]. Its value `N` specifies the *array
+bound*, i.e., the number of elements in the array; `N` shall be greater
+than zero.
 
 In a declaration `T` `D` where `D` has the form
 
@@ -3710,9 +3708,8 @@ The *elements* of an aggregate are:
 
 When an aggregate is initialized by an initializer list as specified in 
 [[dcl.init.list]], the elements of the initializer list are taken as
-initializers for the elements of the aggregate. The
-*explicitly initialized elements* of the aggregate are determined as
-follows:
+initializers for the elements of the aggregate. The *explicitly
+initialized elements* of the aggregate are determined as follows:
 
 - If the initializer list is a *designated-initializer-list*, the
   aggregate shall be of class type, the *identifier* in each
@@ -5451,13 +5448,13 @@ If the *enum-head-name* of an *opaque-enum-declaration* contains a
 specialization [[temp.expl.spec]].
 
 The enumeration type declared with an *enum-key* of only `enum` is an
-*unscoped enumeration*, and its *enumerator*s are
-*unscoped enumerators*. The *enum-key*s `enum class` and `enum struct`
-are semantically equivalent; an enumeration type declared with one of
-these is a *scoped enumeration*, and its *enumerator*s are
-*scoped enumerators*. The optional *enum-head-name* shall not be omitted
-in the declaration of a scoped enumeration. The *type-specifier-seq* of
-an *enum-base* shall name an integral type; any cv-qualification is
+*unscoped enumeration*, and its *enumerator*s are *unscoped
+enumerators*. The *enum-key*s `enum class` and `enum struct` are
+semantically equivalent; an enumeration type declared with one of these
+is a *scoped enumeration*, and its *enumerator*s are *scoped
+enumerators*. The optional *enum-head-name* shall not be omitted in the
+declaration of a scoped enumeration. The *type-specifier-seq* of an
+*enum-base* shall name an integral type; any cv-qualification is
 ignored. An *opaque-enum-declaration* declaring an unscoped enumeration
 shall not omit the *enum-base*. The identifiers in an *enumerator-list*
 are declared as constants, and can appear wherever constants are

@@ -1499,10 +1499,8 @@ int (*p)(int) = f;              // instantiates f<int> to determine its return t
 
 ##### Placeholder type deduction <a id="dcl.type.auto.deduct">[[dcl.type.auto.deduct]]</a>
 
-*Placeholder type deduction*
-
-is the process by which a type containing a placeholder type is replaced
-by a deduced type.
+*Placeholder type deduction* is the process by which a type containing a
+placeholder type is replaced by a deduced type.
 
 A type `T` containing a placeholder type, and a corresponding
 initializer `e`, are determined as follows:

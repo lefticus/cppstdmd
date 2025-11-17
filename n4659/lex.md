@@ -153,13 +153,13 @@ corresponds to a control character (in either of the ranges 0x00–0x1F or
 0x7F–0x9F, both inclusive) or to a character in the basic source
 character set, the program is ill-formed.[^5]
 
-The *basic execution character set* and the
-*basic execution wide-character set* shall each contain all the members
-of the basic source character set, plus control characters representing
-alert, backspace, and carriage return, plus a *null character*
-(respectively, *null wide character*), whose value is 0. For each basic
-execution character set, the values of the members shall be non-negative
-and distinct from one another. In both the source and execution basic
+The *basic execution character set* and the *basic execution
+wide-character set* shall each contain all the members of the basic
+source character set, plus control characters representing alert,
+backspace, and carriage return, plus a *null character* (respectively,
+*null wide character*), whose value is 0. For each basic execution
+character set, the values of the members shall be non-negative and
+distinct from one another. In both the source and execution basic
 character sets, the value of each character after `0` in the above list
 of decimal digits shall be one greater than the value of the previous.
 The *execution character set* and the *execution wide-character set* are
@@ -607,12 +607,12 @@ An *integer literal* is a sequence of digits that has no period or
 exponent part, with optional separating single quotes that are ignored
 when determining its value. An integer literal may have a prefix that
 specifies its base and a suffix that specifies its type. The lexically
-first digit of the sequence of digits is the most significant. A
-*binary integer literal* (base two) begins with `0b` or `0B` and
-consists of a sequence of binary digits. An *octal integer literal*
-(base eight) begins with the digit `0` and consists of a sequence of
-octal digits.[^12] A *decimal integer literal* (base ten) begins with a
-digit other than `0` and consists of a sequence of decimal digits. A
+first digit of the sequence of digits is the most significant. A *binary
+integer literal* (base two) begins with `0b` or `0B` and consists of a
+sequence of binary digits. An *octal integer literal* (base eight)
+begins with the digit `0` and consists of a sequence of octal
+digits.[^12] A *decimal integer literal* (base ten) begins with a digit
+other than `0` and consists of a sequence of decimal digits. A
 *hexadecimal integer literal* (base sixteen) begins with `0x` or `0X`
 and consists of a sequence of hexadecimal digits, which include the
 decimal digits and the letters `a` through `f` and `A` through `F` with
@@ -716,11 +716,11 @@ an *ordinary character literal*. An ordinary character literal that
 contains a single *c-char* representable in the execution character set
 has type `char`, with value equal to the numerical value of the encoding
 of the *c-char* in the execution character set. An ordinary character
-literal that contains more than one *c-char* is a
-*multicharacter literal*. A multicharacter literal, or an ordinary
-character literal containing a single *c-char* not representable in the
-execution character set, is conditionally-supported, has type `int`, and
-has an *implementation-defined* value.
+literal that contains more than one *c-char* is a *multicharacter
+literal*. A multicharacter literal, or an ordinary character literal
+containing a single *c-char* not representable in the execution
+character set, is conditionally-supported, has type `int`, and has an
+*implementation-defined* value.
 
 A character literal that begins with `u8`, such as `u8'w'`, is a
 character literal of type `char`, known as a *UTF-8 character literal*.
@@ -885,11 +885,11 @@ integer part, a radix point, a fraction part, an `e`, `E`, `p` or `P`,
 an optionally signed integer exponent, and an optional type suffix. The
 integer and fraction parts both consist of a sequence of decimal (base
 ten) digits if there is no prefix, or hexadecimal (base sixteen) digits
-if the prefix is `0x` or `0X`. The floating literal is a
-*decimal floating literal* in the former case and a
-*hexadecimal floating literal* in the latter case. Optional separating
-single quotes in a *digit-sequence* or *hexadecimal-digit-sequence* are
-ignored when determining its value.
+if the prefix is `0x` or `0X`. The floating literal is a *decimal
+floating literal* in the former case and a *hexadecimal floating
+literal* in the latter case. Optional separating single quotes in a
+*digit-sequence* or *hexadecimal-digit-sequence* are ignored when
+determining its value.
 
 [*Example 1*: The floating literals `1.602'176'565e-19` and
 `1.602176565e-19` have the same value. — *end example*]

@@ -1292,8 +1292,8 @@ notation in the parameters.
 A parameter identifier in a function-like macro shall be uniquely
 declared within its scope.
 
-The identifier immediately following the `define` is called the
-*macro name*. There is one name space for macro names. Any whitespace
+The identifier immediately following the `define` is called the *macro
+name*. There is one name space for macro names. Any whitespace
 characters preceding or following the replacement list of preprocessing
 tokens are not considered part of the replacement list for either form
 of macro.

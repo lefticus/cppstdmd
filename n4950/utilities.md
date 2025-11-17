@@ -2476,14 +2476,14 @@ namespace std {
 ```
 
 Any instance of `optional<T>` at any given time either contains a value
-or does not contain a value. When an instance of `optional<T>`
-*contains a value*, it means that an object of type `T`, referred to as
-the optional object’s *contained value*, is allocated within the storage
-of the optional object. Implementations are not permitted to use
-additional storage, such as dynamic memory, to allocate its contained
-value. When an object of type `optional<T>` is contextually converted to
-`bool`, the conversion returns `true` if the object contains a value;
-otherwise the conversion returns `false`.
+or does not contain a value. When an instance of `optional<T>` *contains
+a value*, it means that an object of type `T`, referred to as the
+optional object’s *contained value*, is allocated within the storage of
+the optional object. Implementations are not permitted to use additional
+storage, such as dynamic memory, to allocate its contained value. When
+an object of type `optional<T>` is contextually converted to `bool`, the
+conversion returns `true` if the object contains a value; otherwise the
+conversion returns `false`.
 
 When an `optional<T>` object contains a value, member `val` points to
 the contained value.

@@ -1926,16 +1926,16 @@ namespace std {
 ```
 
 Any instance of `optional<T>` at any given time either contains a value
-or does not contain a value. When an instance of `optional<T>`
-*contains a value*, it means that an object of type `T`, referred to as
-the optional object’s *contained value*, is allocated within the storage
-of the optional object. Implementations are not permitted to use
-additional storage, such as dynamic memory, to allocate its contained
-value. The contained value shall be allocated in a region of the
-`optional<T>` storage suitably aligned for the type `T`. When an object
-of type `optional<T>` is contextually converted to `bool`, the
-conversion returns `true` if the object contains a value; otherwise the
-conversion returns `false`.
+or does not contain a value. When an instance of `optional<T>` *contains
+a value*, it means that an object of type `T`, referred to as the
+optional object’s *contained value*, is allocated within the storage of
+the optional object. Implementations are not permitted to use additional
+storage, such as dynamic memory, to allocate its contained value. The
+contained value shall be allocated in a region of the `optional<T>`
+storage suitably aligned for the type `T`. When an object of type
+`optional<T>` is contextually converted to `bool`, the conversion
+returns `true` if the object contains a value; otherwise the conversion
+returns `false`.
 
 Member `val` is provided for exposition only. When an `optional<T>`
 object contains a value, `val` points to the contained value.
@@ -5528,14 +5528,13 @@ constructed with an allocator where either:
 
 #### Uses-allocator construction <a id="allocator.uses.construction">[[allocator.uses.construction]]</a>
 
-*Uses-allocator construction*
-
-with allocator `alloc` and constructor arguments `args...` refers to the
-construction of an object of type `T` such that `alloc` is passed to the
-constructor of `T` if `T` uses an allocator type compatible with
-`alloc`. When applied to the construction of an object of type `T`, it
-is equivalent to initializing it with the value of the expression
-`make_obj_using_allocator<T>(alloc, args...)`, described below.
+*Uses-allocator construction* with allocator `alloc` and constructor
+arguments `args...` refers to the construction of an object of type `T`
+such that `alloc` is passed to the constructor of `T` if `T` uses an
+allocator type compatible with `alloc`. When applied to the construction
+of an object of type `T`, it is equivalent to initializing it with the
+value of the expression `make_obj_using_allocator<T>(alloc, args...)`,
+described below.
 
 The following utility functions support three conventions for passing
 `alloc` to a constructor:

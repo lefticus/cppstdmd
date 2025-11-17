@@ -504,13 +504,11 @@ that is shared between two processes. — *end note*]
 
 ## Waiting and notifying <a id="atomics.wait">[[atomics.wait]]</a>
 
-*Atomic waiting operations*
-
-and *atomic notifying operations* provide a mechanism to wait for the
-value of an atomic object to change more efficiently than can be
-achieved with polling. An atomic waiting operation may block until it is
-unblocked by an atomic notifying operation, according to each function’s
-effects.
+*Atomic waiting operations* and *atomic notifying operations* provide a
+mechanism to wait for the value of an atomic object to change more
+efficiently than can be achieved with polling. An atomic waiting
+operation may block until it is unblocked by an atomic notifying
+operation, according to each function’s effects.
 
 [*Note 1*: Programs are not guaranteed to observe transient atomic
 values, an issue known as the A-B-A problem, resulting in continued

@@ -170,22 +170,18 @@ a pointer `p` of type `T*`, an expression `v` of type `T`, and an rvalue
 allocator-aware, the terms below are defined as if `A` were
 `std::allocator<T>`.)
 
-- `T` is *`CopyInsertable` into `X`* CopyInsertable into
-  X@`CopyInsertable` into `X` means that the following expression is
-  well-formed:
+- `T` is *`CopyInsertable` into `X`* means that the following expression
+  is well-formed:
   ``` cpp
   allocator_traits<A>::construct(m, p, v);
   ```
-- `T` is *`MoveInsertable` into `X`* MoveInsertable into
-  X@`MoveInsertable` into `X` means that the following expression is
-  well-formed:
+- `T` is *`MoveInsertable` into `X`* means that the following expression
+  is well-formed:
   ``` cpp
   allocator_traits<A>::construct(m, p, rv);
   ```
-- `T` is *`EmplaceConstructible` into `X` from `args`*
-  EmplaceConstructible into X from args@`EmplaceConstructible` into `X`
-  from `args`, for zero or more arguments `args`, means that the
-  following expression is well-formed:
+- `T` is *`EmplaceConstructible` into `X` from `args`*, for zero or more
+  arguments `args`, means that the following expression is well-formed:
   ``` cpp
   allocator_traits<A>::construct(m, p, args);
   ```

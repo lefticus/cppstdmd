@@ -355,9 +355,9 @@ constrain a contextually-determined type or template type parameter pack
 the form `C<A_1, \dotsc, A_n>`, then let `E'` be
 `C<T, A_1, \dotsc, A_n>`. Otherwise, let `E'` be `C<T>`. If `T` is not a
 pack, then `E` is `E'`, otherwise `E` is `(E' && ...)`. This
-*constraint-expression* `E` is called the
-*immediately-declared constraint* of `Q` for `T`. The concept designated
-by a *type-constraint* shall be a type concept [[temp.concept]].
+*constraint-expression* `E` is called the *immediately-declared
+constraint* of `Q` for `T`. The concept designated by a
+*type-constraint* shall be a type concept [[temp.concept]].
 
 A *type-parameter* that starts with a *type-constraint* introduces the
 immediately-declared constraint of the *type-constraint* for the
@@ -2011,9 +2011,8 @@ partial ordering is used to determine
 
 — *end note*]
 
-The associated constraints `C` of a declaration `D` are
-*eligible for subsumption* unless `C` contains a concept-dependent
-constraint.
+The associated constraints `C` of a declaration `D` are *eligible for
+subsumption* unless `C` contains a concept-dependent constraint.
 
 A declaration `D1` is *at least as constrained* as a declaration `D2` if
 
@@ -2647,7 +2646,7 @@ f(2, 1.0);                      // args contains two arguments: int and double
 
 — *end example*]
 
-An *\*init-capture\* pack* is a lambda capture that introduces an
+An **init-capture* pack* is a lambda capture that introduces an
 *init-capture* for each of the elements in the pack expansion of its
 *initializer*.
 
@@ -3677,10 +3676,10 @@ template <int I> void f(A<I>, A<I+1+2+3+4>);
 
 If multiple function templates share a name, the use of that name can be
 ambiguous because template argument deduction [[temp.deduct]] may
-identify a specialization for more than one function template.
-*Partial ordering* of overloaded function template declarations is used
-in the following contexts to select the function template to which a
-function template specialization refers:
+identify a specialization for more than one function template. *Partial
+ordering* of overloaded function template declarations is used in the
+following contexts to select the function template to which a function
+template specialization refers:
 
 - during overload resolution for a call to a function template
   specialization [[over.match.best]];
@@ -4694,8 +4693,8 @@ template<class T> struct A<T>::B::C : A<T> {
 
 — *end note*]
 
-A qualified [[basic.lookup.qual]] or unqualified name is a
-*member of the current instantiation* if
+A qualified [[basic.lookup.qual]] or unqualified name is a *member of
+the current instantiation* if
 
 - its lookup context, if it is a qualified name, is the current
   instantiation, and
@@ -4720,11 +4719,11 @@ template <class T> int A<T>::f() {
 
 — *end example*]
 
-A qualified or unqualified name names a
-*dependent member of the current instantiation* if it is a member of the
-current instantiation that, when looked up, refers to at least one
-member declaration (including a *using-declarator* whose terminal name
-is dependent) of a class that is the current instantiation.
+A qualified or unqualified name names a *dependent member of the current
+instantiation* if it is a member of the current instantiation that, when
+looked up, refers to at least one member declaration (including a
+*using-declarator* whose terminal name is dependent) of a class that is
+the current instantiation.
 
 A qualified name [[basic.lookup.qual]] is dependent if
 
@@ -7463,9 +7462,9 @@ with the type referred to above):
 
 Function template `F` is *at least as specialized as* function template
 `G` if, for each pair of types used to determine the ordering, the type
-from `F` is at least as specialized as the type from `G`. `F` is
-*more specialized than* `G` if `F` is at least as specialized as `G` and
-`G` is not at least as specialized as `F`.
+from `F` is at least as specialized as the type from `G`. `F` is *more
+specialized than* `G` if `F` is at least as specialized as `G` and `G`
+is not at least as specialized as `F`.
 
 If, after considering the above, function template `F` is at least as
 specialized as function template `G` and vice-versa, and if `G` has a

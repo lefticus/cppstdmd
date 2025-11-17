@@ -1430,10 +1430,8 @@ scope of the derived class. Template parameter scopes that are
 associated with one scope in the chain of parents are also considered
 [[temp.local]]. — *end note*]
 
-*Unqualified name lookup*
-
-from a program point performs an unqualified search in its immediate
-scope.
+*Unqualified name lookup* from a program point performs an unqualified
+search in its immediate scope.
 
 An *unqualified name* is a name that does not immediately follow a
 *nested-name-specifier* or the `.` or `->` in a class member access
@@ -1808,17 +1806,16 @@ In
 
 — *end example*]
 
-*Qualified name lookup*
-
-in a class, namespace, or enumeration performs a search of the scope
-associated with it [[class.member.lookup]] except as specified below.
-Unless otherwise specified, a qualified name undergoes qualified name
-lookup in its lookup context from the point where it appears unless the
-lookup context either is dependent and is not the current instantiation
-[[temp.dep.type]] or is not a class or class template. If nothing is
-found by qualified lookup for a member-qualified name that is the
-terminal name [[expr.prim.id.unqual]] of a *nested-name-specifier* and
-is not dependent, it undergoes unqualified lookup.
+*Qualified name lookup* in a class, namespace, or enumeration performs a
+search of the scope associated with it [[class.member.lookup]] except as
+specified below. Unless otherwise specified, a qualified name undergoes
+qualified name lookup in its lookup context from the point where it
+appears unless the lookup context either is dependent and is not the
+current instantiation [[temp.dep.type]] or is not a class or class
+template. If nothing is found by qualified lookup for a member-qualified
+name that is the terminal name [[expr.prim.id.unqual]] of a
+*nested-name-specifier* and is not dependent, it undergoes unqualified
+lookup.
 
 [*Note 2*: During lookup for a template specialization, no names are
 dependent. — *end note*]
@@ -3970,8 +3967,8 @@ types or values. — *end note*]
 The types `char`, `wchar_t`, `char8_t`, `char16_t`, and `char32_t` are
 collectively called *character types*. The character types, `bool`, the
 signed and unsigned integer types, and cv-qualified versions
-[[basic.type.qualifier]] thereof, are collectively termed
-*integral types*. A synonym for integral type is *integer type*.
+[[basic.type.qualifier]] thereof, are collectively termed *integral
+types*. A synonym for integral type is *integer type*.
 
 [*Note 8*: Enumerations [[dcl.enum]] are not integral; however,
 unscoped enumerations can be promoted to integral types as specified in
@@ -3987,9 +3984,9 @@ the type `double` is a subset of the set of values of the type
 cv-qualified versions [[basic.type.qualifier]] thereof, are collectively
 termed *standard floating-point types*. An implementation may also
 provide additional types that represent floating-point values and define
-them (and cv-qualified versions thereof) to be
-*extended floating-point types*. The standard and extended
-floating-point types are collectively termed *floating-point types*.
+them (and cv-qualified versions thereof) to be *extended floating-point
+types*. The standard and extended floating-point types are collectively
+termed *floating-point types*.
 
 [*Note 9*: Any additional implementation-specific types representing
 floating-point values that are not defined by the implementation to be
@@ -4001,8 +3998,8 @@ Except as specified in [[basic.extended.fp]], the object and value
 representations and accuracy of operations of floating-point types are
 *implementation-defined*.
 
-Integral and floating-point types are collectively termed
-*arithmetic types*.
+Integral and floating-point types are collectively termed *arithmetic
+types*.
 
 [*Note 10*: Properties of the arithmetic types, such as their minimum
 and maximum representable value, can be queried using the facilities in
@@ -5032,13 +5029,12 @@ of execution might only make progress if the respective threads of
 execution provide parallel forward progress guarantees, but will fail to
 make progress under weakly parallel guarantees. — *end note*]
 
-When a thread of execution P is specified to
-*block with forward progress guarantee delegation* block
-(execution)!with forward progress guarantee delegation on the completion
-of a set S of threads of execution, then throughout the whole time of P
-being blocked on S, the implementation shall ensure that the forward
-progress guarantees provided by at least one thread of execution in S is
-at least as strong as P’s forward progress guarantees.
+When a thread of execution P is specified to *block with forward
+progress guarantee delegation* on the completion of a set S of threads
+of execution, then throughout the whole time of P being blocked on S,
+the implementation shall ensure that the forward progress guarantees
+provided by at least one thread of execution in S is at least as strong
+as P’s forward progress guarantees.
 
 [*Note 7*: It is unspecified which thread or threads of execution in S
 are chosen and for which number of execution steps. The strengthening is

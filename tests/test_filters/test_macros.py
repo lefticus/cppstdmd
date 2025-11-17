@@ -547,6 +547,32 @@ Arrays are collectively called \defnadjx{standard-layout}{types}{type}."""
     assert "collectively called ." not in output
 
 
+def test_defnx_macro_with_index():
+    r"""Test \defnx{} expansion with index key (Issue #25)"""
+    latex = r"The process is called \defnx{name lookup}{lookup!name}."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "*name lookup*" in output
+    assert "\\defnx" not in output
+    # Verify index key is stripped
+    assert "lookup!name" not in output
+
+
+def test_defnx_macro_in_table():
+    r"""Test \defnx{} in table cells - Issue #25"""
+    latex = r"""| none | \defnx{ordinary character literal}{literal!character!ordinary} | `char` |
+| `u8` | \defnx{UTF-8 character literal}{literal!character!UTF-8} | `char8_t` |"""
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "*ordinary character literal*" in output
+    # UTF-8 may have newline from table formatting
+    assert "UTF-8" in output and "character literal" in output
+    assert "\\defnx" not in output
+    # Verify index keys are stripped
+    assert "literal!character!ordinary" not in output
+    assert "literal!character!UTF-8" not in output
+
+
 def test_defnlibxname_macro():
     r"""Test \defnlibxname{} expansion (define library identifier with __ prefix)"""
     latex = r"The \defnlibxname{has_unique_object_representations} trait is defined."

@@ -527,12 +527,11 @@ to the exception object. — *end note*]
 
 The predicate indicating whether a function cannot exit via an exception
 is called the *exception specification* of the function. If the
-predicate is false, the function has a
-*potentially-throwing exception specification*
-potentially-throwing!exception specification, otherwise it has a
-*non-throwing exception specification*. The exception specification is
-either defined implicitly, or defined explicitly by using a
-*noexcept-specifier* as a suffix of a function declarator [[dcl.fct]].
+predicate is false, the function has a *potentially-throwing exception
+specification*, otherwise it has a *non-throwing exception
+specification*. The exception specification is either defined
+implicitly, or defined explicitly by using a *noexcept-specifier* as a
+suffix of a function declarator [[dcl.fct]].
 
 ``` bnf
 noexcept-specifier:

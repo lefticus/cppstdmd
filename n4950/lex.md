@@ -942,14 +942,14 @@ character would require more than one code unit. — *end note*]
 
 **Table: Character literals**
 
-|      |                                                                |            |              |         |
-| ---- | -------------------------------------------------------------- | ---------- | ------------ | ------- |
-| none | \defnx{ordinary character literal}{literal!character!ordinary} | `char`     | ordinary     | `'v'`   |
-| `L`  | \defnx{wide character literal}{literal!character!wide}         | `wchar_t`  | wide literal | `L'w'`  |
-|      |                                                                |            | encoding     |         |
-| `u8` | \defnx{UTF-8 character literal}{literal!character!UTF-8}       | `char8_t`  | UTF-8        | `u8'x'` |
-| `u`  | \defnx{UTF-16 character literal}{literal!character!UTF-16}     | `char16_t` | UTF-16       | `u'y'`  |
-| `U`  | \defnx{UTF-32 character literal}{literal!character!UTF-32}     | `char32_t` | UTF-32       | `U'z'`  |
+|      |                            |            |              |         |
+| ---- | -------------------------- | ---------- | ------------ | ------- |
+| none | ordinary character literal | `char`     | ordinary     | `'v'`   |
+| `L`  | wide character literal     | `wchar_t`  | wide literal | `L'w'`  |
+|      |                            |            | encoding     |         |
+| `u8` | UTF-8 character literal    | `char8_t`  | UTF-8        | `u8'x'` |
+| `u`  | UTF-16 character literal   | `char16_t` | UTF-16       | `u'y'`  |
+| `U`  | UTF-32 character literal   | `char32_t` | UTF-32       | `U'z'`  |
 
 
 In translation phase 4, the value of a *character-literal* is determined
@@ -1184,13 +1184,13 @@ where n is the number of encoded code units as described below.
 
 **Table: String literals**
 
-|      |                                                          |                                       |                               |                                                        |
-| ---- | -------------------------------------------------------- | ------------------------------------- | ----------------------------- | ------------------------------------------------------ |
-| none | \defnx{ordinary string literal}{literal!string!ordinary} | array of $n$\newline `const char`     | ordinary literal encoding     | `"ordinary string"`\newline `R"(ordinary raw string)"` |
-| `L`  | \defnx{wide string literal}{literal!string!wide}         | array of $n$\newline `const wchar_t`  | wide literal\newline encoding | `L"wide string"`\newline `LR"w(wide raw string)w"`     |
-| `u8` | \defnx{UTF-8 string literal}{literal!string!UTF-8}       | array of $n$\newline `const char8_t`  | UTF-8                         | `u8"UTF-8 string"`\newline `u8R"x(UTF-8 raw string)x"` |
-| `u`  | \defnx{UTF-16 string literal}{literal!string!UTF-16}     | array of $n$\newline `const char16_t` | UTF-16                        | `u"UTF-16 string"`\newline `uR"y(UTF-16 raw string)y"` |
-| `U`  | \defnx{UTF-32 string literal}{literal!string!UTF-32}     | array of $n$\newline `const char32_t` | UTF-32                        | `U"UTF-32 string"`\newline `UR"z(UTF-32 raw string)z"` |
+|      |                         |                                       |                               |                                                        |
+| ---- | ----------------------- | ------------------------------------- | ----------------------------- | ------------------------------------------------------ |
+| none | ordinary string literal | array of $n$\newline `const char`     | ordinary literal encoding     | `"ordinary string"`\newline `R"(ordinary raw string)"` |
+| `L`  | wide string literal     | array of $n$\newline `const wchar_t`  | wide literal\newline encoding | `L"wide string"`\newline `LR"w(wide raw string)w"`     |
+| `u8` | UTF-8 string literal    | array of $n$\newline `const char8_t`  | UTF-8                         | `u8"UTF-8 string"`\newline `u8R"x(UTF-8 raw string)x"` |
+| `u`  | UTF-16 string literal   | array of $n$\newline `const char16_t` | UTF-16                        | `u"UTF-16 string"`\newline `uR"y(UTF-16 raw string)y"` |
+| `U`  | UTF-32 string literal   | array of $n$\newline `const char32_t` | UTF-32                        | `U"UTF-32 string"`\newline `UR"z(UTF-32 raw string)z"` |
 
 
 A *string-literal* that has an `R` in the prefix is a *raw string

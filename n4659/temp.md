@@ -1784,18 +1784,18 @@ arguments, nor shall the inline specifier be used in such a declaration.
 
 A *primary class template* declaration is one in which the class
 template name is an identifier. A template declaration in which the
-class template name is a *simple-template-id* is a
-*partial specialization* of the class template named in the
-*simple-template-id*. A partial specialization of a class template
-provides an alternative definition of the template that is used instead
-of the primary definition when the arguments in a specialization match
-those given in the partial specialization ([[temp.class.spec.match]]).
-The primary template shall be declared before any specializations of
-that template. A partial specialization shall be declared before the
-first use of a class template specialization that would make use of the
-partial specialization as the result of an implicit or explicit
-instantiation in every translation unit in which such a use occurs; no
-diagnostic is required.
+class template name is a *simple-template-id* is a *partial
+specialization* of the class template named in the *simple-template-id*.
+A partial specialization of a class template provides an alternative
+definition of the template that is used instead of the primary
+definition when the arguments in a specialization match those given in
+the partial specialization ([[temp.class.spec.match]]). The primary
+template shall be declared before any specializations of that template.
+A partial specialization shall be declared before the first use of a
+class template specialization that would make use of the partial
+specialization as the result of an implicit or explicit instantiation in
+every translation unit in which such a use occurs; no diagnostic is
+required.
 
 Each class template partial specialization is a distinct template and
 definitions shall be provided for the members of a template partial
@@ -5498,9 +5498,9 @@ to above):
 
 Function template `F` is *at least as specialized as* function template
 `G` if, for each pair of types used to determine the ordering, the type
-from `F` is at least as specialized as the type from `G`. `F` is
-*more specialized than* `G` if `F` is at least as specialized as `G` and
-`G` is not at least as specialized as `F`.
+from `F` is at least as specialized as the type from `G`. `F` is *more
+specialized than* `G` if `F` is at least as specialized as `G` and `G`
+is not at least as specialized as `F`.
 
 If, after considering the above, function template `F` is at least as
 specialized as function template `G` and vice-versa, and if `G` has a

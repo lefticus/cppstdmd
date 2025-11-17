@@ -1257,10 +1257,10 @@ void g() {
 — *end example*]
 
 For each argument type `T` in the function call, there is a set of zero
-or more *associated namespaces* and a set of zero or more
-*associated classes* to be considered. The sets of namespaces and
-classes are determined entirely by the types of the function arguments
-(and the namespace of any template template argument). Typedef names and
+or more *associated namespaces* and a set of zero or more *associated
+classes* to be considered. The sets of namespaces and classes are
+determined entirely by the types of the function arguments (and the
+namespace of any template template argument). Typedef names and
 *using-declaration*s used to specify the types do not contribute to this
 set. The sets of namespaces and classes are determined in the following
 way:
@@ -2720,9 +2720,9 @@ if it has an object pointer type and it is one of the following:
   object, where at the time of the copy the source object contained a
   copy of a safely-derived pointer value.
 
-An integer value is an
-*integer representation of a safely-derived pointer* only if its type is
-at least as large as `std::intptr_t` and it is one of the following:
+An integer value is an *integer representation of a safely-derived
+pointer* only if its type is at least as large as `std::intptr_t` and it
+is one of the following:
 
 - the result of a `reinterpret_cast` of a safely-derived pointer value;
 - the result of a valid conversion of an integer representation of a
@@ -2762,10 +2762,10 @@ their complete object ([[intro.object]]).
 ## Object lifetime <a id="basic.life">[[basic.life]]</a>
 
 The *lifetime* of an object or reference is a runtime property of the
-object or reference. An object is said to have
-*non-vacuous initialization* if it is of a class or aggregate type and
-it or one of its subobjects is initialized by a constructor other than a
-trivial default constructor.
+object or reference. An object is said to have *non-vacuous
+initialization* if it is of a class or aggregate type and it or one of
+its subobjects is initialized by a constructor other than a trivial
+default constructor.
 
 [*Note 1*: Initialization by a trivial copy/move constructor is
 non-vacuous initialization. — *end note*]
@@ -3164,12 +3164,12 @@ that character object is equal to the value of the single character
 literal form of that character. It is *implementation-defined* whether a
 `char` object can hold negative values. Characters can be explicitly
 declared `unsigned` or `signed`. Plain `char`, `signed char`, and
-`unsigned char` are three distinct types, collectively called
-*narrow character types*. A `char`, a `signed char`, and an
-`unsigned char` occupy the same amount of storage and have the same
-alignment requirements ([[basic.align]]); that is, they have the same
-object representation. For narrow character types, all bits of the
-object representation participate in the value representation.
+`unsigned char` are three distinct types, collectively called *narrow
+character types*. A `char`, a `signed char`, and an `unsigned char`
+occupy the same amount of storage and have the same alignment
+requirements ([[basic.align]]); that is, they have the same object
+representation. For narrow character types, all bits of the object
+representation participate in the value representation.
 
 [*Note 1*: A bit-field of narrow character type whose length is larger
 than the number of bits in the object representation of that type has
@@ -3189,12 +3189,12 @@ integral conversion from *j* to `unsigned char` is *i*.
 There are five *standard signed integer types* : “`signed char`”,
 “`short int`”, “`int`”, “`long int`”, and “`long long int`”. In this
 list, each type provides at least as much storage as those preceding it
-in the list. There may also be *implementation-defined*
-*extended signed integer types*. The standard and extended signed
-integer types are collectively called *signed integer types*. Plain
-`int`s have the natural size suggested by the architecture of the
-execution environment [^22]; the other signed integer types are provided
-to meet special needs.
+in the list. There may also be *implementation-defined* *extended signed
+integer types*. The standard and extended signed integer types are
+collectively called *signed integer types*. Plain `int`s have the
+natural size suggested by the architecture of the execution environment
+[^22]; the other signed integer types are provided to meet special
+needs.
 
 For each of the standard signed integer types, there exists a
 corresponding (but different) *standard unsigned integer type*:
@@ -3450,8 +3450,8 @@ constitute this ordering.
 In this International Standard, the notation cv (or *cv1*, *cv2*, etc.),
 used in the description of types, represents an arbitrary set of
 cv-qualifiers, i.e., one of {`const`}, {`volatile`}, {`const`,
-`volatile`}, or the empty set. For a type cv `T`, the
-*top-level cv-qualifiers* of that type are those denoted by cv.
+`volatile`}, or the empty set. For a type cv `T`, the *top-level
+cv-qualifiers* of that type are those denoted by cv.
 
 [*Example 1*: The type corresponding to the *type-id* `const int&` has
 no top-level cv-qualifiers. The type corresponding to the *type-id*

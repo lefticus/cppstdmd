@@ -1498,9 +1498,9 @@ void g() {
 — *end example*]
 
 For each argument type `T` in the function call, there is a set of zero
-or more *associated namespaces* and a set of zero or more
-*associated entities* (other than namespaces) to be considered. The sets
-of namespaces and entities are determined entirely by the types of the
+or more *associated namespaces* and a set of zero or more *associated
+entities* (other than namespaces) to be considered. The sets of
+namespaces and entities are determined entirely by the types of the
 function arguments (and the namespace of any template template
 argument). Typedef names and *using-declaration*s used to specify the
 types do not contribute to this set. The sets of namespaces and entities
@@ -3415,9 +3415,9 @@ and is one of the following:
   object, where at the time of the copy the source object contained a
   copy of a safely-derived pointer value.
 
-An integer value is an
-*integer representation of a safely-derived pointer* only if its type is
-at least as large as `std::intptr_t` and it is one of the following:
+An integer value is an *integer representation of a safely-derived
+pointer* only if its type is at least as large as `std::intptr_t` and it
+is one of the following:
 
 - the result of a `reinterpret_cast` of a safely-derived pointer value;
 - the result of a valid conversion of an integer representation of a
@@ -3976,11 +3976,11 @@ Two types *cv1* `T1` and *cv2* `T2` are *layout-compatible* types if
 There are five *standard signed integer types* : “`signed char`”,
 “`short int`”, “`int`”, “`long int`”, and “`long long int`”. In this
 list, each type provides at least as much storage as those preceding it
-in the list. There may also be *implementation-defined*
-*extended signed integer types*. The standard and extended signed
-integer types are collectively called *signed integer types*. The range
-of representable values for a signed integer type is -2ᴺ⁻¹ to 2ᴺ⁻¹-1
-(inclusive), where *N* is called the *width* of the type.
+in the list. There may also be *implementation-defined* *extended signed
+integer types*. The standard and extended signed integer types are
+collectively called *signed integer types*. The range of representable
+values for a signed integer type is -2ᴺ⁻¹ to 2ᴺ⁻¹-1 (inclusive), where
+*N* is called the *width* of the type.
 
 [*Note 1*: Plain `int`s are intended to have the natural width
 suggested by the architecture of the execution environment; the other
@@ -4047,8 +4047,8 @@ integer type is the base-2 representation of the congruent value of the
 corresponding unsigned integer type. The standard signed integer types
 and standard unsigned integer types are collectively called the
 *standard integer types*, and the extended signed integer types and
-extended unsigned integer types are collectively called the
-*extended integer types*.
+extended unsigned integer types are collectively called the *extended
+integer types*.
 
 A fundamental type specified to have a signed or unsigned integer type
 as its *underlying type* has the same object representation, value
@@ -4060,9 +4060,9 @@ Type `char` is a distinct type that has an *implementation-defined*
 choice of “`signed char`” or “`unsigned char`” as its underlying type.
 The values of type `char` can represent distinct codes for all members
 of the implementation’s basic character set. The three types `char`,
-`signed char`, and `unsigned char` are collectively called
-*ordinary character types*. The ordinary character types and `char8_t`
-are collectively called *narrow character types*. For narrow character
+`signed char`, and `unsigned char` are collectively called *ordinary
+character types*. The ordinary character types and `char8_t` are
+collectively called *narrow character types*. For narrow character
 types, each possible bit pattern of the object representation represents
 a distinct value.
 
@@ -4093,8 +4093,8 @@ value representation, and alignment requirements as an
 types or values. — *end note*]
 
 Types `bool`, `char`, `wchar_t`, `char8_t`, `char16_t`, `char32_t`, and
-the signed and unsigned integer types are collectively called
-*integral types*. A synonym for integral type is *integer type*.
+the signed and unsigned integer types are collectively called *integral
+types*. A synonym for integral type is *integer type*.
 
 [*Note 8*: Enumerations [[dcl.enum]] are not integral; however,
 unscoped enumerations can be promoted to integral types as specified in
@@ -5027,13 +5027,12 @@ of execution may only make progress if the respective threads of
 execution provide parallel forward progress guarantees, but will fail to
 make progress under weakly parallel guarantees. — *end note*]
 
-When a thread of execution P is specified to
-*block with forward progress guarantee delegation* block
-(execution)!with forward progress guarantee delegation on the completion
-of a set S of threads of execution, then throughout the whole time of P
-being blocked on S, the implementation shall ensure that the forward
-progress guarantees provided by at least one thread of execution in S is
-at least as strong as P’s forward progress guarantees.
+When a thread of execution P is specified to *block with forward
+progress guarantee delegation* on the completion of a set S of threads
+of execution, then throughout the whole time of P being blocked on S,
+the implementation shall ensure that the forward progress guarantees
+provided by at least one thread of execution in S is at least as strong
+as P’s forward progress guarantees.
 
 [*Note 8*: It is unspecified which thread or threads of execution in S
 are chosen and for which number of execution steps. The strengthening is

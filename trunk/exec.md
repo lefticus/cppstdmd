@@ -6715,15 +6715,15 @@ called on `r`.
 storage for operations launched via calls to
 `parallel_scheduler_backend`. — *end note*]
 
-A *bulk chunked proxy for `rcvr`
-with callable `f` and arguments `args`* is a proxy `r` for `rcvr` with
-base `system_context_replaceability::bulk_item_receiver_proxy` such that
+A *bulk chunked proxy for `rcvr` with callable `f` and arguments `args`*
+is a proxy `r` for `rcvr` with base
+`system_context_replaceability::bulk_item_receiver_proxy` such that
 `r.execute(i, j)` for indices `i` and `j` has effects equivalent to
 `f(i, j, args...)`.
 
-A *bulk unchunked proxy for `rcvr`
-with callable `f` and arguments `args`* is a proxy `r` for `rcvr` with
-base `system_context_replaceability::bulk_item_receiver_proxy` such that
+A *bulk unchunked proxy for `rcvr` with callable `f` and arguments
+`args`* is a proxy `r` for `rcvr` with base
+`system_context_replaceability::bulk_item_receiver_proxy` such that
 `r.execute(i, i + 1)` for index `i` has effects equivalent to
 `f(i, args...)`.
 

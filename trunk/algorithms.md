@@ -9217,10 +9217,9 @@ elements are copied in order.
 
 #### General <a id="alg.heap.operations.general">[[alg.heap.operations.general]]</a>
 
-A random access range \[`a`, `b`) is a
-*heap with respect to `comp` and `proj`* heap with respect to comp and
-proj@heap with respect to `comp` and `proj` for a comparator and
-projection `comp` and `proj` if its elements are organized such that:
+A random access range \[`a`, `b`) is a *heap with respect to `comp` and
+`proj`* for a comparator and projection `comp` and `proj` if its
+elements are organized such that:
 
 - With `N = b - a`, for all i, 0 < i < N,
   `bool(invoke(comp, invoke(proj, a[\left \lfloor{\frac{i - 1}{2}}\right \rfloor]), invoke({}proj, a[i])))`
