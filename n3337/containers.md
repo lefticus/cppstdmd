@@ -3113,7 +3113,7 @@ object and allocator, and inserts elements from the range \[`first`,
 `last`).
 
 *Complexity:* Linear in N if the range \[`first`, `last`) is already
-sorted using `comp` and otherwise N log{N}, where N is `last` - `first`.
+sorted using `comp` and otherwise N log N, where N is `last` - `first`.
 
 #### `map` element access <a id="map.access">[[map.access]]</a>
 
@@ -3413,7 +3413,7 @@ object and allocator, and inserts elements from the range \[`first`,
 `last`).
 
 *Complexity:* Linear in N if the range \[`first`, `last`) is already
-sorted using `comp` and otherwise N log{N}, where N is `last - first`.
+sorted using `comp` and otherwise N log N, where N is `last - first`.
 
 #### `multimap` modifiers <a id="multimap.modifiers">[[multimap.modifiers]]</a>
 
@@ -3646,7 +3646,7 @@ object and allocator, and inserts elements from the range \[`first`,
 a non-const rvalue, then `Key` shall be `CopyConstructible`.
 
 *Complexity:* Linear in N if the range \[`first`, `last`) is already
-sorted using `comp` and otherwise N log{N}, where N is `last - first`.
+sorted using `comp` and otherwise N log N, where N is `last - first`.
 
 #### `set` specialized algorithms <a id="set.special">[[set.special]]</a>
 
@@ -3839,7 +3839,7 @@ object and allocator, and inserts elements from the range \[`first`,
 `last`).
 
 *Complexity:* Linear in N if the range \[`first`, `last`) is already
-sorted using `comp` and otherwise N log{N}, where N is `last - first`.
+sorted using `comp` and otherwise N log N, where N is `last - first`.
 
 #### `multiset` specialized algorithms <a id="multiset.special">[[multiset.special]]</a>
 

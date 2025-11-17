@@ -1100,3 +1100,43 @@ def test_left_right_with_fraction_stays_latex():
     assert code == 0
     # Should stay as LaTeX due to \frac
     assert r"\frac" in output or "$" in output
+
+
+# Tests for log{N} pattern (braces should be stripped)
+def test_log_with_braces_single_char():
+    """Test \\log{N} strips braces to match LaTeX rendering: log{N} → log N"""
+    latex = r"$N \log{N}$ comparisons."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "N log N" in output
+    assert "log{N}" not in output
+    assert "$" not in output
+
+
+def test_log_with_braces_lowercase():
+    """Test \\log{n} with lowercase variable"""
+    latex = r"Complexity is $\log{n}$ in the worst case."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "log n" in output
+    assert "log{n}" not in output
+    assert "$" not in output
+
+
+def test_log_without_braces_unchanged():
+    """Test \\log N without braces works correctly (already correct)"""
+    latex = r"$N \log N$ operations."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "N log N" in output
+    assert "$" not in output
+
+
+def test_log_with_coefficient():
+    """Test \\log{N} with coefficient like 2N"""
+    latex = r"At most $2N \log{N}$ comparisons."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "2N log N" in output
+    assert "log{N}" not in output
+    assert "$" not in output

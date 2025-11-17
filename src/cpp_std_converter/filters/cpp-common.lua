@@ -1303,6 +1303,11 @@ local function try_unicode_conversion(text)
     result = plain_replace(result, latex, text_replacement)
   end
 
+  -- Strip braces from log function calls: log{N} → log N
+  -- In LaTeX, \log{N} and \log N render identically (braces are just grouping)
+  -- This matches how LaTeX renders them in the published PDFs
+  result = result:gsub("log{(%w)}", "log %1")
+
   -- Strip empty braces (used for spacing in LaTeX, e.g., cv{}_i)
   -- Do this AFTER all macro conversions but BEFORE complexity check
   -- so empty braces don't cause unnecessary conversion failures
