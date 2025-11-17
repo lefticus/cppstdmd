@@ -4893,11 +4893,12 @@ multiple memory blocks, referred to as *element blocks*. Insertion
 position is determined by the container, and insertion may re-use the
 memory locations of erased elements.
 
-Element blocks which contain elements are referred to as , those which
-do not are referred to as . Active blocks which become empty of elements
-are either deallocated or become reserved blocks. Reserved blocks become
-active blocks when they are used to store elements. A user can create
-additional reserved blocks by calling `reserve`.
+Element blocks which contain elements are referred to as *active
+blocks*, those which do not are referred to as *reserved blocks*. Active
+blocks which become empty of elements are either deallocated or become
+reserved blocks. Reserved blocks become active blocks when they are used
+to store elements. A user can create additional reserved blocks by
+calling `reserve`.
 
 Erasures use unspecified techniques of constant time complexity to
 identify the memory locations of erased elements, which are subsequently
@@ -18284,8 +18285,8 @@ any rank index k of `extents()`, then let `offset` be a value of type
 `offset` be a value of type `size_t` equal to
 `(*this)(first_<index_type, P>(slices...)...)`.
 
-Given a layout mapping type `M`, a type `S` is a
-\defnadjx{unit-stride}{slice for \texttt{M}}{slice} if
+Given a layout mapping type `M`, a type `S` is a *unit-stride slice for
+`M`* if
 
 - `S` is a specialization of `strided_slice` where `S::stride_type`
   models `integral-constant-like` and `S::stride_type::value` equals

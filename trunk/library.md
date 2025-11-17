@@ -434,8 +434,9 @@ added constraints.
 
 ##### Enumerated types <a id="enumerated.types">[[enumerated.types]]</a>
 
-Several types defined in [[input.output]] are . Each enumerated type may
-be implemented as an enumeration or as a synonym for an enumeration.[^8]
+Several types defined in [[input.output]] are *enumerated types*. Each
+enumerated type may be implemented as an enumeration or as a synonym for
+an enumeration.[^8]
 
 The enumerated type `enumerated` can be written:
 
@@ -694,9 +695,10 @@ requirements for a hosted implementation, except that not all of the
 members of those items are required to be present.
 
 Function declarations and function template declarations followed by a
-comment that include *freestanding-deleted* are . On freestanding
-implementations, it is *implementation-defined* whether each entity
-introduced by a freestanding deleted function is a deleted function
+comment that include *freestanding-deleted* are *freestanding deleted
+functions*. On freestanding implementations, it is
+*implementation-defined* whether each entity introduced by a
+freestanding deleted function is a deleted function
 [[dcl.fct.def.delete]] or whether the requirements are the same as the
 corresponding requirements for a hosted implementation.
 

@@ -6219,8 +6219,11 @@ namespace std {
 ```
 
 An instance of `basic_format_args` provides access to formatting
-arguments. Implementations should optimize the representation of
-`basic_format_args` for a small number of formatting arguments.
+arguments.
+
+*Recommended practice:* Implementations should optimize the
+representation of `basic_format_args` for a small number of formatting
+arguments.
 
 [*Note 1*: For example, by storing indices of type alternatives
 separately from values and packing the former. — *end note*]

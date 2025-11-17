@@ -631,13 +631,14 @@ struct S {
 
 ### The `typedef` specifier <a id="dcl.typedef">[[dcl.typedef]]</a>
 
-Declarations containing the *decl-specifier* `typedef` declare . The
-`typedef` specifier shall not be combined in a *decl-specifier-seq* with
-any other kind of specifier except a *defining-type-specifier*, and it
-shall not be used in the *decl-specifier-seq* of a
-*parameter-declaration* [[dcl.fct]] nor in the *decl-specifier-seq* of a
-*function-definition* [[dcl.fct.def]]. If a `typedef` specifier appears
-in a declaration without a *declarator*, the program is ill-formed.
+Declarations containing the *decl-specifier* `typedef` declare *type
+aliases*. The `typedef` specifier shall not be combined in a
+*decl-specifier-seq* with any other kind of specifier except a
+*defining-type-specifier*, and it shall not be used in the
+*decl-specifier-seq* of a *parameter-declaration* [[dcl.fct]] nor in the
+*decl-specifier-seq* of a *function-definition* [[dcl.fct.def]]. If a
+`typedef` specifier appears in a declaration without a *declarator*, the
+program is ill-formed.
 
 ``` bnf
 typedef-name:

@@ -7091,8 +7091,8 @@ An expression or conversion is *manifestly constant-evaluated* if it is:
 constant-evaluated expression is evaluated even in an unevaluated
 operand [[term.unevaluated.operand]]. — *end note*]
 
-The evaluation of an expression can introduce one or more . The
-evaluation is said to *produce* the declarations.
+The evaluation of an expression can introduce one or more *injected
+declarations*. The evaluation is said to *produce* the declarations.
 
 [*Note 8*: An invocation of the library function template
 `std::meta::define_aggregate` produces an injected declaration

@@ -3929,15 +3929,17 @@ function type, not a reference type, and not cv `void`.
 Arithmetic types [[basic.fundamental]], enumeration types, pointer
 types, pointer-to-member types [[basic.compound]], `std::nullptr_t`, and
 cv-qualified [[basic.type.qualifier]] versions of these types are
-collectively called . Scalar types, trivially copyable class types
-[[class.prop]], arrays of such types, and cv-qualified versions of these
-types are collectively called . Scalar types, trivial class types
+collectively called *scalar types*. Scalar types, trivially copyable
+class types [[class.prop]], arrays of such types, and cv-qualified
+versions of these types are collectively called *trivially copyable
+types*. Scalar types, trivial class types [[class.prop]], arrays of such
+types and cv-qualified versions of these types are collectively called
+*trivial types*. Scalar types, standard-layout class types
 [[class.prop]], arrays of such types and cv-qualified versions of these
-types are collectively called . Scalar types, standard-layout class
-types [[class.prop]], arrays of such types and cv-qualified versions of
-these types are collectively called . Scalar types, implicit-lifetime
-class types [[class.prop]], array types, and cv-qualified versions of
-these types are collectively called .
+types are collectively called *standard-layout types*. Scalar types,
+implicit-lifetime class types [[class.prop]], array types, and
+cv-qualified versions of these types are collectively called
+*implicit-lifetime types*.
 
 A type is a *literal type* if it is:
 

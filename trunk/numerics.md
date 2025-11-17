@@ -7519,7 +7519,8 @@ not overlap, then they also do not alias each other. — *end note*]
 
 #### Linear algebra value types <a id="linalg.reqs.val">[[linalg.reqs.val]]</a>
 
-Throughout [[linalg]], the following types are :
+Throughout [[linalg]], the following types are *linear algebra value
+types*:
 
 - the `value_type` type alias of any input or output `mdspan`
   parameter(s) of any function in [[linalg]]; and
@@ -10714,7 +10715,7 @@ instructions or execution units driven by a common instruction decoder.
 SIMD stands for “Single Instruction Stream – Multiple Data Stream”; it
 is defined in Flynn 1966. — *end note*]
 
-The set of comprises
+The set of *vectorizable types* comprises
 
 - all standard integer types, character types, and the types `float` and
   `double` [[basic.fundamental]];

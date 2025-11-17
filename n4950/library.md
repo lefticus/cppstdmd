@@ -390,8 +390,9 @@ added constraints.
 
 ##### Enumerated types <a id="enumerated.types">[[enumerated.types]]</a>
 
-Several types defined in [[input.output]] are . Each enumerated type may
-be implemented as an enumeration or as a synonym for an enumeration.[^8]
+Several types defined in [[input.output]] are *enumerated types*. Each
+enumerated type may be implemented as an enumeration or as a synonym for
+an enumeration.[^8]
 
 The enumerated type `enumerated` can be written:
 

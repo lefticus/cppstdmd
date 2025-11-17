@@ -523,6 +523,30 @@ def test_defnxname_macro():
     assert "\\defnxname" not in output
 
 
+def test_defnadjx_macro():
+    r"""Test \defnadjx{} expansion (define term with adjective + plural) - Issue #29"""
+    latex = r"collectively called \defnadjx{scalar}{types}{type}."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "*scalar types*" in output
+    assert "\\defnadjx" not in output
+    # Verify no dropped content - the sentence should be complete
+    assert "collectively called ." not in output
+
+
+def test_defnadjx_macro_multiple():
+    r"""Test multiple \defnadjx{} instances with different terms - Issue #29"""
+    latex = r"""Scalar types are collectively called \defnadjx{trivially copyable}{types}{type}.
+Arrays are collectively called \defnadjx{standard-layout}{types}{type}."""
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "*trivially copyable types*" in output
+    assert "*standard-layout types*" in output
+    assert "\\defnadjx" not in output
+    # Verify no dropped content
+    assert "collectively called ." not in output
+
+
 def test_defnlibxname_macro():
     r"""Test \defnlibxname{} expansion (define library identifier with __ prefix)"""
     latex = r"The \defnlibxname{has_unique_object_representations} trait is defined."

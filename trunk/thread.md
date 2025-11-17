@@ -9617,11 +9617,11 @@ public and non-virtual, and it has no base classes of type
 An object is *hazard-protectable* if it is of hazard-protectable type.
 
 The time span between creation and destruction of a hazard pointer h is
-partitioned into a series of ; in each protection epoch, h either is
-*associated with* a hazard-protectable object, or is *unassociated*.
-Upon creation, a hazard pointer is unassociated. Changing the
-association (possibly to the same object) initiates a new protection
-epoch and ends the preceding one.
+partitioned into a series of *protection epochs*; in each protection
+epoch, h either is *associated with* a hazard-protectable object, or is
+*unassociated*. Upon creation, a hazard pointer is unassociated.
+Changing the association (possibly to the same object) initiates a new
+protection epoch and ends the preceding one.
 
 An object `x` of hazard-protectable type `T` is *retired* with a deleter
 of type `D` when the member function

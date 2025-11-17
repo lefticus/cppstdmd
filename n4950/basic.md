@@ -660,25 +660,27 @@ Special cases include that:
 
 — *end note*]
 
-Two non-static member functions have if:
+Two non-static member functions have *corresponding object parameters*
+if:
 
 - exactly one is an implicit object member function with no
   *ref-qualifier* and the types of their object parameters [[dcl.fct]],
   after removing top-level references, are the same, or
 - their object parameters have the same type.
 
-Two non-static member function templates have if:
+Two non-static member function templates have *corresponding object
+parameters* if:
 
 - exactly one is an implicit object member function with no
   *ref-qualifier* and the types of their object parameters, after
   removing any references, are equivalent, or
 - the types of their object parameters are equivalent.
 
-Two function templates have if their *template-parameter-list*s have the
-same length, their corresponding *template-parameter*s are equivalent,
-they have equivalent non-object-parameter-type-lists and return types
-(if any), and, if both are non-static members, they have corresponding
-object parameters.
+Two function templates have *corresponding signatures* if their
+*template-parameter-list*s have the same length, their corresponding
+*template-parameter*s are equivalent, they have equivalent
+non-object-parameter-type-lists and return types (if any), and, if both
+are non-static members, they have corresponding object parameters.
 
 Two declarations *correspond* if they (re)introduce the same name, both
 declare constructors, or both declare destructors, unless
@@ -3742,7 +3744,7 @@ A class that has been declared but not defined, an enumeration type in
 certain contexts [[dcl.enum]], or an array of unknown bound or of
 incomplete element type, is an *incompletely-defined object type*.[^17]
 
-Incompletely-defined object types and cv `void` are
+Incompletely-defined object types and cv `void` are *incomplete types*
 [[basic.fundamental]].
 
 [*Note 2*: Objects cannot be defined to have an incomplete type
@@ -3804,15 +3806,17 @@ function type, not a reference type, and not cv `void`.
 Arithmetic types [[basic.fundamental]], enumeration types, pointer
 types, pointer-to-member types [[basic.compound]], `std::nullptr_t`, and
 cv-qualified [[basic.type.qualifier]] versions of these types are
-collectively called . Scalar types, trivially copyable class types
-[[class.prop]], arrays of such types, and cv-qualified versions of these
-types are collectively called . Scalar types, trivial class types
+collectively called *scalar types*. Scalar types, trivially copyable
+class types [[class.prop]], arrays of such types, and cv-qualified
+versions of these types are collectively called *trivially copyable
+types*. Scalar types, trivial class types [[class.prop]], arrays of such
+types and cv-qualified versions of these types are collectively called
+*trivial types*. Scalar types, standard-layout class types
 [[class.prop]], arrays of such types and cv-qualified versions of these
-types are collectively called . Scalar types, standard-layout class
-types [[class.prop]], arrays of such types and cv-qualified versions of
-these types are collectively called . Scalar types, implicit-lifetime
-class types [[class.prop]], array types, and cv-qualified versions of
-these types are collectively called .
+types are collectively called *standard-layout types*. Scalar types,
+implicit-lifetime class types [[class.prop]], array types, and
+cv-qualified versions of these types are collectively called
+*implicit-lifetime types*.
 
 A type is a *literal type* if it is:
 
@@ -3842,19 +3846,21 @@ that it is possible to create such an object, nor is it a guarantee that
 any object of that type will be usable in a constant
 expression. — *end note*]
 
-Two types *cv1* `T1` and *cv2* `T2` are if `T1` and `T2` are the same
-type, layout-compatible enumerations [[dcl.enum]], or layout-compatible
-standard-layout class types [[class.mem]].
+Two types *cv1* `T1` and *cv2* `T2` are *layout-compatible types* if
+`T1` and `T2` are the same type, layout-compatible enumerations
+[[dcl.enum]], or layout-compatible standard-layout class types
+[[class.mem]].
 
 ### Fundamental types <a id="basic.fundamental">[[basic.fundamental]]</a>
 
-There are five : “`signed char`”, “`short int`”, “`int`”, “`long int`”,
-and “`long long int`”. In this list, each type provides at least as much
-storage as those preceding it in the list. There may also be
-*implementation-defined* . The standard and extended signed integer
-types are collectively called . The range of representable values for a
-signed integer type is -2ᴺ⁻¹ to 2ᴺ⁻¹-1 (inclusive), where *N* is called
-the *width* of the type.
+There are five *standard signed integer types*: “`signed char`”,
+“`short int`”, “`int`”, “`long int`”, and “`long long int`”. In this
+list, each type provides at least as much storage as those preceding it
+in the list. There may also be *implementation-defined* *extended signed
+integer types*. The standard and extended signed integer types are
+collectively called *signed integer types*. The range of representable
+values for a signed integer type is -2ᴺ⁻¹ to 2ᴺ⁻¹-1 (inclusive), where
+*N* is called the *width* of the type.
 
 [*Note 1*: Plain `int`s are intended to have the natural width
 suggested by the architecture of the execution environment; the other
@@ -3866,10 +3872,11 @@ corresponding (but different) *standard unsigned integer type*:
 “`unsigned long int`”, and “`unsigned long long int`”. Likewise, for
 each of the extended signed integer types, there exists a corresponding
 *extended unsigned integer type*. The standard and extended unsigned
-integer types are collectively called . An unsigned integer type has the
-same width *N* as the corresponding signed integer type. The range of
-representable values for the unsigned type is 0 to 2ᴺ-1 (inclusive);
-arithmetic for the unsigned type is performed modulo 2ᴺ.
+integer types are collectively called *unsigned integer types*. An
+unsigned integer type has the same width *N* as the corresponding signed
+integer type. The range of representable values for the unsigned type is
+0 to 2ᴺ-1 (inclusive); arithmetic for the unsigned type is performed
+modulo 2ᴺ.
 
 [*Note 2*: Unsigned arithmetic does not overflow. Overflow for signed
 arithmetic yields undefined behavior [[expr.pre]]. — *end note*]
@@ -3918,9 +3925,10 @@ each coefficient xᵢ is either 0 or 1; this is called the *base-2
 representation* of x. The base-2 representation of a value of signed
 integer type is the base-2 representation of the congruent value of the
 corresponding unsigned integer type. The standard signed integer types
-and standard unsigned integer types are collectively called the , and
-the extended signed integer types and extended unsigned integer types
-are collectively called the .
+and standard unsigned integer types are collectively called the
+*standard integer types*, and the extended signed integer types and
+extended unsigned integer types are collectively called the *extended
+integer types*.
 
 A fundamental type specified to have a signed or unsigned integer type
 as its *underlying type* has the same object representation, value
@@ -3931,9 +3939,10 @@ same representation in both types.
 Type `char` is a distinct type that has an *implementation-defined*
 choice of “`signed char`” or “`unsigned char`” as its underlying type.
 The three types `char`, `signed char`, and `unsigned char` are
-collectively called . The ordinary character types and `char8_t` are
-collectively called . For narrow character types, each possible bit
-pattern of the object representation represents a distinct value.
+collectively called *ordinary character types*. The ordinary character
+types and `char8_t` are collectively called *narrow character types*.
+For narrow character types, each possible bit pattern of the object
+representation represents a distinct value.
 
 [*Note 5*: This requirement does not hold for other
 types. — *end note*]
@@ -3959,8 +3968,8 @@ value representation, and alignment requirements as an
 types or values. — *end note*]
 
 The types `char`, `wchar_t`, `char8_t`, `char16_t`, and `char32_t` are
-collectively called . The character types, `bool`, the signed and
-unsigned integer types, and cv-qualified versions
+collectively called *character types*. The character types, `bool`, the
+signed and unsigned integer types, and cv-qualified versions
 [[basic.type.qualifier]] thereof, are collectively termed
 *integral types*. A synonym for integral type is *integer type*.
 
@@ -4408,7 +4417,8 @@ or a subexpression of an immediate subexpression of E.
 *lambda-expression* are not subexpressions of the
 *lambda-expression*. — *end note*]
 
-The of an expression, conversion, or *initializer* E are
+The *potentially-evaluated subexpressions* of an expression, conversion,
+or *initializer* E are
 
 - the constituent expressions of E and
 - the subexpressions thereof that are not subexpressions of a nested
@@ -4779,8 +4789,8 @@ An evaluation A *strongly happens before* an evaluation D if, either
 to be evaluated before B in all contexts. Strongly happens before
 excludes consume operations. — *end note*]
 
-A A on a scalar object or bit-field M with respect to a value
-computation B of M satisfies the conditions:
+A *visible side effect* A on a scalar object or bit-field M with respect
+to a value computation B of M satisfies the conditions:
 
 - A happens before B and
 - there is no other side effect X to M such that A happens before X and
