@@ -1140,3 +1140,49 @@ def test_log_with_coefficient():
     assert "2N log N" in output
     assert "log{N}" not in output
     assert "$" not in output
+
+
+# Tests for leading operator subscripts: X_{-n}, X_{+i}
+def test_leading_minus_subscript_letter():
+    """Test \\_{-n} with leading minus operator and letter"""
+    latex = r"Sets $X_{-n}$ to the value."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "X₋ₙ" in output
+    assert "$" not in output
+
+
+def test_leading_minus_subscript_digit():
+    """Test \\_{-1} with leading minus operator and digit"""
+    latex = r"If $X_{-1}$ is zero."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "X₋₁" in output
+    assert "$" not in output
+
+
+def test_leading_minus_subscript_r():
+    """Test \\_{-r} with leading minus operator"""
+    latex = r"The bits of $X_{-r}$ are examined."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "X₋ᵣ" in output
+    assert "$" not in output
+
+
+def test_leading_plus_subscript():
+    """Test \\_{+n} with leading plus operator"""
+    latex = r"Value of $Y_{+n}$ is computed."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "Y₊ₙ" in output
+    assert "$" not in output
+
+
+def test_trailing_operator_subscript_still_works():
+    """Test that existing trailing operator subscripts still work"""
+    latex = r"The value $x_{n-1}$ is used."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "xₙ₋₁" in output
+    assert "$" not in output

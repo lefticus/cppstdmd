@@ -1614,7 +1614,7 @@ $X_{i - n}, \dotsc, X_{i - 1}$, in that order.
 explicit mersenne_twister_engine(result_type value);
 ```
 
-*Effects:* Sets $X_{-n}$ to `value`  mod  2ʷ. Then, iteratively for
+*Effects:* Sets X₋ₙ to `value`  mod  2ʷ. Then, iteratively for
 i = 1 - n, …, -1, sets Xᵢ to $$%
  \bigl[f \cdot
        \bigl(X_{i-1} \xor \bigl(X_{i-1} \rightshift (w-2)\bigr)
@@ -1633,8 +1633,8 @@ template<class Sseq> explicit mersenne_twister_engine(Sseq& q);
 n ⋅ k, invokes `q.generate(`a+0`, `a+n ⋅ k`)` and then, iteratively for
 i = -n,…,-1, sets Xᵢ to
 $\left(\sum_{j=0}^{k-1}a_{k(i+n)+j} \cdot 2^{32j} \right) \bmod 2^w$.
-Finally, if the most significant w-r bits of $X_{-n}$ are zero, and if
-each of the other resulting Xᵢ is 0, changes $X_{-n}$ to 2ʷ⁻¹.
+Finally, if the most significant w-r bits of X₋ₙ are zero, and if each
+of the other resulting Xᵢ is 0, changes X₋ₙ to 2ʷ⁻¹.
 
 #### Class template `subtract_with_carry_engine` <a id="rand.eng.sub">[[rand.eng.sub]]</a>
 
@@ -1715,9 +1715,8 @@ that order, followed by c.
 explicit subtract_with_carry_engine(result_type value);
 ```
 
-*Effects:* Sets the values of $X_{-r}, \dotsc, X_{-1}$, in that order,
-as specified below. If $X_{-1}$ is then 0, sets c to 1; otherwise sets c
-to 0.
+*Effects:* Sets the values of X₋ᵣ, …, X₋₁, in that order, as specified
+below. If X₋₁ is then 0, sets c to 1; otherwise sets c to 0.
 
 To set the values Xₖ, first construct `e`, a
 `linear_congruential_engine` object, as if by the following definition:
@@ -1741,7 +1740,7 @@ template<class Sseq> explicit subtract_with_carry_engine(Sseq& q);
 r ⋅ k, invokes `q.generate(`a + 0`, `a + r ⋅ k`)` and then, iteratively
 for i = -r, …, -1, sets Xᵢ to
 $\left(\sum_{j=0}^{k-1}a_{k(i+r)+j} \cdot 2^{32j} \right) \bmod m$. If
-$X_{-1}$ is then 0, sets c to 1; otherwise sets c to 0.
+X₋₁ is then 0, sets c to 1; otherwise sets c to 0.
 
 #### Class template `philox_engine` <a id="rand.eng.philox">[[rand.eng.philox]]</a>
 

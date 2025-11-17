@@ -1037,13 +1037,16 @@ local function is_complex_math(text)
     end
     -- Check if it's simple arithmetic: single char, +/-, single char
     local is_simple_arithmetic = content:match("^%w[-+]%w$")
+    -- Check if it's leading operator: +/-, single char
+    local is_leading_operator = content:match("^[-+]%w$")
     -- Check if it's all word characters (could be multi-char like "max")
     local is_word_chars_only = content:match("^%w+$")
     -- Complex if:
     --   - Has multiple chars AND
     --   - Is NOT simple arithmetic AND
+    --   - Is NOT leading operator AND
     --   - Is NOT all word characters (which convert_subscript_string can handle)
-    if content:match("%S.*%S") and not is_simple_arithmetic and not is_word_chars_only then
+    if content:match("%S.*%S") and not is_simple_arithmetic and not is_leading_operator and not is_word_chars_only then
       return true
     end
   end
@@ -1056,13 +1059,16 @@ local function is_complex_math(text)
     end
     -- Check if it's simple arithmetic: single char, +/-, single char
     local is_simple_arithmetic = content:match("^%w[-+]%w$")
+    -- Check if it's leading operator: +/-, single char
+    local is_leading_operator = content:match("^[-+]%w$")
     -- Check if it's all word characters (could be multi-char like "max")
     local is_word_chars_only = content:match("^%w+$")
     -- Complex if:
     --   - Has multiple chars AND
     --   - Is NOT simple arithmetic AND
+    --   - Is NOT leading operator AND
     --   - Is NOT all word characters (which convert_superscript_string can handle)
-    if content:match("%S.*%S") and not is_simple_arithmetic and not is_word_chars_only then
+    if content:match("%S.*%S") and not is_simple_arithmetic and not is_leading_operator and not is_word_chars_only then
       return true
     end
   end
@@ -1437,6 +1443,13 @@ local function try_unicode_conversion(text)
     end
   end)
 
+  -- Check leading operator subscripts: X_{-n}, X_{+i}
+  result:gsub("(%w)_{([-+])(%w)}", function(base, op, sub)
+    if not convert_subscript_char(op) or not convert_subscript_char(sub) then
+      has_unconvertible_sub = true
+    end
+  end)
+
   -- Check arithmetic subscripts: x_{n-1}, x_{i+1}
   result:gsub("(%w)_{(%w)([-+])(%w)}", function(base, sub1, op, sub2)
     if not convert_subscript_char(sub1) or not convert_subscript_char(op) or not convert_subscript_char(sub2) then
@@ -1448,8 +1461,15 @@ local function try_unicode_conversion(text)
     return nil  -- Abort conversion if any subscript can't be converted
   end
 
-  -- Second pass: actually convert arithmetic subscripts first (before simple ones)
-  -- Pattern: x_{n-1} → xₙ₋₁, p_{i+1} → pᵢ₊₁
+  -- Second pass: actually convert subscripts
+  -- Convert leading operator subscripts FIRST: X_{-n} → X₋ₙ, X_{+i} → X₊ᵢ
+  result = result:gsub("(%w)_{([-+])(%w)}", function(base, op, sub)
+    local unicode_op = convert_subscript_char(op)
+    local unicode_sub = convert_subscript_char(sub)
+    return base .. unicode_op .. unicode_sub
+  end)
+
+  -- Then convert trailing operator subscripts: x_{n-1} → xₙ₋₁, p_{i+1} → pᵢ₊₁
   result = result:gsub("(%w)_{(%w)([-+])(%w)}", function(base, sub1, op, sub2)
     local unicode_sub1 = convert_subscript_char(sub1)
     local unicode_op = convert_subscript_char(op)
