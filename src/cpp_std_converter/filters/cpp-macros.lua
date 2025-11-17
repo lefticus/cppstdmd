@@ -70,11 +70,18 @@ local label_index = {}
 local FIRSTLIB = "support"
 local LASTLIB = "thread"
 
--- Helper function to convert inline math with subscripts in code
+-- Helper function to convert inline math in code (subscripts and operators)
 -- Converts $X_i$ to Xᵢ (Unicode subscript)
-local function convert_math_subscripts(text)
+-- Converts $A \land B$ to A ∧ B (logical operators) - Issue #52
+local function convert_math_in_code(text)
   -- Process $...$  patterns (inline math in code)
   text = text:gsub("%$([^$]+)%$", function(math_content)
+    -- Convert logical operators (Issue #52)
+    math_content = math_content:gsub("\\land", "∧")
+    math_content = math_content:gsub("\\lor", "∨")
+    math_content = math_content:gsub("\\wedge", "∧")
+    math_content = math_content:gsub("\\vee", "∨")
+
     -- Convert subscripts with braces: X_{i} → Xᵢ
     math_content = math_content:gsub("([%w]+)_{([%w]+)}", function(name, sub)
       if subscripts[sub] then
@@ -260,8 +267,8 @@ function RawInline(elem)
           local tcode_content, next_pos = extract_braced_content(content, tcode_start, 6)
           if tcode_content then
             tcode_content = tcode_content:gsub("\\#", "#"):gsub("\\&", "&")
-            -- Convert inline math with subscripts to Unicode
-            tcode_content = convert_math_subscripts(tcode_content)
+            -- Convert inline math (subscripts and operators) to Unicode
+            tcode_content = convert_math_in_code(tcode_content)
             -- Convert LaTeX spacing commands to regular spaces
             tcode_content = convert_latex_spacing(tcode_content)
             table.insert(inlines, pandoc.Code(tcode_content))
@@ -383,8 +390,8 @@ function RawInline(elem)
     code = code:gsub("{ }", " ")
     -- Unescape LaTeX escaped characters (\{ → {, \} → }, etc.)
     code = unescape_latex_chars(code)
-    -- Convert inline math with subscripts to Unicode (BEFORE other processing)
-    code = convert_math_subscripts(code)
+    -- Convert inline math (subscripts and operators) to Unicode (BEFORE other processing)
+    code = convert_math_in_code(code)
     -- Convert LaTeX spacing commands to regular spaces
     code = convert_latex_spacing(code)
     -- Handle escaped special characters

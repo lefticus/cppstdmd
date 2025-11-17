@@ -231,7 +231,13 @@ class StandardBuilder:
                 elif node.macroname == "include":
                     # Decide whether to include based on section
                     should_include = False
-                    if in_frontmatter and include_frontmatter or in_mainmatter or in_backmatter and include_backmatter:
+                    if (
+                        in_frontmatter
+                        and include_frontmatter
+                        or in_mainmatter
+                        or in_backmatter
+                        and include_backmatter
+                    ):
                         should_include = True
 
                     if should_include and node.nodeargd and node.nodeargd.argnlist:

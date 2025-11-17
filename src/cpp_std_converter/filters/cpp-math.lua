@@ -243,6 +243,11 @@ function Math(elem)
       return "`" .. content .. "`"
     end)
 
+    -- Strip text macros in math mode (Issues #53, #48)
+    -- \text{}, \textit{} → unwrap content
+    -- NOTE: \texttt{} already handled above with backtick wrapping
+    preprocessed = common.strip_text_macros_in_math(preprocessed)
+
     -- Regular math conversion
     local converted = try_unicode_conversion(preprocessed)
 

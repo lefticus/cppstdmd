@@ -423,9 +423,7 @@ class TestStandardBuilder:
 
             # Verify cross-file links exist
             # expressions.md should reference intro.md labels
-            re.findall(
-                r"\[intro\.[a-z.]+\]:\s*intro\.md#intro\.[a-z.]+", expr_content
-            )
+            re.findall(r"\[intro\.[a-z.]+\]:\s*intro\.md#intro\.[a-z.]+", expr_content)
             # It's likely (but not guaranteed) that expressions references intro
             # Just verify the format is correct if any exist
 

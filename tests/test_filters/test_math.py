@@ -1186,3 +1186,71 @@ def test_trailing_operator_subscript_still_works():
     assert code == 0
     assert "xₙ₋₁" in output
     assert "$" not in output
+
+
+# NOTE: Bit shift operator tests (Issue #71) are NOT included here
+# Unicode doesn't have subscript characters for all letters (e.g., 'w'),
+# which prevents full conversion. These operators remain as LaTeX for MathJax rendering.
+# See Issue #71 for details and potential future improvements.
+
+
+# Text macro tests (Issues #53, #48, #45)
+def test_text_in_math():
+    """Test \\text{} in math mode strips wrapper (Issue #53)"""
+    latex = r"$P(x) = e^x \text{ .}$"
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    # Check components (allow for whitespace variations)
+    assert "P(x)" in output
+    assert "eˣ" in output
+    assert "." in output
+    assert "\\text" not in output
+    assert "$" not in output
+
+
+def test_text_with_nested_math():
+    """Test \\text{} with nested math inside"""
+    latex = r"$f(x) \text{ for } x \geq 0$"
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "f(x)" in output
+    assert "for" in output
+    assert "x ≥ 0" in output or "≥" in output  # Accept both forms
+    assert "\\text" not in output
+    assert "$" not in output
+
+
+def test_textit_in_math():
+    """Test \\textit{} in math mode strips wrapper (Issue #48)"""
+    latex = r"$[\textit{range}]$"
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "[range]" in output
+    assert "\\textit" not in output
+    assert "$" not in output
+
+
+def test_textit_with_subscript():
+    """Test \\textit{} followed by subscript"""
+    latex = r"$\textit{var}_i$ and $\textit{val}_n$"
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "varᵢ" in output
+    assert "valₙ" in output
+    assert "\\textit" not in output
+    assert "$" not in output
+
+
+def test_texttt_in_math_already_works():
+    """Test \\texttt{} in math mode already handled (Issue #45)"""
+    # This verifies that existing handling in cpp-math.lua works correctly
+    latex = r"$\texttt{T}_i$ and $\texttt{count} \geq \texttt{n}$"
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    # Should convert to backtick-wrapped code with Unicode subscripts/operators
+    assert "`T" in output  # Code wrapped in backticks
+    assert "`count`" in output
+    assert "`n`" in output
+    assert "≥" in output  # Operator converted
+    assert "\\texttt" not in output
+    assert "$" not in output

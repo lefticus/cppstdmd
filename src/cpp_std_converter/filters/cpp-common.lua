@@ -1640,6 +1640,44 @@ local function try_unicode_conversion(text)
   return result
 end
 
+-- Centralized handler for stripping text macros in math mode (Issues #53, #48, #45)
+-- Strips \text{}, \textit{}, \texttt{} wrappers while preserving content
+-- Used by cpp-math.lua preprocessing before Unicode conversion
+local function strip_text_macros_in_math(text)
+  -- Step 1: Protect ordinal endings to avoid infinite loop
+  -- \text{th} → @@ORDINAL_TH@@, etc.
+  text = text:gsub("\\text{(th)}", "@@ORDINAL_%1@@")
+  text = text:gsub("\\text{(st)}", "@@ORDINAL_%1@@")
+  text = text:gsub("\\text{(nd)}", "@@ORDINAL_%1@@")
+  text = text:gsub("\\text{(rd)}", "@@ORDINAL_%1@@")
+
+  -- Step 2: Strip remaining \text{} - plain text in math mode (Issue #53)
+  -- Examples: \text{ .} → " .", \text{ for $x > 0$} → " for $x > 0$"
+  text = process_macro_with_replacement(text, "text", function(content)
+    return content  -- Strip wrapper
+  end)
+
+  -- Step 3: Restore protected ordinals
+  -- @@ORDINAL_TH@@ → \text{th}, etc.
+  text = text:gsub("@@ORDINAL_(th)@@", "\\text{%1}")
+  text = text:gsub("@@ORDINAL_(st)@@", "\\text{%1}")
+  text = text:gsub("@@ORDINAL_(nd)@@", "\\text{%1}")
+  text = text:gsub("@@ORDINAL_(rd)@@", "\\text{%1}")
+
+  -- Strip \textit{} - italic text in math mode (Issue #48)
+  -- In math mode, content is already italic by default, so just unwrap
+  -- Examples: \textit{rank_} → rank_, \textit{var}_i → var_i
+  text = process_macro_with_replacement(text, "textit", function(content)
+    return content
+  end)
+
+  -- NOTE: \texttt{} (Issue #45) is NOT handled here
+  -- It's already handled separately in cpp-math.lua (lines 153-224 and 242-244)
+  -- because it requires special backtick wrapping and subscript handling
+
+  return text
+end
+
 -- Helper function to convert math patterns in code
 -- Used by clean_code_common() for code block cleaning
 local function convert_math_in_code(text)
@@ -1808,6 +1846,11 @@ local function clean_code_common(code, handle_textbackslash)
   -- After simplified_macros.tex, \cv becomes cv, leaving cv{}
   code = code:gsub("cv%{%}", "cv")
   code = code:gsub("\\cv%s", "cv ")
+
+  -- \cvqual{x} represents cv-qualifier metavariable (e.g., cv1, cv2, vq) - Issue #36
+  -- In code blocks, just extract the content without italics
+  code = code:gsub("@\\cvqual{([^}]*)}@", "%1")
+  code = code:gsub("\\cvqual{([^}]*)}", "%1")
 
   -- C++ version macros
   code = expand_cpp_version_macros(code)
@@ -2390,4 +2433,5 @@ return {
   convert_mname = convert_mname,
   expand_macros_common = expand_macros_common,
   try_unicode_conversion = try_unicode_conversion,
+  strip_text_macros_in_math = strip_text_macros_in_math,
 }

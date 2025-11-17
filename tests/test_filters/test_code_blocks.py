@@ -539,3 +539,29 @@ def test_escaped_tilde_standalone():
     assert "return ~0;" in output
     # Should NOT have escaped tilde \~
     assert "\\~" not in output
+
+
+def test_cvqual_in_code_block():
+    r"""Test \cvqual{} macro in code blocks extracts content (Issue #36)
+
+    The actual pattern from C++ standard overloading.tex:
+    @\cvqual{vq} \placeholder{L}@&   operator%=(@\cvqual{vq} \placeholder{L}@&, @\placeholder{R}@);
+
+    \cvqual{x} represents cv-qualifier metavariable (e.g., cv1, cv2, vq)
+    In code blocks, should just extract the content without italics.
+    """
+    latex = r"""
+\begin{codeblock}
+@\cvqual{vq} \placeholder{L}@&   operator%=(@\cvqual{vq} \placeholder{L}@&, @\placeholder{R}@);
+@\cvqual{cv1}@ T& operator++(@\cvqual{cv2}@ T&);
+\end{codeblock}
+"""
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    # Should have extracted metavariable names
+    assert "vq L&   operator%=(vq L&, R);" in output
+    assert "cv1 T& operator++(cv2 T&);" in output
+    # Should NOT have \cvqual macro
+    assert "\\cvqual" not in output
+    # Should NOT have @ delimiters
+    assert "@" not in output

@@ -917,7 +917,9 @@ def test_libmember_in_tcode():
 
 def test_libmember_multiple_in_tcode():
     """Test multiple \\libmember{}{} instances in same \\tcode{}"""
-    latex = r"\tcode{\libmember{ptr}{allocation_result}}, \tcode{\libmember{count}{allocation_result}}"
+    latex = (
+        r"\tcode{\libmember{ptr}{allocation_result}}, \tcode{\libmember{count}{allocation_result}}"
+    )
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
     assert "`ptr`" in output
@@ -978,3 +980,37 @@ Lookup is performed as if \tcode{\~Q} appeared.
     assert "\\~" not in output
 
 
+def test_land_operator_in_tcode():
+    """Test \\land operator in \\tcode{} converts to ∧ (Issue #52)
+
+    This tests inline math with logical operators inside \\tcode{} macros.
+    The actual pattern from C++ standard templates.tex:
+    \\tcode{C1<T> $\\land$ C2<T>}
+    """
+    latex = (
+        r"The associated constraints of \tcode{f4} and \tcode{f5} are \tcode{C1<T> $\land$ C2<T>}."
+    )
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    # Should have converted \land to ∧
+    assert "`C1<T> ∧ C2<T>`" in output
+    # Should NOT have raw LaTeX \land
+    assert "\\land" not in output
+    # Should NOT have $ delimiters
+    assert "$" not in output
+
+
+def test_lor_operator_in_tcode():
+    """Test \\lor operator in \\tcode{} converts to ∨ (related to Issue #52)
+
+    Tests that all logical operators are handled consistently.
+    """
+    latex = r"The constraint is \tcode{A<T> $\lor$ B<T>}."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    # Should have converted \lor to ∨
+    assert "`A<T> ∨ B<T>`" in output
+    # Should NOT have raw LaTeX \lor
+    assert "\\lor" not in output
+    # Should NOT have $ delimiters
+    assert "$" not in output

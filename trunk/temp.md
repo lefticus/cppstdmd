@@ -1766,15 +1766,15 @@ template<C1 T> void f4(T) requires C2<T>;
 template<typename T> requires C1<T> && C2<T> void f5(T);
 ```
 
-The associated constraints of `f4` and `f5` are `C1<T> \land C2<T>`.
+The associated constraints of `f4` and `f5` are `C1<T> ∧ C2<T>`.
 
 ``` cpp
 template<C1 T> requires C2<T> void f6();
 template<C2 T> requires C1<T> void f7();
 ```
 
-The associated constraints of `f6` are `C1<T> \land C2<T>`, and those of
-`f7` are `C2<T> \land C1<T>`.
+The associated constraints of `f6` are `C1<T> ∧ C2<T>`, and those of
+`f7` are `C2<T> ∧ C1<T>`.
 
 — *end example*]
 

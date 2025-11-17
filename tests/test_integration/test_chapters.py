@@ -290,13 +290,17 @@ class TestQualityChecks:
 
             # Find table rows containing "offset" (both %z rows mention "offset from UTC")
             # These should be proper 2-column rows, not single-column malformed rows
-            lines = content.split('\n')
+            lines = content.split("\n")
 
             # Look for rows that mention "offset from UTC" - these are the %z rows
-            offset_rows = [line for line in lines if 'offset from UTC' in line and line.startswith('|')]
+            offset_rows = [
+                line for line in lines if "offset from UTC" in line and line.startswith("|")
+            ]
 
             # Should find at least 2 %z rows (formatting and parsing tables)
-            assert len(offset_rows) >= 2, f"Expected at least 2 table rows with 'offset from UTC', found {len(offset_rows)}"
+            assert (
+                len(offset_rows) >= 2
+            ), f"Expected at least 2 table rows with 'offset from UTC', found {len(offset_rows)}"
 
             for row in offset_rows:
                 # Key test: The row should have %z as the first column
@@ -304,18 +308,20 @@ class TestQualityChecks:
                 # Malformed format would be: | . If the offset... |
 
                 # Strip to check structure (tables may have alignment spaces)
-                row_stripped = '|'.join(part.strip() for part in row.split('|'))
+                row_stripped = "|".join(part.strip() for part in row.split("|"))
 
                 # First cell should contain %z
-                assert row_stripped.startswith('| `%z` |') or row.startswith('| `%z`'), \
-                    f"Row should contain `%z` in first column, got: {row[:80]}"
+                assert row_stripped.startswith("| `%z` |") or row.startswith(
+                    "| `%z`"
+                ), f"Row should contain `%z` in first column, got: {row[:80]}"
 
                 # Verify it's not a malformed single-column row starting with ". "
-                assert not row.strip().startswith('| .'), \
-                    f"Row should not be malformed starting with '| .'"
+                assert not row.strip().startswith(
+                    "| ."
+                ), "Row should not be malformed starting with '| .'"
 
             # Also verify that malformed single-column rows starting with ". If the offset" don't exist
-            malformed_pattern = r'^\|\s*\.\s+(If the offset|The modified commands).*\|$'
+            malformed_pattern = r"^\|\s*\.\s+(If the offset|The modified commands).*\|$"
             malformed_matches = re.findall(malformed_pattern, content, re.MULTILINE)
             assert len(malformed_matches) == 0, f"Found {len(malformed_matches)} malformed rows"
 

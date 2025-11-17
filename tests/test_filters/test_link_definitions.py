@@ -31,10 +31,7 @@ without duplicates.
 
 import re
 import subprocess
-import tempfile
 from pathlib import Path
-
-import pytest
 
 
 def run_pandoc_with_filter(latex: str):
@@ -98,7 +95,7 @@ The continue statement \ref{stmt.continue} skips to next iteration.
     assert code == 0
 
     # Extract all link reference definitions (lines matching [label]: target)
-    link_defs = re.findall(r'^\[([^\]]+)\]:\s*(.+)$', output, re.MULTILINE)
+    link_defs = re.findall(r"^\[([^\]]+)\]:\s*(.+)$", output, re.MULTILINE)
 
     # Group by label to find duplicates
     labels = {}
@@ -110,10 +107,9 @@ The continue statement \ref{stmt.continue} skips to next iteration.
     # Check for duplicates
     duplicates = {label: targets for label, targets in labels.items() if len(targets) > 1}
 
-    assert duplicates == {}, (
-        f"Found duplicate link definitions:\n" +
-        "\n".join(f"  [{label}]: appears {len(targets)} times with targets {targets}"
-                  for label, targets in duplicates.items())
+    assert duplicates == {}, "Found duplicate link definitions:\n" + "\n".join(
+        f"  [{label}]: appears {len(targets)} times with targets {targets}"
+        for label, targets in duplicates.items()
     )
 
 
@@ -165,8 +161,9 @@ Cross-file reference: \ref{expr.prim}
     assert code == 0
 
     # Same-file reference should use #anchor
-    assert re.search(r'\[stmt\.break\]:\s*#stmt\.break', output), \
-        "Same-file reference should use #anchor"
+    assert re.search(
+        r"\[stmt\.break\]:\s*#stmt\.break", output
+    ), "Same-file reference should use #anchor"
 
     # Note: Cross-file reference behavior depends on label index
     # This test just verifies the link definition exists

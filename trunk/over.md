@@ -3038,7 +3038,7 @@ For every triple (`L`, *vq*, `R`), where `L` is an integral type, and
 functions of the form
 
 ``` cpp
-vq L&   operator%=(\cvqual{vq} L&, R);
+vq L&   operator%=(vq L&, R);
 vq L&   operator<<=(vq L&, R);
 vq L&   operator>>=(vq L&, R);
 vq L&   operator&=(vq L&, R);

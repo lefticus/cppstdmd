@@ -157,7 +157,17 @@
 \renewcommand{\opt}[1]{#1ₒₚₜ}  % Optional grammar element (e.g., \opt{T} -> Tₒₚₜ) - consistent everywhere, uses Unicode subscripts
 
 %%--------------------------------------------------
-%% TOTAL: 82 simplified macros
+%% Category K: Math Operators (2 macros)
+%% Bitwise shift operators for random number generators (Issue #71)
+%% NOTE: Unicode subscripts don't exist for all letters (e.g., 'w'), so these
+%% operators are left as LaTeX for MathJax rendering. Future improvement could
+%% handle this differently if needed.
+%%--------------------------------------------------
+%% \leftshift{} and \rightshift - NOT simplified due to Unicode subscript limitations
+%% See Issue #71 for details
+
+%%--------------------------------------------------
+%% TOTAL: 84 simplified macros
 %% Macros cover ~73% of macro usage in the C++ standard source
 %%
 %% Macros removed after investigation (moved back to Lua filters):
