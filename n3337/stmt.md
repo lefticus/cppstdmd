@@ -536,8 +536,8 @@ Flowing off the end of a function is equivalent to a `return` with no
 value; this results in undefined behavior in a value-returning function.
 
 A return statement with an expression of type `void` can be used only in
-functions with a return type of cv-qualifiercv `void`; the expression is
-evaluated just before the function returns to its caller.
+functions with a return type of *cv* `void`; the expression is evaluated
+just before the function returns to its caller.
 
 ### The `goto` statement <a id="stmt.goto">[[stmt.goto]]</a>
 

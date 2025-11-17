@@ -10753,12 +10753,12 @@ The values of the `v₁`, `v₂`, …, `v_N` and their corresponding types
 - if the value of `is_bind_expression_v<\tcode{TD}_i>` is `true`, the
   argument is `\tcode{td}_i(std::forward<\tcode{U}_j>(\tcode{u}_j)...)`
   and its type `Vᵢ` is
-  `invoke_result_t<\tcode{TD}_i cv{} &, \tcode{U}_j...>&&`;
+  `invoke_result_t<\tcode{TD}_i cv &, \tcode{U}_j...>&&`;
 - if the value `j` of `is_placeholder_v<\tcode{TD}_i>` is not zero, the
   argument is `std::forward<\tcode{U}_j>(\tcode{u}_j)` and its type `Vᵢ`
   is `\tcode{U}_j&&`;
 - otherwise, the value is `tdᵢ` and its type `Vᵢ` is
-  `\tcode{TD}_i cv{} &`.
+  `\tcode{TD}_i cv &`.
 
 #### Placeholders <a id="func.bind.place">[[func.bind.place]]</a>
 

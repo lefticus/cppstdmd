@@ -715,9 +715,8 @@ select the user-defined conversion to be invoked.
 to a possibly cv-qualified class type is determined in terms of a
 corresponding non-reference copy-initialization. — *end note*]
 
-Assuming that “cv-qualifiercv1 `T`” is the type of the object being
-initialized, with `T` a class type, the candidate functions are selected
-as follows:
+Assuming that “*cv1* `T`” is the type of the object being initialized,
+with `T` a class type, the candidate functions are selected as follows:
 
 - The converting constructors ([[class.conv.ctor]]) of `T` are
   candidate functions.
@@ -727,7 +726,7 @@ as follows:
   parameter of a constructor where the parameter is of type “reference
   to possibly cv-qualified `T`” and the constructor is called with a
   single argument in the context of direct-initialization of an object
-  of type “cv-qualifiercv2 `T`”, explicit conversion functions are also
+  of type “*cv2* `T`”, explicit conversion functions are also
   considered. Those that are not hidden within `S` and yield a type
   whose cv-unqualified version is the same type as `T` or is a derived
   class thereof are candidate functions. Conversion functions that
@@ -748,10 +747,10 @@ Under the conditions specified in  [[dcl.init]], as part of an
 initialization of an object of non-class type, a conversion function can
 be invoked to convert an initializer expression of class type to the
 type of the object being initialized. Overload resolution is used to
-select the conversion function to be invoked. Assuming that
-“cv-qualifiercv1 `T`” is the type of the object being initialized, and
-“cv `S`” is the type of the initializer expression, with `S` a class
-type, the candidate functions are selected as follows:
+select the conversion function to be invoked. Assuming that “*cv1* `T`”
+is the type of the object being initialized, and “cv `S`” is the type of
+the initializer expression, with `S` a class type, the candidate
+functions are selected as follows:
 
 - The conversion functions of `S` and its base classes are considered.
   Those non-explicit conversion functions that are not hidden within `S`
@@ -763,11 +762,10 @@ type, the candidate functions are selected as follows:
   [[conv.qual]]) are also candidate functions. Conversion functions that
   return a cv-qualified type are considered to yield the cv-unqualified
   version of that type for this process of selecting candidate
-  functions. Conversion functions that return “reference to
-  cv-qualifiercv2 `X`” return lvalues or xvalues, depending on the type
-  of reference, of type “cv-qualifiercv2 `X`” and are therefore
-  considered to yield `X` for this process of selecting candidate
-  functions.
+  functions. Conversion functions that return “reference to *cv2* `X`”
+  return lvalues or xvalues, depending on the type of reference, of type
+  “*cv2* `X`” and are therefore considered to yield `X` for this process
+  of selecting candidate functions.
 
 The argument list has one argument, which is the initializer expression.
 
@@ -780,26 +778,24 @@ Under the conditions specified in  [[dcl.init.ref]], a reference can be
 bound directly to a glvalue or class prvalue that is the result of
 applying a conversion function to an initializer expression. Overload
 resolution is used to select the conversion function to be invoked.
-Assuming that “reference to cv-qualifiercv1 `T`” is the type of the
-reference being initialized, and “cv `S`” is the type of the initializer
+Assuming that “reference to *cv1* `T`” is the type of the reference
+being initialized, and “cv `S`” is the type of the initializer
 expression, with `S` a class type, the candidate functions are selected
 as follows:
 
 - The conversion functions of `S` and its base classes are considered.
   Those non-explicit conversion functions that are not hidden within `S`
-  and yield type “lvalue reference to cv-qualifiercv2 `T2`” (when
-  initializing an lvalue reference or an rvalue reference to function)
-  or “cv-qualifiercv2 `T2`” or “rvalue reference to cv-qualifiercv2
-  `T2`” (when initializing an rvalue reference or an lvalue reference to
-  function), where “cv-qualifiercv1 `T`” is reference-compatible (
-  [[dcl.init.ref]]) with “cv-qualifiercv2 `T2`”, are candidate
-  functions. For direct-initialization, those explicit conversion
-  functions that are not hidden within `S` and yield type “lvalue
-  reference to cv-qualifiercv2 `T2`” or “cv-qualifiercv2 `T2`” or
-  “rvalue reference to cv-qualifiercv2 `T2`”, respectively, where `T2`
-  is the same type as `T` or can be converted to type `T` with a
-  qualification conversion ([[conv.qual]]), are also candidate
-  functions.
+  and yield type “lvalue reference to *cv2* `T2`” (when initializing an
+  lvalue reference or an rvalue reference to function) or “*cv2* `T2`”
+  or “rvalue reference to *cv2* `T2`” (when initializing an rvalue
+  reference or an lvalue reference to function), where “*cv1* `T`” is
+  reference-compatible ([[dcl.init.ref]]) with “*cv2* `T2`”, are
+  candidate functions. For direct-initialization, those explicit
+  conversion functions that are not hidden within `S` and yield type
+  “lvalue reference to *cv2* `T2`” or “*cv2* `T2`” or “rvalue reference
+  to *cv2* `T2`”, respectively, where `T2` is the same type as `T` or
+  can be converted to type `T` with a qualification conversion (
+  [[conv.qual]]), are also candidate functions.
 
 The argument list has one argument, which is the initializer expression.
 
@@ -2275,34 +2271,34 @@ floating types plus promoted integral types.
 arithmetic type is required, an operand of enumeration type will be
 acceptable by way of the integral promotions. — *end note*]
 
-In the remainder of this section, cv-qualifiervq represents either
-`volatile` or no cv-qualifier.
+In the remainder of this section, *vq* represents either `volatile` or
+no cv-qualifier.
 
-For every pair (`T`, cv-qualifiervq), where `T` is an arithmetic type
-other than `bool`, there exist candidate operator functions of the form
-
-``` cpp
-cv-qualifier{vq} T& operator++(cv-qualifier{vq} T&);
-T operator++(cv-qualifier{vq} T&, int);
-```
-
-For every pair (`T`, cv-qualifiervq), where `T` is an arithmetic type
-other than `bool`, there exist candidate operator functions of the form
+For every pair (`T`, *vq*), where `T` is an arithmetic type other than
+`bool`, there exist candidate operator functions of the form
 
 ``` cpp
-cv-qualifier{vq} T& operator--(cv-qualifier{vq} T&);
-T operator--(cv-qualifier{vq} T&, int);
+vq T& operator++(vq T&);
+T operator++(vq T&, int);
 ```
 
-For every pair (`T`, cv-qualifiervq), where `T` is a cv-qualified or
+For every pair (`T`, *vq*), where `T` is an arithmetic type other than
+`bool`, there exist candidate operator functions of the form
+
+``` cpp
+vq T& operator--(vq T&);
+T operator--(vq T&, int);
+```
+
+For every pair (`T`, *vq*), where `T` is a cv-qualified or
 cv-unqualified object type, there exist candidate operator functions of
 the form
 
 ``` cpp
-T*cv-qualifier{vq}& operator++(T*cv-qualifier{vq}&);
-T*cv-qualifier{vq}& operator--(T*cv-qualifier{vq}&);
-T*    operator++(T*cv-qualifier{vq}&, int);
-T*    operator--(T*cv-qualifier{vq}&, int);
+T*vq& operator++(T*vq&);
+T*vq& operator--(T*vq&);
+T*    operator++(T*vq&, int);
+T*    operator--(T*vq&, int);
 ```
 
 For every cv-qualified or cv-unqualified object type `T`, there exist
@@ -2340,18 +2336,18 @@ functions of the form
 T operator~(T);
 ```
 
-For every quintuple (`C1`, `C2`, `T`, cv-qualifiercv1, cv-qualifiercv2),
-where `C2` is a class type, `C1` is the same type as `C2` or is a
-derived class of `C2`, and `T` is an object type or a function type,
-there exist candidate operator functions of the form
+For every quintuple (`C1`, `C2`, `T`, *cv1*, *cv2*), where `C2` is a
+class type, `C1` is the same type as `C2` or is a derived class of `C2`,
+and `T` is an object type or a function type, there exist candidate
+operator functions of the form
 
 ``` cpp
-cv-qualifier{cv12} T& operator->*(cv-qualifier{cv1} C1*, cv-qualifier{cv2} T C2::*);
+cv12 T& operator->*(cv1 C1*, cv2 T C2::*);
 ```
 
-where cv-qualifiercv12 is the union of cv-qualifiercv1 and
-cv-qualifiercv2. The return type is shown for exposition only; see 
-[[expr.mptr.oper]] for the determination of the operator’s result type.
+where *cv12* is the union of *cv1* and *cv2*. The return type is shown
+for exposition only; see  [[expr.mptr.oper]] for the determination of
+the operator’s result type.
 
 For every pair of promoted arithmetic types `L` and `R`, there exist
 candidate operator functions of the form
@@ -2425,53 +2421,52 @@ L       operator>>(L, R);
 where `LR` is the result of the usual arithmetic conversions between
 types `L` and `R`.
 
-For every triple (`L`, cv-qualifiervq, `R`), where `L` is an arithmetic
-type, and `R` is a promoted arithmetic type, there exist candidate
+For every triple (`L`, *vq*, `R`), where `L` is an arithmetic type, and
+`R` is a promoted arithmetic type, there exist candidate operator
+functions of the form
+
+``` cpp
+vq L&   operator=(vq L&, R);
+vq L&   operator*=(vq L&, R);
+vq L&   operator/=(vq L&, R);
+vq L&   operator+=(vq L&, R);
+vq L&   operator-=(vq L&, R);
+```
+
+For every pair (`T`, *vq*), where `T` is any type, there exist candidate
 operator functions of the form
 
 ``` cpp
-cv-qualifier{vq} L&   operator=(cv-qualifier{vq} L&, R);
-cv-qualifier{vq} L&   operator*=(cv-qualifier{vq} L&, R);
-cv-qualifier{vq} L&   operator/=(cv-qualifier{vq} L&, R);
-cv-qualifier{vq} L&   operator+=(cv-qualifier{vq} L&, R);
-cv-qualifier{vq} L&   operator-=(cv-qualifier{vq} L&, R);
+T*vq&   operator=(T*vq&, T*);
 ```
 
-For every pair (`T`, cv-qualifiervq), where `T` is any type, there exist
-candidate operator functions of the form
+For every pair (`T`, *vq*), where `T` is an enumeration or pointer to
+member type, there exist candidate operator functions of the form
 
 ``` cpp
-T*cv-qualifier{vq}&   operator=(T*cv-qualifier{vq}&, T*);
+vq T&   operator=(vq T&, T);
 ```
 
-For every pair (`T`, cv-qualifiervq), where `T` is an enumeration or
-pointer to member type, there exist candidate operator functions of the
-form
-
-``` cpp
-cv-qualifier{vq} T&   operator=(cv-qualifier{vq} T&, T);
-```
-
-For every pair (`T`, cv-qualifiervq), where `T` is a cv-qualified or
+For every pair (`T`, *vq*), where `T` is a cv-qualified or
 cv-unqualified object type, there exist candidate operator functions of
 the form
 
 ``` cpp
-T*cv-qualifier{vq}&   operator+=(T*cv-qualifier{vq}&, std::ptrdiff_t);
-T*cv-qualifier{vq}&   operator-=(T*cv-qualifier{vq}&, std::ptrdiff_t);
+T*vq&   operator+=(T*vq&, std::ptrdiff_t);
+T*vq&   operator-=(T*vq&, std::ptrdiff_t);
 ```
 
-For every triple (`L`, cv-qualifiervq, `R`), where `L` is an integral
-type, and `R` is a promoted integral type, there exist candidate
-operator functions of the form
+For every triple (`L`, *vq*, `R`), where `L` is an integral type, and
+`R` is a promoted integral type, there exist candidate operator
+functions of the form
 
 ``` cpp
-cv-qualifier{vq} L&   operator%=(\cvqual{vq} L&, R);
-cv-qualifier{vq} L&   operator<<=(cv-qualifier{vq} L&, R);
-cv-qualifier{vq} L&   operator>>=(cv-qualifier{vq} L&, R);
-cv-qualifier{vq} L&   operator&=(cv-qualifier{vq} L&, R);
-cv-qualifier{vq} L&   operator^=(cv-qualifier{vq} L&, R);
-cv-qualifier{vq} L&   operator|=(cv-qualifier{vq} L&, R);
+vq L&   operator%=(\cvqual{vq} L&, R);
+vq L&   operator<<=(vq L&, R);
+vq L&   operator>>=(vq L&, R);
+vq L&   operator&=(vq L&, R);
+vq L&   operator^=(vq L&, R);
+vq L&   operator|=(vq L&, R);
 ```
 
 There also exist candidate operator functions of the form

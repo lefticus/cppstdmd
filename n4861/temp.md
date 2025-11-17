@@ -7316,7 +7316,7 @@ the following forms:
 
 ``` cpp
 T
-cv{} T
+cv T
 T*
 T&
 T&&

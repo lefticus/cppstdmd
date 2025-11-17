@@ -250,6 +250,29 @@ def test_cv_braces_expansion():
     assert "cv{}" not in output
 
 
+def test_cv_inside_tcode():
+    r"""Test \cv{} macro inside \tcode{} blocks (n4950 pattern)"""
+    latex = r"\tcode{\cv{} TD\&}"
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "`cv TD&`" in output
+    # Should NOT contain literal cv{} or escaped \cv
+    assert "cv{}" not in output
+    assert "\\cv" not in output
+
+
+def test_cv_with_hyphen():
+    r"""Test \cv-qualified and \cv-unqualified patterns (n3337 usage)"""
+    latex = r"A pointer to \cv-qualified or \cv-unqualified type."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "cv-qualified" in output
+    assert "cv-unqualified" in output
+    # Should NOT lose hyphens
+    assert "cvqualified" not in output
+    assert "cvunqualified" not in output
+
+
 def test_iref_macro_old():
     r"""Test \iref{} expansion for inline references - NOW creates link definitions (bug fix)"""
     latex = r"As specified in \iref{lex.ext}."
@@ -606,11 +629,13 @@ def test_uax_macro():
 
 
 def test_cvqual_macro():
-    r"""Test \cvqual{} expansion (cv-qualifier term)"""
-    latex = r"A \cvqual{} can be const or volatile."
+    r"""Test \cvqual{} expansion (cv-qualifier metavariable)"""
+    latex = r"Two types \cvqual{cv1} T1 and \cvqual{cv2} T2 are related."
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
-    assert "cv-qualifier" in output
+    # cvqual should output its argument in italics (rendered as *cv1*, *cv2* in markdown)
+    assert "*cv1*" in output
+    assert "*cv2*" in output
     assert "\\cvqual" not in output
 
 

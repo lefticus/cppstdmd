@@ -935,10 +935,10 @@ is, `*this` has `const` type.
 volatile member functions when accessing the object and its non-static
 data members. — *end note*]
 
-A member function whose type has a *cv-qualifier-seq* cv-qualifiercv1
-can be called on an object expression [[expr.ref]] of type
-cv-qualifiercv2 `T` only if cv-qualifiercv1 is the same as or more
-cv-qualified than cv-qualifiercv2 [[basic.type.qualifier]].
+A member function whose type has a *cv-qualifier-seq* *cv1* can be
+called on an object expression [[expr.ref]] of type *cv2* `T` only if
+*cv1* is the same as or more cv-qualified than *cv2*
+[[basic.type.qualifier]].
 
 [*Example 2*:
 

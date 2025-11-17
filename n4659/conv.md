@@ -57,9 +57,9 @@ of class type `E` appearing in such a context is said to be
 *contextually implicitly converted* to a specified type `T` and is
 well-formed if and only if `e` can be implicitly converted to a type `T`
 that is determined as follows: `E` is searched for non-explicit
-conversion functions whose return type is cv-qualifiercv `T` or
-reference to cv-qualifiercv `T` such that `T` is allowed by the context.
-There shall be exactly one such `T`.
+conversion functions whose return type is *cv* `T` or reference to *cv*
+`T` such that `T` is allowed by the context. There shall be exactly one
+such `T`.
 
 The effect of any implicit conversion is the same as performing the
 corresponding declaration and initialization and then using the
@@ -222,13 +222,12 @@ int main() {
 
 — *end note*]
 
-[*Note 2*: A prvalue of type “pointer to cv-qualifiercv1 `T`” can be
-converted to a prvalue of type “pointer to cv-qualifiercv2 `T`” if
-“cv-qualifiercv2 `T`” is more cv-qualified than “cv-qualifiercv1 `T`”. A
-prvalue of type “pointer to member of `X` of type cv-qualifiercv1 `T`”
-can be converted to a prvalue of type “pointer to member of `X` of type
-cv-qualifiercv2 `T`” if “cv-qualifiercv2 `T`” is more cv-qualified than
-“cv-qualifiercv1 `T`”. — *end note*]
+[*Note 2*: A prvalue of type “pointer to *cv1* `T`” can be converted to
+a prvalue of type “pointer to *cv2* `T`” if “*cv2* `T`” is more
+cv-qualified than “*cv1* `T`”. A prvalue of type “pointer to member of
+`X` of type *cv1* `T`” can be converted to a prvalue of type “pointer to
+member of `X` of type *cv2* `T`” if “*cv2* `T`” is more cv-qualified
+than “*cv1* `T`”. — *end note*]
 
 [*Note 3*: Function types (including those used in pointer to member
 function types) are never cv-qualified ([[dcl.fct]]). — *end note*]
@@ -370,20 +369,18 @@ can be converted to a prvalue of type `std::nullptr_t`.
 [*Note 1*: The resulting prvalue is not a null pointer
 value. — *end note*]
 
-A prvalue of type “pointer to cv-qualifiercv `T`”, where `T` is an
-object type, can be converted to a prvalue of type “pointer to
-cv-qualifiercv `void`”. The pointer value ([[basic.compound]]) is
-unchanged by this conversion.
+A prvalue of type “pointer to *cv* `T`”, where `T` is an object type,
+can be converted to a prvalue of type “pointer to *cv* `void`”. The
+pointer value ([[basic.compound]]) is unchanged by this conversion.
 
-A prvalue of type “pointer to cv-qualifiercv `D`”, where `D` is a class
-type, can be converted to a prvalue of type “pointer to cv-qualifiercv
-`B`”, where `B` is a base class (Clause  [[class.derived]]) of `D`. If
-`B` is an inaccessible (Clause  [[class.access]]) or ambiguous (
-[[class.member.lookup]]) base class of `D`, a program that necessitates
-this conversion is ill-formed. The result of the conversion is a pointer
-to the base class subobject of the derived class object. The null
-pointer value is converted to the null pointer value of the destination
-type.
+A prvalue of type “pointer to *cv* `D`”, where `D` is a class type, can
+be converted to a prvalue of type “pointer to *cv* `B`”, where `B` is a
+base class (Clause  [[class.derived]]) of `D`. If `B` is an inaccessible
+(Clause  [[class.access]]) or ambiguous ([[class.member.lookup]]) base
+class of `D`, a program that necessitates this conversion is ill-formed.
+The result of the conversion is a pointer to the base class subobject of
+the derived class object. The null pointer value is converted to the
+null pointer value of the destination type.
 
 ## Pointer to member conversions <a id="conv.mem">[[conv.mem]]</a>
 
@@ -397,23 +394,22 @@ pointer to member of cv-qualified type is a single conversion, and not
 the sequence of a pointer to member conversion followed by a
 qualification conversion ([[conv.qual]]).
 
-A prvalue of type “pointer to member of `B` of type cv-qualifiercv `T`”,
-where `B` is a class type, can be converted to a prvalue of type
-“pointer to member of `D` of type cv-qualifiercv `T`”, where `D` is a
-derived class (Clause  [[class.derived]]) of `B`. If `B` is an
-inaccessible (Clause  [[class.access]]), ambiguous (
-[[class.member.lookup]]), or virtual ([[class.mi]]) base class of `D`,
-or a base class of a virtual base class of `D`, a program that
-necessitates this conversion is ill-formed. The result of the conversion
-refers to the same member as the pointer to member before the conversion
-took place, but it refers to the base class member as if it were a
-member of the derived class. The result refers to the member in `D`’s
-instance of `B`. Since the result has type “pointer to member of `D` of
-type cv-qualifiercv `T`”, indirection through it with a `D` object is
-valid. The result is the same as if indirecting through the pointer to
-member of `B` with the `B` subobject of `D`. The null member pointer
-value is converted to the null member pointer value of the destination
-type.[^5]
+A prvalue of type “pointer to member of `B` of type *cv* `T`”, where `B`
+is a class type, can be converted to a prvalue of type “pointer to
+member of `D` of type *cv* `T`”, where `D` is a derived class (Clause 
+[[class.derived]]) of `B`. If `B` is an inaccessible (Clause 
+[[class.access]]), ambiguous ([[class.member.lookup]]), or virtual (
+[[class.mi]]) base class of `D`, or a base class of a virtual base class
+of `D`, a program that necessitates this conversion is ill-formed. The
+result of the conversion refers to the same member as the pointer to
+member before the conversion took place, but it refers to the base class
+member as if it were a member of the derived class. The result refers to
+the member in `D`’s instance of `B`. Since the result has type “pointer
+to member of `D` of type *cv* `T`”, indirection through it with a `D`
+object is valid. The result is the same as if indirecting through the
+pointer to member of `B` with the `B` subobject of `D`. The null member
+pointer value is converted to the null member pointer value of the
+destination type.[^5]
 
 ## Function pointer conversions <a id="conv.fctptr">[[conv.fctptr]]</a>
 

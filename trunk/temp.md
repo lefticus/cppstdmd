@@ -7701,7 +7701,7 @@ template or a concept can be deduced if `P` and `A` have one of the
 following forms:
 
 ``` cpp
-cv{}ₒₚₜ T
+cvₒₚₜ T
 T*
 T&
 T&&

@@ -778,11 +778,10 @@ with `S` a class type, the candidate functions are selected as follows:
   reference-compatible ([[dcl.init.ref]]) with “*cv2* `T2`”, are
   candidate functions. For direct-initialization, those explicit
   conversion functions that are not hidden within `S` and yield type
-  “lvalue reference to cv-qualifiercv2 `T2`” or “cv-qualifiercv2 `T2`”
-  or “rvalue reference to cv-qualifiercv2 `T2`,” respectively, where
-  `T2` is the same type as `T` or can be converted to type `T` with a
-  qualification conversion ([[conv.qual]]), are also candidate
-  functions.
+  “lvalue reference to *cv2* `T2`” or “*cv2* `T2`” or “rvalue reference
+  to *cv2* `T2`,” respectively, where `T2` is the same type as `T` or
+  can be converted to type `T` with a qualification conversion (
+  [[conv.qual]]), are also candidate functions.
 
 The argument list has one argument, which is the initializer expression.
 This argument will be compared against the implicit object parameter of

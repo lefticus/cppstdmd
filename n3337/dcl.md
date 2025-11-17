@@ -4822,8 +4822,8 @@ program that necessitates such a binding is ill-formed if `T1` is an
 inaccessible (Clause  [[class.access]]) or ambiguous (
 [[class.member.lookup]]) base class of `T2`.
 
-A reference to type “cv-qualifiercv1 `T1`” is initialized by an
-expression of type “cv-qualifiercv2 `T2`” as follows:
+A reference to type “*cv1* `T1`” is initialized by an expression of type
+“*cv2* `T2`” as follows:
 
 - If the reference is an lvalue reference and the initializer expression
   - is an lvalue (but is not a bit-field), and “ `T1`” is
@@ -4864,13 +4864,11 @@ expression of type “cv-qualifiercv2 `T2`” as follows:
 
   - If the initializer expression
     - is an xvalue, class prvalue, array prvalue or function lvalue and
-      “cv-qualifiercv1 `T1`” is reference-compatible with
-      “cv-qualifiercv2 `T2`”, or
+      “*cv1* `T1`” is reference-compatible with “*cv2* `T2`”, or
     - has a class type (i.e., `T2` is a class type), where `T1` is not
       reference-related to `T2`, and can be implicitly converted to an
-      xvalue, class prvalue, or function lvalue of type “cv-qualifiercv3
-      `T3`”, where “cv-qualifiercv1 `T1`” is reference-compatible with
-      “cv-qualifiercv3 `T3`”,
+      xvalue, class prvalue, or function lvalue of type “*cv3* `T3`”,
+      where “*cv1* `T1`” is reference-compatible with “*cv3* `T3`”,
 
     then the reference is bound to the value of the initializer
     expression in the first case and to the result of the conversion in

@@ -1805,6 +1805,8 @@ local function clean_code_common(code, handle_textbackslash)
   -- \cv represents "cv"
   code = code:gsub("@\\cv{}@", "cv")
   code = code:gsub("\\cv{}", "cv")
+  -- After simplified_macros.tex, \cv becomes cv, leaving cv{}
+  code = code:gsub("cv%{%}", "cv")
   code = code:gsub("\\cv%s", "cv ")
 
   -- C++ version macros

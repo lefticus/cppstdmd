@@ -8084,17 +8084,17 @@ namespace std {
   // [func.wrap.move], move-only wrapper
   template<class... S> class move_only_function;                        // not defined
   template<class R, class... ArgTypes>
-    class move_only_function<R(ArgTypes...) cv{}\itcorr[-1] ref noexcept(noex)>;     // see below
+    class move_only_function<R(ArgTypes...) cv\itcorr[-1] ref noexcept(noex)>;     // see below
 
   // [func.wrap.copy], copyable wrapper
   template<class... S> class copyable_function;                         // not defined
   template<class R, class... ArgTypes>
-    class copyable_function<R(ArgTypes...) cv{}\itcorr[-1] ref noexcept(noex)>;      // see below
+    class copyable_function<R(ArgTypes...) cv\itcorr[-1] ref noexcept(noex)>;      // see below
 
   // [func.wrap.ref], non-owning wrapper
   template<class... S> class function_ref;                              // freestanding, not defined
   template<class R, class... ArgTypes>
-    class function_ref<R(ArgTypes...) cv{}\itcorr[-1] noexcept(noex)>;               // freestanding, see below
+    class function_ref<R(ArgTypes...) cv\itcorr[-1] noexcept(noex)>;               // freestanding, see below
 
   // [func.search], searchers
   template<class ForwardIterator1, class BinaryPredicate = equal_to<>>
@@ -9622,19 +9622,18 @@ wrapper `g` as follows:
 - if the value of `is_bind_expression_v<\tcode{TD}_i>` is `true`, the
   argument is
   ``` cpp
-  static_cast<cv{} `TD`_i&>(td_i)(std::forward<U_j>(u_j)...)
+  static_cast<cv `TD`_i&>(td_i)(std::forward<U_j>(u_j)...)
   ```
 
   and its type `Vᵢ` is
-  `invoke_result_t<cv{} \tcode{TD}_i&, \tcode{U}_j...>&&`;
+  `invoke_result_t<cv \tcode{TD}_i&, \tcode{U}_j...>&&`;
 - if the value `j` of `is_placeholder_v<\tcode{TD}_i>` is not zero, the
   argument is `std::forward<\tcode{U}_j>(\tcode{u}_j)` and its type `Vᵢ`
   is `\tcode{U}_j&&`;
-- otherwise, the value is `tdᵢ` and its type `Vᵢ` is
-  `cv{} \tcode{TD}_i&`.
+- otherwise, the value is `tdᵢ` and its type `Vᵢ` is `cv \tcode{TD}_i&`.
 
 The value of the target argument `v`_`fd` is `fd` and its corresponding
-type `V`_`fd` is `cv{} FD&`.
+type `V`_`fd` is `cv FD&`.
 
 #### Placeholders <a id="func.bind.place">[[func.bind.place]]</a>
 
@@ -10039,7 +10038,7 @@ above, there is a placeholder *inv-quals* defined as follows:
 ``` cpp
 namespace std {
   template<class R, class... ArgTypes>
-  class move_only_function<R(ArgTypes...) cv{} ref noexcept(noex)> {
+  class move_only_function<R(ArgTypes...) cv ref noexcept(noex)> {
   public:
     using result_type = R;
 
@@ -10061,7 +10060,7 @@ namespace std {
 
     // [func.wrap.move.inv], invocation
     explicit operator bool() const noexcept;
-    R operator()(ArgTypes...) cv{} ref noexcept(noex);
+    R operator()(ArgTypes...) cv ref noexcept(noex);
 
     // [func.wrap.move.util], utility
     void swap(move_only_function&) noexcept;
@@ -10097,14 +10096,14 @@ template<class VT>
 If *noex* is `true`, *`is-callable-from`*`<VT>` is equal to:
 
 ``` cpp
-is_nothrow_invocable_r_v<R, VT cv{} ref, ArgTypes...> &&
+is_nothrow_invocable_r_v<R, VT cv ref, ArgTypes...> &&
 is_nothrow_invocable_r_v<R, VT inv-quals, ArgTypes...>
 ```
 
 Otherwise, *`is-callable-from`*`<VT>` is equal to:
 
 ``` cpp
-is_invocable_r_v<R, VT cv{} ref, ArgTypes...> &&
+is_invocable_r_v<R, VT cv ref, ArgTypes...> &&
 is_invocable_r_v<R, VT inv-quals, ArgTypes...>
 ```
 
@@ -10246,7 +10245,7 @@ explicit operator bool() const noexcept;
 *Returns:* `true` if `*this` has a target object, otherwise `false`.
 
 ``` cpp
-R operator()(ArgTypes... args) cv{} ref noexcept(noex);
+R operator()(ArgTypes... args) cv ref noexcept(noex);
 ```
 
 *Preconditions:* `*this` has a target object.
@@ -10303,7 +10302,7 @@ above, there is a placeholder *inv-quals* defined as follows:
 ``` cpp
 namespace std {
   template<class R, class... ArgTypes>
-  class copyable_function<R(ArgTypes...) cv{} ref noexcept(noex)> {
+  class copyable_function<R(ArgTypes...) cv ref noexcept(noex)> {
   public:
     using result_type = R;
 
@@ -10327,7 +10326,7 @@ namespace std {
 
     // [func.wrap.copy.inv], invocation
     explicit operator bool() const noexcept;
-    R operator()(ArgTypes...) cv{} ref noexcept(noex);
+    R operator()(ArgTypes...) cv ref noexcept(noex);
 
     // [func.wrap.copy.util], utility
     void swap(copyable_function&) noexcept;
@@ -10363,14 +10362,14 @@ template<class VT>
 If *noex* is `true`, *`is-callable-from`*`<VT>` is equal to:
 
 ``` cpp
-is_nothrow_invocable_r_v<R, VT cv{} ref, ArgTypes...> &&
+is_nothrow_invocable_r_v<R, VT cv ref, ArgTypes...> &&
 is_nothrow_invocable_r_v<R, VT inv-quals, ArgTypes...>
 ```
 
 Otherwise, *`is-callable-from`*`<VT>` is equal to:
 
 ``` cpp
-is_invocable_r_v<R, VT cv{} ref, ArgTypes...> &&
+is_invocable_r_v<R, VT cv ref, ArgTypes...> &&
 is_invocable_r_v<R, VT inv-quals, ArgTypes...>
 ```
 
@@ -10536,7 +10535,7 @@ explicit operator bool() const noexcept;
 *Returns:* `true` if `*this` has a target object, otherwise `false`.
 
 ``` cpp
-R operator()(ArgTypes... args) cv{} ref noexcept(noex);
+R operator()(ArgTypes... args) cv ref noexcept(noex);
 ```
 
 *Preconditions:* `*this` has a target object.
@@ -10586,14 +10585,14 @@ combination of the possible replacements of the placeholders cv and
 ``` cpp
 namespace std {
   template<class R, class... ArgTypes>
-  class function_ref<R(ArgTypes...) cv{} noexcept(noex)> {
+  class function_ref<R(ArgTypes...) cv noexcept(noex)> {
   public:
     // [func.wrap.ref.ctor], constructors and assignment operators
     template<class F> function_ref(F*) noexcept;
     template<class F> constexpr function_ref(F&&) noexcept;
     template<auto f> constexpr function_ref(nontype_t<f>) noexcept;
     template<auto f, class U> constexpr function_ref(nontype_t<f>, U&&) noexcept;
-    template<auto f, class T> constexpr function_ref(nontype_t<f>, cv{} T*) noexcept;
+    template<auto f, class T> constexpr function_ref(nontype_t<f>, cv T*) noexcept;
 
     constexpr function_ref(const function_ref&) noexcept = default;
     constexpr function_ref& operator=(const function_ref&) noexcept = default;
@@ -10620,9 +10619,9 @@ namespace std {
 }
 ```
 
-An object of class `function_ref<R(Args...) cv{} noexcept(noex)>` stores
-a pointer to function *thunk-ptr* and an object *bound-entity*. The
-object *bound-entity* has an unspecified trivially copyable type
+An object of class `function_ref<R(Args...) cv noexcept(noex)>` stores a
+pointer to function *thunk-ptr* and an object *bound-entity*. The object
+*bound-entity* has an unspecified trivially copyable type
 *BoundEntityType*, that models `copyable` and is capable of storing a
 pointer to object value or a pointer to function value. The type of
 *thunk-ptr* is `R(*)(BoundEntityType, Args&&...) noexcept(noex)`.
@@ -10734,7 +10733,7 @@ expression-equivalent [[defns.expression.equivalent]] to
 
 ``` cpp
 template<auto f, class T>
-  constexpr function_ref(nontype_t<f>, cv{} T* obj) noexcept;
+  constexpr function_ref(nontype_t<f>, cv T* obj) noexcept;
 ```
 
 Let `F` be `decltype(f)`.

@@ -286,10 +286,10 @@ pointer-to-member type or `std::nullptr_t`, is:
 - if both `p1` and `p2` are null pointer constants, `std::nullptr_t`;
 - if either `p1` or `p2` is a null pointer constant, `T2` or `T1`,
   respectively;
-- if `T1` or `T2` is “pointer to cv-qualifiercv1 `void`” and the other
-  type is “pointer to cv-qualifiercv2 `T`”, where `T` is an object type
-  or `void`, “pointer to cv-qualifiercv12 `void`”, where
-  cv-qualifiercv12 is the union of cv-qualifiercv1 and cv-qualifiercv2;
+- if `T1` or `T2` is “pointer to *cv1* `void`” and the other type is
+  “pointer to *cv2* `T`”, where `T` is an object type or `void`,
+  “pointer to *cv12* `void`”, where *cv12* is the union of *cv1* and
+  *cv2*;
 - if `T1` or `T2` is “pointer to `noexcept` function” and the other type
   is “pointer to function”, where the function types are otherwise the
   same, “pointer to function”;
@@ -304,12 +304,12 @@ pointer-to-member type or `std::nullptr_t`, is:
   `C1` [[dcl.init.ref]], where the function types are otherwise the
   same, “pointer to member of `C2` of type function” or “pointer to
   member of `C1` of type function”, respectively;
-- if `T1` is “pointer to member of `C1` of type cv-qualifiercv1 `U`” and
-  `T2` is “pointer to member of `C2` of type cv-qualifiercv2 `U`”, for
-  some non-function type `U`, where `C1` is reference-related to `C2` or
-  `C2` is reference-related to `C1` [[dcl.init.ref]], the
-  qualification-combined type of `T2` and `T1` or the
-  qualification-combined type of `T1` and `T2`, respectively;
+- if `T1` is “pointer to member of `C1` of type *cv1* `U`” and `T2` is
+  “pointer to member of `C2` of type *cv2* `U`”, for some non-function
+  type `U`, where `C1` is reference-related to `C2` or `C2` is
+  reference-related to `C1` [[dcl.init.ref]], the qualification-combined
+  type of `T2` and `T1` or the qualification-combined type of `T1` and
+  `T2`, respectively;
 - if `T1` and `T2` are similar types [[conv.qual]], the
   qualification-combined type of `T1` and `T2`;
 - otherwise, a program that necessitates the determination of a
@@ -619,13 +619,12 @@ int main() {
 that both can be converted to the qualification-combined type of `T1`
 and `T2`. — *end note*]
 
-[*Note 3*: A prvalue of type “pointer to cv-qualifiercv1 `T`” can be
-converted to a prvalue of type “pointer to cv-qualifiercv2 `T`” if
-“cv-qualifiercv2 `T`” is more cv-qualified than “cv-qualifiercv1 `T`”. A
-prvalue of type “pointer to member of `X` of type cv-qualifiercv1 `T`”
-can be converted to a prvalue of type “pointer to member of `X` of type
-cv-qualifiercv2 `T`” if “cv-qualifiercv2 `T`” is more cv-qualified than
-“cv-qualifiercv1 `T`”. — *end note*]
+[*Note 3*: A prvalue of type “pointer to *cv1* `T`” can be converted to
+a prvalue of type “pointer to *cv2* `T`” if “*cv2* `T`” is more
+cv-qualified than “*cv1* `T`”. A prvalue of type “pointer to member of
+`X` of type *cv1* `T`” can be converted to a prvalue of type “pointer to
+member of `X` of type *cv2* `T`” if “*cv2* `T`” is more cv-qualified
+than “*cv1* `T`”. — *end note*]
 
 [*Note 4*: Function types (including those used in
 pointer-to-member-function types) are never cv-qualified
@@ -3380,10 +3379,10 @@ relationship (`T1`, `B`).
 
 If `E2` designates a bit-field, `E1.E2` is a bit-field. The type and
 value category of `E1.E2` are determined as follows. In the remainder
-of  [[expr.ref]], cv-qualifiercq represents either `const` or the
-absence of `const` and cv-qualifiervq represents either `volatile` or
-the absence of `volatile`. cv-qualifiercv represents an arbitrary set of
-cv-qualifiers, as defined in  [[basic.type.qualifier]].
+of  [[expr.ref]], *cq* represents either `const` or the absence of
+`const` and *vq* represents either `volatile` or the absence of
+`volatile`. *cv* represents an arbitrary set of cv-qualifiers, as
+defined in  [[basic.type.qualifier]].
 
 If `E2` designates an entity that is declared to have type “reference to
 `T`”, then `E1.E2` is an lvalue of type `T`. In that case, if `E2`
@@ -3396,20 +3395,17 @@ the object or function to which the corresponding reference member of
   then `E1.E2` is an lvalue; the expression designates the named member
   of the class. The type of `E1.E2` is `T`.
 - Otherwise, if `E2` designates a non-static data member and the type of
-  `E1` is “cv-qualifiercq1 vq1 `X`”, and the type of `E2` is
-  “cv-qualifiercq2 vq2 `T`”, the expression designates the corresponding
-  member subobject of the object designated by `E1`. If `E1` is an
-  lvalue, then `E1.E2` is an lvalue; otherwise `E1.E2` is an xvalue. Let
-  the notation cv-qualifiervq12 stand for the “union” of cv-qualifiervq1
-  and cv-qualifiervq2; that is, if cv-qualifiervq1 or cv-qualifiervq2 is
-  `volatile`, then cv-qualifiervq12 is `volatile`. Similarly, let the
-  notation cv-qualifiercq12 stand for the “union” of cv-qualifiercq1 and
-  cv-qualifiercq2; that is, if cv-qualifiercq1 or cv-qualifiercq2 is
-  `const`, then cv-qualifiercq12 is `const`. If the entity designated by
-  `E2` is declared to be a `mutable` member, then the type of `E1.E2` is
-  “cv-qualifiervq12 `T`”. If the entity designated by `E2` is not
-  declared to be a `mutable` member, then the type of `E1.E2` is
-  “cv-qualifiercq12 cv-qualifiervq12 `T`”.
+  `E1` is “*cq1 vq1* `X`”, and the type of `E2` is “*cq2 vq2* `T`”, the
+  expression designates the corresponding member subobject of the object
+  designated by `E1`. If `E1` is an lvalue, then `E1.E2` is an lvalue;
+  otherwise `E1.E2` is an xvalue. Let the notation *vq12* stand for the
+  “union” of *vq1* and *vq2*; that is, if *vq1* or *vq2* is `volatile`,
+  then *vq12* is `volatile`. Similarly, let the notation *cq12* stand
+  for the “union” of *cq1* and *cq2*; that is, if *cq1* or *cq2* is
+  `const`, then *cq12* is `const`. If the entity designated by `E2` is
+  declared to be a `mutable` member, then the type of `E1.E2` is “*vq12*
+  `T`”. If the entity designated by `E2` is not declared to be a
+  `mutable` member, then the type of `E1.E2` is “*cq12* *vq12* `T`”.
 - Otherwise, if `E2` denotes an overload set, the expression shall be
   the (possibly-parenthesized) left-hand operand of a member function
   call [[expr.call]], and function overload resolution [[over.match]] is
@@ -3535,13 +3531,13 @@ class type, and the result is an xvalue of the type referred to by `T`.
 If the type of `v` is the same as `T` (ignoring cv-qualifications), the
 result is `v` (converted if necessary).
 
-If `T` is “pointer to cv-qualifiercv1 `B`” and `v` has type “pointer to
-cv-qualifiercv2 `D`” such that `B` is a base class of `D`, the result is
-a pointer to the unique `B` subobject of the `D` object pointed to by
-`v`, or a null pointer value if `v` is a null pointer value. Similarly,
-if `T` is “reference to cv-qualifiercv1 `B`” and `v` has type
-cv-qualifiercv2 `D` such that `B` is a base class of `D`, the result is
-the unique `B` subobject of the `D` object referred to by `v`.[^13]
+If `T` is “pointer to *cv1* `B`” and `v` has type “pointer to *cv2* `D`”
+such that `B` is a base class of `D`, the result is a pointer to the
+unique `B` subobject of the `D` object pointed to by `v`, or a null
+pointer value if `v` is a null pointer value. Similarly, if `T` is
+“reference to *cv1* `B`” and `v` has type *cv2* `D` such that `B` is a
+base class of `D`, the result is the unique `B` subobject of the `D`
+object referred to by `v`.[^13]
 
 In both the pointer and reference cases, the program is ill-formed if
 `B` is an inaccessible or ambiguous base class of `D`.
@@ -3711,19 +3707,18 @@ type or an rvalue reference to function type, the result is an lvalue;
 if `T` is an rvalue reference to object type, the result is an xvalue;
 otherwise, the result is a prvalue.
 
-An lvalue of type “cv-qualifiercv1 `B`”, where `B` is a class type, can
-be cast to type “reference to cv-qualifiercv2 `D`”, where `D` is a
-complete class derived [[class.derived]] from `B`, if cv-qualifiercv2 is
-the same cv-qualification as, or greater cv-qualification than,
-cv-qualifiercv1. If `B` is a virtual base class of `D` or a base class
-of a virtual base class of `D`, or if no valid standard conversion from
-“pointer to `D`” to “pointer to `B`” exists [[conv.ptr]], the program is
-ill-formed. An xvalue of type “cv-qualifiercv1 `B`” can be cast to type
-“rvalue reference to cv-qualifiercv2 `D`” with the same constraints as
-for an lvalue of type “cv-qualifiercv1 `B`”. If the object of type
-“cv-qualifiercv1 `B`” is actually a base class subobject of an object of
-type `D`, the result refers to the enclosing object of type `D`.
-Otherwise, the behavior is undefined.
+An lvalue of type “*cv1* `B`”, where `B` is a class type, can be cast to
+type “reference to *cv2* `D`”, where `D` is a complete class derived
+[[class.derived]] from `B`, if *cv2* is the same cv-qualification as, or
+greater cv-qualification than, *cv1*. If `B` is a virtual base class of
+`D` or a base class of a virtual base class of `D`, or if no valid
+standard conversion from “pointer to `D`” to “pointer to `B`” exists
+[[conv.ptr]], the program is ill-formed. An xvalue of type “*cv1* `B`”
+can be cast to type “rvalue reference to *cv2* `D`” with the same
+constraints as for an lvalue of type “*cv1* `B`”. If the object of type
+“*cv1* `B`” is actually a base class subobject of an object of type `D`,
+the result refers to the enclosing object of type `D`. Otherwise, the
+behavior is undefined.
 
 [*Example 1*:
 
@@ -3819,25 +3814,24 @@ destination values, the result of the conversion is an
 *implementation-defined* choice of either of those values. Otherwise,
 the behavior is undefined.
 
-A prvalue of type “pointer to cv-qualifiercv1 `B`”, where `B` is a class
-type, can be converted to a prvalue of type “pointer to cv-qualifiercv2
-`D`”, where `D` is a complete class derived [[class.derived]] from `B`,
-if cv-qualifiercv2 is the same cv-qualification as, or greater
-cv-qualification than, cv-qualifiercv1. If `B` is a virtual base class
-of `D` or a base class of a virtual base class of `D`, or if no valid
-standard conversion from “pointer to `D`” to “pointer to `B`” exists
-[[conv.ptr]], the program is ill-formed. The null pointer value
-[[basic.compound]] is converted to the null pointer value of the
-destination type. If the prvalue of type “pointer to cv-qualifiercv1
+A prvalue of type “pointer to *cv1* `B`”, where `B` is a class type, can
+be converted to a prvalue of type “pointer to *cv2* `D`”, where `D` is a
+complete class derived [[class.derived]] from `B`, if *cv2* is the same
+cv-qualification as, or greater cv-qualification than, *cv1*. If `B` is
+a virtual base class of `D` or a base class of a virtual base class of
+`D`, or if no valid standard conversion from “pointer to `D`” to
+“pointer to `B`” exists [[conv.ptr]], the program is ill-formed. The
+null pointer value [[basic.compound]] is converted to the null pointer
+value of the destination type. If the prvalue of type “pointer to *cv1*
 `B`” points to a `B` that is actually a base class subobject of an
 object of type `D`, the resulting pointer points to the enclosing object
 of type `D`. Otherwise, the behavior is undefined.
 
-A prvalue of type “pointer to member of `D` of type cv-qualifiercv1 `T`”
-can be converted to a prvalue of type “pointer to member of `B` of type
-cv-qualifiercv2 `T`”, where `D` is a complete class type and `B` is a
-base class [[class.derived]] of `D`, if cv-qualifiercv2 is the same
-cv-qualification as, or greater cv-qualification than, cv-qualifiercv1.
+A prvalue of type “pointer to member of `D` of type *cv1* `T`” can be
+converted to a prvalue of type “pointer to member of `B` of type *cv2*
+`T`”, where `D` is a complete class type and `B` is a base class
+[[class.derived]] of `D`, if *cv2* is the same cv-qualification as, or
+greater cv-qualification than, *cv1*.
 
 [*Note 5*: Function types (including those used in
 pointer-to-member-function types) are never cv-qualified
@@ -3856,17 +3850,17 @@ dynamic type of the object with which indirection through the pointer to
 member is performed must contain the original member; see 
 [[expr.mptr.oper]]. — *end note*]
 
-A prvalue of type “pointer to cv-qualifiercv1 `void`” can be converted
-to a prvalue of type “pointer to cv-qualifiercv2 `T`”, where `T` is an
-object type and cv-qualifiercv2 is the same cv-qualification as, or
-greater cv-qualification than, cv-qualifiercv1. If the original pointer
-value represents the address `A` of a byte in memory and `A` does not
-satisfy the alignment requirement of `T`, then the resulting pointer
-value [[basic.compound]] is unspecified. Otherwise, if the original
-pointer value points to an object *a*, and there is an object *b* of
-type similar to `T` that is pointer-interconvertible [[basic.compound]]
-with *a*, the result is a pointer to *b*. Otherwise, the pointer value
-is unchanged by the conversion.
+A prvalue of type “pointer to *cv1* `void`” can be converted to a
+prvalue of type “pointer to *cv2* `T`”, where `T` is an object type and
+*cv2* is the same cv-qualification as, or greater cv-qualification than,
+*cv1*. If the original pointer value represents the address `A` of a
+byte in memory and `A` does not satisfy the alignment requirement of
+`T`, then the resulting pointer value [[basic.compound]] is unspecified.
+Otherwise, if the original pointer value points to an object *a*, and
+there is an object *b* of type similar to `T` that is
+pointer-interconvertible [[basic.compound]] with *a*, the result is a
+pointer to *b*. Otherwise, the pointer value is unchanged by the
+conversion.
 
 [*Example 2*:
 
@@ -3937,7 +3931,7 @@ different type.[^15]
 
 When a prvalue `v` of object pointer type is converted to the object
 pointer type “pointer to cv `T`”, the result is
-`static_cast<cv{} T*>(static_cast<cv{}~void*>(v))`.
+`static_cast<cv T*>(static_cast<cv~void*>(v))`.
 
 [*Note 5*: Converting a pointer of type “pointer to `T1`” that points
 to an object of type `T1` to the type “pointer to `T2`” (where `T2` is
@@ -5976,10 +5970,9 @@ following shall hold:
   where both operands are *throw-expression*s. — *end note*]
 
 Otherwise, if the second and third operand are glvalue bit-fields of the
-same value category and of types cv-qualifiercv1 `T` and cv-qualifiercv2
-`T`, respectively, the operands are considered to be of type cv `T` for
-the remainder of this subclause, where cv is the union of
-cv-qualifiercv1 and cv-qualifiercv2.
+same value category and of types *cv1* `T` and *cv2* `T`, respectively,
+the operands are considered to be of type cv `T` for the remainder of
+this subclause, where cv is the union of *cv1* and *cv2*.
 
 Otherwise, if the second and third operand have different types and
 either has (possibly cv-qualified) class type, or if both are glvalues
@@ -6010,9 +6003,8 @@ type `T2` of the operand expression `E2` as follows:
     - if `T2` is at least as cv-qualified as `T1`, the target type is
       `T2`,
     - otherwise, no conversion sequence is formed for this operand;
-  - otherwise, if `T2` is a base class of `T1`, the target type is
-    cv-qualifiercv1 `T2`, where cv-qualifiercv1 denotes the
-    cv-qualifiers of `T1`;
+  - otherwise, if `T2` is a base class of `T1`, the target type is *cv1*
+    `T2`, where *cv1* denotes the cv-qualifiers of `T1`;
   - otherwise, the target type is the type that `E2` would have after
     applying the lvalue-to-rvalue [[conv.lval]], array-to-pointer
     [[conv.array]], and function-to-pointer [[conv.func]] standard
@@ -6547,9 +6539,9 @@ would evaluate one of the following:
   — *end example*]
   — *end note*]
 - a conversion from a prvalue `P` of type “pointer to cv `void`” to a
-  type “cv-qualifiercv1 pointer to `T`”, where `T` is not
-  cv-qualifiercv2 `void`, unless `P` is a null pointer value or points
-  to an object whose type is similar to `T`;
+  type “*cv1* pointer to `T`”, where `T` is not *cv2* `void`, unless `P`
+  is a null pointer value or points to an object whose type is similar
+  to `T`;
 - a `reinterpret_cast` [[expr.reinterpret.cast]];
 - a modification of an object
   [[expr.assign]], [[expr.post.incr]], [[expr.pre.incr]] unless it is

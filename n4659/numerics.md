@@ -183,19 +183,18 @@ range of representable values for its type, the behavior is undefined.
 
 If `z` is an lvalue expression of type cv `complex<T>` then:
 
-- the expression `reinterpret_cast<cv{} T(&)[2]>(z)` shall be
-  well-formed,
-- `reinterpret_cast<cv{} T(&)[2]>(z)[0]` shall designate the real part
-  of `z`, and
-- `reinterpret_cast<cv{} T(&)[2]>(z)[1]` shall designate the imaginary
+- the expression `reinterpret_cast<cv T(&)[2]>(z)` shall be well-formed,
+- `reinterpret_cast<cv T(&)[2]>(z)[0]` shall designate the real part of
+  `z`, and
+- `reinterpret_cast<cv T(&)[2]>(z)[1]` shall designate the imaginary
   part of `z`.
 
 Moreover, if `a` is an expression of type cv `complex<T>*` and the
 expression `a[i]` is well-defined for an integer expression `i`, then:
 
-- `reinterpret_cast<cv{} T*>(a)[2*i]` shall designate the real part of
+- `reinterpret_cast<cv T*>(a)[2*i]` shall designate the real part of
   `a[i]`, and
-- `reinterpret_cast<cv{} T*>(a)[2*i + 1]` shall designate the imaginary
+- `reinterpret_cast<cv T*>(a)[2*i + 1]` shall designate the imaginary
   part of `a[i]`.
 
 ### Header `<complex>` synopsis <a id="complex.syn">[[complex.syn]]</a>

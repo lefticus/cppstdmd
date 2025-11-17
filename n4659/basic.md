@@ -3150,10 +3150,10 @@ that it is possible to create such an object, nor is it a guarantee that
 any object of that type will usable in a constant
 expression. — *end note*]
 
-Two types cv-qualifiercv1 `T1` and cv-qualifiercv2 `T2` are
-*layout-compatible* types if `T1` and `T2` are the same type,
-layout-compatible enumerations ([[dcl.enum]]), or layout-compatible
-standard-layout class types ([[class.mem]]).
+Two types *cv1* `T1` and *cv2* `T2` are *layout-compatible* types if
+`T1` and `T2` are the same type, layout-compatible enumerations (
+[[dcl.enum]]), or layout-compatible standard-layout class types (
+[[class.mem]]).
 
 ### Fundamental types <a id="basic.fundamental">[[basic.fundamental]]</a>
 
@@ -3438,19 +3438,19 @@ constitute this ordering.
 
 **Table: Relations on `const` and `volatile`**
 
-|                               |     |                  |
-| ----------------------------- | --- | ---------------- |
-| cv-qualifier{no cv-qualifier} | <   | `const`          |
-| cv-qualifier{no cv-qualifier} | <   | `volatile`       |
-| cv-qualifier{no cv-qualifier} | <   | `const volatile` |
-| `const`                       | <   | `const volatile` |
-| `volatile`                    | <   | `const volatile` |
+|                 |     |                  |
+| --------------- | --- | ---------------- |
+| no cv-qualifier | <   | `const`          |
+| no cv-qualifier | <   | `volatile`       |
+| no cv-qualifier | <   | `const volatile` |
+| `const`         | <   | `const volatile` |
+| `volatile`      | <   | `const volatile` |
 
 
-In this International Standard, the notation cv (or cv-qualifiercv1,
-cv-qualifiercv2, etc.), used in the description of types, represents an
-arbitrary set of cv-qualifiers, i.e., one of {`const`}, {`volatile`},
-{`const`, `volatile`}, or the empty set. For a type cv `T`, the
+In this International Standard, the notation cv (or *cv1*, *cv2*, etc.),
+used in the description of types, represents an arbitrary set of
+cv-qualifiers, i.e., one of {`const`}, {`volatile`}, {`const`,
+`volatile`}, or the empty set. For a type cv `T`, the
 *top-level cv-qualifiers* of that type are those denoted by cv.
 
 [*Example 1*: The type corresponding to the *type-id* `const int&` has

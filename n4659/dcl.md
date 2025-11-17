@@ -5822,9 +5822,8 @@ defined.
   initializing a bit-field with a value that it cannot represent, the
   resulting value of the bit-field is .
   \[*Note 1*:
-  An expression of type “cv-qualifiercv1 `T`” can initialize an object
-  of type “cv-qualifiercv2 `T`” independently of the cv-qualifiers
-  cv-qualifiercv1 and cv-qualifiercv2.
+  An expression of type “*cv1* `T`” can initialize an object of type
+  “*cv2* `T`” independently of the cv-qualifiers *cv1* and *cv2*.
   ``` cpp
   int a;
   const int b = a;
@@ -6306,37 +6305,35 @@ extern int& r2;                 // OK
 
 — *end example*]
 
-Given types “cv-qualifiercv1 `T1`” and “cv-qualifiercv2 `T2`”,
-“cv-qualifiercv1 `T1`” is *reference-related* to “cv-qualifiercv2 `T2`”
-if `T1` is the same type as `T2`, or `T1` is a base class of `T2`.
-“cv-qualifiercv1 `T1`” is *reference-compatible* with “cv-qualifiercv2
-`T2`” if
+Given types “*cv1* `T1`” and “*cv2* `T2`”, “*cv1* `T1`” is
+*reference-related* to “*cv2* `T2`” if `T1` is the same type as `T2`, or
+`T1` is a base class of `T2`. “*cv1* `T1`” is *reference-compatible*
+with “*cv2* `T2`” if
 
 - `T1` is reference-related to `T2`, or
 - `T2` is “`noexcept` function” and `T1` is “function”, where the
   function types are otherwise the same,
 
-and cv-qualifiercv1 is the same cv-qualification as, or greater
-cv-qualification than, cv-qualifiercv2. In all cases where the
-reference-related or reference-compatible relationship of two types is
-used to establish the validity of a reference binding, and `T1` is a
-base class of `T2`, a program that necessitates such a binding is
-ill-formed if `T1` is an inaccessible (Clause  [[class.access]]) or
-ambiguous ([[class.member.lookup]]) base class of `T2`.
+and *cv1* is the same cv-qualification as, or greater cv-qualification
+than, *cv2*. In all cases where the reference-related or
+reference-compatible relationship of two types is used to establish the
+validity of a reference binding, and `T1` is a base class of `T2`, a
+program that necessitates such a binding is ill-formed if `T1` is an
+inaccessible (Clause  [[class.access]]) or ambiguous (
+[[class.member.lookup]]) base class of `T2`.
 
-A reference to type “cv-qualifiercv1 `T1`” is initialized by an
-expression of type “cv-qualifiercv2 `T2`” as follows:
+A reference to type “*cv1* `T1`” is initialized by an expression of type
+“*cv2* `T2`” as follows:
 
 - If the reference is an lvalue reference and the initializer expression
-  - is an lvalue (but is not a bit-field), and “cv-qualifiercv1 `T1`” is
-    reference-compatible with “cv-qualifiercv2 `T2`”, or
+  - is an lvalue (but is not a bit-field), and “*cv1* `T1`” is
+    reference-compatible with “*cv2* `T2`”, or
   - has a class type (i.e., `T2` is a class type), where `T1` is not
     reference-related to `T2`, and can be converted to an lvalue of type
-    “cv-qualifiercv3 `T3`”, where “cv-qualifiercv1 `T1`” is
-    reference-compatible with “cv-qualifiercv3 `T3`”[^14] (this
-    conversion is selected by enumerating the applicable conversion
-    functions ([[over.match.ref]]) and choosing the best one through
-    overload resolution ([[over.match]])),
+    “*cv3* `T3`”, where “*cv1* `T1`” is reference-compatible with “*cv3*
+    `T3`”[^14] (this conversion is selected by enumerating the
+    applicable conversion functions ([[over.match.ref]]) and choosing
+    the best one through overload resolution ([[over.match]])),
 
   then the reference is bound to the initializer expression lvalue in
   the first case and to the lvalue result of the conversion in the
@@ -6362,8 +6359,8 @@ expression of type “cv-qualifiercv2 `T2`” as follows:
 
   — *end example*]
 - Otherwise, the reference shall be an lvalue reference to a
-  non-volatile const type (i.e., cv-qualifiercv1 shall be `const`), or
-  the reference shall be an rvalue reference.
+  non-volatile const type (i.e., *cv1* shall be `const`), or the
+  reference shall be an rvalue reference.
   \[*Example 5*:
   ``` cpp
   double& rd2 = 2.0;              // error: not an lvalue and reference not const
@@ -6373,22 +6370,20 @@ expression of type “cv-qualifiercv2 `T2`” as follows:
 
   — *end example*]
   - If the initializer expression
-    - is an rvalue (but not a bit-field) or function lvalue and
-      “cv-qualifiercv1 `T1`” is reference-compatible with
-      “cv-qualifiercv2 `T2`”, or
+    - is an rvalue (but not a bit-field) or function lvalue and “*cv1*
+      `T1`” is reference-compatible with “*cv2* `T2`”, or
     - has a class type (i.e., `T2` is a class type), where `T1` is not
       reference-related to `T2`, and can be converted to an rvalue or
-      function lvalue of type “cv-qualifiercv3 `T3`”, where
-      “cv-qualifiercv1 `T1`” is reference-compatible with
-      “cv-qualifiercv3 `T3`” (see  [[over.match.ref]]),
+      function lvalue of type “*cv3* `T3`”, where “*cv1* `T1`” is
+      reference-compatible with “*cv3* `T3`” (see  [[over.match.ref]]),
 
     then the value of the initializer expression in the first case and
     the result of the conversion in the second case is called the
     converted initializer. If the converted initializer is a prvalue,
-    its type `T4` is adjusted to type “cv-qualifiercv1 `T4`” (
-    [[conv.qual]]) and the temporary materialization conversion (
-    [[conv.rval]]) is applied. In any case, the reference is bound to
-    the resulting glvalue (or to an appropriate base class subobject).
+    its type `T4` is adjusted to type “*cv1* `T4`” ([[conv.qual]]) and
+    the temporary materialization conversion ([[conv.rval]]) is
+    applied. In any case, the reference is bound to the resulting
+    glvalue (or to an appropriate base class subobject).
     \[*Example 3*:
     ``` cpp
     struct A { };
@@ -6410,23 +6405,22 @@ expression of type “cv-qualifiercv2 `T2`” as follows:
   - Otherwise:
     - If `T1` or `T2` is a class type and `T1` is not reference-related
       to `T2`, user-defined conversions are considered using the rules
-      for copy-initialization of an object of type “cv-qualifiercv1
-      `T1`” by user-defined conversion ([[dcl.init]],
-      [[over.match.copy]], [[over.match.conv]]); the program is
-      ill-formed if the corresponding non-reference copy-initialization
-      would be ill-formed. The result of the call to the conversion
-      function, as described for the non-reference copy-initialization,
-      is then used to direct-initialize the reference. For this
+      for copy-initialization of an object of type “*cv1* `T1`” by
+      user-defined conversion ([[dcl.init]], [[over.match.copy]],
+      [[over.match.conv]]); the program is ill-formed if the
+      corresponding non-reference copy-initialization would be
+      ill-formed. The result of the call to the conversion function, as
+      described for the non-reference copy-initialization, is then used
+      to direct-initialize the reference. For this
       direct-initialization, user-defined conversions are not
       considered.
     - Otherwise, the initializer expression is implicitly converted to a
-      prvalue of type “cv-qualifiercv1 `T1`”. The temporary
-      materialization conversion is applied and the reference is bound
-      to the result.
+      prvalue of type “*cv1* `T1`”. The temporary materialization
+      conversion is applied and the reference is bound to the result.
 
     If `T1` is reference-related to `T2`:
-    - cv-qualifiercv1 shall be the same cv-qualification as, or greater
-      cv-qualification than, cv-qualifiercv2; and
+    - *cv1* shall be the same cv-qualification as, or greater
+      cv-qualification than, *cv2*; and
     - if the reference is an rvalue reference, the initializer
       expression shall not be an lvalue.
 
@@ -6534,8 +6528,8 @@ List-initialization of an object or reference of type `T` is defined as
 follows:
 
 - If `T` is an aggregate class and the initializer list has a single
-  element of type cv-qualifiercv `U`, where `U` is `T` or a class
-  derived from `T`, the object is initialized from that element (by
+  element of type *cv* `U`, where `U` is `T` or a class derived from
+  `T`, the object is initialized from that element (by
   copy-initialization for copy-list-initialization, or by
   direct-initialization for direct-list-initialization).
 - Otherwise, if `T` is a character array and the initializer list has a

@@ -2919,13 +2919,13 @@ constitute this ordering.
 
 **Table: Relations on `const` and `volatile`**
 
-|                               |     |                  |
-| ----------------------------- | --- | ---------------- |
-| cv-qualifier{no cv-qualifier} | <   | `const`          |
-| cv-qualifier{no cv-qualifier} | <   | `volatile`       |
-| cv-qualifier{no cv-qualifier} | <   | `const volatile` |
-| `const`                       | <   | `const volatile` |
-| `volatile`                    | <   | `const volatile` |
+|                 |     |                  |
+| --------------- | --- | ---------------- |
+| no cv-qualifier | <   | `const`          |
+| no cv-qualifier | <   | `volatile`       |
+| no cv-qualifier | <   | `const volatile` |
+| `const`         | <   | `const volatile` |
+| `volatile`      | <   | `const volatile` |
 
 
 In this International Standard, the notation *cv* (or *cv1*, *cv2*,

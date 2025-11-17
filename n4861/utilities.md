@@ -10654,19 +10654,18 @@ wrapper `g` as follows:
 - if the value of `is_bind_expression_v<\tcode{TD}_i>` is `true`, the
   argument is
   ``` cpp
-  static_cast<cv{} `TD`_i&>(td_i)(std::forward<U_j>(u_j)...)
+  static_cast<cv `TD`_i&>(td_i)(std::forward<U_j>(u_j)...)
   ```
 
   and its type `Vᵢ` is
-  `invoke_result_t<cv{} \tcode{TD}_i&, \tcode{U}_j...>&&`;
+  `invoke_result_t<cv \tcode{TD}_i&, \tcode{U}_j...>&&`;
 - if the value `j` of `is_placeholder_v<\tcode{TD}_i>` is not zero, the
   argument is `std::forward<\tcode{U}_j>(\tcode{u}_j)` and its type `Vᵢ`
   is `\tcode{U}_j&&`;
-- otherwise, the value is `tdᵢ` and its type `Vᵢ` is
-  `cv{} \tcode{TD}_i&`.
+- otherwise, the value is `tdᵢ` and its type `Vᵢ` is `cv \tcode{TD}_i&`.
 
 The value of the target argument `v`_`fd` is `fd` and its corresponding
-type `V`_`fd` is `cv{} FD&`.
+type `V`_`fd` is `cv FD&`.
 
 #### Placeholders <a id="func.bind.place">[[func.bind.place]]</a>
 

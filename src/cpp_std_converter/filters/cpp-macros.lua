@@ -413,6 +413,9 @@ function RawInline(elem)
     -- Strip \textit{} from simplified_macros.tex preprocessing
     code = code:gsub("\\textit{([^}]*)}", "%1")
     code = code:gsub("\\colcol{}", "::")  -- Restored: context-dependent
+    -- Convert cv{} to cv (cv-qualifiers: const/volatile)
+    -- simplified_macros.tex expands \cv to cv, leaving cv{} in output
+    code = code:gsub("cv%{%}", "cv")
     -- Handle special characters
     code = convert_special_chars(code)
     -- Handle \mname macros
@@ -808,6 +811,9 @@ function RawBlock(elem)
   if text:match("^\\tcode{.*}$") then
     local code = text:match("^\\tcode{(.*)}$")
     if code then
+      -- Convert cv{} to cv (cv-qualifiers: const/volatile)
+      -- simplified_macros.tex expands \cv to cv, leaving cv{} in output
+      code = code:gsub("cv%{%}", "cv")
       -- Handle escaped special characters
       code = code:gsub("\\#", "#")
       code = code:gsub("\\&", "&")
