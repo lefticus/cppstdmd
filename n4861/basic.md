@@ -1881,11 +1881,11 @@ namespace AB {
 
 void h()
 {
-  AB::g();          // g is declared directly in AB, therefore S is ${ AB::g() }$ and AB::g() is chosen
+  AB::g();          // g is declared directly in AB, therefore S is { `AB::g()` } and AB::g() is chosen
 
   AB::f(1);         // f is not declared directly in AB so the rules are applied recursively to A and B;
                     // namespace Y is not searched and Y::f(float) is not considered;
-                    // S is ${ A::f(int), B::f(char) }$ and overload resolution chooses A::f(int)
+                    // S is { `A::f(int)`, `B::f(char)` } and overload resolution chooses A::f(int)
 
   AB::f('c');       // as above but resolution chooses B::f(char)
 
@@ -1893,10 +1893,10 @@ void h()
                     // are applied recursively to Y and Z, S is { } so the program is ill-formed
 
   AB::i++;          // i is not declared directly in AB so the rules are applied recursively to A and B,
-                    // S is ${ A::i, B::i }$ so the use is ambiguous and the program is ill-formed
+                    // S is { `A::i`, `B::i` } so the use is ambiguous and the program is ill-formed
 
   AB::h(16.8);      // h is not declared directly in AB and not declared directly in A or B so the rules
-                    // are applied recursively to Y and Z, S is ${ Y::h(int), Z::h(double) }$ and
+                    // are applied recursively to Y and Z, S is { `Y::h(int)`, `Z::h(double)` } and
                     // overload resolution chooses Z::h(double)
 }
 ```
@@ -1930,7 +1930,7 @@ namespace BC {
 
 void f()
 {
-  BC::a++;          // OK: S is ${ A::a, A::a }$
+  BC::a++;          // OK: S is { `A::a`, `A::a` }
 }
 
 namespace D {
@@ -1944,7 +1944,7 @@ namespace BD {
 
 void g()
 {
-  BD::a++;          // OK: S is ${ A::a, A::a }$
+  BD::a++;          // OK: S is { `A::a`, `A::a` }
 }
 ```
 
@@ -1973,10 +1973,10 @@ namespace B {
 
 void f()
 {
-  A::a++;           // OK: a declared directly in A, S is ${ A::a }$
-  B::a++;           // OK: both A and B searched (once), S is ${ A::a }$
-  A::b++;           // OK: both A and B searched (once), S is ${ B::b }$
-  B::b++;           // OK: b declared directly in B, S is ${ B::b }$
+  A::a++;           // OK: a declared directly in A, S is { `A::a` }
+  B::a++;           // OK: both A and B searched (once), S is { `A::a` }
+  A::b++;           // OK: both A and B searched (once), S is { `B::b` }
+  B::b++;           // OK: b declared directly in B, S is { `B::b` }
 }
 ```
 

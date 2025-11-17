@@ -1227,8 +1227,8 @@ parameter pack `tpls`, where all indexing is zero-based.
 
 *Requires:* For all i, Uᵢ shall be the type cvᵢ `tuple<`Argsᵢ...`>`,
 where cvᵢ is the (possibly empty) iᵗʰ cv-qualifier-seq and Argsᵢ is the
-parameter pack representing the element types in Uᵢ. Let ${A_{ik}}$ be
-the kᵢᵗʰ type in Argsᵢ. For all Aᵢₖ the following requirements shall be
+parameter pack representing the element types in Uᵢ. Let {Aᵢₖ} be the
+kᵢᵗʰ type in Argsᵢ. For all Aᵢₖ the following requirements shall be
 satisfied: If Tᵢ is deduced as an lvalue reference type, then
 `is_constructible<`Aᵢₖ`, `cvᵢ` `Aᵢₖ`&>::value == true`, otherwise
 `is_constructible<`Aᵢₖ`, `cvᵢ Aᵢₖ`&&>::value == true`.

@@ -1046,8 +1046,7 @@ An associated probability function is typically expressed using certain
 externally-supplied quantities known as the . Such distribution
 parameters are identified in this context by writing, for example,
 p(z | a,b) or P(zᵢ | a,b), to name specific parameters, or by writing,
-for example, $p(z\,|\left\{\tcode{p}\right\})$ or
-$P(z_i\,|\left\{\tcode{p}\right\})$, to denote a distribution’s
+for example, p(z |{`p`}) or P(zᵢ |{`p`}), to denote a distribution’s
 parameters `p` taken as a whole.
 
 A class `D` satisfies the requirements of a if the expressions shown in
@@ -1442,9 +1441,9 @@ template<class Sseq> explicit mersenne_twister_engine(Sseq& q);
 ```
 
 *Effects:* Constructs a `mersenne_twister_engine` object. With
-$k = \left\lceil w / 32 \right\rceil$ and a an array (or equivalent) of
-length n ⋅ k, invokes `q.generate(`a+0`, `a+n ⋅ k`)` and then,
-iteratively for i = -n,…,-1, sets Xᵢ to
+k = ⌈ w / 32 ⌉ and a an array (or equivalent) of length n ⋅ k, invokes
+`q.generate(`a+0`, `a+n ⋅ k`)` and then, iteratively for i = -n,…,-1,
+sets Xᵢ to
 $\left(\sum_{j=0}^{k-1}a_{k(i+n)+j} \cdot 2^{32j} \right) \bmod 2^w$.
 Finally, if the most significant w-r bits of $X_{-n}$ are zero, and if
 each of the other resulting Xᵢ is 0, changes $X_{-n}$ to 2ʷ⁻¹.
@@ -1530,9 +1529,9 @@ template<class Sseq> explicit subtract_with_carry_engine(Sseq& q);
 ```
 
 *Effects:* Constructs a `subtract_with_carry_engine` object. With
-$k = \left\lceil w / 32 \right\rceil$ and a an array (or equivalent) of
-length r ⋅ k, invokes `q.generate(`a+0`, `a+r ⋅ k`)` and then,
-iteratively for i = -r, …, -1, sets Xᵢ to
+k = ⌈ w / 32 ⌉ and a an array (or equivalent) of length r ⋅ k, invokes
+`q.generate(`a+0`, `a+r ⋅ k`)` and then, iteratively for i = -r, …, -1,
+sets Xᵢ to
 $\left(\sum_{j=0}^{k-1}a_{k(i+r)+j} \cdot 2^{32j} \right) \bmod m$. If
 $X_{-1}$ is then 0, sets c to 1; otherwise sets c to 0.
 
@@ -2067,8 +2066,7 @@ template<class RealType, size_t bits, class URNG>
  RealType generate_canonical(URNG& g);
 ```
 
-*Complexity:* Exactly
-$k = \max(1, \left\lceil b / \log_2 R \right\rceil)$ invocations of `g`,
+*Complexity:* Exactly k = max(1, ⌈ b / log₂ R ⌉) invocations of `g`,
 where b[^5] is the lesser of `numeric_limits<RealType>::digits` and
 `bits`, and R is the value of `g.max()` - `g.min()` + 1.
 

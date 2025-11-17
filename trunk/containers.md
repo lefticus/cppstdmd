@@ -18560,7 +18560,7 @@ lookup [[basic.lookup.argdep]]. — *end note*]
     - `$s_k$.stride` > 0
   - $0 \le \texttt{\textit{first_}<index_type, $k$>(slices...)}$
     $\le \texttt{\textit{last_}<$k$>(src.extents(), slices...)}$
-    $\le \texttt{{}src.extent($k$)}$
+    ≤ `{}src.extent($k$)`
 - `sub_map_offset.mapping.extents() == submdspan_extents(src.mapping(), slices...)`
   is `true`; and
 - for each integer pack `I` which is a multidimensional index in

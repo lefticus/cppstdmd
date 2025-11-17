@@ -6188,8 +6188,8 @@ struct C { int x, y, z; };
 template<class T>
 void now_i_know_my() {
   auto [a, b, c] = C();     // OK, $SB_0$ is a, $SB_1$ is b, and $SB_2$ is c
-  auto [d, ...e] = C();     // OK, $SB_0$ is d, the pack e $(v_1)$ contains two structured bindings: $SB_1$ and $SB_2$
-  auto [...f, g] = C();     // OK, the pack f $(v_0)$ contains two structured bindings: $SB_0$ and $SB_1$, and $SB_2$ is g
+  auto [d, ...e] = C();     // OK, $SB_0$ is d, the pack e (`v`_1) contains two structured bindings: $SB_1$ and $SB_2$
+  auto [...f, g] = C();     // OK, the pack f (`v`_0) contains two structured bindings: $SB_0$ and $SB_1$, and $SB_2$ is g
   auto [h, i, j, ...k] = C();           // OK, the pack k is empty
   auto [l, m, n, o, ...p] = C();        // error: structured binding size is too small
 }

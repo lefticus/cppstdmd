@@ -1040,3 +1040,63 @@ def test_grouped_subscript_with_ordinal_no_text():
     assert "kᵢᵗʰ" in output
     assert "x₂ʳᵈ" in output
     assert "$" not in output
+
+
+# Tests for \left and \right delimiter conversion
+def test_left_right_braces_simple():
+    """Test \\left\\{ and \\right\\} with simple content converts properly"""
+    latex = r"$p(z\,|\left\{\tcode{p}\right\})$"
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "p(z |{`p`})" in output
+    assert "$" not in output
+    assert "\\left" not in output
+    assert "\\right" not in output
+
+
+def test_left_right_braces_with_subscript():
+    """Test \\left\\{ and \\right\\} with subscripted variable"""
+    latex = r"$P(z_i\,|\left\{\tcode{p}\right\})$"
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "P(zᵢ |{`p`})" in output
+    assert "$" not in output
+
+
+def test_left_right_floor():
+    """Test \\left\\lfloor and \\right\\rfloor convert to Unicode floor symbols"""
+    latex = r"$\left\lfloor x \right\rfloor$"
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "⌊ x ⌋" in output or "⌊x⌋" in output  # Accept with or without spaces
+    assert "$" not in output
+
+
+def test_left_right_ceil():
+    """Test \\left\\lceil and \\right\\rceil convert to Unicode ceil symbols"""
+    latex = r"$k = \left\lceil w / 32 \right\rceil$"
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "⌈" in output
+    assert "⌉" in output
+    assert "k = " in output
+    assert "$" not in output
+
+
+def test_left_right_parentheses():
+    """Test \\left( and \\right) are stripped (parentheses already ASCII)"""
+    latex = r"$\left(a + b\right)$"
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "(a + b)" in output
+    assert "$" not in output
+    assert "\\left" not in output
+
+
+def test_left_right_with_fraction_stays_latex():
+    """Test \\left/\\right with \\frac stays as LaTeX (complex math)"""
+    latex = r"$\left\lceil \frac{a}{b} \right\rceil$"
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    # Should stay as LaTeX due to \frac
+    assert r"\frac" in output or "$" in output

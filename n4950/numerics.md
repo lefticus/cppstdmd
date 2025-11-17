@@ -1146,10 +1146,9 @@ An associated probability function is typically expressed using certain
 externally-supplied quantities known as the *parameters of the
 distribution*. Such distribution parameters are identified in this
 context by writing, for example, p(z | a,b) or P(zᵢ | a,b), to name
-specific parameters, or by writing, for example,
-$p(z\,|\left\{\tcode{p}\right\})$ or
-$P(z_i\,|\left\{\tcode{p}\right\})$, to denote a distribution’s
-parameters `p` taken as a whole.
+specific parameters, or by writing, for example, p(z |{`p`}) or
+P(zᵢ |{`p`}), to denote a distribution’s parameters `p` taken as a
+whole.
 
 A class `D` meets the requirements of a *random number distribution* if
 the expressions shown in [[rand.req.dist]] are valid and have the
@@ -1463,9 +1462,9 @@ i = 1 - n, …, -1, sets Xᵢ to $$%
 template<class Sseq> explicit mersenne_twister_engine(Sseq& q);
 ```
 
-*Effects:* With $k = \left\lceil w / 32 \right\rceil$ and a an array (or
-equivalent) of length n ⋅ k, invokes `q.generate(`a+0`, `a+n ⋅ k`)` and
-then, iteratively for i = -n,…,-1, sets Xᵢ to
+*Effects:* With k = ⌈ w / 32 ⌉ and a an array (or equivalent) of length
+n ⋅ k, invokes `q.generate(`a+0`, `a+n ⋅ k`)` and then, iteratively for
+i = -n,…,-1, sets Xᵢ to
 $\left(\sum_{j=0}^{k-1}a_{k(i+n)+j} \cdot 2^{32j} \right) \bmod 2^w$.
 Finally, if the most significant w-r bits of $X_{-n}$ are zero, and if
 each of the other resulting Xᵢ is 0, changes $X_{-n}$ to 2ʷ⁻¹.
@@ -1569,9 +1568,9 @@ $\left( \sum_{j=0}^{n-1} z_j \cdot 2^{32j}\right) \bmod m$.
 template<class Sseq> explicit subtract_with_carry_engine(Sseq& q);
 ```
 
-*Effects:* With $k = \left\lceil w / 32 \right\rceil$ and a an array (or
-equivalent) of length r ⋅ k, invokes `q.generate(`a + 0`, `a + r ⋅ k`)`
-and then, iteratively for i = -r, …, -1, sets Xᵢ to
+*Effects:* With k = ⌈ w / 32 ⌉ and a an array (or equivalent) of length
+r ⋅ k, invokes `q.generate(`a + 0`, `a + r ⋅ k`)` and then, iteratively
+for i = -r, …, -1, sets Xᵢ to
 $\left(\sum_{j=0}^{k-1}a_{k(i+r)+j} \cdot 2^{32j} \right) \bmod m$. If
 $X_{-1}$ is then 0, sets c to 1; otherwise sets c to 0.
 
@@ -1691,15 +1690,12 @@ state.
 The transition and generation algorithms are described in terms of the
 following integral constants:
 
-- Let R = `e.max() - e.min() + 1` and
-  $m = \left\lfloor \log_2 R \right\rfloor$.
-- With n as determined below, let
-  $w_0 = \left\lfloor w / n \right\rfloor$, n₀ = n - w  mod  n,
+- Let R = `e.max() - e.min() + 1` and m = ⌊ log₂ R ⌋.
+- With n as determined below, let w₀ = ⌊ w / n ⌋, n₀ = n - w  mod  n,
   $y_0 = 2^{w_0} \left\lfloor R / 2^{w_0} \right\rfloor$, and
   $y_1 = 2^{w_0 + 1} \left\lfloor R / 2^{w_0 + 1} \right\rfloor$.
-- Let $n = \left\lceil w / m \right\rceil$ if and only if the relation
-  $R - y_0 \leq \left\lfloor y_0 / n \right\rfloor$ holds as a result.
-  Otherwise let $n = 1 + \left\lceil w / m \right\rceil$.
+- Let n = ⌈ w / m ⌉ if and only if the relation R - y₀ ≤ ⌊ y₀ / n ⌋
+  holds as a result. Otherwise let n = 1 + ⌈ w / m ⌉.
 
 [*Note 1*: The relation w = n₀ w₀ + (n - n₀)(w₀ + 1) always
 holds. — *end note*]
@@ -2198,8 +2194,7 @@ $$S = \sum_{i=0}^{k-1} (g_i - \texttt{g.min()})
 
 *Throws:* What and when `g` throws.
 
-*Complexity:* Exactly
-$k = \max(1, \left\lceil b / \log_2 R \right\rceil)$ invocations of `g`,
+*Complexity:* Exactly k = max(1, ⌈ b / log₂ R ⌉) invocations of `g`,
 where b[^6]
 
 is the lesser of `numeric_limits<RealType>::digits` and `bits`, and R is
@@ -3461,8 +3456,8 @@ integers i, 0 ≤ i < n, distributed according to the discrete probability
 function $$P(i \,|\, p_0, \dotsc, p_{n-1}) = p_i \text{ .}$$
 
 Unless specified otherwise, the distribution parameters are calculated
-as: $p_k = {w_k / S}$ for k = 0, …, n - 1, in which the values wₖ,
-commonly known as the *weights* , shall be non-negative, non-NaN, and
+as: pₖ = {wₖ / S} for k = 0, …, n - 1, in which the values wₖ, commonly
+known as the *weights* , shall be non-negative, non-NaN, and
 non-infinity. Moreover, the following relation shall hold:
 $0 < S = w_0 + \dotsb + w_{n - 1}$.
 
@@ -3732,10 +3727,10 @@ $$p(x \,|\, b_0, \dotsc, b_n, \; \rho_0, \dotsc, \rho_n)
 The n + 1 distribution parameters bᵢ, also known as this distribution’s
 *interval boundaries* , shall satisfy the relation bᵢ < bᵢ₊₁ for
 i = 0, …, n - 1. Unless specified otherwise, the remaining n + 1
-distribution parameters are calculated as $\rho_k = {w_k / S}$ for
-k = 0, …, n, in which the values wₖ, commonly known as the *weights at
-boundaries* , shall be non-negative, non-NaN, and non-infinity.
-Moreover, the following relation shall hold:
+distribution parameters are calculated as ρₖ = {wₖ / S} for k = 0, …, n,
+in which the values wₖ, commonly known as the *weights at boundaries* ,
+shall be non-negative, non-NaN, and non-infinity. Moreover, the
+following relation shall hold:
 $$0 < S = \frac{1}{2} \cdot \sum_{k=0}^{n-1} (w_k + w_{k+1}) \cdot (b_{k+1} - b_k) \text{ .}$$
 
 ``` cpp

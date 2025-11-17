@@ -1373,7 +1373,7 @@ template <unsigned M> int f()
   requires AddOne<2 * M> && true;
 
 int x = f<0>();     // OK, the atomic constraints from concept C in both fs are Atomic<N>
-                    // with mapping similar to $N \mapsto 2 * M + 1$
+                    // with mapping similar to `N` ↦ `2 * M + 1`
 
 template <unsigned N> struct WrapN;
 template <unsigned N> using Add1Ty = WrapN<N + 1>;

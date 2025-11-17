@@ -8838,7 +8838,7 @@ wrapper `g` as follows:
 - if the value of `is_bind_expression_v<\tcode{TD}_i>` is `true`, the
   argument is
   ``` cpp
-  static_cast<cv{} $TD_i$&>(td_i)(std::forward<U_j>(u_j)...)
+  static_cast<cv{} `TD`_i&>(td_i)(std::forward<U_j>(u_j)...)
   ```
 
   and its type `Vᵢ` is

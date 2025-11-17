@@ -132,10 +132,9 @@ local function is_fully_converted(text)
     return false
   end
 
-  -- Check for remaining braces (usually indicates LaTeX structures)
-  if text:match("[{}]") then
-    return false
-  end
+  -- NOTE: We don't check for bare braces {} because they can appear as literal characters
+  -- from \{ and \} conversions (e.g., p(z|{`p`}) is valid converted output)
+  -- Complex LaTeX structures with braces are already caught by ^{ and _{ checks above
 
   -- Text is fully converted
   return true

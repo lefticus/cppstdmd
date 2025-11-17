@@ -1007,8 +1007,8 @@ local function is_complex_math(text)
     "\\lim",       -- limits
     "\\sqrt",      -- square roots
     "\\binom",     -- binomial coefficients
-    "\\left",      -- large delimiters
-    "\\right",
+    -- NOTE: \left and \right removed - they're stripped before complexity check
+    -- and don't indicate complex math (e.g., \left\lfloor x \right\rfloor converts fine)
     "\\begin",     -- environments
     "\\operatorname",
     "\\mathcal",   -- special fonts we can't represent
@@ -1221,6 +1221,14 @@ local function try_unicode_conversion(text)
   result = result:gsub("\\big%s*", "")
   result = result:gsub("\\Big%s*", "")
 
+  -- Strip delimiter sizing commands (they control size but have no semantic meaning)
+  -- This prevents false positives where \left\lfloor is flagged as complex due to \left
+  -- while still allowing actual complex math (with \frac, \begin, etc.) to be blocked
+  -- IMPORTANT: Use word boundary to avoid matching \leftarrow or \rightarrow
+  -- Match \left or \right only when followed by non-letter (delimiter or space)
+  result = result:gsub("\\left([^a-zA-Z])", "%1")
+  result = result:gsub("\\right([^a-zA-Z])", "%1")
+
   -- Convert spacing commands to spaces
   result = result:gsub("\\quad", "  ")    -- quad = wider space
   result = result:gsub("\\qquad", "    ") -- qquad = even wider space
@@ -1228,6 +1236,11 @@ local function try_unicode_conversion(text)
   result = result:gsub("\\;", " ")         -- medium space
   result = result:gsub("\\!", "")          -- negative thin space (just remove)
   result = result:gsub("\\ ", " ")         -- control space (backslash-space)
+
+  -- Convert literal braces (escaped braces in LaTeX)
+  -- Note: In Lua patterns, { and } need to be escaped with %
+  result = result:gsub("\\%{", "{")
+  result = result:gsub("\\%}", "}")
 
   -- Convert known simple patterns FIRST (before checking for complex math)
   -- This prevents false positives like \rightarrow being flagged as complex due to \right
@@ -1565,6 +1578,12 @@ local function try_unicode_conversion(text)
   result = result:gsub("(%w?)%^{(%w%w+)}", function(base, super_str)
     local unicode_super = convert_superscript_string(super_str)
     return base .. unicode_super
+  end)
+
+  -- Convert \tcode{content} to backticks `content`
+  -- This allows math expressions with inline code to convert properly
+  result = process_macro_with_replacement(result, "tcode", function(content)
+    return "`" .. content .. "`"
   end)
 
   -- If we still have LaTeX commands, we can't fully convert
