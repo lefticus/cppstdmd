@@ -203,3 +203,52 @@ def safe_unlink(path: Path, missing_ok: bool = True) -> None:
         if not missing_ok:
             raise
         logger.debug(f"Could not delete {path}: {e}")
+
+
+def cleanup_temp_files(temp_files: list[Path]) -> None:
+    """Clean up a list of temporary files, ignoring errors.
+
+    Args:
+        temp_files: List of temporary file paths to delete
+
+    Example:
+        temp_files = [Path("/tmp/file1.tex"), Path("/tmp/file2.tex")]
+        cleanup_temp_files(temp_files)
+    """
+    for temp_file in temp_files:
+        with contextlib.suppress(Exception):
+            temp_file.unlink()
+
+
+def expand_latex_inputs(content: str, base_dir: Path) -> str:
+    """Expand \\input{} commands in LaTeX content.
+
+    Recursively expands all \\input{filename} commands by replacing them
+    with the content of the referenced .tex file.
+
+    Args:
+        content: LaTeX content containing \\input{} commands
+        base_dir: Base directory to resolve relative file paths
+
+    Returns:
+        Content with all \\input{} commands expanded
+
+    Example:
+        content = r"\\input{intro}\\nSome text"
+        expanded = expand_latex_inputs(content, Path("source/"))
+    """
+    import re
+
+    def expand_input(match):
+        filename = match.group(1)
+        input_file = base_dir / f"{filename}.tex"
+
+        if input_file.exists():
+            return input_file.read_text(encoding="utf-8")
+        else:
+            # If file doesn't exist, keep the \input command
+            return match.group(0)
+
+    # Replace \input{filename} with file content
+    # Handle both \input{filename} and \input {filename}
+    return re.sub(r"\\input\s*\{([^}]+)\}", expand_input, content)

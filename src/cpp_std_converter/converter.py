@@ -98,6 +98,47 @@ class ConverterError(Exception):
     pass
 
 
+def _handle_repo_error(func):
+    """Decorator to handle RepoManagerError with consistent error reporting.
+
+    Catches RepoManagerError, displays error message to stderr, and exits with code 1.
+
+    Args:
+        func: Function to wrap with error handling
+
+    Returns:
+        Wrapped function with repo error handling
+    """
+
+    def wrapper(*args, **kwargs):
+        try:
+            return func(*args, **kwargs)
+        except RepoManagerError as e:
+            click.echo(f"Repository error: {e}", err=True)
+            sys.exit(1)
+
+    return wrapper
+
+
+def _require_output(output: Path | None, context: str) -> Path:
+    """Ensure output path is provided, exit with error if not.
+
+    Args:
+        output: Optional output path
+        context: Description of the context (e.g., "--build-full", "directory conversion")
+
+    Returns:
+        The output Path
+
+    Raises:
+        SystemExit: If output is None
+    """
+    if not output:
+        click.echo(f"Error: --output required for {context}", err=True)
+        sys.exit(1)
+    return output
+
+
 def _ensure_repo_ready(repo_manager: DraftRepoManager, git_ref: str | None, verbose: bool) -> None:
     """Ensure repository exists and checkout specified ref if provided.
 
@@ -137,6 +178,7 @@ def _handle_list_tags(draft_repo: Path | None) -> None:
         click.echo(f"  {tag}")
 
 
+@_handle_repo_error
 def _handle_build_full(
     draft_repo: Path | None,
     git_ref: str | None,
@@ -147,16 +189,8 @@ def _handle_build_full(
 ) -> None:
     """Handle --build-full option to build concatenated full standard."""
     repo_manager = DraftRepoManager(draft_repo)
-
-    try:
-        _ensure_repo_ready(repo_manager, git_ref, verbose)
-    except RepoManagerError as e:
-        click.echo(f"Repository error: {e}", err=True)
-        sys.exit(1)
-
-    if not output:
-        click.echo("Error: --output required for --build-full", err=True)
-        sys.exit(1)
+    _ensure_repo_ready(repo_manager, git_ref, verbose)
+    output = _require_output(output, "--build-full")
 
     output_file = Path(output)
     builder = StandardBuilder(repo_manager.source_dir)
@@ -174,6 +208,7 @@ def _handle_build_full(
         sys.exit(1)
 
 
+@_handle_repo_error
 def _handle_build_separate(
     draft_repo: Path | None,
     git_ref: str | None,
@@ -184,16 +219,8 @@ def _handle_build_separate(
 ) -> None:
     """Handle --build-separate option to build separate chapter files."""
     repo_manager = DraftRepoManager(draft_repo)
-
-    try:
-        _ensure_repo_ready(repo_manager, git_ref, verbose)
-    except RepoManagerError as e:
-        click.echo(f"Repository error: {e}", err=True)
-        sys.exit(1)
-
-    if not output:
-        click.echo("Error: --output required for --build-separate", err=True)
-        sys.exit(1)
+    _ensure_repo_ready(repo_manager, git_ref, verbose)
+    output = _require_output(output, "--build-separate")
 
     output_dir = Path(output)
     builder = StandardBuilder(repo_manager.source_dir)
@@ -236,9 +263,7 @@ def _handle_directory_conversion(
     converter: "Converter", input_path: Path, output: Path | None, verbose: bool
 ) -> None:
     """Handle directory conversion."""
-    if not output:
-        click.echo("Error: --output required for directory conversion", err=True)
-        sys.exit(1)
+    output = _require_output(output, "directory conversion")
 
     output_files = converter.convert_directory(
         input_path,
@@ -698,17 +723,13 @@ def main(
         # Handle git ref checkout if specified
         if git_ref:
             repo_manager = DraftRepoManager(draft_repo)
-            try:
-                repo_manager.ensure_ready(ref=git_ref, shallow=False)
-                if verbose:
-                    ref_info = repo_manager.get_current_ref()
-                    click.echo(
-                        f"Using draft version: {ref_info['ref']} ({ref_info['short_sha']})",
-                        err=True,
-                    )
-            except RepoManagerError as e:
-                click.echo(f"Repository error: {e}", err=True)
-                sys.exit(1)
+            _handle_repo_error(lambda: repo_manager.ensure_ready(ref=git_ref, shallow=False))()
+            if verbose:
+                ref_info = repo_manager.get_current_ref()
+                click.echo(
+                    f"Using draft version: {ref_info['ref']} ({ref_info['short_sha']})",
+                    err=True,
+                )
 
         # Create converter instance
         converter = Converter(filters_dir=filters_dir)

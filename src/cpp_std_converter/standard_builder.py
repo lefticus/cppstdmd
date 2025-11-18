@@ -42,7 +42,7 @@ from pathlib import Path
 
 from pylatexenc.latexwalker import LatexMacroNode, LatexWalker
 
-from .utils import ensure_dir
+from .utils import cleanup_temp_files, ensure_dir, expand_latex_inputs
 
 
 def _convert_chapter_worker(
@@ -130,16 +130,7 @@ def _convert_chapter_worker(
             if chapter in ["front", "back"]:
                 content = chapter_file.read_text(encoding="utf-8")
                 base_dir = chapter_file.parent
-
-                def expand_input(match):
-                    filename = match.group(1)
-                    input_file = base_dir / f"{filename}.tex"
-                    if input_file.exists():
-                        return input_file.read_text(encoding="utf-8")
-                    else:
-                        return match.group(0)
-
-                expanded = re.sub(r"\\input\s*\{([^}]+)\}", expand_input, content)
+                expanded = expand_latex_inputs(content, base_dir)
 
                 tmp = tempfile.NamedTemporaryFile(
                     mode="w", suffix=".tex", delete=False, encoding="utf-8"
@@ -161,17 +152,13 @@ def _convert_chapter_worker(
         )
 
         # Cleanup temporary files
-        for temp_file in temp_files:
-            with contextlib.suppress(Exception):
-                temp_file.unlink()
+        cleanup_temp_files(temp_files)
 
         return {"success": True, "output_file": output_file, "stable_name": stable_name}
 
     except Exception as e:
         # Cleanup temporary files on error
-        for temp_file in temp_files:
-            with contextlib.suppress(Exception):
-                temp_file.unlink()
+        cleanup_temp_files(temp_files)
 
         return {"success": False, "stable_name": stable_name, "error": str(e)}
 
@@ -276,22 +263,7 @@ class StandardBuilder:
         """
         content = tex_file.read_text(encoding="utf-8")
         base_dir = tex_file.parent
-
-        # Find all \input{filename} commands
-        def expand_input(match):
-            filename = match.group(1)
-            input_file = base_dir / f"{filename}.tex"
-
-            if input_file.exists():
-                # Read and return the input file content
-                return input_file.read_text(encoding="utf-8")
-            else:
-                # If file doesn't exist, keep the \input command
-                return match.group(0)
-
-        # Replace \input{filename} with file content
-        # Handle both \input{filename} and \input {filename}
-        expanded = re.sub(r"\\input\s*\{([^}]+)\}", expand_input, content)
+        expanded = expand_latex_inputs(content, base_dir)
 
         # Create temporary file with expanded content
         tmp = tempfile.NamedTemporaryFile(mode="w", suffix=".tex", delete=False, encoding="utf-8")
@@ -556,9 +528,7 @@ class StandardBuilder:
         output_file.write_text(full_content, encoding="utf-8")
 
         # Cleanup temporary files
-        for temp_file in temp_files:
-            with contextlib.suppress(Exception):
-                temp_file.unlink()
+        cleanup_temp_files(temp_files)
 
         if verbose:
             print(f"\nWrote complete standard to {output_file}")
@@ -907,9 +877,7 @@ class StandardBuilder:
                 print("Added table of contents to front.md")
 
         # Cleanup temporary files
-        for temp_file in temp_files:
-            with contextlib.suppress(Exception):
-                temp_file.unlink()
+        cleanup_temp_files(temp_files)
 
         if verbose:
             print(f"\nWrote {len(output_files)} chapter files to {output_dir}")
