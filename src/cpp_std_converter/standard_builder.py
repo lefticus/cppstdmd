@@ -596,7 +596,6 @@ class StandardBuilder:
         for match in heading_pattern.finditer(markdown_content):
             hashes = match.group(1)
             title = match.group(2).strip()
-            match.group(3)
             stable_name = match.group(4)
 
             level = len(hashes) - 1  # H1=0, H2=1, etc.

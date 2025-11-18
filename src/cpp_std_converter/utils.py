@@ -118,7 +118,6 @@ def temp_tex_file(content: str):
         tmp_path = Path(tmp.name)
         yield tmp_path
     finally:
-        # Clean up temporary file
         tmp_path = Path(tmp.name)
         with contextlib.suppress(FileNotFoundError):
             tmp_path.unlink()
