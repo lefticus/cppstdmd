@@ -71,12 +71,37 @@ local label_index = {}
 local FIRSTLIB = "support"
 local LASTLIB = "thread"
 
+-- Macro length constants (prevents off-by-one errors, improves maintainability)
+local MACRO_LEN = {
+  term = 5,           -- \term
+  mbox = 5,           -- \mbox
+  defn = 5,           -- \defn
+  tcode = 6,          -- \tcode
+  range = 6,          -- \range
+  defnx = 6,          -- \defnx
+  doccite = 8,        -- \doccite
+  unicode = 8,        -- \unicode
+  impdefx = 9,        -- \impdefx
+  Fundescx = 9,       -- \Fundescx
+  grammarterm = 12,   -- \grammarterm
+  description = 19,   -- \begin{description}
+}
+
+-- Common pattern constants (DRY principle, improves maintainability)
+local PATTERN = {
+  inline_math = "%$([^$]+)%$",
+  subscript_braced = "([%w]+)_{([%w]+)}",
+  subscript_simple = "([%w]+)_([%w])",
+  simple_macro = "\\([^}]*){}",
+  braced_macro = "\\([^{]*)%{([^}]*)%}",
+}
+
 -- Helper function to convert inline math in code (subscripts and operators)
 -- Converts $X_i$ to Xᵢ (Unicode subscript)
 -- Converts $A \land B$ to A ∧ B (logical operators) - Issue #52
 local function convert_math_in_code(text)
   -- Process $...$  patterns (inline math in code)
-  text = text:gsub("%$([^$]+)%$", function(math_content)
+  text = text:gsub(PATTERN.inline_math, function(math_content)
     -- Convert logical operators (Issue #52)
     math_content = math_content:gsub("\\land", "∧")
     math_content = math_content:gsub("\\lor", "∨")
@@ -84,7 +109,7 @@ local function convert_math_in_code(text)
     math_content = math_content:gsub("\\vee", "∨")
 
     -- Convert subscripts with braces: X_{i} → Xᵢ
-    math_content = math_content:gsub("([%w]+)_{([%w]+)}", function(name, sub)
+    math_content = math_content:gsub(PATTERN.subscript_braced, function(name, sub)
       if subscripts[sub] then
         return name .. subscripts[sub]
       else
@@ -92,7 +117,7 @@ local function convert_math_in_code(text)
       end
     end)
     -- Convert subscripts without braces: X_i → Xᵢ
-    math_content = math_content:gsub("([%w]+)_([%w])", function(name, sub)
+    math_content = math_content:gsub(PATTERN.subscript_simple, function(name, sub)
       if subscripts[sub] then
         return name .. subscripts[sub]
       else
@@ -239,7 +264,7 @@ function RawInline(elem)
 
   -- \impdefx{description} - handle BEFORE \tcode to extract description with nested macros
   if text:match("^\\impdefx{") then
-    local description, _ = extract_impdefx_description(text, 1, 9, nil)  -- "\impdefx{" is 9 chars
+    local description, _ = extract_impdefx_description(text, 1, MACRO_LEN.impdefx, nil)  -- "\impdefx{" is 9 chars
     if description then
       return parse_impdefx_description_to_inlines(description)
     end
@@ -248,7 +273,7 @@ function RawInline(elem)
   -- \term{} - use brace-balanced extraction to handle nested \tcode{}
   -- Handle BEFORE \tcode to avoid greedy matching issues
   if text:match("^\\term{") then
-    local content, _ = extract_braced_content(text, 1, 5)  -- "\term" is 5 chars
+    local content, _ = extract_braced_content(text, 1, MACRO_LEN.term)  -- \term is 5 chars
     if content then
       -- Parse content with nested \tcode{} support
       -- Custom tcode processor: unescape + convert math + convert spacing
@@ -266,7 +291,7 @@ function RawInline(elem)
   -- \mbox{...} - process nested macros within the box
   local mbox_start = text:find("\\mbox{", 1, true)
   if mbox_start and mbox_start == 1 then
-    local content, _ = extract_braced_content(text, mbox_start, 5)  -- "\mbox" is 5 chars
+    local content, _ = extract_braced_content(text, mbox_start, MACRO_LEN.mbox)  -- \mbox is 5 chars
     if content then
       -- Parse content into inline elements, processing nested macros
       local inlines = {}
@@ -353,7 +378,7 @@ function RawInline(elem)
   local tcode_start = text:find("\\tcode{", 1, true)
   local end_pos
   if tcode_start and tcode_start == 1 then  -- Must be at start
-    code, end_pos = extract_braced_content(text, tcode_start, 6)  -- "\tcode" is 6 chars
+    code, end_pos = extract_braced_content(text, tcode_start, MACRO_LEN.tcode)  -- \tcode is 6 chars
   end
   if code then
     -- Strip \brk{} line break hints and \- discretionary hyphens first
@@ -451,7 +476,7 @@ function RawInline(elem)
   -- Document citations - use brace-balanced parsing to handle nested macros like \Cpp{}
   local doccite_start = text:find("\\doccite{", 1, true)
   if doccite_start then
-    local content, _ = extract_braced_content(text, doccite_start, 8)  -- "\doccite" is 8 chars
+    local content, _ = extract_braced_content(text, doccite_start, MACRO_LEN.doccite)  -- \doccite is 8 chars
     if content then
       -- Expand macros in content before wrapping in emphasis
       content = expand_macros(content)
@@ -462,7 +487,7 @@ function RawInline(elem)
   -- Function description cross-reference - use brace-balanced parsing
   local fundescx_start = text:find("\\Fundescx{", 1, true)
   if fundescx_start then
-    local content, _ = extract_braced_content(text, fundescx_start, 9)  -- "\Fundescx" is 9 chars
+    local content, _ = extract_braced_content(text, fundescx_start, MACRO_LEN.Fundescx)  -- \Fundescx is 9 chars
     if content then
       -- Expand macros in content before wrapping in emphasis
       content = expand_macros(content)
@@ -513,7 +538,7 @@ function RawInline(elem)
   -- \defn{x} - use brace-balanced parsing to handle nested macros like \Cpp{}
   local defn_start = text:find("\\defn{", 1, true)
   if defn_start then
-    local content, _ = extract_braced_content(text, defn_start, 5)  -- "\defn" is 5 chars
+    local content, _ = extract_braced_content(text, defn_start, MACRO_LEN.defn)  -- \defn is 5 chars
     if content then
       -- Expand macros in content before wrapping in emphasis
       content = expand_macros(content)
@@ -655,7 +680,7 @@ function RawInline(elem)
   local unicode_match = text:match("^\\unicode{")
   if unicode_match then
     -- Extract both brace-balanced arguments
-    local args, _ = extract_multi_arg_macro(text, 1, 8, 2)  -- \unicode is 8 chars, 2 args
+    local args, _ = extract_multi_arg_macro(text, 1, MACRO_LEN.unicode, 2)  -- \unicode, 2 args
     if args then
       return pandoc.Str("U+" .. args[1] .. " (" .. args[2] .. ")")
     end
@@ -780,7 +805,7 @@ function RawBlock(elem)
 
   -- \defnx{plural}{singular} - renders plural form with nested \tcode{} support
   if text:match("^\\defnx{") then
-    local plural, next_pos = extract_braced_content(text, 1, 6)  -- "\defnx" is 6 chars
+    local plural, next_pos = extract_braced_content(text, 1, MACRO_LEN.defnx)  -- \defnx is 6 chars
     if plural then
       -- Parse plural content with nested \tcode{} support (uses defaults)
       local inlines = parse_content_with_tcode(plural)
@@ -793,7 +818,7 @@ function RawBlock(elem)
   local desc_start = text:find("\\begin{description}")
   if desc_start then
     -- Find the matching \end{description} accounting for nesting
-    local pos = desc_start + 19 -- length of "\begin{description}"
+    local pos = desc_start + MACRO_LEN.description
     local depth = 1
     local desc_end = nil
 
