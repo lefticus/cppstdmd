@@ -49,12 +49,6 @@ local clean_code_common = common.clean_code_common
 local remove_font_switches = common.remove_font_switches
 local handle_overlap_commands = common.handle_overlap_commands
 
--- Helper function to clean up LaTeX escapes in code
--- Now uses unified clean_code_common() from cpp-common.lua
-local function clean_code(code)
-  return clean_code_common(code, false)  -- false = no special textbackslash handling
-end
-
 -- Main filter function for raw blocks
 function RawBlock(elem)
   if elem.format ~= 'latex' then
@@ -82,7 +76,7 @@ function RawBlock(elem)
 
   if code then
     -- Clean up the code
-    code = clean_code(code)
+    code = clean_code_common(code, false)
     code = trim(code)
 
     -- Return as a code block with cpp language
@@ -94,7 +88,7 @@ function RawBlock(elem)
   code = text:match("\\begin{codeblocktu}{[^}]*}(.-)\\end{codeblocktu}")
 
   if code then
-    code = clean_code(code)
+    code = clean_code_common(code, false)
     code = trim(code)
     return pandoc.CodeBlock(code, {class = "cpp"})
   end
@@ -104,7 +98,7 @@ function RawBlock(elem)
   code = text:match("\\begin{outputblock}(.-)\\end{outputblock}")
 
   if code then
-    code = clean_code(code)
+    code = clean_code_common(code, false)
     code = trim(code)
     return pandoc.CodeBlock(code, {class = "text"})  -- Use "text" class for output
   end
@@ -114,7 +108,7 @@ function RawBlock(elem)
   code = text:match("\\begin{codeblockdigitsep}(.-)\\end{codeblockdigitsep}")
 
   if code then
-    code = clean_code(code)
+    code = clean_code_common(code, false)
     code = trim(code)
     return pandoc.CodeBlock(code, {class = "cpp"})
   end

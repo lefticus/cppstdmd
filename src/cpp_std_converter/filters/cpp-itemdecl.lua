@@ -56,6 +56,8 @@ local remove_macro = common.remove_macro
 local process_macro_with_replacement = common.process_macro_with_replacement
 local clean_code_common = common.clean_code_common
 local expand_macros_common = common.expand_macros_common
+local build_environment_opening = common.build_environment_opening
+local build_environment_closing = common.build_environment_closing
 
 -- Track note and example counters across itemdescr processing
 local itemdescr_note_counter = 0
@@ -295,12 +297,7 @@ local function process_itemdescr_environment(content, env_type, counter_ref, alr
     table.insert(result, pandoc.Para(para))
   else
     -- Complex case: has code blocks or other non-Para blocks (like itemize)
-    local opening = {
-      pandoc.Str("["),
-      pandoc.Emph({pandoc.Str(label .. " " .. counter_val)}),
-      pandoc.Str(":")
-    }
-    table.insert(result, pandoc.Para(opening))
+    table.insert(result, build_environment_opening(label, counter_val, true))
 
     -- Output all blocks from parsed content, converting ref placeholders in Para blocks
     for _, parsed_block in ipairs(parsed.blocks) do
@@ -310,12 +307,7 @@ local function process_itemdescr_environment(content, env_type, counter_ref, alr
       table.insert(result, parsed_block)
     end
 
-    local closing = {
-      pandoc.Str("— "),
-      pandoc.Emph({pandoc.Str("end " .. env_type)}),
-      pandoc.Str("]")
-    }
-    table.insert(result, pandoc.Para(closing))
+    table.insert(result, build_environment_closing(env_type, true))
   end
 
   return result

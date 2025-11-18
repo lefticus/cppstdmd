@@ -57,12 +57,6 @@ local build_environment_closing = common.build_environment_closing
 local note_counter = 0
 local example_counter = 0
 
--- Helper function to clean up LaTeX escapes in code
--- Now uses unified clean_code_common() from cpp-common.lua with special textbackslash handling
-local function clean_code(code)
-  return clean_code_common(code, true)  -- true = special textbackslash handling for notes/examples
-end
-
 -- Helper function to convert codeblock Div to CodeBlock or replace placeholders
 -- Returns a list of blocks (to support title + code for codeblocktu)
 local function process_codeblock_div(block, codeblocks, titles)
@@ -194,7 +188,7 @@ local function extract_codeblocks(content)
     if earliest_start and earliest_code then
       -- Clean and store the code
       local code = earliest_code:gsub("^%s*\n", ""):gsub("\n%s*$", "")
-      code = clean_code(code)
+      code = clean_code_common(code, true)
 
       counter = counter + 1
       codeblocks[counter] = code
@@ -390,13 +384,8 @@ local function process_single_block(block, codeblocks, titles)
         local parsed = pandoc.read(note_content, "latex+raw_tex")
 
         local result = {}
-        local label = "Note"
         -- Opening
-        table.insert(result, pandoc.Para({
-          pandoc.Str("["),
-          pandoc.Emph({pandoc.Str(label .. " " .. note_counter)}),
-          pandoc.Str(":")
-        }))
+        table.insert(result, build_environment_opening("Note", note_counter, true))
 
         -- Process all blocks recursively with the existing codeblocks dict
         for _, parsed_block in ipairs(parsed.blocks) do
@@ -407,11 +396,7 @@ local function process_single_block(block, codeblocks, titles)
         end
 
         -- Closing
-        table.insert(result, pandoc.Para({
-          pandoc.Str("— "),
-          pandoc.Emph({pandoc.Str("end note")}),
-          pandoc.Str("]")
-        }))
+        table.insert(result, build_environment_closing("note", true))
 
         return result
       end
@@ -432,13 +417,8 @@ local function process_single_block(block, codeblocks, titles)
         local parsed = pandoc.read(example_content, "latex+raw_tex")
 
         local result = {}
-        local label = "Example"
         -- Opening
-        table.insert(result, pandoc.Para({
-          pandoc.Str("["),
-          pandoc.Emph({pandoc.Str(label .. " " .. example_counter)}),
-          pandoc.Str(":")
-        }))
+        table.insert(result, build_environment_opening("Example", example_counter, true))
 
         -- Process all blocks recursively with the existing codeblocks dict
         for _, parsed_block in ipairs(parsed.blocks) do
@@ -449,11 +429,7 @@ local function process_single_block(block, codeblocks, titles)
         end
 
         -- Closing
-        table.insert(result, pandoc.Para({
-          pandoc.Str("— "),
-          pandoc.Emph({pandoc.Str("end example")}),
-          pandoc.Str("]")
-        }))
+        table.insert(result, build_environment_closing("example", true))
 
         return result
       end
@@ -537,12 +513,7 @@ function process_environment(content, env_type, counter_val)
     table.insert(result, pandoc.Para(para))
   else
     -- Complex case: has code blocks or other non-Para blocks
-    local opening = {
-      pandoc.Str("["),
-      pandoc.Emph({pandoc.Str(label .. " " .. counter_val)}),
-      pandoc.Str(":")
-    }
-    table.insert(result, pandoc.Para(opening))
+    table.insert(result, build_environment_opening(label, counter_val, true))
 
     -- Output all blocks from parsed content, recursively processing Divs
     for _, parsed_block in ipairs(parsed.blocks) do
@@ -553,12 +524,7 @@ function process_environment(content, env_type, counter_val)
       end
     end
 
-    local closing = {
-      pandoc.Str("— "),
-      pandoc.Emph({pandoc.Str("end " .. env_type)}),
-      pandoc.Str("]")
-    }
-    table.insert(result, pandoc.Para(closing))
+    table.insert(result, build_environment_closing(env_type, true))
   end
 
   return result, counter_val
