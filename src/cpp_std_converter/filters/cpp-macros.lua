@@ -48,6 +48,7 @@ local extract_braced_content = common.extract_braced_content
 local trim = common.trim
 local extract_impdefx_description = common.extract_impdefx_description
 local expand_impdefx_in_text = common.expand_impdefx_in_text
+local parse_content_with_tcode = common.parse_content_with_tcode
 local parse_impdefx_description_to_inlines = common.parse_impdefx_description_to_inlines
 local extract_multi_arg_macro = common.extract_multi_arg_macro
 local process_macro_with_replacement = common.process_macro_with_replacement
@@ -249,42 +250,15 @@ function RawInline(elem)
   if text:match("^\\term{") then
     local content, _ = extract_braced_content(text, 1, 5)  -- "\term" is 5 chars
     if content then
-      -- Parse content into a list of inline elements
-      local inlines = {}
-      local pos = 1
-      while pos <= #content do
-        -- Look for \tcode{...}
-        local tcode_start, tcode_end = content:find("\\tcode{", pos, true)
-        if tcode_start then
-          -- Add text before \tcode
-          if tcode_start > pos then
-            local text_before = content:sub(pos, tcode_start - 1)
-            text_before = text_before:gsub("\\#", "#"):gsub("\\&", "&")
-            table.insert(inlines, pandoc.Str(text_before))
-          end
-          -- Extract \tcode content
-          -- "\tcode" is 6 chars
-          local tcode_content, next_pos = extract_braced_content(content, tcode_start, 6)
-          if tcode_content then
-            tcode_content = tcode_content:gsub("\\#", "#"):gsub("\\&", "&")
-            -- Convert inline math (subscripts and operators) to Unicode
-            tcode_content = convert_math_in_code(tcode_content)
-            -- Convert LaTeX spacing commands to regular spaces
-            tcode_content = convert_latex_spacing(tcode_content)
-            table.insert(inlines, pandoc.Code(tcode_content))
-            pos = next_pos
-          else
-            -- Malformed \tcode, skip it
-            pos = tcode_end + 1
-          end
-        else
-          -- No more \tcode, add remaining text
-          local remaining = content:sub(pos)
-          remaining = remaining:gsub("\\#", "#"):gsub("\\&", "&")
-          table.insert(inlines, pandoc.Str(remaining))
-          break
+      -- Parse content with nested \tcode{} support
+      -- Custom tcode processor: unescape + convert math + convert spacing
+      local inlines = parse_content_with_tcode(content, {
+        tcode_processor = function(code)
+          code = unescape_latex_chars(code)
+          code = convert_math_in_code(code)
+          return convert_latex_spacing(code)
         end
-      end
+      })
       return pandoc.Emph(inlines)
     end
   end
@@ -563,39 +537,11 @@ function RawInline(elem)
   if defnx_start then
     local plural, next_pos = extract_braced_content(text, defnx_start, 6)
     if plural then
-      -- Parse plural content into a list of inline elements
-      local inlines = {}
-      local pos = 1
-      while pos <= #plural do
-        -- Look for \tcode{...}
-        local inner_tcode_start, tcode_end = plural:find("\\tcode{", pos, true)
-        if inner_tcode_start then
-          -- Add text before \tcode
-          if inner_tcode_start > pos then
-            local text_before = plural:sub(pos, inner_tcode_start - 1)
-            text_before = expand_macros(text_before)  -- Expand macros like \Cpp{}
-            text_before = unescape_latex_chars(text_before)
-            table.insert(inlines, pandoc.Str(text_before))
-          end
-          -- Extract \tcode content using brace-balanced extraction
-          local tcode_content, tcode_next_pos = extract_braced_content(plural, inner_tcode_start, 6)
-          if tcode_content then
-            tcode_content = unescape_latex_chars(tcode_content)
-            table.insert(inlines, pandoc.Code(tcode_content))
-            pos = tcode_next_pos
-          else
-            -- Malformed \tcode, skip it
-            pos = tcode_end + 1
-          end
-        else
-          -- No more \tcode, add remaining text
-          local remaining = plural:sub(pos)
-          remaining = expand_macros(remaining)  -- Expand macros like \Cpp{}
-          remaining = unescape_latex_chars(remaining)
-          table.insert(inlines, pandoc.Str(remaining))
-          break
-        end
-      end
+      -- Parse plural content with nested \tcode{} support
+      -- Custom text processor: expand macros (like \Cpp{}) then unescape
+      local inlines = parse_content_with_tcode(plural, {
+        text_processor = function(t) return unescape_latex_chars(expand_macros(t)) end
+      })
       return pandoc.Emph(inlines)
     end
   end
@@ -836,39 +782,8 @@ function RawBlock(elem)
   if text:match("^\\defnx{") then
     local plural, next_pos = extract_braced_content(text, 1, 6)  -- "\defnx" is 6 chars
     if plural then
-      -- Parse plural content into a list of inline elements
-      local inlines = {}
-      local pos = 1
-      while pos <= #plural do
-        -- Look for \tcode{...}
-        local inner_tcode_start2, tcode_end = plural:find("\\tcode{", pos, true)
-        if inner_tcode_start2 then
-          -- Add text before \tcode
-          if inner_tcode_start2 > pos then
-            local text_before = plural:sub(pos, inner_tcode_start2 - 1)
-            text_before = text_before:gsub("\\#", "#"):gsub("\\&", "&")
-            table.insert(inlines, pandoc.Str(text_before))
-          end
-          -- Extract \tcode content
-          -- "\tcode" is 6 chars
-          local tcode_content, tcode_next_pos =
-            extract_braced_content(plural, inner_tcode_start2, 6)
-          if tcode_content then
-            tcode_content = tcode_content:gsub("\\#", "#"):gsub("\\&", "&")
-            table.insert(inlines, pandoc.Code(tcode_content))
-            pos = tcode_next_pos
-          else
-            -- Malformed \tcode, skip it
-            pos = tcode_end + 1
-          end
-        else
-          -- No more \tcode, add remaining text
-          local remaining = plural:sub(pos)
-          remaining = remaining:gsub("\\#", "#"):gsub("\\&", "&")
-          table.insert(inlines, pandoc.Str(remaining))
-          break
-        end
-      end
+      -- Parse plural content with nested \tcode{} support (uses defaults)
+      local inlines = parse_content_with_tcode(plural)
       return pandoc.Para({pandoc.Emph(inlines)})
     end
   end

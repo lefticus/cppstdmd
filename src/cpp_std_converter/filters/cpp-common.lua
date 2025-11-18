@@ -468,6 +468,68 @@ local function expand_impdefx_in_text(text, pattern, prefix_len, suffix_char)
   return text
 end
 
+-- Helper function to parse content containing \tcode{} macros
+-- Extracts \tcode{} macros and converts them to Pandoc elements with configurable processing
+-- This consolidates the duplicate pattern of "find \tcode, extract content, process, insert"
+-- that appears in multiple filters (cpp-macros.lua \term{}, \defnx{}, parse_impdefx_description_to_inlines)
+--
+-- Parameters:
+--   content: String containing text and \tcode{} macros to parse
+--   options: Table with optional processing functions:
+--     - text_processor: function(text) -> processed text for text between \tcode{}
+--       Default: unescape_latex_chars (handles \# and \&)
+--     - tcode_processor: function(code) -> processed code for \tcode{} content
+--       Default: unescape_latex_chars
+--     - create_element: function(code) -> Pandoc element to insert for \tcode{}
+--       Default: pandoc.Code (use pandoc.Str for plain text contexts)
+--
+-- Returns:
+--   Table of Pandoc inline elements (Str and Code/Str alternating)
+local function parse_content_with_tcode(content, options)
+  options = options or {}
+  local text_processor = options.text_processor or unescape_latex_chars
+  local tcode_processor = options.tcode_processor or unescape_latex_chars
+  local create_element = options.create_element or pandoc.Code
+
+  local inlines = {}
+  local pos = 1
+
+  while pos <= #content do
+    -- Look for \tcode{...}
+    local tcode_start, tcode_end = content:find("\\tcode{", pos, true)
+
+    if tcode_start then
+      -- Add text before \tcode
+      if tcode_start > pos then
+        local text_before = content:sub(pos, tcode_start - 1)
+        text_before = text_processor(text_before)
+        table.insert(inlines, pandoc.Str(text_before))
+      end
+
+      -- Extract \tcode content using brace-balanced extraction
+      -- "\tcode" is 6 chars
+      local tcode_content, next_pos = extract_braced_content(content, tcode_start, 6)
+
+      if tcode_content then
+        tcode_content = tcode_processor(tcode_content)
+        table.insert(inlines, create_element(tcode_content))
+        pos = next_pos
+      else
+        -- Malformed \tcode, skip it
+        pos = tcode_end + 1
+      end
+    else
+      -- No more \tcode, add remaining text
+      local remaining = content:sub(pos)
+      remaining = text_processor(remaining)
+      table.insert(inlines, pandoc.Str(remaining))
+      break
+    end
+  end
+
+  return inlines
+end
+
 -- Helper function to parse \impdefx description into Pandoc inline elements
 -- Used by cpp-macros.lua RawInline() handler
 -- Handles nested \tcode{} macros by creating alternating Str elements
@@ -476,40 +538,15 @@ end
 -- Returns:
 --   Table of Pandoc inline elements
 local function parse_impdefx_description_to_inlines(description)
+  -- Start with prefix, then parse content with \tcode{} as plain Str (not Code)
   local inlines = {pandoc.Str("implementation-defined  // ")}
-  local pos = 1
+  local parsed = parse_content_with_tcode(description, {
+    create_element = pandoc.Str  -- Use Str instead of Code for plain text context
+  })
 
-  while pos <= #description do
-    -- Look for \tcode{...}
-    local tcode_start, tcode_end = description:find("\\tcode{", pos, true)
-
-    if tcode_start then
-      -- Add text before \tcode
-      if tcode_start > pos then
-        local text_before = description:sub(pos, tcode_start - 1)
-        text_before = text_before:gsub("\\#", "#"):gsub("\\&", "&")
-        table.insert(inlines, pandoc.Str(text_before))
-      end
-
-      -- Extract \tcode content
-      -- "\tcode" is 6 chars
-      local tcode_content, next_pos = extract_braced_content(description, tcode_start, 6)
-
-      if tcode_content then
-        tcode_content = tcode_content:gsub("\\#", "#"):gsub("\\&", "&")
-        table.insert(inlines, pandoc.Str(tcode_content))
-        pos = next_pos
-      else
-        -- Malformed \tcode, skip it
-        pos = tcode_end + 1
-      end
-    else
-      -- No more \tcode, add remaining text
-      local remaining = description:sub(pos)
-      remaining = remaining:gsub("\\#", "#"):gsub("\\&", "&")
-      table.insert(inlines, pandoc.Str(remaining))
-      break
-    end
+  -- Append parsed elements to initial prefix
+  for _, elem in ipairs(parsed) do
+    table.insert(inlines, elem)
   end
 
   return inlines
@@ -2538,6 +2575,7 @@ return {
   process_code_macro = process_code_macro,
   extract_impdefx_description = extract_impdefx_description,
   expand_impdefx_in_text = expand_impdefx_in_text,
+  parse_content_with_tcode = parse_content_with_tcode,
   parse_impdefx_description_to_inlines = parse_impdefx_description_to_inlines,
   expand_cpp_version_macros = expand_cpp_version_macros,
   expand_concept_macros = expand_concept_macros,

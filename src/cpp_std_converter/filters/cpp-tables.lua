@@ -256,6 +256,39 @@ local function expand_table_macros(text)
   return text
 end
 
+-- Helper function to extract table headers from table content
+-- Tries multiple header styles in order: \hdstyle{}, then \lhdr{}/\chdr{}/\rhdr{}
+-- Returns array of header strings with macros expanded
+local function extract_table_headers(table_content)
+  local headers = {}
+
+  -- Try to find all headers in row using \hdstyle{} pattern
+  local header_line = table_content:match("\\hdstyle{.-}.-\\\\ *\\capsep")
+  if header_line then
+    for hdr in header_line:gmatch("\\hdstyle{([^}]*)}") do
+      table.insert(headers, expand_table_macros(hdr))
+    end
+  end
+
+  -- If no \hdstyle, try \lhdr, \chdr, \rhdr combination
+  if #headers == 0 then
+    local lhdr_line = table_content:match("\\lhdr{.-}.-\\\\ *\\capsep")
+    if lhdr_line then
+      for hdr in lhdr_line:gmatch("\\lhdr{([^}]*)}") do
+        table.insert(headers, expand_table_macros(hdr))
+      end
+      for hdr in lhdr_line:gmatch("\\chdr{([^}]*)}") do
+        table.insert(headers, expand_table_macros(hdr))
+      end
+      for hdr in lhdr_line:gmatch("\\rhdr{([^}]*)}") do
+        table.insert(headers, expand_table_macros(hdr))
+      end
+    end
+  end
+
+  return headers
+end
+
 -- Helper function to parse a table row (split by &)
 local function parse_row(row_text)
   local cells = {}
@@ -1106,32 +1139,8 @@ function RawBlock(elem)
         -- Parse caption (may contain macros)
         caption = expand_table_macros(caption)
 
-        -- Extract header row (try multiple header styles)
-        local headers = {}
-
-        -- Try to find all headers in row (could be 2, 3, or 4 columns)
-        local header_line = table_content:match("\\hdstyle{.-}.-\\\\ *\\capsep")
-        if header_line then
-          for hdr in header_line:gmatch("\\hdstyle{([^}]*)}") do
-            table.insert(headers, expand_table_macros(hdr))
-          end
-        end
-
-        -- If no \hdstyle, try \lhdr, \chdr, \rhdr combination
-        if #headers == 0 then
-          local lhdr_line = table_content:match("\\lhdr{.-}.-\\\\ *\\capsep")
-          if lhdr_line then
-            for hdr in lhdr_line:gmatch("\\lhdr{([^}]*)}") do
-              table.insert(headers, expand_table_macros(hdr))
-            end
-            for hdr in lhdr_line:gmatch("\\chdr{([^}]*)}") do
-              table.insert(headers, expand_table_macros(hdr))
-            end
-            for hdr in lhdr_line:gmatch("\\rhdr{([^}]*)}") do
-              table.insert(headers, expand_table_macros(hdr))
-            end
-          end
-        end
+        -- Extract header row using shared helper
+        local headers = extract_table_headers(table_content)
 
         -- Extract data rows (after \capsep)
         local data_section = extract_data_section(table_content)
@@ -1167,32 +1176,8 @@ function RawBlock(elem)
         -- Parse caption (may contain macros)
         caption = expand_table_macros(caption)
 
-        -- Extract header row (try multiple header styles)
-        local headers = {}
-
-        -- Try to find all headers in row (could be 2, 3, or 4 columns)
-        local header_line = table_content:match("\\hdstyle{.-}.-\\\\ *\\capsep")
-        if header_line then
-          for hdr in header_line:gmatch("\\hdstyle{([^}]*)}") do
-            table.insert(headers, expand_table_macros(hdr))
-          end
-        end
-
-        -- If no \hdstyle, try \lhdr, \chdr, \rhdr combination
-        if #headers == 0 then
-          local lhdr_line2 = table_content:match("\\lhdr{.-}.-\\\\ *\\capsep")
-          if lhdr_line2 then
-            for hdr in lhdr_line2:gmatch("\\lhdr{([^}]*)}") do
-              table.insert(headers, expand_table_macros(hdr))
-            end
-            for hdr in lhdr_line2:gmatch("\\chdr{([^}]*)}") do
-              table.insert(headers, expand_table_macros(hdr))
-            end
-            for hdr in lhdr_line2:gmatch("\\rhdr{([^}]*)}") do
-              table.insert(headers, expand_table_macros(hdr))
-            end
-          end
-        end
+        -- Extract header row using shared helper
+        local headers = extract_table_headers(table_content)
 
         -- Extract data rows (after \capsep)
         local data_section = extract_data_section(table_content)
@@ -1234,35 +1219,8 @@ function RawBlock(elem)
         -- Parse caption to expand any macros in EXTRA (like \oldconcept{...})
         caption = expand_table_macros(caption)
 
-        -- Extract header row (try multiple header styles)
-        local headers = {}
-
-        -- Try to find all headers in row (could be 2, 3, or 4 columns)
-        -- Match pattern: \hdstyle{...} & \hdstyle{...} & ...
-        local header_line = table_content:match("\\hdstyle{.-}.-\\\\ *\\capsep")
-        if header_line then
-          -- Parse headers by splitting on &
-          for hdr in header_line:gmatch("\\hdstyle{([^}]*)}") do
-            table.insert(headers, expand_table_macros(hdr))
-          end
-        end
-
-        -- If no \hdstyle, try \lhdr, \chdr, \rhdr combination
-        if #headers == 0 then
-          local lhdr_line3 = table_content:match("\\lhdr{.-}.-\\\\ *\\capsep")
-          if lhdr_line3 then
-            -- Extract individual headers
-            for hdr in lhdr_line3:gmatch("\\lhdr{([^}]*)}") do
-              table.insert(headers, expand_table_macros(hdr))
-            end
-            for hdr in lhdr_line3:gmatch("\\chdr{([^}]*)}") do
-              table.insert(headers, expand_table_macros(hdr))
-            end
-            for hdr in lhdr_line3:gmatch("\\rhdr{([^}]*)}") do
-              table.insert(headers, expand_table_macros(hdr))
-            end
-          end
-        end
+        -- Extract header row using shared helper
+        local headers = extract_table_headers(table_content)
 
         -- Extract data rows (after \capsep)
         local data_section = extract_data_section(table_content)
