@@ -39,10 +39,11 @@ Usage:
 
 import argparse
 import re
-import subprocess
 import sys
 import tempfile
 from pathlib import Path
+
+from src.cpp_std_converter.utils import ensure_dir, run_command_silent
 
 # Version metadata (in chronological order)
 VERSIONS = {
@@ -178,7 +179,7 @@ def generate_chapter_diff(from_file: Path, to_file: Path, output_file: Path) -> 
     """
     try:
         # Use git diff --no-index for better formatting
-        result = subprocess.run(
+        success, stdout, stderr = run_command_silent(
             [
                 "git",
                 "diff",
@@ -188,19 +189,18 @@ def generate_chapter_diff(from_file: Path, to_file: Path, output_file: Path) -> 
                 str(from_file),
                 str(to_file),
             ],
-            capture_output=True,
-            text=True,
             timeout=60,
         )
 
-        # git diff returns 1 when files differ (this is expected)
-        if result.returncode not in [0, 1]:
+        # git diff returns 1 when files differ (this is expected), 0 when identical
+        # Only fail if git diff command itself failed (returncode > 1)
+        if not success and stderr and "fatal" in stderr.lower():
             print(f"Warning: git diff failed for {from_file.stem}", file=sys.stderr)
             return False
 
         # Write diff output
         with open(output_file, "w", encoding="utf-8") as f:
-            f.write(result.stdout)
+            f.write(stdout)
 
         return True
 
@@ -251,7 +251,7 @@ def generate_stable_name_diff(
                 to_file.write_text("", encoding="utf-8")
 
             # Use git diff with high-quality options
-            result = subprocess.run(
+            success, stdout, stderr = run_command_silent(
                 [
                     "git",
                     "diff",
@@ -262,20 +262,19 @@ def generate_stable_name_diff(
                     str(from_file),
                     str(to_file),
                 ],
-                capture_output=True,
-                text=True,
                 timeout=30,
             )
 
-            # git diff returns 1 when files differ (this is expected)
-            if result.returncode not in [0, 1]:
+            # git diff returns 1 when files differ (this is expected), 0 when identical
+            # Only fail if git diff command itself failed
+            if not success and stderr and "fatal" in stderr.lower():
                 return False
 
             # Add header with stable name
             with open(output_file, "w", encoding="utf-8") as f:
                 f.write(f"# Diff for [{stable_name}]\n")
                 f.write(f"# Stable name: {stable_name}\n\n")
-                f.write(result.stdout)
+                f.write(stdout)
 
             return True
 
@@ -342,7 +341,7 @@ def generate_stable_name_diffs(
 
     # Create output directory
     stable_name_dir = output_dir / "by_stable_name"
-    stable_name_dir.mkdir(parents=True, exist_ok=True)
+    ensure_dir(stable_name_dir)
 
     # Generate diff for each stable name
     success_count = 0
@@ -633,7 +632,7 @@ def generate_diff_pair(
     print(f"  Output directory: {output_base}")
 
     # Create output directory
-    output_base.mkdir(parents=True, exist_ok=True)
+    ensure_dir(output_base)
 
     # Find common/added/removed chapters
     common, removed, added = find_common_chapters(from_version, to_version)

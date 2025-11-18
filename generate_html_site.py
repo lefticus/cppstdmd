@@ -52,6 +52,8 @@ from concurrent.futures import ProcessPoolExecutor, as_completed
 from datetime import datetime
 from pathlib import Path
 
+from src.cpp_std_converter.utils import ensure_dir, run_command, run_command_silent
+
 try:
     from bs4 import BeautifulSoup
     from jinja2 import Environment, FileSystemLoader
@@ -125,22 +127,14 @@ def create_icon(icon_name):
 def check_dependencies():
     """Check if required external tools are available."""
     # Check for diff2html-cli or npx
-    try:
-        result = subprocess.run(
-            ["diff2html", "--version"], capture_output=True, text=True, check=False
-        )
-        if result.returncode == 0:
-            return  # diff2html is available
-    except FileNotFoundError:
-        pass
+    success, stdout, stderr = run_command_silent(["diff2html", "--version"])
+    if success:
+        return  # diff2html is available
 
     # Try npx as fallback
-    try:
-        result = subprocess.run(["npx", "--version"], capture_output=True, text=True, check=False)
-        if result.returncode == 0:
-            return  # npx is available
-    except FileNotFoundError:
-        pass
+    success, stdout, stderr = run_command_silent(["npx", "--version"])
+    if success:
+        return  # npx is available
 
     # Neither available
     print("Error: diff2html-cli is not installed and npx is not available")
@@ -455,24 +449,20 @@ def generate_diff_html(diff_file: Path, output_file: Path, context: dict) -> boo
     """
     try:
         # Create output directory if needed
-        output_file.parent.mkdir(parents=True, exist_ok=True)
+        ensure_dir(output_file.parent)
 
         # Try diff2html first, fall back to npx
         diff2html_cmd = None
-        try:
-            result = subprocess.run(["diff2html", "--version"], capture_output=True, check=False)
-            if result.returncode == 0:
-                diff2html_cmd = "diff2html"
-        except FileNotFoundError:
-            pass
+        success, stdout, stderr = run_command_silent(["diff2html", "--version"])
+        if success:
+            diff2html_cmd = "diff2html"
 
         if diff2html_cmd is None:
             # Try npx
-            try:
-                result = subprocess.run(["npx", "--version"], capture_output=True, check=False)
-                if result.returncode == 0:
-                    diff2html_cmd = "npx"
-            except FileNotFoundError:
+            success, stdout, stderr = run_command_silent(["npx", "--version"])
+            if success:
+                diff2html_cmd = "npx"
+            else:
                 return False
 
         if diff2html_cmd is None:
@@ -482,7 +472,7 @@ def generate_diff_html(diff_file: Path, output_file: Path, context: dict) -> boo
         cmd = ["npx", "diff2html"] if diff2html_cmd == "npx" else ["diff2html"]
         cmd.extend(["-i", "file", "-F", str(output_file), "-s", "side", "--", str(diff_file)])
 
-        result = subprocess.run(cmd, capture_output=True, text=True, check=True)
+        result = run_command(cmd, check=True)
 
         if result.returncode != 0:
             print(f"  Warning: diff2html returned {result.returncode}")
@@ -1088,7 +1078,7 @@ def generate_version_pair(
 
     # Generate individual diff pages in parallel
     diff_output_dir = output_path / "diffs" / slug
-    diff_output_dir.mkdir(parents=True, exist_ok=True)
+    ensure_dir(diff_output_dir)
 
     # Prepare tasks for parallel execution
     tasks = []
@@ -1441,7 +1431,7 @@ def generate_site(
 
     # Create output directory
     output_path = Path(output_dir)
-    output_path.mkdir(parents=True, exist_ok=True)
+    ensure_dir(output_path)
 
     # Determine worker count
     if max_workers is None:

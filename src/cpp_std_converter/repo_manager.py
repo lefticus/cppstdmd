@@ -34,6 +34,8 @@ import logging
 import subprocess
 from pathlib import Path
 
+from .utils import run_command, run_command_silent
+
 logger = logging.getLogger(__name__)
 
 
@@ -88,10 +90,10 @@ class DraftRepoManager:
         cmd.extend([self.REPO_URL, str(self.repo_dir)])
 
         try:
-            subprocess.run(cmd, check=True, capture_output=True, text=True)
+            run_command(cmd)
             logger.info("Clone successful")
-        except subprocess.CalledProcessError as e:
-            raise RepoManagerError(f"Failed to clone repository:\n{e.stderr}") from e
+        except Exception as e:
+            raise RepoManagerError(f"Failed to clone repository:\n{e}") from e
 
     def checkout(self, ref: str) -> None:
         """
@@ -112,47 +114,39 @@ class DraftRepoManager:
 
         try:
             # Try to checkout the ref directly (works if ref exists locally)
-            result = subprocess.run(
+            success, stdout, stderr = run_command_silent(
                 ["git", "checkout", ref],
                 cwd=self.repo_dir,
-                capture_output=True,
-                text=True,
             )
 
-            if result.returncode == 0:
+            if success:
                 logger.info(f"Checked out {ref}")
                 return
 
             # If local checkout failed, try fetching and then checkout
             logger.debug(f"Local ref {ref} not found, attempting fetch...")
             try:
-                subprocess.run(
+                run_command(
                     ["git", "fetch", "--tags"],
                     cwd=self.repo_dir,
-                    check=True,
-                    capture_output=True,
-                    text=True,
                     timeout=10,
                 )
 
                 # Try checkout again after fetch
-                subprocess.run(
+                run_command(
                     ["git", "checkout", ref],
                     cwd=self.repo_dir,
-                    check=True,
-                    capture_output=True,
-                    text=True,
                 )
                 logger.info(f"Checked out {ref}")
-            except (subprocess.CalledProcessError, subprocess.TimeoutExpired) as fetch_error:
+            except (Exception, subprocess.TimeoutExpired) as fetch_error:
                 # Fetch failed (offline?), but original checkout also failed
                 raise RepoManagerError(
                     f"Failed to checkout {ref}. Not found locally and fetch failed "
-                    f"(offline?):\n{result.stderr}"
+                    f"(offline?):\n{stderr}"
                 ) from fetch_error
 
-        except subprocess.CalledProcessError as e:
-            raise RepoManagerError(f"Failed to checkout {ref}:\n{e.stderr}") from e
+        except Exception as e:
+            raise RepoManagerError(f"Failed to checkout {ref}:\n{e}") from e
 
     def get_current_ref(self) -> dict[str, str]:
         """
@@ -172,35 +166,28 @@ class DraftRepoManager:
 
         try:
             # Get SHA
-            result = subprocess.run(
+            result = run_command(
                 ["git", "rev-parse", "HEAD"],
                 cwd=self.repo_dir,
-                check=True,
-                capture_output=True,
-                text=True,
             )
             sha = result.stdout.strip()
             short_sha = sha[:7]
 
             # Get symbolic ref (branch/tag name)
-            try:
-                result = subprocess.run(
-                    ["git", "symbolic-ref", "--short", "HEAD"],
-                    cwd=self.repo_dir,
-                    check=True,
-                    capture_output=True,
-                    text=True,
-                )
-                ref = result.stdout.strip()
-            except subprocess.CalledProcessError:
+            success, stdout, stderr = run_command_silent(
+                ["git", "symbolic-ref", "--short", "HEAD"],
+                cwd=self.repo_dir,
+            )
+
+            if success:
+                ref = stdout.strip()
+            else:
                 # Detached HEAD, try to get tag
-                result = subprocess.run(
+                success, stdout, stderr = run_command_silent(
                     ["git", "describe", "--tags", "--exact-match"],
                     cwd=self.repo_dir,
-                    capture_output=True,
-                    text=True,
                 )
-                ref = result.stdout.strip() if result.returncode == 0 else "detached"
+                ref = stdout.strip() if success else "detached"
 
             return {
                 "sha": sha,
@@ -208,8 +195,8 @@ class DraftRepoManager:
                 "short_sha": short_sha,
             }
 
-        except subprocess.CalledProcessError as e:
-            raise RepoManagerError(f"Failed to get current ref:\n{e.stderr}") from e
+        except Exception as e:
+            raise RepoManagerError(f"Failed to get current ref:\n{e}") from e
 
     def get_tags(self, pattern: str | None = None) -> list[str]:
         """
@@ -230,16 +217,13 @@ class DraftRepoManager:
         try:
             # Try to fetch latest tags (optional, works offline if tags already exist)
             try:
-                subprocess.run(
+                run_command(
                     ["git", "fetch", "--tags"],
                     cwd=self.repo_dir,
-                    check=True,
-                    capture_output=True,
-                    text=True,
                     timeout=10,
                 )
                 logger.debug("Fetched latest tags")
-            except (subprocess.CalledProcessError, subprocess.TimeoutExpired):
+            except (Exception, subprocess.TimeoutExpired):
                 logger.debug("Fetch failed (offline?), using local tags")
 
             # List tags (works with whatever tags are available locally)
@@ -247,19 +231,13 @@ class DraftRepoManager:
             if pattern:
                 cmd.append(pattern)
 
-            result = subprocess.run(
-                cmd,
-                cwd=self.repo_dir,
-                check=True,
-                capture_output=True,
-                text=True,
-            )
+            result = run_command(cmd, cwd=self.repo_dir)
 
             tags = [tag.strip() for tag in result.stdout.split("\n") if tag.strip()]
             return sorted(tags)
 
-        except subprocess.CalledProcessError as e:
-            raise RepoManagerError(f"Failed to get tags:\n{e.stderr}") from e
+        except Exception as e:
+            raise RepoManagerError(f"Failed to get tags:\n{e}") from e
 
     def get_source_files(self, pattern: str = "*.tex") -> list[Path]:
         """

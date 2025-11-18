@@ -58,5 +58,6 @@ def extract_stable_name_from_tex(tex_file: Path) -> str | None:
         # Fallback: use filename stem
         return None
 
-    except Exception:
+    except (OSError, UnicodeDecodeError):
+        # File read errors - return None as fallback
         return None

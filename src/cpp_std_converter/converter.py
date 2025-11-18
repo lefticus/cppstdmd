@@ -33,9 +33,7 @@ using Pandoc with custom Lua filters.
 
 import contextlib
 import re
-import subprocess
 import sys
-import tempfile
 from pathlib import Path
 
 import click
@@ -44,6 +42,7 @@ from .label_indexer import LabelIndexer
 from .repo_manager import DraftRepoManager, RepoManagerError
 from .stable_name import extract_stable_name_from_tex
 from .standard_builder import StandardBuilder
+from .utils import CommandError, ensure_dir, run_command, temp_tex_file
 
 
 def unescape_wikilinks(markdown: str) -> str:
@@ -87,6 +86,10 @@ def unescape_wikilinks(markdown: str) -> str:
     markdown = re.sub(r"\\libglobal\{([^}]+)\}", r"\1", markdown)
 
     return markdown
+
+
+# Files to skip during directory conversion (non-chapter infrastructure files)
+SKIP_FILES = {"std", "layout", "setup", "macros"}
 
 
 class ConverterError(Exception):
@@ -169,37 +172,24 @@ class Converter:
         # Preprocessing: inject simplified macro definitions for Pandoc
         # This allows Pandoc to expand common macros natively, reducing Lua filter complexity
         macros_file = self.filters_dir / "simplified_macros.tex"
-        temp_input_file = None
 
+        # Read input content
+        input_content = input_file.read_text(encoding="utf-8")
+
+        # Fix n3337-specific LaTeX syntax errors before processing
+        # Issue: n3337 has `[\textit{Example}` instead of `\enterexample`
+        # This confuses Pandoc's LaTeX parser (different from filter issues)
+        input_content = re.sub(r"\[\\textit\{Example\}", r"\\enterexample", input_content)
+
+        # Combine with macro definitions if available
         if macros_file.exists():
-            # Read input content
-            input_content = input_file.read_text(encoding="utf-8")
-
-            # Fix n3337-specific LaTeX syntax errors before processing
-            # Issue: n3337 has `[\textit{Example}` instead of `\enterexample`
-            # This confuses Pandoc's LaTeX parser (different from filter issues)
-            input_content = re.sub(r"\[\\textit\{Example\}", r"\\enterexample", input_content)
-
-            # Read macro definitions
             macros_content = macros_file.read_text(encoding="utf-8")
-
-            # Combine: macros first, then original content
             combined_content = macros_content + "\n\n" + input_content
-
-            # Write to temporary file
-            with tempfile.NamedTemporaryFile(
-                mode="w", suffix=".tex", delete=False, encoding="utf-8"
-            ) as tmp:
-                tmp.write(combined_content)
-                temp_input_file = Path(tmp.name)
-
-            # Use temp file for conversion
-            file_to_convert = temp_input_file
         else:
-            # No macro preprocessing
-            file_to_convert = input_file
+            combined_content = input_content
 
-        try:
+        # Use temp file context manager for conversion
+        with temp_tex_file(combined_content) as file_to_convert:
             # Build pandoc command
             cmd = [
                 "pandoc",
@@ -231,33 +221,25 @@ class Converter:
             if verbose:
                 click.echo(f"Running: {' '.join(cmd)}", err=True)
 
-            # Run pandoc
-            result = subprocess.run(
-                cmd,
-                capture_output=True,
-                text=True,
-                check=True,
-            )
+            try:
+                # Run pandoc
+                result = run_command(cmd)
 
-            # Post-process: unescape wikilinks that Pandoc escaped
-            if output_file:
-                # Read generated markdown, unescape, and write back
-                markdown = output_file.read_text()
-                markdown = unescape_wikilinks(markdown)
-                output_file.write_text(markdown)
-                click.echo(f"Converted: {input_file} -> {output_file}", err=True)
-                return markdown
-            else:
-                # Unescape stdout before returning
-                markdown = result.stdout
-                return unescape_wikilinks(markdown)
+                # Post-process: unescape wikilinks that Pandoc escaped
+                if output_file:
+                    # Read generated markdown, unescape, and write back
+                    markdown = output_file.read_text()
+                    markdown = unescape_wikilinks(markdown)
+                    output_file.write_text(markdown)
+                    click.echo(f"Converted: {input_file} -> {output_file}", err=True)
+                    return markdown
+                else:
+                    # Unescape stdout before returning
+                    markdown = result.stdout
+                    return unescape_wikilinks(markdown)
 
-        except subprocess.CalledProcessError as e:
-            raise ConverterError(f"Pandoc conversion failed:\n{e.stderr}") from e
-        finally:
-            # Cleanup: remove temporary file if created
-            if temp_input_file and temp_input_file.exists():
-                temp_input_file.unlink()
+            except CommandError as e:
+                raise ConverterError(f"Pandoc conversion failed:\n{e}") from e
 
     def convert_directory(
         self,
@@ -290,7 +272,7 @@ class Converter:
             raise ConverterError(f"Input directory not found: {input_dir}")
 
         # Create output directory
-        output_dir.mkdir(parents=True, exist_ok=True)
+        ensure_dir(output_dir)
 
         # Build label index for cross-file references
         label_index_file = None
@@ -323,7 +305,7 @@ class Converter:
 
         for tex_file in tex_files:
             # Skip common non-chapter files
-            if tex_file.stem in ["std", "layout", "setup", "macros"]:
+            if tex_file.stem in SKIP_FILES:
                 if verbose:
                     click.echo(f"Skipping: {tex_file.name}", err=True)
                 continue

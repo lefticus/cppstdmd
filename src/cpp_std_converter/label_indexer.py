@@ -179,7 +179,7 @@ class LabelIndexer:
                 label = match.group(1)
                 labels.add(label)
 
-        except Exception as e:
+        except (OSError, UnicodeDecodeError, re.error) as e:
             # Log error but continue
             import sys
 

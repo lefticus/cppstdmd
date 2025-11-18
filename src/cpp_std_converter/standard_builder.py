@@ -42,6 +42,8 @@ from pathlib import Path
 
 from pylatexenc.latexwalker import LatexMacroNode, LatexWalker
 
+from .utils import ensure_dir
+
 
 def _convert_chapter_worker(
     work_unit: dict,
@@ -232,11 +234,9 @@ class StandardBuilder:
                     # Decide whether to include based on section
                     should_include = False
                     if (
-                        in_frontmatter
-                        and include_frontmatter
+                        (in_frontmatter and include_frontmatter)
                         or in_mainmatter
-                        or in_backmatter
-                        and include_backmatter
+                        or (in_backmatter and include_backmatter)
                     ):
                         should_include = True
 
@@ -366,7 +366,7 @@ class StandardBuilder:
                 # Clean up temp file
                 tmp_path.unlink(missing_ok=True)
 
-        except Exception:
+        except (OSError, UnicodeDecodeError, re.error):
             # If extraction fails, fall back to filename
             # This handles files that don't have \rSec tags or conversion errors
             pass
@@ -742,7 +742,7 @@ class StandardBuilder:
             print(f"Found {len(chapters)} chapters in std.tex")
 
         output_dir = Path(output_dir)
-        output_dir.mkdir(parents=True, exist_ok=True)
+        ensure_dir(output_dir)
 
         output_files = []
         temp_files = []  # Track temporary files for cleanup
