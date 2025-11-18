@@ -39,8 +39,8 @@ local subscripts = common.subscripts
 
 -- Unicode conversion tables
 
--- REMOVED DUPLICATION: All math conversion tables and functions now in cpp-common.lua
--- Imported: try_unicode_conversion (the main conversion function with all-or-nothing logic)
+-- Math conversion tables and functions are centralized in cpp-common.lua
+-- Import try_unicode_conversion (the main conversion function with all-or-nothing logic)
 local try_unicode_conversion = common.try_unicode_conversion
 
 local function extract_code_macro(text, macro_name)

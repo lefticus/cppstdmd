@@ -63,8 +63,6 @@ function Blocks(blocks)
     if block.t == "RawBlock" and block.format == "latex" then
       local text = block.text
       -- Pattern: \definition{term}{label}
-      -- NOTE: Using simple ([^}]*) is acceptable because definition terms and labels
-      -- in the intro.defs section are simple text without nested braces.
       local term, label = text:match("\\definition%s*{([^}]*)}%s*{([^}]*)}")
       if term and label then
         pending_definition = {term = term, label = label}
@@ -73,7 +71,6 @@ function Blocks(blocks)
       end
 
       -- Check for \definition{term} without label (label on next line)
-      -- NOTE: Same reasoning - simple patterns acceptable
       local term_only = text:match("\\definition%s*{([^}]*)}")
       if term_only and not term then  -- Only if we didn't already extract term above
         pending_definition = {term = term_only, label = nil}
@@ -82,7 +79,6 @@ function Blocks(blocks)
       end
 
       -- Pattern: \defncontext{context}
-      -- NOTE: Same reasoning - simple patterns acceptable
       local ctx = text:match("\\defncontext%s*{([^}]*)}")
       if ctx then
         pending_context = ctx

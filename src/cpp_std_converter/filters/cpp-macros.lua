@@ -399,8 +399,6 @@ function RawInline(elem)
     -- Clean up ~{} from LaTeX \~{} (tilde with spacing braces)
     code = code:gsub("~{}", "~")
     -- Expand nested macros in code content
-    -- NOTE: \keyword{} handled in simplified_macros.tex but must be stripped
-    -- when nested in \tcode{}
     -- Strip \texttt{} from \keyword{} preprocessing
     code = code:gsub("\\texttt{([^}]*)}", "%1")
     code = code:gsub("\\ctype{([^}]*)}", "%1")
@@ -415,11 +413,11 @@ function RawInline(elem)
     code = code:gsub("\\libglobal{([^}]*)}", "%1")  -- Extract global name (issue #24)
     code = code:gsub("\\exposid{([^}]*)}", "%1")
     code = code:gsub("\\mathit{([^}]*)}", "%1")
-    -- Restored: different meaning in math mode
+    -- Different meaning in math mode
     code = code:gsub("\\mathrm{([^}]*)}", "%1")
     -- Strip \textit{} from simplified_macros.tex preprocessing
     code = code:gsub("\\textit{([^}]*)}", "%1")
-    code = code:gsub("\\colcol{}", "::")  -- Restored: context-dependent
+    code = code:gsub("\\colcol{}", "::")  -- Context-dependent
     -- Convert cv{} to cv (cv-qualifiers: const/volatile)
     -- simplified_macros.tex expands \cv to cv, leaving cv{} in output
     code = code:gsub("cv%{%}", "cv")
