@@ -13,6 +13,23 @@ from pathlib import Path
 logger = logging.getLogger(__name__)
 
 
+# Files to skip during directory conversion and label indexing (non-chapter infrastructure)
+SKIP_FILES = {
+    "std",  # Main document that includes all chapters
+    "layout",  # Page layout configuration
+    "setup",  # Package and command setup
+    "macros",  # LaTeX macro definitions
+    "config",  # Configuration settings
+    "cover-reg",  # Cover page for registered documents
+    "cover-wd",  # Cover page for working drafts
+    "xrefdelta",  # Cross-reference delta tracking
+    "xrefindex",  # Cross-reference index
+    "front",  # Front matter (title, copyright, toc)
+    "back",  # Back matter (index, bibliography)
+    "tabbing-def",  # Tabbing definitions
+}
+
+
 class CommandError(Exception):
     """Raised when a subprocess command fails."""
 

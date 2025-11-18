@@ -42,7 +42,7 @@ from .label_indexer import LabelIndexer
 from .repo_manager import DraftRepoManager, RepoManagerError
 from .stable_name import extract_stable_name_from_tex
 from .standard_builder import StandardBuilder
-from .utils import CommandError, ensure_dir, run_command, temp_tex_file
+from .utils import SKIP_FILES, CommandError, ensure_dir, run_command, temp_tex_file
 
 
 def unescape_wikilinks(markdown: str) -> str:
@@ -86,10 +86,6 @@ def unescape_wikilinks(markdown: str) -> str:
     markdown = re.sub(r"\\libglobal\{([^}]+)\}", r"\1", markdown)
 
     return markdown
-
-
-# Files to skip during directory conversion (non-chapter infrastructure files)
-SKIP_FILES = {"std", "layout", "setup", "macros"}
 
 
 class ConverterError(Exception):

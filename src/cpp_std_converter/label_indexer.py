@@ -34,25 +34,11 @@ import re
 from pathlib import Path
 
 from .stable_name import extract_stable_name_from_tex
+from .utils import SKIP_FILES
 
 
 class LabelIndexer:
     """Build and manage mappings of section labels to their containing files."""
-
-    # Files to skip during indexing (not chapter files)
-    SKIP_FILES = {
-        "std",
-        "layout",
-        "macros",
-        "config",
-        "cover-reg",
-        "cover-wd",
-        "xrefdelta",
-        "xrefindex",
-        "front",
-        "back",
-        "tabbing-def",
-    }
 
     def __init__(self, source_dir: Path):
         """
@@ -89,7 +75,7 @@ class LabelIndexer:
 
         # Step 2: Scan all files for labels
         for tex_file in self.source_dir.glob("*.tex"):
-            if tex_file.stem in self.SKIP_FILES:
+            if tex_file.stem in SKIP_FILES:
                 continue
 
             # Get output filename (stable name or tex stem)
@@ -122,7 +108,7 @@ class LabelIndexer:
         stable_names = {}
 
         for tex_file in self.source_dir.glob("*.tex"):
-            if tex_file.stem in self.SKIP_FILES:
+            if tex_file.stem in SKIP_FILES:
                 continue
 
             try:
