@@ -32,17 +32,15 @@ Builds a complete C++ standard document from std.tex by:
 3. Concatenating with merged cross-reference link definitions
 """
 
-import contextlib
 import os
 import re
 import sys
-import tempfile
 from concurrent.futures import ProcessPoolExecutor, as_completed
 from pathlib import Path
 
 from pylatexenc.latexwalker import LatexMacroNode, LatexWalker
 
-from .utils import cleanup_temp_files, ensure_dir, expand_latex_inputs
+from .utils import cleanup_temp_files, create_temp_tex_file, ensure_dir, expand_latex_inputs
 
 
 def _convert_chapter_worker(
@@ -104,12 +102,7 @@ def _convert_chapter_worker(
                 merged_content.append(content)
 
             # Create temporary merged file
-            tmp = tempfile.NamedTemporaryFile(
-                mode="w", suffix=".tex", delete=False, encoding="utf-8"
-            )
-            tmp.write("\n\n".join(merged_content))
-            tmp.close()
-            file_to_convert = Path(tmp.name)
+            file_to_convert = create_temp_tex_file("\n\n".join(merged_content))
             temp_files.append(file_to_convert)
 
         else:
@@ -132,12 +125,7 @@ def _convert_chapter_worker(
                 base_dir = chapter_file.parent
                 expanded = expand_latex_inputs(content, base_dir)
 
-                tmp = tempfile.NamedTemporaryFile(
-                    mode="w", suffix=".tex", delete=False, encoding="utf-8"
-                )
-                tmp.write(expanded)
-                tmp.close()
-                file_to_convert = Path(tmp.name)
+                file_to_convert = create_temp_tex_file(expanded)
                 temp_files.append(file_to_convert)
 
         # Convert to markdown
@@ -266,11 +254,7 @@ class StandardBuilder:
         expanded = expand_latex_inputs(content, base_dir)
 
         # Create temporary file with expanded content
-        tmp = tempfile.NamedTemporaryFile(mode="w", suffix=".tex", delete=False, encoding="utf-8")
-        tmp.write(expanded)
-        tmp.close()
-
-        return Path(tmp.name)
+        return create_temp_tex_file(expanded)
 
     def extract_stable_name_from_tex(self, tex_file: Path, converter) -> str:
         """
@@ -309,12 +293,7 @@ class StandardBuilder:
 
             # Create temporary file with just the \rSec0 line
             # This avoids issues with unclosed LaTeX environments when truncating
-            tmp = tempfile.NamedTemporaryFile(
-                mode="w", suffix=".tex", delete=False, encoding="utf-8"
-            )
-            tmp.write(rsec0_line + "\n")
-            tmp.close()
-            tmp_path = Path(tmp.name)
+            tmp_path = create_temp_tex_file(rsec0_line + "\n")
 
             try:
                 # Convert with Pandoc (cpp-sections.lua extracts the label)
@@ -431,12 +410,8 @@ class StandardBuilder:
             merged_content.append(content)
 
         # Create temporary file with merged content
-        tmp = tempfile.NamedTemporaryFile(mode="w", suffix=".tex", delete=False, encoding="utf-8")
         # Join with double newline to ensure proper spacing
-        tmp.write("\n\n".join(merged_content))
-        tmp.close()
-
-        return Path(tmp.name)
+        return create_temp_tex_file("\n\n".join(merged_content))
 
     def build_full_standard(
         self, converter, output_file: Path, verbose: bool = False, toc_depth: int = 1

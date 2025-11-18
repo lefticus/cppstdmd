@@ -149,6 +149,30 @@ def temp_file(content: str, suffix: str = ".txt", encoding: str = "utf-8"):
             tmp_path.unlink()
 
 
+def create_temp_tex_file(content: str) -> Path:
+    """Create a temporary .tex file with the given content.
+
+    Unlike temp_tex_file() context manager, this function returns the path
+    and leaves cleanup to the caller. Useful when temp file needs to persist
+    beyond the creation scope.
+
+    Args:
+        content: Content to write to the file
+
+    Returns:
+        Path to the created temporary file
+
+    Example:
+        temp_path = create_temp_tex_file(latex_content)
+        # Use temp_path...
+        temp_path.unlink()  # Manual cleanup when done
+    """
+    tmp = tempfile.NamedTemporaryFile(mode="w", suffix=".tex", delete=False, encoding="utf-8")
+    tmp.write(content)
+    tmp.close()
+    return Path(tmp.name)
+
+
 def safe_read_file(path: Path, encoding: str = "utf-8", errors: str = "strict") -> str | None:
     """Read a file if it exists, return None if it doesn't.
 
