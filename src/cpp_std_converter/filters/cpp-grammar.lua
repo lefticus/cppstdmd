@@ -164,6 +164,39 @@ local function clean_grammar(grammar)
   return grammar
 end
 
+-- Helper function to extract and process BNF environments
+-- Consolidates duplicate pattern: match environment, clean grammar, return CodeBlock
+-- Parameters:
+--   text: LaTeX source text to search
+--   env_name: BNF environment name (e.g., "ncbnf", "ncsimplebnf")
+--   has_param: If true, expects {param} after \begin{env_name}
+-- Returns:
+--   CodeBlock if environment matched, nil otherwise
+local function process_bnf_environment(text, env_name, has_param)
+  local grammar, param
+
+  if has_param then
+    -- Match \begin{env}{param}...\end{env}
+    param, grammar = text:match("\\begin{" .. env_name .. "}{([^}]*)}(.-)\\end{" .. env_name .. "}")
+  else
+    -- Match \begin{env}...\end{env}
+    grammar = text:match("\\begin{" .. env_name .. "}(.-)\\end{" .. env_name .. "}")
+  end
+
+  if grammar then
+    grammar = clean_grammar(grammar)
+
+    -- Add parameter as comment if present (for bnfbase)
+    if param and #param > 0 then
+      grammar = "// " .. param .. "\n" .. grammar
+    end
+
+    return pandoc.CodeBlock(grammar, {class = "bnf"})
+  end
+
+  return nil
+end
+
 -- Main filter function for raw blocks
 function RawBlock(elem)
   if elem.format ~= 'latex' then
@@ -172,52 +205,27 @@ function RawBlock(elem)
 
   local text = elem.text
 
-  -- Match \begin{ncbnf}...\end{ncbnf}
-  local grammar = text:match("\\begin{ncbnf}(.-)\\end{ncbnf}")
+  -- Try each BNF environment type using the helper function
+  -- Order matters: check most specific environments first
+  local result
 
-  if grammar then
-    grammar = clean_grammar(grammar)
-    -- Return as code block with bnf class
-    return pandoc.CodeBlock(grammar, {class = "bnf"})
-  end
+  -- Non-concept BNF environments
+  result = process_bnf_environment(text, "ncbnf", false)
+  if result then return result end
 
-  -- Match \begin{ncsimplebnf}...\end{ncsimplebnf}
-  grammar = text:match("\\begin{ncsimplebnf}(.-)\\end{ncsimplebnf}")
+  result = process_bnf_environment(text, "ncsimplebnf", false)
+  if result then return result end
 
-  if grammar then
-    grammar = clean_grammar(grammar)
-    return pandoc.CodeBlock(grammar, {class = "bnf"})
-  end
+  result = process_bnf_environment(text, "ncrebnf", false)
+  if result then return result end
 
-  -- Match \begin{ncrebnf}...\end{ncrebnf}
-  grammar = text:match("\\begin{ncrebnf}(.-)\\end{ncrebnf}")
+  -- Base BNF with name parameter
+  result = process_bnf_environment(text, "bnfbase", true)
+  if result then return result end
 
-  if grammar then
-    grammar = clean_grammar(grammar)
-    return pandoc.CodeBlock(grammar, {class = "bnf"})
-  end
-
-  -- Match \begin{bnfbase}{name}...\end{bnfbase}
-  -- (base BNF with a name parameter)
-  local bnf_name
-  bnf_name, grammar = text:match("\\begin{bnfbase}{([^}]*)}(.-)\\end{bnfbase}")
-
-  if grammar then
-    grammar = clean_grammar(grammar)
-    -- Include the name as a comment in the grammar
-    if bnf_name and #bnf_name > 0 then
-      grammar = "// " .. bnf_name .. "\n" .. grammar
-    end
-    return pandoc.CodeBlock(grammar, {class = "bnf"})
-  end
-
-  -- Match regular \begin{bnf}...\end{bnf}
-  grammar = text:match("\\begin{bnf}(.-)\\end{bnf}")
-
-  if grammar then
-    grammar = clean_grammar(grammar)
-    return pandoc.CodeBlock(grammar, {class = "bnf"})
-  end
+  -- Regular BNF
+  result = process_bnf_environment(text, "bnf", false)
+  if result then return result end
 
   -- No match, return unchanged
   return elem
