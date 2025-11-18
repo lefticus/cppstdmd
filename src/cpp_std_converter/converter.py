@@ -98,6 +98,157 @@ class ConverterError(Exception):
     pass
 
 
+def _ensure_repo_ready(repo_manager: DraftRepoManager, git_ref: str | None, verbose: bool) -> None:
+    """Ensure repository exists and checkout specified ref if provided.
+
+    Args:
+        repo_manager: Repository manager instance
+        git_ref: Git reference to checkout (optional)
+        verbose: Print verbose output
+
+    Raises:
+        RepoManagerError: If repository operations fail
+    """
+    if not repo_manager.exists():
+        click.echo("Cloning C++ draft repository...", err=True)
+        repo_manager.clone(shallow=False)
+
+    if git_ref:
+        repo_manager.checkout(git_ref)
+
+    if verbose and git_ref:
+        ref_info = repo_manager.get_current_ref()
+        click.echo(
+            f"Using version: {ref_info['ref']} ({ref_info['short_sha']})",
+            err=True,
+        )
+
+
+def _handle_list_tags(draft_repo: Path | None) -> None:
+    """Handle --list-tags option to display available C++ standard versions."""
+    repo_manager = DraftRepoManager(draft_repo)
+    if not repo_manager.exists():
+        click.echo("Cloning C++ draft repository...", err=True)
+        repo_manager.clone(shallow=False)
+
+    click.echo("Available C++ standard version tags:", err=True)
+    tags = repo_manager.get_tags()
+    for tag in tags:
+        click.echo(f"  {tag}")
+
+
+def _handle_build_full(
+    draft_repo: Path | None,
+    git_ref: str | None,
+    output: Path | None,
+    filters_dir: Path | None,
+    verbose: bool,
+    toc_depth: int,
+) -> None:
+    """Handle --build-full option to build concatenated full standard."""
+    repo_manager = DraftRepoManager(draft_repo)
+
+    try:
+        _ensure_repo_ready(repo_manager, git_ref, verbose)
+    except RepoManagerError as e:
+        click.echo(f"Repository error: {e}", err=True)
+        sys.exit(1)
+
+    if not output:
+        click.echo("Error: --output required for --build-full", err=True)
+        sys.exit(1)
+
+    output_file = Path(output)
+    builder = StandardBuilder(repo_manager.source_dir)
+    converter = Converter(filters_dir=filters_dir)
+
+    click.echo("Building full standard from std.tex...", err=True)
+    try:
+        content, chapters = builder.build_full_standard(
+            converter, output_file, verbose=verbose, toc_depth=toc_depth
+        )
+        click.echo(f"\nSuccessfully built full standard to {output_file}", err=True)
+        click.echo(f"Converted {len(chapters)} chapters", err=True)
+    except Exception as e:
+        click.echo(f"Error building full standard: {e}", err=True)
+        sys.exit(1)
+
+
+def _handle_build_separate(
+    draft_repo: Path | None,
+    git_ref: str | None,
+    output: Path | None,
+    filters_dir: Path | None,
+    verbose: bool,
+    toc_depth: int,
+) -> None:
+    """Handle --build-separate option to build separate chapter files."""
+    repo_manager = DraftRepoManager(draft_repo)
+
+    try:
+        _ensure_repo_ready(repo_manager, git_ref, verbose)
+    except RepoManagerError as e:
+        click.echo(f"Repository error: {e}", err=True)
+        sys.exit(1)
+
+    if not output:
+        click.echo("Error: --output required for --build-separate", err=True)
+        sys.exit(1)
+
+    output_dir = Path(output)
+    builder = StandardBuilder(repo_manager.source_dir)
+    converter = Converter(filters_dir=filters_dir)
+
+    click.echo("Building separate chapter files from std.tex...", err=True)
+    try:
+        output_files = builder.build_separate_chapters(
+            converter,
+            output_dir,
+            verbose=verbose,
+            toc_depth=toc_depth,
+        )
+        click.echo(
+            f"\nSuccessfully built {len(output_files)} chapter files to {output_dir}",
+            err=True,
+        )
+    except Exception as e:
+        click.echo(f"Error building separate chapters: {e}", err=True)
+        sys.exit(1)
+
+
+def _handle_file_conversion(
+    converter: "Converter", input_path: Path, output: Path | None, standalone: bool, verbose: bool
+) -> None:
+    """Handle single file conversion."""
+    result = converter.convert_file(
+        input_path,
+        output_file=output,
+        standalone=standalone,
+        verbose=verbose,
+    )
+
+    if not output:
+        # Print to stdout
+        click.echo(result)
+
+
+def _handle_directory_conversion(
+    converter: "Converter", input_path: Path, output: Path | None, verbose: bool
+) -> None:
+    """Handle directory conversion."""
+    if not output:
+        click.echo("Error: --output required for directory conversion", err=True)
+        sys.exit(1)
+
+    output_files = converter.convert_directory(
+        input_path,
+        output,
+        verbose=verbose,
+    )
+
+    click.echo(f"\nConverted {len(output_files)} files", err=True)
+
+
 class Converter:
     """Main converter class that wraps Pandoc with custom filters"""
 
@@ -523,115 +674,20 @@ def main(
     try:
         # Handle --list-tags option
         if list_tags:
-            repo_manager = DraftRepoManager(draft_repo)
-            if not repo_manager.exists():
-                click.echo("Cloning C++ draft repository...", err=True)
-                repo_manager.clone(shallow=False)
-
-            click.echo("Available C++ standard version tags:", err=True)
-            tags = repo_manager.get_tags()
-            for tag in tags:
-                click.echo(f"  {tag}")
+            _handle_list_tags(draft_repo)
             return
 
         # Handle --build-full option
         if build_full:
-            repo_manager = DraftRepoManager(draft_repo)
-
-            # Ensure repo exists and checkout specified version
-            try:
-                if not repo_manager.exists():
-                    click.echo("Cloning C++ draft repository...", err=True)
-                    repo_manager.clone(shallow=False)
-
-                if git_ref:
-                    repo_manager.checkout(git_ref)
-
-                if verbose:
-                    ref_info = repo_manager.get_current_ref()
-                    click.echo(
-                        f"Building full standard from: {ref_info['ref']} ({ref_info['short_sha']})",
-                        err=True,
-                    )
-
-            except RepoManagerError as e:
-                click.echo(f"Repository error: {e}", err=True)
-                sys.exit(1)
-
-            # Build full standard
-            if not output:
-                click.echo("Error: --output required for --build-full", err=True)
-                sys.exit(1)
-
-            output_file = Path(output)
-            builder = StandardBuilder(repo_manager.source_dir)
-            converter = Converter(filters_dir=filters_dir)
-
-            click.echo("Building full standard from std.tex...", err=True)
-            try:
-                content, chapters = builder.build_full_standard(
-                    converter, output_file, verbose=verbose, toc_depth=toc_depth
-                )
-                click.echo(f"\nSuccessfully built full standard to {output_file}", err=True)
-                click.echo(f"Converted {len(chapters)} chapters", err=True)
-            except Exception as e:
-                click.echo(f"Error building full standard: {e}", err=True)
-                sys.exit(1)
-
+            _handle_build_full(draft_repo, git_ref, output, filters_dir, verbose, toc_depth)
             return
 
         # Handle --build-separate option
         if build_separate:
-            repo_manager = DraftRepoManager(draft_repo)
-
-            # Ensure repo exists and checkout specified version
-            try:
-                if not repo_manager.exists():
-                    click.echo("Cloning C++ draft repository...", err=True)
-                    repo_manager.clone(shallow=False)
-
-                if git_ref:
-                    repo_manager.checkout(git_ref)
-
-                if verbose:
-                    ref_info = repo_manager.get_current_ref()
-                    click.echo(
-                        f"Building separate chapters from: {ref_info['ref']} ({ref_info['short_sha']})",
-                        err=True,
-                    )
-
-            except RepoManagerError as e:
-                click.echo(f"Repository error: {e}", err=True)
-                sys.exit(1)
-
-            # Build separate chapters
-            if not output:
-                click.echo("Error: --output required for --build-separate", err=True)
-                sys.exit(1)
-
-            output_dir = Path(output)
-            builder = StandardBuilder(repo_manager.source_dir)
-            converter = Converter(filters_dir=filters_dir)
-
-            click.echo("Building separate chapter files from std.tex...", err=True)
-            try:
-                output_files = builder.build_separate_chapters(
-                    converter,
-                    output_dir,
-                    verbose=verbose,
-                    toc_depth=toc_depth,
-                )
-                click.echo(
-                    f"\nSuccessfully built {len(output_files)} chapter files to {output_dir}",
-                    err=True,
-                )
-            except Exception as e:
-                click.echo(f"Error building separate chapters: {e}", err=True)
-                sys.exit(1)
-
+            _handle_build_separate(draft_repo, git_ref, output, filters_dir, verbose, toc_depth)
             return
 
-        # INPUT_PATH is required if not using --list-tags, --build-full, or --build-separate
+        # INPUT_PATH is required if not using special build modes
         if not input_path:
             click.echo(
                 "Error: INPUT_PATH required (unless using --list-tags, --build-full, or --build-separate)",
@@ -654,35 +710,14 @@ def main(
                 click.echo(f"Repository error: {e}", err=True)
                 sys.exit(1)
 
+        # Create converter instance
         converter = Converter(filters_dir=filters_dir)
 
+        # Handle file or directory conversion
         if input_path.is_file():
-            # Single file conversion
-            result = converter.convert_file(
-                input_path,
-                output_file=output,
-                standalone=standalone,
-                verbose=verbose,
-            )
-
-            if not output:
-                # Print to stdout
-                click.echo(result)
-
+            _handle_file_conversion(converter, input_path, output, standalone, verbose)
         elif input_path.is_dir():
-            # Directory conversion
-            if not output:
-                click.echo("Error: --output required for directory conversion", err=True)
-                sys.exit(1)
-
-            output_files = converter.convert_directory(
-                input_path,
-                output,
-                verbose=verbose,
-            )
-
-            click.echo(f"\nConverted {len(output_files)} files", err=True)
-
+            _handle_directory_conversion(converter, input_path, output, verbose)
         else:
             click.echo(f"Error: Invalid input path: {input_path}", err=True)
             sys.exit(1)

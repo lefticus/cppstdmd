@@ -49,19 +49,42 @@ import shutil
 import subprocess
 import sys
 from concurrent.futures import ProcessPoolExecutor, as_completed
+from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
+
+from jinja2 import Environment
 
 from src.cpp_std_converter.utils import ensure_dir, run_command, run_command_silent
 
 try:
     from bs4 import BeautifulSoup
-    from jinja2 import Environment, FileSystemLoader
+    from jinja2 import FileSystemLoader
 except ImportError as e:
     print(f"Error: Missing required package: {e}")
     print("Please install required packages:")
     print("  pip install jinja2 beautifulsoup4 lxml")
     sys.exit(1)
+
+
+@dataclass
+class VersionPairConfig:
+    """Configuration for processing a version pair diff.
+
+    Encapsulates all parameters needed for generate_version_pair() to reduce
+    parameter count from 10 to 1.
+    """
+
+    from_tag: str  # e.g., 'n4950'
+    to_tag: str  # e.g., 'trunk'
+    from_name: str  # e.g., 'C++23'
+    to_name: str  # e.g., 'C++26'
+    slug: str  # e.g., 'cpp23-to-cpp26'
+    output_path: Path
+    env: Environment
+    max_dots: int | None = None
+    limit: int | None = None
+    max_workers: int | None = None
 
 
 # Version pairs (adjacent only) - these are the focus of the viewer
@@ -985,38 +1008,18 @@ def generate_single_diff(args: tuple) -> tuple[bool, str, str]:
         return (False, stable_name, f"exception: {e}")
 
 
-def generate_version_pair(
-    from_tag: str,
-    to_tag: str,
-    from_name: str,
-    to_name: str,
-    slug: str,
-    output_path: Path,
-    env: Environment,
-    max_dots: int | None = None,
-    limit: int | None = None,
-    max_workers: int | None = None,
-) -> dict:
+def generate_version_pair(config: VersionPairConfig) -> dict:
     """Generate pages for one version pair.
 
     Args:
-        from_tag: Starting version tag (e.g., 'n4950')
-        to_tag: Ending version tag (e.g., 'trunk')
-        from_name: Human-readable start version (e.g., 'C++23')
-        to_name: Human-readable end version (e.g., 'C++26')
-        slug: URL slug for this pair (e.g., 'cpp23-to-cpp26')
-        output_path: Base output directory
-        env: Jinja2 environment
-        tier: Tier to filter (1 or 2)
-        limit: Maximum number of diffs to process (for testing)
-        max_workers: Number of parallel workers (defaults to CPU count)
+        config: VersionPairConfig with all necessary parameters
 
     Returns:
         Dictionary with statistics (count, total_size_kb, total_lines, sections, etc.)
     """
-    print(f"\n📦 Processing {from_name} → {to_name}...")
+    print(f"\n📦 Processing {config.from_name} → {config.to_name}...")
 
-    diff_dir = Path(f"diffs/{from_tag}_to_{to_tag}/by_stable_name")
+    diff_dir = Path(f"diffs/{config.from_tag}_to_{config.to_tag}/by_stable_name")
 
     if not diff_dir.exists():
         print(f"  ⚠️  Directory not found: {diff_dir}")
@@ -1026,16 +1029,16 @@ def generate_version_pair(
             "total_lines": 0,
             "avg_size_kb": 0,
             "sections": [],
-            "from_name": from_name,
-            "to_name": to_name,
-            "slug": slug,
+            "from_name": config.from_name,
+            "to_name": config.to_name,
+            "slug": config.slug,
         }
 
     # Collect stable names
-    stable_names = collect_stable_names(diff_dir, max_dots=max_dots, limit=limit)
+    stable_names = collect_stable_names(diff_dir, max_dots=config.max_dots, limit=config.limit)
 
-    if max_dots is not None:
-        print(f"  Found {len(stable_names)} stable names (max {max_dots} dots)")
+    if config.max_dots is not None:
+        print(f"  Found {len(stable_names)} stable names (max {config.max_dots} dots)")
     else:
         print(f"  Found {len(stable_names)} stable names")
 
@@ -1046,38 +1049,38 @@ def generate_version_pair(
             "total_lines": 0,
             "avg_size_kb": 0,
             "sections": [],
-            "from_name": from_name,
-            "to_name": to_name,
-            "slug": slug,
+            "from_name": config.from_name,
+            "to_name": config.to_name,
+            "slug": config.slug,
         }
 
     # Generate overview page
-    template = env.get_template("version_overview.html")
+    template = config.env.get_template("version_overview.html")
     generated_date = datetime.now().strftime("%Y-%m-%d")
     stats = {"generated_date": generated_date}
     content = template.render(
-        from_name=from_name,
-        to_name=to_name,
-        from_tag=from_tag,
-        to_tag=to_tag,
-        slug=slug,
+        from_name=config.from_name,
+        to_name=config.to_name,
+        from_tag=config.from_tag,
+        to_tag=config.to_tag,
+        slug=config.slug,
         stable_names=stable_names,
         version_pairs=VERSION_PAIRS,
         stats=stats,
         generated_date=generated_date,
     )
 
-    version_dir = output_path / "versions"
+    version_dir = config.output_path / "versions"
     version_dir.mkdir(exist_ok=True, parents=True)
-    overview_file = version_dir / f"{slug}.html"
+    overview_file = version_dir / f"{config.slug}.html"
     overview_file.write_text(content, encoding="utf-8")
     print(f"  ✓ Generated overview: {overview_file}")
 
     # Generate search index
-    generate_search_index(stable_names, version_dir, slug)
+    generate_search_index(stable_names, version_dir, config.slug)
 
     # Generate individual diff pages in parallel
-    diff_output_dir = output_path / "diffs" / slug
+    diff_output_dir = config.output_path / "diffs" / config.slug
     ensure_dir(diff_output_dir)
 
     # Prepare tasks for parallel execution
@@ -1087,32 +1090,32 @@ def generate_version_pair(
         stable_name_availability = build_stable_name_availability(
             stable_name=item["name"],
             version_pairs=VERSION_PAIRS,
-            base_diffs_path=output_path.parent / "diffs",
+            base_diffs_path=config.output_path.parent / "diffs",
         )
 
         context = {
-            "title": f'[{item["name"]}] - {from_name} → {to_name}',
+            "title": f'[{item["name"]}] - {config.from_name} → {config.to_name}',
             "stable_name": item["name"],
             "stable_name_file": item["file"],
-            "from_version": from_name,
-            "to_version": to_name,
-            "from_tag": from_tag,
-            "to_tag": to_tag,
-            "version_slug": slug,
+            "from_version": config.from_name,
+            "to_version": config.to_name,
+            "from_tag": config.from_tag,
+            "to_tag": config.to_tag,
+            "version_slug": config.slug,
             "file_size_kb": item["size_kb"],
             "line_count": item["line_count"],
             "generated_date": datetime.now().strftime("%Y-%m-%d"),
             "stable_name_availability": stable_name_availability,
         }
-        # Get templates directory from env.loader
-        templates_dir = Path(env.loader.searchpath[0])
+        # Get templates directory from config.env.loader
+        templates_dir = Path(config.env.loader.searchpath[0])
         tasks.append((item, str(diff_output_dir), context, str(templates_dir)))
 
     # Execute tasks in parallel
     success_count = 0
     completed_count = 0
 
-    with ProcessPoolExecutor(max_workers=max_workers) as executor:
+    with ProcessPoolExecutor(max_workers=config.max_workers) as executor:
         # Submit all tasks
         future_to_name = {
             executor.submit(generate_single_diff, task): task[0]["name"] for task in tasks
@@ -1150,9 +1153,9 @@ def generate_version_pair(
             "name": item["name"],
             "size_kb": item["size_kb"],
             "lines": item["line_count"],
-            "from_name": from_name,
-            "to_name": to_name,
-            "slug": slug,
+            "from_name": config.from_name,
+            "to_name": config.to_name,
+            "slug": config.slug,
         }
         for item in stable_names
     ]
@@ -1163,9 +1166,9 @@ def generate_version_pair(
         "total_lines": total_lines,
         "avg_size_kb": avg_size_kb,
         "sections": sections,
-        "from_name": from_name,
-        "to_name": to_name,
-        "slug": slug,
+        "from_name": config.from_name,
+        "to_name": config.to_name,
+        "slug": config.slug,
     }
 
 
@@ -1461,18 +1464,21 @@ def generate_site(
     }
 
     for from_tag, to_tag, from_name, to_name, slug in pairs_to_process:
-        pair_stats = generate_version_pair(
-            from_tag,
-            to_tag,
-            from_name,
-            to_name,
-            slug,
-            output_path,
-            env,
+        # Create configuration object for this version pair
+        pair_config = VersionPairConfig(
+            from_tag=from_tag,
+            to_tag=to_tag,
+            from_name=from_name,
+            to_name=to_name,
+            slug=slug,
+            output_path=output_path,
+            env=env,
             max_dots=max_dots,
             limit=test_limit,
             max_workers=max_workers,
         )
+
+        pair_stats = generate_version_pair(pair_config)
 
         stats["total_diffs"] += pair_stats["count"]
         stats["version_pairs"].append(pair_stats)
