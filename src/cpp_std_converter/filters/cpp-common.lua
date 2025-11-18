@@ -1033,6 +1033,31 @@ local function plain_replace(text, find_str, replace_str)
   return text
 end
 
+-- Check if subscript/superscript content is too complex to convert to Unicode
+-- Returns true if content contains LaTeX commands, complex patterns, or multi-char non-word strings
+-- This helper eliminates 20 lines of duplication between subscript/superscript checking
+local function is_complex_script_content(content)
+  -- Skip if contains backslash (LaTeX commands)
+  if content:match("\\") then
+    return true
+  end
+  -- Check if it's simple arithmetic: single char, +/-, single char
+  local is_simple_arithmetic = content:match("^%w[-+]%w$")
+  -- Check if it's leading operator: +/-, single char
+  local is_leading_operator = content:match("^[-+]%w$")
+  -- Check if it's all word characters (could be multi-char like "max")
+  local is_word_chars_only = content:match("^%w+$")
+  -- Complex if:
+  --   - Has multiple chars AND
+  --   - Is NOT simple arithmetic AND
+  --   - Is NOT leading operator AND
+  --   - Is NOT all word characters (which convert functions can handle)
+  if content:match("%S.*%S") and not is_simple_arithmetic and not is_leading_operator and not is_word_chars_only then
+    return true
+  end
+  return false
+end
+
 -- Check if a string contains complex LaTeX that can't be converted
 local function is_complex_math(text)
   -- Patterns that indicate complex math
@@ -1068,44 +1093,14 @@ local function is_complex_math(text)
   -- UPDATED: Now allow multi-character subscripts/superscripts if they can be converted
   for subscript in text:gmatch("_(%b{})") do
     local content = subscript:sub(2, -2)  -- Remove braces
-    -- Skip if contains backslash (LaTeX commands)
-    if content:match("\\") then
-      return true
-    end
-    -- Check if it's simple arithmetic: single char, +/-, single char
-    local is_simple_arithmetic = content:match("^%w[-+]%w$")
-    -- Check if it's leading operator: +/-, single char
-    local is_leading_operator = content:match("^[-+]%w$")
-    -- Check if it's all word characters (could be multi-char like "max")
-    local is_word_chars_only = content:match("^%w+$")
-    -- Complex if:
-    --   - Has multiple chars AND
-    --   - Is NOT simple arithmetic AND
-    --   - Is NOT leading operator AND
-    --   - Is NOT all word characters (which convert_subscript_string can handle)
-    if content:match("%S.*%S") and not is_simple_arithmetic and not is_leading_operator and not is_word_chars_only then
+    if is_complex_script_content(content) then
       return true
     end
   end
 
   for superscript in text:gmatch("%^(%b{})") do
     local content = superscript:sub(2, -2)  -- Remove braces
-    -- Skip if contains backslash (LaTeX commands)
-    if content:match("\\") then
-      return true
-    end
-    -- Check if it's simple arithmetic: single char, +/-, single char
-    local is_simple_arithmetic = content:match("^%w[-+]%w$")
-    -- Check if it's leading operator: +/-, single char
-    local is_leading_operator = content:match("^[-+]%w$")
-    -- Check if it's all word characters (could be multi-char like "max")
-    local is_word_chars_only = content:match("^%w+$")
-    -- Complex if:
-    --   - Has multiple chars AND
-    --   - Is NOT simple arithmetic AND
-    --   - Is NOT leading operator AND
-    --   - Is NOT all word characters (which convert_superscript_string can handle)
-    if content:match("%S.*%S") and not is_simple_arithmetic and not is_leading_operator and not is_word_chars_only then
+    if is_complex_script_content(content) then
       return true
     end
   end
