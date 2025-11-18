@@ -870,7 +870,7 @@ end
 
 -- ============================================================================
 -- Comprehensive Math-to-Unicode Conversion
--- Shared by: cpp-math.lua, cpp-grammar.lua, convert_math_in_code()
+-- Shared by: cpp-math.lua, cpp-grammar.lua, convert_codeblock_math()
 -- Strategy: All-or-nothing - only convert if 100% successful, else preserve $...$
 -- ============================================================================
 
@@ -1146,9 +1146,18 @@ local function convert_superscript_string(str)
   return result
 end
 
--- Try to convert math to Unicode (all-or-nothing strategy)
--- Returns: converted text if 100% successful, nil otherwise
-local function try_unicode_conversion(text)
+-- Try to convert math to Unicode
+-- Parameters:
+--   text: LaTeX math content to convert
+--   options: Optional table with conversion options:
+--     - validate_full (boolean): If true, returns nil when LaTeX commands remain (default: false)
+--     - Used for "all-or-nothing" conversion strategy in cpp-math.lua
+-- Returns: converted text (always), or nil if validate_full=true and conversion incomplete
+--
+-- Backward compatible: When called without options, always returns converted text
+local function try_unicode_conversion(text, options)
+  options = options or {}
+
   -- Trim whitespace
   text = text:gsub("^%s+", ""):gsub("%s+$", "")
 
@@ -1669,6 +1678,19 @@ local function try_unicode_conversion(text)
   -- Restore protected underscores from \textit{} and \exposid{} identifiers
   result = result:gsub("@@UNDERSCORE@@", "_")
 
+  -- Validate full conversion if requested (all-or-nothing strategy)
+  -- Used by cpp-math.lua to fall back to MathJax when conversion is incomplete
+  if options.validate_full then
+    -- Check if any LaTeX commands remain (backslash followed by letter)
+    if result:match("\\%a") then
+      return nil  -- Not fully converted, return nil for MathJax fallback
+    end
+    -- Check for complex math patterns that indicate incomplete conversion
+    if result:match("%^{") or result:match("_{") then
+      return nil  -- Complex subscripts/superscripts remain
+    end
+  end
+
   return result
 end
 
@@ -1712,7 +1734,7 @@ end
 
 -- Helper function to convert math patterns in code
 -- Used by clean_code_common() for code block cleaning
-local function convert_math_in_code(text)
+local function convert_codeblock_math(text)
   -- Process @$...$@ patterns (math mode in code blocks)
   -- These contain subscripts, placeholders, and math symbols
   text = text:gsub("@%$(.-)%$@", function(math_content)
@@ -1808,7 +1830,7 @@ local function clean_code_common(code, handle_textbackslash)
   -- Remove @ escape delimiters and expand common macros
 
   -- First, convert math patterns (@$...$@) before processing other escapes
-  code = convert_math_in_code(code)
+  code = convert_codeblock_math(code)
 
   -- \commentellip represents "..."
   code = code:gsub("@\\commentellip@", "...")
@@ -2581,7 +2603,7 @@ return {
   expand_nested_macros_recursive = expand_nested_macros_recursive,
   remove_macro = remove_macro,
   handle_overlap_commands = handle_overlap_commands,
-  convert_math_in_code = convert_math_in_code,
+  convert_codeblock_math = convert_codeblock_math,
   clean_code_common = clean_code_common,
   code_block_macro_patterns = code_block_macro_patterns,
   split_refs_text = split_refs_text,

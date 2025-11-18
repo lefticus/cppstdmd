@@ -48,6 +48,7 @@ local extract_braced_content = common.extract_braced_content
 local trim = common.trim
 local extract_impdefx_description = common.extract_impdefx_description
 local expand_impdefx_in_text = common.expand_impdefx_in_text
+local try_unicode_conversion = common.try_unicode_conversion
 local parse_content_with_tcode = common.parse_content_with_tcode
 local parse_impdefx_description_to_inlines = common.parse_impdefx_description_to_inlines
 local extract_multi_arg_macro = common.extract_multi_arg_macro
@@ -99,33 +100,14 @@ local PATTERN = {
 -- Helper function to convert inline math in code (subscripts and operators)
 -- Converts $X_i$ to Xᵢ (Unicode subscript)
 -- Converts $A \land B$ to A ∧ B (logical operators) - Issue #52
+-- Delegates to try_unicode_conversion from cpp-common for unified behavior
 local function convert_math_in_code(text)
   -- Process $...$  patterns (inline math in code)
   text = text:gsub(PATTERN.inline_math, function(math_content)
-    -- Convert logical operators (Issue #52)
-    math_content = math_content:gsub("\\land", "∧")
-    math_content = math_content:gsub("\\lor", "∨")
-    math_content = math_content:gsub("\\wedge", "∧")
-    math_content = math_content:gsub("\\vee", "∨")
-
-    -- Convert subscripts with braces: X_{i} → Xᵢ
-    math_content = math_content:gsub(PATTERN.subscript_braced, function(name, sub)
-      if subscripts[sub] then
-        return name .. subscripts[sub]
-      else
-        return name .. "_" .. sub
-      end
-    end)
-    -- Convert subscripts without braces: X_i → Xᵢ
-    math_content = math_content:gsub(PATTERN.subscript_simple, function(name, sub)
-      if subscripts[sub] then
-        return name .. subscripts[sub]
-      else
-        return name .. "_" .. sub
-      end
-    end)
-    -- Return the content without $ delimiters
-    return math_content
+    -- Use centralized Unicode conversion from cpp-common
+    -- This ensures consistent behavior across all math conversion contexts
+    local converted = try_unicode_conversion(math_content)
+    return converted or math_content  -- Fallback to original if conversion fails
   end)
   return text
 end
