@@ -2434,6 +2434,56 @@ local function extract_code_from_div(div_block, lang_class)
   return nil
 end
 
+-- Check if a blocks array contains any non-Para blocks
+-- Used by cpp-notes-examples.lua to decide between simple/complex formatting
+-- @param blocks: array of Pandoc blocks
+-- @return boolean: true if contains CodeBlock, Div, or other non-Para blocks
+local function has_complex_blocks(blocks)
+  for _, block in ipairs(blocks) do
+    if block.t ~= "Para" then
+      return true
+    end
+  end
+  return false
+end
+
+-- Build opening inline sequence for note/example environments
+-- Used by cpp-notes-examples.lua and cpp-itemdecl.lua to unify opening format
+-- @param env_type: string like "Note" or "Example"
+-- @param counter: number for the counter value
+-- @param as_paragraph: boolean - if true, wrap in Para; if false, return inline array
+-- @return pandoc.Para or inline array: [*Type N*:
+local function build_environment_opening(env_type, counter, as_paragraph)
+  local inlines = {
+    pandoc.Str("["),
+    pandoc.Emph({pandoc.Str(env_type .. " " .. counter)}),
+    pandoc.Str(":")
+  }
+  if as_paragraph then
+    return pandoc.Para(inlines)
+  else
+    return inlines
+  end
+end
+
+-- Build closing inline sequence for note/example environments
+-- Used by cpp-notes-examples.lua and cpp-itemdecl.lua to unify closing format
+-- @param env_type: string like "note" or "example" (lowercase for "end note")
+-- @param as_paragraph: boolean - if true, wrap in Para; if false, return inline array
+-- @return pandoc.Para or inline array: — *end type*]
+local function build_environment_closing(env_type, as_paragraph)
+  local inlines = {
+    pandoc.Str("— "),
+    pandoc.Emph({pandoc.Str("end " .. env_type)}),
+    pandoc.Str("]")
+  }
+  if as_paragraph then
+    return pandoc.Para(inlines)
+  else
+    return inlines
+  end
+end
+
 -- Build a formatted defnote paragraph
 -- Used by cpp-definitions.lua for consistent note formatting across different contexts
 -- @param note_content: string containing the LaTeX note content
@@ -2508,5 +2558,8 @@ return {
   try_unicode_conversion = try_unicode_conversion,
   strip_text_macros_in_math = strip_text_macros_in_math,
   extract_code_from_div = extract_code_from_div,
+  has_complex_blocks = has_complex_blocks,
+  build_environment_opening = build_environment_opening,
+  build_environment_closing = build_environment_closing,
   build_defnote = build_defnote,
 }

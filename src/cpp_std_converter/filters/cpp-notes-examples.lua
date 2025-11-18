@@ -49,6 +49,9 @@ local clean_code_common = common.clean_code_common
 local extract_braced_content = common.extract_braced_content
 local expand_macros_common = common.expand_macros_common
 local extract_code_from_div = common.extract_code_from_div
+local has_complex_blocks = common.has_complex_blocks
+local build_environment_opening = common.build_environment_opening
+local build_environment_closing = common.build_environment_closing
 
 -- Track note and example counters
 local note_counter = 0
@@ -243,17 +246,8 @@ function process_div_block(block, codeblocks, titles)
     note_counter = note_counter + 1
 
     local note_inlines = {}
-    local has_blocks = false
 
-    -- Check if content has non-Para blocks
-    for _, div_block in ipairs(block.content) do
-      if div_block.t ~= "Para" then
-        has_blocks = true
-        break
-      end
-    end
-
-    if not has_blocks then
+    if not has_complex_blocks(block.content) then
       -- Simple case: only paragraphs, combine into single inline sequence
       for _, div_block in ipairs(block.content) do
         if div_block.t == "Para" and div_block.content then
@@ -266,28 +260,22 @@ function process_div_block(block, codeblocks, titles)
         end
       end
 
-      local note_para = {
-        pandoc.Str("["),
-        pandoc.Emph({pandoc.Str("Note " .. note_counter)}),
-        pandoc.Str(": ")
-      }
+      local note_para = build_environment_opening("Note", note_counter, false)
+      table.insert(note_para, pandoc.Str(" "))  -- space after colon
       for _, inline in ipairs(note_inlines) do
         table.insert(note_para, inline)
       end
-      table.insert(note_para, pandoc.Str(" — "))
-      table.insert(note_para, pandoc.Emph({pandoc.Str("end note")}))
-      table.insert(note_para, pandoc.Str("]"))
+      table.insert(note_para, pandoc.Str(" "))  -- space before closing
+      local closing = build_environment_closing("note", false)
+      for _, inline in ipairs(closing) do
+        table.insert(note_para, inline)
+      end
 
       return {pandoc.Para(note_para)}
     else
       -- Complex case: has code blocks or other non-Para blocks
       local result = {}
-      local opening = {
-        pandoc.Str("["),
-        pandoc.Emph({pandoc.Str("Note " .. note_counter)}),
-        pandoc.Str(":")
-      }
-      table.insert(result, pandoc.Para(opening))
+      table.insert(result, build_environment_opening("Note", note_counter, true))
 
       -- Recursively process nested div content, passing codeblocks/titles
       for _, div_block in ipairs(block.content) do
@@ -297,12 +285,7 @@ function process_div_block(block, codeblocks, titles)
         end
       end
 
-      local closing = {
-        pandoc.Str("— "),
-        pandoc.Emph({pandoc.Str("end note")}),
-        pandoc.Str("]")
-      }
-      table.insert(result, pandoc.Para(closing))
+      table.insert(result, build_environment_closing("note", true))
       return result
     end
   end
@@ -312,17 +295,8 @@ function process_div_block(block, codeblocks, titles)
     example_counter = example_counter + 1
 
     local example_inlines = {}
-    local has_blocks = false
 
-    -- Check if content has non-Para blocks
-    for _, div_block in ipairs(block.content) do
-      if div_block.t ~= "Para" then
-        has_blocks = true
-        break
-      end
-    end
-
-    if not has_blocks then
+    if not has_complex_blocks(block.content) then
       -- Simple case: only paragraphs, combine into single inline sequence
       for _, div_block in ipairs(block.content) do
         if div_block.t == "Para" and div_block.content then
@@ -335,28 +309,22 @@ function process_div_block(block, codeblocks, titles)
         end
       end
 
-      local example_para = {
-        pandoc.Str("["),
-        pandoc.Emph({pandoc.Str("Example " .. example_counter)}),
-        pandoc.Str(": ")
-      }
+      local example_para = build_environment_opening("Example", example_counter, false)
+      table.insert(example_para, pandoc.Str(" "))  -- space after colon
       for _, inline in ipairs(example_inlines) do
         table.insert(example_para, inline)
       end
-      table.insert(example_para, pandoc.Str(" — "))
-      table.insert(example_para, pandoc.Emph({pandoc.Str("end example")}))
-      table.insert(example_para, pandoc.Str("]"))
+      table.insert(example_para, pandoc.Str(" "))  -- space before closing
+      local closing = build_environment_closing("example", false)
+      for _, inline in ipairs(closing) do
+        table.insert(example_para, inline)
+      end
 
       return {pandoc.Para(example_para)}
     else
       -- Complex case: has code blocks or other non-Para blocks
       local result = {}
-      local opening = {
-        pandoc.Str("["),
-        pandoc.Emph({pandoc.Str("Example " .. example_counter)}),
-        pandoc.Str(":")
-      }
-      table.insert(result, pandoc.Para(opening))
+      table.insert(result, build_environment_opening("Example", example_counter, true))
 
       -- Recursively process nested div content, passing codeblocks/titles
       for _, div_block in ipairs(block.content) do
@@ -366,12 +334,7 @@ function process_div_block(block, codeblocks, titles)
         end
       end
 
-      local closing = {
-        pandoc.Str("— "),
-        pandoc.Emph({pandoc.Str("end example")}),
-        pandoc.Str("]")
-      }
-      table.insert(result, pandoc.Para(closing))
+      table.insert(result, build_environment_closing("example", true))
       return result
     end
   end
@@ -540,18 +503,7 @@ function process_environment(content, env_type, counter_val)
 
   -- Parse the LaTeX content to get Pandoc AST elements
   local parsed = pandoc.read(modified_content, "latex+raw_tex")
-  local has_blocks = false
-
-  -- Check if content has non-Para blocks
-  for _, parsed_block in ipairs(parsed.blocks) do
-    if parsed_block.t ~= "Para" then
-      has_blocks = true
-      break
-    end
-  end
-  if codeblock_count > 0 then
-    has_blocks = true  -- Force complex case if we have codeblocks
-  end
+  local has_blocks = has_complex_blocks(parsed.blocks) or (codeblock_count > 0)
 
   local label = env_type:sub(1,1):upper() .. env_type:sub(2)  -- Capitalize first letter
   local result = {}
@@ -700,15 +652,15 @@ function Blocks(blocks)
       if note_content then
         note_counter = note_counter + 1
         note_content = trim(note_content)
-        table.insert(result, pandoc.Para({
-          pandoc.Str("["),
-          pandoc.Emph({pandoc.Str("Note " .. note_counter)}),
-          pandoc.Str(": "),
-          pandoc.RawInline('latex', note_content),
-          pandoc.Str(" — "),
-          pandoc.Emph({pandoc.Str("end note")}),
-          pandoc.Str("]")
-        }))
+        local inlines = build_environment_opening("Note", note_counter, false)
+        table.insert(inlines, pandoc.Str(" "))
+        table.insert(inlines, pandoc.RawInline('latex', note_content))
+        table.insert(inlines, pandoc.Str(" "))
+        local closing = build_environment_closing("note", false)
+        for _, inline in ipairs(closing) do
+          table.insert(inlines, inline)
+        end
+        table.insert(result, pandoc.Para(inlines))
         goto continue
       end
 
@@ -717,15 +669,15 @@ function Blocks(blocks)
       if example_content then
         example_counter = example_counter + 1
         example_content = trim(example_content)
-        table.insert(result, pandoc.Para({
-          pandoc.Str("["),
-          pandoc.Emph({pandoc.Str("Example " .. example_counter)}),
-          pandoc.Str(": "),
-          pandoc.RawInline('latex', example_content),
-          pandoc.Str(" — "),
-          pandoc.Emph({pandoc.Str("end example")}),
-          pandoc.Str("]")
-        }))
+        local inlines = build_environment_opening("Example", example_counter, false)
+        table.insert(inlines, pandoc.Str(" "))
+        table.insert(inlines, pandoc.RawInline('latex', example_content))
+        table.insert(inlines, pandoc.Str(" "))
+        local closing = build_environment_closing("example", false)
+        for _, inline in ipairs(closing) do
+          table.insert(inlines, inline)
+        end
+        table.insert(result, pandoc.Para(inlines))
         goto continue
       end
     end
@@ -738,17 +690,8 @@ function Blocks(blocks)
         note_counter = note_counter + 1
 
         local note_inlines = {}
-        local has_blocks = false
 
-        -- Check if content has non-Para blocks
-        for _, div_block in ipairs(block.content) do
-          if div_block.t ~= "Para" then
-            has_blocks = true
-            break
-          end
-        end
-
-        if not has_blocks then
+        if not has_complex_blocks(block.content) then
           -- Simple case: only paragraphs, combine into single inline sequence
           for _, div_block in ipairs(block.content) do
             if div_block.t == "Para" and div_block.content then
@@ -761,27 +704,21 @@ function Blocks(blocks)
             end
           end
 
-          local note_para = {
-            pandoc.Str("["),
-            pandoc.Emph({pandoc.Str("Note " .. note_counter)}),
-            pandoc.Str(": ")
-          }
+          local note_para = build_environment_opening("Note", note_counter, false)
+          table.insert(note_para, pandoc.Str(" "))
           for _, inline in ipairs(note_inlines) do
             table.insert(note_para, inline)
           end
-          table.insert(note_para, pandoc.Str(" — "))
-          table.insert(note_para, pandoc.Emph({pandoc.Str("end note")}))
-          table.insert(note_para, pandoc.Str("]"))
+          table.insert(note_para, pandoc.Str(" "))
+          local closing = build_environment_closing("note", false)
+          for _, inline in ipairs(closing) do
+            table.insert(note_para, inline)
+          end
 
           table.insert(result, pandoc.Para(note_para))
         else
           -- Complex case: has code blocks or other non-Para blocks
-          local opening = {
-            pandoc.Str("["),
-            pandoc.Emph({pandoc.Str("Note " .. note_counter)}),
-            pandoc.Str(":")
-          }
-          table.insert(result, pandoc.Para(opening))
+          table.insert(result, build_environment_opening("Note", note_counter, true))
 
           -- Output all blocks from div content
           for _, div_block in ipairs(block.content) do
@@ -791,12 +728,7 @@ function Blocks(blocks)
             end
           end
 
-          local closing = {
-            pandoc.Str("— "),
-            pandoc.Emph({pandoc.Str("end note")}),
-            pandoc.Str("]")
-          }
-          table.insert(result, pandoc.Para(closing))
+          table.insert(result, build_environment_closing("note", true))
         end
 
         goto continue
@@ -807,17 +739,8 @@ function Blocks(blocks)
         example_counter = example_counter + 1
 
         local example_inlines = {}
-        local has_blocks = false
 
-        -- Check if content has non-Para blocks
-        for _, div_block in ipairs(block.content) do
-          if div_block.t ~= "Para" then
-            has_blocks = true
-            break
-          end
-        end
-
-        if not has_blocks then
+        if not has_complex_blocks(block.content) then
           -- Simple case: only paragraphs, combine into single inline sequence
           for _, div_block in ipairs(block.content) do
             if div_block.t == "Para" and div_block.content then
@@ -830,27 +753,21 @@ function Blocks(blocks)
             end
           end
 
-          local example_para = {
-            pandoc.Str("["),
-            pandoc.Emph({pandoc.Str("Example " .. example_counter)}),
-            pandoc.Str(": ")
-          }
+          local example_para = build_environment_opening("Example", example_counter, false)
+          table.insert(example_para, pandoc.Str(" "))
           for _, inline in ipairs(example_inlines) do
             table.insert(example_para, inline)
           end
-          table.insert(example_para, pandoc.Str(" — "))
-          table.insert(example_para, pandoc.Emph({pandoc.Str("end example")}))
-          table.insert(example_para, pandoc.Str("]"))
+          table.insert(example_para, pandoc.Str(" "))
+          local closing = build_environment_closing("example", false)
+          for _, inline in ipairs(closing) do
+            table.insert(example_para, inline)
+          end
 
           table.insert(result, pandoc.Para(example_para))
         else
           -- Complex case: has code blocks or other non-Para blocks
-          local opening = {
-            pandoc.Str("["),
-            pandoc.Emph({pandoc.Str("Example " .. example_counter)}),
-            pandoc.Str(":")
-          }
-          table.insert(result, pandoc.Para(opening))
+          table.insert(result, build_environment_opening("Example", example_counter, true))
 
           -- Output all blocks from div content
           for _, div_block in ipairs(block.content) do
@@ -860,12 +777,7 @@ function Blocks(blocks)
             end
           end
 
-          local closing = {
-            pandoc.Str("— "),
-            pandoc.Emph({pandoc.Str("end example")}),
-            pandoc.Str("]")
-          }
-          table.insert(result, pandoc.Para(closing))
+          table.insert(result, build_environment_closing("example", true))
         end
 
         goto continue
