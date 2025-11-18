@@ -2401,6 +2401,79 @@ local function expand_macros_common(text, options)
   return text
 end
 
+-- Extract code text from a codeblock Div by merging Para and CodeBlock children
+-- Used by cpp-notes-examples.lua to avoid duplicating code extraction logic
+-- @param div_block: Div block containing Para and/or CodeBlock children
+-- @param lang_class: string language class (e.g., "cpp", "text", "bnf")
+-- @return CodeBlock with merged text, or nil if no code found
+local function extract_code_from_div(div_block, lang_class)
+  local code_text = ""
+
+  for _, child_block in ipairs(div_block.content) do
+    if child_block.t == "Para" then
+      -- Convert Para content to plain text
+      local text = pandoc.utils.stringify(child_block)
+      if #code_text > 0 then
+        code_text = code_text .. "\n"
+      end
+      code_text = code_text .. text
+    elseif child_block.t == "CodeBlock" then
+      -- Already a code block, use its text
+      if #code_text > 0 then
+        code_text = code_text .. "\n"
+      end
+      code_text = code_text .. child_block.text
+    end
+  end
+
+  -- Create a CodeBlock with the specified language class
+  if #code_text > 0 then
+    return pandoc.CodeBlock(code_text, {class = lang_class})
+  end
+
+  return nil
+end
+
+-- Build a formatted defnote paragraph
+-- Used by cpp-definitions.lua for consistent note formatting across different contexts
+-- @param note_content: string containing the LaTeX note content
+-- @param note_counter: number for the note counter
+-- @param parse_latex: boolean - if true, parse with pandoc.read; if false, use RawInline
+-- @return pandoc.Para with the formatted note
+local function build_defnote(note_content, note_counter, parse_latex)
+  -- Trim leading/trailing whitespace from note content
+  note_content = trim(note_content)
+
+  local note_para = {
+    pandoc.Str("["),
+    pandoc.Emph({pandoc.Str("Note " .. note_counter .. " to entry")}),
+    pandoc.Str(": ")
+  }
+
+  if parse_latex then
+    -- Parse the LaTeX content to get Pandoc inlines
+    -- Use +raw_tex to ensure nested custom environments are handled correctly
+    local parsed = pandoc.read(note_content, "latex+raw_tex")
+    -- Extract all inlines from the parsed document
+    for _, parsed_block in ipairs(parsed.blocks) do
+      if parsed_block.t == "Para" and parsed_block.content then
+        for _, inline in ipairs(parsed_block.content) do
+          table.insert(note_para, inline)
+        end
+      end
+    end
+  else
+    -- Use RawInline for the content (let later filters process it)
+    table.insert(note_para, pandoc.RawInline('latex', note_content))
+  end
+
+  table.insert(note_para, pandoc.Str(" — "))
+  table.insert(note_para, pandoc.Emph({pandoc.Str("end note")}))
+  table.insert(note_para, pandoc.Str("]"))
+
+  return pandoc.Para(note_para)
+end
+
 -- Export public API
 return {
   subscripts = subscripts,
@@ -2434,4 +2507,6 @@ return {
   expand_macros_common = expand_macros_common,
   try_unicode_conversion = try_unicode_conversion,
   strip_text_macros_in_math = strip_text_macros_in_math,
+  extract_code_from_div = extract_code_from_div,
+  build_defnote = build_defnote,
 }

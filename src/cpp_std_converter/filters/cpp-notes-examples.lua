@@ -48,6 +48,7 @@ local trim = common.trim
 local clean_code_common = common.clean_code_common
 local extract_braced_content = common.extract_braced_content
 local expand_macros_common = common.expand_macros_common
+local extract_code_from_div = common.extract_code_from_div
 
 -- Track note and example counters
 local note_counter = 0
@@ -85,28 +86,9 @@ local function process_codeblock_div(block, codeblocks, titles)
 
   -- Check for codeblock Div (fallback for cases without placeholders)
   if block.t == "Div" and block.classes and block.classes[1] == "codeblock" then
-    -- Extract text content from all Para blocks inside the div
-    local code_text = ""
-    for _, div_block in ipairs(block.content) do
-      if div_block.t == "Para" then
-        -- Convert Para content to plain text
-        local text = pandoc.utils.stringify(div_block)
-        if #code_text > 0 then
-          code_text = code_text .. "\n"
-        end
-        code_text = code_text .. text
-      elseif div_block.t == "CodeBlock" then
-        -- Already a code block, use its text
-        if #code_text > 0 then
-          code_text = code_text .. "\n"
-        end
-        code_text = code_text .. div_block.text
-      end
-    end
-
-    -- Create a proper CodeBlock with class "cpp"
-    if #code_text > 0 then
-      return {pandoc.CodeBlock(code_text, {class = "cpp"})}
+    local code_block = extract_code_from_div(block, "cpp")
+    if code_block then
+      return {code_block}
     end
   end
 
@@ -405,24 +387,9 @@ function process_div_block(block, codeblocks, titles)
 
   -- Handle <div class="codeblock"> - convert to proper code block
   if block.classes[1] == "codeblock" then
-    local code_text = ""
-    for _, div_block in ipairs(block.content) do
-      if div_block.t == "Para" then
-        local text = pandoc.utils.stringify(div_block)
-        if #code_text > 0 then
-          code_text = code_text .. "\n"
-        end
-        code_text = code_text .. text
-      elseif div_block.t == "CodeBlock" then
-        if #code_text > 0 then
-          code_text = code_text .. "\n"
-        end
-        code_text = code_text .. div_block.text
-      end
-    end
-
-    if #code_text > 0 then
-      return {pandoc.CodeBlock(code_text, {class = "cpp"})}
+    local code_block = extract_code_from_div(block, "cpp")
+    if code_block then
+      return {code_block}
     end
   end
 
@@ -916,28 +883,9 @@ function Blocks(blocks)
 
       -- Handle <div class="codeblock"> - convert to proper code block
       if block.classes[1] == "codeblock" then
-        -- Extract text content from all Para blocks inside the div
-        local code_text = ""
-        for _, div_block in ipairs(block.content) do
-          if div_block.t == "Para" then
-            -- Convert Para content to plain text
-            local text = pandoc.utils.stringify(div_block)
-            if #code_text > 0 then
-              code_text = code_text .. "\n"
-            end
-            code_text = code_text .. text
-          elseif div_block.t == "CodeBlock" then
-            -- Already a code block, use its text
-            if #code_text > 0 then
-              code_text = code_text .. "\n"
-            end
-            code_text = code_text .. div_block.text
-          end
-        end
-
-        -- Create a proper CodeBlock with class "cpp"
-        if #code_text > 0 then
-          table.insert(result, pandoc.CodeBlock(code_text, {class = "cpp"}))
+        local code_block = extract_code_from_div(block, "cpp")
+        if code_block then
+          table.insert(result, code_block)
         end
         goto continue
       end

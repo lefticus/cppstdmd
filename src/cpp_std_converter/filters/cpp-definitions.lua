@@ -46,6 +46,7 @@ package.path = package.path .. ";" .. script_dir .. "?.lua"
 -- Import shared utilities
 local common = require("cpp-common")
 local trim = common.trim
+local build_defnote = common.build_defnote
 
 -- Track definition and note counters
 local definition_counter = 0
@@ -93,36 +94,7 @@ function Blocks(blocks)
       local note_content = text:match("\\begin{defnote}([%s%S]-)\\end{defnote}")
       if note_content then
         note_counter = note_counter + 1
-        -- Trim leading/trailing whitespace from note content
-        note_content = trim(note_content)
-
-        -- Parse the LaTeX content to get Pandoc inlines
-        -- Use +raw_tex to ensure nested custom environments are handled correctly
-        local parsed = pandoc.read(note_content, "latex+raw_tex")
-        local note_inlines = {}
-        -- Extract all inlines from the parsed document
-        for _, parsed_block in ipairs(parsed.blocks) do
-          if parsed_block.t == "Para" and parsed_block.content then
-            for _, inline in ipairs(parsed_block.content) do
-              table.insert(note_inlines, inline)
-            end
-          end
-        end
-
-        -- Build the note paragraph
-        local note_para = {
-          pandoc.Str("["),
-          pandoc.Emph({pandoc.Str("Note " .. note_counter .. " to entry")}),
-          pandoc.Str(": ")
-        }
-        for _, inline in ipairs(note_inlines) do
-          table.insert(note_para, inline)
-        end
-        table.insert(note_para, pandoc.Str(" — "))
-        table.insert(note_para, pandoc.Emph({pandoc.Str("end note")}))
-        table.insert(note_para, pandoc.Str("]"))
-
-        table.insert(result, pandoc.Para(note_para))
+        table.insert(result, build_defnote(note_content, note_counter, true))
         goto continue
       end
     end
@@ -238,15 +210,7 @@ function Blocks(blocks)
       local note_content = text:match("\\begin{defnote}([%s%S]-)\\end{defnote}")
       if note_content then
         note_counter = note_counter + 1
-        table.insert(result, pandoc.Para({
-          pandoc.Str("["),
-          pandoc.Emph({pandoc.Str("Note " .. note_counter .. " to entry")}),
-          pandoc.Str(": "),
-          pandoc.RawInline('latex', note_content),
-          pandoc.Str(" — "),
-          pandoc.Emph({pandoc.Str("end note")}),
-          pandoc.Str("]")
-        }))
+        table.insert(result, build_defnote(note_content, note_counter, false))
       else
         table.insert(result, block)
       end
@@ -258,15 +222,7 @@ function Blocks(blocks)
       local note_content = text:match("\\begin{defnote}([%s%S]-)\\end{defnote}")
       if note_content then
         note_counter = note_counter + 1
-        table.insert(result, pandoc.Para({
-          pandoc.Str("["),
-          pandoc.Emph({pandoc.Str("Note " .. note_counter .. " to entry")}),
-          pandoc.Str(": "),
-          pandoc.RawInline('latex', note_content),
-          pandoc.Str(" — "),
-          pandoc.Emph({pandoc.Str("end note")}),
-          pandoc.Str("]")
-        }))
+        table.insert(result, build_defnote(note_content, note_counter, false))
       else
         table.insert(result, block)
       end
