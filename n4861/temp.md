@@ -255,12 +255,11 @@ class Map {
 A *type-constraint* `Q` that designates a concept `C` can be used to
 constrain a contextually-determined type or template type parameter pack
 `T` with a *constraint-expression* `E` defined as follows. If `Q` is of
-the form `C<A_1, \cdots, A_n>`, then let `E'` be
-`C<T, A_1, \cdots, A_n>`. Otherwise, let `E'` be `C<T>`. If `T` is not a
-pack, then `E` is `E'`, otherwise `E` is `(E' && ...)`. This
-*constraint-expression* `E` is called the *immediately-declared
-constraint* of `Q` for `T`. The concept designated by a
-*type-constraint* shall be a type concept [[temp.concept]].
+the form `C<A₁, ⋯, Aₙ>`, then let `E'` be `C<T, A₁, ⋯, Aₙ>`. Otherwise,
+let `E'` be `C<T>`. If `T` is not a pack, then `E` is `E'`, otherwise
+`E` is `(E' && ...)`. This *constraint-expression* `E` is called the
+*immediately-declared constraint* of `Q` for `T`. The concept designated
+by a *type-constraint* shall be a type concept [[temp.concept]].
 
 A *type-parameter* that starts with a *type-constraint* introduces the
 immediately-declared constraint of the *type-constraint* for the
@@ -1564,9 +1563,9 @@ The *normal form* of an *expression* `E` is a constraint
   [[temp.constr.op]] of the normal forms of `E1` and `E2`.
 - The normal form of an expression `E1 && E2` is the conjunction of the
   normal forms of `E1` and `E2`.
-- The normal form of a concept-id `C<A_1, A_2, ..., A_n>` is the normal
+- The normal form of a concept-id `C<A₁, A₂, ..., Aₙ>` is the normal
   form of the *constraint-expression* of `C`, after substituting
-  `A_1, A_2, ..., A_n` for `C`'s respective template parameters in the
+  `A₁, A₂, ..., Aₙ` for `C`'s respective template parameters in the
   parameter mappings in each atomic constraint. If any such substitution
   results in an invalid type or expression, the program is ill-formed;
   no diagnostic is required.

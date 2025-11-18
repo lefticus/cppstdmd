@@ -2048,7 +2048,7 @@ namespace std {
     template<class I, class O>
       using replace_copy_if_result = in_out_result<I, O>;
 
-    template<input_iterator I, sentinel_for<I> S, class O, class T = iter_value_t<O>
+    template<input_iterator I, sentinel_for<I> S, class O, class T = iter_value_t<O>,
              class Proj = identity, indirect_unary_predicate<projected<I, Proj>> Pred>
       requires indirectly_copyable<I, O> && output_iterator<O, const T&>
       constexpr replace_copy_if_result<I, O>
@@ -10328,16 +10328,16 @@ intentional. — *end note*]
 
 ### Definitions <a id="numerics.defns">[[numerics.defns]]</a>
 
-Define `GENERALIZED_NONCOMMUTATIVE_SUM(op, a1, \dotsc, aN)` as follows:
+Define `GENERALIZED_NONCOMMUTATIVE_SUM(op, a1, …, aN)` as follows:
 
 - `a1` when `N` is `1`, otherwise
-- `op(GENERALIZED_NONCOMMUTATIVE_SUM(op, a1, \dotsc, aK),`  
-  `\phantom{op(}GENERALIZED_NONCOMMUTATIVE_SUM(op, aM, \dotsc, aN))` for
-  any `K` where 1 < K+1 = M ≤ N.
+- `op(GENERALIZED_NONCOMMUTATIVE_SUM(op, a1, …, aK),`  
+  `\phantom{op(}GENERALIZED_NONCOMMUTATIVE_SUM(op, aM, …, aN))` for any
+  `K` where 1 < K+1 = M ≤ N.
 
-Define `GENERALIZED_SUM(op, a1, \dotsc, aN)` as
-`GENERALIZED_NONCOMMUTATIVE_SUM(op, b1, \dotsc, bN)`, where
-`b1, \dotsc, bN` may be any permutation of `a1, \dotsc, aN`.
+Define `GENERALIZED_SUM(op, a1, …, aN)` as
+`GENERALIZED_NONCOMMUTATIVE_SUM(op, b1, …, bN)`, where `b1, …, bN` may
+be any permutation of `a1, …, aN`.
 
 ### Accumulate <a id="accumulate">[[accumulate]]</a>
 

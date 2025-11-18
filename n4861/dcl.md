@@ -5053,11 +5053,11 @@ task<void> g3(int a, ...) {     // error: variable parameter list not allowed
 — *end example*]
 
 The *promise type* of a coroutine is
-`std::coroutine_traits<R, P_1, \dotsc, P_n>::promise_type`, where `R` is
-the return type of the function, and `P₁` … `Pₙ` are the sequence of
-types of the function parameters, preceded by the type of the implicit
-object parameter [[over.match.funcs]] if the coroutine is a non-static
-member function. The promise type shall be a class type.
+`std::coroutine_traits<R, P₁, …, Pₙ>::promise_type`, where `R` is the
+return type of the function, and `P₁` … `Pₙ` are the sequence of types
+of the function parameters, preceded by the type of the implicit object
+parameter [[over.match.funcs]] if the coroutine is a non-static member
+function. The promise type shall be a class type.
 
 In the following, `pᵢ` is an lvalue of type `Pᵢ`, where `p₁` denotes
 `*this` and `p_i+1` denotes the $i^\textrm{th}$ function parameter for a
@@ -5102,7 +5102,7 @@ where
   resolution is performed on a promise constructor call created by
   assembling an argument list with lvalues `p₁` … `pₙ`. If a viable
   constructor is found [[over.match.viable]], then
-  *promise-constructor-arguments* is `(p_1, \dotsc, p_n)`, otherwise
+  *promise-constructor-arguments* is `(p₁, …, pₙ)`, otherwise
   *promise-constructor-arguments* is empty.
 
 The *unqualified-id*s `return_void` and `return_value` are looked up in
@@ -5320,9 +5320,9 @@ performed. — *end note*]
 In either case, *e* is an lvalue if the type of the entity *e* is an
 lvalue reference and an xvalue otherwise. Given the type `Tᵢ` designated
 by `std::tuple_element<i, E>::type` and the type `Uᵢ` designated by
-either `\tcode{T}_i&` or `\tcode{T}_i&&`, where `Uᵢ` is an lvalue
-reference if the initializer is an lvalue and an rvalue reference
-otherwise, variables are introduced with unique names `rᵢ` as follows:
+either `Tᵢ&` or `Tᵢ&&`, where `Uᵢ` is an lvalue reference if the
+initializer is an lvalue and an rvalue reference otherwise, variables
+are introduced with unique names `rᵢ` as follows:
 
 ``` bnf
 *S* 'Uᵢ rᵢ =' initializer ';'

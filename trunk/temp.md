@@ -352,12 +352,11 @@ in the scope of the template declaration.
 A *type-constraint* `Q` that designates a concept `C` can be used to
 constrain a contextually-determined type or template type parameter pack
 `T` with a *constraint-expression* `E` defined as follows. If `Q` is of
-the form `C<A_1, \dotsc, A_n>`, then let `E'` be
-`C<T, A_1, \dotsc, A_n>`. Otherwise, let `E'` be `C<T>`. If `T` is not a
-pack, then `E` is `E'`, otherwise `E` is `(E' && ...)`. This
-*constraint-expression* `E` is called the *immediately-declared
-constraint* of `Q` for `T`. The concept designated by a
-*type-constraint* shall be a type concept [[temp.concept]].
+the form `C<A₁, …, Aₙ>`, then let `E'` be `C<T, A₁, …, Aₙ>`. Otherwise,
+let `E'` be `C<T>`. If `T` is not a pack, then `E` is `E'`, otherwise
+`E` is `(E' && ...)`. This *constraint-expression* `E` is called the
+*immediately-declared constraint* of `Q` for `T`. The concept designated
+by a *type-constraint* shall be a type concept [[temp.concept]].
 
 A *type-parameter* that starts with a *type-constraint* introduces the
 immediately-declared constraint of the *type-constraint* for the
@@ -1818,12 +1817,12 @@ The *normal form* of an *expression* `E` is a constraint
   [[temp.constr.op]] of the normal forms of `E1` and `E2`.
 - The normal form of an expression `E1 && E2` is the conjunction of the
   normal forms of `E1` and `E2`.
-- For a concept-id `C<A_1, A_2, \dotsc, A_n>` termed `CI`:
+- For a concept-id `C<A₁, A₂, …, Aₙ>` termed `CI`:
   - If `C` names a dependent concept, the normal form of `CI` is a
     concept-dependent constraint whose concept-id is `CI` and whose
     parameter mapping is the identity mapping.
   - Otherwise, to form `CE`, any non-dependent concept template argument
-    `A_i` is substituted into the *constraint-expression* of `C`. If any
+    `Aᵢ` is substituted into the *constraint-expression* of `C`. If any
     such substitution results in an invalid concept-id, the program is
     ill-formed; no diagnostic is required. The normal form of `CI` is
     the result of substituting, in the normal form `N` of `CE`,
@@ -1859,15 +1858,15 @@ The *normal form* of an *expression* `E` is a constraint
     If `E` contains an unexpanded concept template parameter pack, it
     shall not contain an unexpanded template parameter pack of another
     kind. Let `E'` be the normal form of `E`.
-    - If `E` contains an unexpanded concept template parameter pack
-      `P_k` that has corresponding template arguments in the parameter
-      mapping of any atomic constraint (including concept-dependent
-      constraints) of `E'`, the number of arguments specified for all
-      such `P_k` shall be the same number N. The normal form of `F` is
-      the normal form of `E_0 Op \dotsb Op E_{N-1}` after substituting
-      in `E_i` the respective iᵗʰ concept argument of each `P_k`. If any
-      such substitution results in an invalid type or expression, the
-      program is ill-formed; no diagnostic is required.
+    - If `E` contains an unexpanded concept template parameter pack `Pₖ`
+      that has corresponding template arguments in the parameter mapping
+      of any atomic constraint (including concept-dependent constraints)
+      of `E'`, the number of arguments specified for all such `Pₖ` shall
+      be the same number N. The normal form of `F` is the normal form of
+      `E₀ Op … Op E_{N-1}` after substituting in `Eᵢ` the respective iᵗʰ
+      concept argument of each `Pₖ`. If any such substitution results in
+      an invalid type or expression, the program is ill-formed; no
+      diagnostic is required.
     - Otherwise, the normal form of `F` is a fold expanded constraint
       [[temp.constr.fold]] whose constraint is `E'` and whose
       *fold-operator* is `Op`.

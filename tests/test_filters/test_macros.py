@@ -1064,3 +1064,61 @@ def test_lor_operator_in_tcode():
     assert "\\lor" not in output
     # Should NOT have $ delimiters
     assert "$" not in output
+
+
+def test_nested_tcode_with_subscript_in_math():
+    r"""Test nested \tcode{} with subscript: \tcode{decay_t<$\tcode{T}_i$>}
+
+    From n4659/utilities.tex:14258 - inner \tcode{} should be stripped (not
+    converted to nested backticks), and subscript should convert to Unicode.
+    Expected: `decay_t<Tᵢ>` (single backticks, Unicode subscript)
+    NOT: `` decay_t<`T`_i> `` (nested backticks, unconverted subscript)
+    """
+    latex = r"\tcode{decay_t<$\tcode{T}_i$>}"
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    # Should have single backticks with Unicode subscript
+    assert "`decay_t<Tᵢ>`" in output
+    # Should NOT have nested backticks
+    assert "``" not in output
+    assert "`T`" not in output  # Inner T should not have backticks
+    # Should NOT have unconverted subscript
+    assert "_i" not in output
+
+
+def test_multiple_nested_tcode_in_math():
+    r"""Test multiple nested \tcode{} with subscripts in single outer \tcode{}
+
+    Pattern: \tcode{template<$\tcode{T}_i$, $\tcode{U}_j$>}
+    Both inner subscripts should convert correctly without nested backticks.
+    """
+    latex = r"\tcode{template<$\tcode{T}_i$, $\tcode{U}_j$>}"
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    # Should have all subscripts converted to Unicode
+    assert "`template<Tᵢ, Uⱼ>`" in output
+    # Should NOT have nested backticks or double backticks
+    assert "``" not in output
+    # Should NOT have unconverted subscripts
+    assert "_i" not in output and "_j" not in output
+
+
+def test_nested_tcode_with_superscript():
+    r"""Test nested \tcode{} with superscript: \tcode{X<$\tcode{T}^i$>}
+
+    Superscripts should behave the same as subscripts - convert to Unicode
+    without creating nested backticks.
+    """
+    latex = r"\tcode{X<$\tcode{T}^i$>}"
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    # Should have superscript converted to Unicode
+    assert "`X<Tⁱ>`" in output
+    # Should NOT have nested backticks
+    assert "``" not in output
+    # Should NOT have unconverted superscript
+    assert "^i" not in output
+
+
+# NOTE: $\tcode{T}_i$ (tcode inside math, in running text) is a different scenario
+# from nested \tcode{} and requires handling in cpp-math.lua - out of scope for this fix

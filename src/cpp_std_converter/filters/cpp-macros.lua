@@ -104,8 +104,20 @@ local PATTERN = {
 local function convert_math_in_code(text)
   -- Process $...$  patterns (inline math in code)
   text = text:gsub(PATTERN.inline_math, function(math_content)
-    -- Use centralized Unicode conversion from cpp-common
-    -- This ensures consistent behavior across all math conversion contexts
+    -- Unescape double backslashes from Pandoc's LaTeX parsing
+    -- Pandoc escapes inner \tcode to \\tcode when parsing nested macros
+    -- Pattern: $\\tcode{T}_i$ → $\tcode{T}_i$
+    math_content = math_content:gsub("\\\\", "\\")
+
+    -- Strip nested \tcode{} since we're already in code context from outer \tcode{}
+    -- Inner \tcode{T} → T (no backticks needed, outer \tcode{} provides them)
+    -- This prevents nested backticks like `` `T` `` and allows subscripts to convert
+    -- Pattern: \tcode{decay_t<$\tcode{T}_i$>} → decay_t<Tᵢ> (wrapped by outer backticks)
+    math_content = process_macro_with_replacement(math_content, "tcode", function(content)
+      return content  -- Just strip wrapper, don't add backticks
+    end)
+
+    -- Now convert math to Unicode (subscripts, operators, etc.)
     local converted = try_unicode_conversion(math_content)
     return converted or math_content  -- Fallback to original if conversion fails
   end)
@@ -769,6 +781,10 @@ function RawBlock(elem)
   if text:match("^\\tcode{.*}$") then
     local code = text:match("^\\tcode{(.*)}$")
     if code then
+      -- Unescape LaTeX escaped characters first
+      code = unescape_latex_chars(code)
+      -- Convert inline math (subscripts and operators) to Unicode
+      code = convert_math_in_code(code)
       -- Convert cv{} to cv (cv-qualifiers: const/volatile)
       -- simplified_macros.tex expands \cv to cv, leaving cv{} in output
       code = code:gsub("cv%{%}", "cv")

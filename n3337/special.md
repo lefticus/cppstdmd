@@ -555,7 +555,7 @@ name followed by an empty parameter list is used to declare the
 destructor in a class definition. In such a declaration, the `~`
 followed by the destructor’s class name can be enclosed in optional
 parentheses; such parentheses are ignored. A *typedef-name* shall not be
-used as the *class-name* following the `\sim` in the declarator for a
+used as the *class-name* following the `~` in the declarator for a
 destructor declaration.
 
 A destructor is used to destroy objects of its class type. A destructor

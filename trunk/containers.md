@@ -15366,8 +15366,8 @@ In [[mdspan.layout.reqmts]] and [[mdspan.layout.policy.reqmts]]:
   integer type. — *end note*]
 - `r` is a (possibly const) rank index of `typename M::extents_type`.
 - `dᵣ` is a pack of (possibly const) integers for which
-  `sizeof...(\tcode{d}_r) == M::extents_type::rank()` is `true`, the rᵗʰ
-  element is equal to 1, and all other elements are equal to 0.
+  `sizeof...(dᵣ) == M::extents_type::rank()` is `true`, the rᵗʰ element
+  is equal to 1, and all other elements are equal to 0.
 
 In [[mdspan.layout.reqmts]] through [[mdspan.layout.stride]]:
 
@@ -18082,7 +18082,7 @@ unsigned integer types, or model `integral-constant-like`.
 
 [*Note 1*:
 
-`strided_slice\{.offset = 1, .extent = 10, .stride = 3\}`
+`strided_slice{.offset = 1, .extent = 10, .stride = 3}`
 
 indicates the indices `1`, `4`, `7`, and `10`. Indices are selected from
 the half-open interval \[`1`, `1 + 10`).

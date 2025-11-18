@@ -1895,7 +1895,7 @@ template<class... TTypes, class... UTypes>
 *Returns:* `!(t < u)`.
 
 [*Note 1*: The above definitions for comparison functions do not
-require `t_{tail}` (or `u_{tail}`) to be constructed. It may not even be
+require `tₜₐᵢₗ` (or `uₜₐᵢₗ`) to be constructed. It may not even be
 possible, as `t` and `u` are not required to be copy constructible.
 Also, all comparison functions are short circuited; they do not perform
 element accesses beyond what is required to determine the result of the
@@ -10664,10 +10664,10 @@ In the text that follows:
 - `FD` is the type `decay_t<F>`,
 - `fd` is an lvalue of type `FD` constructed from `std::forward<F>(f)`,
 - `Tᵢ` is the iᵗʰ type in the template parameter pack `BoundArgs`,
-- `TDᵢ` is the type `decay_t<\tcode{T}_i>`,
+- `TDᵢ` is the type `decay_t<Tᵢ>`,
 - `tᵢ` is the iᵗʰ argument in the function parameter pack `bound_args`,
 - `tdᵢ` is an lvalue of type `TDᵢ` constructed from
-  `std::forward<\tcode{T}_i>(\tcode{t}_i)`,
+  `std::forward<Tᵢ>(tᵢ)`,
 - `Uⱼ` is the jᵗʰ deduced type of the `UnBoundArgs&&...` parameter of
   the forwarding call wrapper, and
 - `uⱼ` is the jᵗʰ argument associated with `Uⱼ`.
@@ -10748,17 +10748,14 @@ The values of the `v₁`, `v₂`, …, `v_N` and their corresponding types
 `V₁`, `V₂`, …, `V_N` depend on the types `TDᵢ` derived from the call to
 `bind` and the cv-qualifiers cv of the call wrapper `g` as follows:
 
-- if `TDᵢ` is `reference_wrapper<T>`, the argument is
-  `\tcode{td}_i.get()` and its type `Vᵢ` is `T&`;
-- if the value of `is_bind_expression_v<\tcode{TD}_i>` is `true`, the
-  argument is `\tcode{td}_i(std::forward<\tcode{U}_j>(\tcode{u}_j)...)`
-  and its type `Vᵢ` is
-  `invoke_result_t<\tcode{TD}_i cv &, \tcode{U}_j...>&&`;
-- if the value `j` of `is_placeholder_v<\tcode{TD}_i>` is not zero, the
-  argument is `std::forward<\tcode{U}_j>(\tcode{u}_j)` and its type `Vᵢ`
-  is `\tcode{U}_j&&`;
-- otherwise, the value is `tdᵢ` and its type `Vᵢ` is
-  `\tcode{TD}_i cv &`.
+- if `TDᵢ` is `reference_wrapper<T>`, the argument is `tdᵢ.get()` and
+  its type `Vᵢ` is `T&`;
+- if the value of `is_bind_expression_v<TDᵢ>` is `true`, the argument is
+  `tdᵢ(std::forward<Uⱼ>(uⱼ)...)` and its type `Vᵢ` is
+  `invoke_result_t<TDᵢ cv &, Uⱼ...>&&`;
+- if the value `j` of `is_placeholder_v<TDᵢ>` is not zero, the argument
+  is `std::forward<Uⱼ>(uⱼ)` and its type `Vᵢ` is `Uⱼ&&`;
+- otherwise, the value is `tdᵢ` and its type `Vᵢ` is `TDᵢ cv &`.
 
 #### Placeholders <a id="func.bind.place">[[func.bind.place]]</a>
 

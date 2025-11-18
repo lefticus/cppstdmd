@@ -3170,7 +3170,7 @@ expression-equivalent to the first well-formed expression below:
 
 - `\textit{SCHED-ENV}(get_completion_scheduler<\textit{decayed-typeof}<\textit{set-cpo}>>(get_env(sndr)))`
 - `\textit{MAKE-ENV}(get_domain, get_domain(get_env(sndr)))`
-- `(void(sndr), env<>\{\})`
+- `(void(sndr), env<>{})`
 
 The names `let_value`, `let_error`, and `let_stopped` denote pipeable
 sender adaptor objects. For subexpressions `sndr` and `f`, let `F` be
@@ -4939,9 +4939,9 @@ Declares `my_sender` to be a sender that can complete by calling one of
 the following for a receiver expression `rcvr`:
 
 - `set_value(rcvr)`
-- `set_value(rcvr, int\{...\}, float\{...\})`
-- `set_error(rcvr, exception_ptr\{...\})`
-- `set_error(rcvr, error_code\{...\})`
+- `set_value(rcvr, int{...}, float{...})`
+- `set_error(rcvr, exception_ptr{...})`
+- `set_error(rcvr, error_code{...})`
 - `set_stopped(rcvr)`
 
 — *end example*]

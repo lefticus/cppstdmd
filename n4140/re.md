@@ -2499,7 +2499,7 @@ An object of type `regex_iterator` that is not an end-of-sequence
 iterator holds a *zero-length match* if `match[0].matched == true` and
 `match[0].first == match[0].second`. For example, this can occur when
 the part of the regular expression that matched consists only of an
-assertion (such as `'^'`, `'$'`, `'\backslashb'`, `'\backslashB'`).
+assertion (such as `'^'`, `'$'`, `'\b'`, `'\B'`).
 
 #### `regex_iterator` constructors <a id="re.regiter.cnstr">[[re.regiter.cnstr]]</a>
 

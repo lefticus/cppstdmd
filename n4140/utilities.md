@@ -1440,9 +1440,9 @@ template<class... TTypes, class... UTypes>
 
 *Returns:* `!(t < u)`
 
-The above definitions for comparison operators do not require `t_{tail}`
-(or `u_{tail}`) to be constructed. It may not even be possible, as `t`
-and `u` are not required to be copy constructible. Also, all comparison
+The above definitions for comparison operators do not require `tₜₐᵢₗ`
+(or `uₜₐᵢₗ`) to be constructed. It may not even be possible, as `t` and
+`u` are not required to be copy constructible. Also, all comparison
 operators are short circuited; they do not perform element accesses
 beyond what is required to determine the result of the comparison.
 

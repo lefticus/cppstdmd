@@ -689,10 +689,9 @@ namespace std {
 Let R_`I` be `remove_cvref_t<I>`. The type `iter_difference_t<I>`
 denotes
 
-- `incrementable_traits<R_\tcode{I}>::difference_type` if
-  `iterator_traits<R_\tcode{I}>` names a specialization generated from
-  the primary template, and
-- `iterator_traits<R_\tcode{I}>::difference_type` otherwise.
+- `incrementable_traits<R_I>::difference_type` if `iterator_traits<R_I>`
+  names a specialization generated from the primary template, and
+- `iterator_traits<R_I>::difference_type` otherwise.
 
 Users may specialize `incrementable_traits` on program-defined types.
 
@@ -763,10 +762,10 @@ template<class T> using iter_value_t = see below;
 
 Let R_`I` be `remove_cvref_t<I>`. The type `iter_value_t<I>` denotes
 
-- `indirectly_readable_traits<R_\tcode{I}>::value_type` if
-  `iterator_traits<R_\tcode{I}>` names a specialization generated from
-  the primary template, and
-- `iterator_traits<R_\tcode{I}>::value_type` otherwise.
+- `indirectly_readable_traits<R_I>::value_type` if
+  `iterator_traits<R_I>` names a specialization generated from the
+  primary template, and
+- `iterator_traits<R_I>::value_type` otherwise.
 
 Class template `indirectly_readable_traits` may be specialized on
 program-defined types.

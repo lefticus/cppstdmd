@@ -5218,11 +5218,11 @@ task<void> g3(int a, ...) {     // error: variable parameter list not allowed
 — *end example*]
 
 The *promise type* of a coroutine is
-`std::coroutine_traits<R, P_1, \dotsc, P_n>::promise_type`, where `R` is
-the return type of the function, and `P₁` … `Pₙ` is the sequence of
-types of the non-object function parameters, preceded by the type of the
-object parameter [[dcl.fct]] if the coroutine is a non-static member
-function. The promise type shall be a class type.
+`std::coroutine_traits<R, P₁, …, Pₙ>::promise_type`, where `R` is the
+return type of the function, and `P₁` … `Pₙ` is the sequence of types of
+the non-object function parameters, preceded by the type of the object
+parameter [[dcl.fct]] if the coroutine is a non-static member function.
+The promise type shall be a class type.
 
 In the following, `pᵢ` is an lvalue of type `Pᵢ`, where `p₁` denotes the
 object parameter and `p_i+1` denotes the iᵗʰ non-object function
@@ -5269,8 +5269,7 @@ where
   resolution is performed on a promise constructor call created by
   assembling an argument list `q₁` … `qₙ`. If a viable constructor is
   found [[over.match.viable]], then *promise-constructor-arguments* is
-  `(\tcode{q}_1, \dotsc, \tcode{q}_n)`, otherwise
-  *promise-constructor-arguments* is empty, and
+  `(q₁, …, qₙ)`, otherwise *promise-constructor-arguments* is empty, and
 - a coroutine is suspended at the *initial suspend point* if it is
   suspended at the initial await expression, and
 - a coroutine is suspended at a *final suspend point* if it is suspended
@@ -5492,9 +5491,9 @@ performed. — *end note*]
 In either case, *e* is an lvalue if the type of the entity *e* is an
 lvalue reference and an xvalue otherwise. Given the type `Tᵢ` designated
 by `std::tuple_element<i, E>::type` and the type `Uᵢ` designated by
-either `\tcode{T}_i&` or `\tcode{T}_i&&`, where `Uᵢ` is an lvalue
-reference if the initializer is an lvalue and an rvalue reference
-otherwise, variables are introduced with unique names `rᵢ` as follows:
+either `Tᵢ&` or `Tᵢ&&`, where `Uᵢ` is an lvalue reference if the
+initializer is an lvalue and an rvalue reference otherwise, variables
+are introduced with unique names `rᵢ` as follows:
 
 ``` bnf
 *S* 'Uᵢ rᵢ =' initializer ';'
@@ -5510,10 +5509,10 @@ anonymous union member, and the number of elements in the
 *identifier-list* shall be equal to the number of non-static data
 members of `E`. Designating the non-static data members of `E` as `m₀`,
 `m₁`, `m₂`, … (in declaration order), each `vᵢ` is the name of an lvalue
-that refers to the member `m`ᵢ of *e* and whose type is that of
-`e.\tcode{m}_i` [[expr.ref]]; the referenced type is the declared type
-of `mᵢ` if that type is a reference type, or the type of `e.\tcode{m}_i`
-otherwise. The lvalue is a bit-field if that member is a bit-field.
+that refers to the member `m`ᵢ of *e* and whose type is that of `e.mᵢ`
+[[expr.ref]]; the referenced type is the declared type of `mᵢ` if that
+type is a reference type, or the type of `e.mᵢ` otherwise. The lvalue is
+a bit-field if that member is a bit-field.
 
 [*Example 2*:
 

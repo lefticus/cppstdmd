@@ -13624,8 +13624,8 @@ In subclauses [[mdspan.layout.reqmts]] and
   integer type. — *end note*]
 - `r` is a (possibly const) rank index of `typename M::extents_type`.
 - `dᵣ` is a pack of (possibly const) integers for which
-  `sizeof...(\tcode{d}_r) == M::extents_type::rank()` is `true`, the rᵗʰ
-  element is equal to 1, and all other elements are equal to 0.
+  `sizeof...(dᵣ) == M::extents_type::rank()` is `true`, the rᵗʰ element
+  is equal to 1, and all other elements are equal to 0.
 
 In subclauses [[mdspan.layout.reqmts]] through [[mdspan.layout.stride]],
 let *is-mapping-of* be the exposition-only variable template defined as

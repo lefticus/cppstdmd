@@ -2501,7 +2501,7 @@ iterator holds a *zero-length match* if `match[0].matched == true` and
 
 [*Note 1*: For example, this can occur when the part of the regular
 expression that matched consists only of an assertion (such as `'^'`,
-`'$'`, `'\backslashb'`, `'\backslashB'`). — *end note*]
+`'$'`, `'\b'`, `'\B'`). — *end note*]
 
 #### `regex_iterator` constructors <a id="re.regiter.cnstr">[[re.regiter.cnstr]]</a>
 

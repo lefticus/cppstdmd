@@ -1370,8 +1370,8 @@ initializations for move and copy, respectively, would be
 constexpr-suitable [[dcl.constexpr]]. The defaulted move and copy
 constructor of `tuple<>` are constexpr functions.
 
-If `is_trivially_destructible_v<\tcode{T}_i>` is `true` for all `Tᵢ`,
-then the destructor of `tuple` is trivial.
+If `is_trivially_destructible_v<Tᵢ>` is `true` for all `Tᵢ`, then the
+destructor of `tuple` is trivial.
 
 The default constructor of `tuple<>` is trivial.
 
@@ -2206,11 +2206,11 @@ element of `r`.
 *Remarks:* The second overload is to be found via argument-dependent
 lookup [[basic.lookup.argdep]] only.
 
-[*Note 1*: The above definition does not require `t_{tail}` (or
-`u_{tail}`) to be constructed. It might not even be possible, as `t` and
-`u` are not required to be copy constructible. Also, all comparison
-operator functions are short circuited; they do not perform element
-accesses beyond what is required to determine the result of the
+[*Note 1*: The above definition does not require `tₜₐᵢₗ` (or `uₜₐᵢₗ`)
+to be constructed. It might not even be possible, as `t` and `u` are not
+required to be copy constructible. Also, all comparison operator
+functions are short circuited; they do not perform element accesses
+beyond what is required to determine the result of the
 comparison. — *end note*]
 
 ### `common_reference` related specializations <a id="tuple.common.ref">[[tuple.common.ref]]</a>
@@ -7537,34 +7537,31 @@ collectively referred to as *state entities*.
 
 ### Requirements <a id="func.require">[[func.require]]</a>
 
-Define `INVOKE(f, t_1, t_2, \dotsc, t_N)` as follows:
+Define `INVOKE(f, t₁, t₂, …, t_N)` as follows:
 
-- `(t_1.*f)(t_2, \dotsc, t_N)` when `f` is a pointer to a member
-  function of a class `T` and
-  `is_same_v<T, remove_cvref_t<decltype(t1)>> ||`
-  `is_base_of_v<T, remove_cvref_t<decltype(t_1)>>` is `true`;
-- `(t_1.get().*f)(t_2, \dotsc, t_N)` when `f` is a pointer to a member
-  function of a class `T` and `remove_cvref_t<decltype(t_1)>` is a
-  specialization of `reference_wrapper`;
-- `((*t_1).*f)(t_2, \dotsc, t_N)` when `f` is a pointer to a member
-  function of a class `T` and `t_1` does not satisfy the previous two
-  items;
-- `t_1.*f` when N = 1 and `f` is a pointer to data member of a class `T`
+- `(t₁.*f)(t₂, …, t_N)` when `f` is a pointer to a member function of a
+  class `T` and `is_same_v<T, remove_cvref_t<decltype(t1)>> ||`
+  `is_base_of_v<T, remove_cvref_t<decltype(t₁)>>` is `true`;
+- `(t₁.get().*f)(t₂, …, t_N)` when `f` is a pointer to a member function
+  of a class `T` and `remove_cvref_t<decltype(t₁)>` is a specialization
+  of `reference_wrapper`;
+- `((*t₁).*f)(t₂, …, t_N)` when `f` is a pointer to a member function of
+  a class `T` and `t₁` does not satisfy the previous two items;
+- `t₁.*f` when N = 1 and `f` is a pointer to data member of a class `T`
   and `is_same_v<T, remove_cvref_t<decltype(t1)>> ||`
-  `is_base_of_v<T, remove_cvref_t<decltype(t_1)>>` is `true`;
-- `t_1.get().*f` when N = 1 and `f` is a pointer to data member of a
-  class `T` and `remove_cvref_t<decltype(t_1)>` is a specialization of
+  `is_base_of_v<T, remove_cvref_t<decltype(t₁)>>` is `true`;
+- `t₁.get().*f` when N = 1 and `f` is a pointer to data member of a
+  class `T` and `remove_cvref_t<decltype(t₁)>` is a specialization of
   `reference_wrapper`;
-- `(*t_1).*f` when N = 1 and `f` is a pointer to data member of a class
-  `T` and `t_1` does not satisfy the previous two items;
-- `f(t_1, t_2, \dotsc, t_N)` in all other cases.
+- `(*t₁).*f` when N = 1 and `f` is a pointer to data member of a class
+  `T` and `t₁` does not satisfy the previous two items;
+- `f(t₁, t₂, …, t_N)` in all other cases.
 
-Define `INVOKE<R>(f, t_1, t_2, \dotsc, t_N)` as
-`static_cast<void>(INVOKE(f, t_1, t_2, \dotsc, t_N))` if `R` is
-cv `void`, otherwise `INVOKE(f, t_1, t_2, \dotsc, t_N)` implicitly
-converted to `R`. If
-`reference_converts_from_temporary_v<R, decltype(INVOKE(f, t_1, t_2, \dotsc, t_N))>`
-is `true`, `INVOKE<R>(f, t_1, t_2, \dotsc, t_N)` is ill-formed.
+Define `INVOKE<R>(f, t₁, t₂, …, t_N)` as
+`static_cast<void>(INVOKE(f, t₁, t₂, …, t_N))` if `R` is cv `void`,
+otherwise `INVOKE(f, t₁, t₂, …, t_N)` implicitly converted to `R`. If
+`reference_converts_from_temporary_v<R, decltype(INVOKE(f, t₁, t₂, …, t_N))>`
+is `true`, `INVOKE<R>(f, t₁, t₂, …, t_N)` is ill-formed.
 
 Every call wrapper [[func.def]] meets the *Cpp17MoveConstructible* and
 *Cpp17Destructible* requirements. An *argument forwarding call wrapper*
@@ -8775,11 +8772,10 @@ In the text that follows:
 - `fd` is an lvalue that is a target object of `g` [[func.def]] of type
   `FD` direct-non-list-initialized with `std::forward<F>(f)`,
 - `Tᵢ` is the iᵗʰ type in the template parameter pack `BoundArgs`,
-- `TDᵢ` is the type `decay_t<\tcode{T}_i>`,
+- `TDᵢ` is the type `decay_t<Tᵢ>`,
 - `tᵢ` is the iᵗʰ argument in the function parameter pack `bound_args`,
 - `tdᵢ` is a bound argument entity of `g` [[func.def]] of type `TDᵢ`
-  direct-non-list-initialized with
-  `std::forward<{}\tcode{T}_i>(\tcode{t}_i)`,
+  direct-non-list-initialized with `std::forward<{}Tᵢ>(tᵢ)`,
 - `Uⱼ` is the jᵗʰ deduced type of the `UnBoundArgs&&...` parameter of
   the argument forwarding call wrapper, and
 - `uⱼ` is the jᵗʰ argument associated with `Uⱼ`.
@@ -8833,20 +8829,17 @@ corresponding types `V₁`, `V₂`, …, `V_N` depend on the types `TDᵢ`
 derived from the call to `bind` and the cv-qualifiers cv of the call
 wrapper `g` as follows:
 
-- if `TDᵢ` is `reference_wrapper<T>`, the argument is
-  `\tcode{td}_i.get()` and its type `Vᵢ` is `T&`;
-- if the value of `is_bind_expression_v<\tcode{TD}_i>` is `true`, the
-  argument is
+- if `TDᵢ` is `reference_wrapper<T>`, the argument is `tdᵢ.get()` and
+  its type `Vᵢ` is `T&`;
+- if the value of `is_bind_expression_v<TDᵢ>` is `true`, the argument is
   ``` cpp
   static_cast<cv `TD`_i&>(td_i)(std::forward<U_j>(u_j)...)
   ```
 
-  and its type `Vᵢ` is
-  `invoke_result_t<cv \tcode{TD}_i&, \tcode{U}_j...>&&`;
-- if the value `j` of `is_placeholder_v<\tcode{TD}_i>` is not zero, the
-  argument is `std::forward<\tcode{U}_j>(\tcode{u}_j)` and its type `Vᵢ`
-  is `\tcode{U}_j&&`;
-- otherwise, the value is `tdᵢ` and its type `Vᵢ` is `cv \tcode{TD}_i&`.
+  and its type `Vᵢ` is `invoke_result_t<cv TDᵢ&, Uⱼ...>&&`;
+- if the value `j` of `is_placeholder_v<TDᵢ>` is not zero, the argument
+  is `std::forward<Uⱼ>(uⱼ)` and its type `Vᵢ` is `Uⱼ&&`;
+- otherwise, the value is `tdᵢ` and its type `Vᵢ` is `cv TDᵢ&`.
 
 The value of the target argument `v`_`fd` is `fd` and its corresponding
 type `V`_`fd` is `cv FD&`.
