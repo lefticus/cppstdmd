@@ -72,7 +72,7 @@ statement-seq:
 ```
 
 A compound statement defines a block scope ([[basic.scope]]). A
-declaration is a **statement ([[stmt.dcl]]).
+declaration is a *statement* ([[stmt.dcl]]).
 
 ## Selection statements <a id="stmt.select">[[stmt.select]]</a>
 
@@ -94,8 +94,8 @@ condition:
 
 See  [[dcl.meaning]] for the optional *attribute-specifier-seq* in a
 condition. In Clause  [[stmt.stmt]], the term *substatement* refers to
-the contained **statement or \*\*{statement}{s} that appear in the
-syntax notation. The substatement in a *selection-statement* (each
+the contained *statement* or *statement*s that appear in the syntax
+notation. The substatement in a *selection-statement* (each
 substatement, in the `else` form of the `if` statement) implicitly
 defines a block scope ([[basic.scope]]). If the substatement in a
 selection-statement is a single statement and not a
@@ -117,15 +117,15 @@ if (x) {
 
 Thus after the `if` statement, `i` is no longer in scope.
 
-The rules for \*\*{condition}{s} apply both to *selection-statement*s
-and to the `for` and `while` statements ([[stmt.iter]]). The
-**declarator shall not specify a function or an array. The
-*decl-specifier-seq* shall not define a class or enumeration. If the
-`auto` appears in the , the type of the identifier being declared is
-deduced from the initializer as described in  [[dcl.spec.auto]].
+The rules for *condition*s apply both to *selection-statement*s and to
+the `for` and `while` statements ([[stmt.iter]]). The *declarator*
+shall not specify a function or an array. The *decl-specifier-seq* shall
+not define a class or enumeration. If the `auto` appears in the , the
+type of the identifier being declared is deduced from the initializer as
+described in  [[dcl.spec.auto]].
 
-A name introduced by a declaration in a **condition (either introduced
-by the *decl-specifier-seq* or the **declarator of the condition) is in
+A name introduced by a declaration in a *condition* (either introduced
+by the *decl-specifier-seq* or the *declarator* of the condition) is in
 scope from its point of declaration until the end of the substatements
 controlled by the condition. If the name is re-declared in the outermost
 block of a substatement controlled by the condition, the declaration
@@ -140,20 +140,20 @@ else {
 }
 ```
 
-The value of a **condition that is an initialized declaration in a
+The value of a *condition* that is an initialized declaration in a
 statement other than a `switch` statement is the value of the declared
 variable contextually converted to `bool` (Clause  [[conv]]). If that
 conversion is ill-formed, the program is ill-formed. The value of a
-**condition that is an initialized declaration in a `switch` statement
+*condition* that is an initialized declaration in a `switch` statement
 is the value of the declared variable if it has integral or enumeration
 type, or of that variable implicitly converted to integral or
-enumeration type otherwise. The value of a **condition that is an
+enumeration type otherwise. The value of a *condition* that is an
 expression is the value of the expression, contextually converted to
 `bool` for statements other than `switch`; if that conversion is
 ill-formed, the program is ill-formed. The value of the condition will
 be referred to as simply “the condition” where the usage is unambiguous.
 
-If a **condition can be syntactically resolved as either an expression
+If a *condition* can be syntactically resolved as either an expression
 or the declaration of a block-scope name, it is interpreted as a
 declaration.
 
@@ -275,8 +275,8 @@ while (--x >= 0) {
 
 Thus after the `while` statement, `i` is no longer in scope.
 
-The requirements on \*\*{condition}{s} in iteration statements are
-described in  [[stmt.select]].
+The requirements on *condition*s in iteration statements are described
+in  [[stmt.select]].
 
 ### The `while` statement <a id="stmt.while">[[stmt.while]]</a>
 
@@ -286,7 +286,7 @@ takes place before each execution of the substatement.
 
 When the condition of a `while` statement is a declaration, the scope of
 the variable that is declared extends from its point of declaration (
-[[basic.scope.pdecl]]) to the end of the `while` **statement. A `while`
+[[basic.scope.pdecl]]) to the end of the `while` *statement*. A `while`
 statement of the form
 
 ``` cpp
@@ -347,9 +347,9 @@ The `for` statement
 is equivalent to
 
 except that names declared in the *for-init-statement* are in the same
-declarative region as those declared in the **condition, and except that
-a `continue` in **statement (not enclosed in another iteration
-statement) will execute **expression before re-evaluating **condition.
+declarative region as those declared in the *condition*, and except that
+a `continue` in *statement* (not enclosed in another iteration
+statement) will execute *expression* before re-evaluating *condition*.
 Thus the first statement specifies initialization for the loop; the
 condition ([[stmt.select]]) specifies a test, made before each
 iteration, such that the loop is exited when the condition becomes
@@ -357,7 +357,7 @@ iteration, such that the loop is exited when the condition becomes
 each iteration.
 
 Either or both of the condition and the expression can be omitted. A
-missing **condition makes the implied `while` clause equivalent to
+missing *condition* makes the implied `while` clause equivalent to
 `while(true)`.
 
 If the *for-init-statement* is a declaration, the scope of the name(s)
@@ -411,7 +411,7 @@ a range-based `for` statement is equivalent to
 ```
 
 where `__range`, `__begin`, and `__end` are variables defined for
-exposition only, and `_RangeT` is the type of the **expression, and
+exposition only, and `_RangeT` is the type of the *expression*, and
 *begin-expr* and *end-expr* are determined as follows:
 
 - if `_RangeT` is an array type, *begin-expr* and *end-expr* are
@@ -571,7 +571,7 @@ where a variable with automatic storage duration is not in scope to a
 point where it is in scope is ill-formed unless the variable has scalar
 type, class type with a trivial default constructor and a trivial
 destructor, a cv-qualified version of one of these types, or an array of
-one of the preceding types and is declared without an **initializer (
+one of the preceding types and is declared without an *initializer* (
 [[dcl.init]]).
 
 ``` cpp

@@ -494,15 +494,38 @@ function RawInline(elem)
 
   -- \grammarterm{term}{suffix} - with optional suffix (e.g., {s} for plurals)
   -- Returns Emph + Str if suffix present, otherwise just Emph
+  -- Special case: \grammarterm{}{word} has empty first arg (LaTeX source bug in n3337/n4140)
   local grammarterm_start = text:find("\\grammarterm{", 1, true)
   if grammarterm_start and grammarterm_start == 1 then  -- Must be at start
     -- \grammarterm is 12 chars
     local term, pos_after_term = extract_braced_content(text, grammarterm_start, 12)
     if term then
-      -- Check if there's a second argument (suffix)
+      -- Check if there's a second argument (suffix or actual term if first is empty)
       if pos_after_term and pos_after_term <= #text and
          text:sub(pos_after_term, pos_after_term) == "{" then
         local suffix, pos_after_suffix = extract_braced_content(text, pos_after_term, 0)
+
+        -- Handle empty first argument (LaTeX source bug in n3337/n4140)
+        if term == "" and suffix then
+          -- Pattern: \grammarterm{}{statement} -> term="", suffix="statement"
+          -- Should render as: *statement* (use suffix as term)
+          if pos_after_suffix - 1 == #text then
+            return pandoc.Emph({pandoc.Str(suffix)})
+          end
+
+          -- Pattern: \grammarterm{}{statement}{s} -> should render as: *statement*s
+          -- Check for third argument (plural suffix)
+          if pos_after_suffix and pos_after_suffix <= #text and
+             text:sub(pos_after_suffix, pos_after_suffix) == "{" then
+            local plural, pos_after_plural = extract_braced_content(text, pos_after_suffix, 0)
+            if plural and pos_after_plural - 1 == #text then
+              -- Render suffix (actual term) in italics, plural outside (for consistency)
+              return {pandoc.Emph({pandoc.Str(suffix)}), pandoc.Str(plural)}
+            end
+          end
+        end
+
+        -- Normal case: \grammarterm{term}{suffix}
         -- Suffix must end the string
         if suffix and pos_after_suffix and pos_after_suffix - 1 == #text then
           -- Return list of Inlines: Emph + Str for the suffix

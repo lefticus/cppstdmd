@@ -87,6 +87,44 @@ def test_grammarterm_macro():
     assert "*constant-expression*" in output
 
 
+def test_grammarterm_with_suffix():
+    r"""Test \grammarterm{term}{suffix} expansion (normal plural form)"""
+    latex = r"The remaining cases are \grammarterm{declaration}{s}."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    # Normal case: suffix is outside emphasis
+    assert "*declaration*s" in output
+    # Ensure no malformed output
+    assert "**declaration" not in output
+    assert "\\*\\*{declaration}" not in output
+
+
+def test_grammarterm_empty_first_arg():
+    r"""Test \grammarterm{}{term} with empty first argument (n3337/n4140 bug)"""
+    latex = r"The contained \grammarterm{}{statement} is executed."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "*statement*" in output
+    # Ensure no malformed output like **statement or \*\*{statement}
+    assert "**statement" not in output
+    assert "\\*\\*{statement}" not in output
+    assert "{statement}" not in output
+
+
+def test_grammarterm_empty_first_arg_with_plural():
+    r"""Test \grammarterm{}{term}{s} with empty first argument and plural (n3337/n4140 bug)"""
+    latex = r"The contained \grammarterm{}{statement} or \grammarterm{}{statement}{s} appear."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "*statement*" in output
+    # Plural suffix should be outside italics for consistency with normal pattern
+    assert "*statement*s" in output
+    # Ensure no malformed output
+    assert "**statement" not in output
+    assert "\\*\\*{statement}" not in output
+    assert "{statement}" not in output
+
+
 def test_cpp_version_macros():
     """Test C++ version macro expansion"""
     latex = r"\CppXI{} \CppXIV{} \CppXVII{} \CppXX{} \CppXXIII{}"

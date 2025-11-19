@@ -3820,7 +3820,7 @@ can bind to it.
 
 — *end example*]
 
-When an object of class type `X` is passed to or returned from a
+When an object of type `X` is passed to or returned from a
 potentially-evaluated function call, if `X` is
 
 - a scalar type or
