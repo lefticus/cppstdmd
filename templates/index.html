@@ -74,16 +74,16 @@
 
                 <div class="version-card-body">
                     <p class="version-description">
-                        {% if from_name == "C++11" %}
-                        The foundation: auto, lambdas, move semantics, variadic templates, and the modern STL.
-                        {% elif from_name == "C++14" %}
+                        {% if to_name == "C++14" %}
                         Refinements to C++11: generic lambdas, relaxed constexpr, variable templates.
-                        {% elif from_name == "C++17" %}
+                        {% elif to_name == "C++17" %}
                         Structured bindings, if constexpr, fold expressions, std::optional, std::variant, parallel algorithms.
-                        {% elif from_name == "C++20" %}
+                        {% elif to_name == "C++20" %}
                         The big one: concepts, ranges, coroutines, modules, three-way comparison, constexpr everything.
-                        {% elif from_name == "C++23" %}
+                        {% elif to_name == "C++23" %}
                         Latest refinements: deducing this, if consteval, multidimensional subscript, ranges improvements.
+                        {% elif to_name == "Trunk" %}
+                        Upcoming C++26 features: reflection, contracts, expanded constexpr, and more.
                         {% endif %}
                     </p>
 
