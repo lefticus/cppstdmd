@@ -10890,7 +10890,7 @@ Let *`math-common-simd-t`*`<Ts...>` be an alias for
   `math-floating-point<T0> && math-floating-point<T1>` is `true`;
   otherwise
 - `common_type_t<`*`deduced-vec-t`*`<T0>, T1>`, if `sizeof...(Ts)`
-  equals 2 and `<T0>` is `true`; otherwise
+  equals 2 and *`math-floating-point`*`<T0>` is `true`; otherwise
 - `common_type_t<T0, `*`deduced-vec-t`*`<T1>>`, if `sizeof...(Ts)`
   equals 2; otherwise
 - `common_type_t<`*`math-common-simd-t`*`<T0, T1>, TRest...>`, if

@@ -979,7 +979,7 @@ template<class T1, class T2, class U1, class U2>
 
 *Constraints:* `x.first == y.first` and `x.second == y.second` are valid
 expressions and each of `decltype(x.first == y.first)` and
-`decltype(x.second == y.second)` models .
+`decltype(x.second == y.second)` models *`boolean-``testable`*.
 
 *Returns:* `x.first == y.first && x.second == y.second`.
 

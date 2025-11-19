@@ -2420,7 +2420,7 @@ ClassAtom::
   ClassAtomEquivalence
 
 IdentityEscape::
-  SourceCharacter \textbf{but not} 'c'
+  SourceCharacter but not 'c'
 ```
 
 The following new productions are then added:
@@ -2440,7 +2440,7 @@ ClassName::
   ClassNameCharacter ClassName
 
 ClassNameCharacter::
-  SourceCharacter \textbf{but not one of} '.' \textbf{or} '=' \textbf{or} ':'
+  SourceCharacter but not one of '.' or '=' or ':'
 ```
 
 The productions , and provide functionality equivalent to that of the

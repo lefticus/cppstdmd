@@ -3633,8 +3633,8 @@ Returns an object `e` such that
 - `e.query(get_stop_token)` is expression-equivalent to
   `state.stop-src.get_token()`, and
 - given a query object `q` with type other than cv `get_stop_token_t`
-  and whose type satisfies , `e.query(q)` is expression-equivalent to
-  `get_env(rcvr).query(q)`.
+  and whose type satisfies *`forwarding-query`*, `e.query(q)` is
+  expression-equivalent to `get_env(rcvr).query(q)`.
 
 Let `when-all-env` be an alias template such that `when-all-env<Env>`
 denotes the type

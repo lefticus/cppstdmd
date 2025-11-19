@@ -18218,11 +18218,12 @@ Let `SubExtents` be a specialization of `extents` such that:
     and `tuple_element_t<1, `Sₖ`>` model `integral-constant-like`;
     otherwise
   - `0`, if Sₖ is a specialization of `strided_slice`, whose
-    `extent_type` models , for which `extent_type()` equals zero;
-    otherwise
+    `extent_type` models *`integral-constant-like`*, for which
+    `extent_type()` equals zero; otherwise
   - `1 + (`*`de-ice`*`(`Sₖ`::extent_type()) - 1) /`
     *`de-ice`*`(`Sₖ`::stride_type())`, if Sₖ is a specialization of
-    `strided_slice` whose `extent_type` and `stride_type` model ;
+    `strided_slice` whose `extent_type` and `stride_type` model
+    *`integral-constant-like`*;
   - otherwise, `dynamic_extent`.
 
 *Returns:* A value `ext` of type `SubExtents` such that for each k for

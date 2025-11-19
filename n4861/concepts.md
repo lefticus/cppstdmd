@@ -784,7 +784,7 @@ Let `e` be an expression such that `decltype((e))` is `T`. `T` models
 
 [*Example 2*: The types `bool`, `true_type` [[meta.type.synop]],
 `int*`, and `bitset<N>::reference` [[template.bitset]] model
-. — *end example*]
+*`boolean-testable`*. — *end example*]
 
 ### Concept  <a id="concept.equalitycomparable">[[concept.equalitycomparable]]</a>
 

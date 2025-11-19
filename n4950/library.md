@@ -965,14 +965,14 @@ signatures is called using the default argument [[dcl.fct.default]].
 
 | Expression | Return type |
 | ---------- | ----------- |
-| `a == b`   | `decltype(a == b)` models \exposconceptx{boolean-testable}{boolean-testable} | `==` is an equivalence relation, that is, it has the following properties: For all `a`, `a == a`.; If `a == b`, then `b == a`.; If `a == b` and `b == c`, then `a == c`. |
+| `a == b`   | `decltype(a == b)` models `boolean-testable` | `==` is an equivalence relation, that is, it has the following properties: For all `a`, `a == a`.; If `a == b`, then `b == a`.; If `a == b` and `b == c`, then `a == c`. |
 
 
 **Table: Cpp17LessThanComparable requirements**
 
-| Expression | Return type                                                                 | Requirement                                            |
-| ---------- | --------------------------------------------------------------------------- | ------------------------------------------------------ |
-| `a < b`    | `decltype(a < b)` models \exposconceptx{boolean-testable}{boolean-testable} | `<` is a strict weak ordering relation [[alg.sorting]] |
+| Expression | Return type                                 | Requirement                                            |
+| ---------- | ------------------------------------------- | ------------------------------------------------------ |
+| `a < b`    | `decltype(a < b)` models `boolean-testable` | `<` is a strict weak ordering relation [[alg.sorting]] |
 
 
 **Table: Cpp17DefaultConstructible requirements**

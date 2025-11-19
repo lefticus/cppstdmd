@@ -693,7 +693,7 @@ let `t` be an lvalue that denotes the reified object for `E`. Then:
 [*Note 1*: Whenever `ranges::cend(E)` is a valid expression, the types
 `S` and `I` of the expressions `ranges::cend(E)` and `ranges::cbegin(E)`
 model `sentinel_for<S, I>`. If `S` models `input_iterator`, then `S`
-also models . — *end note*]
+also models *`constant-iterator`*. — *end note*]
 
 ### `ranges::rbegin` <a id="range.access.rbegin">[[range.access.rbegin]]</a>
 
@@ -796,7 +796,8 @@ let `t` be an lvalue that denotes the reified object for `E`. Then:
 [*Note 1*: Whenever `ranges::crend(E)` is a valid expression, the types
 `S` and `I` of the expressions `ranges::crend(E)` and
 `ranges::crbegin(E)` model `sentinel_for<S, I>`. If `S` models
-`input_iterator`, then `S` also models . — *end note*]
+`input_iterator`, then `S` also models
+*`constant-iterator`*. — *end note*]
 
 ### `ranges::size` <a id="range.prim.size">[[range.prim.size]]</a>
 

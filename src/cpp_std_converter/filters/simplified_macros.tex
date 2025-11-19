@@ -68,7 +68,7 @@
 \renewcommand{\deflibconcept}[1]{\texttt{#1}}
 
 %%--------------------------------------------------
-%% Category C: Emphasis Formatting (6 macros)
+%% Category C: Emphasis Formatting (7 macros)
 %% Convert to \textit (italic) - Pandoc renders as emphasis
 %%--------------------------------------------------
 %% \grammarterm{} - REMOVED: context-dependent (BNF vs text), nested in \opt{}
@@ -82,6 +82,7 @@
 \renewcommand{\term}[1]{\textit{#1}}
 \renewcommand{\oldconcept}[1]{\textit{Cpp17#1}}
 \renewcommand{\doccite}[1]{\textit{#1}}
+\renewcommand{\exposconceptx}[2]{\texttt{\textit{#1}}}  % Exposition-only concept with index - Issue #68
 
 %%--------------------------------------------------
 %% Category D: Library Specifications (7 macros)
@@ -206,7 +207,7 @@
 \renewcommand{\locnontermdef}[1]{#1:}  % Locale BNF nonterminal (13× in localization.md) - just term+colon
 
 %%--------------------------------------------------
-%% TOTAL: 95 simplified macros (was 94, added 1 for Issue #14)
+%% TOTAL: 96 simplified macros (was 95, added 1 for Issue #68)
 %% Macros cover ~75% of macro usage in the C++ standard source
 %%
 %% Macros removed after investigation (moved back to Lua filters):

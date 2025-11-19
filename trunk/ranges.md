@@ -726,7 +726,7 @@ let `t` be an lvalue that denotes the reified object for `E`. Then:
 [*Note 1*: Whenever `ranges::cend(E)` is a valid expression, the types
 `S` and `I` of the expressions `ranges::cend(E)` and `ranges::cbegin(E)`
 model `sentinel_for<S, I>`. If `S` models `input_iterator`, then `S`
-also models . — *end note*]
+also models *`constant-iterator`*. — *end note*]
 
 ### `ranges::rbegin` <a id="range.access.rbegin">[[range.access.rbegin]]</a>
 
@@ -829,7 +829,8 @@ let `t` be an lvalue that denotes the reified object for `E`. Then:
 [*Note 1*: Whenever `ranges::crend(E)` is a valid expression, the types
 `S` and `I` of the expressions `ranges::crend(E)` and
 `ranges::crbegin(E)` model `sentinel_for<S, I>`. If `S` models
-`input_iterator`, then `S` also models . — *end note*]
+`input_iterator`, then `S` also models
+*`constant-iterator`*. — *end note*]
 
 ### `ranges::size` <a id="range.prim.size">[[range.prim.size]]</a>
 
@@ -6886,7 +6887,7 @@ template<bool Const, class... Rs>
 ```
 
 Let `Fs` be the pack that consists of all elements of `Rs` except the
-last element, then is equivalent to:
+last element, then *`concat-is-random-access`* is equivalent to:
 
 ``` cpp
 template<bool Const, class... Rs>
@@ -6901,7 +6902,7 @@ template<bool Const, class... Rs>
 ```
 
 Let `Fs` be the pack that consists of all elements of `Rs` except the
-last element, then is equivalent to:
+last element, then *`concat-is-bidirectional`* is equivalent to:
 
 ``` cpp
 template<bool Const, class... Rs>
@@ -7080,10 +7081,10 @@ The member *typedef-name* `iterator_category` is defined if and only if
 - Otherwise, let `Cs` denote the pack of types
   `iterator_traits<iterator_t<maybe-const<Const, Views>>>::iterator_category...`.
   - If
-    `(derived_from<Cs, random_access_iterator_tag> && ...) && \exposconceptx{concat-is-random-ac-{}cess}{concat-is-random-access}<Const, Views...>`
+    `(derived_from<Cs, random_access_iterator_tag> && ...) && concat-is-random-ac-{cess}<Const, Views...>`
     is `true`, `iterator_category` denotes `random_access_iterator_tag`.
   - Otherwise, if
-    `(derived_from<Cs, bidirectional_iterator_tag> && ...) && \exposconceptx{concat-is-{}bidirectional}{concat-is-bidirectional}<Const, Views...>`
+    `(derived_from<Cs, bidirectional_iterator_tag> && ...) && concat-is-{bidirectional}<Const, Views...>`
     is `true`, `iterator_category` denotes `bidirectional_iterator_tag`.
   - Otherwise, if `(derived_from<Cs, forward_iterator_tag> && ...)` is
     `true`, `iterator_category` denotes `forward_iterator_tag`.

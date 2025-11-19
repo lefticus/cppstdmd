@@ -1169,3 +1169,14 @@ def test_textregistered():
     assert code == 0
     assert "®" in output
     assert "textregistered" not in output
+
+
+def test_exposconceptx():
+    r"""Test \exposconceptx{}{} exposition-only concept conversion (Issue #68)"""
+    latex = r"The type models \exposconceptx{boolean-testable}{boolean-testable}."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    # Should have formatted concept name (italic code: *`text`*)
+    assert "*`boolean-testable`*" in output
+    # Should NOT have raw LaTeX command
+    assert "exposconceptx" not in output
