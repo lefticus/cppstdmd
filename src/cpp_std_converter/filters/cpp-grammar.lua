@@ -81,6 +81,12 @@ local function clean_grammar(grammar)
     return content  -- Just strip the wrapper, preserve nested content
   end)
 
+  -- Replace \textbf{x} with x (bold text in BNF blocks) - Issue #69
+  -- Inside code blocks, we just unwrap since markdown bold doesn't render well
+  grammar = process_macro_with_replacement(grammar, "textbf", function(content)
+    return content  -- Just strip the wrapper, preserve nested content
+  end)
+
   -- Replace \terminal{x} with 'x' (terminal symbols)
   -- Use brace-balanced extraction to handle escaped braces properly
   grammar = process_macro_with_replacement(grammar, "terminal", function(content)

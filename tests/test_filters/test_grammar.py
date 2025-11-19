@@ -539,3 +539,22 @@ def test_renontermdef_in_bnf():
     assert "renontermdef" not in output
     # Should be in a BNF code block
     assert "``` bnf" in output or "```bnf" in output
+
+
+def test_textbf_and_textnormal_in_bnf():
+    r"""Test \textbf{} and \textnormal{} unwrapping in BNF blocks (Issue #69)"""
+    latex = r"""
+\begin{ncrebnf}
+\renontermdef{IdentityEscape}\br
+  SourceCharacter \textnormal{\textbf{but not}} \terminal{c}
+\end{ncrebnf}
+"""
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    # Should have clean output without LaTeX commands
+    assert "but not" in output
+    # Should NOT have raw LaTeX commands
+    assert "\\textbf" not in output
+    assert "\\textnormal" not in output
+    # Should be in a BNF code block
+    assert "``` bnf" in output or "```bnf" in output
