@@ -191,7 +191,7 @@
 
 %% Grammar non-terminals (47 occurrences)
 \renewcommand{\fmtnontermdef}[1]{\textit{#1}}  % Format string grammar (33×)
-\renewcommand{\renontermdef}[1]{\textit{#1}}   % Regex grammar (7×)
+\renewcommand{\renontermdef}[1]{#1::}   % Regex grammar (7×) - just term+:: (like \locnontermdef)
 \renewcommand{\defexposconceptnc}[1]{\textit{#1}}  % Exposition-only concepts (29×)
 
 %% Math state variables: \state{X}{Y} → X_Y with subscripts (7 occurrences)

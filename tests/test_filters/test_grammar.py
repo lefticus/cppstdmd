@@ -519,3 +519,23 @@ def test_itcorr_stripped_no_arg():
     # itcorr command should be stripped
     assert "itcorr" not in output
     assert "Text with spacing here." in output
+
+
+def test_renontermdef_in_bnf():
+    r"""Test \renontermdef{} regex grammar macro conversion (Issue #70)"""
+    latex = r"""
+\begin{ncrebnf}
+\renontermdef{ClassAtom}\br
+  \terminal{-}\br
+  ClassAtomNoDash
+\end{ncrebnf}
+"""
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    # Should output term with :: suffix
+    assert "ClassAtom::" in output
+    # Should NOT have \textit or other LaTeX commands
+    assert "\\textit" not in output
+    assert "renontermdef" not in output
+    # Should be in a BNF code block
+    assert "``` bnf" in output or "```bnf" in output

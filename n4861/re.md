@@ -2412,34 +2412,34 @@ The following productions within the ECMAScript grammar are modified as
 follows:
 
 ``` bnf
-\textit{ClassAtom}
+ClassAtom::
   '-'
   ClassAtomNoDash
   ClassAtomExClass
   ClassAtomCollatingElement
   ClassAtomEquivalence
 
-\textit{IdentityEscape}
+IdentityEscape::
   SourceCharacter \textbf{but not} 'c'
 ```
 
 The following new productions are then added:
 
 ``` bnf
-\textit{ClassAtomExClass}
+ClassAtomExClass::
   '[:' ClassName ':]'
 
-\textit{ClassAtomCollatingElement}
+ClassAtomCollatingElement::
   '[.' ClassName '.]'
 
-\textit{ClassAtomEquivalence}
+ClassAtomEquivalence::
   '[=' ClassName '=]'
 
-\textit{ClassName}
+ClassName::
   ClassNameCharacter
   ClassNameCharacter ClassName
 
-\textit{ClassNameCharacter}
+ClassNameCharacter::
   SourceCharacter \textbf{but not one of} '.' \textbf{or} '=' \textbf{or} ':'
 ```
 

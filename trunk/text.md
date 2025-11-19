@@ -8990,7 +8990,7 @@ The following productions within the ECMAScript grammar are modified as
 follows:
 
 ``` bnf
-\textit{ClassAtom}
+ClassAtom::
   '-'
   ClassAtomNoDash
   ClassAtomExClass
@@ -8999,35 +8999,35 @@ follows:
 ```
 
 ``` bnf
-\textit{IdentityEscape}
+IdentityEscape::
   SourceCharacter \textbf{but not} 'c'
 ```
 
 The following new productions are then added:
 
 ``` bnf
-\textit{ClassAtomExClass}
+ClassAtomExClass::
   '[:' ClassName ':]'
 ```
 
 ``` bnf
-\textit{ClassAtomCollatingElement}
+ClassAtomCollatingElement::
   '[.' ClassName '.]'
 ```
 
 ``` bnf
-\textit{ClassAtomEquivalence}
+ClassAtomEquivalence::
   '[=' ClassName '=]'
 ```
 
 ``` bnf
-\textit{ClassName}
+ClassName::
   ClassNameCharacter
   ClassNameCharacter ClassName
 ```
 
 ``` bnf
-\textit{ClassNameCharacter}
+ClassNameCharacter::
   SourceCharacter \textbf{but not one of} '.' \textbf{or} '=' \textbf{or} ':'
 ```
 
