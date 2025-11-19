@@ -1697,7 +1697,7 @@ int main() {
 [^1]: Implementations behave as if these separate phases occur, although
     in practice different phases can be folded together.
 
-[^2]: Unicode is a registered trademark of Unicode, Inc. This
+[^2]: Unicode® is a registered trademark of Unicode, Inc. This
     information is given for the convenience of users of this document
     and does not constitute an endorsement by ISO or IEC of this
     product.

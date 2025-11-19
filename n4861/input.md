@@ -11489,7 +11489,7 @@ C standard library header `<inttypes.h>`, with the following changes:
     `fopen(const char*, const char*)` and `fseek(FILE*, long, int)` are
     declared, in `<cstdio>`.
 
-[^41]: POSIX is a registered trademark of The IEEE. Windows is a
+[^41]: POSIX® is a registered trademark of The IEEE. Windows® is a
     registered trademark of Microsoft Corporation. This information is
     given for the convenience of users of this document and does not
     constitute an endorsement by ISO or IEC of these products.

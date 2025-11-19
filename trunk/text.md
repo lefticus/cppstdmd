@@ -4621,7 +4621,7 @@ displaying Unicode text in a terminal.
 
 [*Note 5*:
 
-This is the case for Windows\textregistered-based
+This is the case for Windows®-based
 
 [^25]
 
@@ -9717,7 +9717,7 @@ is a null pointer value.
 [^24]: Note that the international symbol returned by `do_curr_symbol()`
     usually contains a space, itself; for example, `"USD "`.
 
-[^25]: Windows is a registered trademark of Microsoft Corporation. This
+[^25]: Windows® is a registered trademark of Microsoft Corporation. This
     information is given for the convenience of users of this document
     and does not constitute an endorsement by ISO or IEC of this
     product.

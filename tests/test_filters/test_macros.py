@@ -1160,3 +1160,12 @@ def test_nested_tcode_with_superscript():
 
 # NOTE: $\tcode{T}_i$ (tcode inside math, in running text) is a different scenario
 # from nested \tcode{} and requires handling in cpp-math.lua - out of scope for this fix
+
+
+def test_textregistered():
+    r"""Test \textregistered conversion to ® symbol (Issue #14)"""
+    latex = r"Test POSIX\textregistered\ text."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "®" in output
+    assert "textregistered" not in output

@@ -30,6 +30,7 @@
 \renewcommand{\-}{}           % Discretionary hyphen
 \renewcommand{\linebreak}{}   % Line break hint
 \renewcommand{\@}{}           % Sentence spacing control (LaTeX typography)
+\renewcommand{\textregistered}{®}  % Registered trademark symbol (Issue #14)
 \renewcommand{\Cpp}{C++}
 \renewcommand{\CppIII}{C++03}
 \renewcommand{\CppXI}{C++11}
@@ -205,7 +206,7 @@
 \renewcommand{\locnontermdef}[1]{#1:}  % Locale BNF nonterminal (13× in localization.md) - just term+colon
 
 %%--------------------------------------------------
-%% TOTAL: 94 simplified macros (was 91, added 3)
+%% TOTAL: 95 simplified macros (was 94, added 1 for Issue #14)
 %% Macros cover ~75% of macro usage in the C++ standard source
 %%
 %% Macros removed after investigation (moved back to Lua filters):

@@ -5673,7 +5673,7 @@ functions passed to `std::atexit()` or `std::at_quick_exit()`.
     appearing in a *nested-name-specifier*, an
     *elaborated-type-specifier*, or a *base-specifier*.
 
-[^5]: Unicode is a registered trademark of Unicode, Inc. This
+[^5]: Unicode® is a registered trademark of Unicode, Inc. This
     information is given for the convenience of users of this document
     and does not constitute an endorsement by ISO or IEC of this
     product.

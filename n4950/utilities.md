@@ -13031,7 +13031,7 @@ Otherwise, `endian::native` is not equal to either `endian::big` or
     member `operator()` or a class type which has a conversion to a
     pointer to function.
 
-[^2]: Windows is a registered trademark of Microsoft Corporation. This
+[^2]: Windows® is a registered trademark of Microsoft Corporation. This
     information is given for the convenience of users of this document
     and does not constitute an endorsement by ISO or IEC of this
     product.

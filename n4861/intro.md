@@ -471,12 +471,12 @@ Portions of the library Clauses of this document are based on work by
 P.J. Plauger, which was published as *The Draft Standard C++ Library*
 (Prentice-Hall, ISBN 0-13-117003-1, copyright ©1995 P.J. Plauger).
 
-POSIX is a registered trademark of the Institute of Electrical and
+POSIX® is a registered trademark of the Institute of Electrical and
 Electronic Engineers, Inc.
 
-ECMAScript is a registered trademark of Ecma International.
+ECMAScript® is a registered trademark of Ecma International.
 
-Unicode is a registered trademark of Unicode, Inc.
+Unicode® is a registered trademark of Unicode, Inc.
 
 All rights in these originals are reserved.
 

@@ -977,7 +977,7 @@ on work by P.J. Plauger, which was published as *The Draft Standard
 C++Library* (Prentice-Hall, ISBN 0-13-117003-1, copyright ©1995 P.J.
 Plauger).
 
-POSIX is a registered trademark of the Institute of Electrical and
+POSIX® is a registered trademark of the Institute of Electrical and
 Electronic Engineers, Inc.
 
 All rights in these originals are reserved.
