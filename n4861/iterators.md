@@ -1116,10 +1116,10 @@ the type required to be `equality_comparable`.
 
 ``` cpp
 template<class T>
-  inline constexpr bool is-integer-like = see below; \itcorr[-2]           // exposition only
+  inline constexpr bool is-integer-like = see below;            // exposition only
 
 template<class T>
-  inline constexpr bool is-signed-integer-like = see below; \itcorr[-2]    // exposition only
+  inline constexpr bool is-signed-integer-like = see below;     // exposition only
 
 template<class I>
   concept weakly_incrementable =

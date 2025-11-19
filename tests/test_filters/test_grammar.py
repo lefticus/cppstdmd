@@ -480,3 +480,42 @@ def test_unconvertible_math_preserved():
     assert code == 0
     # Fractions can't be converted, should preserve $...$ delimiters
     assert r"$\frac{a}{b}$" in output or "$" in output
+
+
+def test_bnfnontermshape_stripped():
+    r"""Test that \locnontermdef produces clean output without braces (Issue #74)"""
+    latex = r"""
+\begin{ncbnf}
+\locnontermdef{intval}\br
+    sign units
+\end{ncbnf}
+"""
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    # BnfNontermshape and itcorr should be stripped
+    assert "BnfNontermshape" not in output
+    assert "itcorr" not in output
+    # Should have clean output WITHOUT braces
+    assert "intval:" in output
+    assert "{intval}" not in output  # No braces!
+    assert "sign units" in output
+
+
+def test_itcorr_stripped_with_optional_arg():
+    r"""Test that \itcorr[N] italic correction is stripped"""
+    latex = r"Text with\itcorr[-1] spacing correction and\itcorr[2] another one."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    # itcorr commands should be stripped
+    assert "itcorr" not in output
+    assert "Text with spacing correction and another one." in output
+
+
+def test_itcorr_stripped_no_arg():
+    r"""Test that \itcorr without argument is stripped"""
+    latex = r"Text with \itcorr spacing here."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    # itcorr command should be stripped
+    assert "itcorr" not in output
+    assert "Text with spacing here." in output

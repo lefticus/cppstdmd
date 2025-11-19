@@ -10211,7 +10211,7 @@ and the member `ec` is value-initialized.
 
 ``` cpp
 constexpr from_chars_result from_chars(const char* first, const char* last,
-                                       integer-type&\itcorr[-1] value, int base = 10);
+                                       integer-type& value, int base = 10);
 ```
 
 *Preconditions:* `base` has a value between 2 and 36 (inclusive).

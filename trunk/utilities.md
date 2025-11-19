@@ -8084,17 +8084,17 @@ namespace std {
   // [func.wrap.move], move-only wrapper
   template<class... S> class move_only_function;                        // not defined
   template<class R, class... ArgTypes>
-    class move_only_function<R(ArgTypes...) cv\itcorr[-1] ref noexcept(noex)>;     // see below
+    class move_only_function<R(ArgTypes...) cv ref noexcept(noex)>;     // see below
 
   // [func.wrap.copy], copyable wrapper
   template<class... S> class copyable_function;                         // not defined
   template<class R, class... ArgTypes>
-    class copyable_function<R(ArgTypes...) cv\itcorr[-1] ref noexcept(noex)>;      // see below
+    class copyable_function<R(ArgTypes...) cv ref noexcept(noex)>;      // see below
 
   // [func.wrap.ref], non-owning wrapper
   template<class... S> class function_ref;                              // freestanding, not defined
   template<class R, class... ArgTypes>
-    class function_ref<R(ArgTypes...) cv\itcorr[-1] noexcept(noex)>;               // freestanding, see below
+    class function_ref<R(ArgTypes...) cv noexcept(noex)>;               // freestanding, see below
 
   // [func.search], searchers
   template<class ForwardIterator1, class BinaryPredicate = equal_to<>>
@@ -9635,7 +9635,7 @@ namespace std::placeholders {
   // M is the number of placeholders
   see below _1;
   see below _2;
-             \itcorr⋮
+             ⋮
   see below _M;
 }
 ```

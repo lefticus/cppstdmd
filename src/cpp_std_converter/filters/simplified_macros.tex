@@ -185,7 +185,15 @@
 \renewcommand{\state}[2]{\textit{#1}_\textit{#2}}
 
 %%--------------------------------------------------
-%% TOTAL: 91 simplified macros (was 84, added 7)
+%% Category M: BNF Typography Macros (Issue #74)
+%% Pure typesetting commands with no semantic meaning
+%%--------------------------------------------------
+\renewcommand{\BnfNontermshape}{}  % BNF font styling (small, gray, sans-serif) - strip for markdown
+\renewcommand{\itcorr}[1][]{}      % Italic correction spacing - strip for markdown (33+ occurrences)
+\renewcommand{\locnontermdef}[1]{#1:}  % Locale BNF nonterminal (13× in localization.md) - just term+colon
+
+%%--------------------------------------------------
+%% TOTAL: 94 simplified macros (was 91, added 3)
 %% Macros cover ~75% of macro usage in the C++ standard source
 %%
 %% Macros removed after investigation (moved back to Lua filters):

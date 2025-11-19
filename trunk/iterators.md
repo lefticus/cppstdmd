@@ -1126,7 +1126,7 @@ iterators.
 
 ``` cpp
 template<class In>
-  concept indirectly-readable-impl = \itcorr[-1]                   // exposition only
+  concept indirectly-readable-impl =                    // exposition only
     requires(const In in) {
       typename iter_value_t<In>;
       typename iter_reference_t<In>;
@@ -1201,10 +1201,10 @@ the type required to be `equality_comparable`.
 
 ``` cpp
 template<class T>
-  constexpr bool is-integer-like = see below; \itcorr[-2]          // exposition only
+  constexpr bool is-integer-like = see below;           // exposition only
 
 template<class T>
-  constexpr bool is-signed-integer-like = see below; \itcorr[-2]   // exposition only
+  constexpr bool is-signed-integer-like = see below;    // exposition only
 
 template<class I>
   concept weakly_incrementable =

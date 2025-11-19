@@ -572,7 +572,7 @@ the parsed value and the member `ec` is set such that the conversion to
 
 ``` cpp
 from_chars_result from_chars(const char* first, const char* last,
-                             see below&\itcorr[-1] value, int base = 10);
+                             see below& value, int base = 10);
 ```
 
 *Requires:* `base` has a value between 2 and 36 (inclusive).
@@ -12704,7 +12704,7 @@ namespace std {
       constexpr chrono::minutes                              operator""min(unsigned long long);
       constexpr chrono::duration<unspecified, ratio<60,1>>   operator""min(long double);
       constexpr chrono::seconds                              operator""s(unsigned long long);
-      constexpr chrono::duration<unspecified> \itcorr[-1]               operator""s(long double);
+      constexpr chrono::duration<unspecified>                operator""s(long double);
       constexpr chrono::milliseconds                         operator""ms(unsigned long long);
       constexpr chrono::duration<unspecified, milli>          operator""ms(long double);
       constexpr chrono::microseconds                         operator""us(unsigned long long);

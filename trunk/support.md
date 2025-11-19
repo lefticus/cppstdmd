@@ -149,15 +149,15 @@ namespace std {
 
   // [alg.c.library], C standard library algorithms
   void* bsearch(const void* key, void* base, size_t nmemb, size_t size,         // freestanding
-                c-compare-pred*\itcorr[-1] compar);
+                c-compare-pred* compar);
   void* bsearch(const void* key, void* base, size_t nmemb, size_t size,         // freestanding
-                compare-pred*\itcorr[-1] compar);
+                compare-pred* compar);
   const void* bsearch(const void* key, const void* base, size_t nmemb,          // freestanding
-                      size_t size, c-compare-pred*\itcorr[-1] compar);
+                      size_t size, c-compare-pred* compar);
   const void* bsearch(const void* key, const void* base, size_t nmemb,          // freestanding
-                      size_t size, compare-pred*\itcorr[-1] compar);
-  void qsort(void* base, size_t nmemb, size_t size, c-compare-pred*\itcorr[-1] compar);    // freestanding
-  void qsort(void* base, size_t nmemb, size_t size, compare-pred*\itcorr[-1] compar);      // freestanding
+                      size_t size, compare-pred* compar);
+  void qsort(void* base, size_t nmemb, size_t size, c-compare-pred* compar);    // freestanding
+  void qsort(void* base, size_t nmemb, size_t size, compare-pred* compar);      // freestanding
 
   // [c.math.rand], low-quality random number generation
   int rand();

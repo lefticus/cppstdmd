@@ -3375,7 +3375,7 @@ namespace std::ranges {
     template<bool> class sentinel;                      // exposition only
 
     V base_ = V();                                      // exposition only
-    semiregular-box<Pred> pred_; \itcorr[-1]                       // exposition only
+    semiregular-box<Pred> pred_;                        // exposition only
 
   public:
     take_while_view() = default;
@@ -3634,7 +3634,7 @@ namespace std::ranges {
 
   private:
     V base_ = V();                                      // exposition only
-    semiregular-box<Pred> pred_; \itcorr[-1]                       // exposition only
+    semiregular-box<Pred> pred_;                        // exposition only
   };
 
   template<class R, class Pred>

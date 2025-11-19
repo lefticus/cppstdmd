@@ -4875,7 +4875,7 @@ namespace std::ranges {
 
   private:
     V base_ = V();                                      // exposition only
-    movable-box<Pred> pred_; \itcorr[-1]                           // exposition only
+    movable-box<Pred> pred_;                            // exposition only
   };
 
   template<class R, class Pred>
@@ -7941,7 +7941,7 @@ namespace std::ranges {
     requires (view<Views> && ...) && (sizeof...(Views) > 0)
   template<bool Const>
   class zip_view<Views...>::iterator {
-    tuple<iterator_t<maybe-const<Const, Views>>...> current_;\itcorr[-1]       // exposition only
+    tuple<iterator_t<maybe-const<Const, Views>>...> current_;       // exposition only
     constexpr explicit iterator(tuple<iterator_t<maybe-const<Const, Views>>...>);
                                                                             // exposition only
   public:
@@ -8232,7 +8232,7 @@ namespace std::ranges {
     requires (view<Views> && ...) && (sizeof...(Views) > 0)
   template<bool Const>
   class zip_view<Views...>::sentinel {
-    tuple<sentinel_t<maybe-const<Const, Views>>...> end_;\itcorr[-1]               // exposition only
+    tuple<sentinel_t<maybe-const<Const, Views>>...> end_;               // exposition only
     constexpr explicit sentinel(tuple<sentinel_t<maybe-const<Const, Views>>...> end);
                                                                                 // exposition only
   public:
@@ -8436,7 +8436,7 @@ namespace std::ranges {
     using Parent = maybe-const<Const, zip_transform_view>;      // exposition only
     using Base = maybe-const<Const, InnerView>;                 // exposition only
     Parent* parent_ = nullptr;                                  // exposition only
-    ziperator<Const> inner_;\itcorr[-1]                                    // exposition only
+    ziperator<Const> inner_;                                    // exposition only
 
     constexpr iterator(Parent& parent, ziperator<Const> inner);   // exposition only
 

@@ -4987,9 +4987,9 @@ given two variadic templates `Tuple` and `Variant`, the type
 
 ``` cpp
 META-APPLY(Variant, META-APPLY(Tuple, Ts_0...),
-                    \itcorr[1]META-APPLY(Tuple, Ts_1...),
-                    \itcorr[1]…,
-                    \itcorr[1]META-APPLY(Tuple, Ts_{m-1}...))
+                    META-APPLY(Tuple, Ts_1...),
+                    …,
+                    META-APPLY(Tuple, Ts_{m-1}...))
 ```
 
 where m is the size of the pack `TagFns` and `META-APPLY(T, As...)` is

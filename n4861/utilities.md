@@ -13094,7 +13094,7 @@ and the member `ec` is value-initialized.
 
 ``` cpp
 from_chars_result from_chars(const char* first, const char* last,
-                             see below&\itcorr[-1] value, int base = 10);
+                             see below& value, int base = 10);
 ```
 
 *Preconditions:* `base` has a value between 2 and 36 (inclusive).

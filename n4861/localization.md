@@ -2064,47 +2064,47 @@ of corresponding `numpunct<charT>` members. Integer values have the
 format:
 
 ``` bnf
-{\BnfNontermshape intval\itcorr}:
+intval:
     signₒₚₜ units
 ```
 
 ``` bnf
-{\BnfNontermshape sign\itcorr}:
+sign:
     '+'
     '-'
 ```
 
 ``` bnf
-{\BnfNontermshape units\itcorr}:
+units:
     digits
     digits thousands-sep units
 ```
 
 ``` bnf
-{\BnfNontermshape digits\itcorr}:
+digits:
     digit digitsₒₚₜ
 ```
 
 and floating-point values have:
 
 ``` bnf
-{\BnfNontermshape floatval\itcorr}:
+floatval:
     signₒₚₜ units fractionalₒₚₜ exponentₒₚₜ
     signₒₚₜ decimal-point digits exponentₒₚₜ
 ```
 
 ``` bnf
-{\BnfNontermshape fractional\itcorr}:
+fractional:
     decimal-point digitsₒₚₜ
 ```
 
 ``` bnf
-{\BnfNontermshape exponent\itcorr}:
+exponent:
     e signₒₚₜ digits
 ```
 
 ``` bnf
-{\BnfNontermshape e\itcorr}:
+e:
     'e'
     'E'
 ```
@@ -3029,20 +3029,20 @@ numeric monetary value is required.
 The format of the numeric monetary value is a decimal number:
 
 ``` bnf
-{\BnfNontermshape value\itcorr}:
+value:
     units fractionalₒₚₜ
     decimal-point digits
 ```
 
 ``` bnf
-{\BnfNontermshape fractional\itcorr}:
+fractional:
     decimal-point digitsₒₚₜ
 ```
 
 if `frac_digits()` returns a positive value, or
 
 ``` bnf
-{\BnfNontermshape value\itcorr}:
+value:
     units
 ```
 
@@ -3050,13 +3050,13 @@ otherwise. The symbol indicates the character returned by
 `decimal_point()`. The other symbols are defined as follows:
 
 ``` bnf
-{\BnfNontermshape units\itcorr}:
+units:
     digits
     digits thousands-sep units
 ```
 
 ``` bnf
-{\BnfNontermshape digits\itcorr}:
+digits:
     adigit digitsₒₚₜ
 ```
 

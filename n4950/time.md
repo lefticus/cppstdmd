@@ -888,7 +888,7 @@ namespace std::inline literals::inline chrono_literals {
   constexpr chrono::duration<unspecified, ratio<60, 1>> operator""min(long double);
 
   constexpr chrono::seconds               operator""s(unsigned long long);
-  constexpr chrono::duration<unspecified>\itcorr[-1] operator""s(long double);
+  constexpr chrono::duration<unspecified> operator""s(long double);
 
   constexpr chrono::milliseconds                 operator""ms(unsigned long long);
   constexpr chrono::duration<unspecified, milli> operator""ms(long double);
