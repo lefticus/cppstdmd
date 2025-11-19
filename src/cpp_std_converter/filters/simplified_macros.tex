@@ -8,6 +8,18 @@
 %%
 %% Strategy: Convert custom C++ standard macros to standard LaTeX commands
 %% that Pandoc already knows how to handle (\texttt, \textit, etc.)
+%%
+%% ARCHITECTURAL DECISION: Prefer this file over Lua filters for:
+%% - Pure typesetting commands (font styling, spacing, line breaking)
+%% - Simple string substitutions (C++, NTBS, etc.)
+%% - Commands appearing in BOTH BNF and code contexts
+%%
+%% WHY: One-line fixes work in ALL contexts (BNF, code, tables, text)
+%% automatically, avoiding duplication across multiple Lua filters.
+%%
+%% Example: \itcorr (Issue #74) was being stripped in 3 different places:
+%% cpp-tables.lua, cpp-common.lua, cpp-grammar.lua. Moving it here
+%% eliminated duplication and fixed bugs in one place.
 %%--------------------------------------------------
 
 %%--------------------------------------------------

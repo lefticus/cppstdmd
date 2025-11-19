@@ -2142,8 +2142,8 @@ local function expand_macros_common(text, options)
     -- Strip discretionary hyphen \- used for line breaking (BEFORE processing \tcode)
     text = text:gsub("\\%-", "")
 
-    -- Strip \itcorr[...] italic correction markers (PDF spacing corrections)
-    text = text:gsub("\\itcorr%[%-?%d*%]", "")
+    -- NOTE: \itcorr (italic correction) is now handled by simplified_macros.tex (Issue #74)
+    -- Removed redundant stripping here to centralize in one place
 
     -- Convert LaTeX spacing commands to regular spaces (BEFORE processing \tcode)
     -- Skip when convert_to_latex=true: Pandoc will handle \, correctly in math vs text

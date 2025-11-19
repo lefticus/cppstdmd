@@ -112,10 +112,8 @@ local function expand_table_macros(text)
   text = text:gsub("\\notdef%s", "*not defined* ")
   text = text:gsub("\\notdef", "*not defined*")
 
-  -- Strip italic corrections (PDF-only spacing)
-  text = text:gsub("\\itcorr%[%-?%d*%]", "")
-  text = text:gsub("\\itcorr{}", "")
-  text = text:gsub("\\itcorr%s", "")
+  -- NOTE: \itcorr (italic correction) is now handled by simplified_macros.tex (Issue #74)
+  -- Removed redundant stripping here to avoid duplication across filters
 
   -- Handle bare \texttt{} and \tcode{} with escaped special chars FIRST
   -- (before process_code_macro which uses extract_braced that doesn't handle escaped braces)
