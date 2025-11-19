@@ -3245,7 +3245,7 @@ argument. — *end note*]
 
 When there is no parameter for a given argument, the argument is passed
 in such a way that the receiving function can obtain the value of the
-argument by invoking [[support.runtime]].
+argument by invoking `va_arg` [[support.runtime]].
 
 [*Note 11*: This paragraph does not apply to arguments passed to a
 function parameter pack. Function parameter packs are expanded during
@@ -6590,7 +6590,7 @@ would evaluate one of the following:
   unless E is the corresponding expression of a
   *consteval-block-declaration* [[dcl.pre]];
 - an *asm-declaration* [[dcl.asm]];
-- an invocation of the macro [[cstdarg.syn]];
+- an invocation of the `va_arg` macro [[cstdarg.syn]];
 - a non-constant library call [[defns.nonconst.libcall]]; or
 - a `goto` statement [[stmt.goto]]. \[*Note 20*: A `goto` statement
   introduced by equivalence [[stmt]] is not in scope. For example, a
@@ -6607,7 +6607,7 @@ evaluate
 
 - an operation that has undefined behavior as specified in [[library]]
   through [[thread]] or
-- an invocation of the macro [[cstdarg.syn]].
+- an invocation of the `va_start` macro [[cstdarg.syn]].
 
 [*Example 4*:
 

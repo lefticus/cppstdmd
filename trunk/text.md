@@ -3511,13 +3511,13 @@ namespace std {
   lconv* localeconv();
 }
 
-#define \libmacro{NULL} see [support.types.nullptr]
-#define \libmacro{LC_ALL} see below
-#define \libmacro{LC_COLLATE} see below
-#define \libmacro{LC_CTYPE} see below
-#define \libmacro{LC_MONETARY} see below
-#define \libmacro{LC_NUMERIC} see below
-#define \libmacro{LC_TIME} see below
+#define NULL see [support.types.nullptr]
+#define LC_ALL see below
+#define LC_COLLATE see below
+#define LC_CTYPE see below
+#define LC_MONETARY see below
+#define LC_NUMERIC see below
+#define LC_TIME see below
 ```
 
 The contents and meaning of the header `<clocale>` are the same as the C
@@ -4318,45 +4318,45 @@ is copied unchanged to the output. An escape sequence is one of `{{` or
 syntax of replacement fields is as follows:
 
 ``` bnf
-\fmtnontermdef{replacement-field}
+\textit{replacement-field}
     \terminal{\ arg-idₒₚₜ format-specifierₒₚₜ \terminal{\}}
 ```
 
 ``` bnf
-\fmtnontermdef{arg-id}
+\textit{arg-id}
     '0'
     positive-integer
 ```
 
 ``` bnf
-\fmtnontermdef{positive-integer}
+\textit{positive-integer}
     nonzero-digit
     positive-integer digit
 ```
 
 ``` bnf
-\fmtnontermdef{nonnegative-integer}
+\textit{nonnegative-integer}
     digit
     nonnegative-integer digit
 ```
 
 ``` bnf
-\fmtnontermdef{nonzero-digit} one of
+\textit{nonzero-digit} one of
     '1 2 3 4 5 6 7 8 9'
 ```
 
 ``` bnf
-\fmtnontermdef{digit} one of
+\textit{digit} one of
     '0 1 2 3 4 5 6 7 8 9'
 ```
 
 ``` bnf
-\fmtnontermdef{format-specifier}
+\textit{format-specifier}
     ':' format-spec
 ```
 
 ``` bnf
-\fmtnontermdef{format-spec}
+\textit{format-spec}
     as specified by the formatter specialization for the argument type; cannot start with '}'
 ```
 
@@ -4430,44 +4430,44 @@ types. — *end note*]
 The syntax of format specifications is as follows:
 
 ``` bnf
-\fmtnontermdef{std-format-spec}
+\textit{std-format-spec}
     fill-and-alignₒₚₜ signₒₚₜ '#'ₒₚₜ '0'ₒₚₜ widthₒₚₜ precisionₒₚₜ 'L'ₒₚₜ typeₒₚₜ
 ```
 
 ``` bnf
-\fmtnontermdef{fill-and-align}
+\textit{fill-and-align}
     fillₒₚₜ align
 ```
 
 ``` bnf
-\fmtnontermdef{fill}
+\textit{fill}
     \textnormal{any character other than \ or \texttt{\}}
 ```
 
 ``` bnf
-\fmtnontermdef{align} one of
+\textit{align} one of
     '< > ^'
 ```
 
 ``` bnf
-\fmtnontermdef{sign} one of
+\textit{sign} one of
     '+ -' space
 ```
 
 ``` bnf
-\fmtnontermdef{width}
+\textit{width}
     positive-integer
     \terminal{\ arg-idₒₚₜ \terminal{\}}
 ```
 
 ``` bnf
-\fmtnontermdef{precision}
+\textit{precision}
     '.' nonnegative-integer
     '.' \terminal{\ arg-idₒₚₜ \terminal{\}}
 ```
 
 ``` bnf
-\fmtnontermdef{type} one of
+\textit{type} one of
     'a A b B c d e E f F g G o p P s x X ?'
 ```
 
@@ -5660,29 +5660,29 @@ The class template `range_formatter` is a utility for implementing
 syntax of format specifications is as follows:
 
 ``` bnf
-\fmtnontermdef{range-format-spec}
+\textit{range-format-spec}
     range-fill-and-alignₒₚₜ widthₒₚₜ 'n'ₒₚₜ range-typeₒₚₜ range-underlying-specₒₚₜ
 ```
 
 ``` bnf
-\fmtnontermdef{range-fill-and-align}
+\textit{range-fill-and-align}
     range-fillₒₚₜ align
 ```
 
 ``` bnf
-\fmtnontermdef{range-fill}
+\textit{range-fill}
     any character other than \terminal{\ or \terminal{\}} or \terminal{:}
 ```
 
 ``` bnf
-\fmtnontermdef{range-type}
+\textit{range-type}
     'm'
     's'
     '?s'
 ```
 
 ``` bnf
-\fmtnontermdef{range-underlying-spec}
+\textit{range-underlying-spec}
     ':' format-spec
 ```
 
@@ -6283,22 +6283,22 @@ specification as a *tuple-format-spec* according to the following
 syntax:
 
 ``` bnf
-\fmtnontermdef{tuple-format-spec}
+\textit{tuple-format-spec}
     tuple-fill-and-alignₒₚₜ widthₒₚₜ tuple-typeₒₚₜ
 ```
 
 ``` bnf
-\fmtnontermdef{tuple-fill-and-align}
+\textit{tuple-fill-and-align}
     tuple-fillₒₚₜ align
 ```
 
 ``` bnf
-\fmtnontermdef{tuple-fill}
+\textit{tuple-fill}
     any character other than \terminal{\ or \terminal{\}} or \terminal{:}
 ```
 
 ``` bnf
-\fmtnontermdef{tuple-type}
+\textit{tuple-type}
     'm'
     'n'
 ```
@@ -8990,7 +8990,7 @@ The following productions within the ECMAScript grammar are modified as
 follows:
 
 ``` bnf
-\renontermdef{ClassAtom}
+\textit{ClassAtom}
   '-'
   ClassAtomNoDash
   ClassAtomExClass
@@ -8999,35 +8999,35 @@ follows:
 ```
 
 ``` bnf
-\renontermdef{IdentityEscape}
+\textit{IdentityEscape}
   SourceCharacter \textbf{but not} 'c'
 ```
 
 The following new productions are then added:
 
 ``` bnf
-\renontermdef{ClassAtomExClass}
+\textit{ClassAtomExClass}
   '[:' ClassName ':]'
 ```
 
 ``` bnf
-\renontermdef{ClassAtomCollatingElement}
+\textit{ClassAtomCollatingElement}
   '[.' ClassName '.]'
 ```
 
 ``` bnf
-\renontermdef{ClassAtomEquivalence}
+\textit{ClassAtomEquivalence}
   '[=' ClassName '=]'
 ```
 
 ``` bnf
-\renontermdef{ClassName}
+\textit{ClassName}
   ClassNameCharacter
   ClassNameCharacter ClassName
 ```
 
 ``` bnf
-\renontermdef{ClassNameCharacter}
+\textit{ClassNameCharacter}
   SourceCharacter \textbf{but not one of} '.' \textbf{or} '=' \textbf{or} ':'
 ```
 
@@ -9195,7 +9195,7 @@ namespace std {
   wctrans_t wctrans(const char* property);
 }
 
-#define \libmacro{WEOF} see below
+#define WEOF see below
 ```
 
 The contents and meaning of the header `<cwctype>` are the same as the C
@@ -9281,11 +9281,11 @@ namespace std {
   size_t wcsrtombs(char* dst, const wchar_t** src, size_t len, mbstate_t* ps);
 }
 
-#define \libmacro{NULL} see [support.types.nullptr]                                                  // freestanding
-#define \libmacro{WCHAR_MAX} see below                                             // freestanding
-#define \libmacro{WCHAR_MIN} see below                                             // freestanding
-#define \libmacro{WEOF} see below                                                  // freestanding
-#define \libmacro{WCHAR_WIDTH} see below                                           // freestanding
+#define NULL see [support.types.nullptr]                                                  // freestanding
+#define WCHAR_MAX see below                                             // freestanding
+#define WCHAR_MIN see below                                             // freestanding
+#define WEOF see below                                                  // freestanding
+#define WCHAR_WIDTH see below                                           // freestanding
 ```
 
 The contents and meaning of the header `<cwchar>` are the same as the C

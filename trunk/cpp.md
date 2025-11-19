@@ -733,10 +733,10 @@ form *embed-parameter-seq*.
 A resource is a source of data accessible from the translation
 environment. A resource has an *implementation-resource-width*, which is
 the *implementation-defined* size in bits of the resource. If the
-implementation-resource-width is not an integral multiple of , the
-program is ill-formed. Let *implementation-resource-count* be
-implementation-resource-width divided by . Every resource also has a
-*resource-count*, which is
+implementation-resource-width is not an integral multiple of `CHAR_BIT`,
+the program is ill-formed. Let *implementation-resource-count* be
+implementation-resource-width divided by `CHAR_BIT`. Every resource also
+has a *resource-count*, which is
 
 - the value as computed from the optionally-provided `limit`
   *embed-parameter* [[cpp.embed.param.limit]], if present;

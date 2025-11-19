@@ -2377,7 +2377,7 @@ namespace std {
     constexpr bool ranges::enable_borrowed_range<optional<T&>> = true;
 
   template<class T>
-    concept \defexposconceptnc{is-derived-from-optional} = requires(const T& t) {   // exposition only
+    concept is-derived-from-optional = requires(const T& t) {   // exposition only
       []<class U>(const optional<U>&){ }(t);
     };
 
@@ -8125,13 +8125,13 @@ namespace std {
   }
 
   template<class Fn, class... Args>
-    concept \defexposconceptnc{callable} =                                                  // exposition only
+    concept callable =                                                  // exposition only
       requires (Fn&& fn, Args&&... args) {
         std::forward<Fn>(fn)(std::forward<Args>(args)...);
       };
 
   template<class Fn, class... Args>
-    concept \defexposconceptnc{nothrow-callable} =                                          // exposition only
+    concept nothrow-callable =                                          // exposition only
       callable<Fn, Args...> &&
       requires (Fn&& fn, Args&&... args) {
         { std::forward<Fn>(fn)(std::forward<Args>(args)...) } noexcept;
@@ -11385,11 +11385,11 @@ Otherwise, `endian::native` is not equal to either `endian::big` or
 ``` cpp
 // all freestanding
 
-#define \libmacro{__STDC_VERSION_STDBIT_H__} 202311L
+#define __STDC_VERSION_STDBIT_H__ 202311L
 
-#define \libmacro{__STDC_ENDIAN_BIG__}     see below
-#define \libmacro{__STDC_ENDIAN_LITTLE__}  see below
-#define \libmacro{__STDC_ENDIAN_NATIVE__}  see below
+#define __STDC_ENDIAN_BIG__     see below
+#define __STDC_ENDIAN_LITTLE__  see below
+#define __STDC_ENDIAN_NATIVE__  see below
 
 unsigned int stdc_leading_zeros_uc(unsigned char value);
 unsigned int stdc_leading_zeros_us(unsigned short value);

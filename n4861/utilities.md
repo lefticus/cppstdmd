@@ -13272,45 +13272,45 @@ is copied unchanged to the output. An escape sequence is one of `{{` or
 syntax of replacement fields is as follows:
 
 ``` bnf
-{\BnfNontermshape replacement-field\itcorr}:
+\textit{replacement-field}
     \terminal{\ arg-idₒₚₜ format-specifierₒₚₜ \terminal{\}}
 ```
 
 ``` bnf
-{\BnfNontermshape arg-id\itcorr}:
+\textit{arg-id}
     '0'
     positive-integer
 ```
 
 ``` bnf
-{\BnfNontermshape positive-integer\itcorr}:
+\textit{positive-integer}
     nonzero-digit
     positive-integer digit
 ```
 
 ``` bnf
-{\BnfNontermshape nonnegative-integer\itcorr}:
+\textit{nonnegative-integer}
     digit
     nonnegative-integer digit
 ```
 
 ``` bnf
-{\BnfNontermshape nonzero-digit\itcorr}: one of
+\textit{nonzero-digit} one of
     '1 2 3 4 5 6 7 8 9'
 ```
 
 ``` bnf
-{\BnfNontermshape digit\itcorr}: one of
+\textit{digit} one of
     '0 1 2 3 4 5 6 7 8 9'
 ```
 
 ``` bnf
-{\BnfNontermshape format-specifier\itcorr}:
+\textit{format-specifier}
     ':' format-spec
 ```
 
 ``` bnf
-{\BnfNontermshape format-spec\itcorr}:
+\textit{format-spec}
     as specified by the formatter specialization for the argument type
 ```
 
@@ -13384,44 +13384,44 @@ types. — *end note*]
 The syntax of format specifications is as follows:
 
 ``` bnf
-{\BnfNontermshape std-format-spec\itcorr}:
+\textit{std-format-spec}
     fill-and-alignₒₚₜ signₒₚₜ '#'ₒₚₜ '0'ₒₚₜ widthₒₚₜ precisionₒₚₜ 'L'ₒₚₜ typeₒₚₜ
 ```
 
 ``` bnf
-{\BnfNontermshape fill-and-align\itcorr}:
+\textit{fill-and-align}
     fillₒₚₜ align
 ```
 
 ``` bnf
-{\BnfNontermshape fill\itcorr}:
+\textit{fill}
     \textnormal{any character other than \ or \texttt{\}}
 ```
 
 ``` bnf
-{\BnfNontermshape align\itcorr}: one of
+\textit{align} one of
     '< > ^'
 ```
 
 ``` bnf
-{\BnfNontermshape sign\itcorr}: one of
+\textit{sign} one of
     '+ -' space
 ```
 
 ``` bnf
-{\BnfNontermshape width\itcorr}:
+\textit{width}
     positive-integer
     \terminal{\ arg-idₒₚₜ \terminal{\}}
 ```
 
 ``` bnf
-{\BnfNontermshape precision\itcorr}:
+\textit{precision}
     '.' nonnegative-integer
     '.' \terminal{\ arg-idₒₚₜ \terminal{\}}
 ```
 
 ``` bnf
-{\BnfNontermshape type\itcorr}: one of
+\textit{type} one of
     'a A b B c d e E f F g G o p s x X'
 ```
 

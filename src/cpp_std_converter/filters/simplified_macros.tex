@@ -169,8 +169,24 @@
 %% See Issue #71 for details
 
 %%--------------------------------------------------
-%% TOTAL: 84 simplified macros
-%% Macros cover ~73% of macro usage in the C++ standard source
+%% Category L: Phase 5 Additions - Easy Win Macros
+%% Found by analyzing trunk/ output for unconverted patterns
+%%--------------------------------------------------
+
+%% Code formatting for C preprocessor macros (298 occurrences)
+\renewcommand{\libmacro}[1]{\texttt{#1}}
+
+%% Grammar non-terminals (47 occurrences)
+\renewcommand{\fmtnontermdef}[1]{\textit{#1}}  % Format string grammar (33×)
+\renewcommand{\renontermdef}[1]{\textit{#1}}   % Regex grammar (7×)
+\renewcommand{\defexposconceptnc}[1]{\textit{#1}}  % Exposition-only concepts (29×)
+
+%% Math state variables: \state{X}{Y} → X_Y with subscripts (7 occurrences)
+\renewcommand{\state}[2]{\textit{#1}_\textit{#2}}
+
+%%--------------------------------------------------
+%% TOTAL: 91 simplified macros (was 84, added 7)
+%% Macros cover ~75% of macro usage in the C++ standard source
 %%
 %% Macros removed after investigation (moved back to Lua filters):
 %%  - \tcode{} - contains nested macros (\keyword{}, \ctype{}, \placeholder{}, etc)

@@ -1265,37 +1265,37 @@ namespace std {
 
 ``` cpp
 // all freestanding
-#define \libmacro{BOOL_WIDTH} see below
-#define \libmacro{CHAR_BIT} see below
-#define \libmacro{CHAR_WIDTH} see below
-#define \libmacro{SCHAR_WIDTH} see below
-#define \libmacro{UCHAR_WIDTH} see below
-#define \libmacro{USHRT_WIDTH} see below
-#define \libmacro{SHRT_WIDTH} see below
-#define \libmacro{UINT_WIDTH} see below
-#define \libmacro{INT_WIDTH} see below
-#define \libmacro{ULONG_WIDTH} see below
-#define \libmacro{LONG_WIDTH} see below
-#define \libmacro{ULLONG_WIDTH} see below
-#define \libmacro{LLONG_WIDTH} see below
-#define \libmacro{SCHAR_MIN} see below
-#define \libmacro{SCHAR_MAX} see below
-#define \libmacro{UCHAR_MAX} see below
-#define \libmacro{CHAR_MIN} see below
-#define \libmacro{CHAR_MAX} see below
-#define \libmacro{MB_LEN_MAX} see below
-#define \libmacro{SHRT_MIN} see below
-#define \libmacro{SHRT_MAX} see below
-#define \libmacro{USHRT_MAX} see below
-#define \libmacro{INT_MIN} see below
-#define \libmacro{INT_MAX} see below
-#define \libmacro{UINT_MAX} see below
-#define \libmacro{LONG_MIN} see below
-#define \libmacro{LONG_MAX} see below
-#define \libmacro{ULONG_MAX} see below
-#define \libmacro{LLONG_MIN} see below
-#define \libmacro{LLONG_MAX} see below
-#define \libmacro{ULLONG_MAX} see below
+#define BOOL_WIDTH see below
+#define CHAR_BIT see below
+#define CHAR_WIDTH see below
+#define SCHAR_WIDTH see below
+#define UCHAR_WIDTH see below
+#define USHRT_WIDTH see below
+#define SHRT_WIDTH see below
+#define UINT_WIDTH see below
+#define INT_WIDTH see below
+#define ULONG_WIDTH see below
+#define LONG_WIDTH see below
+#define ULLONG_WIDTH see below
+#define LLONG_WIDTH see below
+#define SCHAR_MIN see below
+#define SCHAR_MAX see below
+#define UCHAR_MAX see below
+#define CHAR_MIN see below
+#define CHAR_MAX see below
+#define MB_LEN_MAX see below
+#define SHRT_MIN see below
+#define SHRT_MAX see below
+#define USHRT_MAX see below
+#define INT_MIN see below
+#define INT_MAX see below
+#define UINT_MAX see below
+#define LONG_MIN see below
+#define LONG_MAX see below
+#define ULONG_MAX see below
+#define LLONG_MIN see below
+#define LLONG_MAX see below
+#define ULLONG_MAX see below
 ```
 
 The header `<climits>` defines all macros the same as the C standard
@@ -1312,47 +1312,47 @@ is the promoted type of `T` [[conv.prom]]. — *end note*]
 // all freestanding
 #define __STDC_VERSION_FLOAT_H__ 202311L
 
-#define \libmacro{FLT_ROUNDS} see below
-#define \libmacro{FLT_EVAL_METHOD} see below
-#define \libmacro{FLT_RADIX} see below
-#define \libmacro{INFINITY} see below
-#define \libmacro{NAN} see below
-#define \libmacro{FLT_SNAN} see below
-#define \libmacro{DBL_SNAN} see below
-#define \libmacro{LDBL_SNAN} see below
-#define \libmacro{FLT_MANT_DIG} see below
-#define \libmacro{DBL_MANT_DIG} see below
-#define \libmacro{LDBL_MANT_DIG} see below
-#define \libmacro{FLT_DECIMAL_DIG} see below
-#define \libmacro{DBL_DECIMAL_DIG} see below
-#define \libmacro{LDBL_DECIMAL_DIG} see below
-#define \libmacro{FLT_DIG} see below
-#define \libmacro{DBL_DIG} see below
-#define \libmacro{LDBL_DIG} see below
-#define \libmacro{FLT_MIN_EXP} see below
-#define \libmacro{DBL_MIN_EXP} see below
-#define \libmacro{LDBL_MIN_EXP} see below
-#define \libmacro{FLT_MIN_10_EXP} see below
-#define \libmacro{DBL_MIN_10_EXP} see below
-#define \libmacro{LDBL_MIN_10_EXP} see below
-#define \libmacro{FLT_MAX_EXP} see below
-#define \libmacro{DBL_MAX_EXP} see below
-#define \libmacro{LDBL_MAX_EXP} see below
-#define \libmacro{FLT_MAX_10_EXP} see below
-#define \libmacro{DBL_MAX_10_EXP} see below
-#define \libmacro{LDBL_MAX_10_EXP} see below
-#define \libmacro{FLT_MAX} see below
-#define \libmacro{DBL_MAX} see below
-#define \libmacro{LDBL_MAX} see below
-#define \libmacro{FLT_EPSILON} see below
-#define \libmacro{DBL_EPSILON} see below
-#define \libmacro{LDBL_EPSILON} see below
-#define \libmacro{FLT_MIN} see below
-#define \libmacro{DBL_MIN} see below
-#define \libmacro{LDBL_MIN} see below
-#define \libmacro{FLT_TRUE_MIN} see below
-#define \libmacro{DBL_TRUE_MIN} see below
-#define \libmacro{LDBL_TRUE_MIN} see below
+#define FLT_ROUNDS see below
+#define FLT_EVAL_METHOD see below
+#define FLT_RADIX see below
+#define INFINITY see below
+#define NAN see below
+#define FLT_SNAN see below
+#define DBL_SNAN see below
+#define LDBL_SNAN see below
+#define FLT_MANT_DIG see below
+#define DBL_MANT_DIG see below
+#define LDBL_MANT_DIG see below
+#define FLT_DECIMAL_DIG see below
+#define DBL_DECIMAL_DIG see below
+#define LDBL_DECIMAL_DIG see below
+#define FLT_DIG see below
+#define DBL_DIG see below
+#define LDBL_DIG see below
+#define FLT_MIN_EXP see below
+#define DBL_MIN_EXP see below
+#define LDBL_MIN_EXP see below
+#define FLT_MIN_10_EXP see below
+#define DBL_MIN_10_EXP see below
+#define LDBL_MIN_10_EXP see below
+#define FLT_MAX_EXP see below
+#define DBL_MAX_EXP see below
+#define LDBL_MAX_EXP see below
+#define FLT_MAX_10_EXP see below
+#define DBL_MAX_10_EXP see below
+#define LDBL_MAX_10_EXP see below
+#define FLT_MAX see below
+#define DBL_MAX see below
+#define LDBL_MAX see below
+#define FLT_EPSILON see below
+#define DBL_EPSILON see below
+#define LDBL_EPSILON see below
+#define FLT_MIN see below
+#define DBL_MIN see below
+#define LDBL_MIN see below
+#define FLT_TRUE_MIN see below
+#define DBL_TRUE_MIN see below
+#define LDBL_TRUE_MIN see below
 ```
 
 The header `<cfloat>` defines all macros the same as the C standard
@@ -4453,10 +4453,10 @@ namespace std {
   using va_list = see below;
 }
 
-#define \libmacro{va_arg}(V, P) see below
-#define \libmacro{va_copy}(VDST, VSRC) see below
-#define \libmacro{va_end}(V) see below
-#define \libmacro{va_start}(V, ...) see below
+#define va_arg(V, P) see below
+#define va_copy(VDST, VSRC) see below
+#define va_end(V) see below
+#define va_start(V, ...) see below
 ```
 
 The contents of the header `<cstdarg>` are the same as the C standard

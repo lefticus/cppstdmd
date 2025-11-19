@@ -320,10 +320,10 @@ namespace std {
     concept exposition onlyconceptnc{movable-value} = see belownc;                          // exposition only
 
   template<class From, class To>
-    concept \defexposconceptnc{decays-to} = same_as<decay_t<From>, To>;             // exposition only
+    concept decays-to = same_as<decay_t<From>, To>;             // exposition only
 
   template<class T>
-    concept \defexposconceptnc{class-type} = exposition onlyconceptnc{decays-to}<T, T> && is_class_v<T>;      // exposition only
+    concept class-type = exposition onlyconceptnc{decays-to}<T, T> && is_class_v<T>;      // exposition only
 
   // [exec.queryable], queryable objects
   template<class T>
@@ -342,7 +342,7 @@ namespace std {
     using stop_token_of_t = remove_cvref_t<decltype(get_stop_token(declval<T>()))>;
 
   template<class T>
-    concept \defexposconceptnc{forwarding-query} = forwarding_query(T{});           // exposition only
+    concept forwarding-query = forwarding_query(T{});           // exposition only
 }
 
 namespace std::execution {
@@ -1353,7 +1353,7 @@ Let `valid-specialization` be the following concept:
 ``` cpp
 namespace std::execution {
   template<template<class...> class T, class... Args>
-  concept \defexposconceptnc{valid-specialization} =                                // exposition only
+  concept valid-specialization =                                // exposition only
     requires { typename T<Args...>; };
 }
 ```
@@ -1388,7 +1388,7 @@ that models `semiregular`.
 ``` cpp
 namespace std::execution {
   template<class Tag>
-  concept \defexposconceptnc{completion-tag} =                                      // exposition only
+  concept completion-tag =                                      // exposition only
     same_as<Tag, set_value_t> || same_as<Tag, set_error_t> || same_as<Tag, set_stopped_t>;
 
   struct default-impls {                                        // exposition only

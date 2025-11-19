@@ -143,7 +143,7 @@ namespace std {
     struct constant_wrapper;
 
   template<class T>
-    concept \defexposconceptnc{constexpr-param} =                                   // exposition only
+    concept constexpr-param =                                   // exposition only
       requires { typename constant_wrapper<T::value>; };
 
   struct cw-operators;                                          // exposition only

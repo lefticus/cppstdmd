@@ -1024,17 +1024,17 @@ A *random number engine* (commonly shortened to *engine*) `e` of type
 requirements (e.g., for seeding and for input/output) specified in this
 subclause.
 
-At any given time, `e` has a state for some integer i ≥ 0. Upon
-construction, `e` has an initial state . An engine’s state may be
-established via a constructor, a `seed` function, assignment, or a
+At any given time, `e` has a state *e*\_*i* for some integer i ≥ 0. Upon
+construction, `e` has an initial state *e*\_*0*. An engine’s state may
+be established via a constructor, a `seed` function, assignment, or a
 suitable `operator>>`.
 
 `E`’s specification shall define:
 
 - the size of `E`’s state in multiples of the size of `result_type`,
   given as an integral constant expression;
-- the *transition algorithm* TA by which `e`’s state is advanced to its
-  *successor state* ; and
+- the *transition algorithm* TA by which `e`’s state *e*\_*i* is
+  advanced to its *successor state* *e*\_*i+1*; and
 - the *generation algorithm* GA by which an engine’s state is mapped to
   a value of type `result_type`.
 
@@ -1268,11 +1268,11 @@ qualify as a seed sequence if it is implicitly convertible to
 #### Class template `linear_congruential_engine` <a id="rand.eng.lcong">[[rand.eng.lcong]]</a>
 
 A `linear_congruential_engine` random number engine produces unsigned
-integer random numbers. The state of a `linear_congruential_engine`
-object `x` is of size 1 and consists of a single integer. The transition
-algorithm is a modular linear function of the form
-$\mathsf{TA}(\state{x}{i}) = (a \cdot \state{x}{i} + c) \bmod m$; the
-generation algorithm is $\mathsf{GA}(\state{x}{i}) = \state{x}{i+1}$.
+integer random numbers. The state *x*\_*i* of a
+`linear_congruential_engine` object `x` is of size 1 and consists of a
+single integer. The transition algorithm is a modular linear function of
+the form TA(xᵢ) = (a ⋅ xᵢ + c)  mod  m; the generation algorithm is
+GA(xᵢ) = xᵢ+1.
 
 ``` cpp
 namespace std {
@@ -1326,7 +1326,7 @@ plus 1.
 If the template parameter `m` is not 0, the following relations shall
 hold: `a < m` and `c < m`.
 
-The textual representation consists of the value of .
+The textual representation consists of the value of *x*\_*i*.
 
 ``` cpp
 explicit linear_congruential_engine(result_type s);
@@ -1351,9 +1351,9 @@ the engine’s state to S.
 A `mersenne_twister_engine` random number engine[^3]
 
 produces unsigned integer random numbers in the closed interval
-[0,2ʷ-1]. The state of a `mersenne_twister_engine` object `x` is of size
-n and consists of a sequence X of n values of the type delivered by `x`;
-all subscripts applied to X are to be taken modulo n.
+[0,2ʷ-1]. The state *x*\_*i* of a `mersenne_twister_engine` object `x`
+is of size n and consists of a sequence X of n values of the type
+delivered by `x`; all subscripts applied to X are to be taken modulo n.
 
 The transition algorithm employs a twisted generalized feedback shift
 register defined by shift values n and m, a twist value r, and a
@@ -1440,7 +1440,7 @@ The following relations shall hold: `0 < m`, `m <= n`, `2u < w`,
 `b <= (1u<<w) - 1u`, `c <= (1u<<w) - 1u`, `d <= (1u<<w) - 1u`, and
 `f <= (1u<<w) - 1u`.
 
-The textual representation of consists of the values of
+The textual representation of *x*\_*i* consists of the values of
 $X_{i - n}, \dotsc, X_{i - 1}$, in that order.
 
 ``` cpp
@@ -1474,11 +1474,11 @@ of the other resulting Xᵢ is 0, changes X₋ₙ to 2ʷ⁻¹.
 A `subtract_with_carry_engine` random number engine produces unsigned
 integer random numbers.
 
-The state of a `subtract_with_carry_engine` object `x` is of size , and
-consists of a sequence X of r integer values 0 ≤ Xᵢ < m  = 2ʷ; all
-subscripts applied to X are to be taken modulo r. The state additionally
-consists of an integer c (known as the *carry*) whose value is either 0
-or 1.
+The state *x*\_*i* of a `subtract_with_carry_engine` object `x` is of
+size , and consists of a sequence X of r integer values
+0 ≤ Xᵢ < m  = 2ʷ; all subscripts applied to X are to be taken modulo r.
+The state *x*\_*i* additionally consists of an integer c (known as the
+*carry*) whose value is either 0 or 1.
 
 The state transition is performed as follows:
 
@@ -1486,13 +1486,11 @@ The state transition is performed as follows:
 - Set Xᵢ to y = Y  mod  m. Set c to 1 if Y < 0, otherwise set c to 0.
 
 [*Note 1*: This algorithm corresponds to a modular linear function of
-the form $\mathsf{TA}(\state{x}{i}) = (a \cdot \state{x}{i}) \bmod b$,
-where b is of the form mʳ - mˢ + 1 and
-a = b - (b - 1) / m. — *end note*]
+the form TA(xᵢ) = (a ⋅ xᵢ)  mod  b, where b is of the form mʳ - mˢ + 1
+and a = b - (b - 1) / m. — *end note*]
 
-The generation algorithm is given by $\mathsf{GA}(\state{x}{i}) = y$,
-where y is the value produced as a result of advancing the engine’s
-state as described above.
+The generation algorithm is given by GA(xᵢ) = y, where y is the value
+produced as a result of advancing the engine’s state as described above.
 
 ``` cpp
 namespace std {
@@ -1607,15 +1605,16 @@ ill-formed if any such required relationship fails to hold.
 #### Class template `discard_block_engine` <a id="rand.adapt.disc">[[rand.adapt.disc]]</a>
 
 A `discard_block_engine` random number engine adaptor produces random
-numbers selected from those produced by some base engine e. The state of
-a `discard_block_engine` engine adaptor object `x` consists of the state
-of its base engine `e` and an additional integer n. The size of the
-state is the size of e’s state plus 1.
+numbers selected from those produced by some base engine e. The state
+*x*\_*i* of a `discard_block_engine` engine adaptor object `x` consists
+of the state *e*\_*i* of its base engine `e` and an additional integer
+n. The size of the state is the size of e’s state plus 1.
 
 The transition algorithm discards all but r > 0 values from each block
 of p ≥ r values delivered by e. The state transition is performed as
-follows: If n ≥ r, advance the state of `e` from to and set n to 0. In
-any case, then increment n and advance `e`’s then-current state to .
+follows: If n ≥ r, advance the state of `e` from *e*\_*i* to
+*e*\_*i+p-r* and set n to 0. In any case, then increment n and advance
+`e`’s then-current state *e*\_*j* to *e*\_*j+1*.
 
 The generation algorithm yields the value returned by the last
 invocation of `e()` while advancing `e`’s state as described above.
@@ -1681,10 +1680,10 @@ each constructor that is not a copy constructor sets `n` to 0.
 
 An `independent_bits_engine` random number engine adaptor combines
 random numbers that are produced by some base engine e, so as to produce
-random numbers with a specified number of bits w. The state of an
-`independent_bits_engine` engine adaptor object `x` consists of the
-state of its base engine `e`; the size of the state is the size of e’s
-state.
+random numbers with a specified number of bits w. The state *x*\_*i* of
+an `independent_bits_engine` engine adaptor object `x` consists of the
+state *e*\_*i* of its base engine `e`; the size of the state is the size
+of e’s state.
 
 The transition and generation algorithms are described in terms of the
 following integral constants:
@@ -1773,11 +1772,12 @@ The textual representation consists of the textual representation of
 
 A `shuffle_order_engine` random number engine adaptor produces the same
 random numbers that are produced by some base engine e, but delivers
-them in a different sequence. The state of a `shuffle_order_engine`
-engine adaptor object `x` consists of the state of its base engine `e`,
-an additional value Y of the type delivered by `e`, and an additional
-sequence V of k values also of the type delivered by `e`. The size of
-the state is the size of e’s state plus k + 1.
+them in a different sequence. The state *x*\_*i* of a
+`shuffle_order_engine` engine adaptor object `x` consists of the state
+*e*\_*i* of its base engine `e`, an additional value Y of the type
+delivered by `e`, and an additional sequence V of k values also of the
+type delivered by `e`. The size of the state is the size of e’s state
+plus k + 1.
 
 The transition algorithm permutes the values produced by e. The state
 transition is performed as follows:

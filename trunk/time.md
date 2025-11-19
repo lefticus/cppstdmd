@@ -7420,34 +7420,34 @@ specification as a *chrono-format-spec* according to the following
 syntax:
 
 ``` bnf
-\fmtnontermdef{chrono-format-spec}
+\textit{chrono-format-spec}
     fill-and-alignₒₚₜ widthₒₚₜ precisionₒₚₜ 'L'ₒₚₜ chrono-specsₒₚₜ
 ```
 
 ``` bnf
-\fmtnontermdef{chrono-specs}
+\textit{chrono-specs}
     conversion-spec
     chrono-specs conversion-spec
     chrono-specs literal-char
 ```
 
 ``` bnf
-\fmtnontermdef{literal-char}
+\textit{literal-char}
     any character other than \{, \}, or \%
 ```
 
 ``` bnf
-\fmtnontermdef{conversion-spec}
+\textit{conversion-spec}
     '%' modifierₒₚₜ type
 ```
 
 ``` bnf
-\fmtnontermdef{modifier} one of
+\textit{modifier} one of
     'E O'
 ```
 
 ``` bnf
-\fmtnontermdef{type} one of
+\textit{type} one of
     'a A b B c C d D e F g G h H I j m M n'
     'p q Q r R S t T u U V w W x X y Y z Z %'
 ```
@@ -7993,12 +7993,12 @@ The specialization is enabled [[unord.hash]].
 ``` cpp
 #define __STDC_VERSION_TIME_H__ 202311L
 
-#define \libmacro{NULL} see [support.types.nullptr]
-#define \libmacro{CLOCKS_PER_SEC} see below
-#define \libmacro{TIME_UTC} see below
-#define \libmacro{TIME_MONOTONIC} see below     // optional
-#define \libmacro{TIME_ACTIVE} see below        // optional
-#define \libmacro{TIME_THREAD_ACTIVE} see below // optional
+#define NULL see [support.types.nullptr]
+#define CLOCKS_PER_SEC see below
+#define TIME_UTC see below
+#define TIME_MONOTONIC see below     // optional
+#define TIME_ACTIVE see below        // optional
+#define TIME_THREAD_ACTIVE see below // optional
 
 namespace std {
   using size_t = see [support.types.layout];

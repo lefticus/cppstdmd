@@ -2585,7 +2585,7 @@ The following productions within the ECMAScript grammar are modified as
 follows:
 
 ``` bnf
-\renontermdef{ClassAtom}
+\textit{ClassAtom}
   '-'
   ClassAtomNoDash
   ClassAtomExClass
@@ -2594,35 +2594,35 @@ follows:
 ```
 
 ``` bnf
-\renontermdef{IdentityEscape}
+\textit{IdentityEscape}
   SourceCharacter \textbf{but not} 'c'
 ```
 
 The following new productions are then added:
 
 ``` bnf
-\renontermdef{ClassAtomExClass}
+\textit{ClassAtomExClass}
   '[:' ClassName ':]'
 ```
 
 ``` bnf
-\renontermdef{ClassAtomCollatingElement}
+\textit{ClassAtomCollatingElement}
   '[.' ClassName '.]'
 ```
 
 ``` bnf
-\renontermdef{ClassAtomEquivalence}
+\textit{ClassAtomEquivalence}
   '[=' ClassName '=]'
 ```
 
 ``` bnf
-\renontermdef{ClassName}
+\textit{ClassName}
   ClassNameCharacter
   ClassNameCharacter ClassName
 ```
 
 ``` bnf
-\renontermdef{ClassNameCharacter}
+\textit{ClassNameCharacter}
   SourceCharacter \textbf{but not one of} '.' \textbf{or} '=' \textbf{or} ':'
 ```
 

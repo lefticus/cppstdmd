@@ -210,10 +210,10 @@ static constexpr bool has_denorm_loss = false;
 The header `<cfloat>` has the following macros:
 
 ``` cpp
-#define \libmacro{FLT_HAS_SUBNORM} see below
-#define \libmacro{DBL_HAS_SUBNORM} see below
-#define \libmacro{LDBL_HAS_SUBNORM} see below
-#define \libmacro{DECIMAL_DIG} see below
+#define FLT_HAS_SUBNORM see below
+#define DBL_HAS_SUBNORM see below
+#define LDBL_HAS_SUBNORM see below
+#define DECIMAL_DIG see below
 ```
 
 The header defines these macros the same as the C standard library
@@ -234,10 +234,10 @@ The header `<stdbool.h>` has the following macro:
 The header `<cerrno>` has the following additional macros:
 
 ``` cpp
-#define \libmacro{ENODATA} see below
-#define \libmacro{ENOSR} see below
-#define \libmacro{ENOSTR} see below
-#define \libmacro{ETIME} see below
+#define ENODATA see below
+#define ENOSR see below
+#define ENOSTR see below
+#define ETIME see below
 ```
 
 The meaning of these macros is defined by the POSIX standard.
@@ -747,7 +747,7 @@ namespace std {
     constexpr T kill_dependency(T y) noexcept;                                  // freestanding
   inline constexpr memory_order memory_order_consume = memory_order::consume;   // freestanding
 
-  #define \libmacro{ATOMIC_VAR_INIT}(value) see below
+  #define ATOMIC_VAR_INIT(value) see below
 }
 ```
 
@@ -791,7 +791,7 @@ template<class T>
 ### Operations on atomic types <a id="depr.atomics.types.operations">[[depr.atomics.types.operations]]</a>
 
 ``` cpp
-#define \libmacro{ATOMIC_VAR_INIT}(value) see below
+#define ATOMIC_VAR_INIT(value) see below
 ```
 
 The macro expands to a token sequence suitable for constant

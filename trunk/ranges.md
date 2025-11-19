@@ -1327,21 +1327,21 @@ following exposition-only concepts:
 
 ``` cpp
 template<class R>
-  concept \defexposconceptnc{simple-view} =                                     // exposition only
+  concept simple-view =                                     // exposition only
     view<R> && range<const R> &&
     same_as<iterator_t<R>, iterator_t<const R>> &&
     same_as<sentinel_t<R>, sentinel_t<const R>>;
 
 template<class I>
-  concept \defexposconceptnc{has-arrow} =                                       // exposition only
+  concept has-arrow =                                       // exposition only
     input_iterator<I> && (is_pointer_v<I> || requires(const I i) { i.operator->(); });
 
 template<class T, class U>
-  concept \defexposconceptnc{different-from} =                                  // exposition only
+  concept different-from =                                  // exposition only
     !same_as<remove_cvref_t<T>, remove_cvref_t<U>>;
 
 template<class R>
-  concept \defexposconceptnc{range-with-movable-references} =                   // exposition only
+  concept range-with-movable-references =                   // exposition only
     input_range<R> && move_constructible<range_reference_t<R>> &&
     move_constructible<range_rvalue_reference_t<R>>;
 ```
@@ -1479,17 +1479,17 @@ template parameter is `subrange_kind::sized`.
 ``` cpp
 namespace std::ranges {
   template<class From, class To>
-    concept \defexposconceptnc{uses-nonqualification-pointer-conversion} =      // exposition only
+    concept uses-nonqualification-pointer-conversion =      // exposition only
       is_pointer_v<From> && is_pointer_v<To> &&
       !convertible_to<remove_pointer_t<From>(*)[], remove_pointer_t<To>(*)[]>;
 
   template<class From, class To>
-    concept \defexposconceptnc{convertible-to-non-slicing} =                    // exposition only
+    concept convertible-to-non-slicing =                    // exposition only
       convertible_to<From, To> &&
       !uses-nonqualification-pointer-conversion<decay_t<From>, decay_t<To>>;
 
   template<class T, class U, class V>
-    concept \defexposconceptnc{pair-like-convertible-from} =                    // exposition only
+    concept pair-like-convertible-from =                    // exposition only
       !range<T> && !is_reference_v<T> && pair-like<T> &&
       constructible_from<T, U, V> &&
       convertible-to-non-slicing<U, tuple_element_t<0, T>> &&
@@ -2746,7 +2746,7 @@ for (int i : views::repeat(17, 4))
 ``` cpp
 namespace std::ranges {
   template<class T>
-    concept \defexposconceptnc{integer-like-with-usable-difference-type} =  // exposition only
+    concept integer-like-with-usable-difference-type =  // exposition only
       is-signed-integer-like<T> || (is-integer-like<T> && weakly_incrementable<T>);
 
   template<move_constructible T, semiregular Bound = unreachable_sentinel_t>
@@ -3074,7 +3074,7 @@ ranges::copy(views::istream<int>(ints), ostream_iterator<int>{cout, "-"});
 ``` cpp
 namespace std::ranges {
   template<class Val, class CharT, class Traits>
-    concept \defexposconceptnc{stream-extractable} =                // exposition only
+    concept stream-extractable =                // exposition only
       requires(basic_istream<CharT, Traits>& is, Val& t) {
         is >> t;
       };
@@ -3425,13 +3425,13 @@ namespace std::ranges {
   }
 
   template<bool Const, class... Views>
-    concept \defexposconceptnc{all-random-access} =                     // exposition only
+    concept all-random-access =                     // exposition only
       (random_access_range<maybe-const<Const, Views>> && ...);
   template<bool Const, class... Views>
-    concept \defexposconceptnc{all-bidirectional} =                     // exposition only
+    concept all-bidirectional =                     // exposition only
       (bidirectional_range<maybe-const<Const, Views>> && ...);
   template<bool Const, class... Views>
-    concept \defexposconceptnc{all-forward} =                           // exposition only
+    concept all-forward =                           // exposition only
       (forward_range<maybe-const<Const, Views>> && ...);
 }
 ```
@@ -6077,7 +6077,7 @@ namespace std::ranges {
   template<auto> struct require-constant;                       // exposition only
 
   template<class R>
-  concept \defexposconceptnc{tiny-range} =                                          // exposition only
+  concept tiny-range =                                          // exposition only
     sized_range<R> &&
     requires { typename require-constant<remove_reference_t<R>::size()>; } &&
     (remove_reference_t<R>::size() <= 1);

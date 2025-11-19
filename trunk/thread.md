@@ -1250,7 +1250,7 @@ template<class charT> struct formatter<thread::id, charT>;
 follows:
 
 ``` bnf
-\fmtnontermdef{thread-id-format-spec}
+\textit{thread-id-format-spec}
     fill-and-alignₒₚₜ widthₒₚₜ
 ```
 
@@ -1781,17 +1781,17 @@ namespace std {
 }
 
 // [atomics.lockfree], lock-free property
-#define \libmacro{ATOMIC_BOOL_LOCK_FREE} unspecified
-#define \libmacro{ATOMIC_CHAR_LOCK_FREE} unspecified
-#define \libmacro{ATOMIC_CHAR8_T_LOCK_FREE} unspecified
-#define \libmacro{ATOMIC_CHAR16_T_LOCK_FREE} unspecified
-#define \libmacro{ATOMIC_CHAR32_T_LOCK_FREE} unspecified
-#define \libmacro{ATOMIC_WCHAR_T_LOCK_FREE} unspecified
-#define \libmacro{ATOMIC_SHORT_LOCK_FREE} unspecified
-#define \libmacro{ATOMIC_INT_LOCK_FREE} unspecified
-#define \libmacro{ATOMIC_LONG_LOCK_FREE} unspecified
-#define \libmacro{ATOMIC_LLONG_LOCK_FREE} unspecified
-#define \libmacro{ATOMIC_POINTER_LOCK_FREE} unspecified
+#define ATOMIC_BOOL_LOCK_FREE unspecified
+#define ATOMIC_CHAR_LOCK_FREE unspecified
+#define ATOMIC_CHAR8_T_LOCK_FREE unspecified
+#define ATOMIC_CHAR16_T_LOCK_FREE unspecified
+#define ATOMIC_CHAR32_T_LOCK_FREE unspecified
+#define ATOMIC_WCHAR_T_LOCK_FREE unspecified
+#define ATOMIC_SHORT_LOCK_FREE unspecified
+#define ATOMIC_INT_LOCK_FREE unspecified
+#define ATOMIC_LONG_LOCK_FREE unspecified
+#define ATOMIC_LLONG_LOCK_FREE unspecified
+#define ATOMIC_POINTER_LOCK_FREE unspecified
 
 namespace std {
   // [atomics.ref.generic], class template atomic_ref
@@ -2112,7 +2112,7 @@ namespace std {
   constexpr void atomic_flag_notify_one(atomic_flag*) noexcept;
   void atomic_flag_notify_all(volatile atomic_flag*) noexcept;
   constexpr void atomic_flag_notify_all(atomic_flag*) noexcept;
-  #define \libmacro{ATOMIC_FLAG_INIT} see belownc
+  #define ATOMIC_FLAG_INIT see belownc
 
   // [atomics.fences], fences
   extern "C" constexpr void atomic_thread_fence(memory_order) noexcept;
@@ -2283,17 +2283,17 @@ within a reasonable amount of time.
 ### Lock-free property <a id="atomics.lockfree">[[atomics.lockfree]]</a>
 
 ``` cpp
-#define \libmacro{ATOMIC_BOOL_LOCK_FREE} unspecified
-#define \libmacro{ATOMIC_CHAR_LOCK_FREE} unspecified
-#define \libmacro{ATOMIC_CHAR8_T_LOCK_FREE} unspecified
-#define \libmacro{ATOMIC_CHAR16_T_LOCK_FREE} unspecified
-#define \libmacro{ATOMIC_CHAR32_T_LOCK_FREE} unspecified
-#define \libmacro{ATOMIC_WCHAR_T_LOCK_FREE} unspecified
-#define \libmacro{ATOMIC_SHORT_LOCK_FREE} unspecified
-#define \libmacro{ATOMIC_INT_LOCK_FREE} unspecified
-#define \libmacro{ATOMIC_LONG_LOCK_FREE} unspecified
-#define \libmacro{ATOMIC_LLONG_LOCK_FREE} unspecified
-#define \libmacro{ATOMIC_POINTER_LOCK_FREE} unspecified
+#define ATOMIC_BOOL_LOCK_FREE unspecified
+#define ATOMIC_CHAR_LOCK_FREE unspecified
+#define ATOMIC_CHAR8_T_LOCK_FREE unspecified
+#define ATOMIC_CHAR16_T_LOCK_FREE unspecified
+#define ATOMIC_CHAR32_T_LOCK_FREE unspecified
+#define ATOMIC_WCHAR_T_LOCK_FREE unspecified
+#define ATOMIC_SHORT_LOCK_FREE unspecified
+#define ATOMIC_INT_LOCK_FREE unspecified
+#define ATOMIC_LONG_LOCK_FREE unspecified
+#define ATOMIC_LLONG_LOCK_FREE unspecified
+#define ATOMIC_POINTER_LOCK_FREE unspecified
 ```
 
 The `ATOMIC_..._LOCK_FREE` macros indicate the lock-free property of the
@@ -5104,7 +5104,7 @@ are eligible to be unblocked [[atomics.wait]] by this call.
 operation [[atomics.wait]].
 
 ``` cpp
-#define \libmacro{ATOMIC_FLAG_INIT} see below
+#define ATOMIC_FLAG_INIT see below
 ```
 
 *Remarks:* The macro `ATOMIC_FLAG_INIT` is defined in such a way that it
@@ -5184,18 +5184,18 @@ The header `<stdatomic.h>` provides the following definitions:
 template<class T>
   using std-atomic = std::atomic<T>;        // exposition only
 
-#define \libmacro{_Atomic}(T) std-atomic<T>
+#define _Atomic(T) std-atomic<T>
 
-#define \libmacro{ATOMIC_BOOL_LOCK_FREE} see below
-#define \libmacro{ATOMIC_CHAR_LOCK_FREE} see below
-#define \libmacro{ATOMIC_CHAR16_T_LOCK_FREE} see below
-#define \libmacro{ATOMIC_CHAR32_T_LOCK_FREE} see below
-#define \libmacro{ATOMIC_WCHAR_T_LOCK_FREE} see below
-#define \libmacro{ATOMIC_SHORT_LOCK_FREE} see below
-#define \libmacro{ATOMIC_INT_LOCK_FREE} see below
-#define \libmacro{ATOMIC_LONG_LOCK_FREE} see below
-#define \libmacro{ATOMIC_LLONG_LOCK_FREE} see below
-#define \libmacro{ATOMIC_POINTER_LOCK_FREE} see below
+#define ATOMIC_BOOL_LOCK_FREE see below
+#define ATOMIC_CHAR_LOCK_FREE see below
+#define ATOMIC_CHAR16_T_LOCK_FREE see below
+#define ATOMIC_CHAR32_T_LOCK_FREE see below
+#define ATOMIC_WCHAR_T_LOCK_FREE see below
+#define ATOMIC_SHORT_LOCK_FREE see below
+#define ATOMIC_INT_LOCK_FREE see below
+#define ATOMIC_LONG_LOCK_FREE see below
+#define ATOMIC_LLONG_LOCK_FREE see below
+#define ATOMIC_POINTER_LOCK_FREE see below
 
 using std::memory_order;             // see below
 using std::memory_order_relaxed;     // see below
@@ -5279,7 +5279,7 @@ using std::atomic_flag_test_and_set;                     // see below
 using std::atomic_flag_test_and_set_explicit;            // see below
 using std::atomic_flag_clear;                            // see below
 using std::atomic_flag_clear_explicit;                   // see below
-#define \libmacro{ATOMIC_FLAG_INIT} see below
+#define ATOMIC_FLAG_INIT see below
 
 using std::atomic_thread_fence;                          // see below
 using std::atomic_signal_fence;                          // see below
@@ -5287,9 +5287,9 @@ using std::atomic_signal_fence;                          // see below
 
 Each *using-declaration* for some name A in the synopsis above makes
 available the same entity as `std::A` declared in `<atomic>`. Each macro
-listed above other than `\libmacro{_Atomic}(T)` is defined as in
-`<atomic>`. It is unspecified whether `<stdatomic.h>` makes available
-any declarations in namespace `std`.
+listed above other than `_Atomic(T)` is defined as in `<atomic>`. It is
+unspecified whether `<stdatomic.h>` makes available any declarations in
+namespace `std`.
 
 Each of the *using-declaration*s for `intN_t`, `uintN_t`, `intptr_t`,
 and `uintptr_t` listed above is defined if and only if the

@@ -314,7 +314,7 @@ defining the macro `NDEBUG`.
 ### Header `<cassert>` synopsis <a id="cassert.syn">[[cassert.syn]]</a>
 
 ``` cpp
-#define \libmacro{assert}(...) see below
+#define assert(...) see below
 ```
 
 ### The `assert` macro <a id="assertions.assert">[[assertions.assert]]</a>
@@ -323,11 +323,11 @@ If `NDEBUG` is defined as a macro name at the point in the source file
 where `<cassert>` is included, the `assert` macro is defined as
 
 ``` cpp
-#define \libmacro{assert}(...) ((void)0)
+#define assert(...) ((void)0)
 ```
 
-Otherwise, the macro puts a diagnostic test into programs; it expands to
-an expression of type `void` which has the following effects:
+Otherwise, the `assert` macro puts a diagnostic test into programs; it
+expands to an expression of type `void` which has the following effects:
 
 - `__VA_ARGS__` is evaluated and contextually converted to `bool`.
 - If the evaluation yields `true` there are no further effects.
@@ -357,7 +357,7 @@ An expression `assert(E)` is a constant subexpression
 ### General <a id="errno.general">[[errno.general]]</a>
 
 The contents of the header `<cerrno>` are the same as the POSIX header
-`<errno.h>`, except that shall be defined as a macro.
+`<errno.h>`, except that `errno` shall be defined as a macro.
 
 [*Note 1*: The intent is to remain in close alignment with the POSIX
 standard. — *end note*]
@@ -367,82 +367,82 @@ A separate `errno` value is provided for each thread.
 ### Header `<cerrno>` synopsis <a id="cerrno.syn">[[cerrno.syn]]</a>
 
 ``` cpp
-#define \libmacro{errno} see below
+#define errno see below
 
-#define \libmacro{E2BIG} see below                                                // freestanding
-#define \libmacro{EACCES} see below                                               // freestanding
-#define \libmacro{EADDRINUSE} see below                                           // freestanding
-#define \libmacro{EADDRNOTAVAIL} see below                                        // freestanding
-#define \libmacro{EAFNOSUPPORT} see below                                         // freestanding
-#define \libmacro{EAGAIN} see below                                               // freestanding
-#define \libmacro{EALREADY} see below                                             // freestanding
-#define \libmacro{EBADF} see below                                                // freestanding
-#define \libmacro{EBADMSG} see below                                              // freestanding
-#define \libmacro{EBUSY} see below                                                // freestanding
-#define \libmacro{ECANCELED} see below                                            // freestanding
-#define \libmacro{ECHILD} see below                                               // freestanding
-#define \libmacro{ECONNABORTED} see below                                         // freestanding
-#define \libmacro{ECONNREFUSED} see below                                         // freestanding
-#define \libmacro{ECONNRESET} see below                                           // freestanding
-#define \libmacro{EDEADLK} see below                                              // freestanding
-#define \libmacro{EDESTADDRREQ} see below                                         // freestanding
-#define \libmacro{EDOM} see below                                                 // freestanding
-#define \libmacro{EEXIST} see below                                               // freestanding
-#define \libmacro{EFAULT} see below                                               // freestanding
-#define \libmacro{EFBIG} see below                                                // freestanding
-#define \libmacro{EHOSTUNREACH} see below                                         // freestanding
-#define \libmacro{EIDRM} see below                                                // freestanding
-#define \libmacro{EILSEQ} see below                                               // freestanding
-#define \libmacro{EINPROGRESS} see below                                          // freestanding
-#define \libmacro{EINTR} see below                                                // freestanding
-#define \libmacro{EINVAL} see below                                               // freestanding
-#define \libmacro{EIO} see below                                                  // freestanding
-#define \libmacro{EISCONN} see below                                              // freestanding
-#define \libmacro{EISDIR} see below                                               // freestanding
-#define \libmacro{ELOOP} see below                                                // freestanding
-#define \libmacro{EMFILE} see below                                               // freestanding
-#define \libmacro{EMLINK} see below                                               // freestanding
-#define \libmacro{EMSGSIZE} see below                                             // freestanding
-#define \libmacro{ENAMETOOLONG} see below                                         // freestanding
-#define \libmacro{ENETDOWN} see below                                             // freestanding
-#define \libmacro{ENETRESET} see below                                            // freestanding
-#define \libmacro{ENETUNREACH} see below                                          // freestanding
-#define \libmacro{ENFILE} see below                                               // freestanding
-#define \libmacro{ENOBUFS} see below                                              // freestanding
-#define \libmacro{ENODEV} see below                                               // freestanding
-#define \libmacro{ENOENT} see below                                               // freestanding
-#define \libmacro{ENOEXEC} see below                                              // freestanding
-#define \libmacro{ENOLCK} see below                                               // freestanding
-#define \libmacro{ENOLINK} see below                                              // freestanding
-#define \libmacro{ENOMEM} see below                                               // freestanding
-#define \libmacro{ENOMSG} see below                                               // freestanding
-#define \libmacro{ENOPROTOOPT} see below                                          // freestanding
-#define \libmacro{ENOSPC} see below                                               // freestanding
-#define \libmacro{ENOSYS} see below                                               // freestanding
-#define \libmacro{ENOTCONN} see below                                             // freestanding
-#define \libmacro{ENOTDIR} see below                                              // freestanding
-#define \libmacro{ENOTEMPTY} see below                                            // freestanding
-#define \libmacro{ENOTRECOVERABLE} see below                                      // freestanding
-#define \libmacro{ENOTSOCK} see below                                             // freestanding
-#define \libmacro{ENOTSUP} see below                                              // freestanding
-#define \libmacro{ENOTTY} see below                                               // freestanding
-#define \libmacro{ENXIO} see below                                                // freestanding
-#define \libmacro{EOPNOTSUPP} see below                                           // freestanding
-#define \libmacro{EOVERFLOW} see below                                            // freestanding
-#define \libmacro{EOWNERDEAD} see below                                           // freestanding
-#define \libmacro{EPERM} see below                                                // freestanding
-#define \libmacro{EPIPE} see below                                                // freestanding
-#define \libmacro{EPROTO} see below                                               // freestanding
-#define \libmacro{EPROTONOSUPPORT} see below                                      // freestanding
-#define \libmacro{EPROTOTYPE} see below                                           // freestanding
-#define \libmacro{ERANGE} see below                                               // freestanding
-#define \libmacro{EROFS} see below                                                // freestanding
-#define \libmacro{ESPIPE} see below                                               // freestanding
-#define \libmacro{ESRCH} see below                                                // freestanding
-#define \libmacro{ETIMEDOUT} see below                                            // freestanding
-#define \libmacro{ETXTBSY} see below                                              // freestanding
-#define \libmacro{EWOULDBLOCK} see below                                          // freestanding
-#define \libmacro{EXDEV} see below                                                // freestanding
+#define E2BIG see below                                                // freestanding
+#define EACCES see below                                               // freestanding
+#define EADDRINUSE see below                                           // freestanding
+#define EADDRNOTAVAIL see below                                        // freestanding
+#define EAFNOSUPPORT see below                                         // freestanding
+#define EAGAIN see below                                               // freestanding
+#define EALREADY see below                                             // freestanding
+#define EBADF see below                                                // freestanding
+#define EBADMSG see below                                              // freestanding
+#define EBUSY see below                                                // freestanding
+#define ECANCELED see below                                            // freestanding
+#define ECHILD see below                                               // freestanding
+#define ECONNABORTED see below                                         // freestanding
+#define ECONNREFUSED see below                                         // freestanding
+#define ECONNRESET see below                                           // freestanding
+#define EDEADLK see below                                              // freestanding
+#define EDESTADDRREQ see below                                         // freestanding
+#define EDOM see below                                                 // freestanding
+#define EEXIST see below                                               // freestanding
+#define EFAULT see below                                               // freestanding
+#define EFBIG see below                                                // freestanding
+#define EHOSTUNREACH see below                                         // freestanding
+#define EIDRM see below                                                // freestanding
+#define EILSEQ see below                                               // freestanding
+#define EINPROGRESS see below                                          // freestanding
+#define EINTR see below                                                // freestanding
+#define EINVAL see below                                               // freestanding
+#define EIO see below                                                  // freestanding
+#define EISCONN see below                                              // freestanding
+#define EISDIR see below                                               // freestanding
+#define ELOOP see below                                                // freestanding
+#define EMFILE see below                                               // freestanding
+#define EMLINK see below                                               // freestanding
+#define EMSGSIZE see below                                             // freestanding
+#define ENAMETOOLONG see below                                         // freestanding
+#define ENETDOWN see below                                             // freestanding
+#define ENETRESET see below                                            // freestanding
+#define ENETUNREACH see below                                          // freestanding
+#define ENFILE see below                                               // freestanding
+#define ENOBUFS see below                                              // freestanding
+#define ENODEV see below                                               // freestanding
+#define ENOENT see below                                               // freestanding
+#define ENOEXEC see below                                              // freestanding
+#define ENOLCK see below                                               // freestanding
+#define ENOLINK see below                                              // freestanding
+#define ENOMEM see below                                               // freestanding
+#define ENOMSG see below                                               // freestanding
+#define ENOPROTOOPT see below                                          // freestanding
+#define ENOSPC see below                                               // freestanding
+#define ENOSYS see below                                               // freestanding
+#define ENOTCONN see below                                             // freestanding
+#define ENOTDIR see below                                              // freestanding
+#define ENOTEMPTY see below                                            // freestanding
+#define ENOTRECOVERABLE see below                                      // freestanding
+#define ENOTSOCK see below                                             // freestanding
+#define ENOTSUP see below                                              // freestanding
+#define ENOTTY see below                                               // freestanding
+#define ENXIO see below                                                // freestanding
+#define EOPNOTSUPP see below                                           // freestanding
+#define EOVERFLOW see below                                            // freestanding
+#define EOWNERDEAD see below                                           // freestanding
+#define EPERM see below                                                // freestanding
+#define EPIPE see below                                                // freestanding
+#define EPROTO see below                                               // freestanding
+#define EPROTONOSUPPORT see below                                      // freestanding
+#define EPROTOTYPE see below                                           // freestanding
+#define ERANGE see below                                               // freestanding
+#define EROFS see below                                                // freestanding
+#define ESPIPE see below                                               // freestanding
+#define ESRCH see below                                                // freestanding
+#define ETIMEDOUT see below                                            // freestanding
+#define ETXTBSY see below                                              // freestanding
+#define EWOULDBLOCK see below                                          // freestanding
+#define EXDEV see below                                                // freestanding
 ```
 
 The meaning of the macros in this header is defined by the POSIX
@@ -1707,7 +1707,7 @@ template<> struct formatter<stacktrace_entry>;
 as follows:
 
 ``` bnf
-\fmtnontermdef{stacktrace-entry-format-spec}
+\textit{stacktrace-entry-format-spec}
     fill-and-alignₒₚₜ widthₒₚₜ
 ```
 

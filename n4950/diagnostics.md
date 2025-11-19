@@ -1682,7 +1682,7 @@ template<> struct formatter<stacktrace_entry>;
 as follows:
 
 ``` bnf
-\fmtnontermdef{stacktrace-entry-format-spec}
+\textit{stacktrace-entry-format-spec}
     fill-and-alignₒₚₜ widthₒₚₜ
 ```
 

@@ -12434,23 +12434,23 @@ namespace std {
   using fpos_t = see below;
 }
 
-#define \libmacro{NULL} see [support.types.nullptr]
-#define \libmacro{_IOFBF} see below
-#define \libmacro{_IOLBF} see below
-#define \libmacro{_IONBF} see below
-#define \libmacro{BUFSIZ} see below
-#define \libmacro{EOF} see below
-#define \libmacro{FOPEN_MAX} see below
-#define \libmacro{FILENAME_MAX} see below
-#define \libmacro{_PRINTF_NAN_LEN_MAX} see below
-#define \libmacro{L_tmpnam} see below
-#define \libmacro{SEEK_CUR} see below
-#define \libmacro{SEEK_END} see below
-#define \libmacro{SEEK_SET} see below
-#define \libmacro{TMP_MAX} see below
-#define \libmacro{stderr} see below
-#define \libmacro{stdin} see below
-#define \libmacro{stdout} see below
+#define NULL see [support.types.nullptr]
+#define _IOFBF see below
+#define _IOLBF see below
+#define _IONBF see below
+#define BUFSIZ see below
+#define EOF see below
+#define FOPEN_MAX see below
+#define FILENAME_MAX see below
+#define _PRINTF_NAN_LEN_MAX see below
+#define L_tmpnam see below
+#define SEEK_CUR see below
+#define SEEK_END see below
+#define SEEK_SET see below
+#define TMP_MAX see below
+#define stderr see below
+#define stdin see below
+#define stdout see below
 
 namespace std {
   int remove(const char* filename);
@@ -12575,34 +12575,34 @@ namespace std {
 #define SCNuFASTN see below
 #define SCNxFASTN see below
 #define SCNbFASTN see below
-#define \libmacro{PRIdMAX} see below
-#define \libmacro{PRIiMAX} see below
-#define \libmacro{PRIoMAX} see below
-#define \libmacro{PRIuMAX} see below
-#define \libmacro{PRIxMAX} see below
-#define \libmacro{PRIXMAX} see below
-#define \libmacro{PRIbMAX} see below
-#define \libmacro{PRIBMAX} see below
-#define \libmacro{SCNdMAX} see below
-#define \libmacro{SCNiMAX} see below
-#define \libmacro{SCNoMAX} see below
-#define \libmacro{SCNuMAX} see below
-#define \libmacro{SCNxMAX} see below
-#define \libmacro{SCNbMAX} see below
-#define \libmacro{PRIdPTR} see below
-#define \libmacro{PRIiPTR} see below
-#define \libmacro{PRIoPTR} see below
-#define \libmacro{PRIuPTR} see below
-#define \libmacro{PRIxPTR} see below
-#define \libmacro{PRIXPTR} see below
-#define \libmacro{PRIbPTR} see below
-#define \libmacro{PRIBPTR} see below
-#define \libmacro{SCNdPTR} see below
-#define \libmacro{SCNiPTR} see below
-#define \libmacro{SCNoPTR} see below
-#define \libmacro{SCNuPTR} see below
-#define \libmacro{SCNxPTR} see below
-#define \libmacro{SCNbPTR} see below
+#define PRIdMAX see below
+#define PRIiMAX see below
+#define PRIoMAX see below
+#define PRIuMAX see below
+#define PRIxMAX see below
+#define PRIXMAX see below
+#define PRIbMAX see below
+#define PRIBMAX see below
+#define SCNdMAX see below
+#define SCNiMAX see below
+#define SCNoMAX see below
+#define SCNuMAX see below
+#define SCNxMAX see below
+#define SCNbMAX see below
+#define PRIdPTR see below
+#define PRIiPTR see below
+#define PRIoPTR see below
+#define PRIuPTR see below
+#define PRIxPTR see below
+#define PRIXPTR see below
+#define PRIbPTR see below
+#define PRIBPTR see below
+#define SCNdPTR see below
+#define SCNiPTR see below
+#define SCNoPTR see below
+#define SCNuPTR see below
+#define SCNxPTR see below
+#define SCNbPTR see below
 ```
 
 The contents and meaning of the header `<cinttypes>` are the same as the
