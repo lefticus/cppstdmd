@@ -1894,6 +1894,13 @@ local function clean_code_common(code, handle_textbackslash)
   code = code:gsub("@\\defexposconcept{([^}]*)}@", "%1")
   code = code:gsub("\\defexposconcept{([^}]*)}", "%1")
 
+  -- \grammartermnc{x} grammar terminal without code formatting (Issue #50)
+  -- Renders as italic text (gray sans-serif italic in LaTeX), but in markdown code blocks
+  -- we just unwrap (can't use italic formatting in code blocks)
+  -- NOTE: Same reasoning as \defn - grammar terms are simple text without nested braces
+  code = code:gsub("@\\grammartermnc{([^}]*)}@", "%1")
+  code = code:gsub("\\grammartermnc{([^}]*)}", "%1")
+
   -- \cv represents "cv"
   code = code:gsub("@\\cv{}@", "cv")
   code = code:gsub("\\cv{}", "cv")

@@ -599,3 +599,33 @@ Each of these functions is\textbf{F} returns the result...
     assert "isF returns" in output
     # Should NOT have raw LaTeX \textbf
     assert "\\textbf" not in output
+
+
+def test_grammartermnc_in_code_block():
+    r"""Test \grammartermnc{} grammar terminal macro conversion (Issue #50)
+
+    From n4950/temp.md line 960:
+        T x = \grammartermnc{template-argument} ;
+
+    \grammartermnc{x} renders as gray sans-serif italic in LaTeX, but since we're in
+    a code block we can't use markdown italic. Just unwrap (keep content, remove wrapper).
+
+    This is different from \grammarterm{} which renders in code font.
+    The "nc" suffix means "no code formatting".
+    """
+    latex = r"""
+\begin{codeblock}
+T x = \grammartermnc{template-argument} ;
+auto y = \grammartermnc{initializer} ;
+\end{codeblock}
+"""
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    # Should unwrap to plain text (no markdown formatting in code blocks)
+    assert "template-argument" in output
+    assert "initializer" in output
+    # Should NOT have raw LaTeX \grammartermnc
+    assert "\\grammartermnc" not in output
+    # Should NOT have markdown asterisks (they don't work in code blocks)
+    assert "*template-argument*" not in output
+    assert "*initializer*" not in output

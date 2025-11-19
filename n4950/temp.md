@@ -957,7 +957,7 @@ type [[dcl.type.class.deduct]], the type of the parameter is the type
 deduced for the variable `x` in the invented declaration
 
 ``` cpp
-T x = \grammartermnc{template-argument} ;
+T x = template-argument ;
 ```
 
 If a deduced parameter type is not permitted for a *template-parameter*
