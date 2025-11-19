@@ -565,3 +565,37 @@ def test_cvqual_in_code_block():
     assert "\\cvqual" not in output
     # Should NOT have @ delimiters
     assert "@" not in output
+
+
+def test_textbf_in_code_block():
+    r"""Test \textbf{} bold text macro unwrapping in code blocks
+
+    From n3337/localization.md, \textbf{} appears in code blocks (e.g., line 970):
+        typedef \textbf{T} mask;
+
+    Also appears in inline code and nested contexts (e.g., lines 634, 638):
+        `is\textbf{F}` and use_facet< ctype<charT> >(loc).is(ctype_base::\textbf{F}, c)
+
+    Since markdown code blocks don't support bold, we unwrap it (keep content, remove wrapper).
+    This is different from Issue #69 which fixed \textbf in BNF grammar blocks.
+    """
+    latex = r"""
+\begin{codeblock}
+// Example 1: Simple unwrapping
+typedef \textbf{T} mask;
+
+// Example 2: Nested in function call
+use_facet< ctype<charT> >(loc).is(ctype_base::\textbf{F}, c);
+
+// Example 3: In template declaration
+Each of these functions is\textbf{F} returns the result...
+\end{codeblock}
+"""
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    # Should have extracted content without \textbf wrapper
+    assert "typedef T mask" in output
+    assert "ctype_base::F" in output
+    assert "isF returns" in output
+    # Should NOT have raw LaTeX \textbf
+    assert "\\textbf" not in output

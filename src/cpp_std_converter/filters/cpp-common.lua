@@ -1978,6 +1978,12 @@ local function clean_code_common(code, handle_textbackslash)
     new_code = code:gsub("\\texttt{([^{}]*)}", "%1")
     if new_code ~= code then changed = true end
     code = new_code
+    new_code = code:gsub("@\\textbf{([^{}@]*)}@", "%1")
+    if new_code ~= code then changed = true end
+    code = new_code
+    new_code = code:gsub("\\textbf{([^{}]*)}", "%1")
+    if new_code ~= code then changed = true end
+    code = new_code
     if not changed then break end
   end
 

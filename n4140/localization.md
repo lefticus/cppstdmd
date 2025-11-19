@@ -636,7 +636,7 @@ Each of these functions `is\textbf{F}` returns the result of the
 expression:
 
 ``` cpp
-use_facet< ctype<charT> >(loc).is(ctype_base::\textbf{F}, c)
+use_facet< ctype<charT> >(loc).is(ctype_base::F, c)
 ```
 
 where ***F*** is the `ctype_base::mask` value corresponding to that
@@ -979,7 +979,7 @@ another virtual function.
 namespace std {
   class ctype_base {
   public:
-    typedef \textbf{T} mask;
+    typedef T mask;
 
     // numeric values are for exposition only.
     static const mask space = 1 << 0;
