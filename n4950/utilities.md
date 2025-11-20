@@ -2493,8 +2493,8 @@ meets the *Cpp17Destructible* requirements ([[cpp17.destructible]]).
 
 #### Constructors <a id="optional.ctor">[[optional.ctor]]</a>
 
-The exposition-only variable template *converts-from-any-cvref* is used
-by some constructors for `optional`.
+The exposition-only variable template *`converts-from-any-cvref`* is
+used by some constructors for `optional`.
 
 ``` cpp
 template<class T, class W>
@@ -5296,7 +5296,7 @@ namespace std {
 Any object of type `expected<T, E>` either contains a value of type `T`
 or a value of type `E` within its own storage. Implementations are not
 permitted to use additional storage, such as dynamic memory, to allocate
-the object of type `T` or the object of type `E`. Member *has_val*
+the object of type `T` or the object of type `E`. Member *`has_val`*
 indicates whether the `expected<T, E>` object contains an object of type
 `T`.
 
@@ -5315,8 +5315,9 @@ requirements ([[cpp17.destructible]]). `E` shall meet the
 
 #### Constructors <a id="expected.object.cons">[[expected.object.cons]]</a>
 
-The exposition-only variable template *converts-from-any-cvref* defined
-in [[optional.ctor]] is used by some constructors for `expected`.
+The exposition-only variable template *`converts-from-any-cvref`*
+defined in [[optional.ctor]] is used by some constructors for
+`expected`.
 
 ``` cpp
 constexpr expected();
@@ -6239,7 +6240,7 @@ private:
 Any object of type `expected<T, E>` either represents a value of type
 `T`, or contains a value of type `E` within its own storage.
 Implementations are not permitted to use additional storage, such as
-dynamic memory, to allocate the object of type `E`. Member *has_val*
+dynamic memory, to allocate the object of type `E`. Member *`has_val`*
 indicates whether the `expected<T, E>` object represents a value of type
 `T`.
 
@@ -6996,8 +6997,6 @@ constexpr bitset& operator|=(const bitset& rhs) noexcept;
 
 *Returns:* `*this`.
 
-\indexlibrarymember{operator^=}{bitset}
-
 ``` cpp
 constexpr bitset& operator^=(const bitset& rhs) noexcept;
 ```
@@ -7083,8 +7082,6 @@ constexpr bitset& reset(size_t pos);
 
 *Throws:* `out_of_range` if `pos` does not correspond to a valid bit
 position.
-
-\indexlibrarymember{operator~}{bitset}
 
 ``` cpp
 constexpr bitset operator~() const noexcept;
@@ -7248,8 +7245,6 @@ template<size_t N>
 ```
 
 *Returns:* `bitset<N>(lhs) |= rhs`.
-
-\indexlibrarymember{operator^}{bitset}
 
 ``` cpp
 template<size_t N>
@@ -11788,7 +11783,7 @@ the *range-format-spec*:
 
 *Returns:* An iterator past the end of the output range.
 
-#### Class template *range-default-formatter* <a id="format.range.fmtdef">[[format.range.fmtdef]]</a>
+#### Class template *`range-default-formatter`* <a id="format.range.fmtdef">[[format.range.fmtdef]]</a>
 
 ``` cpp
 namespace std {
@@ -11845,7 +11840,7 @@ template<class FormatContext>
 
 *Effects:* Equivalent to: `return `*`underlying_`*`.format(elems, ctx);`
 
-#### Specialization of *range-default-formatter* for maps <a id="format.range.fmtmap">[[format.range.fmtmap]]</a>
+#### Specialization of *`range-default-formatter`* for maps <a id="format.range.fmtmap">[[format.range.fmtmap]]</a>
 
 ``` cpp
 namespace std {
@@ -11905,7 +11900,7 @@ template<class FormatContext>
 
 *Effects:* Equivalent to: `return `*`underlying_`*`.format(r, ctx);`
 
-#### Specialization of *range-default-formatter* for sets <a id="format.range.fmtset">[[format.range.fmtset]]</a>
+#### Specialization of *`range-default-formatter`* for sets <a id="format.range.fmtset">[[format.range.fmtset]]</a>
 
 ``` cpp
 namespace std {
@@ -11956,7 +11951,7 @@ template<class FormatContext>
 
 *Effects:* Equivalent to: `return `*`underlying_`*`.format(r, ctx);`
 
-#### Specialization of *range-default-formatter* for strings <a id="format.range.fmtstr">[[format.range.fmtstr]]</a>
+#### Specialization of *`range-default-formatter`* for strings <a id="format.range.fmtstr">[[format.range.fmtstr]]</a>
 
 ``` cpp
 namespace std {
@@ -12158,7 +12153,7 @@ template<class Visitor, class Context>
 *Effects:* Equivalent to:
 `return visit(std::forward<Visitor>(vis), arg.value);`
 
-#### Class template *format-arg-store* <a id="format.arg.store">[[format.arg.store]]</a>
+#### Class template *`format-arg-store`* <a id="format.arg.store">[[format.arg.store]]</a>
 
 ``` cpp
 namespace std {
@@ -12169,7 +12164,7 @@ namespace std {
 }
 ```
 
-An instance of *format-arg-store* stores formatting arguments.
+An instance of *`format-arg-store`* stores formatting arguments.
 
 ``` cpp
 template<class Context = format_context, class... Args>

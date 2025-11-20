@@ -1056,8 +1056,8 @@ with a base characteristic of `true_type` if the corresponding condition
 is true, otherwise `false_type`.
 
 Let `ELEMS-OF(T)` be the parameter pack `get<N>(declval<T>())`, where
-*N* is the pack of `size_t` template arguments of the specialization of
-`index_sequence` denoted by
+*`N`* is the pack of `size_t` template arguments of the specialization
+of `index_sequence` denoted by
 `make_index_sequence<tuple_size_v<remove_reference_t<T>>>`.
 
 [*Note 1*: Virtual base classes that are private, protected, or
@@ -1987,8 +1987,8 @@ static_assert(size_of(^^X<int>) == sizeof(int));    // instantiates X<int>
 — *end note*]
 
 Any function in namespace `std::meta` whose return type is `string_view`
-or `u8string_view` returns an object *V* such that `V.data()[V.size()]`
-equals `'\0'`.
+or `u8string_view` returns an object *`V`* such that
+`V.data()[V.size()]` equals `'\0'`.
 
 [*Example 2*:
 

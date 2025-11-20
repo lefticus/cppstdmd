@@ -543,12 +543,77 @@ def test_libglobal_macro():
 
 
 def test_exposidnc_macro():
-    r"""Test \exposidnc{} expansion (exposition-only identifier without correction)"""
+    r"""Test \exposidnc{} expansion (exposition-only identifier without correction)
+
+    Should render as italic code: *`hidden-member`* (not just italic *hidden-member*)
+    This ensures the identifier is both emphasized and formatted as code.
+    """
     latex = r"The \exposidnc{hidden-member} is not part of the interface."
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
-    assert "*hidden-member*" in output
+    # Should produce italic code: *`hidden-member`*
+    assert "*`hidden-member`*" in output
     assert "\\exposidnc" not in output
+
+
+def test_exposconceptnc_macro():
+    r"""Test \exposconceptnc{} expansion (exposition-only concept without correction) - Issue #49
+
+    Should render as italic code: *`tuple-like`* (not just italic *tuple-like*)
+    This ensures the concept name is both emphasized and formatted as code.
+    """
+    latex = r"template<\exposconceptnc{tuple-like} TTuple, \exposconceptnc{tuple-like} UTuple>"
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    # Should produce italic code: *`tuple-like`*
+    assert "*`tuple-like`*" in output
+    assert "\\exposconceptnc" not in output
+    # Should not have the malformed "exposition onlyconceptnc" pattern
+    assert "exposition onlyconceptnc" not in output
+
+
+def test_seebelownc_macro():
+    r"""Test \seebelownc expansion (see below without correction) - Issue #49"""
+    latex = r"concept tuple-like = \seebelownc;"
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "*see below*" in output
+    assert "\\seebelownc" not in output
+    # Should not have the malformed "see belownc" pattern
+    assert "see belownc" not in output
+
+
+def test_seebelownc_with_empty_braces():
+    r"""Test \seebelownc{} with empty braces - must consume the {} - Issue #49
+
+    In containers.tex, \seebelownc{} is used with empty braces which must be consumed.
+    """
+    latex = r"using value_type = \seebelownc{};"
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "*see below*" in output
+    # Must NOT have extra {} in output
+    assert "*see below*{}" not in output
+    assert "see below{}" not in output
+    assert "\\seebelownc" not in output
+
+
+def test_indexlibraryctor_strips_exposid():
+    r"""Test \indexlibraryctor{} with \exposid{} inside - must strip entire macro - Issue #49
+
+    The \indexlibraryctor{} macro is an indexing macro that should be completely stripped.
+    Even if it contains \exposid{} inside its argument, the entire macro should disappear.
+    This was causing *`iterator`* to appear in ranges.md when it shouldn't.
+    """
+    latex = r"\indexlibraryctor{repeat_view::\exposid{iterator}}%"
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    # Entire index macro should be stripped - NO output at all
+    assert output.strip() == ""
+    # Must not have any trace of iterator or the index macro
+    assert "iterator" not in output
+    assert "\\indexlibraryctor" not in output
+    assert "\\exposid" not in output
 
 
 def test_defnxname_macro():

@@ -224,7 +224,8 @@ function RawInline(elem)
   local text = elem.text
 
   -- Strip index generation commands - these are PDF-only and should never appear in output
-  if text:match("^\\indextext{") or text:match("^\\index{") or text:match("^\\indexlibrary{") then
+  -- Covers all 22 index macro variants: \indexlibraryctor{}, \indexlibrarymember{}, etc. (Issue #49)
+  if text:match("^\\index") then
     return {}  -- Return empty list to remove element
   end
 
@@ -433,7 +434,10 @@ function RawInline(elem)
     -- Library indexing macros (issue #46)
     code = code:gsub("\\libmember{([^}]*)}{([^}]*)}", "%1")  -- Extract member name, discard class
     code = code:gsub("\\libglobal{([^}]*)}", "%1")  -- Extract global name (issue #24)
+    -- Exposition-only identifiers and concepts (Issue #49) - strip in code contexts
     code = code:gsub("\\exposid{([^}]*)}", "%1")
+    code = code:gsub("\\exposidnc{([^}]*)}", "%1")
+    code = code:gsub("\\exposconceptnc{([^}]*)}", "%1")
     code = code:gsub("\\mathit{([^}]*)}", "%1")
     -- Different meaning in math mode
     code = code:gsub("\\mathrm{([^}]*)}", "%1")
@@ -569,11 +573,17 @@ function RawInline(elem)
     end
   end
 
+  -- Exposition-only identifiers and concepts - render as italic code (*`text`*)
+  -- These need code formatting (not just italic) because they represent identifiers
   emph = text:match("\\exposid{([^}]*)}")
-  if emph then return pandoc.Emph({pandoc.Str(emph)}) end
+  if emph then return pandoc.Emph({pandoc.Code(emph)}) end
 
   emph = text:match("\\exposidnc{([^}]*)}")
-  if emph then return pandoc.Emph({pandoc.Str(emph)}) end
+  if emph then return pandoc.Emph({pandoc.Code(emph)}) end
+
+  -- Issue #49: exposition-only concept names (like tuple-like, decrementable)
+  emph = text:match("\\exposconceptnc{([^}]*)}")
+  if emph then return pandoc.Emph({pandoc.Code(emph)}) end
 
   emph = text:match("\\placeholder{([^}]*)}")
   if emph then return pandoc.Emph({pandoc.Str(emph)}) end

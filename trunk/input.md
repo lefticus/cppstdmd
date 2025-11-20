@@ -4986,7 +4986,7 @@ initialization is presented here as:
   character sequence.
 - `init-buf-ptrs()` sets the base class’ get area [[streambuf.get.area]]
   and put area [[streambuf.put.area]] pointers after initializing,
-  moving from, or assigning to *buf* accordingly.
+  moving from, or assigning to *`buf`* accordingly.
 
 #### Constructors <a id="stringbuf.cons">[[stringbuf.cons]]</a>
 
@@ -5504,7 +5504,7 @@ uses a `basic_stringbuf<charT, traits, Allocator>` object to control the
 associated storage. For the sake of exposition, the maintained data is
 presented here as:
 
-- *sb*, the `stringbuf` object.
+- *`sb`*, the `stringbuf` object.
 
 #### Constructors <a id="istringstream.cons">[[istringstream.cons]]</a>
 
@@ -5769,7 +5769,7 @@ writing objects of class `basic_string<{}charT, traits, Allocator>`. It
 uses a `basic_stringbuf` object to control the associated storage. For
 the sake of exposition, the maintained data is presented here as:
 
-- *sb*, the `stringbuf` object.
+- *`sb`*, the `stringbuf` object.
 
 #### Constructors <a id="ostringstream.cons">[[ostringstream.cons]]</a>
 
@@ -6037,7 +6037,7 @@ and writing from objects of class
 associated sequence. For the sake of exposition, the maintained data is
 presented here as
 
-- *sb*, the `stringbuf` object.
+- *`sb`*, the `stringbuf` object.
 
 #### Constructors <a id="stringstream.cons">[[stringstream.cons]]</a>
 
@@ -7475,7 +7475,7 @@ files. It uses a `basic_filebuf<{}charT, traits>` object to control the
 associated sequence. For the sake of exposition, the maintained data is
 presented here as:
 
-- *sb*, the `filebuf` object.
+- *`sb`*, the `filebuf` object.
 
 #### Constructors <a id="ifstream.cons">[[ifstream.cons]]</a>
 
@@ -7647,7 +7647,7 @@ files. It uses a `basic_filebuf<{}charT, traits>` object to control the
 associated sequence. For the sake of exposition, the maintained data is
 presented here as:
 
-- *sb*, the `filebuf` object.
+- *`sb`*, the `filebuf` object.
 
 #### Constructors <a id="ofstream.cons">[[ofstream.cons]]</a>
 
@@ -7829,7 +7829,7 @@ writing from named files. It uses a `basic_filebuf<charT, traits>`
 object to control the associated sequences. For the sake of exposition,
 the maintained data is presented here as:
 
-- *sb*, the `basic_filebuf` object.
+- *`sb`*, the `basic_filebuf` object.
 
 #### Constructors <a id="fstream.cons">[[fstream.cons]]</a>
 

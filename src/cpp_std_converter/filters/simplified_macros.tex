@@ -68,12 +68,14 @@
 \renewcommand{\deflibconcept}[1]{\texttt{#1}}
 
 %%--------------------------------------------------
-%% Category C: Emphasis Formatting (7 macros)
+%% Category C: Emphasis Formatting (4 macros)
 %% Convert to \textit (italic) - Pandoc renders as emphasis
 %%--------------------------------------------------
 %% \grammarterm{} - REMOVED: context-dependent (BNF vs text), nested in \opt{}
-\renewcommand{\exposid}[1]{\textit{#1}}
-\renewcommand{\exposidnc}[1]{\textit{#1}}
+%% \exposid{} - REMOVED: context-dependent (needs code+italic), moved to cpp-macros.lua
+%% \exposidnc{} - REMOVED: context-dependent (needs code+italic), moved to cpp-macros.lua
+%% \exposconceptnc{} - REMOVED: context-dependent (needs code+italic), moved to cpp-macros.lua - Issue #49
+\renewcommand{\seebelownc}[1]{\textit{see below}}  % See below (no correction) - Issue #49 - required arg consumes {}
 %% \placeholder{} - REMOVED: context-dependent (code blocks vs text)
 %% \placeholdernc{} - REMOVED: context-dependent (code blocks vs text)
 \renewcommand{\defn}[1]{\textit{#1}}
@@ -207,7 +209,7 @@
 \renewcommand{\locnontermdef}[1]{#1:}  % Locale BNF nonterminal (13× in localization.md) - just term+colon
 
 %%--------------------------------------------------
-%% TOTAL: 96 simplified macros (was 95, added 1 for Issue #68)
+%% TOTAL: 93 simplified macros (was 96, removed 3 for Issue #49)
 %% Macros cover ~75% of macro usage in the C++ standard source
 %%
 %% Macros removed after investigation (moved back to Lua filters):
@@ -215,6 +217,7 @@
 %%  - \ctype{} - nested in \tcode{}
 %%  - \grammarterm{} - context-dependent (BNF vs text)
 %%  - \placeholder{}, \placeholdernc{} - context-dependent (code blocks vs text)
+%%  - \exposid{}, \exposidnc{}, \exposconceptnc{} - context-dependent (need code+italic) - Issue #49
 %%  - \stage{} - requires special handling in cpp-macros.lua for description lists
 %%  - \textbackslash - already a standard LaTeX command
 %%  - \colcol{}, \mathrm{}, \bigoh{} - context-dependent, keep in Lua filters

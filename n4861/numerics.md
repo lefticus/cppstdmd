@@ -4490,8 +4490,6 @@ v0[valarray<size_t>(vi, 5)] = v1;
 
 #### Unary operators <a id="valarray.unary">[[valarray.unary]]</a>
 
-\indexlibrarymember{operator~}{valarray}
-
 ``` cpp
 valarray operator+() const;
 valarray operator-() const;
@@ -4509,8 +4507,6 @@ returned array is initialized with the result of applying the indicated
 operator to the corresponding element of the array.
 
 #### Compound assignment <a id="valarray.cassign">[[valarray.cassign]]</a>
-
-\indexlibrarymember{operator^=}{valarray}
 
 ``` cpp
 valarray& operator*= (const valarray& v);
@@ -4541,8 +4537,6 @@ each of the elements of `*this` and the corresponding element of `v`.
 
 *Remarks:* The appearance of an array on the left-hand side of a
 compound assignment does not invalidate references or pointers.
-
-\indexlibrarymember{operator^=}{valarray}
 
 ``` cpp
 valarray& operator*= (const T& v);
@@ -4668,8 +4662,6 @@ invalidates all pointers and references to elements in the array.
 
 #### Binary operators <a id="valarray.binary">[[valarray.binary]]</a>
 
-\indexlibrarymember{operator^}{valarray}
-
 ``` cpp
 template<class T> valarray<T> operator* (const valarray<T>&, const valarray<T>&);
 template<class T> valarray<T> operator/ (const valarray<T>&, const valarray<T>&);
@@ -4693,8 +4685,6 @@ implicitly converted to `T`.
 argument arrays. Each element of the returned array is initialized with
 the result of applying the indicated operator to the corresponding
 elements of the argument arrays.
-
-\indexlibrarymember{operator^}{valarray}
 
 ``` cpp
 template<class T> valarray<T> operator* (const valarray<T>&,
@@ -4977,8 +4967,6 @@ values of the argument array elements to selected elements of the
 
 #### Compound assignment <a id="slice.arr.comp.assign">[[slice.arr.comp.assign]]</a>
 
-\indexlibrarymember{operator^=}{slice_array}
-
 ``` cpp
 void operator*= (const valarray<T>&) const;
 void operator/= (const valarray<T>&) const;
@@ -5152,8 +5140,6 @@ values of the argument array elements to selected elements of the
 
 #### Compound assignment <a id="gslice.array.comp.assign">[[gslice.array.comp.assign]]</a>
 
-\indexlibrarymember{operator^=}{gslice_array}
-
 ``` cpp
 void operator*= (const valarray<T>&) const;
 void operator/= (const valarray<T>&) const;
@@ -5237,8 +5223,6 @@ values of the argument array elements to selected elements of the
 `valarray<T>` object to which it refers.
 
 #### Compound assignment <a id="mask.array.comp.assign">[[mask.array.comp.assign]]</a>
-
-\indexlibrarymember{operator^=}{mask_array}
 
 ``` cpp
 void operator*= (const valarray<T>&) const;
@@ -5340,8 +5324,6 @@ indirection.
 — *end example*]
 
 #### Compound assignment <a id="indirect.array.comp.assign">[[indirect.array.comp.assign]]</a>
-
-\indexlibrarymember{operator^=}{indirect_array}
 
 ``` cpp
 void operator*= (const valarray<T>&) const;

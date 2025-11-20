@@ -551,8 +551,8 @@ sequences that follow a few uniform conventions:
   elements of the array have defined contents up to and including an
   element determined by some predicate. A character sequence can be
   designated by a pointer value `S` that points to its first element.
-- Let *STATICALLY-WIDEN*`<charT>("...")` be `"..."` if `charT` is `char`
-  and `L"..."` if `charT` is `wchar_t`.
+- Let *`STATICALLY-WIDEN`*`<charT>("...")` be `"..."` if `charT` is
+  `char` and `L"..."` if `charT` is `wchar_t`.
 
 ###### Byte strings <a id="byte.strings">[[byte.strings]]</a>
 

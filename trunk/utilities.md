@@ -2558,8 +2558,8 @@ requirements ([[cpp17.destructible]]).
 
 #### Constructors <a id="optional.ctor">[[optional.ctor]]</a>
 
-The exposition-only variable template *converts-from-any-cvref* is used
-by some constructors for `optional`.
+The exposition-only variable template *`converts-from-any-cvref`* is
+used by some constructors for `optional`.
 
 ``` cpp
 template<class T, class W>
@@ -4021,7 +4021,7 @@ A variant object holds and manages the lifetime of a value. If the
 argument types given to `variant`. These template arguments are called
 alternatives.
 
-In [[variant]], *GET* denotes a set of exposition-only function
+In [[variant]], *`GET`* denotes a set of exposition-only function
 templates [[variant.get]].
 
 ### Header `<variant>` synopsis <a id="variant.syn">[[variant.syn]]</a>
@@ -5900,7 +5900,7 @@ namespace std {
 
 Any object of type `expected<T, E>` either contains a value of type `T`
 or a value of type `E` nested within [[intro.object]] it. Member
-*has_val* indicates whether the `expected<T, E>` object contains an
+*`has_val`* indicates whether the `expected<T, E>` object contains an
 object of type `T`.
 
 A type `T` is a *valid value type for `expected`*, if `remove_cv_t<T>`
@@ -5918,8 +5918,9 @@ requirements ([[cpp17.destructible]]). `E` shall meet the
 
 #### Constructors <a id="expected.object.cons">[[expected.object.cons]]</a>
 
-The exposition-only variable template *converts-from-any-cvref* defined
-in [[optional.ctor]] is used by some constructors for `expected`.
+The exposition-only variable template *`converts-from-any-cvref`*
+defined in [[optional.ctor]] is used by some constructors for
+`expected`.
 
 ``` cpp
 constexpr expected();
@@ -6845,7 +6846,7 @@ private:
 
 Any object of type `expected<T, E>` either represents a value of type
 `T`, or contains a value of type `E` nested within [[intro.object]] it.
-Member *has_val* indicates whether the `expected<T, E>` object
+Member *`has_val`* indicates whether the `expected<T, E>` object
 represents a value of type `T`.
 
 A program that instantiates the definition of the template
@@ -7619,8 +7620,6 @@ constexpr bitset& operator|=(const bitset& rhs) noexcept;
 
 *Returns:* `*this`.
 
-\indexlibrarymember{operator^=}{bitset}
-
 ``` cpp
 constexpr bitset& operator^=(const bitset& rhs) noexcept;
 ```
@@ -7706,8 +7705,6 @@ constexpr bitset& reset(size_t pos);
 
 *Throws:* `out_of_range` if `pos` does not correspond to a valid bit
 position.
-
-\indexlibrarymember{operator~}{bitset}
 
 ``` cpp
 constexpr bitset operator~() const noexcept;
@@ -7871,8 +7868,6 @@ template<size_t N>
 ```
 
 *Returns:* `bitset<N>(lhs) |= rhs`.
-
-\indexlibrarymember{operator^}{bitset}
 
 ``` cpp
 template<size_t N>
@@ -10613,11 +10608,11 @@ namespace std {
 ```
 
 An object of class `function_ref<R(Args...) cv noexcept(noex)>` stores a
-pointer to function *thunk-ptr* and an object *bound-entity*. The object
-*bound-entity* has an unspecified trivially copyable type
-*BoundEntityType*, that models `copyable` and is capable of storing a
+pointer to function *`thunk-ptr`* and an object *`bound-entity`*. The
+object *`bound-entity`* has an unspecified trivially copyable type
+*`BoundEntityType`*, that models `copyable` and is capable of storing a
 pointer to object value or a pointer to function value. The type of
-*thunk-ptr* is `R(*)(BoundEntityType, Args&&...) noexcept(noex)`.
+*`thunk-ptr`* is `R(*)(BoundEntityType, Args&&...) noexcept(noex)`.
 
 Each specialization of `function_ref` is a trivially copyable type
 [[term.trivially.copyable.type]] that models `copyable`.

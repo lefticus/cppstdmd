@@ -847,7 +847,7 @@ scheduler associated with a completion tag from a sender’s attributes.
 The name `get_completion_scheduler` denotes a query object template. For
 a subexpression `q`, the expression
 `get_completion_scheduler<completion-tag>(q)` is ill-formed if
-*completion-tag* is not one of `set_value_t`, `set_error_t`, or
+*`completion-tag`* is not one of `set_value_t`, `set_error_t`, or
 `set_stopped_t`. Otherwise,
 `get_completion_scheduler<completion-tag>(q)` is expression-equivalent
 to
@@ -859,16 +859,16 @@ MANDATE-NOTHROW(AS-CONST(q).query(get_completion_scheduler<completion-tag>))
 *Mandates:* If the expression above is well-formed, its type satisfies
 `scheduler`.
 
-Let *completion-fn* be a completion function [[exec.async.ops]]; let
-*completion-tag* be the associated completion tag of *completion-fn*;
-let `args` be a pack of subexpressions; and let `sndr` be a
-subexpression such that `sender<decltype((sndr))>` is `true` and
-`get_completion_scheduler<completion-tag>(get_env(sndr))` is well-formed
-and denotes a scheduler `sch`. If an asynchronous operation created by
-connecting `sndr` with a receiver `rcvr` causes the evaluation of
-`completion-fn(rcvr, args...)`, the behavior is undefined unless the
-evaluation happens on an execution agent that belongs to `sch`’s
-associated execution resource.
+Let *`completion-fn`* be a completion function [[exec.async.ops]]; let
+*`completion-tag`* be the associated completion tag of
+*`completion-fn`*; let `args` be a pack of subexpressions; and let
+`sndr` be a subexpression such that `sender<decltype((sndr))>` is `true`
+and `get_completion_scheduler<completion-tag>(get_env(sndr))` is
+well-formed and denotes a scheduler `sch`. If an asynchronous operation
+created by connecting `sndr` with a receiver `rcvr` causes the
+evaluation of `completion-fn(rcvr, args...)`, the behavior is undefined
+unless the evaluation happens on an execution agent that belongs to
+`sch`’s associated execution resource.
 
 The expression
 `forwarding_query(get_completion_scheduler<completion-tag>)` is a core
@@ -1136,7 +1136,7 @@ is expression-equivalent to:
 - otherwise, `env2.query(q, as...)` if that expression is well-formed,
 - otherwise, `env3.query(q, as...)` is ill-formed.
 
-The results of *FWD-ENV*, *MAKE-ENV*, and *JOIN-ENV* can be
+The results of *`FWD-ENV`*, *`MAKE-ENV`*, and *`JOIN-ENV`* can be
 context-dependent; i.e., they can evaluate to expressions with different
 types and value categories in different contexts for the same arguments.
 
@@ -1280,7 +1280,7 @@ struct emplace-from {
 };
 ```
 
-[*Note 1*: *emplace-from* is used to emplace non-movable types into
+[*Note 1*: *`emplace-from`* is used to emplace non-movable types into
 `tuple`, `optional`, `variant`, and similar types. — *end note*]
 
 ``` cpp
@@ -1307,13 +1307,13 @@ struct product-type {       // exposition only
 };
 ```
 
-[*Note 2*: *product-type* is presented here in pseudo-code form for the
-sake of exposition. It can be approximated in standard C++ with a
+[*Note 2*: *`product-type`* is presented here in pseudo-code form for
+the sake of exposition. It can be approximated in standard C++ with a
 tuple-like implementation that takes care to keep the type an aggregate
 that can be used as the initializer of a structured binding
 declaration. — *end note*]
 
-[*Note 3*: An expression of type *product-type* is usable as the
+[*Note 3*: An expression of type *`product-type`* is usable as the
 initializer of a structured binding declaration
 [[dcl.struct.bind]]. — *end note*]
 
@@ -1514,14 +1514,14 @@ namespace std::execution {
 }
 ```
 
-It is unspecified whether a specialization of *basic-sender* is an
+It is unspecified whether a specialization of *`basic-sender`* is an
 aggregate.
 
-An expression of type *basic-sender* is usable as the initializer of a
+An expression of type *`basic-sender`* is usable as the initializer of a
 structured binding declaration [[dcl.struct.bind]].
 
 The expression in the `noexcept` clause of the constructor of
-*basic-state* is
+*`basic-state`* is
 
 ``` cpp
 is_nothrow_move_constructible_v<Rcvr> &&
@@ -1530,13 +1530,13 @@ nothrow-callable<decltype(impls-for<tag_of_t<Sndr>>::get-state), Sndr, Rcvr&> &&
  is_nothrow_constructible_v<state-type<Sndr, Rcvr>, get-state-result>)
 ```
 
-where *get-state-result* is
+where *`get-state-result`* is
 
 ``` cpp
 call-result-t<decltype(impls-for<tag_of_t<Sndr>>::get-state), Sndr, Rcvr&>.
 ```
 
-The object *connect-all* is initialized with a callable object
+The object *`connect-all`* is initialized with a callable object
 equivalent to the following lambda:
 
 ``` cpp
@@ -1556,7 +1556,7 @@ equivalent to the following lambda:
 `return` statement is not potentially throwing; otherwise, `false`.
 
 The expression in the `noexcept` clause of the constructor of
-*basic-operation* is:
+*`basic-operation`* is:
 
 ``` cpp
 is_nothrow_constructible_v<basic-state<Self, Rcvr>, Self, Rcvr> &&
@@ -1564,7 +1564,7 @@ noexcept(connect-all(this, std::forward<Sndr>(sndr), indices-for<Sndr>()))
 ```
 
 The expression in the `noexcept` clause of the `connect` member function
-of *basic-sender* is:
+of *`basic-sender`* is:
 
 ``` cpp
 is_nothrow_constructible_v<basic-operation<Self, Rcvr>, Self, Rcvr>
@@ -1943,7 +1943,7 @@ denotes the type `decltype(GET-AWAITER(c, p).await_resume())` and
 `await-result-type<C>` denotes the type
 `decltype(GET-AWAITER(c).await_resume())`.
 
-Let *with-await-transform* be the exposition-only class template:
+Let *`with-await-transform`* be the exposition-only class template:
 
 ``` cpp
 namespace std::execution {
@@ -1970,7 +1970,7 @@ namespace std::execution {
 }
 ```
 
-Let *env-promise* be the exposition-only class template:
+Let *`env-promise`* be the exposition-only class template:
 
 ``` cpp
 namespace std::execution {
@@ -1988,7 +1988,7 @@ namespace std::execution {
 }
 ```
 
-[*Note 2*: Specializations of *env-promise* are used only for the
+[*Note 2*: Specializations of *`env-promise`* are used only for the
 purpose of type computation; its members need not be
 defined. — *end note*]
 
@@ -2243,7 +2243,8 @@ transform_sender(decltype(get-domain-late(sndr, get_env(rcvr))){}, sndr, get_env
 and let `DS` and `DR` be `decay_t<decltype((new_sndr))>` and
 `decay_t<Rcvr>`, respectively.
 
-Let *connect-awaitable-promise* be the following exposition-only class:
+Let *`connect-awaitable-promise`* be the following exposition-only
+class:
 
 ``` cpp
 namespace std::execution {
@@ -2276,7 +2277,7 @@ namespace std::execution {
 }
 ```
 
-Let *operation-state-task* be the following exposition-only class:
+Let *`operation-state-task`* be the following exposition-only class:
 
 ``` cpp
 namespace std::execution {
@@ -2309,7 +2310,7 @@ completion_signatures<
   set_stopped_t()>
 ```
 
-and let *connect-awaitable* be an exposition-only coroutine defined as
+and let *`connect-awaitable`* be an exposition-only coroutine defined as
 follows:
 
 ``` cpp
@@ -2389,22 +2390,22 @@ with a value completion operation, an error completion operation, or a
 stopped completion operation, respectively.
 
 The names `just`, `just_error`, and `just_stopped` denote customization
-point objects. Let *just-cpo* be one of `just`, `just_error`, or
+point objects. Let *`just-cpo`* be one of `just`, `just_error`, or
 `just_stopped`. For a pack of subexpressions `ts`, let `Ts` be the pack
 of types `decltype((ts))`. The expression `just-cpo(ts...)` is
 ill-formed if
 
 - `(movable-value<Ts> &&...)` is `false`, or
-- *just-cpo* is `just_error` and `sizeof...(ts) == 1` is `false`, or
-- *just-cpo* is `just_stopped` and `sizeof...(ts) == 0` is `false`.
+- *`just-cpo`* is `just_error` and `sizeof...(ts) == 1` is `false`, or
+- *`just-cpo`* is `just_stopped` and `sizeof...(ts) == 0` is `false`.
 
 Otherwise, it is expression-equivalent to
 `make-sender(just-cpo, product-type{ts...})`.
 
-For `just`, `just_error`, and `just_stopped`, let *set-cpo* be
+For `just`, `just_error`, and `just_stopped`, let *`set-cpo`* be
 `set_value`, `set_error`, and `set_stopped`, respectively. The
-exposition-only class template *impls-for* [[exec.snd.expos]] is
-specialized for *just-cpo* as follows:
+exposition-only class template *`impls-for`* [[exec.snd.expos]] is
+specialized for *`just-cpo`* as follows:
 
 ``` cpp
 namespace std::execution {
@@ -2429,7 +2430,7 @@ result equal to a value read from the receiver’s associated environment.
 the expression `read_env(q)` is expression-equivalent to
 `make-sender(read_env, q)`.
 
-The exposition-only class template *impls-for* [[exec.snd.expos]] is
+The exposition-only class template *`impls-for`* [[exec.snd.expos]] is
 specialized for `read_env` as follows:
 
 ``` cpp
@@ -2580,9 +2581,9 @@ result of `get_env(rcvr)`.
 `write_env(sndr, env)` is ill-formed. Otherwise, it is
 expression-equivalent to `make-sender(write_env, env, sndr)`.
 
-Let *write-env-t* denote the type `decltype(auto(write_env))`. The
-exposition-only class template *impls-for* [[exec.snd.expos]] is
-specialized for *write-env-t* as follows:
+Let *`write-env-t`* denote the type `decltype(auto(write_env))`. The
+exposition-only class template *`impls-for`* [[exec.snd.expos]] is
+specialized for *`write-env-t`* as follows:
 
 ``` cpp
 template<>
@@ -2700,7 +2701,7 @@ transform_sender(get-domain-early(sndr), make-sender(continues_on, sch, sndr))
 
 except that `sndr` is evaluated only once.
 
-The exposition-only class template *impls-for* [[exec.snd.expos]] is
+The exposition-only class template *`impls-for`* [[exec.snd.expos]] is
 specialized for `continues_on_t` as follows:
 
 ``` cpp
@@ -2766,7 +2767,7 @@ transform_sender(
 
 except that `sch` is evaluated only once.
 
-The exposition-only class template *impls-for* [[exec.snd.expos]] is
+The exposition-only class template *`impls-for`* [[exec.snd.expos]] is
 specialized for `schedule_from_t` as follows:
 
 ``` cpp
@@ -2833,19 +2834,19 @@ auto cs = get_completion_signatures<child-type<Sndr>, FWD-ENV-T(Env)...>();
 decay-copyable-result-datums(cs);   // see REF:exec.snd.expos
 ```
 
-Objects of the local class *state-type* can be used to initialize a
+Objects of the local class *`state-type`* can be used to initialize a
 structured binding.
 
 Let `Sigs` be a pack of the arguments to the `completion_signatures`
 specialization named by
 `completion_signatures_of_t<child-type<Sndr>, FWD-ENV-T(env_of_t<Rcvr>)>`.
-Let *as-tuple* be an alias template such that `as-tuple<Tag(Args...)>`
+Let *`as-tuple`* be an alias template such that `as-tuple<Tag(Args...)>`
 denotes the type `decayed-tuple<Tag, Args...>`, and let
-*is-nothrow-decay-copy-sig* be a variable template such that
+*`is-nothrow-decay-copy-sig`* be a variable template such that
 `auto(is-nothrow-decay-copy-sig<Tag(Args...{})>)` is a constant
 expression of type `bool` and equal to
 `(is_nothrow_constructible_v<decay_t<Args>, Args> && ...)`. Let
-*error-completion* be a pack consisting of the type
+*`error-completion`* be a pack consisting of the type
 `set_error_t(exception_ptr)` if
 `(is-nothrow-decay-copy-sig<Sigs> &&...)` is `false`, and an empty pack
 otherwise. Then `variant_t` denotes the type
@@ -2888,7 +2889,7 @@ namespace std::execution {
 ```
 
 The expression in the `noexcept` clause of the lambda is `true` if the
-construction of the returned *state-type* object is not potentially
+construction of the returned *`state-type`* object is not potentially
 throwing; otherwise, `false`.
 
 The member `impls-for<schedule_from_t>::complete` is initialized with a
@@ -2983,7 +2984,7 @@ Let `out_sndr` and `env` be subexpressions, let `OutSndr` be
 `on.transform_env(out_sndr, env)` and
 `on.transform_sender(out_sndr, env)` are ill-formed.
 
-Otherwise: Let *not-a-scheduler* be an unspecified empty class type.
+Otherwise: Let *`not-a-scheduler`* be an unspecified empty class type.
 
 The expression `on.transform_env(out_sndr, env)` has effects equivalent
 to:
@@ -3087,10 +3088,10 @@ for the error and stopped completion operations, respectively, sending
 the result of the invocable as a value completion.
 
 The names `then`, `upon_error`, and `upon_stopped` denote pipeable
-sender adaptor objects. Let the expression *then-cpo* be one of `then`,
-`upon_error`, or `upon_stopped`. For subexpressions `sndr` and `f`, if
-`decltype((sndr))` does not satisfy `sender`, or `decltype((f))` does
-not satisfy `movable-value`, `then-cpo(sndr, f) `is ill-formed.
+sender adaptor objects. Let the expression *`then-cpo`* be one of
+`then`, `upon_error`, or `upon_stopped`. For subexpressions `sndr` and
+`f`, if `decltype((sndr))` does not satisfy `sender`, or `decltype((f))`
+does not satisfy `movable-value`, `then-cpo(sndr, f) `is ill-formed.
 
 Otherwise, the expression `then-cpo(sndr, f)` is expression-equivalent
 to:
@@ -3101,10 +3102,10 @@ transform_sender(get-domain-early(sndr), make-sender(then-cpo, f, sndr))
 
 except that `sndr` is evaluated only once.
 
-For `then`, `upon_error`, and `upon_stopped`, let *set-cpo* be
+For `then`, `upon_error`, and `upon_stopped`, let *`set-cpo`* be
 `set_value`, `set_error`, and `set_stopped`, respectively. The
-exposition-only class template *impls-for* [[exec.snd.expos]] is
-specialized for *then-cpo* as follows:
+exposition-only class template *`impls-for`* [[exec.snd.expos]] is
+specialized for *`then-cpo`* as follows:
 
 ``` cpp
 namespace std::execution {
@@ -3162,14 +3163,14 @@ asynchronous operation by passing the sender’s result datums to a
 user-specified callable, which returns a new sender that is connected
 and started.
 
-For `let_value`, `let_error`, and `let_stopped`, let *set-cpo* be
+For `let_value`, `let_error`, and `let_stopped`, let *`set-cpo`* be
 `set_value`, `set_error`, and `set_stopped`, respectively. Let the
-expression *let-cpo* be one of `let_value`, `let_error`, or
+expression *`let-cpo`* be one of `let_value`, `let_error`, or
 `let_stopped`. For a subexpression `sndr`, let `let-env(sndr)` be
 expression-equivalent to the first well-formed expression below:
 
-- `\textit{SCHED-ENV}(get_completion_scheduler<\textit{decayed-typeof}<\textit{set-cpo}>>(get_env(sndr)))`
-- `\textit{MAKE-ENV}(get_domain, get_domain(get_env(sndr)))`
+- `\exposid{SCHED-ENV}(get_completion_scheduler<\exposid{decayed-typeof}<\exposid{set-cpo}>>(get_env(sndr)))`
+- `\exposid{MAKE-ENV}(get_domain, get_domain(get_env(sndr)))`
 - `(void(sndr), env<>{})`
 
 The names `let_value`, `let_error`, and `let_stopped` denote pipeable
@@ -3188,8 +3189,8 @@ transform_sender(get-domain-early(sndr), make-sender(let-cpo, f, sndr))
 
 except that `sndr` is evaluated only once.
 
-The exposition-only class template *impls-for* [[exec.snd.expos]] is
-specialized for *let-cpo* as follows:
+The exposition-only class template *`impls-for`* [[exec.snd.expos]] is
+specialized for *`let-cpo`* as follows:
 
 ``` cpp
 namespace std::execution {
@@ -3207,7 +3208,7 @@ namespace std::execution {
 }
 ```
 
-Let *receiver2* denote the following exposition-only class template:
+Let *`receiver2`* denote the following exposition-only class template:
 
 ``` cpp
 namespace std::execution {
@@ -3278,7 +3279,7 @@ following are `true`:
 where *`env-t`* is the pack
 `decltype(`*`let-cpo`*`.transform_env(declval<Sndr>(), declval<Env>()))`.
 
-`\textit{impls-for}<\textit{decayed-typeof}<\textit{let-cpo}>>::\textit{get-state}`
+`\exposid{impls-for}<\exposid{decayed-typeof}<\exposid{let-cpo}>>::\exposid{get-state}`
 
 is initialized with a callable object equivalent to the following:
 
@@ -3305,13 +3306,13 @@ Let `Sigs` be a pack of the arguments to the `completion_signatures`
 specialization named by
 `completion_signatures_of_t<child-type<Sndr>, FWD-ENV-T(env_of_t<Rcvr>)>`.
 Let `LetSigs` be a pack of those types in `Sigs` with a return type of
-`decayed-typeof<set-cpo>`. Let *as-tuple* be an alias template such that
-`as-tuple<Tag(Args...)>` denotes the type `decayed-tuple<Args...>`. Then
-`args_variant_t` denotes the type
+`decayed-typeof<set-cpo>`. Let *`as-tuple`* be an alias template such
+that `as-tuple<Tag(Args...)>` denotes the type `decayed-tuple<Args...>`.
+Then `args_variant_t` denotes the type
 `variant<monostate, as-tuple<LetSigs>...>` except with duplicate types
 removed.
 
-Given a type `Tag` and a pack `Args`, let *as-sndr2* be an alias
+Given a type `Tag` and a pack `Args`, let *`as-sndr2`* be an alias
 template such that `as-sndr2<Tag(Args...)>` denotes the type
 `call-result-t<F, decay_t<Args>&...>`. Then `ops2_variant_t` denotes the
 type
@@ -3325,8 +3326,8 @@ except with duplicate types removed.
 The *requires-clause* constraining the above lambda is satisfied if and
 only if the types `args_variant_t` and `ops2_variant_t` are well-formed.
 
-The exposition-only function template *let-bind* has effects equivalent
-to:
+The exposition-only function template *`let-bind`* has effects
+equivalent to:
 
 ``` cpp
 using args_t = decayed-tuple<Args...>;
@@ -3339,7 +3340,7 @@ auto mkop2 = [&] {
 start(state.ops2.template emplace<decltype(mkop2())>(emplace-from{mkop2}));
 ```
 
-`\textit{impls-for}<\textit{decayed-typeof}<let-cpo>>::\textit{complete}`
+`\exposid{impls-for}<\exposid{decayed-typeof}<let-cpo>>::\exposid{complete}`
 
 is initialized with a callable object equivalent to the following:
 
@@ -3371,7 +3372,7 @@ Let the subexpression `out_sndr` denote the result of the invocation
 `connect(out_sndr, rcvr)` has undefined behavior unless it creates an
 asynchronous operation [[exec.async.ops]] that, when started:
 
-- invokes `f` when *set-cpo* is called with `sndr`’s result datums,
+- invokes `f` when *`set-cpo`* is called with `sndr`’s result datums,
 - makes its completion dependent on the completion of a sender returned
   by `f`, and
 - propagates the other completion operations sent by `sndr`.
@@ -3404,7 +3405,7 @@ transform_sender(get-domain-early(sndr), make-sender(
 ```
 
 except that `sndr` is evaluated only once. The first template argument
-of *product-type* is `Policy` if `Policy` models `copy_constructible`,
+of *`product-type`* is `Policy` if `Policy` models `copy_constructible`,
 and `const Policy&` otherwise.
 
 Let `sndr` and `env` be subexpressions such that `Sndr` is
@@ -3427,7 +3428,7 @@ expressed in terms of `bulk_chunked(sndr, policy, shape, f)` when it is
 connected to a receiver whose execution domain does not customize
 `bulk`. — *end note*]
 
-The exposition-only class template *impls-for* [[exec.snd.expos]] is
+The exposition-only class template *`impls-for`* [[exec.snd.expos]] is
 specialized for `bulk_chunked_t` as follows:
 
 ``` cpp
@@ -3466,7 +3467,7 @@ The expression in the *requires-clause* of the lambda above is `true` if
 and only if `Tag` denotes a type other than `set_value_t` or if the
 expression `f(auto(shape), auto(shape), args...)` is well-formed.
 
-The exposition-only class template *impls-for* [[exec.snd.expos]] is
+The exposition-only class template *`impls-for`* [[exec.snd.expos]] is
 specialized for `bulk_unchunked_t` as follows:
 
 ``` cpp
@@ -3597,7 +3598,7 @@ The expression `when_all(sndrs...)` is expression-equivalent to:
 transform_sender(CD2(), make-sender(when_all, {}, sndrs...))
 ```
 
-The exposition-only class template *impls-for* [[exec.snd.expos]] is
+The exposition-only class template *`impls-for`* [[exec.snd.expos]] is
 specialized for `when_all_t` as follows:
 
 ``` cpp
@@ -3616,7 +3617,7 @@ namespace std::execution {
 }
 ```
 
-Let *make-when-all-env* be the following exposition-only function
+Let *`make-when-all-env`* be the following exposition-only function
 template:
 
 ``` cpp
@@ -3703,7 +3704,8 @@ where e is the expression
 std::forward<Sndr>(sndr).apply(make-state<Rcvr>())
 ```
 
-and where *make-state* is the following exposition-only class template:
+and where *`make-state`* is the following exposition-only class
+template:
 
 ``` cpp
 enum class disposition { started, error, stopped };             // exposition only
@@ -3738,7 +3740,7 @@ struct make-state {
 };
 ```
 
-Let *copy-fail* be `exception_ptr` if decay-copying any of the child
+Let *`copy-fail`* be `exception_ptr` if decay-copying any of the child
 senders’ result datums can potentially throw; otherwise, `none-such`,
 where `none-such` is an unspecified empty class type.
 
@@ -3900,7 +3902,7 @@ transform_sender(get-domain-early(sndr), make-sender(into_variant, {}, sndr))
 
 except that `sndr` is only evaluated once.
 
-The exposition-only class template *impls-for* [[exec.snd.expos]] is
+The exposition-only class template *`impls-for`* [[exec.snd.expos]] is
 specialized for `into_variant` as follows:
 
 ``` cpp
@@ -3962,7 +3964,7 @@ transform_sender(get-domain-early(sndr), make-sender(stopped_as_optional, {}, sn
 
 except that `sndr` is only evaluated once.
 
-The exposition-only class template *impls-for* [[exec.snd.expos]] is
+The exposition-only class template *`impls-for`* [[exec.snd.expos]] is
 specialized for `stopped_as_optional_t` as follows:
 
 ``` cpp
@@ -4045,7 +4047,7 @@ return let_stopped(
 the scope can track the lifetime of any asynchronous operations created
 with the sender.
 
-Let *associate-data* be the following exposition-only class template:
+Let *`associate-data`* be the following exposition-only class template:
 
 ``` cpp
 namespace std::execution {
@@ -4083,7 +4085,7 @@ namespace std::execution {
 }
 ```
 
-For an *associate-data* object `a`, `a.sndr.has_value()` is `true` if
+For an *`associate-data`* object `a`, `a.sndr.has_value()` is `true` if
 and only if an association was successfully made and is owned by `a`.
 
 ``` cpp
@@ -4149,7 +4151,7 @@ subexpressions `sndr` and `token`:
 
   except that `sndr` is evaluated only once.
 
-The exposition-only class template *impls-for* [[exec.snd.expos]] is
+The exposition-only class template *`impls-for`* [[exec.snd.expos]] is
 specialized for `associate_t` as follows:
 
 ``` cpp
@@ -4237,7 +4239,7 @@ is_nothrow_move_constructible_v<wrap-sender> &&
 nothrow-callable<connect_t, wrap-sender, Rcvr>
 ```
 
-where *wrap-sender* is the type
+where *`wrap-sender`* is the type
 `remove_cvref_t<data-type<Sndr>>::wrap-sender`.
 
 The member `impls-for<associate_t>::start` is initialized with a
@@ -4254,12 +4256,12 @@ observable via `token`'s associated async scope object.
 
 #### Exposition-only `execution::stop-when` <a id="exec.stop.when">[[exec.stop.when]]</a>
 
-*stop-when* fuses an additional stop token `t` into a sender so that,
+*`stop-when`* fuses an additional stop token `t` into a sender so that,
 upon connecting to a receiver `r`, the resulting operation state
 receives stop requests from both `t` and the token returned from
 `get_stop_token(get_env(r))`.
 
-The name *stop-when* denotes an exposition-only sender adaptor. For
+The name *`stop-when`* denotes an exposition-only sender adaptor. For
 subexpressions `sndr` and `token`:
 
 - If `decltype((sndr))` does not satisfy `sender`, or
@@ -4276,9 +4278,9 @@ subexpressions `sndr` and `token`:
     `connect(write_env(sndr, prop(get_stop_token, token)), r)`.
   - Otherwise, the effects of connecting `osndr` to `r` are equivalent
     to `connect(write_env(sndr, prop(get_stop_token, stoken)), r)` where
-    `stoken` is an object of an exposition-only type *stoken-t* such
+    `stoken` is an object of an exposition-only type *`stoken-t`* such
     that:
-    - *stoken-t* models `stoppable_token`;
+    - *`stoken-t`* models `stoppable_token`;
     - `stoken.stop_requested()` returns
       `token.stop_requested() || rtoken.stop_reques-{}ted()`;
     - `stoken.stop_possible()` returns
@@ -4286,15 +4288,7 @@ subexpressions `sndr` and `token`:
     - for types `Fn` and `Init` such that both `invocable<Fn>` and
       `constructible_from<Fn, Init>` are modeled,
       `stoken-t::callback_type<Fn>` models
-      `stoppable-callback-for<Fn, stoken-t, Init>`.\begin{tailnote}
-        For an object \texttt{fn} of type \texttt{Fn}
-        constructed from a value, \texttt{init}, of type \texttt{Init},
-        registering \texttt{fn} using
-        \texttt{\textit{stoken-t}::callback_type\<Fn\>(stoken, init)}
-        results in an invocation of \texttt{fn} when
-        a callback registered with \texttt{token} or \texttt{rtoken} would be invoked.
-        \texttt{fn} is invoked at most once.
-        \end{tailnote}
+      `stoppable-callback-for<Fn, stoken-t, Init>`.*`stoken-t`*
 
 #### `execution::spawn_future` <a id="exec.spawn.future">[[exec.spawn.future]]</a>
 
@@ -4315,7 +4309,7 @@ If any of `sender<Sndr>`, `scope_token<Token>`, or `queryable<Env>` are
 not satisfied, the expression `spawn_future(sndr, token, env)` is
 ill-formed.
 
-Let *spawn-future-state-base* be the exposition-only class template:
+Let *`spawn-future-state-base`* be the exposition-only class template:
 
 ``` cpp
 namespace std::execution {
@@ -4332,21 +4326,21 @@ namespace std::execution {
 ```
 
 Let `Sigs` be the pack of arguments to the `completion_signatures`
-specialization provided as a parameter to the *spawn-future-state-base*
-class template. Let *as-tuple* be an alias template that transforms a
-completion signature `Tag(Args...)` into the tuple specialization
-`decayed-tuple<Tag, Args...>`.
+specialization provided as a parameter to the
+*`spawn-future-state-base`* class template. Let *`as-tuple`* be an alias
+template that transforms a completion signature `Tag(Args...)` into the
+tuple specialization `decayed-tuple<Tag, Args...>`.
 
 - If `is_nothrow_constructible_v<decay_t<Arg>, Arg>` is `true` for every
   type `Arg` in every parameter pack `Args` in every completion
-  signature `Tag(Args...)` in `Sigs` then *variant-t* denotes the type
+  signature `Tag(Args...)` in `Sigs` then *`variant-t`* denotes the type
   `variant<monostate, tuple<set_stopped_t>, as-tuple<Sigs>...>`, except
   with duplicate types removed.
-- Otherwise *variant-t* denotes the type
+- Otherwise *`variant-t`* denotes the type
   `variant<monostate, tuple<set_stopped_t>, tuple<set_error_t, exception_ptr>, as-tuple<Sigs>...>`,
   except with duplicate types removed.
 
-Let *spawn-future-receiver* be the exposition-only class template:
+Let *`spawn-future-receiver`* be the exposition-only class template:
 
 ``` cpp
 namespace std::execution {
@@ -4392,7 +4386,7 @@ namespace std::execution {
 
 Let `ssource-t` be an unspecified type that models `stoppable-source`
 and let `ssource` be an lvalue of type `ssource-t`. Let `stoken-t` be
-`decltype(ssource.get_token())`. Let *future-spawned-sender* be the
+`decltype(ssource.get_token())`. Let *`future-spawned-sender`* be the
 alias template:
 
 ``` cpp
@@ -4401,7 +4395,7 @@ using future-spawned-sender =                                   // exposition on
   decltype(write_env(stop-when(declval<Sender>(), declval<stoken-t>()), declval<Env>()));
 ```
 
-Let *spawn-future-state* be the exposition-only class template:
+Let *`spawn-future-state`* be the exposition-only class template:
 
 ``` cpp
 namespace std::execution {
@@ -4447,10 +4441,10 @@ namespace std::execution {
 }
 ```
 
-For purposes of determining the existence of a data race, *complete*,
-*consume*, and *abandon* behave as atomic operations
+For purposes of determining the existence of a data race, *`complete`*,
+*`consume`*, and *`abandon`* behave as atomic operations
 [[intro.multithread]]. These operations on a single object of a type
-that is a specialization of *spawn-future-state* appear to occur in a
+that is a specialization of *`spawn-future-state`* appear to occur in a
 single total order.
 
 ``` cpp
@@ -4522,7 +4516,7 @@ if (associated)
   token.disassociate();
 ```
 
-The exposition-only class template *impls-for* [[exec.snd.expos]] is
+The exposition-only class template *`impls-for`* [[exec.snd.expos]] is
 specialized for `spawn_future_t` as follows:
 
 ``` cpp
@@ -4560,7 +4554,7 @@ The expression `spawn_future(sndr, token, env)` has the following
 effects:
 
 - Uses `alloc` to allocate and construct an object `s` of a type that is
-  a specialization of *spawn-future-state* from `alloc`,
+  a specialization of *`spawn-future-{`* from `alloc`,
   `token.wrap(sndr)`, `token`, and `senv`. If an exception is thrown
   then any constructed objects are destroyed and any allocated memory is
   deallocated.
@@ -4583,7 +4577,7 @@ used to block the current thread of execution until the specified sender
 completes and to return its async result. `sync_wait` mandates that the
 input sender has exactly one value completion signature.
 
-Let *sync-wait-env* be the following exposition-only class type:
+Let *`sync-wait-env`* be the following exposition-only class type:
 
 ``` cpp
 namespace std::this_thread {
@@ -4601,8 +4595,8 @@ namespace std::this_thread {
 }
 ```
 
-Let *sync-wait-result-type* and *sync-wait-with-variant-result-type* be
-exposition-only alias templates defined as follows:
+Let *`sync-wait-result-type`* and *`sync-wait-with-variant-result-type`*
+be exposition-only alias templates defined as follows:
 
 ``` cpp
 namespace std::this_thread {
@@ -4633,7 +4627,7 @@ apply_sender(get-domain-early(sndr), sync_wait, sndr)
 - `same_as<decltype(e), sync-wait-result-type<Sndr>>` is `true`, where e
   is the `apply_sender` expression above.
 
-Let *sync-wait-state* and *sync-wait-receiver* be the following
+Let *`sync-wait-state`* and *`sync-wait-receiver`* be the following
 exposition-only class templates:
 
 ``` cpp
@@ -4721,7 +4715,7 @@ The behavior of `this_thread::sync_wait(sndr)` is undefined unless:
   sender completes. \[*Note 2*: The default implementation of
   `sync_wait` achieves forward progress guarantee delegation by
   providing a `run_loop` scheduler via the `get_delegation_scheduler`
-  query on the *sync-wait-receiver*’s environment. The `run_loop` is
+  query on the *`sync-wait-receiver`*’s environment. The `run_loop` is
   driven by the current thread of execution. — *end note*]
 - It returns the specified sender’s async results as follows:
   - For a value completion, the result datums are returned in a `tuple`
@@ -4791,7 +4785,7 @@ subexpressions `sndr`, `token`, and `env`,
 If any of `sender<Sndr>`, `scope_token<Token>`, or `queryable<Env>` are
 not satisfied, the expression `spawn({}sndr, token, env)` is ill-formed.
 
-Let *spawn-state-base* be the exposition-only class:
+Let *`spawn-state-base`* be the exposition-only class:
 
 ``` cpp
 namespace std::execution {
@@ -4801,7 +4795,7 @@ namespace std::execution {
 }
 ```
 
-Let *spawn-receiver* be the exposition-only class:
+Let *`spawn-receiver`* be the exposition-only class:
 
 ``` cpp
 namespace std::execution {
@@ -4815,7 +4809,7 @@ namespace std::execution {
 }
 ```
 
-Let *spawn-state* be the exposition-only class template:
+Let *`spawn-state`* be the exposition-only class template:
 
 ``` cpp
 namespace std::execution {
@@ -4999,9 +4993,9 @@ equivalent to:
 typename indirect-meta-apply<always-true<As...>>::template meta-apply<T, As...>
 ```
 
-[*Note 1*: The purpose of *META-APPLY* is to make it valid to use
+[*Note 1*: The purpose of *`META-APPLY`* is to make it valid to use
 non-variadic templates as `Variant` and `Tuple` arguments to
-*gather-signatures*. — *end note*]
+*`gather-signatures`*. — *end note*]
 
 ``` cpp
 namespace std::execution {
@@ -5069,7 +5063,7 @@ Class template `prop` is for building a queryable object from a query
 object and a value.
 
 *Mandates:* `callable<QueryTag, prop-like<ValueType>>` is modeled, where
-*prop-like* is the following exposition-only class template:
+*`prop-like`* is the following exposition-only class template:
 
 ``` cpp
 template<class ValueType>
@@ -5187,7 +5181,7 @@ instance has an associated state that can be one of *starting*,
 
 Concurrent invocations of the member functions of `run_loop` other than
 `run` and its destructor do not introduce data races. The member
-functions *pop-front*, *push-back*, and `finish` execute atomically.
+functions *`pop-front`*, *`push-back`*, and `finish` execute atomically.
 
 *Recommended practice:* Implementations should use an intrusive queue of
 operation states to hold the work units to make scheduling
@@ -5231,59 +5225,60 @@ namespace std::execution {
 class run-loop-scheduler;
 ```
 
-*run-loop-scheduler* is an unspecified type that models `scheduler`.
+*`run-loop-scheduler`* is an unspecified type that models `scheduler`.
 
-Instances of *run-loop-scheduler* remain valid until the end of the
+Instances of *`run-loop-scheduler`* remain valid until the end of the
 lifetime of the `run_loop` instance from which they were obtained.
 
-Two instances of *run-loop-scheduler* compare equal if and only if they
-were obtained from the same `run_loop` instance.
+Two instances of *`run-loop-scheduler`* compare equal if and only if
+they were obtained from the same `run_loop` instance.
 
-Let *sch* be an expression of type *run-loop-scheduler*. The expression
-`schedule(sch)` has type *run-loop-sender* and is not
-potentially-throwing if *sch* is not potentially-throwing.
+Let *`sch`* be an expression of type *`run-loop-scheduler`*. The
+expression `schedule(sch)` has type *`run-loop-\newline sender`* and is
+not potentially-throwing if *`sch`* is not potentially-throwing.
 
 ``` cpp
 class run-loop-sender;
 ```
 
-*run-loop-sender* is an exposition-only type that satisfies `sender`.
+*`run-loop-sender`* is an exposition-only type that satisfies `sender`.
 `completion_signatures_of_t<run-{loop-sender}>` is
 
 ``` cpp
 completion_signatures<set_value_t(), set_error_t(exception_ptr), set_stopped_t()>
 ```
 
-An instance of *run-loop-sender* remains valid until the end of the
+An instance of *`run-loop-sender`* remains valid until the end of the
 lifetime of its associated `run_loop` instance.
 
-Let *sndr* be an expression of type *run-loop-sender*, let *rcvr* be an
-expression such that `receiver_of<decltype((rcvr)), CS>` is `true` where
-`CS` is the `completion_signatures` specialization above. Let `C` be
-either `set_value_t` or `set_stopped_t`. Then:
+Let *`sndr`* be an expression of type *`run-loop-sender`*, let *`rcvr`*
+be an expression such that `receiver_of<decltype((rcvr)), CS>` is `true`
+where `CS` is the `completion_signatures` specialization above. Let `C`
+be either `set_value_t` or `set_stopped_t`. Then:
 
 - The expression `connect(sndr, rcvr)` has type
   `run-loop-opstate<decay_t<decltype((rcvr))>>` and is
   potentially-throwing if and only if `(void(sndr), auto(rcvr))` is
   potentially-throwing.
 - The expression `get_completion_scheduler<C>(get_env(sndr))` is
-  potentially-throwing if and only if *sndr* is potentially-throwing,
-  has type *run-loop-scheduler*, and compares equal to the
-  *run-loop-scheduler* instance from which *sndr* was obtained.
+  potentially-throwing if and only if *`sndr`* is potentially-throwing,
+  has type *`run-loop-scheduler`*, and compares equal to the
+  *`run-loop-\newline scheduler`* instance from which *`sndr`* was
+  obtained.
 
 ``` cpp
 template<class Rcvr>
   struct run-loop-opstate;
 ```
 
-`\textit{run-loop-opstate}<Rcvr>`
+`\exposid{run-loop-opstate}<Rcvr>`
 
-inherits privately and unambiguously from *run-loop-opstate-base*.
+inherits privately and unambiguously from *`run-loop-opstate-base`*.
 
 Let o be a non-const lvalue of type `run-loop-opstate<Rcvr>`, and let
 `REC(o)` be a non-const lvalue reference to an instance of type `Rcvr`
-that was initialized with the expression *rcvr* passed to the invocation
-of connect that returned o. Then:
+that was initialized with the expression *`rcvr`* passed to the
+invocation of connect that returned o. Then:
 
 - The object to which `REC(o)` refers remains valid for the lifetime of
   the object to which o refers.
@@ -5443,7 +5438,7 @@ namespace std::execution {
 }
 ```
 
-*awaitable-receiver* is equivalent to:
+*`awaitable-receiver`* is equivalent to:
 
 ``` cpp
 struct awaitable-receiver {
@@ -5454,7 +5449,7 @@ struct awaitable-receiver {
 };
 ```
 
-Let `rcvr` be an rvalue expression of type *awaitable-receiver*, let
+Let `rcvr` be an rvalue expression of type *`awaitable-receiver`*, let
 `crcvr` be a const lvalue that refers to `rcvr`, let `vs` be a pack of
 subexpressions, and let `err` be an expression of type `Err`. Then:
 
@@ -5537,7 +5532,7 @@ are indeterminately sequenced:
   awaitable-sender<decltype((adapted-expr)), Promise>
   ```
 
-  are both satisfied, where *adapted-expr* is
+  are both satisfied, where *`adapted-expr`* is
   `get_await_completion_adaptor(get_env(expr))(expr)`, except that
   `expr` is evaluated only once.
 - Otherwise, `sender-awaitable{expr, p}` if
@@ -5638,7 +5633,7 @@ transform_sender(get-domain-early(sndr), make-sender(affine_on, sch, sndr))
 
 except that `sndr` is evaluated only once.
 
-The exposition-only class template *impls-for* [[exec.snd.expos]] is
+The exposition-only class template *`impls-for`* [[exec.snd.expos]] is
 specialized for `affine_on_t` as follows:
 
 ``` cpp
@@ -5690,11 +5685,11 @@ namespace std::execution {
 `inline_scheduler` is a class that models `scheduler` [[exec.sched]].
 All objects of type `inline_scheduler` are equal.
 
-*inline-sender* is an exposition-only type that satisfies `sender`. The
-type `completion_signatures_of_t<inline-sender>` is
+*`inline-sender`* is an exposition-only type that satisfies `sender`.
+The type `completion_signatures_of_t<inline-sender>` is
 `completion_signatures<set_value_t()>`.
 
-Let `sndr` be an expression of type *inline-sender*, let `rcvr` be an
+Let `sndr` be an expression of type *`inline-sender`*, let `rcvr` be an
 expression such that `receiver_of<decltype((rcvr)), CS>` is `true` where
 `CS` is `completion_signatures<set_value_t()>`, then:
 
@@ -5804,7 +5799,7 @@ namespace std::execution {
 }
 ```
 
-*ts-sender* is an exposition-only class that models `sender`
+*`ts-sender`* is an exposition-only class that models `sender`
 [[exec.snd]] and for which `completion_signatures_of_t<ts-sender>`
 denotes:
 
@@ -5817,7 +5812,7 @@ completion_signatures<
 ```
 
 Let `sch` be an object of type `task_scheduler` and let `sndr` be an
-object of type *ts-sender* obtained from `schedule(sch)`. Then
+object of type *`ts-sender`* obtained from `schedule(sch)`. Then
 `get_completion_scheduler<set_value_t>(get_env(sndr)) == sch` is `true`.
 The object `SENDER(sndr)` is the sender object contained by `sndr` or an
 object move constructed from it.
@@ -5845,8 +5840,8 @@ namespace std::execution {
 }
 ```
 
-*state* is an exposition-only class template whose specializations model
-`operation_state` [[exec.opstate]].
+*`state`* is an exposition-only class template whose specializations
+model `operation_state` [[exec.opstate]].
 
 ``` cpp
 void start() & noexcept;
@@ -5997,7 +5992,7 @@ namespace std::execution {
 }
 ```
 
-The type *own-env-t* is `Environment::template
+The type *`own-env-t`* is `Environment::template
 env_type<decltype(get_env({}declval{}<Rcvr>({}))){}>` if that
 *qualified-id* is valid and denotes a type, `env<>` otherwise.
 
@@ -6113,7 +6108,7 @@ refers to objects `STATE(prom)`, `RCVR(prom)`, and `SCHED(prom)`
 associated with `tsk` during evaluation of `task::state<Rcvr>::start`
 for some receiver `Rcvr`.
 
-*error-variant* is a `variant<monostate,
+*`error-variant`* is a `variant<monostate,
 remove_cvref_t<E>...>`, with duplicate types removed, where `E...` are
 the parameter types of the template arguments of the specialization of
 `execution::completion_signatures` denoted by `error_types`.
@@ -6328,23 +6323,24 @@ counts of associations. Let:
 During its lifetime `scope` goes through different states which govern
 what operations are allowed and the result of these operations:
 
-- *unused*: a newly constructed object starts in the *unused* state.
-- *open*: when `tkn.try_associate()` is called while `scope` is in the
-  *unused* state, `scope` moves to the *open* state.
-- *open-and-joining*: when the operation state `op` is started while
-  `scope` is in the *unused* or *open* state, `scope` moves to the
-  *open-and-joining* state.
-- *closed*: when `scope.close()` is called while `scope` is in the
-  *open* state, `scope` moves to the *closed* state.
-- *unused-and-closed*: when `scope.close()` is called while `scope` is
-  in the *unused* state, `scope` moves to the *unused-and-closed* state.
-- *closed-and-joining*: when `scope.close()` is called while `scope` is
-  in the *open-and-joining* state or the operation state `op` is started
-  while `scope` is in the *closed* or *unused-and-closed* state, `scope`
-  moves to the *closed-and-joining* state.
-- *joined*: when the count of associations drops to zero while `scope`
-  is in the *open-and-joining* or *closed-and-joining* state, `scope`
-  moves to the *joined* state.
+- *`unused`*: a newly constructed object starts in the *`unused`* state.
+- *`open`*: when `tkn.try_associate()` is called while `scope` is in the
+  *`unused`* state, `scope` moves to the *`open`* state.
+- *`open-and-joining`*: when the operation state `op` is started while
+  `scope` is in the *`unused`* or *`open`* state, `scope` moves to the
+  *`open-and-joining`* state.
+- *`closed`*: when `scope.close()` is called while `scope` is in the
+  *`open`* state, `scope` moves to the *`closed`* state.
+- *`unused-and-closed`*: when `scope.close()` is called while `scope` is
+  in the *`unused`* state, `scope` moves to the *`unused-and-closed`*
+  state.
+- *`closed-and-joining`*: when `scope.close()` is called while `scope`
+  is in the *`open-and-joining`* state or the operation state `op` is
+  started while `scope` is in the *`closed`* or *`unused-and-closed`*
+  state, `scope` moves to the *`closed-and-joining`* state.
+- *`joined`*: when the count of associations drops to zero while `scope`
+  is in the *`open-and-joining`* or *`closed-and-joining`* state,
+  `scope` moves to the *`joined`* state.
 
 *Recommended practice:* For `simple_counting_scope` and
 `counting_scope`, implementations should store the state and the count
@@ -6367,8 +6363,8 @@ enum scope-state-type {     // exposition only
 };
 ```
 
-The exposition-only class template *impls-for* [[exec.snd.expos]] is
-specialized for *scope-join-t* as follows:
+The exposition-only class template *`impls-for`* [[exec.snd.expos]] is
+specialized for *`scope-join-t`* as follows:
 
 ``` cpp
 namespace std::execution {
@@ -6475,8 +6471,8 @@ namespace std::execution {
 ```
 
 For purposes of determining the existence of a data race, `get_token`,
-`close`, `join`, *try-associate*, *disassociate*, and
-*start-join-sender* behave as atomic operations [[intro.multithread]].
+`close`, `join`, *`try-associate`*, *`disassociate`*, and
+*`start-join-sender`* behave as atomic operations [[intro.multithread]].
 These operations on a single object of type `simple_counting_scope`
 appear to occur in a single total order.
 

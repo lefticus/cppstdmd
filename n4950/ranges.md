@@ -1513,8 +1513,6 @@ constexpr subrange(R&& r) requires (!StoreSize || sized_range<R>);
   `subrange(r, static_cast<decltype(`*`size_`*`)>(ranges::size(r)))`.
 - Otherwise, `subrange(ranges::begin(r), ranges::end(r))`.
 
-*PairLike*
-
 ``` cpp
 template<different-from<subrange> PairLike>
   requires pair-like-convertible-from<PairLike, const I&, const S&>
@@ -1740,7 +1738,7 @@ auto words = views::split(str, ' ') | to<vector<string>>();
 
 — *end example*]
 
-Let *reservable-container* be defined as follows:
+Let *`reservable-container`* be defined as follows:
 
 ``` cpp
 template<class Container>
@@ -1753,7 +1751,7 @@ constexpr bool reservable-container =          // exposition only
   };
 ```
 
-Let *container-insertable* be defined as follows:
+Let *`container-insertable`* be defined as follows:
 
 ``` cpp
 template<class Container, class Ref>
@@ -1764,7 +1762,7 @@ constexpr bool container-insertable =          // exposition only
   };
 ```
 
-Let *container-inserter* be defined as follows:
+Let *`container-inserter`* be defined as follows:
 
 ``` cpp
 template<class Ref, class Container>
@@ -2771,7 +2769,7 @@ namespace std::ranges {
 ```
 
 If `is-signed-integer-like<index-type>` is `true`, the member
-*typedef-name* `difference_type` denotes *index-type*. Otherwise, it
+*typedef-name* `difference_type` denotes *`index-type`*. Otherwise, it
 denotes `IOTA-DIFF-T(index-type)` [[range.iota.view]].
 
 ``` cpp
@@ -3171,7 +3169,7 @@ specified above, are all well-formed.
 ### Movable wrapper <a id="range.move.wrap">[[range.move.wrap]]</a>
 
 Many types in this subclause are specified in terms of an
-exposition-only class template *movable-box*. `movable-box<T>` behaves
+exposition-only class template *`movable-box`*. `movable-box<T>` behaves
 exactly like `optional<T>` with the following differences:
 
 - `movable-box<T>` constrains its type parameter `T` with
@@ -3220,7 +3218,7 @@ exactly like `optional<T>` with the following differences:
 ### Non-propagating cache <a id="range.nonprop.cache">[[range.nonprop.cache]]</a>
 
 Some types in subclause [[range.adaptors]] are specified in terms of an
-exposition-only class template *non-propagating-cache*.
+exposition-only class template *`non-propagating-{`*.
 `non-propagating-cache<T>` behaves exactly like `optional<T>` with the
 following differences:
 
@@ -3273,8 +3271,8 @@ following differences:
   `*this` does not contain a value, and the previous value (if any) has
   been destroyed.
 
-[*Note 1*: *non-propagating-cache* enables an input view to temporarily
-cache values as it is iterated over. — *end note*]
+[*Note 1*: *`non-propagating-cache`* enables an input view to
+temporarily cache values as it is iterated over. — *end note*]
 
 ### Range adaptor helpers <a id="range.adaptor.helpers">[[range.adaptor.helpers]]</a>
 
@@ -4049,16 +4047,16 @@ namespace std::ranges {
 
 `iterator::iterator_concept` is defined as follows:
 
-- If *Base* models `random_access_range`, then `iterator_concept`
+- If *`Base`* models `random_access_range`, then `iterator_concept`
   denotes `random_access_iterator_tag`.
-- Otherwise, if *Base* models `bidirectional_range`, then
+- Otherwise, if *`Base`* models `bidirectional_range`, then
   `iterator_concept` denotes `bidirectional_iterator_tag`.
-- Otherwise, if *Base* models `forward_range`, then `iterator_concept`
+- Otherwise, if *`Base`* models `forward_range`, then `iterator_concept`
   denotes `forward_iterator_tag`.
 - Otherwise, `iterator_concept` denotes `input_iterator_tag`.
 
 The member *typedef-name* `iterator_category` is defined if and only if
-*Base* models `forward_range`. In that case,
+*`Base`* models `forward_range`. In that case,
 `iterator::iterator_category` is defined as follows: Let `C` denote the
 type `iterator_traits<iterator_t<Base>>::iterator_category`.
 
@@ -5100,17 +5098,17 @@ namespace std::ranges {
 
 `iterator::iterator_concept` is defined as follows:
 
-- If *ref-is-glvalue* is `true`, *Base* models `bidirectional_range`,
-  and `range_reference_t<Base>` models both `bidirectional_range` and
-  `common_range`, then `iterator_concept` denotes
-  `bidirectional_iterator_tag`.
-- Otherwise, if *ref-is-glvalue* is `true` and *Base* and
+- If *`ref-is-glvalue`* is `true`, *`Base`* models
+  `bidirectional_range`, and `range_reference_t<Base>` models both
+  `bidirectional_range` and `common_range`, then `iterator_concept`
+  denotes `bidirectional_iterator_tag`.
+- Otherwise, if *`ref-is-glvalue`* is `true` and *`Base`* and
   `range_reference_t<Base>` each model , then `iterator_concept` denotes
   `forward_iterator_tag`.
 - Otherwise, `iterator_concept` denotes `input_iterator_tag`.
 
 The member *typedef-name* `iterator_category` is defined if and only if
-*ref-is-glvalue* is `true`, *Base* models `forward_range`, and
+*`ref-is-glvalue`* is `true`, *`Base`* models `forward_range`, and
 `range_reference_t<Base>` models `forward_range`. In that case,
 `iterator::iterator_category` is defined as follows:
 
@@ -5135,7 +5133,7 @@ common_type_t<
   range_difference_t<range_reference_t<Base>>>
 ```
 
-`join_view` iterators use the *satisfy* function to skip over empty
+`join_view` iterators use the *`satisfy`* function to skip over empty
 inner ranges.
 
 ``` cpp
@@ -5566,16 +5564,17 @@ namespace std::ranges {
 
 `iterator::iterator_concept` is defined as follows:
 
-- If *ref-is-glvalue* is `true`, *Base* models `bidirectional_range`,
-  and *InnerBase* and *PatternBase* each model `bidirectional-common`,
-  then `iterator_concept` denotes `bidirectional_iterator_tag`.
-- Otherwise, if *ref-is-glvalue* is `true` and *Base* and *InnerBase*
-  each model `forward_range`, then `iterator_concept` denotes
-  `forward_iterator_tag`.
+- If *`ref-is-glvalue`* is `true`, *`Base`* models
+  `bidirectional_range`, and *`InnerBase`* and *`PatternBase`* each
+  model `bidirectional-common`, then `iterator_concept` denotes
+  `bidirectional_iterator_tag`.
+- Otherwise, if *`ref-is-glvalue`* is `true` and *`Base`* and
+  *`InnerBase`* each model `forward_range`, then `iterator_concept`
+  denotes `forward_iterator_tag`.
 - Otherwise, `iterator_concept` denotes `input_iterator_tag`.
 
 The member *typedef-name* `iterator_category` is defined if and only if
-*ref-is-glvalue* is `true`, and *Base* and *InnerBase* each model
+*`ref-is-glvalue`* is `true`, and *`Base`* and *`InnerBase`* each model
 `forward_range`. In that case, `iterator::iterator_category` is defined
 as follows:
 
@@ -5591,8 +5590,8 @@ as follows:
 
   is `false`, `iterator_category` denotes `input_iterator_tag`.
 - Otherwise, if *OUTERC*, *INNERC*, and *PATTERNC* each model
-  `derived_from<bidirectional_iterator_category>` and *InnerBase* and
-  *PatternBase* each model `common_range`, `iterator_category` denotes
+  `derived_from<bidirectional_iterator_category>` and *`InnerBase`* and
+  *`PatternBase`* each model `common_range`, `iterator_category` denotes
   `bidirectional_iterator_tag`.
 - Otherwise, if *OUTERC*, *INNERC*, and *PATTERNC* each model
   `derived_from<forward_iterator_tag>`, `iterator_category` denotes
@@ -6051,8 +6050,8 @@ namespace std::ranges {
 ```
 
 Many of the specifications in [[range.lazy.split]] refer to the notional
-member *current* of *outer-iterator*. *current* is equivalent to
-*current\_* if `V` models `forward_range`, and `*parent_->current_`
+member *current* of *`outer-iterator`*. *current* is equivalent to
+*`current_`* if `V` models `forward_range`, and `*parent_->current_`
 otherwise.
 
 ``` cpp
@@ -6242,7 +6241,7 @@ namespace std::ranges {
 }
 ```
 
-If *Base* does not model `forward_range` there is no member
+If *`Base`* does not model `forward_range` there is no member
 `iterator_category`. Otherwise, the *typedef-name* `iterator_category`
 denotes:
 
@@ -7100,16 +7099,16 @@ namespace std::ranges {
 
 The member *typedef-name* `iterator_concept` is defined as follows:
 
-- If *Base* models `random_access_range`, then `iterator_concept`
+- If *`Base`* models `random_access_range`, then `iterator_concept`
   denotes `random_access_iterator_tag`.
-- Otherwise, if *Base* models `bidirectional_range`, then
+- Otherwise, if *`Base`* models `bidirectional_range`, then
   `iterator_concept` denotes `bidirectional_iterator_tag`.
-- Otherwise, if *Base* models `forward_range`, then `iterator_concept`
+- Otherwise, if *`Base`* models `forward_range`, then `iterator_concept`
   denotes `forward_iterator_tag`.
 - Otherwise, `iterator_concept` denotes `input_iterator_tag`.
 
 The member *typedef-name* `iterator_category` is defined if and only if
-*Base* models `forward_range`. In that case, `iterator_category` is
+*`Base`* models `forward_range`. In that case, `iterator_category` is
 defined as follows: Let `C` denote the type
 `iterator_traits<iterator_t<Base>>::iterator_category`.
 
@@ -7550,11 +7549,11 @@ namespace std::ranges {
 The member *typedef-name* `iterator::iterator_concept` is defined as
 follows:
 
-- If *Base* models `random_access_range`, then `iterator_concept`
+- If *`Base`* models `random_access_range`, then `iterator_concept`
   denotes `random_access_iterator_tag`.
-- Otherwise, if *Base* models `bidirectional_range`, then
+- Otherwise, if *`Base`* models `bidirectional_range`, then
   `iterator_concept` denotes `bidirectional_iterator_tag`.
-- Otherwise, if *Base* models `forward_range`, then `iterator_concept`
+- Otherwise, if *`Base`* models `forward_range`, then `iterator_concept`
   denotes `forward_iterator_tag`.
 - Otherwise, `iterator_concept` denotes `input_iterator_tag`.
 
@@ -7896,7 +7895,7 @@ namespace std::ranges {
 ```
 
 Two `zip_view` objects have the same underlying sequence if and only if
-the corresponding elements of *views\_* are equal [[concepts.equality]]
+the corresponding elements of *`views_`* are equal [[concepts.equality]]
 and have the same underlying sequence.
 
 [*Note 1*: In particular, comparison of iterators obtained from
@@ -8008,7 +8007,7 @@ namespace std::ranges {
 `iterator::iterator_category` is present if and only if
 `all-forward<Const, Views...>` is modeled.
 
-If the invocation of any non-const member function of *iterator* exits
+If the invocation of any non-const member function of *`iterator`* exits
 via an exception, the iterator acquires a singular value.
 
 ``` cpp
@@ -8486,7 +8485,7 @@ namespace std::ranges {
 ```
 
 The member *typedef-name* `iterator::iterator_category` is defined if
-and only if *Base* models `forward_range`. In that case,
+and only if *`Base`* models `forward_range`. In that case,
 `iterator::iterator_category` is defined as follows:
 
 - If
@@ -8908,14 +8907,14 @@ namespace std::ranges {
 
 `iterator::iterator_concept` is defined as follows:
 
-- If *Base* models `random_access_range`, then `iterator_concept`
+- If *`Base`* models `random_access_range`, then `iterator_concept`
   denotes `random_access_iterator_tag`.
-- Otherwise, if *Base* models `bidirectional_range`, then
+- Otherwise, if *`Base`* models `bidirectional_range`, then
   `iterator_concept` denotes `bidirectional_iterator_tag`.
 - Otherwise, `iterator_concept` denotes `forward_iterator_tag`.
 
-If the invocation of any non-const member function of *iterator* exits
-via an exception, the *iterator* acquires a singular value.
+If the invocation of any non-const member function of *`iterator`* exits
+via an exception, the *`iterator`* acquires a singular value.
 
 ``` cpp
 constexpr iterator(iterator_t<Base> first, sentinel_t<Base> last);
@@ -10192,9 +10191,9 @@ namespace std::ranges {
 
 `iterator::iterator_concept` is defined as follows:
 
-- If *Base* models `random_access_range`, then `iterator_concept`
+- If *`Base`* models `random_access_range`, then `iterator_concept`
   denotes `random_access_iterator_tag`.
-- Otherwise, if *Base* models `bidirectional_range`, then
+- Otherwise, if *`Base`* models `bidirectional_range`, then
   `iterator_concept` denotes `bidirectional_iterator_tag`.
 - Otherwise, `iterator_concept` denotes `forward_iterator_tag`.
 
@@ -10648,14 +10647,14 @@ namespace std::ranges {
 
 `iterator::iterator_concept` is defined as follows:
 
-- If *Base* models `random_access_range`, then `iterator_concept`
+- If *`Base`* models `random_access_range`, then `iterator_concept`
   denotes `random_access_iterator_tag`.
-- Otherwise, if *Base* models `bidirectional_range`, then
+- Otherwise, if *`Base`* models `bidirectional_range`, then
   `iterator_concept` denotes `bidirectional_iterator_tag`.
 - Otherwise, `iterator_concept` denotes `forward_iterator_tag`.
 
-If the invocation of any non-const member function of *iterator* exits
-via an exception, the *iterator* acquires a singular value.
+If the invocation of any non-const member function of *`iterator`* exits
+via an exception, the *`iterator`* acquires a singular value.
 
 ``` cpp
 constexpr iterator(iterator_t<Base> current, range_difference_t<Base> n)
@@ -10882,7 +10881,7 @@ namespace std::ranges {
 }
 ```
 
-[*Note 1*: *sentinel* is used only when `slide-caches-first<V>` is
+[*Note 1*: *`sentinel`* is used only when `slide-caches-first<V>` is
 `true`. — *end note*]
 
 ``` cpp
@@ -11369,16 +11368,16 @@ namespace std::ranges {
 
 `iterator::iterator_concept` is defined as follows:
 
-- If *Base* models `random_access_range`, then `iterator_concept`
+- If *`Base`* models `random_access_range`, then `iterator_concept`
   denotes `random_access_iterator_tag`.
-- Otherwise, if *Base* models `bidirectional_range`, then
+- Otherwise, if *`Base`* models `bidirectional_range`, then
   `iterator_concept` denotes `bidirectional_iterator_tag`.
-- Otherwise, if *Base* models `forward_range`, then `iterator_concept`
+- Otherwise, if *`Base`* models `forward_range`, then `iterator_concept`
   denotes `forward_iterator_tag`.
 - Otherwise, `iterator_concept` denotes `input_iterator_tag`.
 
 The member *typedef-name* `iterator_category` is defined if and only if
-*Base* models `forward_range`. In that case,
+*`Base`* models `forward_range`. In that case,
 `iterator::iterator_category` is defined as follows:
 
 - Let `C` denote the type
@@ -12306,17 +12305,17 @@ namespace std {
 
 - If `Allocator` is not `void`, `allocator_traits<Allocator>::pointer`
   is a pointer type.
-- *value* is a cv-unqualified object type.
-- *reference* is either a reference type, or a cv-unqualified object
+- *`value`* is a cv-unqualified object type.
+- *`reference`* is either a reference type, or a cv-unqualified object
   type that models `copy_constructible`.
-- Let `RRef` denote `remove_reference_t<reference>&&` if *reference* is
-  a reference type, and *reference* otherwise. Each of:
+- Let `RRef` denote `remove_reference_t<reference>&&` if *`reference`*
+  is a reference type, and *`reference`* otherwise. Each of:
   - `common_reference_with<reference&&, value&>`,
   - `common_reference_with<reference&&, RRef&&>`, and
-  - `\texttt{common_reference_with}<RRef&&, const \textit{value}&>`
+  - `\texttt{common_reference_with}<RRef&&, const \exposid{value}&>`
 
   is modeled.
-  \[*Note 4*: These requirements ensure the exposition-only *iterator*
+  \[*Note 4*: These requirements ensure the exposition-only *`iterator`*
   type can model `indirectly_readable` and thus
   `input_iterator`. — *end note*]
 

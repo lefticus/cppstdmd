@@ -5781,7 +5781,7 @@ the *range-format-spec*:
 
 *Returns:* An iterator past the end of the output range.
 
-#### Class template *range-default-formatter* <a id="format.range.fmtdef">[[format.range.fmtdef]]</a>
+#### Class template *`range-default-formatter`* <a id="format.range.fmtdef">[[format.range.fmtdef]]</a>
 
 ``` cpp
 namespace std {
@@ -5838,7 +5838,7 @@ template<class FormatContext>
 
 *Effects:* Equivalent to: `return `*`underlying_`*`.format(elems, ctx);`
 
-#### Specialization of *range-default-formatter* for maps <a id="format.range.fmtmap">[[format.range.fmtmap]]</a>
+#### Specialization of *`range-default-formatter`* for maps <a id="format.range.fmtmap">[[format.range.fmtmap]]</a>
 
 ``` cpp
 namespace std {
@@ -5898,7 +5898,7 @@ template<class FormatContext>
 
 *Effects:* Equivalent to: `return `*`underlying_`*`.format(r, ctx);`
 
-#### Specialization of *range-default-formatter* for sets <a id="format.range.fmtset">[[format.range.fmtset]]</a>
+#### Specialization of *`range-default-formatter`* for sets <a id="format.range.fmtset">[[format.range.fmtset]]</a>
 
 ``` cpp
 namespace std {
@@ -5949,7 +5949,7 @@ template<class FormatContext>
 
 *Effects:* Equivalent to: `return `*`underlying_`*`.format(r, ctx);`
 
-#### Specialization of *range-default-formatter* for strings <a id="format.range.fmtstr">[[format.range.fmtstr]]</a>
+#### Specialization of *`range-default-formatter`* for strings <a id="format.range.fmtstr">[[format.range.fmtstr]]</a>
 
 ``` cpp
 namespace std {
@@ -6162,7 +6162,7 @@ void format(basic_format_parse_context<char_type>& parse_ctx, Context& format_ct
 
 *Effects:* Equivalent to: `format_(parse_ctx, format_ctx, ptr_);`
 
-#### Class template *format-arg-store* <a id="format.arg.store">[[format.arg.store]]</a>
+#### Class template *`format-arg-store`* <a id="format.arg.store">[[format.arg.store]]</a>
 
 ``` cpp
 namespace std {
@@ -6173,7 +6173,7 @@ namespace std {
 }
 ```
 
-An instance of *format-arg-store* stores formatting arguments.
+An instance of *`format-arg-store`* stores formatting arguments.
 
 ``` cpp
 template<class Context = format_context, class... Args>

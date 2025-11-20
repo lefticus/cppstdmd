@@ -4846,8 +4846,6 @@ v0[valarray<size_t>(vi, 5)] = v1;
 
 #### Unary operators <a id="valarray.unary">[[valarray.unary]]</a>
 
-\indexlibrarymember{operator~}{valarray}
-
 ``` cpp
 valarray operator+() const;
 valarray operator-() const;
@@ -4865,8 +4863,6 @@ returned array is initialized with the result of applying the indicated
 operator to the corresponding element of the array.
 
 #### Compound assignment <a id="valarray.cassign">[[valarray.cassign]]</a>
-
-\indexlibrarymember{operator^=}{valarray}
 
 ``` cpp
 valarray& operator*= (const valarray& v);
@@ -4897,8 +4893,6 @@ each of the elements of `*this` and the corresponding element of `v`.
 
 *Remarks:* The appearance of an array on the left-hand side of a
 compound assignment does not invalidate references or pointers.
-
-\indexlibrarymember{operator^=}{valarray}
 
 ``` cpp
 valarray& operator*= (const T& v);
@@ -5024,8 +5018,6 @@ invalidates all pointers and references to elements in the array.
 
 #### Binary operators <a id="valarray.binary">[[valarray.binary]]</a>
 
-\indexlibrarymember{operator^}{valarray}
-
 ``` cpp
 template<class T> valarray<T> operator* (const valarray<T>&, const valarray<T>&);
 template<class T> valarray<T> operator/ (const valarray<T>&, const valarray<T>&);
@@ -5049,8 +5041,6 @@ implicitly converted to `T`.
 argument arrays. Each element of the returned array is initialized with
 the result of applying the indicated operator to the corresponding
 elements of the argument arrays.
-
-\indexlibrarymember{operator^}{valarray}
 
 ``` cpp
 template<class T> valarray<T> operator* (const valarray<T>&,
@@ -5333,8 +5323,6 @@ values of the argument array elements to selected elements of the
 
 #### Compound assignment <a id="slice.arr.comp.assign">[[slice.arr.comp.assign]]</a>
 
-\indexlibrarymember{operator^=}{slice_array}
-
 ``` cpp
 void operator*= (const valarray<T>&) const;
 void operator/= (const valarray<T>&) const;
@@ -5507,8 +5495,6 @@ values of the argument array elements to selected elements of the
 
 #### Compound assignment <a id="gslice.array.comp.assign">[[gslice.array.comp.assign]]</a>
 
-\indexlibrarymember{operator^=}{gslice_array}
-
 ``` cpp
 void operator*= (const valarray<T>&) const;
 void operator/= (const valarray<T>&) const;
@@ -5592,8 +5578,6 @@ values of the argument array elements to selected elements of the
 `valarray<T>` object to which the `mask_array` object refers.
 
 #### Compound assignment <a id="mask.array.comp.assign">[[mask.array.comp.assign]]</a>
-
-\indexlibrarymember{operator^=}{mask_array}
 
 ``` cpp
 void operator*= (const valarray<T>&) const;
@@ -5696,8 +5680,6 @@ indirection.
 — *end example*]
 
 #### Compound assignment <a id="indirect.array.comp.assign">[[indirect.array.comp.assign]]</a>
-
-\indexlibrarymember{operator^=}{indirect_array}
 
 ``` cpp
 void operator*= (const valarray<T>&) const;
@@ -7884,11 +7866,11 @@ template<class OtherExtents>
 
 ### Exposition-only helpers <a id="linalg.helpers">[[linalg.helpers]]</a>
 
-#### *abs-if-needed* <a id="linalg.helpers.abs">[[linalg.helpers.abs]]</a>
+#### *`abs-if-needed`* <a id="linalg.helpers.abs">[[linalg.helpers.abs]]</a>
 
-The name *abs-if-needed* denotes an exposition-only function object. The
-expression `abs-if-needed(E)` for a subexpression `E` whose type is `T`
-is expression-equivalent to:
+The name *`abs-if-needed`* denotes an exposition-only function object.
+The expression `abs-if-needed(E)` for a subexpression `E` whose type is
+`T` is expression-equivalent to:
 
 - `E` if `T` is an unsigned integer;
 - otherwise, `std::abs(E)` if `T` is an arithmetic type,
@@ -7902,9 +7884,9 @@ is expression-equivalent to:
   absolute value of its input, the program is ill-formed, no diagnostic
   required.
 
-#### *conj-if-needed* <a id="linalg.helpers.conj">[[linalg.helpers.conj]]</a>
+#### *`conj-if-needed`* <a id="linalg.helpers.conj">[[linalg.helpers.conj]]</a>
 
-The name *conj-if-needed* denotes an exposition-only function object.
+The name *`conj-if-needed`* denotes an exposition-only function object.
 The expression `conj-if-needed(E)` for a subexpression `E` whose type is
 `T` is expression-equivalent to:
 
@@ -7920,9 +7902,9 @@ The expression `conj-if-needed(E)` for a subexpression `E` whose type is
   diagnostic required;
 - otherwise, `E`.
 
-#### *real-if-needed* <a id="linalg.helpers.real">[[linalg.helpers.real]]</a>
+#### *`real-if-needed`* <a id="linalg.helpers.real">[[linalg.helpers.real]]</a>
 
-The name *real-if-needed* denotes an exposition-only function object.
+The name *`real-if-needed`* denotes an exposition-only function object.
 The expression `real-if-needed(E)` for a subexpression `E` whose type is
 `T` is expression-equivalent to:
 
@@ -7938,9 +7920,9 @@ The expression `real-if-needed(E)` for a subexpression `E` whose type is
   required;
 - otherwise, `E`.
 
-#### *imag-if-needed* <a id="linalg.helpers.imag">[[linalg.helpers.imag]]</a>
+#### *`imag-if-needed`* <a id="linalg.helpers.imag">[[linalg.helpers.imag]]</a>
 
-The name *imag-if-needed* denotes an exposition-only function object.
+The name *`imag-if-needed`* denotes an exposition-only function object.
 The expression `imag-if-needed(E)` for a subexpression `E` whose type is
 `T` is expression-equivalent to:
 
@@ -8428,7 +8410,7 @@ returns a new `mdspan` representing the transpose of the input matrix.
 
 #### Exposition-only helpers for `layout_transpose` and `transposed` <a id="linalg.transp.helpers">[[linalg.transp.helpers]]</a>
 
-The exposition-only *transpose-extents* function takes an `extents`
+The exposition-only *`transpose-extents`* function takes an `extents`
 object representing the extents of a matrix, and returns a new `extents`
 object representing the extents of the transpose of the matrix.
 
@@ -11719,7 +11701,7 @@ specializations *`overaligned-flag`*`<N1>` and
 *`overaligned-flag`*`<N2>`, `Flags2` is not required to contain the
 specialization *`overaligned-flag`*`<std::min(N1, N2)>`.
 
-### Class template *simd-iterator* <a id="simd.iterator">[[simd.iterator]]</a>
+### Class template *`simd-iterator`* <a id="simd.iterator">[[simd.iterator]]</a>
 
 ``` cpp
 namespace std::simd {
@@ -12797,7 +12779,7 @@ Let:
 - *`select-value`*`(`i`)` be a function which returns
   `v[`*`bit-index`*`(`i`)]` for i in the range \[`0`,
   `reduce_count(selector)`) and a valid but unspecified value otherwise.
-  \[*Note 3*: Different calls to *select-value* can return different
+  \[*Note 3*: Different calls to *`select-value`* can return different
   unspecified values. — *end note*]
 
 *Returns:* A data-parallel object where the iᵗʰ element is initialized

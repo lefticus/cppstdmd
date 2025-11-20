@@ -144,6 +144,11 @@ local function clean_grammar(grammar)
   -- \descr{X} renders as X (description text, just remove wrapper)
   grammar = grammar:gsub("\\descr{([^}]*)}", "%1")
 
+  -- Exposition-only identifiers and concepts (Issue #49) - strip in grammar/BNF contexts
+  grammar = grammar:gsub("\\exposid{([^}]*)}", "%1")
+  grammar = grammar:gsub("\\exposidnc{([^}]*)}", "%1")
+  grammar = grammar:gsub("\\exposconceptnc{([^}]*)}", "%1")
+
   -- Process cross-reference macros that may appear in BNF blocks (Issue #22)
   -- \tref{label} -> [[label]] (table reference)
   -- \iref{label} -> [[label]] (indexed reference)

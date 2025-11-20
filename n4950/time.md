@@ -24,7 +24,7 @@ summarized in [[time.summary]].
 | [[ctime.syn]]      | C library time utilities    | `<ctime>`  |
 
 
-Let *STATICALLY-WIDEN*`<charT>("...")` be `"..."` if `charT` is `char`
+Let *`STATICALLY-WIDEN`*`<charT>("...")` be `"..."` if `charT` is `char`
 and `L"..."` if `charT` is `wchar_t`.
 
 ## Header `<chrono>` synopsis <a id="time.syn">[[time.syn]]</a>

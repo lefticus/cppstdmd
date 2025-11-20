@@ -5898,19 +5898,19 @@ were removed and its *function-body* were replaced by the following
 
 ``` bnf
 '{'
-   *promise-type* \textit{promise} *promise-constructor-arguments* ';'
-% FIXME:    \exposid{promise}'.get_return_object()' ';'
+   *promise-type* promise *promise-constructor-arguments* ';'
+% FIXME:    promise'.get_return_object()' ';'
 % ... except that it's not a discarded-value expression
    'try' '{'
-     'co_await' '\textit{promise}.initial_suspend()' ';'
+     'co_await' 'promise.initial_suspend()' ';'
      function-body
    '} catch ( ... ) {'
-     'if (!\textit{initial-await-resume-called})'
+     'if (!initial-await-resume-called)'
        'throw' ';'
-     '\textit{promise}.unhandled_exception()' ';'
+     'promise.unhandled_exception()' ';'
    '}'
-\textit{final-suspend} ':'
-   'co_await' '\textit{promise}.final_suspend()' ';'
+final-suspend ':'
+   'co_await' 'promise.final_suspend()' ';'
 '}'
 ```
 
@@ -5924,9 +5924,9 @@ where
   `true` immediately before the evaluation of the *await-resume*
   expression [[expr.await]] of the initial await expression, and
 - *promise-type* denotes the promise type, and
-- the object denoted by the exposition-only name *promise* is the
+- the object denoted by the exposition-only name *`promise`* is the
   *promise object* of the coroutine, and
-- the label denoted by the name *final-suspend* is defined for
+- the label denoted by the name *`final-suspend`* is defined for
   exposition only [[stmt.return.coroutine]], and
 - *promise-constructor-arguments* is determined as follows: overload
   resolution is performed on a promise constructor call created by
@@ -6133,26 +6133,26 @@ denote the *cv-qualifier*s in the *decl-specifier-seq* and *S* consist
 of each *decl-specifier* of the *decl-specifier-seq* that is
 `constexpr`, `constinit`, or a *storage-class-specifier*. A cv that
 includes `volatile` is deprecated; see  [[depr.volatile.type]]. First, a
-variable with a unique name *e* is introduced. If the
+variable with a unique name *`e`* is introduced. If the
 *assignment-expression* in the *initializer* has array type *cv1* `A`
-and no *ref-qualifier* is present, *e* is defined by
+and no *ref-qualifier* is present, *`e`* is defined by
 
 ``` bnf
-attribute-specifier-seqₒₚₜ *S* cv 'A' \textit{e} ';'
+attribute-specifier-seqₒₚₜ *S* cv 'A' e ';'
 ```
 
 and each element is copy-initialized or direct-initialized from the
 corresponding element of the *assignment-expression* as specified by the
-form of the *initializer*. Otherwise, *e* is defined as-if by
+form of the *initializer*. Otherwise, *`e`* is defined as-if by
 
 ``` bnf
-attribute-specifier-seqₒₚₜ decl-specifier-seq ref-qualifierₒₚₜ \textit{e} initializer ';'
+attribute-specifier-seqₒₚₜ decl-specifier-seq ref-qualifierₒₚₜ e initializer ';'
 ```
 
 where the declaration is never interpreted as a function declaration and
 the parts of the declaration other than the *declarator-id* are taken
 from the corresponding structured binding declaration. The type of the
-*id-expression* *e* is called `E`.
+*id-expression* *`e`* is called `E`.
 
 [*Note 1*: `E` is never a reference type [[expr.prop]]. — *end note*]
 
@@ -6190,7 +6190,7 @@ void now_i_know_my() {
 — *end example*]
 
 If a structured binding declaration appears as a *condition*, the
-decision variable [[stmt.pre]] of the condition is *e*.
+decision variable [[stmt.pre]] of the condition is *`e`*.
 
 If the *initializer* refers to one of the names introduced by the
 structured binding declaration, the program is ill-formed.
@@ -6242,7 +6242,7 @@ is `get<i>(e)`, where `get` undergoes argument-dependent lookup
 [*Note 4*: Ordinary unqualified lookup [[basic.lookup.unqual]] is not
 performed. — *end note*]
 
-In either case, *e* is an lvalue if the type of the entity *e* is an
+In either case, *`e`* is an lvalue if the type of the entity *`e`* is an
 lvalue reference and an xvalue otherwise. Given the type `Tᵢ` designated
 by `std::tuple_element<i, E>::type` and the type `Uᵢ` designated by
 either `Tᵢ&` or `Tᵢ&&`, where `Uᵢ` is an lvalue reference if the
@@ -6255,9 +6255,9 @@ are introduced with unique names `rᵢ` as follows:
 
 Each $\textrm{SB}_i$ is the name of an lvalue of type `Tᵢ` that refers
 to the object bound to `rᵢ`; the referenced type is `Tᵢ`. The
-initialization of *e* and any conversion of *e* considered as a decision
-variable [[stmt.pre]] is sequenced before the initialization of any
-`rᵢ`. The initialization of each `rᵢ` is sequenced before the
+initialization of *`e`* and any conversion of *`e`* considered as a
+decision variable [[stmt.pre]] is sequenced before the initialization of
+any `rᵢ`. The initialization of each `rᵢ` is sequenced before the
 initialization of any `rⱼ` where i < j.
 
 Otherwise, all of `E`’s non-static data members shall be direct members
@@ -6267,7 +6267,7 @@ anonymous union member, and the structured binding size of `E` is equal
 to the number of non-static data members of `E`. Designating the
 non-static data members of `E` as `m₀`, `m₁`, `m₂`, … (in declaration
 order), each $\textrm{SB}_i$ is the name of an lvalue that refers to the
-member `m`ᵢ of *e* and whose type is that of `e.mᵢ` [[expr.ref]]; the
+member `m`ᵢ of *`e`* and whose type is that of `e.mᵢ` [[expr.ref]]; the
 referenced type is the declared type of `mᵢ` if that type is a reference
 type, or the type of `e.mᵢ` otherwise. The lvalue is a bit-field if that
 member is a bit-field.
@@ -6825,17 +6825,17 @@ namespace A {
 An *unnamed-namespace-definition* behaves as if it were replaced by
 
 ``` bnf
-inlineₒₚₜ namespace \textit{unique} \terminal{\ \terminal{/* empty body */} \terminal{\}}
-using namespace \textit{unique} \terminal{;}
-namespace \textit{unique} \terminal{\ namespace-body \terminal{\}}
+inlineₒₚₜ namespace unique \terminal{\ \terminal{/* empty body */} \terminal{\}}
+using namespace unique \terminal{;}
+namespace unique \terminal{\ namespace-body \terminal{\}}
 ```
 
 where `inline` appears if and only if it appears in the
-*unnamed-namespace-definition* and all occurrences of *unique* in a
+*unnamed-namespace-definition* and all occurrences of *`unique`* in a
 translation unit are replaced by the same identifier, and this
 identifier differs from all other identifiers in the program. The
 optional *attribute-specifier-seq* in the *unnamed-namespace-definition*
-appertains to *unique*.
+appertains to *`unique`*.
 
 [*Example 1*:
 

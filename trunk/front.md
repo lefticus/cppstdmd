@@ -1202,7 +1202,7 @@ by the use of type or `constant width` type to avoid ambiguities; see
     - 29.10.3 Header `<simd>` synopsis [[simd.syn]](numerics.md#simd.syn)
     - 29.10.4 Type traits [[simd.traits]](numerics.md#simd.traits)
     - 29.10.5 Load and store flags [[simd.flags]](numerics.md#simd.flags)
-    - 29.10.6 Class template *simd-iterator* [[simd.iterator]](numerics.md#simd.iterator)
+    - 29.10.6 Class template *`simd-iterator`* [[simd.iterator]](numerics.md#simd.iterator)
     - 29.10.7 Class template `basic_vec` [[simd.class]](numerics.md#simd.class)
     - 29.10.8 `basic_vec` non-member operations [[simd.nonmembers]](numerics.md#simd.nonmembers)
     - 29.10.9 Class template `basic_mask` [[simd.mask.class]](numerics.md#simd.mask.class)

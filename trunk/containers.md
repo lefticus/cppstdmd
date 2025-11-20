@@ -1339,7 +1339,7 @@ If a node handle is not empty, then it contains an allocator that is
 equal to the allocator of the container when the element was extracted.
 If a node handle is empty, it contains no allocator.
 
-Class *node-handle* is for exposition only.
+Class *`node-handle`* is for exposition only.
 
 If a user-defined specialization of `pair` exists for
 `pair<const Key, T>` or `pair<Key, T>`, where `Key` is the container’s
@@ -1351,10 +1351,10 @@ template<unspecified>
 class node-handle {
 public:
   // These type declarations are described in [associative.reqmts] and [unord.req].
-  using value_type     = see belownc{};     // not present for map containers
-  using key_type       = see belownc{};     // not present for set containers
-  using mapped_type    = see belownc{};     // not present for set containers
-  using allocator_type = see belownc{};
+  using value_type     = see below;     // not present for map containers
+  using key_type       = see below;     // not present for set containers
+  using mapped_type    = see below;     // not present for set containers
+  using allocator_type = see below;
 
 private:
   using container_node_type = unspecified;                  // exposition only
@@ -1532,8 +1532,8 @@ struct insert-return-type
 };
 ```
 
-The name *insert-return-type* is for exposition only.
-*insert-return-type* has the template parameters, data members, and
+The name *`insert-return-type`* is for exposition only.
+*`insert-return-type`* has the template parameters, data members, and
 special members specified above. It has no base classes or members other
 than those specified.
 
@@ -8878,11 +8878,11 @@ The header `<unordered_map>` defines the class templates `unordered_map`
 and `unordered_multimap`; the header `<unordered_set>` defines the class
 templates `unordered_set` and `unordered_multiset`.
 
-The exposition-only alias templates *iter-value-type*, *iter-key-type*,
-*iter-mapped-type*, *iter-to-alloc-type*, *range-key-type*,
-*range-mapped-type*, and *range-to-alloc-type* defined in
-[[associative.general]] may appear in deduction guides for unordered
-containers.
+The exposition-only alias templates *`iter-value-type`*,
+*`iter-key-type`*, *`iter-mapped-type`*, *`iter-to-alloc-type`*,
+*`range-key-type`*, *`range-mapped-type`*, and *`range-to-alloc-type`*
+defined in [[associative.general]] may appear in deduction guides for
+unordered containers.
 
 ### Header `<unordered_map>` synopsis <a id="unord.map.syn">[[unord.map.syn]]</a>
 
@@ -10769,10 +10769,10 @@ overload resolution if any of the following are true:
 - It has both `MappedContainer` and `Allocator` template parameters, and
   `uses_allocator_v<MappedContainer, Allocator>` is `false`.
 
-The exposition-only alias template *iter-value-type* defined in
+The exposition-only alias template *`iter-value-type`* defined in
 [[sequences.general]] and the exposition-only alias templates
-*iter-key-type*, *iter-mapped-type*, *range-key-type*, and
-*range-mapped-type* defined in [[associative.general]] may appear in
+*`iter-key-type`*, *`iter-mapped-type`*, *`range-key-type`*, and
+*`range-mapped-type`* defined in [[associative.general]] may appear in
 deduction guides for container adaptors.
 
 The following exposition-only alias template may appear in deduction
@@ -15287,7 +15287,7 @@ template<class OtherIndexType, size_t N>
   [0, `rank_dynamic()`), direct-non-list-initializes
   *`dynamic-extents`*`[`d`]` with `as_const(exts[`d`])`.
 - Otherwise, for all d in the range [0, `rank_dynamic()`),
-  direct-non-list-initializes *dynamic-extents*`[`d`]` with
+  direct-non-list-initializes *`dynamic-extents`*`[`d`]` with
   `as_const(exts[`*`dynamic-index-inv`*`(`d`)])`.
 
 ``` cpp
@@ -15371,15 +15371,15 @@ In [[mdspan.layout.reqmts]] and [[mdspan.layout.policy.reqmts]]:
 
 In [[mdspan.layout.reqmts]] through [[mdspan.layout.stride]]:
 
-- Let *is-mapping-of* be the exposition-only variable template defined
+- Let *`is-mapping-of`* be the exposition-only variable template defined
   as follows:
   ``` cpp
   template<class Layout, class Mapping>
   constexpr bool is-mapping-of =  // exposition only
     is_same_v<typename Layout::template mapping<typename Mapping::extents_type>, Mapping>;
   ```
-- Let *is-layout-left-padded-mapping-of* be the exposition-only variable
-  template defined as follows:
+- Let *`is-layout-left-padded-mapping-of`* be the exposition-only
+  variable template defined as follows:
   ``` cpp
   template<class Mapping>
   constexpr bool is-layout-left-padded-mapping-of = see below;   // exposition only
@@ -15388,7 +15388,7 @@ In [[mdspan.layout.reqmts]] through [[mdspan.layout.stride]]:
   where `is-layout-left-padded-mapping-of<Mapping>` is `true` if and
   only if `Mapping` denotes a specialization of
   `layout_left_padded<S>::mapping` for some value `S` of type `size_t`.
-- Let *is-layout-right-padded-mapping-of* be the exposition-only
+- Let *`is-layout-right-padded-mapping-of`* be the exposition-only
   variable template defined as follows:
   ``` cpp
   template<class Mapping>
@@ -16198,7 +16198,7 @@ Let `OFFSET(m)` be:
   multidimensional index in `m.extents()` and each element of `z` equals
   0.
 
-Let *is-extents* be the exposition-only variable template defined as
+Let *`is-extents`* be the exposition-only variable template defined as
 follows:
 
 ``` cpp
@@ -16478,10 +16478,10 @@ ill-formed.
 models `regular` for each `E`.
 
 Throughout [[mdspan.layout.leftpad]], let `P_rank` be the following size
-*rank\_* parameter pack of `size_`t values:
+*`rank_`* parameter pack of `size_`t values:
 
-- the empty parameter pack, if *rank\_* equals zero;
-- otherwise, `0zu`, if *rank\_* equals one;
+- the empty parameter pack, if *`rank_`* equals zero;
+- otherwise, `0zu`, if *`rank_`* equals one;
 - otherwise, the parameter pack `0zu`, `1zu`, …, `rank_- 1`.
 
 *Mandates:*
@@ -16491,15 +16491,15 @@ Throughout [[mdspan.layout.leftpad]], let `P_rank` be the following size
   of type `index_type`.
 - `padding_value` is representable as a value of type `index_type`.
 - If
-  - *rank\_* is greater than one,
+  - *`rank_`* is greater than one,
   - `padding_value` does not equal `dynamic_extent`, and
-  - *first-static-extent* does not equal `dynamic_extent`,
+  - *`first-static-extent`* does not equal `dynamic_extent`,
 
   then `LEAST-MULTIPLE-AT-LEAST(padding_value, first-static-extent)` is
   representable as a value of type `size_t`, and is representable as a
   value of type `index_type`.
 - If
-  - *rank\_* is greater than one,
+  - *`rank_`* is greater than one,
   - `padding_value` does not equal `dynamic_extent`, and
   - `extents_type::static_extent(k)` does not equal `dynamic_extent` for
     all k in the range \[`0`, `extents_type::rank()`),
@@ -16921,10 +16921,10 @@ ill-formed.
 models `regular` for each `E`.
 
 Throughout [[mdspan.layout.rightpad]], let `P_rank` be the following
-size *rank\_* parameter pack of `size_`t values:
+size *`rank_`* parameter pack of `size_`t values:
 
-- the empty parameter pack, if *rank\_* equals zero;
-- otherwise, `0zu`, if *rank\_* equals one;
+- the empty parameter pack, if *`rank_`* equals zero;
+- otherwise, `0zu`, if *`rank_`* equals one;
 - otherwise, the parameter pack `0zu`, `1zu`, …, `rank_- 1`.
 
 *Mandates:*
@@ -16934,15 +16934,15 @@ size *rank\_* parameter pack of `size_`t values:
   of type `index_type`.
 - `padding_value` is representable as a value of type `index_type`.
 - If
-  - *rank\_* is greater than one,
+  - *`rank_`* is greater than one,
   - `padding_value` does not equal `dynamic_extent`, and
-  - *last-static-extent* does not equal `dynamic_extent`,
+  - *`last-static-extent`* does not equal `dynamic_extent`,
 
   then `LEAST-MULTIPLE-AT-LEAST(padding_value, last-static-extent)` is
   representable as a value of type `size_t`, and is representable as a
   value of type `index_type`.
 - If
-  - *rank\_* is greater than one,
+  - *`rank_`* is greater than one,
   - `padding_value` does not equal `dynamic_extent`, and
   - `extents_type::static_extent(k)` does not equal `dynamic_extent` for
     all k in the range \[`0`, *`rank_`*),
@@ -18256,8 +18256,8 @@ following are `true`:
 
 - if Sₖ is a specialization of `strided_slice`, `sₖ.extent` is equal to
   zero or `sₖ.stride` is greater than zero; and
-- $0            \leq \tcode{\textit{first_}<index_type, $k$>(slices...)} \\
-  \hphantom{0 } \leq \tcode{\textit{last_}<$k$>(extents(), slices...)} \\
+- $0            \leq \tcode{\exposid{first_}<index_type, $k$>(slices...)} \\
+  \hphantom{0 } \leq \tcode{\exposid{last_}<$k$>(extents(), slices...)} \\
   \hphantom{0 } \leq \tcode{extents().extent($k$)}$
 
 Let `sub_ext` be the result of `submdspan_extents(extents(), slices...)`

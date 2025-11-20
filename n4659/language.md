@@ -320,8 +320,6 @@ constexpr byte operator&(byte l, byte r) noexcept;
 return byte(static_cast<unsigned char>(l) & static_cast<unsigned char>(r));
 ```
 
-\indexlibrarymember{operator^=}{byte}
-
 ``` cpp
 constexpr byte& operator^=(byte& l, byte r) noexcept;
 ```
@@ -332,8 +330,6 @@ constexpr byte& operator^=(byte& l, byte r) noexcept;
 return l = byte(static_cast<unsigned char>(l) ^ static_cast<unsigned char>(r));
 ```
 
-\indexlibrarymember{operator^}{byte}
-
 ``` cpp
 constexpr byte operator^(byte l, byte r) noexcept;
 ```
@@ -343,8 +339,6 @@ constexpr byte operator^(byte l, byte r) noexcept;
 ``` cpp
 return byte(static_cast<unsigned char>(l) ^ static_cast<unsigned char>(r));
 ```
-
-\indexlibrarymember{operator~}{byte}
 
 ``` cpp
 constexpr byte operator~(byte b) noexcept;

@@ -1186,8 +1186,6 @@ constexpr subrange(R&& r) requires (!StoreSize || sized_range<R>);
 - If *StoreSize* is `true`, `subrange{r, ranges::size(r)}`.
 - Otherwise, `subrange{ranges::begin(r), ranges::end(r)}`.
 
-*PairLike*
-
 ``` cpp
 template<not-same-as<subrange> PairLike>
   requires pair-like-convertible-from<PairLike, const I&, const S&>
@@ -2232,7 +2230,7 @@ In this case, `adaptor(args...)` is a range adaptor closure object.
 ### Semiregular wrapper <a id="range.semi.wrap">[[range.semi.wrap]]</a>
 
 Many types in this subclause are specified in terms of an
-exposition-only class template *semiregular-box*. `semiregular-box<T>`
+exposition-only class template *`semiregular-box`*. `semiregular-box<T>`
 behaves exactly like `optional<T>` with the following differences:
 
 - `semiregular-box<T>` constrains its type parameter `T` with
@@ -3842,10 +3840,10 @@ namespace std::ranges {
 
 `iterator::iterator_concept` is defined as follows:
 
-- If *ref-is-glvalue* is `true` and *Base* and `range_reference_t<Base>`
-  each model `bidirectional_range`, then `iterator_concept` denotes
-  `bidirectional_iterator_tag`.
-- Otherwise, if *ref-is-glvalue* is `true` and *Base* and
+- If *`ref-is-glvalue`* is `true` and *`Base`* and
+  `range_reference_t<Base>` each model `bidirectional_range`, then
+  `iterator_concept` denotes `bidirectional_iterator_tag`.
+- Otherwise, if *`ref-is-glvalue`* is `true` and *`Base`* and
   `range_reference_t<Base>` each model , then `iterator_concept` denotes
   `forward_iterator_tag`.
 - Otherwise, `iterator_concept` denotes `input_iterator_tag`.
@@ -3856,10 +3854,10 @@ namespace std::ranges {
   `iterator_traits<iterator_t<Base>>::iterator_category`, and let
   *INNERC* denote
   `iterator_traits<iterator_t<range_reference_t<Base>>>::iterator_category`.
-- If *ref-is-glvalue* is `true` and *OUTERC* and *INNERC* each model
+- If *`ref-is-glvalue`* is `true` and *OUTERC* and *INNERC* each model
   `derived_from<bidirectional_iterator_tag>`, `iterator_category`
   denotes `bidirectional_iterator_tag`.
-- Otherwise, if *ref-is-glvalue* is `true` and *OUTERC* and *INNERC*
+- Otherwise, if *`ref-is-glvalue`* is `true` and *OUTERC* and *INNERC*
   each model `derived_from<forward_iterator_tag>`, `iterator_category`
   denotes `forward_iterator_tag`.
 - Otherwise, if *OUTERC* and *INNERC* each model
@@ -3875,7 +3873,7 @@ common_type_t<
   range_difference_t<range_reference_t<Base>>>
 ```
 
-`join_view` iterators use the *satisfy* function to skip over empty
+`join_view` iterators use the *`satisfy`* function to skip over empty
 inner ranges.
 
 ``` cpp
@@ -4236,8 +4234,8 @@ namespace std::ranges {
 ```
 
 Many of the following specifications refer to the notional member
-*current* of *outer-iterator*. *current* is equivalent to *current\_* if
-`V` models `forward_range`, and `parent_->current_` otherwise.
+*current* of *`outer-iterator`*. *current* is equivalent to *`current_`*
+if `V` models `forward_range`, and `parent_->current_` otherwise.
 
 ``` cpp
 constexpr explicit outer-iterator(Parent& parent)

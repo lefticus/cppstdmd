@@ -2726,7 +2726,7 @@ if (p != nullptr && p->weak-this.expired())
   p->weak-this = shared_ptr<remove_cv_t<Y>>(*this, const_cast<remove_cv_t<Y>*>(p));
 ```
 
-The assignment to the *weak-this* member is not atomic and conflicts
+The assignment to the *`weak-this`* member is not atomic and conflicts
 with any potentially concurrent access to the same object
 [[intro.multithread]].
 
@@ -4315,12 +4315,12 @@ owned object as needed.
 
 Constructing an owned object with `args...` using the allocator `a`
 means calling `allocator_traits<Allocator>::construct(a, p, args...)`
-where `args` is an expression pack, `a` is an allocator, and *p* is a
+where `args` is an expression pack, `a` is an allocator, and *`p`* is a
 pointer obtained by calling `allocator_traits<Allocator>::allocate`.
 
-The member *alloc* is used for any memory allocation and element
+The member *`alloc`* is used for any memory allocation and element
 construction performed by member functions during the lifetime of each
-indirect object. The allocator *alloc* may be replaced only via
+indirect object. The allocator *`alloc`* may be replaced only via
 assignment or `swap()`. `Allocator` replacement is performed by copy
 assignment, move assignment, or swapping of the allocator only if
 [[container.reqmts]]:
@@ -4849,10 +4849,10 @@ allocate and free storage for the owned object as needed.
 Constructing an owned object of type `U` with `args...` using the
 allocator `a` means calling
 `allocator_traits<Allocator>::construct(a, p, args...)` where `args` is
-an expression pack, `a` is an allocator, and *p* points to storage
+an expression pack, `a` is an allocator, and *`p`* points to storage
 suitable for an owned object of type `U`.
 
-The member *alloc* is used for any memory allocation and element
+The member *`alloc`* is used for any memory allocation and element
 construction performed by member functions during the lifetime of each
 polymorphic value object, or until the allocator is replaced. The
 allocator may be replaced only via assignment or `swap()`. `Allocator`

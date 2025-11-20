@@ -407,8 +407,6 @@ value ([[intro.multithread]]).
 
 ## Lock-free property <a id="atomics.lockfree">[[atomics.lockfree]]</a>
 
-\indeximpldef{values of various \texttt{ATOMIC\_...\_LOCK_FREE} macros}
-
 ``` cpp
 #define ATOMIC_BOOL_LOCK_FREE unspecified
 #define ATOMIC_CHAR_LOCK_FREE unspecified
@@ -546,8 +544,6 @@ atomic<int> v = ATOMIC_VAR_INIT(5);
 
 — *end example*]
 
-*integral*
-
 ``` cpp
 static constexpr bool is_always_lock_free = implementation-defined  // whether a given atomic type's operations are always lock free;
 ```
@@ -558,8 +554,6 @@ type’s operations are always lock-free, and `false` otherwise.
 [*Note 4*: The value of `is_always_lock_free` is consistent with the
 value of the corresponding `ATOMIC_..._LOCK_FREE` macro, if
 defined. — *end note*]
-
-*integral*
 
 ``` cpp
 bool is_lock_free() const volatile noexcept;
@@ -573,8 +567,6 @@ otherwise.
 consistent with the value of `is_always_lock_free` for the same
 type. — *end note*]
 
-*integral*
-
 ``` cpp
 void store(T desired, memory_order order = memory_order_seq_cst) volatile noexcept;
 void store(T desired, memory_order order = memory_order_seq_cst) noexcept;
@@ -587,8 +579,6 @@ void store(T desired, memory_order order = memory_order_seq_cst) noexcept;
 value of `desired`. Memory is affected according to the value of
 `order`.
 
-*integral*
-
 ``` cpp
 T operator=(T desired) volatile noexcept;
 T operator=(T desired) noexcept;
@@ -597,8 +587,6 @@ T operator=(T desired) noexcept;
 *Effects:* Equivalent to: `store(desired)`.
 
 *Returns:* `desired`.
-
-*integral*
 
 ``` cpp
 T load(memory_order order = memory_order_seq_cst) const volatile noexcept;
@@ -612,16 +600,12 @@ T load(memory_order order = memory_order_seq_cst) const noexcept;
 
 *Returns:* Atomically returns the value pointed to by `this`.
 
-*type* *integral*
-
 ``` cpp
 operator T() const volatile noexcept;
 operator T() const noexcept;
 ```
 
 *Effects:* Equivalent to: `return load();`
-
-*integral*
 
 ``` cpp
 T exchange(T desired, memory_order order = memory_order_seq_cst) volatile noexcept;
@@ -635,8 +619,6 @@ operations ([[intro.multithread]]).
 
 *Returns:* Atomically returns the value pointed to by `this` immediately
 before the effects.
-
-*integral* *integral*
 
 ``` cpp
 bool compare_exchange_weak(T& expected, T desired,
@@ -854,9 +836,6 @@ operator, and computation correspondence is:
 | `or` | `|`         | bitwise inclusive or | `xor` | `^` | bitwise exclusive or |
 | `and` | `&`         | bitwise and |     |     |     |
 
-
-*integral* *integral* *integral* *integral* *integral*
-
 ``` cpp
 T fetch_key(T operand, memory_order order = memory_order_seq_cst) volatile noexcept;
 T fetch_key(T operand, memory_order order = memory_order_seq_cst) noexcept;
@@ -873,8 +852,6 @@ the effects.
 
 *Remarks:* For signed integer types, arithmetic is defined to use two’s
 complement representation. There are no undefined results.
-
-*integral* *integral* *integral* *integral* *integral*
 
 ``` cpp
 T operator op=(T operand) volatile noexcept;
@@ -989,16 +966,12 @@ T* operator op=(ptrdiff_t operand) noexcept;
 
 ### Member operators common to integers and pointers to objects <a id="atomics.types.memop">[[atomics.types.memop]]</a>
 
-*integral*
-
 ``` cpp
 T operator++(int) volatile noexcept;
 T operator++(int) noexcept;
 ```
 
 *Effects:* Equivalent to: `return fetch_add(1);`
-
-*integral*
 
 ``` cpp
 T operator--(int) volatile noexcept;
@@ -1007,16 +980,12 @@ T operator--(int) noexcept;
 
 *Effects:* Equivalent to: `return fetch_sub(1);`
 
-*integral*
-
 ``` cpp
 T operator++() volatile noexcept;
 T operator++() noexcept;
 ```
 
 *Effects:* Equivalent to: `return fetch_add(1) + 1;`
-
-*integral*
 
 ``` cpp
 T operator--() volatile noexcept;

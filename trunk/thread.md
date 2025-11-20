@@ -655,8 +655,8 @@ namespace std {
 }
 ```
 
-*stop-state* refers to the `stop_token`’s associated stop state. A
-`stop_token` object is disengaged when *stop-state* is empty.
+*`stop-state`* refers to the `stop_token`’s associated stop state. A
+`stop_token` object is disengaged when *`stop-state`* is empty.
 
 #### Member functions <a id="stoptoken.mem">[[stoptoken.mem]]</a>
 
@@ -717,8 +717,8 @@ namespace std {
 }
 ```
 
-*stop-state* refers to the `stop_source`’s associated stop state. A
-`stop_source` object is disengaged when *stop-state* is empty.
+*`stop-state`* refers to the `stop_source`’s associated stop state. A
+`stop_source` object is disengaged when *`stop-state`* is empty.
 
 `stop_source` models `stoppable-source`, `copyable`,
 `equality_comparable`, and `swappable`.
@@ -818,7 +818,7 @@ template parameter `CallbackFn` that satisfies both `invocable` and
 `stoppable-callback-for<CallbackFn, stop_token, Initializer>` is
 satisfied, then
 `stoppable-callback-for<CallbackFn, stop_token, Initializer>` is
-modeled. The exposition-only *callback-fn* member is the associated
+modeled. The exposition-only *`callback-fn`* member is the associated
 callback function [[stoptoken.concepts]] of
 `stop_callback<\newline CallbackFn>` objects.
 
@@ -1048,8 +1048,8 @@ stoppable-callback-for<CallbackFn, inplace_stop_token, Initializer>
 ```
 
 is modeled. For an `inplace_stop_callback<CallbackFn>` object, the
-exposition-only *callback-fn* member is its associated callback function
-[[stoptoken.concepts]].
+exposition-only *`callback-fn`* member is its associated callback
+function [[stoptoken.concepts]].
 
 #### Constructors and destructor <a id="stopcallback.inplace.cons">[[stopcallback.inplace.cons]]</a>
 
@@ -2446,8 +2446,6 @@ The program is ill-formed if `is_always_lock_free` is `false` and
 
 #### Operations <a id="atomics.ref.ops">[[atomics.ref.ops]]</a>
 
-*pointer-type* *integral-type* *floating-point-type*
-
 ``` cpp
 static constexpr size_t required_alignment;
 ```
@@ -2462,8 +2460,6 @@ lock-free could depend on the alignment of the referenced object. For
 example, lock-free operations on `std::complex<double>` could be
 supported only if aligned to `2*alignof(double)`. — *end note*]
 
-*pointer-type* *integral-type* *floating-point-type*
-
 ``` cpp
 static constexpr bool is_always_lock_free;
 ```
@@ -2472,16 +2468,12 @@ The static data member `is_always_lock_free` is `true` if the
 `atomic_ref` type’s operations are always lock-free, and `false`
 otherwise.
 
-*pointer-type* *integral-type* *floating-point-type*
-
 ``` cpp
 bool is_lock_free() const noexcept;
 ```
 
 *Returns:* `true` if operations on all objects of the type
 `atomic_ref<T>` are lock-free, `false` otherwise.
-
-*pointer-type*
 
 ``` cpp
 constexpr atomic_ref(T& obj);
@@ -2494,15 +2486,11 @@ constexpr atomic_ref(T& obj);
 
 *Throws:* Nothing.
 
-*pointer-type*
-
 ``` cpp
 constexpr atomic_ref(const atomic_ref& ref) noexcept;
 ```
 
 *Ensures:* `*this` references the object referenced by `ref`.
-
-*pointer-type* *integral-type* *floating-point-type*
 
 ``` cpp
 constexpr void store(value_type desired,
@@ -2518,8 +2506,6 @@ constexpr void store(value_type desired,
 value of `desired`. Memory is affected according to the value of
 `order`.
 
-*pointer-type* *integral-type* *floating-point-type*
-
 ``` cpp
 constexpr value_type operator=(value_type desired) const noexcept;
 ```
@@ -2533,8 +2519,6 @@ store(desired);
 return desired;
 ```
 
-*pointer-type* *integral-type* *floating-point-type*
-
 ``` cpp
 constexpr value_type load(memory_order order = memory_order::seq_cst) const noexcept;
 ```
@@ -2546,15 +2530,11 @@ constexpr value_type load(memory_order order = memory_order::seq_cst) const noex
 
 *Returns:* Atomically returns the value referenced by `*ptr`.
 
-*type* *pointer-type* *integral-type* *floating-point-type*
-
 ``` cpp
 constexpr operator value_type() const noexcept;
 ```
 
 *Effects:* Equivalent to: `return load();`
-
-*pointer-type* *integral-type* *floating-point-type*
 
 ``` cpp
 constexpr value_type exchange(value_type desired,
@@ -2570,9 +2550,6 @@ operation [[intro.multithread]].
 
 *Returns:* Atomically returns the value referenced by `*ptr` immediately
 before the effects.
-
-*pointer-type* *integral-type* *floating-point-type* *pointer-type*
-*integral-type* *floating-point-type*
 
 ``` cpp
 constexpr bool compare_exchange_weak(value_type& expected, value_type desired,
@@ -2779,9 +2756,6 @@ The following operations perform arithmetic computations. The
 correspondence among key, operator, and computation is specified in
 [[atomic.types.int.comp]].
 
-*integral-type* *integral-type* *integral-type* *integral-type*
-*integral-type* *integral-type* *integral-type*
-
 ``` cpp
 constexpr value_type fetch_key(value_type operand,
   memory_order order = memory_order::seq_cst) const noexcept;
@@ -2811,9 +2785,6 @@ performed as if by `max` and `min` algorithms [[alg.min.max]],
 respectively, with the object value and the first parameter as the
 arguments.
 
-*integral-type* *integral-type* *integral-type* *integral-type*
-*integral-type* *integral-type*
-
 ``` cpp
 constexpr void store_key(value_type operand,
                          memory_order order = memory_order::seq_cst) const noexcept;
@@ -2839,9 +2810,6 @@ computation. — *end note*]
 For `store_max` and `store_min`, the maximum and minimum computation is
 performed as if by `max` and `min` algorithms [[alg.min.max]],
 respectively, with `*ptr` and the first parameter as the arguments.
-
-*integral-type* *integral-type* *integral-type* *integral-type*
-*integral-type*
 
 ``` cpp
 constexpr value_type operator op=(value_type operand) const noexcept;
@@ -2949,10 +2917,6 @@ correspondence among key, operator, and computation is specified in
 `fminimum`, `fmaximum_num`, and `fminimum_num`, which are specified
 below.
 
-*floating-point-type* *floating-point-type* *floating-point-type*
-*floating-point-type* *floating-point-type* *floating-point-type*
-*floating-point-type* *floating-point-type*
-
 ``` cpp
 constexpr value_type fetch_key(value_type operand,
                           memory_order order = memory_order::seq_cst) const noexcept;
@@ -2998,10 +2962,6 @@ floating-point environment.
 
 *Recommended practice:* The implementation of `fetch_max` and
 `fetch_min` should treat negative zero as smaller than positive zero.
-
-*floating-point-type* *floating-point-type* *floating-point-type*
-*floating-point-type* *floating-point-type* *floating-point-type*
-*floating-point-type* *floating-point-type*
 
 ``` cpp
 constexpr void store_key(value_type operand,
@@ -3051,8 +3011,6 @@ operations. — *end note*]
 
 *Recommended practice:* The implementation of `store_max` and
 `store_min` should treat negative zero as smaller than positive zero.
-
-*floating-point-type* *floating-point-type*
 
 ``` cpp
 constexpr value_type operator op=(value_type operand) const noexcept;
@@ -3147,8 +3105,6 @@ The following operations perform arithmetic computations. The
 correspondence among key, operator, and computation is specified in
 [[atomic.types.pointer.comp]].
 
-*pointer-type* *pointer-type* *pointer-type* *pointer-type*
-
 ``` cpp
 constexpr value_type fetch_key(\seeabovenc operand,
                                memory_order order = memory_order::seq_cst) const noexcept;
@@ -3180,8 +3136,6 @@ arguments.
 subobjects thereof), the `<` operator does not establish a strict weak
 ordering ([[cpp17.lessthancomparable]], [[expr.rel]]). — *end note*]
 
-*pointer-type* *pointer-type* *pointer-type* *pointer-type*
-
 ``` cpp
 constexpr void store_key(\seeabovenc operand,
                          memory_order order = memory_order::seq_cst) const noexcept;
@@ -3209,8 +3163,6 @@ first parameter as the arguments.
 subobjects thereof), the `<` operator does not establish a strict weak
 ordering ([[cpp17.lessthancomparable]], [[expr.rel]]). — *end note*]
 
-*pointer-type* *pointer-type*
-
 ``` cpp
 constexpr value_type operator op=(difference_type operand) const noexcept;
 ```
@@ -3226,8 +3178,6 @@ Let `referred-type` be `pointer-type` for the specializations in
 [[atomics.ref.pointer]] and be `integral-type` for the specializations
 in [[atomics.ref.int]].
 
-*pointer-type* *integral-type*
-
 ``` cpp
 constexpr value_type operator++(int) const noexcept;
 ```
@@ -3235,8 +3185,6 @@ constexpr value_type operator++(int) const noexcept;
 *Constraints:* `is_const_v<`*`referred-type`*`>` is `false`.
 
 *Effects:* Equivalent to: `return fetch_add(1);`
-
-*pointer-type* *integral-type*
 
 ``` cpp
 constexpr value_type operator--(int) const noexcept;
@@ -3246,8 +3194,6 @@ constexpr value_type operator--(int) const noexcept;
 
 *Effects:* Equivalent to: `return fetch_sub(1);`
 
-*pointer-type* *integral-type*
-
 ``` cpp
 constexpr value_type operator++() const noexcept;
 ```
@@ -3255,8 +3201,6 @@ constexpr value_type operator++() const noexcept;
 *Constraints:* `is_const_v<`*`referred-type`*`>` is `false`.
 
 *Effects:* Equivalent to: `return fetch_add(1) + 1;`
-
-*pointer-type* *integral-type*
 
 ``` cpp
 constexpr value_type operator--() const noexcept;
@@ -3364,8 +3308,6 @@ the just-constructed object `A` to another thread via
 variable, and then immediately accessing `A` in the receiving thread.
 This results in undefined behavior. — *end note*]
 
-*integral-type* *floating-point-type*
-
 ``` cpp
 static constexpr bool is_always_lock_free = implementation-defined  // whether a given atomic type's operations are always lock free;
 ```
@@ -3376,8 +3318,6 @@ type’s operations are always lock-free, and `false` otherwise.
 [*Note 2*: The value of `is_always_lock_free` is consistent with the
 value of the corresponding `ATOMIC_..._LOCK_FREE` macro, if
 defined. — *end note*]
-
-*integral-type* *floating-point-type*
 
 ``` cpp
 bool is_lock_free() const volatile noexcept;
@@ -3390,8 +3330,6 @@ otherwise.
 [*Note 3*: The return value of the `is_lock_free` member function is
 consistent with the value of `is_always_lock_free` for the same
 type. — *end note*]
-
-*integral-type* *floating-point-type*
 
 ``` cpp
 void store(T desired, memory_order order = memory_order::seq_cst) volatile noexcept;
@@ -3408,8 +3346,6 @@ constexpr void store(T desired, memory_order order = memory_order::seq_cst) noex
 value of `desired`. Memory is affected according to the value of
 `order`.
 
-*integral-type* *floating-point-type*
-
 ``` cpp
 T operator=(T desired) volatile noexcept;
 constexpr T operator=(T desired) noexcept;
@@ -3421,8 +3357,6 @@ constexpr T operator=(T desired) noexcept;
 *Effects:* Equivalent to `store(desired)`.
 
 *Returns:* `desired`.
-
-*integral-type* *floating-point-type*
 
 ``` cpp
 T load(memory_order order = memory_order::seq_cst) const volatile noexcept;
@@ -3439,8 +3373,6 @@ constexpr T load(memory_order order = memory_order::seq_cst) const noexcept;
 
 *Returns:* Atomically returns the value pointed to by `this`.
 
-*type* *integral-type* *floating-point-type*
-
 ``` cpp
 operator T() const volatile noexcept;
 constexpr operator T() const noexcept;
@@ -3450,8 +3382,6 @@ constexpr operator T() const noexcept;
 `is_always_lock_free` is `true`.
 
 *Effects:* Equivalent to: `return load();`
-
-*integral-type* *floating-point-type*
 
 ``` cpp
 T exchange(T desired, memory_order order = memory_order::seq_cst) volatile noexcept;
@@ -3468,9 +3398,6 @@ operations [[intro.multithread]].
 
 *Returns:* Atomically returns the value pointed to by `this` immediately
 before the effects.
-
-*integral-type* *floating-point-type* *integral-type*
-*floating-point-type*
 
 ``` cpp
 bool compare_exchange_weak(T& expected, T desired,
@@ -3636,8 +3563,6 @@ bool party(pony desired) {
 
 — *end note*]
 
-*integral-type* *floating-point-type*
-
 ``` cpp
 void wait(T old, memory_order order = memory_order::seq_cst) const volatile noexcept;
 constexpr void wait(T old, memory_order order = memory_order::seq_cst) const noexcept;
@@ -3657,8 +3582,6 @@ constexpr void wait(T old, memory_order order = memory_order::seq_cst) const noe
 *Remarks:* This function is an atomic waiting
 operation [[atomics.wait]].
 
-*integral-type* *floating-point-type*
-
 ``` cpp
 void notify_one() volatile noexcept;
 constexpr void notify_one() noexcept;
@@ -3670,8 +3593,6 @@ call, if any such atomic waiting operations exist.
 
 *Remarks:* This function is an atomic notifying
 operation [[atomics.wait]].
-
-*integral-type* *floating-point-type*
 
 ``` cpp
 void notify_all() volatile noexcept;
@@ -3850,10 +3771,6 @@ correspondence among key, operator, and computation is specified in
 | `max` |             | maximum | `xor` | `^` | bitwise exclusive or |
 | `min` |             | minimum |     |     |     |
 
-
-*integral-type* *integral-type* *integral-type* *integral-type*
-*integral-type* *integral-type* *integral-type*
-
 ``` cpp
 integral-type fetch_key(integral-type operand,
                          memory_order order = memory_order::seq_cst) volatile noexcept;
@@ -3885,9 +3802,6 @@ For `fetch_max` and `fetch_min`, the maximum and minimum computation is
 performed as if by `max` and `min` algorithms [[alg.min.max]],
 respectively, with the object value and the first parameter as the
 arguments.
-
-*integral-type* *integral-type* *integral-type* *integral-type*
-*integral-type* *integral-type*
 
 ``` cpp
 void store_key(integral-type operand,
@@ -3921,9 +3835,6 @@ For `store_max` and `store_min`, the maximum and minimum computation is
 performed as if by `max` and `min` algorithms [[alg.min.max]],
 respectively, with the value pointed to by `this` and the first
 parameter as the arguments.
-
-*integral-type* *integral-type* *integral-type* *integral-type*
-*integral-type*
 
 ``` cpp
 integral-type operator op=(integral-type operand) volatile noexcept;
@@ -4084,10 +3995,6 @@ specified in [[atomic.types.int.comp]], except for the keys `max`,
 `min`, `fmaximum`, `fminimum`, `fmaximum_num`, and `fminimum_num`, which
 are specified below.
 
-*floating-point-type* *floating-point-type* *floating-point-type*
-*floating-point-type* *floating-point-type* *floating-point-type*
-*floating-point-type* *floating-point-type*
-
 ``` cpp
 floating-point-type fetch_key(floating-point-type operand,
                               memory_order order = memory_order::seq_cst) volatile noexcept;
@@ -4139,9 +4046,6 @@ floating-point environment.
 
 *Recommended practice:* The implementation of `fetch_max` and
 `fetch_min` should treat negative zero as smaller than positive zero.
-
-*floating-point-type* *floating-point-type* *floating-point-type*
-*floating-point-type* *floating-point-type* *floating-point-type*
 
 ``` cpp
 void store_key(floating-point-type operand,
@@ -4198,8 +4102,6 @@ operations. — *end note*]
 
 *Recommended practice:* The implementation of `store_max` and
 `store_min` should treat negative zero as smaller than positive zero.
-
-*floating-point-type* *floating-point-type*
 
 ``` cpp
 floating-point-type operator op=(floating-point-type operand) volatile noexcept;
@@ -4399,8 +4301,6 @@ constexpr T* operator op=(ptrdiff_t operand) noexcept;
 
 #### Member operators common to integers and pointers to objects <a id="atomics.types.memop">[[atomics.types.memop]]</a>
 
-*integral-type*
-
 ``` cpp
 value_type operator++(int) volatile noexcept;
 constexpr value_type operator++(int) noexcept;
@@ -4410,8 +4310,6 @@ constexpr value_type operator++(int) noexcept;
 `is_always_lock_free` is `true`.
 
 *Effects:* Equivalent to: `return fetch_add(1);`
-
-*integral-type*
 
 ``` cpp
 value_type operator--(int) volatile noexcept;
@@ -4423,8 +4321,6 @@ constexpr value_type operator--(int) noexcept;
 
 *Effects:* Equivalent to: `return fetch_sub(1);`
 
-*integral-type*
-
 ``` cpp
 value_type operator++() volatile noexcept;
 constexpr value_type operator++() noexcept;
@@ -4434,8 +4330,6 @@ constexpr value_type operator++() noexcept;
 `is_always_lock_free` is `true`.
 
 *Effects:* Equivalent to: `return fetch_add(1) + 1;`
-
-*integral-type*
 
 ``` cpp
 value_type operator--() volatile noexcept;

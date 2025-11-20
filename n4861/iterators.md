@@ -939,7 +939,7 @@ The name `ranges::iter_swap` denotes a customization point object
 [[customization.point.object]] that exchanges the values
 [[concept.swappable]] denoted by its arguments.
 
-Let *iter-exchange-move* be the exposition-only function:
+Let *`iter-exchange-move`* be the exposition-only function:
 
 ``` cpp
 template<class X, class Y>

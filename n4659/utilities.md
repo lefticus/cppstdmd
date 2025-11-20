@@ -4695,8 +4695,6 @@ bitset<N>& operator|=(const bitset<N>& rhs) noexcept;
 
 *Returns:* `*this`.
 
-\indexlibrarymember{operator^=}{bitset}
-
 ``` cpp
 bitset<N>& operator^=(const bitset<N>& rhs) noexcept;
 ```
@@ -4770,8 +4768,6 @@ position.
 *Effects:* Resets the bit at position `pos` in `*this`.
 
 *Returns:* `*this`.
-
-\indexlibrarymember{operator~}{bitset}
 
 ``` cpp
 bitset<N> operator~() const noexcept;
@@ -4953,8 +4949,6 @@ bitset<N> operator|(const bitset<N>& lhs, const bitset<N>& rhs) noexcept;
 ```
 
 *Returns:* `bitset<N>(lhs) |= rhs`.
-
-\indexlibrarymember{operator^}{bitset}
 
 ``` cpp
 bitset<N> operator^(const bitset<N>& lhs, const bitset<N>& rhs) noexcept;

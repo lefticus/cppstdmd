@@ -458,10 +458,10 @@ template<unspecified>
   class node_handle {
   public:
     // These type declarations are described in Tables [tab:containers.associative.requirements] and [tab:HashRequirements].
-    using value_type     = see belownc{};   // not present for map containers
-    using key_type       = see belownc{};   // not present for set containers
-    using mapped_type    = see belownc{};   // not present for set containers
-    using allocator_type = see belownc{};
+    using value_type     = see below;   // not present for map containers
+    using key_type       = see below;   // not present for set containers
+    using mapped_type    = see below;   // not present for set containers
+    using allocator_type = see below;
 
   private:
     using container_node_type = unspecified;

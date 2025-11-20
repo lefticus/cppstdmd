@@ -444,7 +444,7 @@ If a node handle is not empty, then it contains an allocator that is
 equal to the allocator of the container when the element was extracted.
 If a node handle is empty, it contains no allocator.
 
-Class *node-handle* is for exposition only.
+Class *`node-handle`* is for exposition only.
 
 If a user-defined specialization of `pair` exists for
 `pair<const Key, T>` or `pair<Key, T>`, where `Key` is the container’s
@@ -456,10 +456,10 @@ template<unspecified>
 class node-handle {
 public:
   // These type declarations are described in Tables [tab:container.assoc.req] and [tab:container.hash.req].
-  using value_type     = see belownc{};     // not present for map containers
-  using key_type       = see belownc{};     // not present for set containers
-  using mapped_type    = see belownc{};     // not present for set containers
-  using allocator_type = see belownc{};
+  using value_type     = see below;     // not present for map containers
+  using key_type       = see below;     // not present for set containers
+  using mapped_type    = see below;     // not present for set containers
+  using allocator_type = see below;
 
 private:
   using container_node_type = unspecified;
@@ -636,9 +636,10 @@ struct insert-return-type
 };
 ```
 
-The name *insert-return-type* is exposition only. *insert-return-type*
-has the template parameters, data members, and special members specified
-above. It has no base classes or members other than those specified.
+The name *`insert-return-type`* is exposition only.
+*`insert-return-type`* has the template parameters, data members, and
+special members specified above. It has no base classes or members other
+than those specified.
 
 ### Associative containers <a id="associative.reqmts">[[associative.reqmts]]</a>
 
@@ -4603,10 +4604,10 @@ The header `<unordered_map>` defines the class templates `unordered_map`
 and `unordered_multimap`; the header `<unordered_set>` defines the class
 templates `unordered_set` and `unordered_multiset`.
 
-The exposition-only alias templates *iter-value-type*, *iter-key-type*,
-*iter-mapped-type*, and *iter-to-alloc-type* defined in
-[[associative.general]] may appear in deduction guides for unordered
-containers.
+The exposition-only alias templates *`iter-value-type`*,
+*`iter-key-type`*, *`iter-mapped-type`*, and *`iter-to-alloc-type`*
+defined in [[associative.general]] may appear in deduction guides for
+unordered containers.
 
 ### Header `<unordered_map>` synopsis <a id="unord.map.syn">[[unord.map.syn]]</a>
 

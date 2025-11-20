@@ -1026,7 +1026,7 @@ The name `ranges::iter_swap` denotes a customization point object
 [[customization.point.object]] that exchanges the values
 [[concept.swappable]] denoted by its arguments.
 
-Let *iter-exchange-move* be the exposition-only function template:
+Let *`iter-exchange-move`* be the exposition-only function template:
 
 ``` cpp
 template<class X, class Y>
@@ -1825,7 +1825,7 @@ take callable objects [[func.def]] as arguments.
 
 To implement algorithms taking projections, it is necessary to determine
 the projected type of an iterator’s value type. For the exposition-only
-alias template *indirect-value-t*, `indirect-value-t<T>` denotes
+alias template *`indirect-value-t`*, `indirect-value-t<T>` denotes
 
 - `invoke_result_t<Proj&, indirect-value-t<I>>` if `T` names
   `projected<I, Proj>`, and
@@ -4187,7 +4187,8 @@ common_iterator tmp = *this;
 return tmp;
 ```
 
-Otherwise, if `requires(I& i) { { *i++ } -> ``; }` is `true` or
+Otherwise, if `requires(I& i) { { *i++ } -> `*`can-reference`*`; }` is
+`true` or
 
 ``` cpp
 indirectly_readable<I> && constructible_from<iter_value_t<I>, iter_reference_t<I>> &&

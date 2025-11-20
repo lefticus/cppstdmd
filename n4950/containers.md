@@ -1317,7 +1317,7 @@ If a node handle is not empty, then it contains an allocator that is
 equal to the allocator of the container when the element was extracted.
 If a node handle is empty, it contains no allocator.
 
-Class *node-handle* is for exposition only.
+Class *`node-handle`* is for exposition only.
 
 If a user-defined specialization of `pair` exists for
 `pair<const Key, T>` or `pair<Key, T>`, where `Key` is the container’s
@@ -1329,10 +1329,10 @@ template<unspecified>
 class node-handle {
 public:
   // These type declarations are described in [associative.reqmts] and [unord.req].
-  using value_type     = see belownc{};     // not present for map containers
-  using key_type       = see belownc{};     // not present for set containers
-  using mapped_type    = see belownc{};     // not present for set containers
-  using allocator_type = see belownc{};
+  using value_type     = see below;     // not present for map containers
+  using key_type       = see below;     // not present for set containers
+  using mapped_type    = see below;     // not present for set containers
+  using allocator_type = see below;
 
 private:
   using container_node_type = unspecified;                  // exposition only
@@ -1510,9 +1510,10 @@ struct insert-return-type
 };
 ```
 
-The name *insert-return-type* is exposition only. *insert-return-type*
-has the template parameters, data members, and special members specified
-above. It has no base classes or members other than those specified.
+The name *`insert-return-type`* is exposition only.
+*`insert-return-type`* has the template parameters, data members, and
+special members specified above. It has no base classes or members other
+than those specified.
 
 ### Associative containers <a id="associative.reqmts">[[associative.reqmts]]</a>
 
@@ -7418,11 +7419,11 @@ The header `<unordered_map>` defines the class templates `unordered_map`
 and `unordered_multimap`; the header `<unordered_set>` defines the class
 templates `unordered_set` and `unordered_multiset`.
 
-The exposition-only alias templates *iter-value-type*, *iter-key-type*,
-*iter-mapped-type*, *iter-to-alloc-type*, *range-key-type*,
-*range-mapped-type*, and *range-to-alloc-type* defined in
-[[associative.general]] may appear in deduction guides for unordered
-containers.
+The exposition-only alias templates *`iter-value-type`*,
+*`iter-key-type`*, *`iter-mapped-type`*, *`iter-to-alloc-type`*,
+*`range-key-type`*, *`range-mapped-type`*, and *`range-to-alloc-type`*
+defined in [[associative.general]] may appear in deduction guides for
+unordered containers.
 
 ### Header `<unordered_map>` synopsis <a id="unord.map.syn">[[unord.map.syn]]</a>
 
@@ -9194,10 +9195,10 @@ overload resolution if any of the following are true:
 - It has both `MappedContainer` and `Allocator` template parameters, and
   `uses_allocator_v<MappedContainer, Allocator>` is `false`.
 
-The exposition-only alias template *iter-value-type* defined in
+The exposition-only alias template *`iter-value-type`* defined in
 [[sequences.general]] and the exposition-only alias templates
-*iter-key-type*, *iter-mapped-type*, *range-key-type*, and
-*range-mapped-type* defined in [[associative.general]] may appear in
+*`iter-key-type`*, *`iter-mapped-type`*, *`range-key-type`*, and
+*`range-mapped-type`* defined in [[associative.general]] may appear in
 deduction guides for container adaptors.
 
 The following exposition-only alias template may appear in deduction
@@ -13556,7 +13557,7 @@ template<class OtherIndexType, size_t N>
   [0, `rank_dynamic()`), direct-non-list-initializes
   *`dynamic-extents`*`[`d`]` with `as_const(exts[`d`])`.
 - Otherwise, for all d in the range [0, `rank_dynamic()`),
-  direct-non-list-initializes *dynamic-extents*`[`d`]` with
+  direct-non-list-initializes *`dynamic-extents`*`[`d`]` with
   `as_const(exts[`*`dynamic-index-inv`*`(`d`)])`.
 
 ``` cpp
@@ -13628,8 +13629,8 @@ In subclauses [[mdspan.layout.reqmts]] and
   is equal to 1, and all other elements are equal to 0.
 
 In subclauses [[mdspan.layout.reqmts]] through [[mdspan.layout.stride]],
-let *is-mapping-of* be the exposition-only variable template defined as
-follows:
+let *`is-mapping-of`* be the exposition-only variable template defined
+as follows:
 
 ``` cpp
 template<class Layout, class Mapping>
@@ -14300,7 +14301,7 @@ Let `OFFSET(m)` be:
   multidimensional index in `m.extents()` and each element of `z` equals
   0.
 
-Let *is-extents* be the exposition-only variable template defined as
+Let *`is-extents`* be the exposition-only variable template defined as
 follows:
 
 ``` cpp

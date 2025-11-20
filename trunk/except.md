@@ -787,7 +787,7 @@ These situations are:
   member function, or
 - when an object `scope` of type `std::execution::simple_counting_scope`
   or `std::execution::counting_scope` is destroyed and `scope.state` is
-  not equal to *joined*, *unused*, or *unused-and-closed*
+  not equal to *`joined`*, *`unused`*, or *`unused-and-closed`*
   [[exec.simple.counting.ctor]], or
 - when `std::execution::get_parallel_scheduler` is called and
   `std::execution::system_context_replaceability::query_parallel_scheduler_backend()`

@@ -4454,8 +4454,6 @@ bitset<N>& operator|=(const bitset<N>& rhs) noexcept;
 
 *Returns:* `*this`.
 
-\indexlibrarymember{operator^=}{bitset}
-
 ``` cpp
 bitset<N>& operator^=(const bitset<N>& rhs) noexcept;
 ```
@@ -4529,8 +4527,6 @@ bitset<N>& reset(size_t pos);
 
 *Throws:* `out_of_range` if `pos` does not correspond to a valid bit
 position.
-
-\indexlibrarymember{operator~}{bitset}
 
 ``` cpp
 bitset<N> operator~() const noexcept;
@@ -4704,8 +4700,6 @@ bitset<N> operator|(const bitset<N>& lhs, const bitset<N>& rhs) noexcept;
 ```
 
 *Returns:* `bitset<N>(lhs) |= rhs`.
-
-\indexlibrarymember{operator^}{bitset}
 
 ``` cpp
 bitset<N> operator^(const bitset<N>& lhs, const bitset<N>& rhs) noexcept;
@@ -14432,7 +14426,7 @@ template<class Visitor, class Context>
 *Effects:* Equivalent to:
 `return visit(forward<Visitor>(vis), arg.value);`
 
-#### Class template *format-arg-store* <a id="format.arg.store">[[format.arg.store]]</a>
+#### Class template *`format-arg-store`* <a id="format.arg.store">[[format.arg.store]]</a>
 
 ``` cpp
 namespace std {
@@ -14443,7 +14437,7 @@ namespace std {
 }
 ```
 
-An instance of *format-arg-store* stores formatting arguments.
+An instance of *`format-arg-store`* stores formatting arguments.
 
 ``` cpp
 template<class Context = format_context, class... Args>

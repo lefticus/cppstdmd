@@ -505,11 +505,11 @@ place before each execution of the substatement.
 A `while` statement is equivalent to
 
 ``` bnf
-\textit{label} ':'
+label ':'
 '{'
    if '(' condition ')' '{'
       statement
-      goto \textit{label} ';'
+      goto label ';'
    '}'
 '}'
 ```
@@ -600,11 +600,11 @@ is equivalent to
 ``` bnf
 '{'
    init-statementₒₚₜ
-   auto '&&'\textit{range} '=' for-range-initializer ';'
-   auto \textit{begin} '=' \textit{begin-expr} ';'
-   auto \textit{end} '=' \textit{end-expr} ';'
-   for '(' ';' \textit{begin} '!=' \textit{end}';' '++'\textit{begin} ')' '{'
-     for-range-declaration '=' '*' \textit{begin} ';'
+   auto '&&'range '=' for-range-initializer ';'
+   auto begin '=' begin-expr ';'
+   auto end '=' end-expr ';'
+   for '(' ';' begin '!=' end';' '++'begin ')' '{'
+     for-range-declaration '=' '*' begin ';'
      statement
    '}'
 '}'
@@ -615,19 +615,20 @@ where
 - if the *for-range-initializer* is an *expression*, it is regarded as
   if it were surrounded by parentheses (so that a comma operator cannot
   be reinterpreted as delimiting two *init-declarator*s);
-- *range*, *begin*, and *end* are variables defined for exposition only;
-  and
-- *begin-expr* and *end-expr* are determined as follows:
-  - if the type of *range* is a reference to an array type `R`,
-    *begin-expr* and *end-expr* are *range* and *range* `+` `N`,
+- *`range`*, *`begin`*, and *`end`* are variables defined for exposition
+  only; and
+- *`begin-expr`* and *`end-expr`* are determined as follows:
+  - if the type of *`range`* is a reference to an array type `R`,
+    *`begin-expr`* and *`end-expr`* are *`range`* and *`range`* `+` `N`,
     respectively, where `N` is the array bound. If `R` is an array of
     unknown bound or an array of incomplete type, the program is
     ill-formed;
-  - if the type of *range* is a reference to a class type `C`, and
+  - if the type of *`range`* is a reference to a class type `C`, and
     searches in the scope of `C` [[class.member.lookup]] for the names
-    `begin` and `end` each find at least one declaration, *begin-expr*
-    and *end-expr* are `range.begin()` and `range.end()`, respectively;
-  - otherwise, *begin-expr* and *end-expr* are `begin(range)` and
+    `begin` and `end` each find at least one declaration, *`begin-expr`*
+    and *`end-expr`* are `range.begin()` and `range.end()`,
+    respectively;
+  - otherwise, *`begin-expr`* and *`end-expr`* are `begin(range)` and
     `end(range)`, respectively, where `begin` and `end` undergo
     argument-dependent lookup [[basic.lookup.argdep]].
     \[*Note 1*: Ordinary unqualified lookup [[basic.lookup.unqual]] is
@@ -689,12 +690,13 @@ expansion-init-list:
 The *compound-statement* of an *expansion-statement* is a
 control-flow-limited statement [[stmt.label]].
 
-For an expression `E`, let the expressions *begin-expr* and *end-expr*
-be determined as specified in  [[stmt.ranged]]. An expression is
-*expansion-iterable* if it does not have array type and either
+For an expression `E`, let the expressions *`begin-expr`* and
+*`end-expr`* be determined as specified in  [[stmt.ranged]]. An
+expression is *expansion-iterable* if it does not have array type and
+either
 
-- *begin-expr* and *end-expr* are of the form `E.begin()` and `E.end()`,
-  or
+- *`begin-expr`* and *`end-expr`* are of the form `E.begin()` and
+  `E.end()`, or
 - argument-dependent lookups for `begin(E)` and for `end(E)` each find
   at least one function or function template.
 
@@ -763,9 +765,9 @@ follows:
   }
   ```
 
-  The variables *range*, *begin*, *end*, and *iter* are defined for
-  exposition only.
-  \[*Note 2*: The instantiation is ill-formed if *range* is not a
+  The variables *`range`*, *`begin`*, *`end`*, and *`iter`* are defined
+  for exposition only.
+  \[*Note 2*: The instantiation is ill-formed if *`range`* is not a
   constant expression [[expr.const]]. — *end note*]
 - Otherwise, S is a destructuring expansion statement and S is
   equivalent to:
@@ -993,10 +995,10 @@ operand. Let *p* be an lvalue naming the coroutine promise object
 [[dcl.fct.def.coroutine]]. A `co_return` statement is equivalent to:
 
 ``` bnf
-\terminal{\ S\terminal{;} goto \textit{final-suspend}\terminal{;} \terminal{\}}
+\terminal{\ S\terminal{;} goto final-suspend\terminal{;} \terminal{\}}
 ```
 
-where *final-suspend* is the exposition-only label defined in
+where *`final-suspend`* is the exposition-only label defined in
 [[dcl.fct.def.coroutine]] and *S* is defined as follows:
 
 - If the operand is a *braced-init-list* or an expression of non-`void`
