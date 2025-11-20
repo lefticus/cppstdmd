@@ -3013,7 +3013,7 @@ sequence of characters is expected. User-defined types should define
 their own implicit conversions to `std::basic_string_view` in order to
 interoperate with these functions. — *end note*]
 
-The complexity of `basic_string_view` member functions is unless
+The complexity of `basic_string_view` member functions is 𝑂(1) unless
 otherwise specified.
 
 ### Header `<string_view>` synopsis <a id="string.view.synop">[[string.view.synop]]</a>
@@ -3469,8 +3469,8 @@ This section specifies the `basic_string_view` member functions named
 and `find_last_not_of`.
 
 Member functions in this section have complexity
-\bigoh{\texttt{size() \* str.size()}} at worst, although implementations
-are encouraged to do better.
+𝑂(`size() * str.size()`) at worst, although implementations are
+encouraged to do better.
 
 Each member function of the form
 

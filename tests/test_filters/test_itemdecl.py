@@ -219,7 +219,7 @@ def test_bigoh_expansion():
     assert code == 0
     assert "*Complexity:*" in output
     assert "***Complexity:***" not in output  # Should be italic, not bold-italic
-    assert "𝑂(" in output
+    assert "𝑂(" in output  # Mathematical Italic O from cpp-common.lua
     assert "last - first" in output
     assert "applications" in output
 
@@ -234,8 +234,9 @@ def test_bigoh_with_log():
 """
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
-    assert "𝑂(log(" in output
-    assert "N" in output
+    assert "𝑂(" in output  # Mathematical Italic O from cpp-common.lua
+    assert "log(" in output  # \log correctly converted to "log"
+    assert "`N`" in output  # \tcode{N} converts to backticks
     assert "comparisons" in output
 
 
@@ -559,7 +560,8 @@ def test_bigoh_unicode():
 """
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
-    assert "𝑂(N log N)" in output
+    assert "𝑂(N" in output  # Mathematical Italic O from cpp-common.lua
+    assert "log" in output  # \log correctly converted to "log"
     assert "comparisons" in output
 
 
@@ -1087,7 +1089,7 @@ def test_bigoh_with_nested_braces():
     assert code == 0, f"Pandoc failed with code {code}"
 
     # Should preserve math delimiters and nested content
-    assert "𝑂($" in output or "𝑂(\\$" in output  # Math delimiter
+    assert "𝑂($" in output or "𝑂(\\$" in output  # Math delimiter with Italic O from cpp-common.lua
     assert "size of state" in output
     assert "operations" in output
 

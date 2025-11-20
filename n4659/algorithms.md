@@ -1385,7 +1385,8 @@ Unless otherwise specified, the complexity requirements of
 requirements of the overloads without as follows: when the guarantee
 says “at most *expr*” or “exactly *expr*” and does not specify the
 number of assignments or swaps, and *expr* is not already expressed with
-\bigoh notation, the complexity of the algorithm shall be *expr*.
+𝑂() notation, the complexity of the algorithm shall be
+𝑂(\placeholder{expr}).
 
 Parallel algorithms shall not participate in overload resolution unless
 `is_execution_policy_v<decay_t<ExecutionPolicy>>` is `true`.
@@ -3620,7 +3621,7 @@ access iterators \[`a`, `b`) such that:
   `comp(a[\left \lfloor{\frac{i - 1}{2}}\right \rfloor], a[i])` is
   `false`.
 - `*a` may be removed by `pop_heap()`, or a new element added by
-  `push_heap()`, in time.
+  `push_heap()`, in 𝑂(log N) time.
 
 These properties make heaps useful as priority queues.
 

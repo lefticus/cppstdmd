@@ -80,6 +80,7 @@ local MACRO_LEN = {
   tcode = 6,          -- \tcode
   range = 6,          -- \range
   defnx = 6,          -- \defnx
+  bigoh = 6,          -- \bigoh
   doccite = 8,        -- \doccite
   unicode = 8,        -- \unicode
   impdefx = 9,        -- \impdefx
@@ -279,6 +280,38 @@ function RawInline(elem)
         end
       })
       return pandoc.Emph(inlines)
+    end
+  end
+
+  -- \bigoh{} - Big-O complexity notation (Issue #38)
+  -- Converts \bigoh{x} → 𝑂(x) with support for nested \tcode{} and math commands
+  -- Handle BEFORE \tcode to process nested macros properly
+  if text:match("^\\bigoh{") then
+    local content, _ = extract_braced_content(text, 1, MACRO_LEN.bigoh)  -- \bigoh is 6 chars
+    if content then
+      -- Convert LaTeX math commands to text equivalents (same as cpp-common.lua)
+      content = content:gsub("\\log", "log")
+      content = content:gsub("\\min", "min")
+      content = content:gsub("\\max", "max")
+      content = content:gsub("\\sqrt", "sqrt")
+
+      -- Parse content with nested \tcode{} support
+      -- Custom tcode processor: unescape + convert math + convert spacing
+      local inlines = parse_content_with_tcode(content, {
+        tcode_processor = function(code)
+          code = unescape_latex_chars(code)
+          code = convert_math_in_code(code)
+          return convert_latex_spacing(code)
+        end
+      })
+
+      -- Return as: 𝑂(content) using Mathematical Italic O (matches cpp-common.lua)
+      local result = {pandoc.Str("𝑂(")}
+      for _, inline in ipairs(inlines) do
+        table.insert(result, inline)
+      end
+      table.insert(result, pandoc.Str(")"))
+      return result
     end
   end
 

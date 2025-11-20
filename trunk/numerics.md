@@ -1146,7 +1146,7 @@ where `charT` and `traits` are constrained according to [[strings]] and
 `E` shall meet the *Cpp17CopyConstructible* (
 [[cpp17.copyconstructible]]) and *Cpp17CopyAssignable* (
 [[cpp17.copyassignable]]) requirements. These operations shall each be
-of complexity no worse than .
+of complexity no worse than 𝑂(\text{size of state}).
 
 On hosted implementations, the following expressions are well-formed and
 have the specified semantics.
@@ -1642,7 +1642,7 @@ A `subtract_with_carry_engine` random number engine produces unsigned
 integer random numbers.
 
 The state *x*\_*i* of a `subtract_with_carry_engine` object `x` is of
-size , and consists of a sequence X of r integer values
+size 𝑂(r), and consists of a sequence X of r integer values
 0 ≤ Xᵢ < m  = 2ʷ; all subscripts applied to X are to be taken modulo r.
 The state *x*\_*i* additionally consists of an integer c (known as the
 *carry*) whose value is either 0 or 1.
@@ -9381,7 +9381,7 @@ The following elements apply to all functions in
 - `addable(x,y,z)` is `true` for those overloads that take a `z`
   parameter.
 
-*Complexity:* \bigoh{\texttt{x.extent(0)} \times \texttt{A.extent(1)}}.
+*Complexity:* 𝑂(`x.extent(0)` \times `A.extent(1)`).
 
 ``` cpp
 template<in-matrix InMat, in-vector InVec, out-vector OutVec>
@@ -9468,7 +9468,7 @@ The following elements apply to all functions in
 - `addable(x,y,z)` is `true` for those overloads that take a `z`
   parameter.
 
-*Complexity:* \bigoh{\texttt{x.extent(0)} \times \texttt{A.extent(1)}}.
+*Complexity:* 𝑂(`x.extent(0)` \times `A.extent(1)`).
 
 ``` cpp
 template<in-matrix InMat, class Triangle, in-vector InVec, out-vector OutVec>
@@ -9528,7 +9528,7 @@ The following elements apply to all functions in
 - `addable(x, y, z)` is `true` for those overloads that take a `z`
   parameter.
 
-*Complexity:* \bigoh{\texttt{x.extent(0)} \times \texttt{A.extent(1)}}.
+*Complexity:* 𝑂(`x.extent(0)` \times `A.extent(1)`).
 
 ``` cpp
 template<in-matrix InMat, class Triangle, in-vector InVec, out-vector OutVec>
@@ -9853,7 +9853,7 @@ The following elements apply to all functions in
 - `A.extent(0)` equals `A.extent(1)`, and
 - `A.extent(0)` equals `x.extent(0)`.
 
-*Complexity:* \bigoh{\texttt{x.extent(0)} \times \texttt{x.extent(0)}}.
+*Complexity:* 𝑂(`x.extent(0)` \times `x.extent(0)`).
 
 ``` cpp
 template<class Scalar, in-vector InVec, possibly-packed-inout-matrix InOutMat, class Triangle>
@@ -9942,7 +9942,7 @@ The following elements apply to all functions in
 - `A.extent(0)` equals `A.extent(1)`, and
 - `multipliable(A, x, y)` is `true`.
 
-*Complexity:* \bigoh{\texttt{x.extent(0)} \times \texttt{y.extent(0)}}.
+*Complexity:* 𝑂(`x.extent(0)` \times `y.extent(0)`).
 
 ``` cpp
 template<in-vector InVec1, in-vector InVec2,
@@ -9995,7 +9995,7 @@ The following elements apply to all functions in
 *Preconditions:* `multipliable(A, B, C)` is `true`.
 
 *Complexity:*
-\bigoh{\texttt{A.extent(0)} \times \texttt{A.extent(1)} \times \texttt{B.extent(1)}}.
+𝑂(`A.extent(0)` \times `A.extent(1)` \times `B.extent(1)`).
 
 ``` cpp
 template<in-matrix InMat1, in-matrix InMat2, out-matrix OutMat>
@@ -10044,7 +10044,7 @@ The following elements apply to all functions in
   parameter.
 
 *Complexity:*
-\bigoh{\texttt{A.extent(0)} \times \texttt{A.extent(1)} \times \texttt{B.extent(1)}}.
+𝑂(`A.extent(0)` \times `A.extent(1)` \times `B.extent(1)`).
 
 ``` cpp
 template<in-matrix InMat1, class Triangle, in-matrix InMat2, out-matrix OutMat>
@@ -10313,7 +10313,7 @@ The following elements apply to all functions in
 - `A.extent(0)` equals `C.extent(0)`.
 
 *Complexity:*
-\bigoh{\texttt{A.extent(0)} \times \texttt{A.extent(1)} \times \texttt{C.extent(0)}}.
+𝑂(`A.extent(0)` \times `A.extent(1)` \times `C.extent(0)`).
 
 ``` cpp
 template<class Scalar, in-matrix InMat, possibly-packed-inout-matrix InOutMat, class Triangle>
@@ -10388,7 +10388,7 @@ The following elements apply to all functions in
 - `A.extent(0)` equals `A.extent(1)`.
 
 *Complexity:*
-\bigoh{\texttt{A.extent(0)} \times \texttt{A.extent(1)} \times \texttt{C.extent(0)}}.
+𝑂(`A.extent(0)` \times `A.extent(1)` \times `C.extent(0)`).
 
 ``` cpp
 template<in-matrix InMat1, in-matrix InMat2,

@@ -3429,8 +3429,8 @@ equivalent-key groups Eaᵢ and Ebᵢ are arranged in the same order (as is
 commonly the case, e.g., if `a` and `b` are unmodified copies of the
 same container), then the average-case complexity for
 `unordered_multiset` and `unordered_multimap` becomes proportional to N
-(but worst-case complexity remains , e.g., for a pathologically bad hash
-function). The behavior of a program that uses `operator==` or
+(but worst-case complexity remains 𝑂(N^2), e.g., for a pathologically
+bad hash function). The behavior of a program that uses `operator==` or
 `operator!=` on unordered containers is undefined unless the `Pred`
 function object has the same behavior for both containers and the
 equality comparison function for `Key` is a refinement[^1]

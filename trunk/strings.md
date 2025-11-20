@@ -531,7 +531,7 @@ in the range
 
 invalidates pointers, iterators, and references to elements of `str`.
 
-The complexity of `basic_string_view` member functions is unless
+The complexity of `basic_string_view` member functions is 𝑂(1) unless
 otherwise specified.
 
 `basic_string_view<charT, traits>` is a trivially copyable type
@@ -923,8 +923,8 @@ constexpr bool contains(const charT* x) const;
 #### Searching <a id="string.view.find">[[string.view.find]]</a>
 
 Member functions in this subclause have complexity
-\bigoh{\texttt{size() \* str.size()}} at worst, although implementations
-should do better.
+𝑂(`size() * str.size()`) at worst, although implementations should do
+better.
 
 Let *F* be one of `find`, `rfind`, `find_first_of`, `find_last_of`,
 `find_first_not_of`, and `find_last_not_of`.

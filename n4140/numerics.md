@@ -973,7 +973,8 @@ where `charT` and `traits` are constrained according to Clause 
 
 `E` shall meet the requirements of `CopyConstructible` (Table 
 [[copyconstructible]]) and `CopyAssignable` (Table  [[copyassignable]])
-types. These operations shall each be of complexity no worse than .
+types. These operations shall each be of complexity no worse than
+𝑂(\mbox{size of state}).
 
 #### Random number engine adaptor requirements <a id="rand.req.adapt">[[rand.req.adapt]]</a>
 
@@ -1454,7 +1455,7 @@ A `subtract_with_carry_engine` random number engine produces unsigned
 integer random numbers.
 
 The state *x*\_*i* of a `subtract_with_carry_engine` object `x` is of
-size , and consists of a sequence X of r integer values
+size 𝑂(r), and consists of a sequence X of r integer values
 0 ≤ Xᵢ < m  = 2ʷ; all subscripts applied to X are to be taken modulo r.
 The state *x*\_*i* additionally consists of an integer c (known as the )
 whose value is either 0 or 1.

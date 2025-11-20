@@ -1180,3 +1180,17 @@ def test_exposconceptx():
     assert "*`boolean-testable`*" in output
     # Should NOT have raw LaTeX command
     assert "exposconceptx" not in output
+
+
+def test_bigoh_complexity():
+    r"""Test \bigoh{} Big-O complexity notation conversion in paragraph contexts (Issue #38)"""
+    latex = r"Member functions have complexity \bigoh{\tcode{size() * str.size()}} at worst."
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    # Should have Mathematical Italic O (U+1D442) - same as cpp-common.lua
+    assert "𝑂(" in output
+    assert "`size() * str.size()`" in output or "size() * str.size()" in output
+    # Should NOT have raw LaTeX commands
+    assert "\\bigoh" not in output
+    assert "\\tcode" not in output
+    assert "\\texttt" not in output

@@ -940,8 +940,8 @@ of sequences.
 The `range` concept requires that `ranges::begin` and `ranges::end`
 return an iterator and a sentinel, respectively. The `sized_range`
 concept refines `range` with the requirement that `ranges::size` be
-amortized . The `view` concept specifies requirements on a `range` type
-to provide operations with predictable complexity.
+amortized 𝑂(1). The `view` concept specifies requirements on a `range`
+type to provide operations with predictable complexity.
 
 Several refinements of `range` group requirements that arise frequently
 in concepts and algorithms. Common ranges are ranges for which
