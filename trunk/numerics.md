@@ -9381,7 +9381,7 @@ The following elements apply to all functions in
 - `addable(x,y,z)` is `true` for those overloads that take a `z`
   parameter.
 
-*Complexity:* 𝑂(`x.extent(0)` \times `A.extent(1)`).
+*Complexity:* 𝑂(`x.extent(0)` × `A.extent(1)`).
 
 ``` cpp
 template<in-matrix InMat, in-vector InVec, out-vector OutVec>
@@ -9468,7 +9468,7 @@ The following elements apply to all functions in
 - `addable(x,y,z)` is `true` for those overloads that take a `z`
   parameter.
 
-*Complexity:* 𝑂(`x.extent(0)` \times `A.extent(1)`).
+*Complexity:* 𝑂(`x.extent(0)` × `A.extent(1)`).
 
 ``` cpp
 template<in-matrix InMat, class Triangle, in-vector InVec, out-vector OutVec>
@@ -9528,7 +9528,7 @@ The following elements apply to all functions in
 - `addable(x, y, z)` is `true` for those overloads that take a `z`
   parameter.
 
-*Complexity:* 𝑂(`x.extent(0)` \times `A.extent(1)`).
+*Complexity:* 𝑂(`x.extent(0)` × `A.extent(1)`).
 
 ``` cpp
 template<in-matrix InMat, class Triangle, in-vector InVec, out-vector OutVec>
@@ -9608,7 +9608,7 @@ apply to the triangular matrix `A`[[linalg.general]].
 
 *Effects:* Computes y = A x.
 
-*Complexity:* 𝑂(`x.extent(0)` `A.extent(1)`).
+*Complexity:* 𝑂(`x.extent(0)` × `A.extent(1)`).
 
 ``` cpp
 template<in-matrix InMat, class Triangle, class DiagonalStorage, inout-vector InOutVec>
@@ -9630,7 +9630,7 @@ vectorization, are still possible. — *end note*]
 *Effects:* Computes a vector y' such that y' = A y, and assigns each
 element of y' to the corresponding element of y.
 
-*Complexity:* 𝑂(`y.extent(0)` `A.extent(1)`).
+*Complexity:* 𝑂(`y.extent(0)` × `A.extent(1)`).
 
 ``` cpp
 template<in-matrix InMat, class Triangle, class DiagonalStorage,
@@ -9650,7 +9650,7 @@ apply to the triangular matrix `A`[[linalg.general]].
 
 *Effects:* Computes z = y + A x.
 
-*Complexity:* 𝑂(`x.extent(0)` `A.extent(1)`).
+*Complexity:* 𝑂(`x.extent(0)` × `A.extent(1)`).
 
 *Remarks:* `z` may alias `y`.
 
@@ -9700,7 +9700,7 @@ matrix `A`[[linalg.general]].
 element of x' to the corresponding element of x. If no such x' exists,
 then the elements of `x` are valid but unspecified.
 
-*Complexity:* 𝑂(`A.extent(1)` `b.extent(0)`).
+*Complexity:* 𝑂(`A.extent(1)` × `b.extent(0)`).
 
 ``` cpp
 template<in-matrix InMat, class Triangle, class DiagonalStorage,
@@ -9752,7 +9752,7 @@ optimizations, such as vectorization, are still possible. — *end note*]
 element of x' to the corresponding element of b. If no such x' exists,
 then the elements of `b` are valid but unspecified.
 
-*Complexity:* 𝑂(`A.extent(1)` `b.extent(0)`).
+*Complexity:* 𝑂(`A.extent(1)` × `b.extent(0)`).
 
 ``` cpp
 template<in-matrix InMat, class Triangle, class DiagonalStorage, inout-vector InOutVec>
@@ -9802,7 +9802,7 @@ types). — *end note*]
 *Effects:* Computes a matrix A' such that $A' = A + x y^T$, and assigns
 each element of A' to the corresponding element of A.
 
-*Complexity:* 𝑂(`x.extent(0)` `y.extent(0)`).
+*Complexity:* 𝑂(`x.extent(0)` × `y.extent(0)`).
 
 ``` cpp
 template<in-vector InVec1, in-vector InVec2, inout-matrix InOutMat>
@@ -9853,7 +9853,7 @@ The following elements apply to all functions in
 - `A.extent(0)` equals `A.extent(1)`, and
 - `A.extent(0)` equals `x.extent(0)`.
 
-*Complexity:* 𝑂(`x.extent(0)` \times `x.extent(0)`).
+*Complexity:* 𝑂(`x.extent(0)` × `x.extent(0)`).
 
 ``` cpp
 template<class Scalar, in-vector InVec, possibly-packed-inout-matrix InOutMat, class Triangle>
@@ -9942,7 +9942,7 @@ The following elements apply to all functions in
 - `A.extent(0)` equals `A.extent(1)`, and
 - `multipliable(A, x, y)` is `true`.
 
-*Complexity:* 𝑂(`x.extent(0)` \times `y.extent(0)`).
+*Complexity:* 𝑂(`x.extent(0)` × `y.extent(0)`).
 
 ``` cpp
 template<in-vector InVec1, in-vector InVec2,
@@ -9994,8 +9994,7 @@ The following elements apply to all functions in
 
 *Preconditions:* `multipliable(A, B, C)` is `true`.
 
-*Complexity:*
-𝑂(`A.extent(0)` \times `A.extent(1)` \times `B.extent(1)`).
+*Complexity:* 𝑂(`A.extent(0)` × `A.extent(1)` × `B.extent(1)`).
 
 ``` cpp
 template<in-matrix InMat1, in-matrix InMat2, out-matrix OutMat>
@@ -10043,8 +10042,7 @@ The following elements apply to all functions in
 - `addable(E, E, C)` is `true` for those overloads that take an `E`
   parameter.
 
-*Complexity:*
-𝑂(`A.extent(0)` \times `A.extent(1)` \times `B.extent(1)`).
+*Complexity:* 𝑂(`A.extent(0)` × `A.extent(1)` × `B.extent(1)`).
 
 ``` cpp
 template<in-matrix InMat1, class Triangle, in-matrix InMat2, out-matrix OutMat>
@@ -10258,7 +10256,7 @@ template<class ExecutionPolicy,
 *Effects:* Computes a matrix C' such that C' = A C and assigns each
 element of C' to the corresponding element of C.
 
-*Complexity:* 𝑂(`A.extent(0)` `A.extent(1)` `C.extent(0)`).
+*Complexity:* 𝑂(`A.extent(0)` × `A.extent(1)` × `C.extent(0)`).
 
 ``` cpp
 template<in-matrix InMat, class Triangle, class DiagonalStorage, inout-matrix InOutMat>
@@ -10286,7 +10284,7 @@ template<class ExecutionPolicy,
 *Effects:* Computes a matrix C' such that C' = C A and assigns each
 element of C' to the corresponding element of C.
 
-*Complexity:* 𝑂(`A.extent(0)` `A.extent(1)` `C.extent(0)`).
+*Complexity:* 𝑂(`A.extent(0)` × `A.extent(1)` × `C.extent(0)`).
 
 #### Rank-k update of a symmetric or Hermitian matrix <a id="linalg.algs.blas3.rankk">[[linalg.algs.blas3.rankk]]</a>
 
@@ -10312,8 +10310,7 @@ The following elements apply to all functions in
 - `C.extent(0)` equals `C.extent(1)`, and
 - `A.extent(0)` equals `C.extent(0)`.
 
-*Complexity:*
-𝑂(`A.extent(0)` \times `A.extent(1)` \times `C.extent(0)`).
+*Complexity:* 𝑂(`A.extent(0)` × `A.extent(1)` × `C.extent(0)`).
 
 ``` cpp
 template<class Scalar, in-matrix InMat, possibly-packed-inout-matrix InOutMat, class Triangle>
@@ -10387,8 +10384,7 @@ The following elements apply to all functions in
 - `addable(A, B, C)` is `true`, and
 - `A.extent(0)` equals `A.extent(1)`.
 
-*Complexity:*
-𝑂(`A.extent(0)` \times `A.extent(1)` \times `C.extent(0)`).
+*Complexity:* 𝑂(`A.extent(0)` × `A.extent(1)` × `C.extent(0)`).
 
 ``` cpp
 template<in-matrix InMat1, in-matrix InMat2,
@@ -10456,7 +10452,7 @@ matrix `A`[[linalg.general]].
 to the corresponding element of X. If no such X' exists, then the
 elements of `X` are valid but unspecified.
 
-*Complexity:* 𝑂(`A.extent(0)` `X.extent(1)` `X.extent(1)`).
+*Complexity:* 𝑂(`A.extent(0)` × `X.extent(1)` × `X.extent(1)`).
 
 [*Note 2*: Since the triangular matrix is on the left, the desired
 `divide` implementation in the case of noncommutative multiplication is
@@ -10606,7 +10602,7 @@ optimizations, such as vectorization, are still possible. — *end note*]
 to the corresponding element of B. If so such X' exists, then the
 elements of `B` are valid but unspecified.
 
-*Complexity:* 𝑂(`A.extent(0)` `A.extent(1)` `B.extent(1)`).
+*Complexity:* 𝑂(`A.extent(0)` × `A.extent(1)` × `B.extent(1)`).
 
 ``` cpp
 template<in-matrix InMat, class Triangle, class DiagonalStorage, inout-matrix InOutMat>
@@ -10674,7 +10670,7 @@ optimizations, such as vectorization, are still possible. — *end note*]
 to the corresponding element of B. If so such X' exists, then the
 elements of `B` are valid but unspecified.
 
-*Complexity:* 𝑂(`A.extent(0)` `A.extent(1)` `B.extent(1)`).
+*Complexity:* 𝑂(`A.extent(0)` × `A.extent(1)` × `B.extent(1)`).
 
 ``` cpp
 template<in-matrix InMat, class Triangle, class DiagonalStorage, inout-matrix InOutMat>

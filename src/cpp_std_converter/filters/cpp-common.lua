@@ -380,6 +380,28 @@ local function process_macro_with_replacement(text, macro_name, replacement_func
   return text
 end
 
+-- Helper function to convert LaTeX math commands to Unicode equivalents
+-- Used by \bigoh{} in both cpp-macros.lua and cpp-common.lua
+-- Converts:
+--   - Function names: \log, \min, \max, \sqrt → plain text
+--   - Math operators: \times, \cdot, \leq, \geq, \neq → Unicode symbols
+local function convert_latex_math_commands(text)
+  -- Convert math function names to plain text
+  text = text:gsub("\\log", "log")
+  text = text:gsub("\\min", "min")
+  text = text:gsub("\\max", "max")
+  text = text:gsub("\\sqrt", "sqrt")
+
+  -- Convert math operators to Unicode symbols
+  text = text:gsub("\\times", "×")
+  text = text:gsub("\\cdot", "⋅")
+  text = text:gsub("\\leq", "≤")
+  text = text:gsub("\\geq", "≥")
+  text = text:gsub("\\neq", "≠")
+
+  return text
+end
+
 -- Helper function to extract and clean description from \impdefx macro
 -- Used by cpp-macros.lua and expand_impdefx_in_text()
 -- Extracts the description argument, handling nested braces properly
@@ -2358,10 +2380,7 @@ local function expand_macros_common(text, options)
     -- Use process_macro_with_replacement for proper brace-balancing
     if options.convert_to_latex then
       text = process_macro_with_replacement(text, "bigoh", function(content)
-        content = content:gsub("\\log", "log")
-        content = content:gsub("\\min", "min")
-        content = content:gsub("\\max", "max")
-        content = content:gsub("\\sqrt", "sqrt")
+        content = convert_latex_math_commands(content)
         return "𝑂(" .. content .. ")"
       end)
     end
@@ -2613,6 +2632,7 @@ return {
   expand_library_spec_macros = expand_library_spec_macros,
   extract_multi_arg_macro = extract_multi_arg_macro,
   process_macro_with_replacement = process_macro_with_replacement,
+  convert_latex_math_commands = convert_latex_math_commands,
   expand_nested_macros_recursive = expand_nested_macros_recursive,
   remove_macro = remove_macro,
   handle_overlap_commands = handle_overlap_commands,

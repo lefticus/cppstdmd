@@ -53,6 +53,7 @@ local parse_content_with_tcode = common.parse_content_with_tcode
 local parse_impdefx_description_to_inlines = common.parse_impdefx_description_to_inlines
 local extract_multi_arg_macro = common.extract_multi_arg_macro
 local process_macro_with_replacement = common.process_macro_with_replacement
+local convert_latex_math_commands = common.convert_latex_math_commands
 local remove_macro = common.remove_macro
 local split_refs_text = common.split_refs_text
 local convert_latex_spacing = common.convert_latex_spacing
@@ -289,11 +290,8 @@ function RawInline(elem)
   if text:match("^\\bigoh{") then
     local content, _ = extract_braced_content(text, 1, MACRO_LEN.bigoh)  -- \bigoh is 6 chars
     if content then
-      -- Convert LaTeX math commands to text equivalents (same as cpp-common.lua)
-      content = content:gsub("\\log", "log")
-      content = content:gsub("\\min", "min")
-      content = content:gsub("\\max", "max")
-      content = content:gsub("\\sqrt", "sqrt")
+      -- Convert LaTeX math commands using shared helper
+      content = convert_latex_math_commands(content)
 
       -- Parse content with nested \tcode{} support
       -- Custom tcode processor: unescape + convert math + convert spacing
@@ -307,10 +305,8 @@ function RawInline(elem)
 
       -- Return as: 𝑂(content) using Mathematical Italic O (matches cpp-common.lua)
       local result = {pandoc.Str("𝑂(")}
-      for _, inline in ipairs(inlines) do
-        table.insert(result, inline)
-      end
-      table.insert(result, pandoc.Str(")"))
+      table.move(inlines, 1, #inlines, #result+1, result)
+      result[#result+1] = pandoc.Str(")")
       return result
     end
   end
