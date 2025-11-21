@@ -5,9 +5,7 @@
 [*Note 1*:
 
 [[expr]] defines the syntax, order of evaluation, and meaning of
-expressions.
-
-[^1]
+expressions.[^1]
 
 An expression is a sequence of operators and operands that specifies a
 computation. An expression can result in a value and can cause side
@@ -49,9 +47,7 @@ and is sometimes adjustable by a library function. — *end note*]
 
 The implementation can regroup operators according to the usual
 mathematical rules only where the operators really are associative or
-commutative.
-
-[^2]
+commutative.[^2]
 
 For example, in the following fragment
 
@@ -3530,9 +3526,7 @@ destination type.
 
 Depending on the type of the object, a write operation through the
 pointer, lvalue or pointer to data member resulting from a `const_cast`
-that casts away a const-qualifier
-
-[^20]
+that casts away a const-qualifier[^20]
 
 can produce undefined behavior [[dcl.type.cv]].
 
@@ -3865,9 +3859,8 @@ to any other fundamental type [[basic.fundamental]] is
 [*Note 1*:
 
 In particular, the values of `sizeof(bool)`, `sizeof(char16_t)`,
-`sizeof(char32_t)`, and `sizeof(wchar_t)` are implementation-defined.
-
-[^21]
+`sizeof(char32_t)`, and `sizeof(wchar_t)` are
+implementation-defined.[^21]
 
 — *end note*]
 
@@ -6494,7 +6487,7 @@ A function or variable is *needed for constant evaluation* if it is:
 [^20]: `const_cast` is not limited to conversions that cast away a
     const-qualifier.
 
-[^21]: `sizeof(bool)` is not required to be `1`.
+[^21]: `sizeof``(``bool``)` is not required to be `1`.
 
 [^22]: The actual size of a potentially-overlapping subobject can be
     less than the result of applying `sizeof` to the subobject, due to

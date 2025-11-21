@@ -396,9 +396,7 @@ Access to the facets of a `locale` is via two function templates,
 
 [*Example 1*:
 
-An iostream `operator<<` can be implemented as:
-
-[^2]
+An iostream `operator<<` can be implemented as:[^2]
 
 ``` cpp
 template<class charT, class traits>
@@ -4621,9 +4619,7 @@ displaying Unicode text in a terminal.
 
 [*Note 5*:
 
-This is the case for Windows®-based
-
-[^25]
+This is the case for Windows®-based[^25]
 
 and many POSIX-based operating systems.
 

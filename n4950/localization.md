@@ -161,9 +161,7 @@ Access to the facets of a `locale` is via two function templates,
 
 [*Example 1*:
 
-An iostream `operator<<` can be implemented as:
-
-[^2]
+An iostream `operator<<` can be implemented as:[^2]
 
 ``` cpp
 template<class charT, class traits>

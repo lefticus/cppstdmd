@@ -104,25 +104,79 @@ overloaded:
 
 - Parameter declarations that differ only in the use of equivalent
   typedef “types” are equivalent. A `typedef` is not a separate type,
-  but only a synonym for another type [[dcl.typedef]]. Enumerations, on
-  the other hand, are distinct types and can be used to distinguish
-  overloaded function declarations.
+  but only a synonym for another type [[dcl.typedef]].
+  \[*Example 1*:
+  ``` cpp
+  typedef int Int;
+
+  void f(int i);
+  void f(Int i);                  // OK: redeclaration of f(int)
+  void f(int i) { ... }
+  void f(Int i) { ... }     // error: redefinition of f(int)
+  ```
+
+  — *end example*]
+  Enumerations, on the other hand, are distinct types and can be used to
+  distinguish overloaded function declarations.
+  \[*Example 2*:
+  ``` cpp
+  enum E { a };
+
+  void f(int i) { ... }
+  void f(E i)   { ... }
+  ```
+
+  — *end example*]
 - Parameter declarations that differ only in a pointer `*` versus an
   array `[]` are equivalent. That is, the array declaration is adjusted
   to become a pointer declaration [[dcl.fct]]. Only the second and
   subsequent array dimensions are significant in parameter types
   [[dcl.array]].
+  \[*Example 3*:
+  ``` cpp
+  int f(char*);
+  int f(char[]);                  // same as f(char*);
+  int f(char[7]);                 // same as f(char*);
+  int f(char[9]);                 // same as f(char*);
+
+  int g(char(*)[10]);
+  int g(char[5][10]);             // same as g(char(*)[10]);
+  int g(char[7][10]);             // same as g(char(*)[10]);
+  int g(char(*)[20]);             // different from g(char(*)[10]);
+  ```
+
+  — *end example*]
 - Parameter declarations that differ only in that one is a function type
   and the other is a pointer to the same function type are equivalent.
   That is, the function type is adjusted to become a pointer to function
   type [[dcl.fct]].
+  \[*Example 4*:
+  ``` cpp
+  void h(int());
+  void h(int (*)());              // redeclaration of h(int())
+  void h(int x()) { }             // definition of h(int())
+  void h(int (*x)()) { }          // error: redefinition of h(int())
+  ```
+
+  — *end example*]
 - Parameter declarations that differ only in the presence or absence of
   `const` and/or `volatile` are equivalent. That is, the `const` and
   `volatile` type-specifiers for each parameter type are ignored when
-  determining which function is being declared, defined, or called. Only
-  the `const` and `volatile` type-specifiers at the outermost level of
-  the parameter type specification are ignored in this fashion; `const`
-  and `volatile` type-specifiers buried within a parameter type
+  determining which function is being declared, defined, or called.
+  \[*Example 5*:
+  ``` cpp
+  typedef const int cInt;
+
+  int f (int);
+  int f (const int);              // redeclaration of f(int)
+  int f (int) { ... }       // definition of f(int)
+  int f (cInt) { ... }      // error: redefinition of f(int)
+  ```
+
+  — *end example*]
+  Only the `const` and `volatile` type-specifiers at the outermost level
+  of the parameter type specification are ignored in this fashion;
+  `const` and `volatile` type-specifiers buried within a parameter type
   specification are significant and can be used to distinguish
   overloaded function declarations.[^1] In particular, for any type `T`,
   “pointer to `T`”, “pointer to `const` `T`”, and “pointer to `volatile`
@@ -130,6 +184,22 @@ overloaded:
   `T`”, “reference to `const` `T`”, and “reference to `volatile` `T`”.
 - Two parameter declarations that differ only in their default arguments
   are equivalent.
+  \[*Example 6*:
+  Consider the following:
+  ``` cpp
+  void f (int i, int j);
+  void f (int i, int j = 99);     // OK: redeclaration of f(int, int)
+  void f (int i = 88, int j);     // OK: redeclaration of f(int, int)
+  void f ();                      // OK: overloaded declaration of f
+
+  void prog () {
+      f (1, 2);                   // OK: call f(int, int)
+      f (1);                      // OK: call f(int, int)
+      f ();                       // error: f(int, int) or f()?
+  }
+  ```
+
+  — *end example*]
 
 — *end note*]
 

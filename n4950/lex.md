@@ -549,9 +549,7 @@ digit: one of
 [*Note 1*:
 
 The character properties XID_Start and XID_Continue are Derived Core
-Properties as described by UAX \#44 of the Unicode Standard.
-
-[^7]
+Properties as described by UAX \#44 of the Unicode Standard.[^7]
 
 — *end note*]
 
@@ -1637,10 +1635,10 @@ int main() {
     meaning, depending on the implementation.
 
 [^7]: On systems in which linkers cannot accept extended characters, an
-    encoding of the *universal-character-name* can be used in forming
+    encoding of the \*universal-character-name\* can be used in forming
     valid external identifiers. For example, some otherwise unused
-    character or sequence of characters can be used to encode the `\u`
-    in a *universal-character-name*. Extended characters can produce a
+    character or sequence of characters can be used to encode the `̆` in
+    a \*universal-character-name\*. Extended characters can produce a
     long external identifier, but C++ does not place a translation limit
     on significant characters for external identifiers.
 

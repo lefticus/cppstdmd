@@ -855,9 +855,7 @@ In the body of the member function `tnode::set`, the member names
 which the function is called. Thus, in the call `n1.set("abc",&n2,0)`,
 `tword` refers to `n1.tword`, and in the call `n2.set("def",0,0)`, it
 refers to `n2.tword`. The functions `strlen`, `perror`, and `strcpy` are
-not members of the class `tnode` and should be declared elsewhere.
-
-[^2]
+not members of the class `tnode` and should be declared elsewhere.[^2]
 
 — *end example*]
 

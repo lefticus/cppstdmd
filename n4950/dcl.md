@@ -6261,9 +6261,7 @@ The order in which namespaces are considered and the relationships among
 the namespaces implied by the *using-directive*s do not affect overload
 resolution. Neither is any function excluded because another has the
 same signature, even if one is in a namespace reachable through
-*using-directive*s in the namespace of the other.
-
-[^10]
+*using-directive*s in the namespace of the other.[^10]
 
 — *end note*]
 
@@ -7871,9 +7869,9 @@ Here, `hasher`, `pred`, and `alloc` could have the same address as
 
 [^10]: During name lookup in a class hierarchy, some ambiguities can be
     resolved by considering whether one member hides the other along
-    some paths [[class.member.lookup]]. There is no such disambiguation
-    when considering the set of names found as a result of following
-    *using-directive*s.
+    some paths [[class.member.lookup]]. There is no such
+    disambiguation when considering the set of names found as a result
+    of following \*using-directive\*s.
 
 [^11]: A *using-declaration* with more than one *using-declarator* is
     equivalent to a corresponding sequence of *using-declaration*s with

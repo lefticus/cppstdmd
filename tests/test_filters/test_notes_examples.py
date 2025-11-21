@@ -515,3 +515,31 @@ had been declared as well.
     # Should have markdown code blocks
     assert "``` cpp" in output or "```cpp" in output
     assert "*end example*" in output
+
+
+def test_note_inside_list_item():
+    """Test note numbering when note appears inside a list item (Issue #5)"""
+    latex = r"""\begin{itemize}
+\item First item
+\item Second item with a note:
+\begin{note}
+This note is inside a list item.
+\end{note}
+\item Third item
+\end{itemize}
+
+\begin{note}
+This is a top-level note after the list.
+\end{note}"""
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    # Both notes should be numbered sequentially
+    # The note inside the list should be Note 1
+    assert "*Note 1*" in output
+    assert "This note is inside a list item" in output
+    # The top-level note should be Note 2 (not Note 1 again!)
+    assert "*Note 2*" in output
+    assert "This is a top-level note after the list" in output
+    # Should NOT have duplicate "Note 1"
+    note_1_count = output.count("*Note 1*")
+    assert note_1_count == 1, f"Found {note_1_count} instances of 'Note 1', expected 1"

@@ -224,248 +224,270 @@ local function expand_macros(content)
 end
 
 -- Forward declarations for recursive processing
-local process_div_block
-local process_environment
+local convert_environment_from_blocks
+local convert_environment_from_nested_string
+local convert_environment_from_string
+local convert_environment_from_codeblock
+local process_block_recursive
 
--- Helper function to process Div blocks (examples, notes, footnotes)
--- Takes codeblocks and titles for placeholder replacement
--- Returns a list of blocks
-function process_div_block(block, codeblocks, titles)
-  if not block.classes then
+-- Generic function to convert note or example from Div blocks
+-- env_type: "note" or "example"
+-- block_content: array of blocks from Div
+-- codeblocks: optional dict for placeholder replacement
+-- titles: optional dict for codeblocktu titles
+-- counter_val: current counter value
+-- Returns: result_blocks, updated_counter
+function convert_environment_from_blocks(env_type, block_content, codeblocks, titles, counter_val)
+  counter_val = counter_val + 1
+
+  local label = env_type:sub(1,1):upper() .. env_type:sub(2)  -- Capitalize first letter
+  local result = {}
+
+  if not has_complex_blocks(block_content) then
+    -- Simple case: only paragraphs, combine into single inline sequence
+    local inlines = {}
+    for _, div_block in ipairs(block_content) do
+      if div_block.t == "Para" and div_block.content then
+        if #inlines > 0 then
+          table.insert(inlines, pandoc.Space())
+        end
+        for _, inline in ipairs(div_block.content) do
+          table.insert(inlines, inline)
+        end
+      end
+    end
+
+    local para = build_environment_opening(label, counter_val, false)
+    table.insert(para, pandoc.Str(" "))  -- space after colon
+    for _, inline in ipairs(inlines) do
+      table.insert(para, inline)
+    end
+    table.insert(para, pandoc.Str(" "))  -- space before closing
+    local closing = build_environment_closing(env_type, false)
+    for _, inline in ipairs(closing) do
+      table.insert(para, inline)
+    end
+
+    table.insert(result, pandoc.Para(para))
+  else
+    -- Complex case: has code blocks or other non-Para blocks
+    table.insert(result, build_environment_opening(label, counter_val, true))
+
+    -- Recursively process nested div content, passing codeblocks/titles
+    for _, div_block in ipairs(block_content) do
+      local blocks = process_block_recursive(div_block, codeblocks, titles)
+      for _, b in ipairs(blocks) do
+        table.insert(result, b)
+      end
+    end
+
+    table.insert(result, build_environment_closing(env_type, true))
+  end
+
+  return result, counter_val
+end
+
+-- Generic function to convert note or example from nested RawBlock string
+-- Used when codeblocks have already been extracted by parent
+-- env_type: "note" or "example"
+-- content: string content (already has codeblock placeholders)
+-- codeblocks: dict for placeholder replacement
+-- titles: dict for codeblocktu titles
+-- counter_val: current counter value
+-- Returns: result_blocks, updated_counter
+function convert_environment_from_nested_string(env_type, content, codeblocks, titles, counter_val)
+  counter_val = counter_val + 1
+
+  content = trim(content)
+  content = expand_macros(content)
+
+  -- Parse the content (which already has codeblock placeholders)
+  local parsed = pandoc.read(content, "latex+raw_tex")
+
+  local label = env_type:sub(1,1):upper() .. env_type:sub(2)  -- Capitalize first letter
+  local result = {}
+
+  -- Opening
+  table.insert(result, build_environment_opening(label, counter_val, true))
+
+  -- Process all blocks recursively with the existing codeblocks dict
+  for _, parsed_block in ipairs(parsed.blocks) do
+    local blocks = process_block_recursive(parsed_block, codeblocks, titles)
+    for _, b in ipairs(blocks) do
+      table.insert(result, b)
+    end
+  end
+
+  -- Closing
+  table.insert(result, build_environment_closing(env_type, true))
+
+  return result, counter_val
+end
+
+-- Generic function to convert note or example from CodeBlock with "latex" class
+-- This is a rare edge case where content is preserved as raw LaTeX
+-- env_type: "note" or "example"
+-- content: raw LaTeX string content
+-- counter_val: current counter value
+-- Returns: result_blocks (single Para with RawInline), updated_counter
+function convert_environment_from_codeblock(env_type, content, counter_val)
+  counter_val = counter_val + 1
+
+  content = trim(content)
+  local label = env_type:sub(1,1):upper() .. env_type:sub(2)  -- Capitalize first letter
+
+  local inlines = build_environment_opening(label, counter_val, false)
+  table.insert(inlines, pandoc.Str(" "))
+  table.insert(inlines, pandoc.RawInline('latex', content))
+  table.insert(inlines, pandoc.Str(" "))
+  local closing = build_environment_closing(env_type, false)
+  for _, inline in ipairs(closing) do
+    table.insert(inlines, inline)
+  end
+
+  return {pandoc.Para(inlines)}, counter_val
+end
+
+-- Unified recursive block processor
+-- Handles all block types: RawBlock, Div, CodeBlock, lists, placeholders
+-- This is the single entry point for recursive processing
+-- Increments module-level counters (note_counter, example_counter)
+-- codeblocks: optional dict for placeholder replacement
+-- titles: optional dict for codeblocktu titles
+-- Returns: list of blocks
+function process_block_recursive(block, codeblocks, titles)
+  -- Handle Div blocks that might contain notes/examples/footnotes/codeblocks
+  if block.t == "Div" and block.classes then
+    local class = block.classes[1]
+
+    if class == "note" then
+      local result
+      result, note_counter = convert_environment_from_blocks("note", block.content, codeblocks, titles, note_counter)
+      return result
+    elseif class == "example" then
+      local result
+      result, example_counter = convert_environment_from_blocks("example", block.content, codeblocks, titles, example_counter)
+      return result
+    elseif class == "footnote" then
+      -- Just unwrap the div, keep content
+      return block.content
+    elseif class == "codeblock" then
+      local code_block = extract_code_from_div(block, "cpp")
+      if code_block then
+        return {code_block}
+      end
+    end
+    -- If not recognized, return as-is
     return {block}
   end
 
-  -- Handle <div class="note">
-  if block.classes[1] == "note" then
-    note_counter = note_counter + 1
-
-    local note_inlines = {}
-
-    if not has_complex_blocks(block.content) then
-      -- Simple case: only paragraphs, combine into single inline sequence
-      for _, div_block in ipairs(block.content) do
-        if div_block.t == "Para" and div_block.content then
-          if #note_inlines > 0 then
-            table.insert(note_inlines, pandoc.Space())
-          end
-          for _, inline in ipairs(div_block.content) do
-            table.insert(note_inlines, inline)
-          end
-        end
-      end
-
-      local note_para = build_environment_opening("Note", note_counter, false)
-      table.insert(note_para, pandoc.Str(" "))  -- space after colon
-      for _, inline in ipairs(note_inlines) do
-        table.insert(note_para, inline)
-      end
-      table.insert(note_para, pandoc.Str(" "))  -- space before closing
-      local closing = build_environment_closing("note", false)
-      for _, inline in ipairs(closing) do
-        table.insert(note_para, inline)
-      end
-
-      return {pandoc.Para(note_para)}
-    else
-      -- Complex case: has code blocks or other non-Para blocks
-      local result = {}
-      table.insert(result, build_environment_opening("Note", note_counter, true))
-
-      -- Recursively process nested div content, passing codeblocks/titles
-      for _, div_block in ipairs(block.content) do
-        local blocks = process_single_block(div_block, codeblocks, titles)
-        for _, b in ipairs(blocks) do
-          table.insert(result, b)
-        end
-      end
-
-      table.insert(result, build_environment_closing("note", true))
-      return result
-    end
-  end
-
-  -- Handle <div class="example">
-  if block.classes[1] == "example" then
-    example_counter = example_counter + 1
-
-    local example_inlines = {}
-
-    if not has_complex_blocks(block.content) then
-      -- Simple case: only paragraphs, combine into single inline sequence
-      for _, div_block in ipairs(block.content) do
-        if div_block.t == "Para" and div_block.content then
-          if #example_inlines > 0 then
-            table.insert(example_inlines, pandoc.Space())
-          end
-          for _, inline in ipairs(div_block.content) do
-            table.insert(example_inlines, inline)
-          end
-        end
-      end
-
-      local example_para = build_environment_opening("Example", example_counter, false)
-      table.insert(example_para, pandoc.Str(" "))  -- space after colon
-      for _, inline in ipairs(example_inlines) do
-        table.insert(example_para, inline)
-      end
-      table.insert(example_para, pandoc.Str(" "))  -- space before closing
-      local closing = build_environment_closing("example", false)
-      for _, inline in ipairs(closing) do
-        table.insert(example_para, inline)
-      end
-
-      return {pandoc.Para(example_para)}
-    else
-      -- Complex case: has code blocks or other non-Para blocks
-      local result = {}
-      table.insert(result, build_environment_opening("Example", example_counter, true))
-
-      -- Recursively process nested div content, passing codeblocks/titles
-      for _, div_block in ipairs(block.content) do
-        local blocks = process_single_block(div_block, codeblocks, titles)
-        for _, b in ipairs(blocks) do
-          table.insert(result, b)
-        end
-      end
-
-      table.insert(result, build_environment_closing("example", true))
-      return result
-    end
-  end
-
-  -- Handle <div class="footnote"> - just unwrap the div, keep content
-  if block.classes[1] == "footnote" then
-    local result = {}
-    for _, div_block in ipairs(block.content) do
-      table.insert(result, div_block)
-    end
-    return result
-  end
-
-  -- Handle <div class="codeblock"> - convert to proper code block
-  if block.classes[1] == "codeblock" then
-    local code_block = extract_code_from_div(block, "cpp")
-    if code_block then
-      return {code_block}
-    end
-  end
-
-  -- Return block as-is if not recognized
-  return {block}
-end
-
--- Helper function to recursively process a single block, handling nested Divs and RawBlocks
-local function process_single_block(block, codeblocks, titles)
-  -- Handle Div blocks that might contain nested examples/notes/footnotes
-  if block.t == "Div" and block.classes then
-    return process_div_block(block, codeblocks, titles)
-  end
-
-  -- Handle RawBlock that might contain nested examples/notes
-  -- Note: At this point, codeblocks have already been extracted and replaced with placeholders
-  -- by the parent's extract_codeblocks() call. We need to parse the content and process it
-  -- using the existing codeblocks dict rather than calling process_environment() which would
-  -- try to extract codeblocks again.
+  -- Handle RawBlock that might contain nested notes/examples/footnotes
   if block.t == "RawBlock" and block.format == "latex" then
     local text = block.text
 
-    -- Check for nested note
+    -- Check for note
     local note_start, note_end = text:find("\\begin{note}")
     if note_start then
       local note_content_end = text:find("\\end{note}", note_start)
       if note_content_end then
-        note_counter = note_counter + 1
-        -- 12 = length of "\begin{note}"
         local note_content = text:sub(note_start + 12, note_content_end - 1)
-        note_content = trim(note_content)
-        note_content = expand_macros(note_content)
-
-        -- Parse the content (which already has codeblock placeholders)
-        local parsed = pandoc.read(note_content, "latex+raw_tex")
-
-        local result = {}
-        -- Opening
-        table.insert(result, build_environment_opening("Note", note_counter, true))
-
-        -- Process all blocks recursively with the existing codeblocks dict
-        for _, parsed_block in ipairs(parsed.blocks) do
-          local blocks = process_single_block(parsed_block, codeblocks, titles)
-          for _, b in ipairs(blocks) do
-            table.insert(result, b)
-          end
+        local result
+        -- Use nested string converter if we have codeblocks (already extracted)
+        -- Otherwise use regular string converter (will extract codeblocks)
+        if codeblocks then
+          result, note_counter = convert_environment_from_nested_string("note", note_content, codeblocks, titles, note_counter)
+        else
+          result, note_counter = convert_environment_from_string(note_content, "note", note_counter)
         end
-
-        -- Closing
-        table.insert(result, build_environment_closing("note", true))
-
         return result
       end
     end
 
-    -- Check for nested example
+    -- Check for example
     local example_start, example_end = text:find("\\begin{example}")
     if example_start then
       local example_content_end = text:find("\\end{example}", example_start)
       if example_content_end then
-        example_counter = example_counter + 1
-        -- 15 = length of "\begin{example}"
         local example_content = text:sub(example_start + 15, example_content_end - 1)
-        example_content = trim(example_content)
-        example_content = expand_macros(example_content)
-
-        -- Parse the content (which already has codeblock placeholders)
-        local parsed = pandoc.read(example_content, "latex+raw_tex")
-
-        local result = {}
-        -- Opening
-        table.insert(result, build_environment_opening("Example", example_counter, true))
-
-        -- Process all blocks recursively with the existing codeblocks dict
-        for _, parsed_block in ipairs(parsed.blocks) do
-          local blocks = process_single_block(parsed_block, codeblocks, titles)
-          for _, b in ipairs(blocks) do
-            table.insert(result, b)
-          end
+        local result
+        -- Use nested string converter if we have codeblocks (already extracted)
+        -- Otherwise use regular string converter (will extract codeblocks)
+        if codeblocks then
+          result, example_counter = convert_environment_from_nested_string("example", example_content, codeblocks, titles, example_counter)
+        else
+          result, example_counter = convert_environment_from_string(example_content, "example", example_counter)
         end
-
-        -- Closing
-        table.insert(result, build_environment_closing("example", true))
-
         return result
       end
     end
+    -- Note: Footnote handling is done at top-level in Blocks() function
+    -- Footnotes inside notes/examples are handled by the environment converters
+  end
 
-    -- Check for nested footnote
-    local footnote_start, footnote_end = text:find("\\begin{footnote}")
-    if footnote_start then
-      local footnote_content_end = text:find("\\end{footnote}", footnote_start)
-      if footnote_content_end then
-        -- 16 = length of "\begin{footnote}"
-        local footnote_content = text:sub(footnote_start + 16, footnote_content_end - 1)
-        footnote_content = trim(footnote_content)
-        footnote_content = expand_macros(footnote_content)
+  -- Handle CodeBlock with "latex" class (rare edge case)
+  if block.t == "CodeBlock" and block.classes and block.classes[1] == "latex" then
+    local text = block.text
 
-        -- Create a native Pandoc footnote (Note inline element)
-        local parsed = pandoc.read(footnote_content, "latex+raw_tex")
+    -- Check for note
+    local note_content = text:match("\\begin{note}([%s%S]-)\\end{note}")
+    if note_content then
+      local result
+      result, note_counter = convert_environment_from_codeblock("note", note_content, note_counter)
+      return result
+    end
 
-        -- Create Note with parsed blocks as content
-        local note = pandoc.Note(parsed.blocks)
-
-        -- Return as Para containing the Note inline element
-        return {pandoc.Para({note})}
-      end
+    -- Check for example
+    local example_content = text:match("\\begin{example}([%s%S]-)\\end{example}")
+    if example_content then
+      local result
+      result, example_counter = convert_environment_from_codeblock("example", example_content, example_counter)
+      return result
     end
   end
 
-  -- Handle codeblock replacement
+  -- Handle BulletList and OrderedList blocks - recursively process items (FIXES ISSUE #5!)
+  if block.t == "BulletList" or block.t == "OrderedList" then
+    local modified = false
+    local new_items = {}
+
+    for _, item in ipairs(block.content) do
+      local new_item_blocks = {}
+      for _, item_block in ipairs(item) do
+        -- Recursively process each block in the list item
+        local processed = process_block_recursive(item_block, codeblocks, titles)
+        for _, b in ipairs(processed) do
+          table.insert(new_item_blocks, b)
+        end
+        -- Check if we made a modification
+        if #processed ~= 1 or processed[1] ~= item_block then
+          modified = true
+        end
+      end
+      table.insert(new_items, new_item_blocks)
+    end
+
+    if modified then
+      -- Return modified list
+      if block.t == "BulletList" then
+        return {pandoc.BulletList(new_items)}
+      else
+        return {pandoc.OrderedList(new_items, block.listAttributes)}
+      end
+    end
+    return {block}
+  end
+
+  -- Handle codeblock placeholder replacement and codeblock Divs
   return process_codeblock_div(block, codeblocks, titles)
 end
 
--- Unified function to process note or example environments
+-- Generic function to convert note or example from top-level RawBlock string
+-- Handles codeblock extraction, macro expansion, and parsing
 -- env_type: "note" or "example"
+-- content: raw LaTeX string
 -- counter_val: current counter value
 -- Returns: result blocks, updated counter value
-function process_environment(content, env_type, counter_val)
+function convert_environment_from_string(content, env_type, counter_val)
   counter_val = counter_val + 1
 
   -- Trim leading/trailing whitespace
@@ -517,7 +539,7 @@ function process_environment(content, env_type, counter_val)
 
     -- Output all blocks from parsed content, recursively processing Divs
     for _, parsed_block in ipairs(parsed.blocks) do
-      local blocks = process_single_block(parsed_block, codeblocks, titles)
+      local blocks = process_block_recursive(parsed_block, codeblocks, titles)
       -- Insert all blocks from the list (handles both single block and title+code)
       for _, block in ipairs(blocks) do
         table.insert(result, block)
@@ -554,30 +576,17 @@ function Blocks(blocks)
         goto continue
       end
 
-      -- Check for note environment
-      local note_content = text:match("\\begin{note}([%s%S]-)\\end{note}")
-      if note_content then
-        local blocks_to_insert
-        blocks_to_insert, note_counter = process_environment(note_content, "note", note_counter)
-        for _, b in ipairs(blocks_to_insert) do
+      -- If RawBlock contains note/example, delegate to process_block_recursive()
+      -- (it will handle any footnotes inside them correctly)
+      if text:match("\\begin{note}") or text:match("\\begin{example}") then
+        local processed = process_block_recursive(block, nil, nil)
+        for _, b in ipairs(processed) do
           table.insert(result, b)
         end
         goto continue
       end
 
-      -- Check for example environment
-      local example_content = text:match("\\begin{example}([%s%S]-)\\end{example}")
-      if example_content then
-        local blocks_to_insert
-        blocks_to_insert, example_counter =
-          process_environment(example_content, "example", example_counter)
-        for _, b in ipairs(blocks_to_insert) do
-          table.insert(result, b)
-        end
-        goto continue
-      end
-
-      -- Check for footnote environment
+      -- Check for footnote environment (special case - attaches to previous Para)
       local footnote_content = text:match("\\begin{footnote}([%s%S]-)\\end{footnote}")
       if footnote_content then
         -- Create a native Pandoc footnote (Note inline element)
@@ -606,189 +615,47 @@ function Blocks(blocks)
         end
         goto continue
       end
-    end
 
-    -- Handle note/example environments in CodeBlock with class "latex"
-    -- These are rare edge cases where content is preserved as raw LaTeX
-    if block.t == "CodeBlock" and block.classes and block.classes[1] == "latex" then
-      local text = block.text
-
-      -- Check for note environment
-      local note_content = text:match("\\begin{note}([%s%S]-)\\end{note}")
-      if note_content then
-        note_counter = note_counter + 1
-        note_content = trim(note_content)
-        local inlines = build_environment_opening("Note", note_counter, false)
-        table.insert(inlines, pandoc.Str(" "))
-        table.insert(inlines, pandoc.RawInline('latex', note_content))
-        table.insert(inlines, pandoc.Str(" "))
-        local closing = build_environment_closing("note", false)
-        for _, inline in ipairs(closing) do
-          table.insert(inlines, inline)
-        end
-        table.insert(result, pandoc.Para(inlines))
-        goto continue
+      -- For all other RawBlock content, use the unified processor
+      -- This handles note/example environments
+      local processed = process_block_recursive(block, nil, nil)
+      for _, b in ipairs(processed) do
+        table.insert(result, b)
       end
-
-      -- Check for example environment
-      local example_content = text:match("\\begin{example}([%s%S]-)\\end{example}")
-      if example_content then
-        example_counter = example_counter + 1
-        example_content = trim(example_content)
-        local inlines = build_environment_opening("Example", example_counter, false)
-        table.insert(inlines, pandoc.Str(" "))
-        table.insert(inlines, pandoc.RawInline('latex', example_content))
-        table.insert(inlines, pandoc.Str(" "))
-        local closing = build_environment_closing("example", false)
-        for _, inline in ipairs(closing) do
-          table.insert(inlines, inline)
-        end
-        table.insert(result, pandoc.Para(inlines))
-        goto continue
-      end
+      goto continue
     end
 
     -- Handle Div elements that Pandoc created from LaTeX environments
-    -- These are environments that Pandoc's LaTeX reader converts to Div instead of RawBlock
-    if block.t == "Div" and block.classes then
-      -- Handle <div class="note">
-      if block.classes[1] == "note" then
-        note_counter = note_counter + 1
+    if block.t == "Div" and block.classes and block.classes[1] then
+      local class = block.classes[1]
 
-        local note_inlines = {}
-
-        if not has_complex_blocks(block.content) then
-          -- Simple case: only paragraphs, combine into single inline sequence
-          for _, div_block in ipairs(block.content) do
-            if div_block.t == "Para" and div_block.content then
-              if #note_inlines > 0 then
-                table.insert(note_inlines, pandoc.Space())
-              end
-              for _, inline in ipairs(div_block.content) do
-                table.insert(note_inlines, inline)
-              end
-            end
-          end
-
-          local note_para = build_environment_opening("Note", note_counter, false)
-          table.insert(note_para, pandoc.Str(" "))
-          for _, inline in ipairs(note_inlines) do
-            table.insert(note_para, inline)
-          end
-          table.insert(note_para, pandoc.Str(" "))
-          local closing = build_environment_closing("note", false)
-          for _, inline in ipairs(closing) do
-            table.insert(note_para, inline)
-          end
-
-          table.insert(result, pandoc.Para(note_para))
-        else
-          -- Complex case: has code blocks or other non-Para blocks
-          table.insert(result, build_environment_opening("Note", note_counter, true))
-
-          -- Output all blocks from div content
-          for _, div_block in ipairs(block.content) do
-            local processed_blocks = process_codeblock_div(div_block, nil, nil)
-            for _, b in ipairs(processed_blocks) do
-              table.insert(result, b)
-            end
-          end
-
-          table.insert(result, build_environment_closing("note", true))
-        end
-
+      -- Skip table-related Div blocks - let cpp-tables.lua handle them
+      if class == "libtab2" or class == "lib2dtab2" or
+         class == "libtab3" or class == "lib2dtab3" then
+        table.insert(result, block)
         goto continue
       end
 
-      -- Handle <div class="example">
-      if block.classes[1] == "example" then
-        example_counter = example_counter + 1
-
-        local example_inlines = {}
-
-        if not has_complex_blocks(block.content) then
-          -- Simple case: only paragraphs, combine into single inline sequence
-          for _, div_block in ipairs(block.content) do
-            if div_block.t == "Para" and div_block.content then
-              if #example_inlines > 0 then
-                table.insert(example_inlines, pandoc.Space())
-              end
-              for _, inline in ipairs(div_block.content) do
-                table.insert(example_inlines, inline)
-              end
-            end
-          end
-
-          local example_para = build_environment_opening("Example", example_counter, false)
-          table.insert(example_para, pandoc.Str(" "))
-          for _, inline in ipairs(example_inlines) do
-            table.insert(example_para, inline)
-          end
-          table.insert(example_para, pandoc.Str(" "))
-          local closing = build_environment_closing("example", false)
-          for _, inline in ipairs(closing) do
-            table.insert(example_para, inline)
-          end
-
-          table.insert(result, pandoc.Para(example_para))
-        else
-          -- Complex case: has code blocks or other non-Para blocks
-          table.insert(result, build_environment_opening("Example", example_counter, true))
-
-          -- Output all blocks from div content
-          for _, div_block in ipairs(block.content) do
-            local processed_blocks2 = process_codeblock_div(div_block, nil, nil)
-            for _, b in ipairs(processed_blocks2) do
-              table.insert(result, b)
-            end
-          end
-
-          table.insert(result, build_environment_closing("example", true))
-        end
-
-        goto continue
-      end
-
-      -- Handle <div class="footnote"> - just unwrap the div, keep content
-      if block.classes[1] == "footnote" then
-        -- Footnotes are just unwrapped - no special formatting needed
-        -- Just output the content blocks directly
-        for _, div_block in ipairs(block.content) do
-          table.insert(result, div_block)
+      -- For known classes, use unified processor
+      if class == "note" or class == "example" or class == "footnote" or class == "codeblock" then
+        local processed = process_block_recursive(block, nil, nil)
+        for _, b in ipairs(processed) do
+          table.insert(result, b)
         end
         goto continue
       end
 
-      -- Handle <div class="codeblock"> - convert to proper code block
-      if block.classes[1] == "codeblock" then
-        local code_block = extract_code_from_div(block, "cpp")
-        if code_block then
-          table.insert(result, code_block)
-        end
-        goto continue
-      end
-
-      -- Handle other div classes (like "indented", "center", "ncbnf")
-      -- unwrap by outputting content as blockquote. This preserves content
-      -- from LaTeX environments like \begin{indented} that would be lost
-      if block.classes[1] then
-        -- Skip table-related Div blocks - let cpp-tables.lua handle them
-        if block.classes[1] == "libtab2" or
-           block.classes[1] == "lib2dtab2" or
-           block.classes[1] == "libtab3" or
-           block.classes[1] == "lib2dtab3" then
-          table.insert(result, block)
-          goto continue
-        end
-
-        -- Convert to blockquote to preserve indentation/centering visually
-        table.insert(result, pandoc.BlockQuote(block.content))
-        goto continue
-      end
+      -- Handle other unknown div classes (like "indented", "center", "ncbnf")
+      -- Convert to blockquote to preserve indentation/centering visually
+      table.insert(result, pandoc.BlockQuote(block.content))
+      goto continue
     end
 
-    -- Keep other blocks as-is
-    table.insert(result, block)
+    -- For all other block types (including CodeBlock), use unified processor
+    local processed = process_block_recursive(block, nil, nil)
+    for _, b in ipairs(processed) do
+      table.insert(result, b)
+    end
 
     ::continue::
   end

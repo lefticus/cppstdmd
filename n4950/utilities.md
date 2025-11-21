@@ -10725,9 +10725,7 @@ displaying Unicode text in a terminal.
 
 [*Note 5*:
 
-This is the case for Windows
-
-[^2]
+This is the case for Windows[^2]
 
 -based and many POSIX-based operating systems.
 

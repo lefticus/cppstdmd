@@ -6357,8 +6357,23 @@ Type deduction can fail for the following reasons:
 - Attempting to create an array with an element type that is `void`, a
   function type, or a reference type, or attempting to create an array
   with a size that is zero or negative.
+  \[*Example 9*:
+  ``` cpp
+  template <class T> int f(T[5]);
+  int I = f<int>(0);
+  int j = f<void>(0);             // invalid array
+  ```
+
+  — *end example*]
 - Attempting to use a type that is not a class or enumeration type in a
   qualified name.
+  \[*Example 10*:
+  ``` cpp
+  template <class T> int f(typename T::B*);
+  int i = f<int>(0);
+  ```
+
+  — *end example*]
 - Attempting to use a type in a *nested-name-specifier* of a
   *qualified-id* when that type does not contain the specified member,
   or
@@ -6367,22 +6382,72 @@ Type deduction can fail for the following reasons:
     or
   - the specified member is not a non-type where a non-type is required.
 
-  \[*Example 1*: \_\_CODEBLOCK_3\_\_ — *end example*]
+  \[*Example 11*:
+  ``` cpp
+  template <int I> struct X { };
+  template <template <class T> class> struct Z { };
+  template <class T> void f(typename T::Y*) {}
+  template <class T> void g(X<T::N>*) {}
+  template <class T> void h(Z<T::TT>*) {}
+  struct A {};
+  struct B { int Y; };
+  struct C {
+    typedef int N;
+  };
+  struct D {
+    typedef int TT;
+  };
+
+  int main() {
+    // Deduction fails in each of these cases:
+    f<A>(0);          // A does not contain a member Y
+    f<B>(0);          // The Y member of B is not a type
+    g<C>(0);          // The N member of C is not a non-type
+    h<D>(0);          // The TT member of D is not a template
+  }
+  ```
+
+  — *end example*]
 - Attempting to create a pointer to reference type.
 - Attempting to create a reference to `void`.
 - Attempting to create “pointer to member of `T`” when `T` is not a
   class type.
+  \[*Example 12*:
+  ``` cpp
+  template <class T> int f(int T::*);
+  int i = f<int>(0);
+  ```
+
+  — *end example*]
 - Attempting to give an invalid type to a non-type template parameter.
+  \[*Example 13*:
+  ``` cpp
+  template <class T, T> struct S {};
+  template <class T> int f(S<T, T{}>*);   // #1
+  class X {
+    int m;
+  };
+  int i0 = f<X>(0);   // #1 uses a value of non-structural type X as a non-type template argument
+  ```
+
+  — *end example*]
 - Attempting to perform an invalid conversion in either a template
   argument expression, or an expression used in the function
   declaration.
+  \[*Example 14*:
+  ``` cpp
+  template <class T, T*> int f(int);
+  int i2 = f<int,1>(0);           // can't convert 1 to int*
+  ```
+
+  — *end example*]
 - Attempting to create a function type in which a parameter has a type
   of `void`, or in which the return type is a function type or array
   type.
 
 — *end note*]
 
-[*Example 9*:
+[*Example 15*:
 
 In the following example, assuming a `signed char` cannot represent the
 value 1000, a narrowing conversion [[dcl.init.list]] would be required
