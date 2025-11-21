@@ -248,6 +248,12 @@ function Math(elem)
     -- NOTE: \texttt{} already handled above with backtick wrapping
     preprocessed = common.strip_text_macros_in_math(preprocessed)
 
+    -- Strip \ensuremath{} wrappers in math mode (Issue #78)
+    -- Already in math context, so \ensuremath{} is redundant
+    preprocessed = common.process_macro_with_replacement(preprocessed, "ensuremath", function(content)
+      return content
+    end)
+
     -- Regular math conversion
     local converted = try_unicode_conversion(preprocessed)
 

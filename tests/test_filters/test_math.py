@@ -1254,3 +1254,55 @@ def test_texttt_in_math_already_works():
     assert "≥" in output  # Operator converted
     assert "\\texttt" not in output
     assert "$" not in output
+
+
+def test_state_macro_with_subscripts():
+    r"""Test \state{var}{subscript} macro expansion with math subscripts (numerics.md)"""
+    latex = r"""
+At any given time, \tcode{e} has a state \state{e}{i} for some integer $i \geq 0$.
+Upon construction, \tcode{e} has an initial state \state{e}{0}.
+An engine's state may be established via \state{x}{j}.
+"""
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    # Should have subscripts using Unicode subscript characters
+    assert "eᵢ" in output  # e with subscript i
+    assert "e₀" in output  # e with subscript 0
+    assert "xⱼ" in output  # x with subscript j
+    # Should NOT have escaped underscores or raw LaTeX
+    assert "\\_" not in output
+    assert "\\state" not in output
+
+
+def test_state_macro_in_math_mode():
+    r"""Test \state{} macro inside math expressions doesn't cause regression (Issue #78)"""
+    latex = r"""
+The transition algorithm is $\mathsf{TA}(\state{x}{i}) = (a \cdot \state{x}{i} + c) \bmod m$;
+the generation algorithm is $\mathsf{GA}(\state{x}{i}) = \state{x}{i+1}$.
+"""
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    # Simple subscripts should convert to Unicode
+    assert "xᵢ" in output
+    # Arithmetic subscripts should also convert to Unicode (i+1 → ᵢ₊₁)
+    assert "xᵢ₊₁" in output
+    # Should NOT have \ensuremath{} wrappers in output
+    assert "\\ensuremath" not in output
+    # Should NOT revert to LaTeX format
+    assert "$" not in output or output.count("$") == 0
+
+
+def test_bare_arithmetic_subscripts():
+    r"""Test bare arithmetic subscripts like _{i+1} convert to Unicode (exposes \state{e}{i+1} issue)"""
+    latex = r"""
+Test bare arithmetic subscripts: $_{i+1}$, $_{n-1}$, and $_{k+2}$.
+"""
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    # Bare arithmetic subscripts should convert to Unicode
+    assert "ᵢ₊₁" in output  # _{i+1} → ᵢ₊₁
+    assert "ₙ₋₁" in output  # _{n-1} → ₙ₋₁
+    assert "ₖ₊₂" in output  # _{k+2} → ₖ₊₂
+    # Should NOT have raw LaTeX patterns
+    assert "_{" not in output
+    assert "$_" not in output

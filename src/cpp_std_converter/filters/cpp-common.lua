@@ -1520,6 +1520,13 @@ local function try_unicode_conversion(text, options)
     end
   end)
 
+  -- Check bare arithmetic subscripts: _{i+1}, _{n-1}
+  result:gsub("^_{(%w)([-+])(%w)}$", function(sub1, op, sub2)
+    if not convert_subscript_char(sub1) or not convert_subscript_char(op) or not convert_subscript_char(sub2) then
+      has_unconvertible_sub = true
+    end
+  end)
+
   if has_unconvertible_sub then
     return nil  -- Abort conversion if any subscript can't be converted
   end
@@ -1538,6 +1545,14 @@ local function try_unicode_conversion(text, options)
     local unicode_op = convert_subscript_char(op)
     local unicode_sub2 = convert_subscript_char(sub2)
     return base .. unicode_sub1 .. unicode_op .. unicode_sub2
+  end)
+
+  -- Convert bare arithmetic subscripts: _{i+1} → ᵢ₊₁, _{n-1} → ₙ₋₁
+  result = result:gsub("^_{(%w)([-+])(%w)}$", function(sub1, op, sub2)
+    local unicode_sub1 = convert_subscript_char(sub1)
+    local unicode_op = convert_subscript_char(op)
+    local unicode_sub2 = convert_subscript_char(sub2)
+    return unicode_sub1 .. unicode_op .. unicode_sub2
   end)
 
   -- Iterate subscript conversion until no more changes occur

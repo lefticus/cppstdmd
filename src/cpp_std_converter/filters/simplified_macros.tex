@@ -197,8 +197,8 @@
 \renewcommand{\renontermdef}[1]{#1::}   % Regex grammar (7×) - just term+:: (like \locnontermdef)
 \renewcommand{\defexposconceptnc}[1]{\textit{#1}}  % Exposition-only concepts (29×)
 
-%% Math state variables: \state{X}{Y} → X_Y with subscripts (7 occurrences)
-\renewcommand{\state}[2]{\textit{#1}_\textit{#2}}
+%% Math state variables: \state{X}{Y} → X_Y with subscripts (27 occurrences)
+\renewcommand{\state}[2]{#1\ensuremath{_{#2}}}
 
 %%--------------------------------------------------
 %% Category M: BNF Typography Macros (Issue #74)

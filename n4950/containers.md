@@ -14367,10 +14367,10 @@ template<class OtherIndexType>
   `index_type`[[basic.fundamental]].
 - If *rank\_* is greater than 0, then there exists a permutation P of
   the integers in the range [0, rank_), such that
-  `s[`pᵢ`] >= s[`pᵢ₋₁`] * e.extent(p`$_{i-1}$`)` is `true` for all i in
-  the range [1, rank_), where pᵢ is the iᵗʰ element of P.
-  \[*Note 3*: For `layout_stride`, this condition is necessary and
-  sufficient for `is_unique()` to be `true`. — *end note*]
+  `s[`pᵢ`] >= s[`pᵢ₋₁`] * e.extent(p`ᵢ₋₁`)` is `true` for all i in the
+  range [1, rank_), where pᵢ is the iᵗʰ element of P. \[*Note 3*: For
+  `layout_stride`, this condition is necessary and sufficient for
+  `is_unique()` to be `true`. — *end note*]
 
 *Effects:* Direct-non-list-initializes *extents\_* with `e`, and for all
 d in the range [0, rank_), direct-non-list-initializes `strides_[`d`]`
