@@ -57,6 +57,9 @@ local build_environment_closing = common.build_environment_closing
 local note_counter = 0
 local example_counter = 0
 
+-- Forward declarations for functions used before they're defined
+local process_list_recursive
+
 -- Helper function to convert codeblock Div to CodeBlock or replace placeholders
 -- Returns a list of blocks (to support title + code for codeblocktu)
 local function process_codeblock_div(block, codeblocks, titles)
@@ -92,33 +95,7 @@ local function process_codeblock_div(block, codeblocks, titles)
   -- Handle BulletList and OrderedList blocks - recursively process items
   -- for placeholders (Issue #18)
   if (block.t == "BulletList" or block.t == "OrderedList") and codeblocks then
-    local modified = false
-    local new_items = {}
-
-    for _, item in ipairs(block.content) do
-      local new_item_blocks = {}
-      for _, item_block in ipairs(item) do
-        -- Recursively process each block in the list item
-        local processed = process_codeblock_div(item_block, codeblocks, titles)
-        for _, b in ipairs(processed) do
-          table.insert(new_item_blocks, b)
-        end
-        -- Check if we made a modification
-        if #processed ~= 1 or processed[1] ~= item_block then
-          modified = true
-        end
-      end
-      table.insert(new_items, new_item_blocks)
-    end
-
-    if modified then
-      -- Return modified list
-      if block.t == "BulletList" then
-        return {pandoc.BulletList(new_items)}
-      else
-        return {pandoc.OrderedList(new_items, block.listAttributes)}
-      end
-    end
+    return process_list_recursive(block, process_codeblock_div, codeblocks, titles)
   end
 
   -- Return block as single-item list for consistency
@@ -230,28 +207,80 @@ local convert_environment_from_string
 local convert_environment_from_codeblock
 local process_block_recursive
 
--- Generic function to convert note or example from Div blocks
--- env_type: "note" or "example"
--- block_content: array of blocks from Div
+-- Helper: Extract environment content from text string
+-- Returns: content string (or nil if not found)
+local function extract_environment_content(text, env_type)
+  local pattern = "\\begin{" .. env_type .. "}([%s%S]-)\\end{" .. env_type .. "}"
+  return text:match(pattern)
+end
+
+-- Helper: Process list items recursively
+-- Consolidates duplicate list processing logic from
+-- process_codeblock_div and process_block_recursive
+-- block: BulletList or OrderedList block to process
+-- processor_fn: function(item_block, ...) that returns list of blocks
+-- ...: additional args to pass to processor_fn (e.g., codeblocks, titles)
+-- Returns: list containing modified list block (if changed) or original block (if unchanged)
+function process_list_recursive(block, processor_fn, ...)
+  if block.t ~= "BulletList" and block.t ~= "OrderedList" then
+    return {block}
+  end
+
+  local modified = false
+  local new_items = {}
+
+  for _, item in ipairs(block.content) do
+    local new_item_blocks = {}
+    for _, item_block in ipairs(item) do
+      -- Recursively process each block in the list item
+      local processed = processor_fn(item_block, ...)
+      for _, b in ipairs(processed) do
+        table.insert(new_item_blocks, b)
+      end
+      -- Check if we made a modification
+      if #processed ~= 1 or processed[1] ~= item_block then
+        modified = true
+      end
+    end
+    table.insert(new_items, new_item_blocks)
+  end
+
+  if modified then
+    -- Return modified list
+    if block.t == "BulletList" then
+      return {pandoc.BulletList(new_items)}
+    else
+      return {pandoc.OrderedList(new_items, block.listAttributes)}
+    end
+  end
+
+  return {block}
+end
+
+-- Helper: Build environment output (simple or complex mode)
+-- Consolidates the shared rendering logic from all environment converters
+-- label: capitalized environment type (e.g., "Note", "Example")
+-- counter_val: counter value for this environment
+-- blocks: array of blocks to render
+-- env_type: "note" or "example" (lowercase)
 -- codeblocks: optional dict for placeholder replacement
 -- titles: optional dict for codeblocktu titles
--- counter_val: current counter value
--- Returns: result_blocks, updated_counter
-function convert_environment_from_blocks(env_type, block_content, codeblocks, titles, counter_val)
-  counter_val = counter_val + 1
-
-  local label = env_type:sub(1,1):upper() .. env_type:sub(2)  -- Capitalize first letter
+-- is_simple: if true, render as inline; if false, render with opening/closing blocks
+-- Returns: result blocks
+local function build_environment_output(
+  label, counter_val, blocks, env_type, codeblocks, titles, is_simple
+)
   local result = {}
 
-  if not has_complex_blocks(block_content) then
+  if is_simple then
     -- Simple case: only paragraphs, combine into single inline sequence
     local inlines = {}
-    for _, div_block in ipairs(block_content) do
-      if div_block.t == "Para" and div_block.content then
+    for _, block in ipairs(blocks) do
+      if block.t == "Para" and block.content then
         if #inlines > 0 then
           table.insert(inlines, pandoc.Space())
         end
-        for _, inline in ipairs(div_block.content) do
+        for _, inline in ipairs(block.content) do
           table.insert(inlines, inline)
         end
       end
@@ -273,10 +302,10 @@ function convert_environment_from_blocks(env_type, block_content, codeblocks, ti
     -- Complex case: has code blocks or other non-Para blocks
     table.insert(result, build_environment_opening(label, counter_val, true))
 
-    -- Recursively process nested div content, passing codeblocks/titles
-    for _, div_block in ipairs(block_content) do
-      local blocks = process_block_recursive(div_block, codeblocks, titles)
-      for _, b in ipairs(blocks) do
+    -- Recursively process blocks
+    for _, block in ipairs(blocks) do
+      local processed = process_block_recursive(block, codeblocks, titles)
+      for _, b in ipairs(processed) do
         table.insert(result, b)
       end
     end
@@ -284,6 +313,25 @@ function convert_environment_from_blocks(env_type, block_content, codeblocks, ti
     table.insert(result, build_environment_closing(env_type, true))
   end
 
+  return result
+end
+
+-- Generic function to convert note or example from Div blocks
+-- env_type: "note" or "example"
+-- block_content: array of blocks from Div
+-- codeblocks: optional dict for placeholder replacement
+-- titles: optional dict for codeblocktu titles
+-- counter_val: current counter value
+-- Returns: result_blocks, updated_counter
+function convert_environment_from_blocks(
+  env_type, block_content, codeblocks, titles, counter_val
+)
+  counter_val = counter_val + 1
+  local label = env_type:sub(1,1):upper() .. env_type:sub(2)
+  local is_simple = not has_complex_blocks(block_content)
+  local result = build_environment_output(
+    label, counter_val, block_content, env_type, codeblocks, titles, is_simple
+  )
   return result, counter_val
 end
 
@@ -295,7 +343,9 @@ end
 -- titles: dict for codeblocktu titles
 -- counter_val: current counter value
 -- Returns: result_blocks, updated_counter
-function convert_environment_from_nested_string(env_type, content, codeblocks, titles, counter_val)
+function convert_environment_from_nested_string(
+  env_type, content, codeblocks, titles, counter_val
+)
   counter_val = counter_val + 1
 
   content = trim(content)
@@ -304,22 +354,11 @@ function convert_environment_from_nested_string(env_type, content, codeblocks, t
   -- Parse the content (which already has codeblock placeholders)
   local parsed = pandoc.read(content, "latex+raw_tex")
 
-  local label = env_type:sub(1,1):upper() .. env_type:sub(2)  -- Capitalize first letter
-  local result = {}
-
-  -- Opening
-  table.insert(result, build_environment_opening(label, counter_val, true))
-
-  -- Process all blocks recursively with the existing codeblocks dict
-  for _, parsed_block in ipairs(parsed.blocks) do
-    local blocks = process_block_recursive(parsed_block, codeblocks, titles)
-    for _, b in ipairs(blocks) do
-      table.insert(result, b)
-    end
-  end
-
-  -- Closing
-  table.insert(result, build_environment_closing(env_type, true))
+  local label = env_type:sub(1,1):upper() .. env_type:sub(2)
+  -- Always use complex mode since codeblocks were already extracted
+  local result = build_environment_output(
+    label, counter_val, parsed.blocks, env_type, codeblocks, titles, false
+  )
 
   return result, counter_val
 end
@@ -362,11 +401,15 @@ function process_block_recursive(block, codeblocks, titles)
 
     if class == "note" then
       local result
-      result, note_counter = convert_environment_from_blocks("note", block.content, codeblocks, titles, note_counter)
+      result, note_counter = convert_environment_from_blocks(
+        "note", block.content, codeblocks, titles, note_counter
+      )
       return result
     elseif class == "example" then
       local result
-      result, example_counter = convert_environment_from_blocks("example", block.content, codeblocks, titles, example_counter)
+      result, example_counter = convert_environment_from_blocks(
+        "example", block.content, codeblocks, titles, example_counter
+      )
       return result
     elseif class == "footnote" then
       -- Just unwrap the div, keep content
@@ -385,37 +428,33 @@ function process_block_recursive(block, codeblocks, titles)
   if block.t == "RawBlock" and block.format == "latex" then
     local text = block.text
 
-    -- Check for note
-    local note_start, note_end = text:find("\\begin{note}")
-    if note_start then
-      local note_content_end = text:find("\\end{note}", note_start)
-      if note_content_end then
-        local note_content = text:sub(note_start + 12, note_content_end - 1)
+    -- Check for note or example environments
+    for _, env_type in ipairs({"note", "example"}) do
+      local content = extract_environment_content(text, env_type)
+      if content then
         local result
         -- Use nested string converter if we have codeblocks (already extracted)
         -- Otherwise use regular string converter (will extract codeblocks)
         if codeblocks then
-          result, note_counter = convert_environment_from_nested_string("note", note_content, codeblocks, titles, note_counter)
+          if env_type == "note" then
+            result, note_counter = convert_environment_from_nested_string(
+              "note", content, codeblocks, titles, note_counter
+            )
+          else
+            result, example_counter = convert_environment_from_nested_string(
+              "example", content, codeblocks, titles, example_counter
+            )
+          end
         else
-          result, note_counter = convert_environment_from_string(note_content, "note", note_counter)
-        end
-        return result
-      end
-    end
-
-    -- Check for example
-    local example_start, example_end = text:find("\\begin{example}")
-    if example_start then
-      local example_content_end = text:find("\\end{example}", example_start)
-      if example_content_end then
-        local example_content = text:sub(example_start + 15, example_content_end - 1)
-        local result
-        -- Use nested string converter if we have codeblocks (already extracted)
-        -- Otherwise use regular string converter (will extract codeblocks)
-        if codeblocks then
-          result, example_counter = convert_environment_from_nested_string("example", example_content, codeblocks, titles, example_counter)
-        else
-          result, example_counter = convert_environment_from_string(example_content, "example", example_counter)
+          if env_type == "note" then
+            result, note_counter = convert_environment_from_string(
+              content, "note", note_counter
+            )
+          else
+            result, example_counter = convert_environment_from_string(
+              content, "example", example_counter
+            )
+          end
         end
         return result
       end
@@ -428,53 +467,28 @@ function process_block_recursive(block, codeblocks, titles)
   if block.t == "CodeBlock" and block.classes and block.classes[1] == "latex" then
     local text = block.text
 
-    -- Check for note
-    local note_content = text:match("\\begin{note}([%s%S]-)\\end{note}")
-    if note_content then
-      local result
-      result, note_counter = convert_environment_from_codeblock("note", note_content, note_counter)
-      return result
-    end
-
-    -- Check for example
-    local example_content = text:match("\\begin{example}([%s%S]-)\\end{example}")
-    if example_content then
-      local result
-      result, example_counter = convert_environment_from_codeblock("example", example_content, example_counter)
-      return result
+    -- Check for note or example environments
+    for _, env_type in ipairs({"note", "example"}) do
+      local content = extract_environment_content(text, env_type)
+      if content then
+        local result
+        if env_type == "note" then
+          result, note_counter = convert_environment_from_codeblock(
+            "note", content, note_counter
+          )
+        else
+          result, example_counter = convert_environment_from_codeblock(
+            "example", content, example_counter
+          )
+        end
+        return result
+      end
     end
   end
 
   -- Handle BulletList and OrderedList blocks - recursively process items (FIXES ISSUE #5!)
   if block.t == "BulletList" or block.t == "OrderedList" then
-    local modified = false
-    local new_items = {}
-
-    for _, item in ipairs(block.content) do
-      local new_item_blocks = {}
-      for _, item_block in ipairs(item) do
-        -- Recursively process each block in the list item
-        local processed = process_block_recursive(item_block, codeblocks, titles)
-        for _, b in ipairs(processed) do
-          table.insert(new_item_blocks, b)
-        end
-        -- Check if we made a modification
-        if #processed ~= 1 or processed[1] ~= item_block then
-          modified = true
-        end
-      end
-      table.insert(new_items, new_item_blocks)
-    end
-
-    if modified then
-      -- Return modified list
-      if block.t == "BulletList" then
-        return {pandoc.BulletList(new_items)}
-      else
-        return {pandoc.OrderedList(new_items, block.listAttributes)}
-      end
-    end
-    return {block}
+    return process_list_recursive(block, process_block_recursive, codeblocks, titles)
   end
 
   -- Handle codeblock placeholder replacement and codeblock Divs
@@ -503,51 +517,11 @@ function convert_environment_from_string(content, env_type, counter_val)
   local parsed = pandoc.read(modified_content, "latex+raw_tex")
   local has_blocks = has_complex_blocks(parsed.blocks) or (codeblock_count > 0)
 
-  local label = env_type:sub(1,1):upper() .. env_type:sub(2)  -- Capitalize first letter
-  local result = {}
-
-  if not has_blocks then
-    -- Simple case: only paragraphs, combine into single inline sequence
-    local inlines = {}
-    for _, parsed_block in ipairs(parsed.blocks) do
-      if parsed_block.t == "Para" and parsed_block.content then
-        if #inlines > 0 then
-          table.insert(inlines, pandoc.Space())
-        end
-        for _, inline in ipairs(parsed_block.content) do
-          table.insert(inlines, inline)
-        end
-      end
-    end
-
-    local para = {
-      pandoc.Str("["),
-      pandoc.Emph({pandoc.Str(label .. " " .. counter_val)}),
-      pandoc.Str(": ")
-    }
-    for _, inline in ipairs(inlines) do
-      table.insert(para, inline)
-    end
-    table.insert(para, pandoc.Str(" — "))
-    table.insert(para, pandoc.Emph({pandoc.Str("end " .. env_type)}))
-    table.insert(para, pandoc.Str("]"))
-
-    table.insert(result, pandoc.Para(para))
-  else
-    -- Complex case: has code blocks or other non-Para blocks
-    table.insert(result, build_environment_opening(label, counter_val, true))
-
-    -- Output all blocks from parsed content, recursively processing Divs
-    for _, parsed_block in ipairs(parsed.blocks) do
-      local blocks = process_block_recursive(parsed_block, codeblocks, titles)
-      -- Insert all blocks from the list (handles both single block and title+code)
-      for _, block in ipairs(blocks) do
-        table.insert(result, block)
-      end
-    end
-
-    table.insert(result, build_environment_closing(env_type, true))
-  end
+  local label = env_type:sub(1,1):upper() .. env_type:sub(2)
+  local is_simple = not has_blocks
+  local result = build_environment_output(
+    label, counter_val, parsed.blocks, env_type, codeblocks, titles, is_simple
+  )
 
   return result, counter_val
 end
