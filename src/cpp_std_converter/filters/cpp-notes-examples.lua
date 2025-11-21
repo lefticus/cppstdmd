@@ -57,8 +57,48 @@ local build_environment_closing = common.build_environment_closing
 local note_counter = 0
 local example_counter = 0
 
+-- Helper: Capitalize first letter of string
+local function capitalize(str)
+  return str:sub(1,1):upper() .. str:sub(2)
+end
+
+-- Helper: Get counter value for environment type
+local function get_counter_for_env(env_type)
+  return env_type == "note" and note_counter or example_counter
+end
+
+-- Helper: Set counter value for environment type
+local function set_counter_for_env(env_type, value)
+  if env_type == "note" then
+    note_counter = value
+  else
+    example_counter = value
+  end
+end
+
+-- Helper: Prepare environment by incrementing counter and getting label
+local function prepare_environment(env_type, counter_val)
+  return counter_val + 1, capitalize(env_type)
+end
+
+-- Optimized macro expansion using shared function from cpp-common
+local function expand_macros(content)
+  -- Use shared expand_macros_common with minimal mode for notes/examples context
+  return expand_macros_common(content, {minimal = true})
+end
+
+-- Helper: Prepare content by trimming and expanding macros
+local function prepare_content(content)
+  return expand_macros(trim(content))
+end
+
 -- Forward declarations for functions used before they're defined
 local process_list_recursive
+local convert_environment_from_blocks
+local convert_environment_from_nested_string
+local convert_environment_from_string
+local convert_environment_from_codeblock
+local process_block_recursive
 
 -- Helper function to convert codeblock Div to CodeBlock or replace placeholders
 -- Returns a list of blocks (to support title + code for codeblocktu)
@@ -147,7 +187,8 @@ local function extract_codeblocks(content)
     local cbtu_title = nil
     if cbtu_start and (not earliest_start or cbtu_start < earliest_start) then
       -- Use brace-balanced extraction for the title
-      local title_brace_start = cbtu_start + 20  -- After \begin{codeblocktu}{
+      local cbtu_prefix = "\\begin{codeblocktu}{"
+      local title_brace_start = cbtu_start + #cbtu_prefix
       local title, title_end = extract_braced_content(modified_content, title_brace_start - 1, 0)
       if title and title_end then
         local cbtu_end = modified_content:find("\\end{codeblocktu}", title_end, true)
@@ -193,19 +234,6 @@ local function extract_codeblocks(content)
 
   return modified_content, codeblocks, titles, counter
 end
-
--- Optimized macro expansion using shared function from cpp-common
-local function expand_macros(content)
-  -- Use shared expand_macros_common with minimal mode for notes/examples context
-  return expand_macros_common(content, {minimal = true})
-end
-
--- Forward declarations for recursive processing
-local convert_environment_from_blocks
-local convert_environment_from_nested_string
-local convert_environment_from_string
-local convert_environment_from_codeblock
-local process_block_recursive
 
 -- Helper: Extract environment content from text string
 -- Returns: content string (or nil if not found)
@@ -326,8 +354,8 @@ end
 function convert_environment_from_blocks(
   env_type, block_content, codeblocks, titles, counter_val
 )
-  counter_val = counter_val + 1
-  local label = env_type:sub(1,1):upper() .. env_type:sub(2)
+  local label
+  counter_val, label = prepare_environment(env_type, counter_val)
   local is_simple = not has_complex_blocks(block_content)
   local result = build_environment_output(
     label, counter_val, block_content, env_type, codeblocks, titles, is_simple
@@ -346,15 +374,14 @@ end
 function convert_environment_from_nested_string(
   env_type, content, codeblocks, titles, counter_val
 )
-  counter_val = counter_val + 1
+  local label
+  counter_val, label = prepare_environment(env_type, counter_val)
 
-  content = trim(content)
-  content = expand_macros(content)
+  content = prepare_content(content)
 
   -- Parse the content (which already has codeblock placeholders)
   local parsed = pandoc.read(content, "latex+raw_tex")
 
-  local label = env_type:sub(1,1):upper() .. env_type:sub(2)
   -- Always use complex mode since codeblocks were already extracted
   local result = build_environment_output(
     label, counter_val, parsed.blocks, env_type, codeblocks, titles, false
@@ -370,10 +397,10 @@ end
 -- counter_val: current counter value
 -- Returns: result_blocks (single Para with RawInline), updated_counter
 function convert_environment_from_codeblock(env_type, content, counter_val)
-  counter_val = counter_val + 1
+  local label
+  counter_val, label = prepare_environment(env_type, counter_val)
 
   content = trim(content)
-  local label = env_type:sub(1,1):upper() .. env_type:sub(2)  -- Capitalize first letter
 
   local inlines = build_environment_opening(label, counter_val, false)
   table.insert(inlines, pandoc.Str(" "))
@@ -399,17 +426,13 @@ function process_block_recursive(block, codeblocks, titles)
   if block.t == "Div" and block.classes then
     local class = block.classes[1]
 
-    if class == "note" then
+    if class == "note" or class == "example" then
+      local counter = get_counter_for_env(class)
       local result
-      result, note_counter = convert_environment_from_blocks(
-        "note", block.content, codeblocks, titles, note_counter
+      result, counter = convert_environment_from_blocks(
+        class, block.content, codeblocks, titles, counter
       )
-      return result
-    elseif class == "example" then
-      local result
-      result, example_counter = convert_environment_from_blocks(
-        "example", block.content, codeblocks, titles, example_counter
-      )
+      set_counter_for_env(class, counter)
       return result
     elseif class == "footnote" then
       -- Just unwrap the div, keep content
@@ -432,30 +455,20 @@ function process_block_recursive(block, codeblocks, titles)
     for _, env_type in ipairs({"note", "example"}) do
       local content = extract_environment_content(text, env_type)
       if content then
+        local counter = get_counter_for_env(env_type)
         local result
         -- Use nested string converter if we have codeblocks (already extracted)
         -- Otherwise use regular string converter (will extract codeblocks)
         if codeblocks then
-          if env_type == "note" then
-            result, note_counter = convert_environment_from_nested_string(
-              "note", content, codeblocks, titles, note_counter
-            )
-          else
-            result, example_counter = convert_environment_from_nested_string(
-              "example", content, codeblocks, titles, example_counter
-            )
-          end
+          result, counter = convert_environment_from_nested_string(
+            env_type, content, codeblocks, titles, counter
+          )
         else
-          if env_type == "note" then
-            result, note_counter = convert_environment_from_string(
-              content, "note", note_counter
-            )
-          else
-            result, example_counter = convert_environment_from_string(
-              content, "example", example_counter
-            )
-          end
+          result, counter = convert_environment_from_string(
+            content, env_type, counter
+          )
         end
+        set_counter_for_env(env_type, counter)
         return result
       end
     end
@@ -471,16 +484,12 @@ function process_block_recursive(block, codeblocks, titles)
     for _, env_type in ipairs({"note", "example"}) do
       local content = extract_environment_content(text, env_type)
       if content then
+        local counter = get_counter_for_env(env_type)
         local result
-        if env_type == "note" then
-          result, note_counter = convert_environment_from_codeblock(
-            "note", content, note_counter
-          )
-        else
-          result, example_counter = convert_environment_from_codeblock(
-            "example", content, example_counter
-          )
-        end
+        result, counter = convert_environment_from_codeblock(
+          env_type, content, counter
+        )
+        set_counter_for_env(env_type, counter)
         return result
       end
     end
@@ -502,13 +511,10 @@ end
 -- counter_val: current counter value
 -- Returns: result blocks, updated counter value
 function convert_environment_from_string(content, env_type, counter_val)
-  counter_val = counter_val + 1
+  local label
+  counter_val, label = prepare_environment(env_type, counter_val)
 
-  -- Trim leading/trailing whitespace
-  content = trim(content)
-
-  -- Expand macros efficiently
-  content = expand_macros(content)
+  content = prepare_content(content)
 
   -- Extract codeblocks before parsing (optimized)
   local modified_content, codeblocks, titles, codeblock_count = extract_codeblocks(content)
@@ -517,7 +523,6 @@ function convert_environment_from_string(content, env_type, counter_val)
   local parsed = pandoc.read(modified_content, "latex+raw_tex")
   local has_blocks = has_complex_blocks(parsed.blocks) or (codeblock_count > 0)
 
-  local label = env_type:sub(1,1):upper() .. env_type:sub(2)
   local is_simple = not has_blocks
   local result = build_environment_output(
     label, counter_val, parsed.blocks, env_type, codeblocks, titles, is_simple
