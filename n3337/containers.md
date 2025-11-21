@@ -1212,10 +1212,10 @@ iterators and references to elements of the deque. An insertion at
 either end of the deque invalidates all the iterators to the deque, but
 has no effect on the validity of references to elements of the deque.
 
-If an exception is thrown other than by the copy constructor, move
-constructor, assignment operator, or move assignment operator of `T`
-there are no effects. If an exception is thrown by the move constructor
-of a non-`CopyInsertable` `T`, the effects are unspecified.
+*Remarks:* If an exception is thrown other than by the copy constructor,
+move constructor, assignment operator, or move assignment operator of
+`T` there are no effects. If an exception is thrown by the move
+constructor of a non-`CopyInsertable` `T`, the effects are unspecified.
 
 *Complexity:* The complexity is linear in the number of elements
 inserted plus the lesser of the distances to the beginning and end of
@@ -2074,8 +2074,8 @@ void push_back(const T& x);
 void push_back(T&& x);
 ```
 
-Does not affect the validity of iterators and references. If an
-exception is thrown there are no effects.
+*Remarks:* Does not affect the validity of iterators and references. If
+an exception is thrown there are no effects.
 
 *Complexity:* Insertion of a single element into a list takes constant
 time and exactly one call to a constructor of `T`. Insertion of multiple
@@ -2181,7 +2181,7 @@ references to the erased elements.
 *Throws:* Nothing unless an exception is thrown by `*i == value` or
 `pred(*i) != false`.
 
-Stable.
+*Remarks:* Stable.
 
 *Complexity:* Exactly `size()` applications of the corresponding
 predicate.
@@ -2227,9 +2227,9 @@ elements of `x` now refer to those same elements but as members of
 refer to their elements, but they now behave as iterators into `*this`,
 not into `x`.
 
-Stable. If `(&x != this)` the range `[x.begin(), x.end())` is empty
-after the merge. No elements are copied by this operation. The behavior
-is undefined if `this->get_allocator() != x.get_allocator()`.
+*Remarks:* Stable. If `(&x != this)` the range `[x.begin(), x.end())` is
+empty after the merge. No elements are copied by this operation. The
+behavior is undefined if `this->get_allocator() != x.get_allocator()`.
 
 *Complexity:* At most `size() + x.size() - 1` applications of `comp` if
 `(&x != this)`; otherwise, no applications of `comp` are performed. If
@@ -2256,7 +2256,7 @@ second version) shall define a strict weak ordering ([[alg.sorting]]).
 function object. Does not affect the validity of iterators and
 references.
 
-Stable.
+*Remarks:* Stable.
 
 *Complexity:* Approximately N log(N) comparisons, where `N == size()`.
 
@@ -2513,19 +2513,19 @@ most linear time in the size of the sequence.
 
 *Throws:* `length_error` if `n > max_size()`.[^4]
 
-Reallocation invalidates all the references, pointers, and iterators
-referring to the elements in the sequence. It is guaranteed that no
-reallocation takes place during insertions that happen after a call to
-`reserve()` until the time when an insertion would make the size of the
-vector greater than the value of `capacity()`.
+*Remarks:* Reallocation invalidates all the references, pointers, and
+iterators referring to the elements in the sequence. It is guaranteed
+that no reallocation takes place during insertions that happen after a
+call to `reserve()` until the time when an insertion would make the size
+of the vector greater than the value of `capacity()`.
 
 ``` cpp
 void shrink_to_fit();
 ```
 
-`shrink_to_fit` is a non-binding request to reduce `capacity()` to
-`size()`. The request is non-binding to allow latitude for
-implementation-specific optimizations.
+*Remarks:* `shrink_to_fit` is a non-binding request to reduce
+`capacity()` to `size()`. The request is non-binding to allow latitude
+for implementation-specific optimizations.
 
 ``` cpp
 void swap(vector& x);
@@ -2592,13 +2592,13 @@ void push_back(const T& x);
 void push_back(T&& x);
 ```
 
-Causes reallocation if the new size is greater than the old capacity. If
-no reallocation happens, all the iterators and references before the
-insertion point remain valid. If an exception is thrown other than by
-the copy constructor, move constructor, assignment operator, or move
-assignment operator of `T` or by any `InputIterator` operation there are
-no effects. If an exception is thrown by the move constructor of a
-non-`CopyInsertable` `T`, the effects are unspecified.
+*Remarks:* Causes reallocation if the new size is greater than the old
+capacity. If no reallocation happens, all the iterators and references
+before the insertion point remain valid. If an exception is thrown other
+than by the copy constructor, move constructor, assignment operator, or
+move assignment operator of `T` or by any `InputIterator` operation
+there are no effects. If an exception is thrown by the move constructor
+of a non-`CopyInsertable` `T`, the effects are unspecified.
 
 *Complexity:* The complexity is linear in the number of elements
 inserted plus the distance to the end of the vector.

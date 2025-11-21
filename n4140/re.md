@@ -775,8 +775,8 @@ case of the characters being matched.[^1] The value returned shall be
 independent of the case of the characters in the character sequence. If
 the name is not recognized then returns `char_class_type()`.
 
-For `regex_traits<char>`, at least the narrow character names in
-Table  [[tab:re.traits.classnames]] shall be recognized. For
+*Remarks:* For `regex_traits<char>`, at least the narrow character names
+in Table  [[tab:re.traits.classnames]] shall be recognized. For
 `regex_traits<wchar_t>`, at least the wide character names in
 Table  [[tab:re.traits.classnames]] shall be recognized.
 

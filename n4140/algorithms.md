@@ -721,7 +721,7 @@ dereferenced iterator.
 
 *Complexity:* Applies `f` exactly `last - first` times.
 
-If `f` returns a result, the result is ignored.
+*Remarks:* If `f` returns a result, the result is ignored.
 
 ### Find <a id="alg.find">[[alg.find]]</a>
 
@@ -1197,8 +1197,8 @@ subranges, or modify elements in the ranges \[`first1`, `last1`\],
 *Complexity:* Exactly `last1 - first1` applications of `op` or
 `binary_op`.
 
-`result` may be equal to `first` in case of unary transform, or to
-`first1` or `first2` in case of binary transform.
+*Remarks:* `result` may be equal to `first` in case of unary transform,
+or to `first1` or `first2` in case of binary transform.
 
 ### Replace <a id="alg.replace">[[alg.replace]]</a>
 
@@ -1468,7 +1468,7 @@ the element from the position `first + i` into position
 
 *Returns:* `first + (last - middle)`.
 
-This is a left rotate.
+*Remarks:* This is a left rotate.
 
 *Requires:* \[`first`, `middle`) and \[`middle`, `last`) shall be valid
 ranges. `ForwardIterator` shall satisfy the requirements of
@@ -1519,9 +1519,9 @@ convertible to `iterator_traits<RandomAccessIterator>::difference_type`.
 
 *Complexity:* Exactly `(last - first) - 1` swaps.
 
-To the extent that the implementation of this function makes use of
-random numbers, the object `g` shall serve as the implementation’s
-source of randomness.
+*Remarks:* To the extent that the implementation of this function makes
+use of random numbers, the object `g` shall serve as the
+implementation’s source of randomness.
 
 ### Partitions <a id="alg.partitions">[[alg.partitions]]</a>
 
@@ -2100,11 +2100,12 @@ original ranges.
 *Complexity:* At most `2 * ((last1 - first1) + (last2 - first2)) - 1`
 comparisons.
 
-If \[`first1`, `last1`) contains m elements that are equivalent to each
-other and \[`first2`, `last2`) contains n elements that are equivalent
-to them, then all m elements from the first range shall be copied to the
-output range, in order, and then max(n - m, 0) elements from the second
-range shall be copied to the output range, in order.
+*Remarks:* If \[`first1`, `last1`) contains m elements that are
+equivalent to each other and \[`first2`, `last2`) contains n elements
+that are equivalent to them, then all m elements from the first range
+shall be copied to the output range, in order, and then max(n - m, 0)
+elements from the second range shall be copied to the output range, in
+order.
 
 #### `set_intersection` <a id="set.intersection">[[set.intersection]]</a>
 
@@ -2136,10 +2137,10 @@ original ranges.
 *Complexity:* At most `2 * ((last1 - first1) + (last2 - first2)) - 1`
 comparisons.
 
-If \[`first1`, `last1`) contains m elements that are equivalent to each
-other and \[`first2`, `last2`) contains n elements that are equivalent
-to them, the first min(m, n) elements shall be copied from the first
-range to the output range, in order.
+*Remarks:* If \[`first1`, `last1`) contains m elements that are
+equivalent to each other and \[`first2`, `last2`) contains n elements
+that are equivalent to them, the first min(m, n) elements shall be
+copied from the first range to the output range, in order.
 
 #### `set_difference` <a id="set.difference">[[set.difference]]</a>
 
@@ -2171,10 +2172,10 @@ original ranges.
 *Complexity:* At most `2 * ((last1 - first1) + (last2 - first2)) - 1`
 comparisons.
 
-If \[`first1`, `last1`) contains m elements that are equivalent to each
-other and \[`first2`, `last2`) contains n elements that are equivalent
-to them, the last max(m - n, 0) elements from \[`first1`, `last1`) shall
-be copied to the output range.
+*Remarks:* If \[`first1`, `last1`) contains m elements that are
+equivalent to each other and \[`first2`, `last2`) contains n elements
+that are equivalent to them, the last max(m - n, 0) elements from
+\[`first1`, `last1`) shall be copied to the output range.
 
 #### `set_symmetric_difference` <a id="set.symmetric.difference">[[set.symmetric.difference]]</a>
 
@@ -2208,12 +2209,12 @@ original ranges.
 *Complexity:* At most `2 * ((last1 - first1) + (last2 - first2)) - 1`
 comparisons.
 
-If \[`first1`, `last1`) contains m elements that are equivalent to each
-other and \[`first2`, `last2`) contains n elements that are equivalent
-to them, then |m - n| of those elements shall be copied to the output
-range: the last m - n of these elements from \[`first1`, `last1`) if
-m > n, and the last n - m of these elements from \[`first2`, `last2`) if
-m < n.
+*Remarks:* If \[`first1`, `last1`) contains m elements that are
+equivalent to each other and \[`first2`, `last2`) contains n elements
+that are equivalent to them, then |m - n| of those elements shall be
+copied to the output range: the last m - n of these elements from
+\[`first1`, `last1`) if m > n, and the last n - m of these elements from
+\[`first2`, `last2`) if m < n.
 
 ### Heap operations <a id="alg.heap.operations">[[alg.heap.operations]]</a>
 
@@ -2368,7 +2369,7 @@ template<class T, class Compare>
 
 *Returns:* The smaller value.
 
-Returns the first argument when the arguments are equivalent.
+*Remarks:* Returns the first argument when the arguments are equivalent.
 
 ``` cpp
 template<class T>
@@ -2396,7 +2397,7 @@ template<class T, class Compare>
 
 *Returns:* The larger value.
 
-Returns the first argument when the arguments are equivalent.
+*Remarks:* Returns the first argument when the arguments are equivalent.
 
 ``` cpp
 template<class T>
@@ -2425,8 +2426,8 @@ template<class T, class Compare>
 *Returns:* `pair<const T&, const T&>(b, a)` if `b` is smaller than `a`,
 and `pair<const T&, const T&>(a, b)` otherwise.
 
-Returns `pair<const T&, const T&>(a, b)` when the arguments are
-equivalent.
+*Remarks:* Returns `pair<const T&, const T&>(a, b)` when the arguments
+are equivalent.
 
 *Complexity:* Exactly one comparison.
 
@@ -2525,7 +2526,7 @@ otherwise.
 *Complexity:* At most `2*min((last1 - first1), (last2 - first2))`
 applications of the corresponding comparison.
 
-If two sequences have the same number of elements and their
+*Remarks:* If two sequences have the same number of elements and their
 corresponding elements are equivalent, then neither sequence is
 lexicographically less than the other. If one sequence is a prefix of
 the other, then the shorter sequence is lexicographically less than the

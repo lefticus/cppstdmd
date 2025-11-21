@@ -1286,3 +1286,56 @@ Four categories: \techterm{uniform random number generators}, \techterm{random n
     # Should NOT have incomplete "known as the " pattern
     assert "known as the ." not in output
     assert "known as the \n" not in output
+
+
+def test_notes_realnotes_macros():
+    r"""Test \notes and \realnotes macros render as italic labels (Issue #80)
+
+    These macros were used in n3337-n4140 but caused incomplete comma-delimited lists
+    when unhandled, leaving double commas like ", , Error conditions:".
+    """
+    latex = r"""
+The \requires, \effects, \postconditions, \returns, \throws, \complexity, \notes, \errors, and \realnotes
+specified for the function invocations.
+"""
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    # Should have all spec labels in italic
+    assert "*Requires:*" in output
+    assert "*Effects:*" in output
+    assert "*Postconditions:*" in output
+    assert "*Returns:*" in output
+    assert "*Throws:*" in output
+    assert "*Complexity:*" in output
+    assert "*Remarks:*" in output  # \notes -> Remarks:
+    assert "*Error conditions:*" in output  # \errors
+    assert "*Notes:*" in output  # \realnotes -> Notes:
+    # Should NOT have raw LaTeX commands
+    assert "\\notes" not in output
+    assert "\\realnotes" not in output
+    # Should NOT have incomplete ", , " pattern
+    assert ", , " not in output
+
+
+def test_libnoheader_macro():
+    r"""Test \libnoheader{} macro renders as code with angle brackets (Issue #80)
+
+    This macro is used in n4861+ to list reserved/absent header names.
+    Without handling, it causes incomplete lists like "The header names , , , and".
+    """
+    latex = r"""
+The header names \libnoheader{ccomplex}, \libnoheader{ciso646}, \libnoheader{cstdalign},
+\libnoheader{cstdbool}, and \libnoheader{ctgmath} are reserved for previous standardization.
+"""
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    # Should have all header names as inline code with angle brackets
+    assert "`<ccomplex>`" in output
+    assert "`<ciso646>`" in output
+    assert "`<cstdalign>`" in output
+    assert "`<cstdbool>`" in output
+    assert "`<ctgmath>`" in output
+    # Should NOT have raw LaTeX command
+    assert "\\libnoheader" not in output
+    # Should NOT have incomplete "header names , , " pattern
+    assert "header names , ," not in output

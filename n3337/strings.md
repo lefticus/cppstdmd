@@ -903,7 +903,7 @@ indicated in Table  [[tab:strings.ctr.4]].
 | `capacity()` | a value at least as large as `size()`                                                                  |
 
 
-Uses `traits::length()`.
+*Remarks:* Uses `traits::length()`.
 
 ``` cpp
 basic_string(size_type n, charT c, const Allocator& a = Allocator());
@@ -1018,7 +1018,7 @@ basic_string<charT,traits,Allocator>&
 
 *Returns:* `*this = basic_string<charT,traits,Allocator>(s)`.
 
-Uses `traits::length()`.
+*Remarks:* Uses `traits::length()`.
 
 ``` cpp
 basic_string<charT,traits,Allocator>& operator=(charT c);
@@ -1146,9 +1146,9 @@ request.
 void shrink_to_fit();
 ```
 
-`shrink_to_fit` is a non-binding request to reduce `capacity()` to
-`size()`. The request is non-binding to allow latitude for
-implementation-specific optimizations.
+*Remarks:* `shrink_to_fit` is a non-binding request to reduce
+`capacity()` to `size()`. The request is non-binding to allow latitude
+for implementation-specific optimizations.
 
 ``` cpp
 void clear() noexcept;
@@ -1820,7 +1820,7 @@ both of the following conditions obtain:
 *Returns:* `xpos` if the function can determine such a value for `xpos`.
 Otherwise, returns `npos`.
 
-Uses `traits::eq()`.
+*Remarks:* Uses `traits::eq()`.
 
 ``` cpp
 size_type find(const charT* s, size_type pos, size_type n) const;
@@ -1860,7 +1860,7 @@ that both of the following conditions obtain:
 *Returns:* `xpos` if the function can determine such a value for `xpos`.
 Otherwise, returns `npos`.
 
-Uses `traits::eq()`.
+*Remarks:* Uses `traits::eq()`.
 
 ``` cpp
 size_type rfind(const charT* s, size_type pos, size_type n) const;
@@ -1901,7 +1901,7 @@ both of the following conditions obtain:
 *Returns:* `xpos` if the function can determine such a value for `xpos`.
 Otherwise, returns `npos`.
 
-Uses `traits::eq()`.
+*Remarks:* Uses `traits::eq()`.
 
 ``` cpp
 size_type
@@ -1944,7 +1944,7 @@ that both of the following conditions obtain:
 *Returns:* `xpos` if the function can determine such a value for `xpos`.
 Otherwise, returns `npos`.
 
-Uses `traits::eq()`.
+*Remarks:* Uses `traits::eq()`.
 
 ``` cpp
 size_type find_last_of(const charT* s, size_type pos, size_type n) const;
@@ -1986,7 +1986,7 @@ both of the following conditions obtain:
 *Returns:* `xpos` if the function can determine such a value for `xpos`.
 Otherwise, returns `npos`.
 
-Uses `traits::eq()`.
+*Remarks:* Uses `traits::eq()`.
 
 ``` cpp
 size_type
@@ -2028,7 +2028,7 @@ that both of the following conditions obtain:
 *Returns:* `xpos` if the function can determine such a value for `xpos`.
 Otherwise, returns `npos`.
 
-Uses `traits::eq()`.
+*Remarks:* Uses `traits::eq()`.
 
 ``` cpp
 size_type find_last_not_of(const charT* s, size_type pos,
@@ -2177,7 +2177,7 @@ template<class charT, class traits, class Allocator>
 
 *Returns:* `basic_string<charT,traits,Allocator>(lhs) + rhs`.
 
-Uses `traits::length()`.
+*Remarks:* Uses `traits::length()`.
 
 ``` cpp
 template<class charT, class traits, class Allocator>
@@ -2188,7 +2188,7 @@ template<class charT, class traits, class Allocator>
 
 *Returns:* `std::move(rhs.insert(0, lhs))`.
 
-Uses `traits::length()`.
+*Remarks:* Uses `traits::length()`.
 
 ``` cpp
 template<class charT, class traits, class Allocator>
@@ -2217,7 +2217,7 @@ template<class charT, class traits, class Allocator>
 
 *Returns:* `lhs + basic_string<charT,traits,Allocator>(rhs)`.
 
-Uses `traits::length()`.
+*Remarks:* Uses `traits::length()`.
 
 ``` cpp
 template<class charT, class traits, class Allocator>
@@ -2228,7 +2228,7 @@ template<class charT, class traits, class Allocator>
 
 *Returns:* `std::move(lhs.append(rhs))`.
 
-Uses `traits::length()`.
+*Remarks:* Uses `traits::length()`.
 
 ``` cpp
 template<class charT, class traits, class Allocator>

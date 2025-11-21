@@ -2831,7 +2831,7 @@ unspecified state.
     file names [[cpp.include]].
 
 [^15]: It is intentional that there is no C++ header for any of these C
-    headers: , .
+    headers: `<stdnoreturn.h>`, `<threads.h>`.
 
 [^16]: This disallows the practice, allowed in C, of providing a masking
     macro in addition to the function prototype. The only way to achieve

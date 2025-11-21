@@ -365,10 +365,10 @@ appropriate):[^5]
 - *Throws:* any exceptions thrown by the function, and the conditions
   that would cause the exception
 - *Complexity:* the time and/or space complexity of the function
-- additional semantic constraints on the function
+- *Remarks:* additional semantic constraints on the function
 - *Error conditions:* the error conditions for error codes reported by
   the function.
-- non-normative comments about the function
+- *Notes:* non-normative comments about the function
 
 Whenever the *Effects:* element specifies that the semantics of some
 function `F` are *Equivalent to* some code sequence, then the various
@@ -376,14 +376,14 @@ elements are interpreted as follows. If `F`’s semantics specifies a
 *Requires:* element, then that requirement is logically imposed prior to
 the *equivalent-to* semantics. Next, the semantics of the code sequence
 are determined by the *Requires:* , *Effects:* , *Postconditions:* ,
-*Returns:* , *Throws:* , *Complexity:* , , *Error conditions:* , and
-specified for the function invocations contained in the code sequence.
-The value returned from `F` is specified by `F`’s *Returns:* element, or
-if `F` has no *Returns:* element, a non-`void` return from `F` is
-specified by the *Returns:* elements in the code sequence. If `F`’s
-semantics contains a *Throws:* , *Postconditions:* , or *Complexity:*
-element, then that supersedes any occurrences of that element in the
-code sequence.
+*Returns:* , *Throws:* , *Complexity:* , *Remarks:* , *Error
+conditions:* , and *Notes:* specified for the function invocations
+contained in the code sequence. The value returned from `F` is specified
+by `F`’s *Returns:* element, or if `F` has no *Returns:* element, a
+non-`void` return from `F` is specified by the *Returns:* elements in
+the code sequence. If `F`’s semantics contains a *Throws:* ,
+*Postconditions:* , or *Complexity:* element, then that supersedes any
+occurrences of that element in the code sequence.
 
 For non-reserved replacement and handler functions, Clause 
 [[language.support]] specifies two behaviors for the functions in

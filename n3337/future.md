@@ -333,7 +333,7 @@ char* str();
 *Effects:* Calls `freeze()`, then returns the beginning pointer for the
 input sequence, `gbeg`.
 
-The return value can be a null pointer.
+*Remarks:* The return value can be a null pointer.
 
 ``` cpp
 int pcount() const;
@@ -362,8 +362,8 @@ sequence, if possible, in one of two ways:
 
 Returns `EOF` to indicate failure.
 
-The function can alter the number of write positions available as a
-result of any call.
+*Remarks:* The function can alter the number of write positions
+available as a result of any call.
 
 To make a write position available, the function reallocates (or
 initially allocates) an array object with a sufficient number of
@@ -402,9 +402,9 @@ possible, in one of three ways:
 
 Returns `EOF` to indicate failure.
 
-If the function can succeed in more than one of these ways, it is
-unspecified which way is chosen. The function can alter the number of
-putback positions available as a result of any call.
+*Remarks:* If the function can succeed in more than one of these ways,
+it is unspecified which way is chosen. The function can alter the number
+of putback positions available as a result of any call.
 
 ``` cpp
 int_type underflow();
@@ -423,8 +423,8 @@ without moving the stream position past it, as follows:
 
 Returns `EOF` to indicate failure.
 
-The function can alter the number of read positions available as a
-result of any call.
+*Remarks:* The function can alter the number of read positions available
+as a result of any call.
 
 ``` cpp
 pos_type seekoff(off_type off, seekdir way, openmode which = in | out);

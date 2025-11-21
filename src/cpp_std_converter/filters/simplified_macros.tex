@@ -62,6 +62,7 @@
 \renewcommand{\libheader}[1]{\texttt{<#1>}}
 \renewcommand{\libheaderdef}[1]{\texttt{<#1>}}
 \renewcommand{\libheaderref}[1]{\texttt{<#1>}}
+\renewcommand{\libnoheader}[1]{\texttt{<#1>}}  % Reserved/absent header name (used in n4861+) - Issue #80
 \renewcommand{\libconcept}[1]{\texttt{#1}}
 \renewcommand{\exposconcept}[1]{\texttt{#1}}
 \renewcommand{\libglobal}[1]{\texttt{#1}}
@@ -127,6 +128,8 @@
 \renewcommand{\postconditions}{\textit{Postconditions:} }
 \renewcommand{\preconditions}{\textit{Preconditions:} }
 \renewcommand{\realnote}{\textit{Note:} }
+\renewcommand{\notes}{\textit{Remarks:} }  % Alias for \remarks (obsolete macro used in n3337-n4140) - Issue #80
+\renewcommand{\realnotes}{\textit{Notes:} }  % Similar to \realnote but plural (obsolete macro used in n3337-n4140) - Issue #80
 
 %%--------------------------------------------------
 %% Category F: Ranges (5 macros)

@@ -493,7 +493,7 @@ complex<T>& operator/=(const complex<T>& rhs);
 template<class T> complex<T> operator+(const complex<T>& lhs);
 ```
 
-unary operator.
+*Remarks:* unary operator.
 
 *Returns:* `complex<T>(lhs)`.
 
@@ -510,7 +510,7 @@ template<class T> complex<T> operator+(const T& lhs, const complex<T>& rhs);
 template<class T> complex<T> operator-(const complex<T>& lhs);
 ```
 
-unary operator.
+*Remarks:* unary operator.
 
 *Returns:* `complex<T>(-lhs.real(),-lhs.imag())`.
 
@@ -550,8 +550,8 @@ template<class T> bool operator==(const T& lhs, const complex<T>& rhs);
 
 *Returns:* `lhs.real() == rhs.real() && lhs.imag() == rhs.imag()`.
 
-The imaginary part is assumed to be `T()`, or 0.0, for the `T`
-arguments.
+*Remarks:* The imaginary part is assumed to be `T()`, or 0.0, for the
+`T` arguments.
 
 ``` cpp
 template<class T>
@@ -579,9 +579,9 @@ If bad input is encountered, calls `is.setstate(ios_base::failbit)`
 
 *Returns:* `is`.
 
-This extraction is performed as a series of simpler extractions.
-Therefore, the skipping of whitespace is specified to be the same for
-each of the simpler extractions.
+*Remarks:* This extraction is performed as a series of simpler
+extractions. Therefore, the skipping of whitespace is specified to be
+the same for each of the simpler extractions.
 
 ``` cpp
 template<class T, class charT, class traits>
@@ -737,7 +737,7 @@ template<class T> complex<T> exp(const complex<T>& x);
 template<class T> complex<T> log(const complex<T>& x);
 ```
 
-the branch cuts are along the negative real axis.
+*Remarks:* the branch cuts are along the negative real axis.
 
 *Returns:* The complex natural (base e) logarithm of `x`, in the range
 of a strip mathematically unbounded along the real axis and in the
@@ -748,7 +748,7 @@ interval \[`-i times pi`, `i times pi`\] along the imaginary axis. When
 template<class T> complex<T> log10(const complex<T>& x);
 ```
 
-the branch cuts are along the negative real axis.
+*Remarks:* the branch cuts are along the negative real axis.
 
 *Returns:* The complex common (base 10) logarithm of `x`, defined as
 `log(x)/log(10)`.
@@ -760,7 +760,7 @@ template<class T> complex<T> pow  (const complex<T>& x, const T& y);
 template<class T> complex<T> pow  (const T& x, const complex<T>& y);
 ```
 
-the branch cuts are along the negative real axis.
+*Remarks:* the branch cuts are along the negative real axis.
 
 *Returns:* The complex power of base `x` raised to the `y`-th power,
 defined as `exp(y*log(x))`. The value returned for `pow(0,0)` is
@@ -782,7 +782,7 @@ template<class T> complex<T> sinh (const complex<T>& x);
 template<class T> complex<T> sqrt (const complex<T>& x);
 ```
 
-the branch cuts are along the negative real axis.
+*Remarks:* the branch cuts are along the negative real axis.
 
 *Returns:* The complex square root of `x`, in the range of the right
 half-plane. If the argument is a negative real number, the value
@@ -5016,7 +5016,7 @@ output iterator. In the ranges \[`first`, `last`\] and
 shall neither modify elements nor invalidate iterators or
 subranges.[^18]
 
-`result` may be equal to `first`.
+*Remarks:* `result` may be equal to `first`.
 
 ### Adjacent difference <a id="adjacent.difference">[[adjacent.difference]]</a>
 
@@ -5048,7 +5048,7 @@ writable to the `result` output iterator. In the ranges \[`first`,
 `last`\] and \[`result`, `result + (last - first)`\], `binary_op` shall
 neither modify elements nor invalidate iterators or subranges.[^19]
 
-`result` may be equal to `first`.
+*Remarks:* `result` may be equal to `first`.
 
 *Returns:* `result + (last - first)`.
 

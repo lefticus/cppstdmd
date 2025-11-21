@@ -2313,9 +2313,9 @@ thread, and either
 - The function will unblock when signaled by a call to `notify_one()` or
   a call to `notify_all()`, or spuriously.
 
-If the function fails to meet the postcondition, `std::terminate()`
-shall be called ([[except.terminate]]). This can happen if the
-re-locking of the mutex throws an exception.
+*Remarks:* If the function fails to meet the postcondition,
+`std::terminate()` shall be called ([[except.terminate]]). This can
+happen if the re-locking of the mutex throws an exception.
 
 `lock.owns_lock()` is `true` and `lock.mutex()` is locked by the calling
 thread.
@@ -2342,9 +2342,9 @@ while (!pred())
   wait(lock);
 ```
 
-If the function fails to meet the postcondition, `std::terminate()`
-shall be called ([[except.terminate]]). This can happen if the
-re-locking of the mutex throws an exception.
+*Remarks:* If the function fails to meet the postcondition,
+`std::terminate()` shall be called ([[except.terminate]]). This can
+happen if the re-locking of the mutex throws an exception.
 
 `lock.owns_lock()` is `true` and `lock.mutex()` is locked by the calling
 thread.
@@ -2378,9 +2378,9 @@ thread, and either
 - If the function exits via an exception, `lock.lock()` shall be called
   prior to exiting the function.
 
-If the function fails to meet the postcondition, `std::terminate()`
-shall be called ([[except.terminate]]). This can happen if the
-re-locking of the mutex throws an exception.
+*Remarks:* If the function fails to meet the postcondition,
+`std::terminate()` shall be called ([[except.terminate]]). This can
+happen if the re-locking of the mutex throws an exception.
 
 `lock.owns_lock()` is `true` and `lock.mutex()` is locked by the calling
 thread.
@@ -2415,9 +2415,9 @@ return wait_until(lock, chrono::steady_clock::now() + rel_time);
 timeout ([[thread.req.timing]]) specified by `rel_time` expired,
 otherwise `cv_status::no_timeout`.
 
-If the function fails to meet the postcondition, `std::terminate()`
-shall be called ([[except.terminate]]). This can happen if the
-re-locking of the mutex throws an exception.
+*Remarks:* If the function fails to meet the postcondition,
+`std::terminate()` shall be called ([[except.terminate]]). This can
+happen if the re-locking of the mutex throws an exception.
 
 `lock.owns_lock()` is `true` and `lock.mutex()` is locked by the calling
 thread.
@@ -2448,9 +2448,9 @@ while (!pred())
 return true;
 ```
 
-If the function fails to meet the postcondition, `std::terminate()`
-shall be called ([[except.terminate]]). This can happen if the
-re-locking of the mutex throws an exception.
+*Remarks:* If the function fails to meet the postcondition,
+`std::terminate()` shall be called ([[except.terminate]]). This can
+happen if the re-locking of the mutex throws an exception.
 
 `lock.owns_lock()` is `true` and `lock.mutex()` is locked by the calling
 thread.
@@ -2485,9 +2485,9 @@ return wait_until(lock, chrono::steady_clock::now() + rel_time, std::move(pred))
 There is no blocking if `pred()` is initially `true`, even if the
 timeout has already expired.
 
-If the function fails to meet the postcondition, `std::terminate()`
-shall be called ([[except.terminate]]). This can happen if the
-re-locking of the mutex throws an exception.
+*Remarks:* If the function fails to meet the postcondition,
+`std::terminate()` shall be called ([[except.terminate]]). This can
+happen if the re-locking of the mutex throws an exception.
 
 `lock.owns_lock()` is `true` and `lock.mutex()` is locked by the calling
 thread.
@@ -2601,9 +2601,9 @@ allows to query that, such as the `unique_lock` wrapper.
 - The function will unblock when signaled by a call to `notify_one()`, a
   call to `notify_all()`, or spuriously.
 
-If the function fails to meet the postcondition, `std::terminate()`
-shall be called ([[except.terminate]]). This can happen if the
-re-locking of the mutex throws an exception.
+*Remarks:* If the function fails to meet the postcondition,
+`std::terminate()` shall be called ([[except.terminate]]). This can
+happen if the re-locking of the mutex throws an exception.
 
 `lock` is locked by the calling thread.
 
@@ -2638,9 +2638,9 @@ template <class Lock, class Clock, class Duration>
 - If the function exits via an exception, `lock.lock()` shall be called
   prior to exiting the function.
 
-If the function fails to meet the postcondition, `std::terminate()`
-shall be called ([[except.terminate]]). This can happen if the
-re-locking of the mutex throws an exception.
+*Remarks:* If the function fails to meet the postcondition,
+`std::terminate()` shall be called ([[except.terminate]]). This can
+happen if the re-locking of the mutex throws an exception.
 
 `lock` is locked by the calling thread.
 
@@ -2665,9 +2665,9 @@ return wait_until(lock, chrono::steady_clock::now() + rel_time);
 timeout ([[thread.req.timing]]) specified by `rel_time` expired,
 otherwise `cv_status::no_timeout`.
 
-If the function fails to meet the postcondition, `std::terminate()`
-shall be called ([[except.terminate]]). This can happen if the
-re-locking of the mutex throws an exception.
+*Remarks:* If the function fails to meet the postcondition,
+`std::terminate()` shall be called ([[except.terminate]]). This can
+happen if the re-locking of the mutex throws an exception.
 
 `lock` is locked by the calling thread.
 

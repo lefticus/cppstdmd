@@ -342,11 +342,11 @@ is redundant. The `shrink_to_fit` member function can be used instead.
 functionality can be achieved by calling `shrink_to_fit()` instead, or
 the function call can be safely eliminated with no side effects.
 
-**Change:** Remove header and all its contents. **Rationale:** The
-header has been deprecated for the previous three editions of this
-document and no longer implements the current Unicode standard,
-supporting only the obsolete UCS-2 encoding. Ongoing support is at
-implementer’s discretion, exercising freedoms granted by
+**Change:** Remove header `<codecvt>` and all its contents.
+**Rationale:** The header has been deprecated for the previous three
+editions of this document and no longer implements the current Unicode
+standard, supporting only the obsolete UCS-2 encoding. Ongoing support
+is at implementer’s discretion, exercising freedoms granted by
 [[zombie.names]]. **Effect on original feature:** A valid C++23 program
 `#include`-ing the header or importing the header unit may fail to
 compile. Code that uses any of the following names by importing the
@@ -360,14 +360,14 @@ standard library modules may fail to compile:
 - `generate_header`, and
 - `little_endian`.
 
-**Change:** Remove header and all its contents. **Rationale:** The
-header has been deprecated since the original C++ standard; the
-`<spanstream>` header provides an updated, safer facility. Ongoing
-support is at implementer’s discretion, exercising freedoms granted by
-[[zombie.names]]. **Effect on original feature:** A valid C++23 program
-`#include`-ing the header or importing the header unit may become
-ill-formed. Code that uses any of the following classes by importing one
-of the standard library modules may become ill-formed:
+**Change:** Remove header `<strstream>` and all its contents.
+**Rationale:** The header has been deprecated since the original C++
+standard; the `<spanstream>` header provides an updated, safer facility.
+Ongoing support is at implementer’s discretion, exercising freedoms
+granted by [[zombie.names]]. **Effect on original feature:** A valid
+C++23 program `#include`-ing the header or importing the header unit may
+become ill-formed. Code that uses any of the following classes by
+importing one of the standard library modules may become ill-formed:
 
 - `istrstream`
 - `ostrstream`
@@ -1149,13 +1149,16 @@ may be invalid in this revision of C++.
 **Change:** Remove vacuous C++ header files. **Rationale:** The empty
 headers implied a false requirement to achieve C compatibility with the
 C++ headers. **Effect on original feature:** A valid C++17 program that
-`#include`s any of the following headers may fail to compile: , , , ,
-and . To retain the same behavior:
+`#include`s any of the following headers may fail to compile:
+`<ccomplex>`, `<ciso646>`, `<cstdalign>`, `<cstdbool>`, and `<ctgmath>`.
+To retain the same behavior:
 
-- a `#include` of can be replaced by a `#include` of `<complex>`,
-- a `#include` of can be replaced by a `#include` of `<cmath>` and a
-  `#include` of `<complex>`, and
-- a `#include` of , , or can simply be removed.
+- a `#include` of `<ccomplex>` can be replaced by a `#include` of
+  `<complex>`,
+- a `#include` of `<ctgmath>` can be replaced by a `#include` of
+  `<cmath>` and a `#include` of `<complex>`, and
+- a `#include` of `<ciso646>`, `<cstdalign>`, or `<cstdbool>` can simply
+  be removed.
 
 ###  [[containers]]: containers library <a id="diff.cpp17.containers">[[diff.cpp17.containers]]</a>
 
@@ -2930,9 +2933,9 @@ included from the C standard library.
 For compatibility with the C standard library, the C++ standard library
 provides the C headers enumerated in  [[support.c.headers]].
 
-There are no C++ headers for the C standard library’s headers and , nor
-are these headers from the C standard library headers themselves part of
-C++.
+There are no C++ headers for the C standard library’s headers
+`<stdnoreturn.h>` and `<threads.h>`, nor are these headers from the C
+standard library headers themselves part of C++.
 
 The C headers `<complex.h>` and `<tgmath.h>` do not contain any of the
 content from the C standard library and instead merely include other

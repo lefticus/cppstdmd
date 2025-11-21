@@ -1563,7 +1563,8 @@ The name `stossc` is reserved as a member function for previous
 standardization, and may not be used as a name for function-like macros
 in portable code.
 
-The header names , , , , and are reserved for previous standardization.
+The header names `<ccomplex>`, `<ciso646>`, `<cstdalign>`, `<cstdbool>`,
+and `<ctgmath>` are reserved for previous standardization.
 
 ##### Macro names <a id="macro.names">[[macro.names]]</a>
 
@@ -2343,7 +2344,7 @@ objects shall be placed in a valid but unspecified state.
     file names [[cpp.include]].
 
 [^15]: It is intentional that there is no C++ header for any of these C
-    headers: , , .
+    headers: `<stdatomic.h>`, `<stdnoreturn.h>`, `<threads.h>`.
 
 [^16]: This disallows the practice, allowed in C, of providing a masking
     macro in addition to the function prototype. The only way to achieve

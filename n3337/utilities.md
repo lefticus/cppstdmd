@@ -277,10 +277,11 @@ template <class T>
   typename add_rvalue_reference<T>::type declval() noexcept;  // as unevaluated operand
 ```
 
-If this function is odr-used ([[basic.def.odr]]), the program is
-ill-formed.
+*Remarks:* If this function is odr-used ([[basic.def.odr]]), the
+program is ill-formed.
 
-The template parameter `T` of `declval` may be an incomplete type.
+*Remarks:* The template parameter `T` of `declval` may be an incomplete
+type.
 
 ``` cpp
 template <class To, class From>
@@ -370,9 +371,9 @@ template<class U, class V> pair(U&& x, V&& y);
 *Effects:* The constructor initializes `first` with `std::forward<U>(x)`
 and `second` with `std::forward<V>(y)`.
 
-If `U` is not implicitly convertible to `first_type` or `V` is not
-implicitly convertible to `second_type` this constructor shall not
-participate in overload resolution.
+*Remarks:* If `U` is not implicitly convertible to `first_type` or `V`
+is not implicitly convertible to `second_type` this constructor shall
+not participate in overload resolution.
 
 ``` cpp
 template<class U, class V> pair(const pair<U, V>& p);
@@ -2623,8 +2624,8 @@ allocate which returned `p`.
 
 *Effects:* Deallocates the storage referenced by `p` .
 
-Uses `::operator delete(void*)` ([[new.delete]]), but it is unspecified
-when this function is called.
+*Remarks:* Uses `::operator delete(void*)` ([[new.delete]]), but it is
+unspecified when this function is called.
 
 ``` cpp
 size_type max_size() const noexcept;
@@ -3010,7 +3011,7 @@ void operator()(T *ptr) const;
 
 *Effects:* calls `delete` on `ptr`.
 
-If `T` is an incomplete type, the program is ill-formed.
+*Remarks:* If `T` is an incomplete type, the program is ill-formed.
 
 ##### `default_delete<T[]>` <a id="unique.ptr.dltr.dflt1">[[unique.ptr.dltr.dflt1]]</a>
 
@@ -3030,7 +3031,7 @@ void operator()(T* ptr) const;
 
 *Effects:* calls `delete[]` on `ptr`.
 
-If T is an incomplete type, the program is ill-formed.
+*Remarks:* If T is an incomplete type, the program is ill-formed.
 
 #### `unique_ptr` for single objects <a id="unique.ptr.single">[[unique.ptr.single]]</a>
 
@@ -3124,8 +3125,8 @@ value-initializing the stored pointer and the stored deleter.
 *Postconditions:* `get() == nullptr`. `get_deleter()` returns a
 reference to the stored deleter.
 
-If this constructor is instantiated with a pointer type or reference
-type for the template argument `D`, the program is ill-formed.
+*Remarks:* If this constructor is instantiated with a pointer type or
+reference type for the template argument `D`, the program is ill-formed.
 
 ``` cpp
 explicit unique_ptr(pointer p) noexcept;
@@ -3141,8 +3142,8 @@ stored pointer with `p` and value-initializing the stored deleter.
 *Postconditions:* `get() == p`. `get_deleter()` returns a reference to
 the stored deleter.
 
-If this constructor is instantiated with a pointer type or reference
-type for the template argument `D`, the program is ill-formed.
+*Remarks:* If this constructor is instantiated with a pointer type or
+reference type for the template argument `D`, the program is ill-formed.
 
 ``` cpp
 unique_ptr(pointer p, see below d1) noexcept;
@@ -4053,10 +4054,10 @@ T& operator*() const noexcept;
 
 *Returns:* `*get()`.
 
-When `T` is `void`, it is unspecified whether this member function is
-declared. If it is declared, it is unspecified what its return type is,
-except that the declaration (although not necessarily the definition) of
-the function shall be well formed.
+*Remarks:* When `T` is `void`, it is unspecified whether this member
+function is declared. If it is declared, it is unspecified what its
+return type is, except that the declaration (although not necessarily
+the definition) of the function shall be well formed.
 
 ``` cpp
 T* operator->() const noexcept;
@@ -4133,9 +4134,9 @@ the newly constructed object of type `T`.
 *Throws:* `bad_alloc`, or an exception thrown from `A::allocate` or from
 the constructor of `T`.
 
-Implementations are encouraged, but not required, to perform no more
-than one memory allocation. This provides efficiency equivalent to an
-intrusive smart pointer.
+*Remarks:* Implementations are encouraged, but not required, to perform
+no more than one memory allocation. This provides efficiency equivalent
+to an intrusive smart pointer.
 
 These functions will typically allocate more memory than `sizeof(T)` to
 allow for internal bookkeeping structures such as the reference counts.
@@ -4398,8 +4399,8 @@ template<class Y> weak_ptr& operator=(const shared_ptr<Y>& r) noexcept;
 
 *Effects:* Equivalent to `weak_ptr(r).swap(*this)`.
 
-The implementation may meet the effects (and the implied guarantees) via
-different means, without creating a temporary.
+*Remarks:* The implementation may meet the effects (and the implied
+guarantees) via different means, without creating a temporary.
 
 ##### `weak_ptr` modifiers <a id="util.smartptr.weak.mod">[[util.smartptr.weak.mod]]</a>
 
@@ -5539,11 +5540,11 @@ exception.
 *Throws:* Nothing unless the construction of `fd` or of one of the
 values `tid` throws an exception.
 
-The return type shall satisfy the requirements of `MoveConstructible`.
-If all of `FD` and `TiD` satisfy the requirements of
-`CopyConstructible`, then the return type shall satisfy the requirements
-of `CopyConstructible`. This implies that all of `FD` and `TiD` are
-`MoveConstructible`.
+*Remarks:* The return type shall satisfy the requirements of
+`MoveConstructible`. If all of `FD` and `TiD` satisfy the requirements
+of `CopyConstructible`, then the return type shall satisfy the
+requirements of `CopyConstructible`. This implies that all of `FD` and
+`TiD` are `MoveConstructible`.
 
 ``` cpp
 template<class R, class F, class... BoundArgs>
@@ -5567,11 +5568,11 @@ throws an exception.
 *Throws:* Nothing unless the construction of `fd` or of one of the
 values `tid` throws an exception.
 
-The return type shall satisfy the requirements of `MoveConstructible`.
-If all of `FD` and `TiD` satisfy the requirements of
-`CopyConstructible`, then the return type shall satisfy the requirements
-of `CopyConstructible`. This implies that all of `FD` and `TiD` are
-`MoveConstructible`.
+*Remarks:* The return type shall satisfy the requirements of
+`MoveConstructible`. If all of `FD` and `TiD` satisfy the requirements
+of `CopyConstructible`, then the return type shall satisfy the
+requirements of `CopyConstructible`. This implies that all of `FD` and
+`TiD` are `MoveConstructible`.
 
 The values of the *bound arguments* `v1, v2, ..., vN` and their
 corresponding types `V1, V2, ..., VN` depend on the types `TiD` derived
@@ -7008,13 +7009,13 @@ public:
 *Requires:* `Rep` shall be an arithmetic type or a class emulating an
 arithmetic type.
 
-If `duration` is instantiated with a `duration` type for the template
-argument `Rep`, the program is ill-formed.
+*Remarks:* If `duration` is instantiated with a `duration` type for the
+template argument `Rep`, the program is ill-formed.
 
-If `Period` is not a specialization of `ratio`, the program is
-ill-formed.
+*Remarks:* If `Period` is not a specialization of `ratio`, the program
+is ill-formed.
 
-If `Period::num` is not positive, the program is ill-formed.
+*Remarks:* If `Period::num` is not positive, the program is ill-formed.
 
 *Requires:* Members of `duration` shall not throw exceptions other than
 those thrown by the indicated operations on their representations.
@@ -7354,11 +7355,12 @@ unless `ToDuration` is an instantiation of `duration`.
     static_cast<CR>(d.count()) * static_cast<CR>(CF::num) / static_cast<CR>(CF::den)))
   ```
 
-This function does not use any implicit conversions; all conversions are
-done with `static_cast`. It avoids multiplications and divisions when it
-is known at compile time that one or more arguments is 1. Intermediate
-computations are carried out in the widest representation and only
-converted to the destination representation at the final step.
+*Notes:* This function does not use any implicit conversions; all
+conversions are done with `static_cast`. It avoids multiplications and
+divisions when it is known at compile time that one or more arguments
+is 1. Intermediate computations are carried out in the widest
+representation and only converted to the destination representation at
+the final step.
 
 ### Class template `time_point` <a id="time.point">[[time.point]]</a>
 

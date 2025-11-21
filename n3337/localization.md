@@ -428,8 +428,8 @@ associated with that name.
 
 *Throws:* `runtime_error` if the argument is not valid, or is null.
 
-The set of valid string argument values is `"C"`, `""`, and any
-*implementation-defined* values.
+*Remarks:* The set of valid string argument values is `"C"`, `""`, and
+any *implementation-defined* values.
 
 ``` cpp
 explicit locale(const string& std_name);
@@ -447,7 +447,7 @@ the same semantics as `locale(std_name)`.
 
 *Throws:* `runtime_error` if the argument is not valid, or is null.
 
-The locale has a name if and only if `other` has a name.
+*Remarks:* The locale has a name if and only if `other` has a name.
 
 ``` cpp
 locale(const locale& other, const string& std_name, category cat);
@@ -464,7 +464,7 @@ argument except that of type `Facet`, and installs the second argument
 as the remaining facet. If `f` is null, the resulting object is a copy
 of `other`.
 
-The resulting locale has no name.
+*Remarks:* The resulting locale has no name.
 
 ``` cpp
 locale(const locale& other, const locale& one, category cats);
@@ -474,8 +474,8 @@ locale(const locale& other, const locale& one, category cats);
 argument except those that implement `cats`, which are instead
 incorporated from the second argument.
 
-The resulting locale has a name if and only if the first two arguments
-have names.
+*Remarks:* The resulting locale has a name if and only if the first two
+arguments have names.
 
 ``` cpp
 const locale& operator=(const locale& other) noexcept;
@@ -500,7 +500,7 @@ except for that one facet of `other` that is identified by `Facet`.
 
 *Throws:* `runtime_error` if `has_facet<Facet>(other)` is false.
 
-The resulting locale has no name.
+*Remarks:* The resulting locale has no name.
 
 ``` cpp
 basic_string<char> name() const;
@@ -536,8 +536,8 @@ template <class charT, class traits, class Allocator>
 
 *Effects:* Compares two strings according to the `collate<charT>` facet.
 
-This member operator template (and therefore `locale` itself) satisfies
-requirements for a comparator predicate template argument
+*Remarks:* This member operator template (and therefore `locale` itself)
+satisfies requirements for a comparator predicate template argument
 (Clause  [[algorithms]]) applied to strings.
 
 *Returns:* The result of the following expression:
@@ -586,8 +586,8 @@ The `"C"` locale.
 *Returns:* A locale that implements the classic `"C"` locale semantics,
 equivalent to the value `locale("C")`.
 
-This locale, its facets, and their member functions, do not change with
-time.
+*Remarks:* This locale, its facets, and their member functions, do not
+change with time.
 
 ### `locale` globals <a id="locale.global.templates">[[locale.global.templates]]</a>
 
@@ -602,8 +602,8 @@ public static member `id` as defined in  [[locale.facet]].
 
 *Throws:* `bad_cast` if `has_facet<Facet>(loc)` is `false`.
 
-The reference returned remains valid at least as long as any copy of
-`loc` exists.
+*Remarks:* The reference returned remains valid at least as long as any
+copy of `loc` exists.
 
 ``` cpp
 template <class Facet> bool has_facet(const locale& loc) noexcept;
@@ -1618,9 +1618,9 @@ shall also return `ok`.[^7] As a result of operations on `state`, it can
 return `ok` or `partial` and set `from_next == from` and
 `to_next != to`.
 
-Its operations on `state` are unspecified. This argument can be used,
-for example, to maintain shift state, to specify conversion options
-(such as count only), or to identify a cache of seek offsets.
+*Remarks:* Its operations on `state` are unspecified. This argument can
+be used, for example, to maintain shift state, to specify conversion
+options (such as count only), or to identify a cache of seek offsets.
 
 *Returns:* An enumeration value, as summarized in
 Table  [[tab:localization.convert.result.values.out.in]].
@@ -3218,7 +3218,7 @@ classified according to `ct`) are used; any trailing characters
 (including digits appearing after a non-digit character) are ignored.
 Calls `str.width(0)`.
 
-The currency symbol is generated if and only if
+*Remarks:* The currency symbol is generated if and only if
 `(str.flags() & str.showbase)` is nonzero. If the number of characters
 generated for the specified format is less than the value returned by
 `str.width()` on entry to the function, then copies of `fill` are
@@ -3505,8 +3505,8 @@ passed to `close()`.
 
 Returns a value less than 0 if no such catalog can be opened.
 
-The locale argument `loc` is used for character set code conversion when
-retrieving messages, if needed.
+*Remarks:* The locale argument `loc` is used for character set code
+conversion when retrieving messages, if needed.
 
 ``` cpp
 string_type do_get(catalog cat, int set, int msgid,
@@ -3529,7 +3529,8 @@ closed.
 
 *Effects:* Releases unspecified resources associated with `cat`.
 
-The limit on such resources, if any, is implementation-defined.
+*Remarks:* The limit on such resources, if any, is
+implementation-defined.
 
 #### Class template `messages_byname` <a id="locale.messages.byname">[[locale.messages.byname]]</a>
 

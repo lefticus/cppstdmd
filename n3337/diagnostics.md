@@ -619,10 +619,10 @@ const error_category& generic_category() noexcept;
 `error_category`. All calls to this function shall return references to
 the same object.
 
-The object’s `default_error_condition` and `equivalent` virtual
-functions shall behave as specified for the class `error_category`. The
-object’s `name` virtual function shall return a pointer to the string
-`"generic"`.
+*Remarks:* The object’s `default_error_condition` and `equivalent`
+virtual functions shall behave as specified for the class
+`error_category`. The object’s `name` virtual function shall return a
+pointer to the string `"generic"`.
 
 ``` cpp
 const error_category& system_category() noexcept;
@@ -632,9 +632,9 @@ const error_category& system_category() noexcept;
 `error_category`. All calls to this function shall return references to
 the same object.
 
-The object’s `equivalent` virtual functions shall behave as specified
-for class `error_category`. The object’s `name` virtual function shall
-return a pointer to the string `"system"`. The object’s
+*Remarks:* The object’s `equivalent` virtual functions shall behave as
+specified for class `error_category`. The object’s `name` virtual
+function shall return a pointer to the string `"system"`. The object’s
 `default_error_condition` virtual function shall behave as follows:
 
 If the argument `ev` corresponds to a POSIX `errno` value `posv`, the

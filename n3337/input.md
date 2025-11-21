@@ -933,8 +933,8 @@ object (which may throw `failure`).
 *Returns:* On success `parray[idx]`. On failure a valid `void*&`
 initialized to 0.
 
-After a subsequent call to `pword(int)` for the same object, the earlier
-return value may no longer be valid.
+*Remarks:* After a subsequent call to `pword(int)` for the same object,
+the earlier return value may no longer be valid.
 
 #### `ios_base` callbacks <a id="ios.base.callback">[[ios.base.callback]]</a>
 
@@ -951,8 +951,8 @@ function is active are not called until the next event.
 
 *Requires:* The function `fn` shall not throw exceptions.
 
-Identical pairs are not merged. A function registered twice will be
-called twice.
+*Remarks:* Identical pairs are not merged. A function registered twice
+will be called twice.
 
 #### `ios_base` constructors/destructor <a id="ios.base.cons">[[ios.base.cons]]</a>
 
@@ -1115,7 +1115,7 @@ whichever comes first; otherwise the behavior is undefined.
 ~basic_ios();
 ```
 
-The destructor does not destroy `rdbuf()`.
+*Remarks:* The destructor does not destroy `rdbuf()`.
 
 ``` cpp
 void init(basic_streambuf<charT,traits>* sb);
@@ -1792,9 +1792,9 @@ and initializes:[^13]
 - the `getloc()` member to a copy the global locale, `locale()`, at the
   time of construction.
 
-Once the `getloc()` member is initialized, results of calling locale
-member functions, and of members of facets so obtained, can safely be
-cached until the next time the member `imbue` is called.
+*Remarks:* Once the `getloc()` member is initialized, results of calling
+locale member functions, and of members of facets so obtained, can
+safely be cached until the next time the member `imbue` is called.
 
 ``` cpp
 basic_streambuf(const basic_streambuf& rhs);
@@ -2050,10 +2050,10 @@ void imbue(const locale&)
 
 *Effects:* Change any translations based on locale.
 
-Allows the derived class to be informed of changes in locale at the time
-they occur. Between invocations of this function a class derived from
-streambuf can safely cache results of calls to locale functions and to
-members of facets so obtained.
+*Remarks:* Allows the derived class to be informed of changes in locale
+at the time they occur. Between invocations of this function a class
+derived from streambuf can safely cache results of calls to locale
+functions and to members of facets so obtained.
 
 *Default behavior:* Does nothing.
 
@@ -2125,7 +2125,7 @@ fail.[^14]
 
 *Default behavior:* Returns zero.
 
-Uses `traits::eof()`.
+*Remarks:* Uses `traits::eof()`.
 
 ``` cpp
 streamsize xsgetn(char_type* s, streamsize n);
@@ -2139,14 +2139,14 @@ to `sbumpc()` would return `traits::eof()`.
 
 *Returns:* The number of characters assigned.[^15]
 
-Uses `traits::eof()`.
+*Remarks:* Uses `traits::eof()`.
 
 ``` cpp
 int_type underflow();
 ```
 
-The public members of `basic_streambuf` call this virtual function only
-if `gptr()` is null or `gptr() >= egptr()`
+*Remarks:* The public members of `basic_streambuf` call this virtual
+function only if `gptr()` is null or `gptr() >= egptr()`
 
 *Returns:* `traits::to_int_type(c)`, where `c` is the first *character*
 of the *pending sequence*, without moving the input sequence position
@@ -2190,8 +2190,8 @@ pointer for the input sequence.
 int_type pbackfail(int_type c = traits::eof());
 ```
 
-The public functions of `basic_streambuf` call this virtual function
-only when `gptr()` is null, `gptr() == eback()`, or
+*Remarks:* The public functions of `basic_streambuf` call this virtual
+function only when `gptr()` is null, `gptr() == eback()`, or
 `traits::eq(traits::to_char_type(c),gptr()[-1])` returns `false`. Other
 calls shall also satisfy that constraint.
 
@@ -2453,7 +2453,7 @@ virtual ~basic_istream();
 
 *Effects:* Destroys an object of class `basic_istream`.
 
-Does not perform any operations of `rdbuf()`.
+*Remarks:* Does not perform any operations of `rdbuf()`.
 
 ##### Class `basic_istream` assign and swap <a id="istream.assign">[[istream.assign]]</a>
 
@@ -2512,7 +2512,7 @@ discards each character as long as the next available input character
 `is.rdbuf()->sgetc()` returns `traits::eof()`, the function calls
 `setstate(failbit | eofbit)` (which may throw `ios_base::failure`).
 
-The constructor
+*Remarks:* The constructor
 `explicit sentry(basic_istream<charT,traits>& is, bool noskipws = false)`
 uses the currently imbued locale in `is`, to determine whether the next
 input character is whitespace or not.
@@ -2955,7 +2955,7 @@ until any of the following occurs:
 - `traits::eq_int_type(traits::to_int_type(c), delim)` for the next
   available input character `c` (in which case `c` is extracted).
 
-The last condition will never occur if
+*Remarks:* The last condition will never occur if
 `traits::eq_int_type(delim, traits::eof())`.
 
 *Returns:* `*this`.
@@ -3183,7 +3183,7 @@ virtual ~basic_iostream();
 
 *Effects:* Destroys an object of class `basic_iostream`.
 
-Does not perform any operations on `rdbuf()`.
+*Remarks:* Does not perform any operations on `rdbuf()`.
 
 ##### `basic_iostream` assign and swap <a id="iostream.assign">[[iostream.assign]]</a>
 
@@ -4326,8 +4326,8 @@ sequence, if possible, in one of three ways:
 
 *Returns:* `traits::eof()` to indicate failure.
 
-If the function can succeed in more than one of these ways, it is
-unspecified which way is chosen.
+*Remarks:* If the function can succeed in more than one of these ways,
+it is unspecified which way is chosen.
 
 ``` cpp
 int_type overflow(int_type c = traits::eof());
@@ -4344,8 +4344,8 @@ sequence, if possible, in one of two ways:
   character to append. Signals success by returning a value other than
   `traits::eof()`.
 
-The function can alter the number of write positions available as a
-result of any call.
+*Remarks:* The function can alter the number of write positions
+available as a result of any call.
 
 *Returns:* `traits::eof()` to indicate failure.
 
@@ -5104,9 +5104,9 @@ streamsize showmanyc();
 *Effects:* Behaves the same as
 `basic_streambuf::showmanyc()` ([[streambuf.virtuals]]).
 
-An implementation might well provide an overriding definition for this
-function signature if it can determine that more characters can be read
-from the input sequence.
+*Remarks:* An implementation might well provide an overriding definition
+for this function signature if it can determine that more characters can
+be read from the input sequence.
 
 ``` cpp
 int_type underflow();
@@ -5165,7 +5165,7 @@ sequence, if possible, in one of three ways:
 
 *Returns:* `traits::eof()` to indicate failure.
 
-If `is_open() == false`, the function always fails.
+*Remarks:* If `is_open() == false`, the function always fails.
 
 The function does not put back a character directly to the input
 sequence.
@@ -5230,9 +5230,9 @@ and write any unshift sequence. Next, seek to the new position: if
 `width > 0`, call `std::fseek(file, width * off, whence)`, otherwise
 call `std::fseek(file, 0, whence)`.
 
-“The last operation was output” means either the last virtual operation
-was overflow or the put buffer is non-empty. “Write any unshift
-sequence” means, if `width` if less than zero then call
+*Remarks:* “The last operation was output” means either the last virtual
+operation was overflow or the put buffer is non-empty. “Write any
+unshift sequence” means, if `width` if less than zero then call
 `a_codecvt.unshift(state, xbuf, xbuf+XSIZE, xbuf_end)` and output the
 resulting unshift sequence. The function determines one of three values
 for the argument `whence`, of type `int`, as indicated in

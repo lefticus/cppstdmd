@@ -978,9 +978,10 @@ safely-derived pointer.
 *Default behavior:* If `ptr` is null, does nothing. Otherwise, reclaims
 the storage allocated by the earlier call to `operator new`.
 
-It is unspecified under what conditions part or all of such reclaimed
-storage will be allocated by subsequent calls to `operator new` or any
-of `calloc`, `malloc`, or `realloc`, declared in `<cstdlib>`.
+*Remarks:* It is unspecified under what conditions part or all of such
+reclaimed storage will be allocated by subsequent calls to
+`operator new` or any of `calloc`, `malloc`, or `realloc`, declared in
+`<cstdlib>`.
 
 ``` cpp
 void operator delete(void* ptr, const std::nothrow_t&) noexcept;
@@ -1098,7 +1099,7 @@ void* operator new(std::size_t size, void* ptr) noexcept;
 
 *Returns:* `ptr`.
 
-Intentionally performs no other action.
+*Remarks:* Intentionally performs no other action.
 
 This can be useful for constructing an object at a known address:
 
@@ -1113,7 +1114,7 @@ void* operator new[](std::size_t size, void* ptr) noexcept;
 
 *Returns:* `ptr`.
 
-Intentionally performs no other action.
+*Remarks:* Intentionally performs no other action.
 
 ``` cpp
 void operator delete(void* ptr, void*) noexcept;
@@ -1125,9 +1126,10 @@ void operator delete(void* ptr, void*) noexcept;
 safety ([[basic.stc.dynamic.safety]]) then `ptr` shall be a
 safely-derived pointer.
 
-Default function called when any part of the initialization in a
-placement new expression that invokes the library’s non-array placement
-operator new terminates by throwing an exception ([[expr.new]]).
+*Remarks:* Default function called when any part of the initialization
+in a placement new expression that invokes the library’s non-array
+placement operator new terminates by throwing an
+exception ([[expr.new]]).
 
 ``` cpp
 void operator delete[](void* ptr, void*) noexcept;
@@ -1139,8 +1141,8 @@ void operator delete[](void* ptr, void*) noexcept;
 safety ([[basic.stc.dynamic.safety]]) then `ptr` shall be a
 safely-derived pointer.
 
-Default function called when any part of the initialization in a
-placement new expression that invokes the library’s array placement
+*Remarks:* Default function called when any part of the initialization
+in a placement new expression that invokes the library’s array placement
 operator new terminates by throwing an exception ([[expr.new]]).
 
 #### Data races <a id="new.delete.dataraces">[[new.delete.dataraces]]</a>
@@ -1185,8 +1187,8 @@ bad_alloc() noexcept;
 
 *Effects:* Constructs an object of class `bad_alloc`.
 
-The result of calling `what()` on the newly constructed object is
-implementation-defined.
+*Remarks:* The result of calling `what()` on the newly constructed
+object is implementation-defined.
 
 ``` cpp
 bad_alloc(const bad_alloc&) noexcept;
@@ -1347,7 +1349,7 @@ const char* name() const noexcept;
 
 *Returns:* An *implementation-defined* NTBS.
 
-The message may be a null-terminated multibyte
+*Remarks:* The message may be a null-terminated multibyte
 string ([[multibyte.strings]]), suitable for conversion and display as
 a `wstring` ([[string.classes]], [[locale.codecvt]])
 
@@ -1375,8 +1377,8 @@ bad_cast() noexcept;
 
 *Effects:* Constructs an object of class `bad_cast`.
 
-The result of calling `what()` on the newly constructed object is
-implementation-defined.
+*Remarks:* The result of calling `what()` on the newly constructed
+object is implementation-defined.
 
 ``` cpp
 bad_cast(const bad_cast&) noexcept;
@@ -1391,7 +1393,7 @@ virtual const char* what() const noexcept;
 
 *Returns:* An *implementation-defined* NTBS.
 
-The message may be a null-terminated multibyte
+*Remarks:* The message may be a null-terminated multibyte
 string ([[multibyte.strings]]), suitable for conversion and display as
 a `wstring` ([[string.classes]], [[locale.codecvt]])
 
@@ -1419,8 +1421,8 @@ bad_typeid() noexcept;
 
 *Effects:* Constructs an object of class `bad_typeid`.
 
-The result of calling `what()` on the newly constructed object is
-implementation-defined.
+*Remarks:* The result of calling `what()` on the newly constructed
+object is implementation-defined.
 
 ``` cpp
 bad_typeid(const bad_typeid&) noexcept;
@@ -1435,7 +1437,7 @@ virtual const char* what() const noexcept;
 
 *Returns:* An *implementation-defined* NTBS.
 
-The message may be a null-terminated multibyte
+*Remarks:* The message may be a null-terminated multibyte
 string ([[multibyte.strings]]), suitable for conversion and display as
 a `wstring` ([[string.classes]], [[locale.codecvt]])
 
@@ -1507,7 +1509,7 @@ exception() noexcept;
 
 *Effects:* Constructs an object of class `exception`.
 
-Does not throw any exceptions.
+*Remarks:* Does not throw any exceptions.
 
 ``` cpp
 exception(const exception& rhs) noexcept;
@@ -1525,7 +1527,7 @@ virtual ~exception();
 
 *Effects:* Destroys an object of class `exception`.
 
-Does not throw any exceptions.
+*Remarks:* Does not throw any exceptions.
 
 ``` cpp
 virtual const char* what() const noexcept;
@@ -1533,7 +1535,7 @@ virtual const char* what() const noexcept;
 
 *Returns:* An *implementation-defined* NTBS.
 
-The message may be a null-terminated multibyte
+*Remarks:* The message may be a null-terminated multibyte
 string ([[multibyte.strings]]), suitable for conversion and display as
 a `wstring` ([[string.classes]], [[locale.codecvt]]). The return value
 remains valid until the exception object from which it is obtained is
@@ -1563,8 +1565,8 @@ bad_exception() noexcept;
 
 *Effects:* Constructs an object of class `bad_exception`.
 
-The result of calling `what()` on the newly constructed object is
-implementation-defined.
+*Remarks:* The result of calling `what()` on the newly constructed
+object is implementation-defined.
 
 ``` cpp
 bad_exception(const bad_exception&) noexcept;
@@ -1579,7 +1581,7 @@ virtual const char* what() const noexcept;
 
 *Returns:* An *implementation-defined* NTBS.
 
-The message may be a null-terminated multibyte
+*Remarks:* The message may be a null-terminated multibyte
 string ([[multibyte.strings]]), suitable for conversion and display as
 a `wstring` ([[string.classes]], [[locale.codecvt]]).
 
@@ -1651,8 +1653,9 @@ object ([[except.throw]]) until a handler for the exception (including
 activated ([[except.handle]]). This includes stack
 unwinding ([[except.ctor]]).
 
-When `uncaught_exception()` returns `true`, throwing an exception can
-result in a call of `std::terminate()` ([[except.terminate]]).
+*Remarks:* When `uncaught_exception()` returns `true`, throwing an
+exception can result in a call of
+`std::terminate()` ([[except.terminate]]).
 
 ### Exception propagation <a id="propagation">[[propagation]]</a>
 

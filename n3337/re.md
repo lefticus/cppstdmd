@@ -755,8 +755,8 @@ independent of the case of the characters in the character sequence. If
 the name is not recognized then returns a value that compares equal to
 0.
 
-For `regex_traits<char>`, at least the names `"d"`, `"w"`, `"s"`,
-`"alnum"`, `"alpha"`, `"blank"`, `"cntrl"`, `"digit"`, `"graph"`,
+*Remarks:* For `regex_traits<char>`, at least the names `"d"`, `"w"`,
+`"s"`, `"alnum"`, `"alpha"`, `"blank"`, `"cntrl"`, `"digit"`, `"graph"`,
 `"lower"`, `"print"`, `"punct"`, `"space"`, `"upper"` and `"xdigit"`
 shall be recognized. For `regex_traits<wchar_t>`, at least the names
 `L"d"`, `L"w"`, `L"s"`, `L"alnum"`, `L"alpha"`, `L"blank"`, `L"cntrl"`,

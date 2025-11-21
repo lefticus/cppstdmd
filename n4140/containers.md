@@ -1260,12 +1260,12 @@ iterators and references to elements of the deque. An insertion at
 either end of the deque invalidates all the iterators to the deque, but
 has no effect on the validity of references to elements of the deque.
 
-If an exception is thrown other than by the copy constructor, move
-constructor, assignment operator, or move assignment operator of `T`
-there are no effects. If an exception is thrown while inserting a single
-element at either end, there are no effects. Otherwise, if an exception
-is thrown by the move constructor of a non-`CopyInsertable` `T`, the
-effects are unspecified.
+*Remarks:* If an exception is thrown other than by the copy constructor,
+move constructor, assignment operator, or move assignment operator of
+`T` there are no effects. If an exception is thrown while inserting a
+single element at either end, there are no effects. Otherwise, if an
+exception is thrown by the move constructor of a non-`CopyInsertable`
+`T`, the effects are unspecified.
 
 *Complexity:* The complexity is linear in the number of elements
 inserted plus the lesser of the distances to the beginning and end of
@@ -2117,8 +2117,8 @@ void push_back(const T& x);
 void push_back(T&& x);
 ```
 
-Does not affect the validity of iterators and references. If an
-exception is thrown there are no effects.
+*Remarks:* Does not affect the validity of iterators and references. If
+an exception is thrown there are no effects.
 
 *Complexity:* Insertion of a single element into a list takes constant
 time and exactly one call to a constructor of `T`. Insertion of multiple
@@ -2538,11 +2538,11 @@ most linear time in the size of the sequence.
 
 *Throws:* `length_error` if `n > max_size()`.[^4]
 
-Reallocation invalidates all the references, pointers, and iterators
-referring to the elements in the sequence. No reallocation shall take
-place during insertions that happen after a call to `reserve()` until
-the time when an insertion would make the size of the vector greater
-than the value of `capacity()`.
+*Remarks:* Reallocation invalidates all the references, pointers, and
+iterators referring to the elements in the sequence. No reallocation
+shall take place during insertions that happen after a call to
+`reserve()` until the time when an insertion would make the size of the
+vector greater than the value of `capacity()`.
 
 ``` cpp
 void shrink_to_fit();
@@ -2552,11 +2552,11 @@ void shrink_to_fit();
 
 *Complexity:* Linear in the size of the sequence.
 
-`shrink_to_fit` is a non-binding request to reduce `capacity()` to
-`size()`. The request is non-binding to allow latitude for
-implementation-specific optimizations. If an exception is thrown other
-than by the move constructor of a non-`CopyInsertable` `T` there are no
-effects.
+*Remarks:* `shrink_to_fit` is a non-binding request to reduce
+`capacity()` to `size()`. The request is non-binding to allow latitude
+for implementation-specific optimizations. If an exception is thrown
+other than by the move constructor of a non-`CopyInsertable` `T` there
+are no effects.
 
 ``` cpp
 void swap(vector& x);
@@ -2578,8 +2578,8 @@ default-inserted elements to the sequence.
 *Requires:* `T` shall be `MoveInsertable` and `DefaultInsertable` into
 `*this`.
 
-If an exception is thrown other than by the move constructor of a
-non-`CopyInsertable` `T` there are no effects.
+*Remarks:* If an exception is thrown other than by the move constructor
+of a non-`CopyInsertable` `T` there are no effects.
 
 ``` cpp
 void resize(size_type sz, const T& c);
@@ -2591,7 +2591,7 @@ void resize(size_type sz, const T& c);
 
 *Requires:* `T` shall be `CopyInsertable` into `*this`.
 
-If an exception is thrown there are no effects.
+*Remarks:* If an exception is thrown there are no effects.
 
 #### `vector` data <a id="vector.data">[[vector.data]]</a>
 
@@ -2621,13 +2621,13 @@ void push_back(const T& x);
 void push_back(T&& x);
 ```
 
-Causes reallocation if the new size is greater than the old capacity. If
-no reallocation happens, all the iterators and references before the
-insertion point remain valid. If an exception is thrown other than by
-the copy constructor, move constructor, assignment operator, or move
-assignment operator of `T` or by any `InputIterator` operation there are
-no effects. If an exception is thrown while inserting a single element
-at the end and `T` is `CopyInsertable` or
+*Remarks:* Causes reallocation if the new size is greater than the old
+capacity. If no reallocation happens, all the iterators and references
+before the insertion point remain valid. If an exception is thrown other
+than by the copy constructor, move constructor, assignment operator, or
+move assignment operator of `T` or by any `InputIterator` operation
+there are no effects. If an exception is thrown while inserting a single
+element at the end and `T` is `CopyInsertable` or
 `is_nothrow_move_constructible<T>::value` is `true`, there are no
 effects. Otherwise, if an exception is thrown by the move constructor of
 a non-`CopyInsertable` `T`, the effects are unspecified.
