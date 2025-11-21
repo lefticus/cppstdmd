@@ -332,7 +332,7 @@ enumerated values and their meanings are as follows:
   `memory_order::seq_cst`: a load operation performs an acquire
   operation on the affected memory location.
 
-[*Note 1*: Atomic operations specifying `memory_order::relaxed` are
+[*Note 2*: Atomic operations specifying `memory_order::relaxed` are
 relaxed with respect to memory ordering. Implementations must still
 guarantee that any given atomic access to a particular atomic object be
 indivisible with respect to all other atomic accesses to that
@@ -371,20 +371,20 @@ S:
 - if a `memory_order::seq_cst` fence X happens before A and B happens
   before a `memory_order::seq_cst` fence Y, then X precedes Y in S.
 
-[*Note 2*: This definition ensures that S is consistent with the
+[*Note 3*: This definition ensures that S is consistent with the
 modification order of any atomic object M. It also ensures that a
 `memory_order::seq_cst` load A of M gets its value either from the last
 modification of M that precedes A in S or from some
 non-`memory_order::seq_cst` modification of M that does not happen
 before any modification of M that precedes A in S. — *end note*]
 
-[*Note 3*: We do not require that S be consistent with “happens before”
+[*Note 4*: We do not require that S be consistent with “happens before”
 [[intro.races]]. This allows more efficient implementation of
 `memory_order::acquire` and `memory_order::release` on some machine
 architectures. It can produce surprising results when these are mixed
 with `memory_order::seq_cst` accesses. — *end note*]
 
-[*Note 4*: `memory_order::seq_cst` ensures sequential consistency only
+[*Note 5*: `memory_order::seq_cst` ensures sequential consistency only
 for a program that is free of data races and uses exclusively
 `memory_order::seq_cst` atomic operations. Any use of weaker ordering
 will invalidate this guarantee unless extreme care is used. In many
@@ -395,7 +395,7 @@ thread. — *end note*]
 Implementations should ensure that no “out-of-thin-air” values are
 computed that circularly depend on their own computation.
 
-[*Note 5*:
+[*Note 6*:
 
 For example, with `x` and `y` initially zero,
 
@@ -418,7 +418,7 @@ such an execution is possible.
 
 — *end note*]
 
-[*Note 6*:
+[*Note 7*:
 
 The recommendation similarly disallows `r1 == r2 == 42` in the following
 example, with `x` and `y` again initially zero:

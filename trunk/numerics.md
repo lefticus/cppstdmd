@@ -1877,7 +1877,7 @@ $[ M_0, C_0, M_1, C_1, M_2, C_2, \dotsc, M_{n/2 - 1}, C_{n/2 - 1} ]$.
 The textual representation consists of the values of
 $K_0, \dotsc, K_{n/2 - 1}, X_{0}, \dotsc, X_{n - 1}, i$, in that order.
 
-[*Note 1*: The stream extraction operator can reconstruct Y from K and
+[*Note 2*: The stream extraction operator can reconstruct Y from K and
 X, as needed. — *end note*]
 
 ``` cpp
@@ -7558,10 +7558,10 @@ complexity requirements, if any, are satisfied.
   parameter) are assignable and convertible to the output `mdspan`’s
   `value_type`.
 - The function may reorder addends and partial sums arbitrarily.
-  \[*Note 2*: Factors in each product are not reordered; multiplication
+  \[*Note 1*: Factors in each product are not reordered; multiplication
   is not necessarily commutative. — *end note*]
 
-[*Note 1*: The above requirements do not prohibit implementation
+[*Note 2*: The above requirements do not prohibit implementation
 approaches and optimization techniques which are not user-observable. In
 particular, if for all input and output arguments the `value_type` is a
 floating-point type, implementers are free to leverage approximations,
@@ -7569,7 +7569,7 @@ use arithmetic operations not explicitly listed above, and compute
 floating-point sums in any way that improves their
 accuracy. — *end note*]
 
-[*Note 2*:
+[*Note 3*:
 
 For all functions in [[linalg]], suppose that all input and output
 `mdspan` have as `value_type` a floating-point type, and any `Scalar`
@@ -8144,7 +8144,7 @@ namespace std::linalg {
   class scaled_accessor {
   public:
     using element_type =
-      add_const_t<decltype(declval<ScalingFactor>() * declval<NestedAccessor::element_type>())>;
+      const decltype(declval<ScalingFactor>() * declval<NestedAccessor::element_type>());
     using reference = remove_const_t<element_type>;
     using data_handle_type = NestedAccessor::data_handle_type;
     using offset_policy = scaled_accessor<ScalingFactor, NestedAccessor::offset_policy>;
@@ -8276,7 +8276,7 @@ namespace std::linalg {
   class conjugated_accessor {
   public:
     using element_type =
-      add_const_t<decltype(conj-if-needed(declval<NestedAccessor::element_type>()))>;
+      const decltype(conj-if-needed(declval<NestedAccessor::element_type>()));
     using reference = remove_const_t<element_type>;
     using data_handle_type = NestedAccessor::data_handle_type;
     using offset_policy = conjugated_accessor<NestedAccessor::offset_policy>;
@@ -12779,7 +12779,7 @@ Let:
 - *`select-value`*`(`i`)` be a function which returns
   `v[`*`bit-index`*`(`i`)]` for i in the range \[`0`,
   `reduce_count(selector)`) and a valid but unspecified value otherwise.
-  \[*Note 3*: Different calls to *`select-value`* can return different
+  \[*Note 1*: Different calls to *`select-value`* can return different
   unspecified values. — *end note*]
 
 *Returns:* A data-parallel object where the iᵗʰ element is initialized

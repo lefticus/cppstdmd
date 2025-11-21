@@ -1784,7 +1784,7 @@ A type `T` containing a placeholder type, and a corresponding
   - If the operand is a *braced-init-list* [[dcl.init.list]], the
     program is ill-formed.
   - If the operand is an *expression* X that is not an
-    *assignment-expression*, E is `(X)`. \[*Note 1*: A comma expression
+    *assignment-expression*, E is `(X)`. \[*Note 4*: A comma expression
     [[expr.comma]] is not an *assignment-expression*. — *end note*]
   - Otherwise, E is the operand of the `return` statement.
 
@@ -2497,7 +2497,7 @@ T D
 
 the *decl-specifier-seq* `T` determines the type `T`.
 
-[*Example 1*:
+[*Example 4*:
 
 In the declaration
 
@@ -4218,7 +4218,7 @@ source type is not defined.
   of `wchar_t`, and the initializer is a *string-literal*, see 
   [[dcl.init.string]].
 - If the initializer is `()`, the object is value-initialized.
-  \[*Note 2*:
+  \[*Note 6*:
   Since `()` is not permitted by the syntax for *initializer*,
   ``` cpp
   X a();
@@ -4245,7 +4245,7 @@ source type is not defined.
   - If the initializer expression is a prvalue and the cv-unqualified
     version of the source type is the same as the destination type, the
     initializer expression is used to initialize the destination object.
-    \[*Example 4*: `T x = T(T(T()));` value-initializes `x`
+    \[*Example 2*: `T x = T(T(T()));` value-initializes `x`
     [[basic.lval]], [[expr.type.conv]]. — *end example*]
   - Otherwise, if the initialization is direct-initialization, or if it
     is copy-initialization where the cv-unqualified version of the
@@ -4268,12 +4268,12 @@ source type is not defined.
       value computation and side effect associated with the
       initialization of eᵢ is sequenced before those associated with the
       initialization of eⱼ.
-      \[*Note 3*:
+      \[*Note 7*:
       By contrast with direct-list-initialization, narrowing conversions
       [[dcl.init.list]] can appear, designators are not permitted, a
       temporary object bound to a reference does not have its lifetime
       extended [[class.temporary]], and there is no brace elision.
-      \[*Example 5*:
+      \[*Example 3*:
       ``` cpp
       struct A {
         int a;
@@ -4324,7 +4324,7 @@ source type is not defined.
   initialization is ill-formed. When initializing a bit-field with a
   value that it cannot represent, the resulting value of the bit-field
   is .
-  \[*Note 4*:
+  \[*Note 8*:
   An expression of type “*cv1* `T`” can initialize an object of type
   “*cv2* `T`” independently of the cv-qualifiers *cv1* and *cv2*.
   ``` cpp
@@ -4359,7 +4359,7 @@ An object whose initialization has completed is deemed to be
 constructed, even if the object is of non-class type or no constructor
 of the object’s class is invoked for the initialization.
 
-[*Note 6*: Such an object might have been value-initialized or
+[*Note 9*: Such an object might have been value-initialized or
 initialized by aggregate initialization [[dcl.init.aggr]] or by an
 inherited constructor [[class.inhctor.init]]. — *end note*]
 
@@ -4372,11 +4372,11 @@ A declaration that specifies the initialization of a variable, whether
 from an explicit initializer or by default-initialization, is called the
 *initializing declaration* of that variable.
 
-[*Note 7*: In most cases this is the defining declaration [[basic.def]]
-of the variable, but the initializing declaration of a non-inline static
-data member [[class.static.data]] can be the declaration within the
-class definition and not the definition (if any) outside
-it. — *end note*]
+[*Note 10*: In most cases this is the defining declaration
+[[basic.def]] of the variable, but the initializing declaration of a
+non-inline static data member [[class.static.data]] can be the
+declaration within the class definition and not the definition (if any)
+outside it. — *end note*]
 
 ### Aggregates <a id="dcl.init.aggr">[[dcl.init.aggr]]</a>
 
@@ -4423,7 +4423,7 @@ For each explicitly initialized element:
   initialized by the *braced-init-list* `{ `*D*` }`, where *D* is the
   *designated-initializer-clause* naming a member of the anonymous union
   member. There shall be only one such *designated-initializer-clause*.
-  \[*Example 6*:
+  \[*Example 1*:
   ``` cpp
   struct C {
     union {
@@ -4442,7 +4442,7 @@ For each explicitly initialized element:
   *designated-initializer-clause*. If that initializer is of the form
   `= `*assignment-expression* and a narrowing conversion
   [[dcl.init.list]] is required to convert the expression, the program
-  is ill-formed. \[*Note 5*: The form of the initializer determines
+  is ill-formed. \[*Note 2*: The form of the initializer determines
   whether copy-initialization or direct-initialization is
   performed. — *end note*]
 - Otherwise, the initializer list is a brace-enclosed
@@ -4452,11 +4452,11 @@ For each explicitly initialized element:
   copy-initialized from a brace-enclosed *initializer-list* consisting
   of all of the *initializer-clause*s that appertain to subobjects of
   the aggregate element, in the order of appearance.
-  \[*Note 6*: If an initializer is itself an initializer list, the
+  \[*Note 3*: If an initializer is itself an initializer list, the
   element is list-initialized, which will result in a recursive
   application of the rules in this subclause if the element is an
   aggregate. — *end note*]
-  \[*Example 7*:
+  \[*Example 2*:
   ``` cpp
   struct A {
     int x;
@@ -4505,7 +4505,7 @@ If the aggregate is a union and the initializer list is empty, then
 - otherwise, the first member of the union (if any) is copy-initialized
   from an empty initializer list.
 
-[*Example 1*:
+[*Example 3*:
 
 ``` cpp
 struct S { int a; const char* b; int c; int d = b[a]; };
@@ -4544,7 +4544,7 @@ The destructor for each element of class type other than an anonymous
 union member is potentially invoked [[class.dtor]] from the context
 where the aggregate initialization occurs.
 
-[*Note 2*: This provision ensures that destructors can be called for
+[*Note 4*: This provision ensures that destructors can be called for
 fully-constructed subobjects in case an exception is thrown
 [[except.ctor]]. — *end note*]
 
@@ -4552,7 +4552,7 @@ The number of elements [[dcl.array]] in an array of unknown bound
 initialized with a brace-enclosed *initializer-list* is the number of
 explicitly initialized elements of the array.
 
-[*Example 2*:
+[*Example 4*:
 
 ``` cpp
 int x[] = { 1, 3, 5 };
@@ -4563,7 +4563,7 @@ elements since no size was specified and there are three initializers.
 
 — *end example*]
 
-[*Example 3*:
+[*Example 5*:
 
 In
 
@@ -4580,7 +4580,7 @@ X b[2] = { { 1, 2, 3 }, { 4, 5, 6 } };
 An array of unknown bound shall not be initialized with an empty
 *braced-init-list* `{}`.[^6]
 
-[*Note 3*:
+[*Note 5*:
 
 A default member initializer does not determine the bound for a member
 array of unknown bound. Since the default member initializer is ignored
@@ -4588,7 +4588,7 @@ if a suitable *mem-initializer* is present [[class.base.init]], the
 default member initializer is not considered to initialize the array of
 unknown bound.
 
-[*Example 4*:
+[*Example 6*:
 
 ``` cpp
 struct S {
@@ -4600,12 +4600,12 @@ struct S {
 
 — *end note*]
 
-[*Note 4*:
+[*Note 6*:
 
 Static data members, non-static data members of anonymous union members,
 and unnamed bit-fields are not considered elements of the aggregate.
 
-[*Example 5*:
+[*Example 7*:
 
 ``` cpp
 struct A {
@@ -4629,7 +4629,7 @@ If a member has a default member initializer and a potentially-evaluated
 subexpression thereof is an aggregate initialization that would use that
 default member initializer, the program is ill-formed.
 
-[*Example 6*:
+[*Example 8*:
 
 ``` cpp
 struct A;
@@ -4651,7 +4651,7 @@ When initializing a multidimensional array, the *initializer-clause*s
 initialize the elements with the last (rightmost) index of the array
 varying the fastest [[dcl.array]].
 
-[*Example 7*:
+[*Example 9*:
 
 ``` cpp
 int x[2][2] = { 3, 1, 4, 2 };
@@ -4692,11 +4692,11 @@ is replaced in the list of aggregate elements by the sequence of its own
 aggregate elements, and the appertainment analysis resumes with the
 first such element and the same *initializer-clause*.
 
-[*Note 5*:
+[*Note 7*:
 
 These rules apply recursively to the aggregate’s subaggregates.
 
-[*Example 8*:
+[*Example 10*:
 
 In
 
@@ -4728,7 +4728,7 @@ exhausted. If any *initializer-clause* remains that does not appertain
 to an element of the aggregate or one of its subaggregates, the program
 is ill-formed.
 
-[*Example 9*:
+[*Example 11*:
 
 ``` cpp
 char cv[4] = { 'a', 's', 'd', 'f', 0 };     // error: too many initializers
@@ -4736,7 +4736,7 @@ char cv[4] = { 'a', 's', 'd', 'f', 0 };     // error: too many initializers
 
 — *end example*]
 
-[*Example 10*:
+[*Example 12*:
 
 ``` cpp
 float y[4][3] = {
@@ -4768,12 +4768,12 @@ next three are taken successively for `y[1]` and `y[2]`.
 
 — *end example*]
 
-[*Note 6*:
+[*Note 8*:
 
 The initializer for an empty subaggregate is needed if any initializers
 are provided for subsequent elements.
 
-[*Example 11*:
+[*Example 13*:
 
 ``` cpp
 struct S { } s;
@@ -4796,7 +4796,7 @@ struct A {
 
 — *end note*]
 
-[*Example 12*:
+[*Example 14*:
 
 ``` cpp
 struct A {
@@ -4817,19 +4817,20 @@ initialized with whatever `a.operator int()` returns.
 
 — *end example*]
 
-[*Note 7*: An aggregate array or an aggregate class can contain
+[*Note 9*: An aggregate array or an aggregate class can contain
 elements of a class type with a user-declared constructor
 [[class.ctor]]. Initialization of these aggregate objects is described
 in  [[class.expl.init]]. — *end note*]
 
-[*Note 8*: Whether the initialization of aggregates with static storage
-duration is static or dynamic is specified in  [[basic.start.static]],
-[[basic.start.dynamic]], and  [[stmt.dcl]]. — *end note*]
+[*Note 10*: Whether the initialization of aggregates with static
+storage duration is static or dynamic is specified in 
+[[basic.start.static]], [[basic.start.dynamic]], and 
+[[stmt.dcl]]. — *end note*]
 
 When a union is initialized with an initializer list, there shall not be
 more than one explicitly initialized element.
 
-[*Example 13*:
+[*Example 15*:
 
 ``` cpp
 union u { int a; const char* b; };
@@ -4844,7 +4845,7 @@ u g = { .a = 1, .b = "asdf" };  // error
 
 — *end example*]
 
-[*Note 9*: As described above, the braces around the
+[*Note 11*: As described above, the braces around the
 *initializer-clause* for a union member can be omitted if the union is a
 member of another aggregate. — *end note*]
 
@@ -4966,11 +4967,11 @@ A reference to type “*cv1* `T1`” is initialized by an expression of type
   first case and to the lvalue result of the conversion in the second
   case (or, in either case, to the appropriate base class subobject of
   the object).
-  \[*Note 7*: The usual lvalue-to-rvalue [[conv.lval]], array-to-pointer
+  \[*Note 2*: The usual lvalue-to-rvalue [[conv.lval]], array-to-pointer
   [[conv.array]], and function-to-pointer [[conv.func]] standard
   conversions are not needed, and therefore are suppressed, when such
   direct bindings to lvalues are done. — *end note*]
-  \[*Example 8*:
+  \[*Example 3*:
   ``` cpp
   double d = 2.0;
   double& rd = d;                 // rd refers to d
@@ -4987,7 +4988,7 @@ A reference to type “*cv1* `T1`” is initialized by an expression of type
 - Otherwise, if the reference is an lvalue reference to a type that is
   not const-qualified or is volatile-qualified, the program is
   ill-formed.
-  \[*Example 9*:
+  \[*Example 4*:
   ``` cpp
   double& rd2 = 2.0;              // error: not an lvalue and reference not const
   int  i = 2;
@@ -5011,7 +5012,7 @@ A reference to type “*cv1* `T1`” is initialized by an expression of type
   applied, considering the type of the prvalue to be “*cv1* `T4`”
   [[conv.qual]]. In any case, the reference binds to the resulting
   glvalue (or to an appropriate base class subobject).
-  \[*Example 10*:
+  \[*Example 5*:
   ``` cpp
   struct A { };
   struct B : A { } b;
@@ -5056,7 +5057,7 @@ A reference to type “*cv1* `T1`” is initialized by an expression of type
     applied, considering the type of the prvalue to be “*cv1* `T1`”, and
     the reference is bound to the result.
 
-  \[*Example 11*:
+  \[*Example 6*:
   ``` cpp
   struct Banana { };
   struct Enigma { operator const Banana(); };
@@ -5090,7 +5091,7 @@ In all cases except the last (i.e., implicitly converting the
 initializer expression to the referenced type), the reference is said to
 *bind directly* to the initializer expression.
 
-[*Note 2*:  [[class.temporary]] describes the lifetime of temporaries
+[*Note 3*:  [[class.temporary]] describes the lifetime of temporaries
 bound to references. — *end note*]
 
 ### List-initialization <a id="dcl.init.list">[[dcl.init.list]]</a>
@@ -5170,7 +5171,7 @@ defined as follows:
   *designated-initializer-list* shall form a subsequence of the ordered
   *identifier*s in the direct non-static data members of `T`. Aggregate
   initialization is performed [[dcl.init.aggr]].
-  \[*Example 12*:
+  \[*Example 2*:
   ``` cpp
   struct A { int x; int y; int z; };
   A a{.y = 2, .x = 1};                // error: designator order does not match declaration order
@@ -5189,7 +5190,7 @@ defined as follows:
   subclause.
 - Otherwise, if `T` is an aggregate, aggregate initialization is
   performed [[dcl.init.aggr]].
-  \[*Example 13*:
+  \[*Example 3*:
   ``` cpp
   double ad[] = { 1, 2.0 };           // OK
   int ai[] = { 1, 2.0 };              // error: narrowing
@@ -5213,7 +5214,7 @@ defined as follows:
   through overload resolution [[over.match]], [[over.match.list]]. If a
   narrowing conversion (see below) is required to convert any of the
   arguments, the program is ill-formed.
-  \[*Example 14*:
+  \[*Example 4*:
   ``` cpp
   struct S {
     S(std::initializer_list<double>); // #1
@@ -5229,7 +5230,7 @@ defined as follows:
   ```
 
   — *end example*]
-  \[*Example 15*:
+  \[*Example 5*:
   ``` cpp
   struct Map {
     Map(std::initializer_list<std::pair<std::string,int>>);
@@ -5238,7 +5239,7 @@ defined as follows:
   ```
 
   — *end example*]
-  \[*Example 16*:
+  \[*Example 6*:
   ``` cpp
   struct S {
     // no initializer-list constructors
@@ -5259,7 +5260,7 @@ defined as follows:
   initialized with the value `T(v)` [[expr.type.conv]]; if a narrowing
   conversion is required to convert `v` to `U`, the program is
   ill-formed.
-  \[*Example 17*:
+  \[*Example 7*:
   ``` cpp
   enum byte : unsigned char { };
   byte b { 42 };                      // OK
@@ -5287,7 +5288,7 @@ defined as follows:
   by direct-initialization for direct-list-initialization); if a
   narrowing conversion (see below) is required to convert the element to
   `T`, the program is ill-formed.
-  \[*Example 18*:
+  \[*Example 8*:
   ``` cpp
   int x1 {2};                         // OK
   int x2 {2.0};                       // error: narrowing
@@ -5301,10 +5302,10 @@ defined as follows:
   unless `T` is “reference to array of unknown bound of `U`”, in which
   case the type of the prvalue is the type of `x` in the declaration
   `U x[] H`, where H is the initializer list.
-  \[*Note 8*: As usual, the binding will fail and the program is
+  \[*Note 3*: As usual, the binding will fail and the program is
   ill-formed if the reference type is an lvalue reference to a non-const
   type. — *end note*]
-  \[*Example 19*:
+  \[*Example 9*:
   ``` cpp
   struct S {
     S(std::initializer_list<double>); // #1
@@ -5329,14 +5330,14 @@ defined as follows:
   — *end example*]
 - Otherwise, if the initializer list has no elements, the object is
   value-initialized.
-  \[*Example 20*:
+  \[*Example 10*:
   ``` cpp
   int** pp {};                        // initialized to null pointer
   ```
 
   — *end example*]
 - Otherwise, the program is ill-formed.
-  \[*Example 21*:
+  \[*Example 11*:
   ``` cpp
   struct A { int i; int j; };
   A a1 { 1, 2 };                      // aggregate initialization
@@ -5366,7 +5367,7 @@ is, every value computation and side effect associated with a given
 side effect associated with any *initializer-clause* that follows it in
 the comma-separated list of the *initializer-list*.
 
-[*Note 3*: This evaluation ordering holds regardless of the semantics
+[*Note 4*: This evaluation ordering holds regardless of the semantics
 of the initialization; for example, it applies when the elements of the
 *initializer-list* are interpreted as arguments of a constructor call,
 even though ordinarily there are no sequencing constraints on the
@@ -5381,14 +5382,14 @@ copy-initialized with the corresponding element of the initializer list,
 and the `std::initializer_list<E>` object is constructed to refer to
 that array.
 
-[*Note 4*: A constructor or conversion function selected for the copy
+[*Note 5*: A constructor or conversion function selected for the copy
 needs to be accessible [[class.access]] in the context of the
 initializer list. — *end note*]
 
 If a narrowing conversion is required to initialize any of the elements,
 the program is ill-formed.
 
-[*Note 5*: Backing arrays are potentially non-unique objects
+[*Note 6*: Backing arrays are potentially non-unique objects
 [[intro.object]]. — *end note*]
 
 The backing array has the same lifetime as any other temporary object
@@ -5396,7 +5397,7 @@ The backing array has the same lifetime as any other temporary object
 object from the array extends the lifetime of the array exactly like
 binding a reference to a temporary.
 
-[*Example 2*:
+[*Example 12*:
 
 ``` cpp
 void f(std::initializer_list<double> il);
@@ -5440,7 +5441,7 @@ does not outlive the call to `f`.
 
 — *end example*]
 
-[*Example 3*:
+[*Example 13*:
 
 ``` cpp
 typedef std::complex<double> cmplx;
@@ -5492,10 +5493,10 @@ A *narrowing conversion* is an implicit conversion
     promotions will fit into the target type, or
 - from a pointer type or a pointer-to-member type to `bool`.
 
-[*Note 6*: As indicated above, such conversions are not allowed at the
+[*Note 7*: As indicated above, such conversions are not allowed at the
 top level in list-initializations. — *end note*]
 
-[*Example 4*:
+[*Example 14*:
 
 ``` cpp
 int x = 999;                    // x is not a constant expression

@@ -3286,7 +3286,7 @@ which is the type of the contained value after assignment.
   `true`, and
 - the expression *FUN*(std::forward\<T\>(t)) (with *FUN* being the
   above-mentioned set of imaginary functions) is well-formed.
-  \[*Note 2*:
+  \[*Note 1*:
       variant<string, string> v;
       v = "abc";
 
@@ -7374,7 +7374,7 @@ the initialization of the object.
 *Remarks:*
 
 - Implementations should perform no more than one memory allocation.
-  \[*Note 3*: This provides efficiency equivalent to an intrusive smart
+  \[*Note 1*: This provides efficiency equivalent to an intrusive smart
   pointer. — *end note*]
 - When an object of an array type `U` is specified to have an initial
   value of `u` (of the same type), this shall be interpreted to mean
@@ -8553,7 +8553,7 @@ general-purpose memory resources having the following qualities:
   results in the allocation of an additional chunk of memory from the
   *upstream allocator* (supplied at construction), thus replenishing the
   pool. With each successive replenishment, the chunk size obtained
-  increases geometrically. \[*Note 4*: By allocating memory in chunks,
+  increases geometrically. \[*Note 1*: By allocating memory in chunks,
   the pooling strategy increases the chance that consecutive allocations
   will be close together in memory. — *end note*]
 - Allocation requests that exceed the largest block size of any pool are
@@ -12145,7 +12145,7 @@ as follows:
   respectively.
   - If `is_same_v<T1, D1>` is `false` or `is_same_v<T2, D2>` is `false`,
     let `C` denote the same type, if any, as `common_type_t<D1, D2>`.
-  - \[*Note 5*: None of the following will apply if there is a
+  - \[*Note 3*: None of the following will apply if there is a
     specialization `common_type<D1, D2>`. — *end note*]
   - Otherwise, if
     ``` cpp
@@ -12173,7 +12173,7 @@ pursuant to [[namespace.std]], a program may specialize
 `is_same_v<T1, decay_t<T1>>` and `is_same_v<T2, decay_t<T2>>` are each
 `true`.
 
-[*Note 3*: Such specializations are needed when only explicit
+[*Note 4*: Such specializations are needed when only explicit
 conversions are desired between the template arguments. — *end note*]
 
 Such a specialization need not have a member named `type`, but if it
@@ -12219,7 +12219,7 @@ pursuant to [[namespace.std]], a program may partially specialize
 that `is_same_v<T, decay_t<T>{>}` and `is_same_v<U, decay_t<U>{>}` are
 each `true`.
 
-[*Note 4*: Such specializations can be used to influence the result of
+[*Note 5*: Such specializations can be used to influence the result of
 `common_reference`, and are needed when only explicit conversions are
 desired between the template arguments. — *end note*]
 
@@ -12232,7 +12232,7 @@ type, if any, as does
 `basic_common_reference<U, T, UQual, TQual>::type`. No diagnostic is
 required for a violation of these rules.
 
-[*Example 1*:
+[*Example 2*:
 
 Given these definitions:
 
@@ -13128,7 +13128,7 @@ the `"C"` locale, as described for `strtod`, except that
   `chars_format::scientific`, the optional exponent part shall not
   appear; and
 - if `fmt` is `chars_format::hex`, the prefix `"0x"` or `"0X"` is
-  assumed. \[*Example 2*: The string `0x123` is parsed to have the value
+  assumed. \[*Example 1*: The string `0x123` is parsed to have the value
   `0` with remaining characters `x123`. — *end example*]
 
 In any case, the resulting `value` is one of at most two floating-point

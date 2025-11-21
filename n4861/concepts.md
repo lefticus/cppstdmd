@@ -525,11 +525,11 @@ expression `S` determined as follows:
 
   `noexcept(S)` is equal to
   `is_nothrow_move_constructible_v<T> && is_nothrow_move_assignable_v<T>`.
-- Otherwise, `ranges::swap(E1, E2)` is ill-formed. \[*Note 1*: This case
+- Otherwise, `ranges::swap(E1, E2)` is ill-formed. \[*Note 2*: This case
   can result in substitution failure when `ranges::swap(E1, E2)` appears
   in the immediate context of a template instantiation. — *end note*]
 
-[*Note 2*: Whenever `ranges::swap(E1, E2)` is a valid expression, it
+[*Note 3*: Whenever `ranges::swap(E1, E2)` is a valid expression, it
 exchanges the values denoted by `E1` and `E2` and has type
 `void`. — *end note*]
 
@@ -550,7 +550,7 @@ template<class T, class U>
     };
 ```
 
-[*Note 3*: The semantics of the `swappable` and `swappable_with`
+[*Note 4*: The semantics of the `swappable` and `swappable_with`
 concepts are fully defined by the `ranges::swap` customization
 point. — *end note*]
 

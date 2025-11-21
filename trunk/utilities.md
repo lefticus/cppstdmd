@@ -2118,7 +2118,7 @@ template<size_t I, class T> struct tuple_element<I, const T>;
 Let `TE` denote `tuple_element_t<I, T>` of the cv-unqualified type `T`.
 Then each specialization of the template meets the
 *Cpp17TransformationTrait* requirements [[meta.rqmts]] with a member
-typedef `type` that names the type `add_const_t<TE>`.
+typedef `type` that names the type `const TE`.
 
 In addition to being available via inclusion of the `<tuple>` header,
 the template is available when any of the headers `<array>`, `<ranges>`,
@@ -4492,7 +4492,7 @@ which is the type of the contained value after assignment.
   `true`, and
 - the expression *FUN*(std::forward\<T\>(t)) (with *FUN* being the
   above-mentioned set of imaginary functions) is well-formed.
-  \[*Note 2*:
+  \[*Note 1*:
       variant<string, string> v;
       v = "abc";
 
@@ -4709,7 +4709,7 @@ template<size_t I, class T> struct variant_alternative<I, const T>;
 Let `VA` denote `variant_alternative<I, T>` of the cv-unqualified type
 `T`. Then each specialization of the template meets the
 *Cpp17TransformationTrait* requirements [[meta.rqmts]] with a member
-typedef `type` that names the type `add_const_t<VA::type>`.
+typedef `type` that names the type `const VA::type`.
 
 ``` cpp
 variant_alternative<I, variant<Types...>>::type

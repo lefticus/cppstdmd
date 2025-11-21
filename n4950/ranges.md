@@ -2107,7 +2107,7 @@ Let `IOTA-DIFF-T(W)` be defined as follows:
   than the width of `W` if such a type exists.
 - Otherwise, `IOTA-DIFF-T(W)` is an unspecified signed-integer-like type
   [[iterator.concept.winc]] of width not less than the width of `W`.
-  \[*Note 2*: It is unspecified whether this type satisfies
+  \[*Note 1*: It is unspecified whether this type satisfies
   `weakly_incrementable`. — *end note*]
 
 The exposition-only *decrementable* concept is equivalent to:
@@ -8134,7 +8134,7 @@ friend constexpr bool operator==(const iterator& x, const iterator& y)
 - Otherwise, `true` if there exists an integer
   0 ≤ i < `sizeof...(Views)` such that
   `bool(std::get<`i`>(x.`*`current_`*`) == std::get<`i`>(y.`*`current_`*`))`
-  is `true`. \[*Note 3*: This allows `zip_view` to model `common_range`
+  is `true`. \[*Note 1*: This allows `zip_view` to model `common_range`
   when all constituent views model `common_range`. — *end note*]
 - Otherwise, `false`.
 
@@ -12315,7 +12315,7 @@ namespace std {
   - `\texttt{common_reference_with}<RRef&&, const \exposid{value}&>`
 
   is modeled.
-  \[*Note 4*: These requirements ensure the exposition-only *`iterator`*
+  \[*Note 1*: These requirements ensure the exposition-only *`iterator`*
   type can model `indirectly_readable` and thus
   `input_iterator`. — *end note*]
 

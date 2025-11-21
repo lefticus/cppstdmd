@@ -642,7 +642,12 @@ function Blocks(blocks)
   return result
 end
 
--- Return single filter
+-- Return single filter with topdown traversal to ensure correct processing order
+-- This prevents Pandoc from calling Blocks() in bottom-up order (which would
+-- process notes inside lists before top-level notes, breaking counter sequence)
 return {
-  { Blocks = Blocks }
+  {
+    Blocks = Blocks,
+    traverse = 'topdown'
+  }
 }

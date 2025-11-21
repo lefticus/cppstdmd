@@ -508,7 +508,7 @@ expression `S` determined as follows:
   and does not include a declaration of `ranges::swap`. If the function
   selected by overload resolution does not exchange the values denoted
   by `E1` and `E2`, the program is ill-formed, no diagnostic required.
-  \[*Note 1*: This precludes calling unconstrained program-defined
+  \[*Note 2*: This precludes calling unconstrained program-defined
   overloads of `swap`. When the deleted overload is viable,
   program-defined overloads need to be more specialized
   [[temp.func.order]] to be selected. — *end note*]
@@ -533,11 +533,11 @@ expression `S` determined as follows:
 
   `noexcept(S)` is equal to
   `is_nothrow_move_constructible_v<T> && is_nothrow_move_assignable_v<T>`.
-- Otherwise, `ranges::swap(E1, E2)` is ill-formed. \[*Note 2*: This case
+- Otherwise, `ranges::swap(E1, E2)` is ill-formed. \[*Note 3*: This case
   can result in substitution failure when `ranges::swap(E1, E2)` appears
   in the immediate context of a template instantiation. — *end note*]
 
-[*Note 2*: Whenever `ranges::swap(E1, E2)` is a valid expression, it
+[*Note 4*: Whenever `ranges::swap(E1, E2)` is a valid expression, it
 exchanges the values denoted by `E1` and `E2` and has type
 `void`. — *end note*]
 
@@ -558,7 +558,7 @@ template<class T, class U>
     };
 ```
 
-[*Note 3*: The semantics of the `swappable` and `swappable_with`
+[*Note 5*: The semantics of the `swappable` and `swappable_with`
 concepts are fully defined by the `ranges::swap` customization point
 object. — *end note*]
 

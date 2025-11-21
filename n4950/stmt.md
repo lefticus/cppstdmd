@@ -603,7 +603,7 @@ for (int& x : array)
 
 — *end example*]
 
-[*Note 1*: The lifetime of some temporaries in the
+[*Note 2*: The lifetime of some temporaries in the
 *for-range-initializer* is extended to cover the entire loop
 [[class.temporary]]. — *end note*]
 

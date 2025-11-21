@@ -8704,7 +8704,7 @@ general-purpose memory resources having the following qualities:
   results in the allocation of an additional chunk of memory from the
   *upstream allocator* (supplied at construction), thus replenishing the
   pool. With each successive replenishment, the chunk size obtained
-  increases geometrically. \[*Note 2*: By allocating memory in chunks,
+  increases geometrically. \[*Note 1*: By allocating memory in chunks,
   the pooling strategy increases the chance that consecutive allocations
   will be close together in memory. — *end note*]
 - Allocation requests that exceed the largest block size of any pool are
@@ -9393,7 +9393,7 @@ template <class T, class... Args>
   OUTERMOST_ALLOC_TRAITS(*this)::construct(
       OUTERMOST(*this), p, std::forward<Args>(args)..., inner_allocator())
   ```
-- Otherwise, the program is ill-formed. \[*Note 3*: An error will result
+- Otherwise, the program is ill-formed. \[*Note 2*: An error will result
   if `uses_allocator` evaluates to `true` but the specific constructor
   does not take an allocator. This definition prevents a silent failure
   to pass an inner allocator to a contained element. — *end note*]
@@ -12184,7 +12184,7 @@ follows:
     decay_t<decltype(false ? declval<D1>() : declval<D2>())>
     ```
 
-    \[*Note 4*: This will not apply if there is a specialization
+    \[*Note 3*: This will not apply if there is a specialization
     `common_type<D1, D2>`. — *end note*]
 
   In either case, the member *typedef-name* `type` shall denote the same
@@ -12202,7 +12202,7 @@ pursuant to [[namespace.std]], a program may specialize
 `is_same_v<T1, decay_t<T1>>` and `is_same_v<T2, decay_t<T2>>` are each
 `true`.
 
-[*Note 3*: Such specializations are needed when only explicit
+[*Note 4*: Such specializations are needed when only explicit
 conversions are desired between the template arguments. — *end note*]
 
 Such a specialization need not have a member named `type`, but if it
@@ -12744,7 +12744,7 @@ A type `TC` meets the `TrivialClock` requirements if:
   [[tab:copyconstructible]]), `CopyAssignable` (Table 
   [[tab:copyassignable]]), `Destructible` (Table  [[tab:destructible]]),
   and the requirements of numeric types ([[numeric.requirements]]).
-  \[*Note 5*: This means, in particular, that operations on these types
+  \[*Note 3*: This means, in particular, that operations on these types
   will not throw exceptions. — *end note*]
 - lvalues of the types `TC::rep`, `TC::duration`, and `TC::time_point`
   are swappable ([[swappable.requirements]]),

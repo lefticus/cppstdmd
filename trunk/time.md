@@ -961,7 +961,7 @@ A type `TC` meets the requirements if
   *Cpp17LessThanComparable* ([[cpp17.lessthancomparable]]) and
   *Cpp17Swappable* [[swappable.requirements]] requirements and the
   requirements of numeric types [[numeric.requirements]],
-  \[*Note 1*: This means, in particular, that operations on these types
+  \[*Note 3*: This means, in particular, that operations on these types
   will not throw exceptions. — *end note*]
 - the function `TC::now()` does not throw exceptions, and
 - the type `TC::time_point::clock` meets the *Cpp17TrivialClock*

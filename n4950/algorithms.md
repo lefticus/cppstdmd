@@ -244,7 +244,7 @@ to synchronize with another function invocation, or another function
 invocation is specified to synchronize with it, and if it is not a
 memory allocation or deallocation function.
 
-[*Note 1*: Implementations must ensure that internal synchronization
+[*Note 2*: Implementations must ensure that internal synchronization
 inside standard library functions does not prevent forward progress when
 those functions are executed by threads of execution with weakly
 parallel forward progress guarantees. — *end note*]
@@ -5209,7 +5209,7 @@ parameter `pred`, and let E be
     the same as `T`, then `T` meets the *Cpp17CopyAssignable*
     ([[cpp17.copyassignable]]) requirements. Otherwise, `T` meets both
     the *Cpp17CopyConstructible* ([[cpp17.copyconstructible]]) and
-    *Cpp17CopyAssignable* requirements. \[*Note 2*: For the overloads
+    *Cpp17CopyAssignable* requirements. \[*Note 1*: For the overloads
     with an `ExecutionPolicy`, there might be a performance cost if the
     value type of `ForwardIterator1` does not meet both the
     *Cpp17CopyConstructible* and *Cpp17CopyAssignable*

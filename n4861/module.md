@@ -472,11 +472,11 @@ headers that includes all importable C++ library headers [[headers]].
 - otherwise, if they appear in the same translation unit, they import
   the same header unit;
 - otherwise, it is unspecified whether they import the same header unit.
-  \[*Note 1*: It is therefore possible that multiple copies exist of
+  \[*Note 3*: It is therefore possible that multiple copies exist of
   entities declared with internal linkage in an importable
   header. — *end note*]
 
-[*Note 3*: A *module-import-declaration* nominating a *header-name* is
+[*Note 4*: A *module-import-declaration* nominating a *header-name* is
 also recognized by the preprocessor, and results in macros defined at
 the end of phase 4 of translation of the header unit being made visible
 as described in [[cpp.import]]. — *end note*]
@@ -485,7 +485,7 @@ A declaration of a name with internal linkage is permitted within a
 header unit despite all declarations being implicitly exported
 [[module.interface]].
 
-[*Note 4*: A definition that appears in multiple translation units
+[*Note 5*: A definition that appears in multiple translation units
 cannot in general refer to such names [[basic.def.odr]]. — *end note*]
 
 A header unit shall not contain a definition of a non-inline function or

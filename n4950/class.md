@@ -160,7 +160,7 @@ A class `S` is a *standard-layout class* if it:
   base classes first declared in the same class, and
 - has no element of the set M(S) of types as a base class, where for any
   type `X`, M(X) is defined as follows.[^1]
-  \[*Note 1*: M(X) is the set of the types of all non-base-class
+  \[*Note 2*: M(X) is the set of the types of all non-base-class
   subobjects that can be at a zero offset in `X`. — *end note*]
   - If `X` is a non-union class type with no non-static data members,
     the set M(X) is empty.
@@ -196,7 +196,7 @@ A *standard-layout struct* is a standard-layout class defined with the
 *standard-layout union* is a standard-layout class defined with the
 *class-key* `union`.
 
-[*Note 2*: Standard-layout classes are useful for communicating with
+[*Note 3*: Standard-layout classes are useful for communicating with
 code written in other programming languages. Their layout is specified
 in  [[class.mem]]. — *end note*]
 
@@ -229,7 +229,7 @@ struct POD {        // both trivial and standard-layout
 
 — *end example*]
 
-[*Note 3*: Aggregates of class type are described in 
+[*Note 4*: Aggregates of class type are described in 
 [[dcl.init.aggr]]. — *end note*]
 
 A class `S` is an *implicit-lifetime class* if
@@ -654,7 +654,7 @@ If `T` is the name of a class, then each of the following shall have a
 name different from `T`:
 
 - every static data member of class `T`;
-- every member function of class `T`; \[*Note 2*: This restriction does
+- every member function of class `T`; \[*Note 9*: This restriction does
   not apply to constructors, which do not have names
   [[class.ctor]] — *end note*]
 - every member of class `T` that is itself a type;
@@ -726,7 +726,7 @@ int f() {
 
 — *end example*]
 
-[*Note 9*: Reading a volatile object through a glvalue of non-volatile
+[*Note 10*: Reading a volatile object through a glvalue of non-volatile
 type has undefined behavior [[dcl.type.cv]]. — *end note*]
 
 If a standard-layout class object has any non-static data members, its
@@ -734,12 +734,12 @@ address is the same as the address of its first non-static data member
 if that member is not a bit-field. Its address is also the same as the
 address of each of its base class subobjects.
 
-[*Note 10*: There can therefore be unnamed padding within a
+[*Note 11*: There can therefore be unnamed padding within a
 standard-layout struct object inserted by an implementation, but not at
 its beginning, as necessary to achieve appropriate
 alignment. — *end note*]
 
-[*Note 11*: The object and its first subobject are
+[*Note 12*: The object and its first subobject are
 pointer-interconvertible
 [[basic.compound]], [[expr.static.cast]]. — *end note*]
 
@@ -3853,7 +3853,7 @@ A member `m` is accessible at the point *R* when named in class `N` if
   `N`, where `m` as a member of `P` is public, private, or protected, or
 - there exists a base class `B` of `N` that is accessible at *R*, and
   `m` is accessible at *R* when named in class `B`.
-  \[*Example 1*:
+  \[*Example 3*:
   ``` cpp
   class B;
   class A {
@@ -5143,7 +5143,7 @@ eliminate multiple copies):
   operation can be omitted by treating the *exception-declaration* as an
   alias for the exception object if the meaning of the program will be
   unchanged except for the execution of constructors and destructors for
-  the object declared by the *exception-declaration*. \[*Note 3*: There
+  the object declared by the *exception-declaration*. \[*Note 1*: There
   cannot be a move from the exception object because it is always an
   lvalue. — *end note*]
 
@@ -5151,7 +5151,7 @@ Copy elision is not permitted where an expression is evaluated in a
 context requiring a constant expression [[expr.const]] and in constant
 initialization [[basic.start.static]].
 
-[*Note 1*: It is possible that copy elision is performed if the same
+[*Note 2*: It is possible that copy elision is performed if the same
 expression is evaluated in another context. — *end note*]
 
 [*Example 1*:
@@ -5455,7 +5455,7 @@ comparison category types `T₀`, `T₁`, …, `T_n-1` is defined as follows:
 - Otherwise, if at least one `Tᵢ` is `std::weak_ordering`, `U` is
   `std::weak_ordering` [[cmp.weakord]].
 - Otherwise, `U` is `std::strong_ordering` [[cmp.strongord]].
-  \[*Note 4*: In particular, this is the result when n is
+  \[*Note 2*: In particular, this is the result when n is
   0. — *end note*]
 
 ### Secondary comparison operators <a id="class.compare.secondary">[[class.compare.secondary]]</a>

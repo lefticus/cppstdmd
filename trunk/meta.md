@@ -979,14 +979,14 @@ variable `t`:
 T t(declval<Args>()...);
 ```
 
-[*Note 1*: These tokens are never interpreted as a function
+[*Note 2*: These tokens are never interpreted as a function
 declaration. — *end note*]
 
 Access checking is performed as if in a context unrelated to `T` and any
 of the `Args`. Only the validity of the immediate context of the
 variable initialization is considered.
 
-[*Note 2*: The evaluation of the initialization can result in side
+[*Note 3*: The evaluation of the initialization can result in side
 effects such as the instantiation of class template specializations and
 function template specializations, the generation of implicitly-defined
 functions, and so on. Such side effects are not in the “immediate
@@ -1008,7 +1008,7 @@ The predicate condition for a template specialization
 The set of scalar types for which this condition holds is
 *implementation-defined*.
 
-[*Note 3*: If a type has padding bits, the condition does not hold;
+[*Note 4*: If a type has padding bits, the condition does not hold;
 otherwise, the condition holds true for integral types. — *end note*]
 
 ### Type property queries <a id="meta.unary.prop.query">[[meta.unary.prop.query]]</a>
@@ -1259,7 +1259,7 @@ Notwithstanding the provisions of [[meta.rqmts]], and pursuant to
 types `T1` and `T2` such that `is_same_v<T1, decay_t<T1>>` and
 `is_same_v<T2, decay_t<T2>>` are each `true`.
 
-[*Note 2*: Such specializations are needed when only explicit
+[*Note 3*: Such specializations are needed when only explicit
 conversions are desired between the template arguments. — *end note*]
 
 Such a specialization need not have a member named `type`, but if it
@@ -1306,7 +1306,7 @@ Notwithstanding the provisions of [[meta.rqmts]], and pursuant to
 that `is_same_v<T, decay_t<T>>` and `is_same_v<U, decay_t<U>>` are each
 `true`.
 
-[*Note 3*: Such specializations can be used to influence the result of
+[*Note 4*: Such specializations can be used to influence the result of
 `common_reference`, and are needed when only explicit conversions are
 desired between the template arguments. — *end note*]
 
@@ -1319,7 +1319,7 @@ denote the same type, if any, as does
 `basic_common_reference<U, T, UQual, TQual>::type`. No diagnostic is
 required for a violation of these rules.
 
-[*Example 1*:
+[*Example 2*:
 
 Given these definitions:
 
@@ -2335,7 +2335,7 @@ consteval bool has_identifier(info r);
   - no declaration in S does so using any name other than N.
 
   Otherwise, `false`.
-  \[*Example 2*:
+  \[*Example 1*:
       void fun(int);
       constexpr std::meta::info r = parameters_of(^^fun)[0];
       static_assert(!has_identifier(r));
@@ -2946,7 +2946,7 @@ consteval info parent_of(info r);
   a declaration of what is represented by `r`.
   - If E is the function call operator of a closure type for a
     *consteval-block-declaration*[[dcl.pre]], then
-    `parent_of(parent_of(``))`. \[*Note 3*: In this case, the first
+    `parent_of(parent_of(``))`. \[*Note 1*: In this case, the first
     `parent_of` will be the closure type, so the second `parent_of` is
     necessary to give the parent of that closure type. — *end note*]
   - Otherwise, .
@@ -3029,7 +3029,7 @@ template argument A, its corresponding reflection R is determined as
 follows:
 
 - If A denotes a type or type alias, then R is a reflection representing
-  the underlying entity of A. \[*Note 4*: R always represents a type,
+  the underlying entity of A. \[*Note 2*: R always represents a type,
   never a type alias. — *end note*]
 - Otherwise, if A denotes a class template, variable template, concept,
   or alias template, then R is a reflection representing A.
@@ -3305,7 +3305,7 @@ Let *`DESIGNATING-CLS`*`(r, ctx)` be:
 - If `r` represents an unnamed bit-field F, then
   `is_accessible(``r_H``, ctx)`, where `r_H` represents a hypothetical
   non-static data member of the class represented by *`PARENT-CLS`*`(r)`
-  with the same access as F. \[*Note 5*: Unnamed bit-fields are treated
+  with the same access as F. \[*Note 1*: Unnamed bit-fields are treated
   as class members for the purpose of `is_accessible`. — *end note*]
 - Otherwise, if `r` does not represent a class member or a direct base
   class relationship, then `true`.
@@ -3782,7 +3782,7 @@ variable represented by `r`.
 
 - `r` represents a variable or object of type `U`,
 - `is_convertible_v<remove_reference_t<U>(*)[], remove_reference_t<T>(*)[]>`
-  is `true`,and \[*Note 6*: The intent is to allow only qualification
+  is `true`,and \[*Note 1*: The intent is to allow only qualification
   conversion from `U` to `T`. — *end note*]
 - If `r` represents a variable, then either that variable is usable in
   constant expressions or its lifetime began within the core constant
@@ -4111,7 +4111,7 @@ other functions in `std::meta` (e.g., `type_of`,
     identifier [[lex.name]] that is not a keyword [[lex.key]] when
     interpreted with the ordinary literal encoding;
 
-  \[*Note 7*: The name corresponds to the spelling of an
+  \[*Note 1*: The name corresponds to the spelling of an
   identifier token after phase 6 of translation@@REF:lex.phases@@.
   Lexical constructs like
   *universal-character-name*s@@REF:lex.universal.char@@ are not
@@ -4146,7 +4146,7 @@ $(T_K, N_K, A_K, W_K, *NUA*_K)$ be the corresponding data member
 description represented by $r_K$.
 
 - C is incomplete from every point in the evaluation context;
-  \[*Note 8*: C can be a class template specialization for which there
+  \[*Note 2*: C can be a class template specialization for which there
   is a reachable definition of the class template. In this case, the
   injected declaration is an explicit specialization. — *end note*]
 - `is_data_member_spec(`$r_K$`)` is `true` for every $r_K$;
@@ -4154,7 +4154,7 @@ description represented by $r_K$.
 - for every pair $(r_K, r_L)$ where K < L, if $N_K$ is not $\bot$ and
   $N_L$ is not $\bot$, then either:
   - $N_K$` != `$N_L$ is `true` or
-  - $N_K$` == u8"_"` is `true`. \[*Note 9*: Every provided identifier is
+  - $N_K$` == u8"_"` is `true`. \[*Note 3*: Every provided identifier is
     unique or `"_"`. — *end note*]
 
 *Effects:* Produces an injected declaration D[[expr.const]] that defines

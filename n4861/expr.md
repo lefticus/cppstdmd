@@ -487,7 +487,7 @@ rules:
   [[defns.access]], and the value contained in the object is the prvalue
   result.
 
-[*Note 1*: See also  [[basic.lval]]. — *end note*]
+[*Note 2*: See also  [[basic.lval]]. — *end note*]
 
 ### Array-to-pointer conversion <a id="conv.array">[[conv.array]]</a>
 
@@ -975,7 +975,7 @@ A program cannot refer to a function with a trailing *requires-clause*
 whose *constraint-expression* is not satisfied, because such functions
 are never selected by overload resolution.
 
-[*Example 1*:
+[*Example 2*:
 
 ``` cpp
 template<typename T> struct A {
@@ -1699,7 +1699,7 @@ local entities as follows:
 - An *id-expression* that names a local entity potentially references
   that entity; an *id-expression* that names one or more non-static
   class members and does not form a pointer to member [[expr.unary.op]]
-  potentially references `*this`. \[*Note 2*: This occurs even if
+  potentially references `*this`. \[*Note 3*: This occurs even if
   overload resolution selects a static member function for the
   *id-expression*. — *end note*]
 - A `this` expression potentially references `*this`.
@@ -1746,7 +1746,7 @@ it is not odr-used.
 
 — *end example*]
 
-[*Note 3*:
+[*Note 4*:
 
 The set of captured entities is determined syntactically, and entities
 might be implicitly captured even if the expression denoting a local
@@ -1773,7 +1773,7 @@ An entity is *captured* if it is captured explicitly or implicitly. An
 entity captured by a *lambda-expression* is odr-used [[basic.def.odr]]
 in the scope containing the *lambda-expression*.
 
-[*Note 4*: As a consequence, if a *lambda-expression* explicitly
+[*Note 5*: As a consequence, if a *lambda-expression* explicitly
 captures an entity that is not odr-usable, the program is ill-formed
 [[basic.def.odr]]. — *end note*]
 
@@ -1826,7 +1826,7 @@ struct s2 {
 
 — *end example*]
 
-[*Note 5*: Because local entities are not odr-usable within a default
+[*Note 6*: Because local entities are not odr-usable within a default
 argument [[basic.def.odr]], a *lambda-expression* appearing in a default
 argument cannot implicitly or explicitly capture any local entity. Such
 a *lambda-expression* can still have an *init-capture* if any
@@ -1871,7 +1871,7 @@ Every *id-expression* within the *compound-statement* of a
 captured by copy is transformed into an access to the corresponding
 unnamed data member of the closure type.
 
-[*Note 6*: An *id-expression* that is not an odr-use refers to the
+[*Note 7*: An *id-expression* that is not an odr-use refers to the
 original entity, never to a member of the closure type. However, such an
 *id-expression* can still cause the implicit capture of the
 entity. — *end note*]
@@ -1919,7 +1919,7 @@ An *id-expression* within the *compound-statement* of a
 reference refers to the entity to which the captured reference is bound
 and not to the captured reference.
 
-[*Note 7*: The validity of such captures is determined by the lifetime
+[*Note 8*: The validity of such captures is determined by the lifetime
 of the object to which the reference refers, not by the lifetime of the
 reference itself. — *end note*]
 
@@ -1977,10 +1977,10 @@ elements are direct-initialized in increasing subscript order.) These
 initializations are performed in the (unspecified) order in which the
 non-static data members are declared.
 
-[*Note 8*: This ensures that the destructions will occur in the reverse
+[*Note 9*: This ensures that the destructions will occur in the reverse
 order of the constructions. — *end note*]
 
-[*Note 9*: If a non-reference entity is implicitly or explicitly
+[*Note 10*: If a non-reference entity is implicitly or explicitly
 captured by reference, invoking the function call operator of the
 corresponding *lambda-expression* after the lifetime of the entity has
 ended is likely to result in undefined behavior. — *end note*]
@@ -2265,7 +2265,7 @@ properties proceed in the following order:
     *return-type-requirement* is performed.
   - The immediately-declared constraint [[temp.param]] of the
     *type-constraint* for `decltype((E))` shall be satisfied.
-    \[*Example 2*:
+    \[*Example 1*:
     Given concepts `C` and `D`,
     ``` cpp
     requires {
@@ -2285,7 +2285,7 @@ properties proceed in the following order:
     (including in the case where n is zero).
     — *end example*]
 
-[*Example 1*:
+[*Example 2*:
 
 ``` cpp
 template<typename T> concept C1 = requires(T x) {
@@ -2729,7 +2729,7 @@ rules applies.
   - Otherwise (when `E2` refers to a non-static member function),
     `E1.E2` is a prvalue. The expression can be used only as the
     left-hand operand of a member function call [[class.mfct]].
-    \[*Note 3*: Any redundant set of parentheses surrounding the
+    \[*Note 5*: Any redundant set of parentheses surrounding the
     expression is ignored [[expr.prim.paren]]. — *end note*]
 - If `E2` is a nested type, the expression `E1.E2` is ill-formed.
 - If `E2` is a member enumerator and the type of `E2` is `T`, the
@@ -2740,7 +2740,7 @@ program is ill-formed if the class of which `E2` is directly a member is
 an ambiguous base [[class.member.lookup]] of the naming class
 [[class.access.base]] of `E2`.
 
-[*Note 5*: The program is also ill-formed if the naming class is an
+[*Note 6*: The program is also ill-formed if the naming class is an
 ambiguous base of the class type of the object expression; see 
 [[class.access.base]]. — *end note*]
 
@@ -3372,7 +3372,7 @@ The result of the unary `&` operator is a pointer to its operand.
 - Otherwise, if the operand is an lvalue of type `T`, the resulting
   expression is a prvalue of type “pointer to `T`” whose result is a
   pointer to the designated object [[intro.memory]] or function.
-  \[*Note 4*: In particular, taking the address of a variable of type
+  \[*Note 2*: In particular, taking the address of a variable of type
   “cv `T`” yields a pointer of type “pointer to cv `T`”. — *end note*]
 - Otherwise, the program is ill-formed.
 
@@ -3390,14 +3390,14 @@ bool b = p2 > p1;   // defined behavior, with value true
 
 — *end example*]
 
-[*Note 2*: A pointer to member formed from a `mutable` non-static data
+[*Note 3*: A pointer to member formed from a `mutable` non-static data
 member [[dcl.stc]] does not reflect the `mutable` specifier associated
 with the non-static data member. — *end note*]
 
 A pointer to member is only formed when an explicit `&` is used and its
 operand is a *qualified-id* not enclosed in parentheses.
 
-[*Note 3*: That is, the expression `&(qualified-id)`, where the
+[*Note 4*: That is, the expression `&(qualified-id)`, where the
 *qualified-id* is enclosed in parentheses, does not form an expression
 of type “pointer to member”. Neither does `qualified-id`, because there
 is no implicit conversion from a *qualified-id* for a non-static member
@@ -3411,7 +3411,7 @@ type declares `operator&()`, it is unspecified whether the operator has
 the built-in meaning or the operator function is called. The operand of
 `&` shall not be a bit-field.
 
-[*Note 4*: The address of an overloaded function [[over]] can be taken
+[*Note 5*: The address of an overloaded function [[over]] can be taken
 only in a context that uniquely determines which version of the
 overloaded function is referred to (see  [[over.over]]). Since the
 context might determine whether the operand is a static or non-static
@@ -3444,7 +3444,7 @@ There is an ambiguity in the grammar when `~` is followed by a
 treating `~` as the unary complement operator rather than as the start
 of an *unqualified-id* naming a destructor.
 
-[*Note 5*: Because the grammar does not permit an operator to follow
+[*Note 6*: Because the grammar does not permit an operator to follow
 the `.`, `->`, or `::` tokens, a `~` followed by a *type-name* or
 *decltype-specifier* in a member access expression or *qualified-id* is
 unambiguously parsed as a destructor name. — *end note*]
@@ -3532,7 +3532,7 @@ and the *await-ready* expression, then:
 - If the result of *await-ready* is `false`, the coroutine is considered
   suspended. Then:
   - If the type of *await-suspend* is `std::coroutine_handle<Z>`,
-    *await-suspend*`.resume()` is evaluated. \[*Note 5*: This resumes
+    *await-suspend*`.resume()` is evaluated. \[*Note 1*: This resumes
     the coroutine referred to by the result of *await-suspend*. Any
     number of coroutines may be successively resumed in this fashion,
     eventually returning control flow to the current coroutine caller or
@@ -4057,7 +4057,7 @@ A *new-expression* that creates an object of type `T` initializes that
 object as follows:
 
 - If the *new-initializer* is omitted, the object is default-initialized
-  [[dcl.init]]. \[*Note 6*: If no initialization is performed, the
+  [[dcl.init]]. \[*Note 12*: If no initialization is performed, the
   object has an indeterminate value. — *end note*]
 - Otherwise, the *new-initializer* is interpreted according to the
   initialization rules of  [[dcl.init]] for direct-initialization.
@@ -4082,7 +4082,7 @@ propagate in the context of the *new-expression*. If no unambiguous
 matching deallocation function can be found, propagating the exception
 does not cause the object’s memory to be freed.
 
-[*Note 12*: This is appropriate when the called allocation function
+[*Note 13*: This is appropriate when the called allocation function
 does not allocate memory; otherwise, it is likely to result in a memory
 leak. — *end note*]
 
@@ -4538,7 +4538,7 @@ shall be the same type that is defined as `std::ptrdiff_t` in the
 - Otherwise, if `P` and `Q` point to, respectively, array elements i and
   j of the same array object `x`, the expression `P - Q` has the value
   i - j.
-- Otherwise, the behavior is undefined. \[*Note 7*: If the value i - j
+- Otherwise, the behavior is undefined. \[*Note 1*: If the value i - j
   is not in the range of representable values of type `std::ptrdiff_t`,
   the behavior is undefined. — *end note*]
 
@@ -4546,7 +4546,7 @@ For addition or subtraction, if the expressions `P` or `Q` have type
 “pointer to cv `T`”, where `T` and the array element type are not
 similar [[conv.qual]], the behavior is undefined.
 
-[*Note 1*: In particular, a pointer to a base class cannot be used for
+[*Note 2*: In particular, a pointer to a base class cannot be used for
 pointer arithmetic when the array contains objects of a derived class
 type. — *end note*]
 
@@ -4760,7 +4760,7 @@ performed on both operands to bring them to their composite pointer type
 - If one refers to a member of class `C1` and the other refers to a
   member of a different class `C2`, where neither is a base class of the
   other, the result is unspecified.
-  \[*Example 3*:
+  \[*Example 1*:
   ``` cpp
   struct A {};
   struct B : A { int x; };
@@ -4779,7 +4779,7 @@ performed on both operands to bring them to their composite pointer type
   to the same member of the same most derived object [[intro.object]] or
   the same subobject if indirection with a hypothetical object of the
   associated class type were performed, otherwise they compare unequal.
-  \[*Example 4*:
+  \[*Example 2*:
   ``` cpp
   struct B {
     int f();
@@ -4928,7 +4928,7 @@ following shall hold:
   type and value category of the other. The *conditional-expression* is
   a bit-field if that operand is a bit-field.
 - Both the second and the third operands have type `void`; the result is
-  of type `void` and is a prvalue. \[*Note 8*: This includes the case
+  of type `void` and is a prvalue. \[*Note 1*: This includes the case
   where both operands are *throw-expression*s. — *end note*]
 
 Otherwise, if the second and third operand are glvalue bit-fields of the
@@ -4943,7 +4943,7 @@ cv-qualification, an attempt is made to form an implicit conversion
 sequence [[over.best.ics]] from each of those operands to the type of
 the other.
 
-[*Note 1*: Properties such as access, whether an operand is a
+[*Note 2*: Properties such as access, whether an operand is a
 bit-field, or whether a conversion function is deleted are ignored for
 that determination. — *end note*]
 
@@ -4980,7 +4980,7 @@ sequence can be formed, that conversion is applied to the chosen operand
 and the converted operand is used in place of the original operand for
 the remainder of this subclause.
 
-[*Note 2*: The conversion might be ill-formed even if an implicit
+[*Note 3*: The conversion might be ill-formed even if an implicit
 conversion sequence could be formed. — *end note*]
 
 If the second and third operands are glvalues of the same value category
@@ -5265,7 +5265,7 @@ A variable or temporary object `o` is *constant-initialized* if
   when interpreted as a *constant-expression*, except that if `o` is an
   object, that full-expression may also invoke constexpr constructors
   for `o` and its subobjects even if those objects are of non-literal
-  class types. \[*Note 9*: Such a class may have a non-trivial
+  class types. \[*Note 2*: Such a class may have a non-trivial
   destructor. Within this evaluation, `std::is_constant_evaluated()`
   [[meta.const.eval]] returns `true`. — *end note*]
 
@@ -5296,7 +5296,7 @@ would evaluate one of the following:
 
 - `this` [[expr.prim.this]], except in a constexpr function
   [[dcl.constexpr]] that is being evaluated as part of E;
-- an invocation of a non-constexpr function \[*Note 10*: Overload
+- an invocation of a non-constexpr function \[*Note 3*: Overload
   resolution [[over.match]] is applied as usual. — *end note*] ;
 - an invocation of an undefined constexpr function;
 - an invocation of an instantiated constexpr function that fails to
@@ -5308,7 +5308,7 @@ would evaluate one of the following:
 - an expression that would exceed the implementation-defined limits (see
   [[implimits]]);
 - an operation that would have undefined behavior as specified in
-  [[intro]] through [[cpp]] of this document \[*Note 11*: including, for
+  [[intro]] through [[cpp]] of this document \[*Note 4*: including, for
   example, signed integer overflow [[expr.prop]], certain pointer
   arithmetic [[expr.add]], division by zero [[expr.mul]], or certain
   shift operations [[expr.shift]] — *end note*] ;
@@ -5335,7 +5335,7 @@ would evaluate one of the following:
   automatic storage duration defined outside that *lambda-expression*,
   where the reference would be an odr-use ([[basic.def.odr]],
   [[expr.prim.lambda]]);
-  \[*Example 5*:
+  \[*Example 1*:
   ``` cpp
   void g() {
     const int n = 0;
@@ -5347,13 +5347,13 @@ would evaluate one of the following:
   ```
 
   — *end example*]
-  \[*Note 12*:
+  \[*Note 5*:
   If the odr-use occurs in an invocation of a function call operator of
   a closure type, it no longer refers to `this` or to an enclosing
   automatic variable due to the transformation
   [[expr.prim.lambda.capture]] of the *id-expression* into an access of
   the corresponding data member.
-  \[*Example 6*:
+  \[*Example 2*:
   ``` cpp
   auto monad = [](auto v) { return [=] { return v; }; };
   auto bind = [](auto m) {
@@ -5400,7 +5400,7 @@ as specified in [[library]] through [[thread]] of this document, or an
 invocation of the `va_start` macro [[cstdarg.syn]], it is unspecified
 whether E is a core constant expression.
 
-[*Example 1*:
+[*Example 3*:
 
 ``` cpp
 int x;                              // not constant
@@ -5478,7 +5478,7 @@ An *integral constant expression* is an expression of integral or
 unscoped enumeration type, implicitly converted to a prvalue, where the
 converted expression is a core constant expression.
 
-[*Note 2*: Such expressions may be used as bit-field lengths
+[*Note 6*: Such expressions may be used as bit-field lengths
 [[class.bit]], as enumerator initializers if the underlying type is not
 fixed [[dcl.enum]], and as alignments [[dcl.align]]. — *end note*]
 
@@ -5488,7 +5488,7 @@ contextually implicitly converted [[conv]] to an integral or unscoped
 enumeration type and the selected conversion function shall be
 `constexpr`.
 
-[*Example 2*:
+[*Example 4*:
 
 ``` cpp
 struct A {
@@ -5524,7 +5524,7 @@ constant expression and the implicit conversion sequence contains only
 
 and where the reference binding (if any) binds directly.
 
-[*Note 3*: Such expressions may be used in `new` expressions
+[*Note 7*: Such expressions may be used in `new` expressions
 [[expr.new]], as case expressions [[stmt.switch]], as enumerator
 initializers if the underlying type is fixed [[dcl.enum]], as array
 bounds [[dcl.array]], and as non-type template arguments
@@ -5557,7 +5557,7 @@ object with static storage duration that either is not a temporary
 object or is a temporary object whose value satisfies the above
 constraints, or if it is a non-immediate function.
 
-[*Example 3*:
+[*Example 5*:
 
 ``` cpp
 consteval int f() { return 42; }
@@ -5570,7 +5570,7 @@ constexpr auto e = g();                         // error: a pointer to an immedi
 
 — *end example*]
 
-[*Note 4*:
+[*Note 8*:
 
 Since this document imposes no restrictions on the accuracy of
 floating-point operations, it is unspecified whether the evaluation of a
@@ -5578,7 +5578,7 @@ floating-point expression during translation yields the same result as
 the evaluation of the same expression (or the same operations on the
 same values) during program execution.[^32]
 
-[*Example 4*:
+[*Example 6*:
 
 ``` cpp
 bool f() {
@@ -5634,7 +5634,7 @@ An expression or conversion is *manifestly constant-evaluated* if it is:
 
   — *end example*]
 
-[*Note 5*: A manifestly constant-evaluated expression is evaluated even
+[*Note 9*: A manifestly constant-evaluated expression is evaluated even
 in an unevaluated operand. — *end note*]
 
 An expression or conversion is *potentially constant evaluated* if it

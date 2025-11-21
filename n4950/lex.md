@@ -960,7 +960,7 @@ of any other kind of *character-literal* is determined as follows:
   *basic-c-char*, *simple-escape-sequence*, or
   *universal-character-name* is the code unit value of the specified
   character as encoded in the literal’s associated character encoding.
-  \[*Note 8*: If the specified character lacks representation in the
+  \[*Note 2*: If the specified character lacks representation in the
   literal’s associated character encoding or if it cannot be encoded as
   a single code unit, then the literal is a non-encodable character
   literal. — *end note*]
@@ -986,7 +986,7 @@ of any other kind of *character-literal* is determined as follows:
 The character specified by a *simple-escape-sequence* is specified in
 [[lex.ccon.esc]].
 
-[*Note 2*: Using an escape sequence for a question mark is supported
+[*Note 3*: Using an escape sequence for a question mark is supported
 for compatibility with ISO C++14 and ISO C. — *end note*]
 
 **Table: Simple escape sequences**
@@ -1307,12 +1307,12 @@ order as follows:
   encoding. If a character lacks representation in the associated
   character encoding, then the *string-literal* is
   conditionally-supported and an *implementation-defined* code unit
-  sequence is encoded. \[*Note 9*: No character lacks representation in
+  sequence is encoded. \[*Note 5*: No character lacks representation in
   any Unicode encoding form. — *end note*] When encoding a stateful
   character encoding, implementations should encode the first such
   sequence beginning with the initial encoding state and encode
   subsequent sequences beginning with the final encoding state of the
-  prior sequence. \[*Note 10*: The encoded code unit sequence can differ
+  prior sequence. \[*Note 6*: The encoded code unit sequence can differ
   from the sequence of code units that would be obtained by encoding
   each character independently. — *end note*]
 - Each *numeric-escape-sequence* [[lex.ccon]] contributes a single code

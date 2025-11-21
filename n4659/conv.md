@@ -131,7 +131,7 @@ rules:
 - Otherwise, the value contained in the object indicated by the glvalue
   is the prvalue result.
 
-[*Note 1*: See also  [[basic.lval]]. — *end note*]
+[*Note 2*: See also  [[basic.lval]]. — *end note*]
 
 ## Array-to-pointer conversion <a id="conv.array">[[conv.array]]</a>
 

@@ -432,7 +432,7 @@ given character:
 - Otherwise, if the next three characters are `[::` and the subsequent
   character is not `:`, or if the next three characters are `[:>`, the
   `[` is treated as a preprocessing token by itself and not as the first
-  character of the preprocessing token `[:`. \[*Note 8*: The tokens `[:`
+  character of the preprocessing token `[:`. \[*Note 2*: The tokens `[:`
   and `:]` cannot be composed from digraphs. — *end note*]
 - Otherwise, the next preprocessing token is the longest sequence of
   characters that could constitute a preprocessing token, even if that
@@ -1356,12 +1356,12 @@ order as follows:
   and *universal-character-name*s [[lex.charset]] is encoded to a code
   unit sequence using the *string-literal*’s associated character
   encoding. If a character lacks representation in the associated
-  character encoding, then the program is ill-formed. \[*Note 9*: No
+  character encoding, then the program is ill-formed. \[*Note 6*: No
   character lacks representation in any Unicode encoding
   form. — *end note*] When encoding a stateful character encoding,
   implementations should encode the first such sequence beginning with
   the initial encoding state and encode subsequent sequences beginning
-  with the final encoding state of the prior sequence. \[*Note 10*: The
+  with the final encoding state of the prior sequence. \[*Note 7*: The
   encoded code unit sequence can differ from the sequence of code units
   that would be obtained by encoding each character
   independently. — *end note*]

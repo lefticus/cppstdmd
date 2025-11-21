@@ -686,14 +686,14 @@ variable `t`:
 T t(declval<Args>()...);
 ```
 
-[*Note 1*: These tokens are never interpreted as a function
+[*Note 2*: These tokens are never interpreted as a function
 declaration. — *end note*]
 
 Access checking is performed as if in a context unrelated to `T` and any
 of the `Args`. Only the validity of the immediate context of the
 variable initialization is considered.
 
-[*Note 2*: The evaluation of the initialization can result in side
+[*Note 3*: The evaluation of the initialization can result in side
 effects such as the instantiation of class template specializations and
 function template specializations, the generation of implicitly-defined
 functions, and so on. Such side effects are not in the “immediate
@@ -714,7 +714,7 @@ if:
 The set of scalar types for which this condition holds is
 *implementation-defined*.
 
-[*Note 3*: If a type has padding bits, the condition does not hold;
+[*Note 4*: If a type has padding bits, the condition does not hold;
 otherwise, the condition holds true for integral types. — *end note*]
 
 ### Type property queries <a id="meta.unary.prop.query">[[meta.unary.prop.query]]</a>
@@ -943,7 +943,7 @@ pursuant to [[namespace.std]], a program may specialize
 `is_same_v<T1, decay_t<T1>>` and `is_same_v<T2, decay_t<T2>>` are each
 `true`.
 
-[*Note 2*: Such specializations are needed when only explicit
+[*Note 3*: Such specializations are needed when only explicit
 conversions are desired between the template arguments. — *end note*]
 
 Such a specialization need not have a member named `type`, but if it
@@ -990,7 +990,7 @@ pursuant to [[namespace.std]], a program may partially specialize
 that `is_same_v<T, decay_t<T>>` and `is_same_v<U, decay_t<U>>` are each
 `true`.
 
-[*Note 3*: Such specializations can be used to influence the result of
+[*Note 4*: Such specializations can be used to influence the result of
 `common_reference`, and are needed when only explicit conversions are
 desired between the template arguments. — *end note*]
 
@@ -1003,7 +1003,7 @@ denote the same type, if any, as does
 `basic_common_reference<U, T, UQual, TQual>::type`. No diagnostic is
 required for a violation of these rules.
 
-[*Example 1*:
+[*Example 2*:
 
 Given these definitions:
 

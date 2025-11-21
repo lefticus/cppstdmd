@@ -3114,7 +3114,7 @@ the initialization of the object.
 *Remarks:*
 
 - Implementations should perform no more than one memory allocation.
-  \[*Note 1*: This provides efficiency equivalent to an intrusive smart
+  \[*Note 3*: This provides efficiency equivalent to an intrusive smart
   pointer. — *end note*]
 - When an object of an array type `U` is specified to have an initial
   value of `u` (of the same type), this shall be interpreted to mean
@@ -5714,7 +5714,7 @@ general-purpose memory resources having the following qualities:
   results in the allocation of an additional chunk of memory from the
   *upstream allocator* (supplied at construction), thus replenishing the
   pool. With each successive replenishment, the chunk size obtained
-  increases geometrically. \[*Note 2*: By allocating memory in chunks,
+  increases geometrically. \[*Note 1*: By allocating memory in chunks,
   the pooling strategy increases the chance that consecutive allocations
   will be close together in memory. — *end note*]
 - Allocation requests that exceed the largest block size of any pool are

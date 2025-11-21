@@ -1743,10 +1743,10 @@ the C++ standard library, unless explicitly stated otherwise.
   fact valid.
 - If a function argument binds to an rvalue reference parameter, the
   implementation may assume that this parameter is a unique reference to
-  this argument. \[*Note 2*: If the parameter is a generic parameter of
+  this argument. \[*Note 1*: If the parameter is a generic parameter of
   the form `T&&` and an lvalue of type `A` is bound, the argument binds
   to an lvalue reference [[temp.deduct.call]] and thus is not covered by
-  the previous sentence. — *end note*] \[*Note 3*: If a program casts
+  the previous sentence. — *end note*] \[*Note 2*: If a program casts
   an lvalue to an xvalue while passing that lvalue to a library function
   (e.g., by calling the function with the argument `std::move(x)`), the
   program is effectively asking that function to treat that lvalue as a

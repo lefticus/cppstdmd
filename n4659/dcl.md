@@ -5779,7 +5779,7 @@ defined.
   - If the initializer expression is a prvalue and the cv-unqualified
     version of the source type is the same class as the class of the
     destination, the initializer expression is used to initialize the
-    destination object. \[*Example 1*: `T x = T(T(T()));` calls the `T`
+    destination object. \[*Example 4*: `T x = T(T(T()));` calls the `T`
     default constructor to initialize `x`. — *end example*]
   - Otherwise, if the initialization is direct-initialization, or if it
     is copy-initialization where the cv-unqualified version of the
@@ -5819,7 +5819,7 @@ defined.
   conversion cannot be done, the initialization is ill-formed. When
   initializing a bit-field with a value that it cannot represent, the
   resulting value of the bit-field is .
-  \[*Note 1*:
+  \[*Note 7*:
   An expression of type “*cv1* `T`” can initialize an object of type
   “*cv2* `T`” independently of the cv-qualifiers *cv1* and *cv2*.
   ``` cpp
@@ -5841,7 +5841,7 @@ An object whose initialization has completed is deemed to be
 constructed, even if no constructor of the object’s class is invoked for
 the initialization.
 
-[*Note 7*: Such an object might have been value-initialized or
+[*Note 8*: Such an object might have been value-initialized or
 initialized by aggregate initialization ([[dcl.init.aggr]]) or by an
 inherited constructor ([[class.inhctor.init]]). — *end note*]
 
@@ -5849,7 +5849,7 @@ A declaration that specifies the initialization of a variable, whether
 from an explicit initializer or by default-initialization, is called the
 *initializing declaration* of that variable.
 
-[*Note 8*: In most cases this is the defining declaration (
+[*Note 9*: In most cases this is the defining declaration (
 [[basic.def]]) of the variable, but the initializing declaration of a
 non-inline static data member ([[class.static.data]]) might be the
 declaration within the class definition and not the definition at
@@ -6342,7 +6342,7 @@ A reference to type “*cv1* `T1`” is initialized by an expression of type
   [[conv.func]]) standard conversions are not needed, and therefore are
   suppressed, when such direct bindings to lvalues are
   done. — *end note*]
-  \[*Example 2*:
+  \[*Example 3*:
   ``` cpp
   double d = 2.0;
   double& rd = d;                 // rd refers to d
@@ -6359,7 +6359,7 @@ A reference to type “*cv1* `T1`” is initialized by an expression of type
 - Otherwise, the reference shall be an lvalue reference to a
   non-volatile const type (i.e., *cv1* shall be `const`), or the
   reference shall be an rvalue reference.
-  \[*Example 5*:
+  \[*Example 4*:
   ``` cpp
   double& rd2 = 2.0;              // error: not an lvalue and reference not const
   int  i = 2;
@@ -6382,7 +6382,7 @@ A reference to type “*cv1* `T1`” is initialized by an expression of type
     the temporary materialization conversion ([[conv.rval]]) is
     applied. In any case, the reference is bound to the resulting
     glvalue (or to an appropriate base class subobject).
-    \[*Example 3*:
+    \[*Example 5*:
     ``` cpp
     struct A { };
     struct B : A { } b;
@@ -6422,7 +6422,7 @@ A reference to type “*cv1* `T1`” is initialized by an expression of type
     - if the reference is an rvalue reference, the initializer
       expression shall not be an lvalue.
 
-    \[*Example 4*:
+    \[*Example 6*:
     ``` cpp
     struct Banana { };
     struct Enigma { operator const Banana(); };
@@ -6455,7 +6455,7 @@ In all cases except the last (i.e., implicitly converting the
 initializer expression to the underlying type of the reference), the
 reference is said to *bind directly* to the initializer expression.
 
-[*Note 2*:  [[class.temporary]] describes the lifetime of temporaries
+[*Note 3*:  [[class.temporary]] describes the lifetime of temporaries
 bound to references. — *end note*]
 
 ### List-initialization <a id="dcl.init.list">[[dcl.init.list]]</a>
@@ -6536,7 +6536,7 @@ follows:
   section.
 - Otherwise, if `T` is an aggregate, aggregate initialization is
   performed ([[dcl.init.aggr]]).
-  \[*Example 6*:
+  \[*Example 2*:
   ``` cpp
   double ad[] = { 1, 2.0 };           // OK
   int ai[] = { 1, 2.0 };              // error: narrowing
@@ -6560,7 +6560,7 @@ follows:
   through overload resolution ([[over.match]],  [[over.match.list]]).
   If a narrowing conversion (see below) is required to convert any of
   the arguments, the program is ill-formed.
-  \[*Example 7*:
+  \[*Example 3*:
   ``` cpp
   struct S {
     S(std::initializer_list<double>); // #1
@@ -6574,7 +6574,7 @@ follows:
   ```
 
   — *end example*]
-  \[*Example 8*:
+  \[*Example 4*:
   ``` cpp
   struct Map {
     Map(std::initializer_list<std::pair<std::string,int>>);
@@ -6583,7 +6583,7 @@ follows:
   ```
 
   — *end example*]
-  \[*Example 9*:
+  \[*Example 5*:
   ``` cpp
   struct S {
     // no initializer-list constructors
@@ -6603,7 +6603,7 @@ follows:
   initialized with the value `T(v)` ([[expr.type.conv]]); if a
   narrowing conversion is required to convert `v` to the underlying type
   of `T`, the program is ill-formed.
-  \[*Example 10*:
+  \[*Example 6*:
   ``` cpp
   enum byte : unsigned char { };
   byte b { 42 };                      // OK
@@ -6630,7 +6630,7 @@ follows:
   by direct-initialization for direct-list-initialization); if a
   narrowing conversion (see below) is required to convert the element to
   `T`, the program is ill-formed.
-  \[*Example 11*:
+  \[*Example 7*:
   ``` cpp
   int x1 {2};                         // OK
   int x2 {2.0};                       // error: narrowing
@@ -6645,7 +6645,7 @@ follows:
   \[*Note 3*: As usual, the binding will fail and the program is
   ill-formed if the reference type is an lvalue reference to a non-const
   type. — *end note*]
-  \[*Example 12*:
+  \[*Example 8*:
   ``` cpp
   struct S {
     S(std::initializer_list<double>); // #1
@@ -6663,14 +6663,14 @@ follows:
   — *end example*]
 - Otherwise, if the initializer list has no elements, the object is
   value-initialized.
-  \[*Example 13*:
+  \[*Example 9*:
   ``` cpp
   int** pp {};                        // initialized to null pointer
   ```
 
   — *end example*]
 - Otherwise, the program is ill-formed.
-  \[*Example 14*:
+  \[*Example 10*:
   ``` cpp
   struct A { int i; int j; };
   A a1 { 1, 2 };                      // aggregate initialization
@@ -6700,7 +6700,7 @@ That is, every value computation and side effect associated with a given
 side effect associated with any *initializer-clause* that follows it in
 the comma-separated list of the *initializer-list*.
 
-[*Note 3*: This evaluation ordering holds regardless of the semantics
+[*Note 4*: This evaluation ordering holds regardless of the semantics
 of the initialization; for example, it applies when the elements of the
 *initializer-list* are interpreted as arguments of a constructor call,
 even though ordinarily there are no sequencing constraints on the
@@ -6714,14 +6714,14 @@ is copy-initialized with the corresponding element of the initializer
 list, and the `std::initializer_list<E>` object is constructed to refer
 to that array.
 
-[*Note 4*: A constructor or conversion function selected for the copy
+[*Note 5*: A constructor or conversion function selected for the copy
 shall be accessible (Clause  [[class.access]]) in the context of the
 initializer list. — *end note*]
 
 If a narrowing conversion is required to initialize any of the elements,
 the program is ill-formed.
 
-[*Example 2*:
+[*Example 11*:
 
 ``` cpp
 struct X {
@@ -6748,7 +6748,7 @@ The array has the same lifetime as any other temporary object (
 object from the array extends the lifetime of the array exactly like
 binding a reference to a temporary.
 
-[*Example 3*:
+[*Example 12*:
 
 ``` cpp
 typedef std::complex<double> cmplx;
@@ -6775,7 +6775,7 @@ member, so the program is ill-formed ([[class.base.init]]).
 
 — *end example*]
 
-[*Note 5*: The implementation is free to allocate the array in
+[*Note 6*: The implementation is free to allocate the array in
 read-only memory if an explicit array with the same initializer could be
 so allocated. — *end note*]
 
@@ -6795,10 +6795,10 @@ A *narrowing conversion* is an implicit conversion
   where the source is a constant expression whose value after integral
   promotions will fit into the target type.
 
-[*Note 6*: As indicated above, such conversions are not allowed at the
+[*Note 7*: As indicated above, such conversions are not allowed at the
 top level in list-initializations. — *end note*]
 
-[*Example 4*:
+[*Example 13*:
 
 ``` cpp
 int x = 999;              // x is not a constant expression

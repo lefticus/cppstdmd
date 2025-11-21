@@ -6165,7 +6165,7 @@ Normalization of a generic format pathname means:
 2.  Replace each slash character in the *root-name* with a
     *preferred-separator*.
 3.  Replace each *directory-separator* with a *preferred-separator*.
-    \[*Note 1*: The generic pathname grammar ([[fs.path.generic]])
+    \[*Note 2*: The generic pathname grammar ([[fs.path.generic]])
     defines *directory-separator* as one or more slashes and
     *preferred-separator*s. — *end note*]
 4.  Remove each *dot* filename and any immediately following
@@ -6175,7 +6175,7 @@ Normalization of a generic format pathname means:
     with any immediately following *directory-separator*.
 6.  If there is a *root-directory*, remove all *dot-dot* filenames and
     any *directory-separator*s immediately following them.
-    \[*Note 2*: These *dot-dot* filenames attempt to refer to
+    \[*Note 3*: These *dot-dot* filenames attempt to refer to
     nonexistent parent directories. — *end note*]
 7.  If the last filename is *dot-dot*, remove any trailing
     *directory-separator*.
@@ -6204,7 +6204,7 @@ Pathname resolution is the operating system dependent mechanism for
 resolving a pathname to a particular file in a file hierarchy. There may
 be multiple pathnames that resolve to the same file.
 
-[*Example 1*: POSIX specifies the mechanism in section 4.11, Pathname
+[*Example 2*: POSIX specifies the mechanism in section 4.11, Pathname
 resolution. — *end example*]
 
 A path that is not absolute, and as such, only unambiguously identifies
@@ -6212,13 +6212,13 @@ the location of a file when resolved ([[fs.def.pathres]]) relative to
 an implied starting location. The elements of a path that determine if
 it is relative are operating system dependent.
 
-[*Note 2*: Pathnames “.” and “..” are relative paths. — *end note*]
+[*Note 4*: Pathnames “.” and “..” are relative paths. — *end note*]
 
 A type of file with the property that when the file is encountered
 during pathname resolution, a string stored by the file is used to
 modify the pathname resolution.
 
-[*Note 3*: Symbolic links are often called symlinks. A symbolic link
+[*Note 5*: Symbolic links are often called symlinks. A symbolic link
 can be thought of as a raw pointer to a file. If the file pointed to
 does not exist, the symbolic link is said to be a “dangling” symbolic
 link. — *end note*]
@@ -6847,19 +6847,19 @@ determined by its value type:
 
 - `char`: The encoding is the native narrow encoding (
   [[fs.def.native.encode]]). The method of conversion, if any, is
-  operating system dependent. \[*Note 3*: For POSIX-based operating
+  operating system dependent. \[*Note 6*: For POSIX-based operating
   systems `path::value_type` is `char` so no conversion from `char`
   value type arguments or to `char` value type return values is
   performed. For Windows-based operating systems, the native narrow
   encoding is determined by calling a Windows API
-  function. — *end note*] \[*Note 4*: This results in behavior
+  function. — *end note*] \[*Note 7*: This results in behavior
   identical to other C and C++ standard library functions that perform
   file operations using narrow character strings to identify paths.
   Changing this behavior would be surprising and error
   prone. — *end note*]
 - `wchar_t`: The encoding is the native wide encoding (
   [[fs.def.native.encode]]). The method of conversion is unspecified.
-  \[*Note 5*: For Windows-based operating systems `path::value_type` is
+  \[*Note 8*: For Windows-based operating systems `path::value_type` is
   `wchar_t` so no conversion from `wchar_t` value type arguments or to
   `wchar_t` value type return values is performed. — *end note*]
 - `char16_t`: The encoding is UTF-16. The method of conversion is
@@ -7689,7 +7689,7 @@ For the elements of the pathname in the generic format, the forward
 traversal order is as follows:
 
 - The *root-name* element, if present.
-- The *root-directory* element, if present. \[*Note 6*: The generic
+- The *root-directory* element, if present. \[*Note 1*: The generic
   format is required to ensure lexicographical comparison works
   correctly. — *end note*]
 - Each successive *filename* element, if present.
@@ -7762,11 +7762,11 @@ Path equality and path equivalence have different semantics.
 
 - Equality is determined by the `path` non-member `operator==`, which
   considers the two path’s lexical representations only.
-  \[*Example 2*: `path("foo") == "bar"` is never
+  \[*Example 1*: `path("foo") == "bar"` is never
   `true`. — *end example*]
 - Equivalence is determined by the `equivalent()` non-member function,
   which determines if two paths resolve ([[fs.def.pathres]]) to the
-  same file system entity. \[*Example 3*: `equivalent("foo", "bar")`
+  same file system entity. \[*Example 2*: `equivalent("foo", "bar")`
   will be `true` when both paths resolve to the same
   file. — *end example*]
 
@@ -9954,21 +9954,21 @@ determined as if by converting the `st_mode` member of the obtained
     `file_status(file_type::unknown)`.
   - Otherwise, returns `file_status(file_type::none)`.
 
-  \[*Note 7*: These semantics distinguish between `p` being known not to
+  \[*Note 1*: These semantics distinguish between `p` being known not to
   exist, `p` existing but not being able to determine its attributes,
   and there being an error that prevents even knowing if `p` exists.
   These distinctions are important to some use cases. — *end note*]
 - Otherwise,
   - If the attributes indicate a regular file, as if by POSIX `S_ISREG`,
     returns `file_status(file_type::regular, prms)`.
-    \[*Note 8*: `file_type::regular` implies appropriate `<fstream>`
+    \[*Note 2*: `file_type::regular` implies appropriate `<fstream>`
     operations would succeed, assuming no hardware, permission, access,
     or file system race errors. Lack of `file_type::regular` does not
     necessarily imply `<fstream>` operations would fail on a
     directory. — *end note*]
   - Otherwise, if the attributes indicate a directory, as if by POSIX
     `S_ISDIR`, returns `file_status(file_type::directory, prms)`.
-    \[*Note 9*: `file_type::directory` implies that calling
+    \[*Note 3*: `file_type::directory` implies that calling
     `directory_iterator(p)` would succeed. — *end note*]
   - Otherwise, if the attributes indicate a block special file, as if by
     POSIX `S_ISBLK`, returns `file_status(file_type::block, prms)`.

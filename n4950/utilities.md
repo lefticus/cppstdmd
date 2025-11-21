@@ -3943,7 +3943,7 @@ which is the type of the contained value after assignment.
   `true`, and
 - the expression *FUN*(std::forward\<T\>(t)) (with *FUN* being the
   above-mentioned set of imaginary functions) is well-formed.
-  \[*Note 2*:
+  \[*Note 1*:
       variant<string, string> v;
       v = "abc";
 
@@ -11604,7 +11604,7 @@ ill-formed.
 For a type `R`, `format_kind<R>` is defined as follows:
 
 - If `same_as<remove_cvref_t<ranges::range_reference_t<R>>, R>` is
-  `true`, `format_kind<R>` is `range_format::disabled`. \[*Note 3*: This
+  `true`, `format_kind<R>` is `range_format::disabled`. \[*Note 1*: This
   prevents constraint recursion for ranges whose reference type is the
   same range type. For example, `std::filesystem::path` is a range of
   `std::filesystem::path`. — *end note*]

@@ -488,7 +488,7 @@ sequences that follow a few uniform conventions:
   encodings of the execution character sets and the sets of additional
   elements (if any) are locale-specific. Each element of the execution
   wide-character set is encoded as a single code unit representable by a
-  value of type `wchar_t`. \[*Note 2*: The encodings of the execution
+  value of type `wchar_t`. \[*Note 1*: The encodings of the execution
   character sets can be unrelated to any literal
   encoding. — *end note*]
 - A *letter* is any of the 26 lowercase or 26 uppercase letters in the
@@ -2060,10 +2060,10 @@ the C++ standard library, unless explicitly stated otherwise.
   implementation may assume that this parameter is a unique reference to
   this argument, except that the argument passed to a move-assignment
   operator may be a reference to `*this` [[lib.types.movedfrom]].
-  \[*Note 3*: If the type of a parameter is a forwarding reference
+  \[*Note 1*: If the type of a parameter is a forwarding reference
   [[temp.deduct.call]] that is deduced to an lvalue reference type, then
   the argument is not bound to an rvalue reference. — *end note*]
-  \[*Note 4*: If a program casts an lvalue to an xvalue while passing
+  \[*Note 2*: If a program casts an lvalue to an xvalue while passing
   that lvalue to a library function (e.g., by calling the function with
   the argument `std::move(x)`), the program is effectively asking that
   function to treat that lvalue as a temporary object. The
@@ -2309,7 +2309,7 @@ In any case:
 - Every base class described as `virtual` shall be virtual;
 - Every base class not specified as `virtual` shall not be virtual;
 - Unless explicitly stated otherwise, types with distinct names shall be
-  distinct types. \[*Note 5*: There is an implicit exception to this
+  distinct types. \[*Note 1*: There is an implicit exception to this
   rule for types that are described as synonyms
   [[dcl.typedef]], [[namespace.udecl]], such as `size_t`
   [[support.types]] and `streamoff` [[stream.types]]. — *end note*]

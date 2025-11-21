@@ -383,7 +383,7 @@ unit, then
   every translation unit where it is odr-used, and the implicit
   definition in every translation unit shall call the same constructor
   for a subobject of `D`.
-  \[*Example 1*:
+  \[*Example 3*:
   ``` cpp
   // translation unit 1:
   struct X {
@@ -481,7 +481,7 @@ which specifies the same unqualified name,
   declarative region ([[namespace.alias]], Clause 
   [[temp]]). — *end note*]
 
-[*Note 1*: These restrictions apply to the declarative region into
+[*Note 2*: These restrictions apply to the declarative region into
 which a name is introduced, which is not necessarily the same as the
 region in which the declaration occurs. In particular,
 *elaborated-type-specifier*s ([[dcl.type.elab]]) and friend
@@ -492,7 +492,7 @@ into the declarative region where the declaration appears and also
 introduce a (possibly not visible) name into an enclosing namespace;
 these restrictions apply to both regions. — *end note*]
 
-[*Note 2*: The name lookup rules are summarized in 
+[*Note 3*: The name lookup rules are summarized in 
 [[basic.lookup]]. — *end note*]
 
 ### Point of declaration <a id="basic.scope.pdecl">[[basic.scope.pdecl]]</a>
@@ -585,8 +585,8 @@ The point of declaration of a class first declared in an
   scope, the *identifier* is declared as a *class-name* in the namespace
   that contains the declaration; otherwise, except as a friend
   declaration, the *identifier* is declared in the smallest namespace or
-  block scope that contains the declaration. \[*Note 2*: These rules
-  also apply within templates. — *end note*] \[*Note 3*: Other forms of
+  block scope that contains the declaration. \[*Note 3*: These rules
+  also apply within templates. — *end note*] \[*Note 4*: Other forms of
   *elaborated-type-specifier* do not declare a new name, and therefore
   must refer to an existing *type-name*. See  [[basic.lookup.elab]] and 
   [[dcl.type.elab]]. — *end note*]
@@ -614,7 +614,7 @@ template<class T
 
 — *end example*]
 
-[*Note 3*: Friend declarations refer to functions or classes that are
+[*Note 5*: Friend declarations refer to functions or classes that are
 members of the nearest enclosing namespace, but they do not introduce
 new names into that namespace ([[namespace.memdef]]). Function
 declarations at block scope and variable declarations with the `extern`
@@ -622,7 +622,7 @@ specifier at block scope refer to declarations that are members of an
 enclosing namespace, but they do not introduce new names into that
 scope. — *end note*]
 
-[*Note 4*: For point of instantiation of a template, see 
+[*Note 6*: For point of instantiation of a template, see 
 [[temp.point]]. — *end note*]
 
 ### Block scope <a id="basic.scope.block">[[basic.scope.block]]</a>
@@ -1277,7 +1277,7 @@ way:
   parameters (excluding template template parameters); the namespaces of
   which any template template arguments are members; and the classes of
   which any member templates used as template template arguments are
-  members. \[*Note 4*: Non-type template arguments do not contribute to
+  members. \[*Note 1*: Non-type template arguments do not contribute to
   the set of associated namespaces. — *end note*]
 - If `T` is an enumeration type, its associated namespace is the
   innermost enclosing namespace of its declaration. If it is a class
@@ -1322,7 +1322,7 @@ namespaces associated with the argument types as described below. The
 set of declarations found by the lookup of the name is the union of *X*
 and *Y*.
 
-[*Note 1*: The namespaces and classes associated with the argument
+[*Note 2*: The namespaces and classes associated with the argument
 types can include namespaces and classes already considered by the
 ordinary unqualified lookup. — *end note*]
 
@@ -3489,7 +3489,7 @@ array type is considered to be const-qualified.
   specified by the context in which it appears.
 - An *xvalue* is a glvalue that denotes an object or bit-field whose
   resources can be reused (usually because it is near the end of its
-  lifetime). \[*Example 2*: Certain kinds of expressions involving
+  lifetime). \[*Example 1*: Certain kinds of expressions involving
   rvalue references ([[dcl.ref]]) yield xvalues, such as a call to a
   function whose return type is an rvalue reference or a cast to an
   rvalue reference type. — *end example*]

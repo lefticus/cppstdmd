@@ -419,7 +419,7 @@ meet the following additional requirements:
 - No `swap()` function throws an exception.
 - No `swap()` function invalidates any references, pointers, or
   iterators referring to the elements of the containers being swapped.
-  \[*Note 1*: The `end()` iterator does not refer to any element, so it
+  \[*Note 3*: The `end()` iterator does not refer to any element, so it
   can be invalidated. — *end note*]
 
 Unless otherwise specified (either explicitly or by defining a function
@@ -577,7 +577,7 @@ instantiated:
   and its evaluation causes the following postcondition to hold: The
   value of `*p` is equivalent to the value of `rv` before the
   evaluation.
-  \[*Note 2*: `rv` remains a valid object. Its state is
+  \[*Note 1*: `rv` remains a valid object. Its state is
   unspecified. — *end note*]
 - `T` is **Cpp17CopyInsertable* into `X`* means that, in addition to `T`
   being *Cpp17MoveInsertable* into `X`, the following expression is
@@ -600,7 +600,7 @@ instantiated:
   allocator_traits<A>::destroy(m, p)
   ```
 
-[*Note 1*: A container calls
+[*Note 2*: A container calls
 `allocator_traits<A>::construct(m, p, args)` to construct an element at
 `p` using `args`, with `m == get_allocator()`. The default `construct`
 in `allocator` will call `::new((void*)p) T(args)`, but specialized
@@ -4914,7 +4914,7 @@ of element blocks, both by users and implementations.
   implementation’s default limits are used.
 - The default limits of an implementation are not guaranteed to be the
   same as the minimum and maximum possible capacities for an
-  implementation’s element blocks. \[*Note 3*: To allow latitude for
+  implementation’s element blocks. \[*Note 1*: To allow latitude for
   both implementation-specific and user-directed
   optimization. — *end note*] The latter are defined as hard limits.
   The maximum hard limit shall be no larger than
@@ -7351,7 +7351,7 @@ template<class InputIterator>
     tuple_element_t<1, iter-value-type<InputIterator>>;                 // exposition only
 template<class InputIterator>
   using iter-to-alloc-type = pair<
-    add_const_t<tuple_element_t<0, iter-value-type<InputIterator>>>,
+    const tuple_element_t<0, iter-value-type<InputIterator>>,
     tuple_element_t<1, iter-value-type<InputIterator>>>;                // exposition only
 template<ranges::input_range Range>
   using range-key-type =
@@ -7360,7 +7360,7 @@ template<ranges::input_range Range>
   using range-mapped-type = ranges::range_value_t<Range>::second_type; // exposition only
 template<ranges::input_range Range>
   using range-to-alloc-type =
-    pair<add_const_t<typename ranges::range_value_t<Range>::first_type>,
+    pair<const typename ranges::range_value_t<Range>::first_type,
          typename ranges::range_value_t<Range>::second_type>;           // exposition only
 ```
 
@@ -14586,7 +14586,7 @@ template<class It>
 
 - `It` satisfies `contiguous_iterator`.
 - `is_convertible_v<U(*)[], element_type(*)[]>` is `true`.
-  \[*Note 4*: The intent is to allow only qualification conversions of
+  \[*Note 1*: The intent is to allow only qualification conversions of
   the iterator reference type to `element_type`. — *end note*]
 
 *Preconditions:*
@@ -14610,7 +14610,7 @@ template<class It, class End>
 *Constraints:* Let `U` be `remove_reference_t<iter_reference_t<It>>`.
 
 - `is_convertible_v<U(*)[], element_type(*)[]>` is `true`.
-  \[*Note 5*: The intent is to allow only qualification conversions of
+  \[*Note 2*: The intent is to allow only qualification conversions of
   the iterator reference type to `element_type`. — *end note*]
 - `It` satisfies `contiguous_iterator`.
 - `End` satisfies `sized_sentinel_for<It>`.
@@ -14640,7 +14640,7 @@ template<class T, size_t N> constexpr span(const array<T, N>& arr) noexcept;
 
 - `extent == dynamic_extent || N == extent` is `true`, and
 - `is_convertible_v<U(*)[], element_type(*)[]>` is `true`.
-  \[*Note 6*: The intent is to allow only qualification conversions of
+  \[*Note 3*: The intent is to allow only qualification conversions of
   the array element type to `element_type`. — *end note*]
 
 *Effects:* Constructs a `span` that is a view over the supplied array.
@@ -14664,7 +14664,7 @@ template<class R> constexpr explicit(extent != dynamic_extent) span(R&& r);
 - `remove_cvref_t<R>` is not a specialization of `array`.
 - `is_array_v<remove_cvref_t<R>>` is `false`.
 - `is_convertible_v<U(*)[], element_type(*)[]>` is `true`.
-  \[*Note 7*: The intent is to allow only qualification conversions of
+  \[*Note 4*: The intent is to allow only qualification conversions of
   the range reference type to `element_type`. — *end note*]
 
 *Preconditions:*
@@ -14709,7 +14709,7 @@ template<class OtherElementType, size_t OtherExtent>
 - `extent == dynamic_extent` `||` `OtherExtent == dynamic_extent` `||`
   `extent == OtherExtent` is `true`, and
 - `is_convertible_v<OtherElementType(*)[], element_type(*)[]>` is
-  `true`. \[*Note 8*: The intent is to allow only qualification
+  `true`. \[*Note 5*: The intent is to allow only qualification
   conversions of the `OtherElementType` to
   `element_type`. — *end note*]
 
@@ -15240,7 +15240,7 @@ Let `N` be `sizeof...(OtherIndexTypes)`, and let `exts_arr` be
 - `(is_convertible_v<OtherIndexTypes, index_type> && ...)` is `true`,
 - `(is_nothrow_constructible_v<index_type, OtherIndexTypes> && ...)` is
   `true`, and
-- `N == rank_dynamic() || N == rank()` is `true`. \[*Note 9*: One can
+- `N == rank_dynamic() || N == rank()` is `true`. \[*Note 1*: One can
   construct `extents` from just dynamic extents, which are all the
   values getting stored, or from all the extents with a
   precondition. — *end note*]
@@ -15362,7 +15362,7 @@ In [[mdspan.layout.reqmts]] and [[mdspan.layout.policy.reqmts]]:
 - `m` denotes a (possibly const) value of type `M`.
 - `i` and `j` are packs of (possibly const) integers that are
   multidimensional indices in `m.extents()` [[mdspan.overview]].
-  \[*Note 10*: The type of each element of the packs can be a different
+  \[*Note 1*: The type of each element of the packs can be a different
   integer type. — *end note*]
 - `r` is a (possibly const) rank index of `typename M::extents_type`.
 - `dᵣ` is a pack of (possibly const) integers for which
@@ -16224,7 +16224,7 @@ concept layout-mapping-alike = requires {                         // exposition 
 };
 ```
 
-[*Note 1*: This concept checks that the functions
+[*Note 2*: This concept checks that the functions
 `M::is_always_strided()`, `M::is_always_exhaustive()`, and
 `M::is_always_unique()` exist, are constant expressions, and have a
 return type of `bool`. — *end note*]
@@ -16267,7 +16267,7 @@ template<class OtherIndexType>
   the integers in the range [0, rank_), such that
   `s[`pᵢ`] >= s[`pᵢ₋₁`] * e.extent(p`$_{i-1}$`)` is `true` for all i in
   the range [1, rank_), where pᵢ is the iᵗʰ element of P.
-  \[*Note 11*: For `layout_stride`, this condition is necessary and
+  \[*Note 3*: For `layout_stride`, this condition is necessary and
   sufficient for `is_unique()` to be `true`. — *end note*]
 
 *Effects:* Direct-non-list-initializes *extents\_* with `e`, and for all
@@ -17286,7 +17286,7 @@ In [[mdspan.accessor.reqmts]],
 - `A` denotes an accessor policy.
 - `a` denotes a value of type `A` or `const A`.
 - `p` denotes a value of type `A::data_handle_type` or
-  `const A::data_handle_type`. \[*Note 12*: The type
+  `const A::data_handle_type`. \[*Note 1*: The type
   `A::data_handle_type` need not be dereferenceable. — *end note*]
 - `n`, `i`, and `j` each denote values of type `size_t`.
 
@@ -18314,7 +18314,7 @@ constexpr auto layout_left::mapping<Extents>::submdspan-mapping-impl(
   - for k equal to `SubExtents::rank() - 1`, Sₖ is a unit-stride slice
     for `mapping`;
 
-  \[*Note 13*: If the above conditions are true, all Sₖ with k larger
+  \[*Note 2*: If the above conditions are true, all Sₖ with k larger
   than `SubExtents::rank() - 1` are convertible to
   `index_type`. — *end note*]
 - otherwise,
@@ -18365,7 +18365,7 @@ constexpr auto layout_right::mapping<Extents>::submdspan-mapping-impl(
   - for k equal to *rank\_* - `SubExtents::rank()`, Sₖ is a unit-stride
     slice for `mapping`;
 
-  \[*Note 14*: If the above conditions are true, all Sₖ with
+  \[*Note 3*: If the above conditions are true, all Sₖ with
   $k < \texttt{\textit{rank_} - SubExtents::rank()}$ are convertible to
   `index_type`. — *end note*]
 - otherwise,

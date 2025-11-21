@@ -125,7 +125,7 @@ the `_until` function.
 *Recommended practice:* Implementations should decrease the duration of
 the wait when the clock is adjusted forwards.
 
-[*Note 1*: If the clock is not synchronized with a steady clock, e.g.,
+[*Note 2*: If the clock is not synchronized with a steady clock, e.g.,
 a CPU time clock, these timeouts can fail to provide useful
 functionality. — *end note*]
 
@@ -141,7 +141,7 @@ if, during its execution, a clock, time point, or time duration throws
 an exception. Such exceptions are referred to as *timeout-related
 exceptions*.
 
-[*Note 2*: Instantiations of clock, time point and duration types
+[*Note 3*: Instantiations of clock, time point and duration types
 supplied by the implementation as specified in  [[time.clock]] do not
 throw exceptions. — *end note*]
 
@@ -488,7 +488,7 @@ modeled only if:
 
       If the callback invocation was added to stop state’s list of
       callbacks, `scb` shall be associated with the stop state.
-  - \[*Note 2*: If `t.stop_possible()` is `false`, there is no
+  - \[*Note 1*: If `t.stop_possible()` is `false`, there is no
     requirement that the initialization of `scb` causes the
     initialization of `callback_fn`. — *end note*]
 - Destruction of `scb` shall execute a
@@ -611,7 +611,7 @@ registered callback invocations shall be synchronously executed. If an
 invocation of a callback exits via an exception then `terminate` shall
 be invoked [[except.terminate]].
 
-[*Note 1*: No constraint is placed on the order in which the callback
+[*Note 2*: No constraint is placed on the order in which the callback
 invocations are executed. — *end note*]
 
 `request_stop` shall return `true` if a stop request was made, and
@@ -619,7 +619,7 @@ invocations are executed. — *end note*]
 `stop_possible` shall return `false` or a call to `stop_requested` shall
 return `true`.
 
-[*Note 2*: A stop request includes notifying all condition variables of
+[*Note 3*: A stop request includes notifying all condition variables of
 type `condition_variable_any` temporarily registered during an
 interruptible wait [[thread.condvarany.intwait]]. — *end note*]
 
@@ -9537,18 +9537,18 @@ to an evaluation A if
     label its atomic load operation L. If there exists an atomic
     modification B on `src` such that L observes a modification that is
     modification-ordered before B, and B happens before `x` is retired,
-    the end of E strongly happens before A. \[*Note 5*: In typical use,
+    the end of E strongly happens before A. \[*Note 1*: In typical use,
     a store to `src` sequenced before retiring `x` will be such an
     atomic operation B. — *end note*]
 
-  \[*Note 6*: The latter two conditions convey the informal notion that
+  \[*Note 2*: The latter two conditions convey the informal notion that
   a protection epoch that began before retiring `x`, as implied either
   by the happens-before relation or the coherence order of some source,
   delays the reclamation of `x`. — *end note*]
 
 The number of possibly-reclaimable objects has an unspecified bound.
 
-[*Note 1*: The bound can be a function of the number of hazard
+[*Note 3*: The bound can be a function of the number of hazard
 pointers, the number of threads that retire objects, and the number of
 threads that use hazard pointers. — *end note*]
 

@@ -456,11 +456,11 @@ headers that includes all importable C++ library headers [[headers]].
 - otherwise, if they appear in the same translation unit, they import
   the same header unit;
 - otherwise, it is unspecified whether they import the same header unit.
-  \[*Note 1*: It is therefore possible that multiple copies exist of
+  \[*Note 3*: It is therefore possible that multiple copies exist of
   entities declared with internal linkage in an importable
   header. — *end note*]
 
-[*Note 3*: A *module-import-declaration* nominating a *header-name* is
+[*Note 4*: A *module-import-declaration* nominating a *header-name* is
 also recognized by the preprocessor, and results in macros defined at
 the end of phase 4 of translation of the header unit being made visible
 as described in [[cpp.import]]. Any other *module-import-declaration*
@@ -470,7 +470,7 @@ A declaration of a name with internal linkage is permitted within a
 header unit despite all declarations being implicitly exported
 [[module.interface]].
 
-[*Note 4*: A definition that appears in multiple translation units
+[*Note 5*: A definition that appears in multiple translation units
 cannot in general refer to such names [[basic.def.odr]]. — *end note*]
 
 A header unit shall not contain a definition of a non-inline function or
@@ -487,7 +487,7 @@ imports all translation units imported by non-exported
 These rules can in turn lead to the importation of yet more translation
 units.
 
-[*Note 5*: Such indirect importation does not make macros available,
+[*Note 6*: Such indirect importation does not make macros available,
 because a translation unit is a sequence of tokens in translation phase
 7 [[lex.phases]]. Macros can be made available by directly importing
 header units as described in [[cpp.import]]. — *end note*]
@@ -632,7 +632,7 @@ A declaration `D` in a global module fragment of a module unit is
 *discarded* if `D` is not decl-reachable from any *declaration* in the
 *declaration-seq* of the *translation-unit*.
 
-[*Note 2*: A discarded declaration is neither reachable nor visible to
+[*Note 3*: A discarded declaration is neither reachable nor visible to
 name lookup outside the module unit, nor in template instantiations
 whose points of instantiation [[temp.point]] are outside the module
 unit, even when the instantiation context [[module.context]] includes

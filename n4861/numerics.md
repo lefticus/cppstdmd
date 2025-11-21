@@ -5957,10 +5957,10 @@ ensure:
   `double` parameter has type `double` or an integer type, then all
   arguments of arithmetic type corresponding to `double` parameters are
   effectively cast to `double`.
-- \[*Note 1*: Otherwise, all arguments of arithmetic type corresponding
+- \[*Note 2*: Otherwise, all arguments of arithmetic type corresponding
   to `double` parameters have type `float`. — *end note*]
 
-[*Note 2*: `abs` is exempted from these rules in order to stay
+[*Note 3*: `abs` is exempted from these rules in order to stay
 compatible with C. — *end note*]
 
 ISO C 7.12

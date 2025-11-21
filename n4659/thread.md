@@ -110,10 +110,10 @@ time specified above to the time it would return from a steady-clock
 relative timeout on the difference between Cₜ and the time point of the
 call to the `_until` function.
 
-[*Note 1*: Implementations should decrease the duration of the wait
+[*Note 3*: Implementations should decrease the duration of the wait
 when the clock is adjusted forwards. — *end note*]
 
-[*Note 2*: If the clock is not synchronized with a steady clock, e.g.,
+[*Note 4*: If the clock is not synchronized with a steady clock, e.g.,
 a CPU time clock, these timeouts might not provide useful
 functionality. — *end note*]
 
@@ -129,7 +129,7 @@ if, during its execution, a clock, time point, or time duration throws
 an exception. Such exceptions are referred to as *timeout-related
 exceptions*.
 
-[*Note 3*: Instantiations of clock, time point and duration types
+[*Note 5*: Instantiations of clock, time point and duration types
 supplied by the implementation as specified in  [[time.clock]] do not
 throw exceptions. — *end note*]
 
@@ -3704,7 +3704,7 @@ shared_future& operator=(const shared_future& rhs) noexcept;
 *Effects:*
 
 - Releases any shared state ([[futures.state]]);
-- assigns the contents of `rhs` to `*this`. \[*Note 3*: As a result,
+- assigns the contents of `rhs` to `*this`. \[*Note 4*: As a result,
   `*this` refers to the same shared state as `rhs` (if
   any). — *end note*]
 
@@ -3731,7 +3731,7 @@ value stored in the shared state.
 *Returns:*
 
 - `shared_future::get()` returns a const reference to the value stored
-  in the object’s shared state. \[*Note 4*: Access through that
+  in the object’s shared state. \[*Note 5*: Access through that
   reference after the shared state has been destroyed produces undefined
   behavior; this can be avoided by not storing the reference in any
   storage with a greater lifetime than the `shared_future` object that
@@ -3858,7 +3858,7 @@ implementation may choose any of the corresponding policies):
   referring to this shared state shall invoke the deferred function in
   the thread that called the waiting function. Once evaluation of
   *INVOKE*(std::move(g), std::move(xyz)) begins, the function is no
-  longer considered deferred. \[*Note 5*: If this policy is specified
+  longer considered deferred. \[*Note 1*: If this policy is specified
   together with other policies, such as when using a `policy` value of
   `launch::async | launch::deferred`, implementations should defer
   invocation or the selection of the policy when no more concurrency can
@@ -3879,12 +3879,12 @@ ready. — *end note*]
 *Synchronization:* Regardless of the provided `policy` argument,
 
 - the invocation of `async` synchronizes with ([[intro.multithread]])
-  the invocation of `f`. \[*Note 6*: This statement applies even when
+  the invocation of `f`. \[*Note 2*: This statement applies even when
   the corresponding `future` object is moved to another
   thread. — *end note*] ; and
 - the completion of the function `f` is sequenced
   before ([[intro.multithread]]) the shared state is made ready.
-  \[*Note 7*: `f` might not be called at all, so its completion might
+  \[*Note 3*: `f` might not be called at all, so its completion might
   never happen. — *end note*]
 
 If the implementation chooses the `launch::async` policy,
@@ -3908,7 +3908,7 @@ memory for the internal data structures could not be allocated.
 - `resource_unavailable_try_again` — if `policy == launch::async` and
   the system is unable to start a new thread.
 
-[*Note 1*: Line \#1 might not result in concurrency because the `async`
+[*Note 4*: Line \#1 might not result in concurrency because the `async`
 call uses the default policy, which may use `launch::deferred`, in which
 case the lambda might not be invoked until the `get()` call; in that
 case, `work1` and `work2` are called on the same thread and there is no

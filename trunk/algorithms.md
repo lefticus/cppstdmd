@@ -250,7 +250,7 @@ invocation is specified to synchronize with it, and if it is not a
 memory allocation or deallocation function or lock-free atomic
 modify-write operation [[atomics.order]].
 
-[*Note 1*: Implementations must ensure that internal synchronization
+[*Note 2*: Implementations must ensure that internal synchronization
 inside standard library functions does not prevent forward progress when
 those functions are executed by threads of execution with weakly
 parallel forward progress guarantees. — *end note*]
@@ -8608,7 +8608,7 @@ Let:
   the element `e1` in the position `first1 + `K there are at least N - K
   elements `e2` in \[`first2`, `last2`) for which E(`e1`, `e1`) holds,
   and be equal to `last1 - first1` if no such integer exists.
-  \[*Note 2*: `first1 + `K points to the position past the last element
+  \[*Note 1*: `first1 + `K points to the position past the last element
   to be copied. — *end note*]
 
 *Preconditions:* The ranges \[`first1`, `last1`) and \[`first2`,
@@ -11861,7 +11861,7 @@ constexpr borrowed_iterator_t<R> ranges::generate_random(R&& r, G&& g);
   an unspecified number of invocations of the form `g()` or
   `g.generate_random(s)`, if such an expression is well-formed for a
   value `N` and an object `s` of type `span<invoke_result_t<G&>, N>`.
-  \[*Note 3*: Values of `N` can differ between
+  \[*Note 1*: Values of `N` can differ between
   invocations. — *end note*]
 - Otherwise, calls `ranges::generate(std::forward<R>(r), ref(g))`.
 
@@ -11902,7 +11902,7 @@ constexpr borrowed_iterator_t<R> ranges::generate_random(R&& r, G&& g, D&& d);
   performing an unspecified number of invocations of the form
   `invoke(d, g)` or `d.generate_random(s, g)`, if such an expression is
   well-formed for a value `N` and an object `s` of type
-  `span<invoke_result_t<D&, G&>, N>`. \[*Note 4*: Values of N can differ
+  `span<invoke_result_t<D&, G&>, N>`. \[*Note 2*: Values of N can differ
   between invocations. — *end note*]
 - Otherwise, calls
   ``` cpp

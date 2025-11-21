@@ -1898,7 +1898,7 @@ following restrictions apply:
 - The type of a template parameter corresponding to a specialized
   non-type argument shall not be dependent on a parameter of the
   specialization.
-  \[*Example 1*:
+  \[*Example 5*:
   ``` cpp
   template <class T, T t> struct C {};
   template <class T> struct C<T, 1>;              // error
@@ -2674,7 +2674,7 @@ to be checked. The program is ill-formed, no diagnostic required, if:
 - the interpretation of such a construct in the hypothetical
   instantiation is different from the interpretation of the
   corresponding construct in any actual instantiation of the template.
-  \[*Note 1*:
+  \[*Note 3*:
   This can happen in situations including the following:
   - a type used in a non-dependent name is incomplete at the point at
     which a template is defined but is complete at the point at which an
@@ -2708,7 +2708,7 @@ to be checked. The program is ill-formed, no diagnostic required, if:
 Otherwise, no diagnostic shall be issued for a template for which a
 valid specialization can be generated.
 
-[*Note 3*: If a template is instantiated, errors will be diagnosed
+[*Note 4*: If a template is instantiated, errors will be diagnosed
 according to the other rules in this International Standard. Exactly
 when these errors are diagnosed is a quality of implementation
 issue. — *end note*]
@@ -2805,7 +2805,7 @@ void h() {
 
 — *end example*]
 
-[*Note 4*: For purposes of name lookup, default arguments and
+[*Note 5*: For purposes of name lookup, default arguments and
 *noexcept-specifier*s of function templates and default arguments and
 *noexcept-specifier*s of member functions of class templates are
 considered definitions ([[temp.decls]]). — *end note*]
@@ -3332,7 +3332,7 @@ A type is dependent if it is
 - denoted by `decltype(`*expression*`)`, where *expression* is
   type-dependent ([[temp.dep.expr]]).
 
-[*Note 2*: Because typedefs do not introduce new types, but instead
+[*Note 6*: Because typedefs do not introduce new types, but instead
 simply refer to other types, a name that refers to a typedef that is a
 member of the current instantiation is dependent only if the type
 referred to is dependent. — *end note*]
@@ -4599,7 +4599,7 @@ definition for one of the following explicit specializations:
 - the explicit specialization of a member function template;
 - the explicit specialization of a member function of a class template
   where the class template specialization to which the member function
-  specialization belongs is implicitly instantiated. \[*Note 6*: Default
+  specialization belongs is implicitly instantiated. \[*Note 3*: Default
   function arguments may be specified in the declaration or definition
   of a member function of a class template specialization that is
   explicitly specialized. — *end note*]
@@ -5683,7 +5683,7 @@ The non-deduced contexts are:
   initializer list ([[dcl.init.list]]) but the parameter does not have
   a type for which deduction from an initializer list is specified (
   [[temp.deduct.call]]).
-  \[*Example 2*:
+  \[*Example 1*:
   ``` cpp
   template<class T> void g(T);
   g({1,2,3});                 // error: no argument deduced for T
@@ -5698,14 +5698,14 @@ context, all of the types that comprise that type name are also
 non-deduced. However, a compound type can include both deduced and
 non-deduced types.
 
-[*Example 1*: If a type is specified as `A<T>::B<T2>`, both `T` and
+[*Example 2*: If a type is specified as `A<T>::B<T2>`, both `T` and
 `T2` are non-deduced. Likewise, if a type is specified as
 `A<I+J>::X<T>`, `I`, `J`, and `T` are non-deduced. If a type is
 specified as `void` `f(typename` `A<T>::B,` `A<T>)`, the `T` in
 `A<T>::B` is non-deduced but the `T` in `A<T>` is
 deduced. — *end example*]
 
-[*Example 2*:
+[*Example 3*:
 
 Here is an example in which different parameter/argument pairs produce
 inconsistent template argument deductions:
@@ -5827,7 +5827,7 @@ pack expansion:
 - otherwise, if `Pᵢ` is not a pack expansion, template argument
   deduction fails.
 
-[*Example 3*:
+[*Example 4*:
 
 ``` cpp
 template<class T1, class... Z> class S;                               // #1
@@ -5860,7 +5860,7 @@ is changed to simply `T`).
 adjusted `Pᵢ` will be `T`, causing `T` to be deduced as
 `X&`. — *end note*]
 
-[*Example 4*:
+[*Example 5*:
 
 ``` cpp
 template <class T> void f(T&&);
@@ -5887,7 +5887,7 @@ function parameter pack:
 - otherwise, if `Pᵢ` is not a function parameter pack, template argument
   deduction fails.
 
-[*Example 5*:
+[*Example 6*:
 
 ``` cpp
 template<class T, class... U> void f(T*, U...) { }  // #1
@@ -5900,7 +5900,7 @@ template void f(int*);                              // selects #1
 These forms can be used in the same way as `T` is for further
 composition of types.
 
-[*Example 6*:
+[*Example 7*:
 
 ``` cpp
 X<int> (*)(char[6])
@@ -5930,7 +5930,7 @@ parameter `P` that is declared with a dependent type is deduced from an
 expression, the template parameters in the type of `P` are deduced from
 the type of the value.
 
-[*Example 7*:
+[*Example 8*:
 
 ``` cpp
 template<long n> struct A { };
@@ -5949,7 +5949,7 @@ using R = C<A<2>>::Q;           // OK; T was deduced to long from the
 
 The type of `N` in the type `T[N]` is `std::size_t`.
 
-[*Example 8*:
+[*Example 9*:
 
 ``` cpp
 template<typename T> struct S;
@@ -5963,7 +5963,7 @@ using V = S<int[42]>::Q;        // OK; T was deduced to std::size_t from the typ
 
 — *end example*]
 
-[*Example 9*:
+[*Example 10*:
 
 ``` cpp
 template<class T, T i> void f(int (&a)[i]);
@@ -6004,7 +6004,7 @@ parameter, the non-type template parameter is used in a subexpression in
 the function parameter list, the expression is a non-deduced context as
 specified above.
 
-[*Example 10*:
+[*Example 11*:
 
 ``` cpp
 template <int i> class A { ... };
@@ -6049,7 +6049,7 @@ named by the enclosing *simple-template-id*, deduction fails. If `P` has
 a form that contains `[i]`, and if the type of `i` is not an integral
 type, deduction fails.[^8]
 
-[*Example 11*:
+[*Example 12*:
 
 ``` cpp
 template<int i> class A { ... };
@@ -6073,7 +6073,7 @@ void k2() {
 A *template-argument* can be deduced from a function, pointer to
 function, or pointer to member function type.
 
-[*Example 12*:
+[*Example 13*:
 
 ``` cpp
 template<class T> void f(void(*)(T,int));
@@ -6095,7 +6095,7 @@ int m() {
 A template *type-parameter* cannot be deduced from the type of a
 function default argument.
 
-[*Example 13*:
+[*Example 14*:
 
 ``` cpp
 template <class T> void f(T = 5, T = 7);
@@ -6112,7 +6112,7 @@ The *template-argument* corresponding to a template *template-parameter*
 is deduced from the type of the *template-argument* of a class template
 specialization used in the argument list of a function call.
 
-[*Example 14*:
+[*Example 15*:
 
 ``` cpp
 template <template <class T> class X> struct A { };
@@ -6128,7 +6128,7 @@ f(ab);              // calls f(A<B>)
 [[temp.variadic]]) can deduce zero or more arguments for each parameter
 pack. — *end note*]
 
-[*Example 15*:
+[*Example 16*:
 
 ``` cpp
 template<class> struct X { };

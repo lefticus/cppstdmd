@@ -3647,12 +3647,12 @@ invariants:
 *Recommended practice:*
 
 - Implementations should not consider registered encodings to be
-  interchangeable. \[*Example 2*: Shift_JIS and Windows-31J denote
+  interchangeable. \[*Example 1*: Shift_JIS and Windows-31J denote
   different encodings. — *end example*]
 - Implementations should not use the name of a registered encoding to
   describe another similar yet different non-registered encoding unless
   there is a precedent on that implementation.
-  \[*Example 3*: Big5 — *end example*]
+  \[*Example 2*: Big5 — *end example*]
 
 #### Members <a id="text.encoding.members">[[text.encoding.members]]</a>
 

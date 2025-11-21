@@ -644,7 +644,7 @@ for (int& x : array)
 
 — *end example*]
 
-[*Note 1*: The lifetime of some temporaries in the
+[*Note 2*: The lifetime of some temporaries in the
 *for-range-initializer* is extended to cover the entire loop
 [[class.temporary]]. — *end note*]
 
@@ -767,7 +767,7 @@ follows:
 
   The variables *`range`*, *`begin`*, *`end`*, and *`iter`* are defined
   for exposition only.
-  \[*Note 2*: The instantiation is ill-formed if *`range`* is not a
+  \[*Note 1*: The instantiation is ill-formed if *`range`* is not a
   constant expression [[expr.const]]. — *end note*]
 - Otherwise, S is a destructuring expansion statement and S is
   equivalent to:

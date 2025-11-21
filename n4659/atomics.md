@@ -275,7 +275,7 @@ enumerated values and their meanings are as follows:
   `memory_order_seq_cst`: a load operation performs an acquire operation
   on the affected memory location.
 
-[*Note 1*: Atomic operations specifying `memory_order_relaxed` are
+[*Note 2*: Atomic operations specifying `memory_order_relaxed` are
 relaxed with respect to memory ordering. Implementations must still
 guarantee that any given atomic access to a particular atomic object be
 indivisible with respect to all other atomic accesses to that
@@ -299,7 +299,7 @@ of the following values:
 - if *A* does not exist, the result of some modification of *M* that is
   not `memory_order_seq_cst`.
 
-[*Note 2*: Although it is not explicitly required that *S* include
+[*Note 3*: Although it is not explicitly required that *S* include
 locks, it can always be extended to an order that does include lock and
 unlock operations, since the ordering between those is already included
 in the “happens before” ordering. — *end note*]
@@ -334,7 +334,7 @@ later than *A* in the modification order of *M* if:
   sequenced before *X*, *Y* is sequenced before *B*, and *X* precedes
   *Y* in *S*.
 
-[*Note 3*: `memory_order_seq_cst` ensures sequential consistency only
+[*Note 4*: `memory_order_seq_cst` ensures sequential consistency only
 for a program that is free of data races and uses exclusively
 `memory_order_seq_cst` operations. Any use of weaker ordering will
 invalidate this guarantee unless extreme care is used. In particular,
@@ -346,7 +346,7 @@ specifications. — *end note*]
 Implementations should ensure that no “out-of-thin-air” values are
 computed that circularly depend on their own computation.
 
-[*Note 4*:
+[*Note 5*:
 
 For example, with `x` and `y` initially zero,
 
@@ -369,7 +369,7 @@ such an execution is possible.
 
 — *end note*]
 
-[*Note 5*:
+[*Note 6*:
 
 The recommendation similarly disallows `r1 == r2 == 42` in the following
 example, with `x` and `y` again initially zero:

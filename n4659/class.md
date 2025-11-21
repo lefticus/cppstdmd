@@ -590,7 +590,7 @@ If `T` is the name of a class, then each of the following shall have a
 name different from `T`:
 
 - every static data member of class `T`;
-- every member function of class `T` \[*Note 1*: This restriction does
+- every member function of class `T` \[*Note 6*: This restriction does
   not apply to constructors, which do not have names (
   [[class.ctor]]) — *end note*] ;
 - every member of class `T` that is itself a type;
@@ -655,7 +655,7 @@ int f() {
 
 — *end example*]
 
-[*Note 6*: Reading a volatile object through a non-volatile glvalue has
+[*Note 7*: Reading a volatile object through a non-volatile glvalue has
 undefined behavior ([[dcl.type.cv]]). — *end note*]
 
 If a standard-layout class object has any non-static data members, its
@@ -663,11 +663,11 @@ address is the same as the address of its first non-static data member.
 Otherwise, its address is the same as the address of its first base
 class subobject (if any).
 
-[*Note 7*: There might therefore be unnamed padding within a
+[*Note 8*: There might therefore be unnamed padding within a
 standard-layout struct object, but not at its beginning, as necessary to
 achieve appropriate alignment. — *end note*]
 
-[*Note 8*: The object and its first subobject are
+[*Note 9*: The object and its first subobject are
 pointer-interconvertible ([[basic.compound]],
 [[expr.static.cast]]). — *end note*]
 
@@ -2817,7 +2817,7 @@ A member `m` is accessible at the point *R* when named in class `N` if
   where `m` as a member of `P` is public, private, or protected, or
 - there exists a base class `B` of `N` that is accessible at *R*, and
   `m` is accessible at *R* when named in class `B`.
-  \[*Example 1*:
+  \[*Example 3*:
   ``` cpp
   class B;
   class A {

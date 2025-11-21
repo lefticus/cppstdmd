@@ -257,7 +257,7 @@ A function is *named by* an expression or conversion as follows:
   that expression or conversion, unless it is a pure virtual function
   and either the expression is not an *id-expression* naming the
   function with an explicitly qualified name or the expression forms a
-  pointer to member [[expr.unary.op]]. \[*Note 1*: This covers taking
+  pointer to member [[expr.unary.op]]. \[*Note 2*: This covers taking
   the address of functions ([[conv.func]], [[expr.unary.op]]), calls to
   named functions [[expr.call]], operator overloading [[over]],
   user-defined conversions [[class.conv.fct]], allocation functions for
@@ -396,7 +396,7 @@ X* x2;                          // use X in pointer formation
 
 — *end example*]
 
-[*Note 2*:
+[*Note 3*:
 
 The rules for declarations and expressions describe in which contexts
 complete class types are required. A class type `T` must be complete if:
@@ -487,7 +487,7 @@ following requirements shall be satisfied.
   constructor was implicitly defined in every translation unit where it
   is odr-used, and the implicit definition in every translation unit
   shall call the same constructor for a subobject of `D`.
-  \[*Example 1*:
+  \[*Example 5*:
   ``` cpp
   // translation unit 1:
   struct X {
@@ -533,7 +533,7 @@ defined within default arguments or default template arguments of either
 definition, including in the application of these requirements to other
 entities.
 
-[*Note 3*: The entity is still declared in multiple translation units,
+[*Note 4*: The entity is still declared in multiple translation units,
 and [[basic.link]] still applies to these declarations. In particular,
 *lambda-expression*s [[expr.prim.lambda]] appearing in the type of `D`
 may result in the different declarations having distinct types, and
@@ -545,7 +545,7 @@ is ill-formed; a diagnostic is required only if the entity is attached
 to a named module and a prior definition is reachable at the point where
 a later definition occurs.
 
-[*Example 5*:
+[*Example 6*:
 
 ``` cpp
 inline void f(bool cond, void (*p)()) {
@@ -635,12 +635,12 @@ which specifies the same unqualified name,
   that is not a typedef name and the other declarations shall all refer
   to the same variable, non-static data member, or enumerator, or all
   refer to functions and function templates; in this case the class name
-  or enumeration name is hidden [[basic.scope.hiding]]. \[*Note 2*: A
+  or enumeration name is hidden [[basic.scope.hiding]]. \[*Note 1*: A
   structured binding [[dcl.struct.bind]], namespace name
   [[basic.namespace]], or class template name [[temp.pre]] must be
   unique in its declarative region. — *end note*]
 
-[*Note 1*: These restrictions apply to the declarative region into
+[*Note 2*: These restrictions apply to the declarative region into
 which a name is introduced, which is not necessarily the same as the
 region in which the declaration occurs. In particular,
 *elaborated-type-specifier*s [[dcl.type.elab]] and friend declarations
@@ -655,7 +655,7 @@ For a given declarative region *R* and a point *P* outside *R*, the set
 of *intervening* declarative regions between *P* and *R* comprises all
 declarative regions that are or enclose *R* and do not enclose *P*.
 
-[*Note 2*: The name lookup rules are summarized in 
+[*Note 3*: The name lookup rules are summarized in 
 [[basic.lookup]]. — *end note*]
 
 ### Point of declaration <a id="basic.scope.pdecl">[[basic.scope.pdecl]]</a>
@@ -786,7 +786,7 @@ template<class T
 
 — *end example*]
 
-[*Note 3*: Friend declarations refer to functions or classes that are
+[*Note 5*: Friend declarations refer to functions or classes that are
 members of the nearest enclosing namespace, but they do not introduce
 new names into that namespace [[namespace.memdef]]. Function
 declarations at block scope and variable declarations with the `extern`
@@ -794,7 +794,7 @@ specifier at block scope refer to declarations that are members of an
 enclosing namespace, but they do not introduce new names into that
 scope. — *end note*]
 
-[*Note 4*: For point of instantiation of a template, see 
+[*Note 6*: For point of instantiation of a template, see 
 [[temp.point]]. — *end note*]
 
 ### Block scope <a id="basic.scope.block">[[basic.scope.block]]</a>
@@ -1519,7 +1519,7 @@ are determined in the following way:
   templates used as template template arguments; the namespaces of which
   any template template arguments are members; and the classes of which
   any member templates used as template template arguments are members.
-  \[*Note 5*: Non-type template arguments do not contribute to the set
+  \[*Note 1*: Non-type template arguments do not contribute to the set
   of associated namespaces. — *end note*]
 - If `T` is an enumeration type, its associated namespace is the
   innermost enclosing namespace of its declaration, and its associated
@@ -1563,7 +1563,7 @@ namespaces associated with the argument types as described below. The
 set of declarations found by the lookup of the name is the union of *X*
 and *Y*.
 
-[*Note 1*: The namespaces and entities associated with the argument
+[*Note 2*: The namespaces and entities associated with the argument
 types can include namespaces and entities already considered by the
 ordinary unqualified lookup. — *end note*]
 
@@ -2459,7 +2459,7 @@ A declaration D *names* an entity E if
   *template-name*, or *concept-name* denoting E, or
 - E is a function or function template and D contains an expression that
   names E [[basic.def.odr]] or an *id-expression* that refers to a set
-  of overloads that contains E. \[*Note 6*: Non-dependent names in an
+  of overloads that contains E. \[*Note 4*: Non-dependent names in an
   instantiated declaration do not refer to a set of overloads
   [[temp.nondep]]. — *end note*]
 
@@ -2480,7 +2480,7 @@ A declaration is an *exposure* if it either names a TU-local entity
 or defines a constexpr variable initialized to a TU-local value (defined
 below).
 
-[*Note 4*: An inline function template can be an exposure even though
+[*Note 5*: An inline function template can be an exposure even though
 explicit specializations of it might be usable in other translation
 units. — *end note*]
 
@@ -2497,7 +2497,7 @@ An entity is *TU-local* if it is
 - a specialization of a TU-local template,
 - a specialization of a template with any TU-local template argument, or
 - a specialization of a template whose (possibly instantiated)
-  declaration is an exposure. \[*Note 7*: The specialization might have
+  declaration is an exposure. \[*Note 6*: The specialization might have
   been implicitly or explicitly instantiated. — *end note*]
 
 A value or object is *TU-local* if either
@@ -3542,14 +3542,14 @@ Temporary objects are created
 - when a prvalue is converted to an xvalue [[conv.rval]],
 - when needed by the implementation to pass or return an object of
   trivially-copyable type (see below), and
-- when throwing an exception [[except.throw]]. \[*Note 8*: The lifetime
+- when throwing an exception [[except.throw]]. \[*Note 1*: The lifetime
   of exception objects is described in  [[except.throw]]. — *end note*]
 
 Even when the creation of the temporary object is unevaluated
 [[expr.prop]], all the semantic restrictions shall be respected as if
 the temporary object had been created and later destroyed.
 
-[*Note 1*: This includes accessibility [[class.access]] and whether it
+[*Note 2*: This includes accessibility [[class.access]] and whether it
 is deleted, for the constructor selected and for the destructor.
 However, in the special case of the operand of a *decltype-specifier*
 [[expr.call]], no temporary is introduced, so the foregoing does not
@@ -3558,7 +3558,7 @@ apply to such a prvalue. — *end note*]
 The materialization of a temporary object is generally delayed as long
 as possible in order to avoid creating unnecessary temporary objects.
 
-[*Note 2*:
+[*Note 3*:
 
 Temporary objects are materialized:
 
@@ -3631,7 +3631,7 @@ temporary (even if that constructor is inaccessible or would not be
 selected by overload resolution to perform a copy or move of the
 object).
 
-[*Note 3*: This latitude is granted to allow objects of class type to
+[*Note 4*: This latitude is granted to allow objects of class type to
 be passed to or returned from functions in registers. — *end note*]
 
 When an implementation introduces a temporary object of a class that has
@@ -3703,7 +3703,7 @@ int&& c = cond ? id<int[3]>{1, 2, 3}[i] : static_cast<int&&>(0);
 
 — *end example*]
 
-[*Note 4*:
+[*Note 5*:
 
 An explicit type conversion ([[expr.type.conv]], [[expr.cast]]) is
 interpreted as a sequence of elementary casts, covered above.
@@ -3718,7 +3718,7 @@ const int& x = (const int&)1;   // temporary for value 1 has same lifetime as x
 
 — *end note*]
 
-[*Note 5*:
+[*Note 6*:
 
 If a temporary object has a reference member initialized by another
 temporary object, lifetime extension applies recursively to such a
@@ -3752,8 +3752,8 @@ The exceptions to this lifetime rule are:
 - A temporary bound to a reference in a *new-initializer* [[expr.new]]
   persists until the completion of the full-expression containing the
   *new-initializer*.
-  \[*Note 9*: This may introduce a dangling reference. — *end note*]
-  \[*Example 2*:
+  \[*Note 7*: This may introduce a dangling reference. — *end note*]
+  \[*Example 5*:
   ``` cpp
   struct S { int mi; const std::pair<int,int>& mp; };
   S a { 1, {2,3} };
@@ -3778,7 +3778,7 @@ created the temporary shall be destroyed before `obj1` is destroyed; if
 created after the temporary is created the temporary shall be destroyed
 after `obj2` is destroyed.
 
-[*Example 5*:
+[*Example 6*:
 
 ``` cpp
 struct S {
@@ -4931,12 +4931,12 @@ Executions of atomic functions that are either defined to be lock-free
 
 - If there is only one thread that is not blocked [[defns.block]] in a
   standard library function, a lock-free execution in that thread shall
-  complete. \[*Note 10*: Concurrently executing threads may prevent
+  complete. \[*Note 2*: Concurrently executing threads may prevent
   progress of a lock-free execution. For example, this situation can
   occur with load-locked store-conditional implementations. This
   property is sometimes termed obstruction-free. — *end note*]
 - When one or more lock-free executions run concurrently, at least one
-  should complete. \[*Note 11*: It is difficult for some implementations
+  should complete. \[*Note 3*: It is difficult for some implementations
   to provide absolute guarantees to this effect, since repeated and
   particularly inopportune interference from other threads may prevent
   forward progress, e.g., by repeatedly stealing a cache line for
@@ -4965,7 +4965,7 @@ the operation is complete. Each such check might consist of one or more
 execution steps, for example using observable behavior of the abstract
 machine. — *end example*]
 
-[*Note 2*: Because of this and the preceding requirement regarding what
+[*Note 4*: Because of this and the preceding requirement regarding what
 threads of execution have to perform eventually, it follows that no
 thread of execution can execute forever without an execution step
 occurring. — *end note*]
@@ -4979,7 +4979,7 @@ For a thread of execution providing *concurrent forward progress
 guarantees*, the implementation ensures that the thread will eventually
 make progress for as long as it has not terminated.
 
-[*Note 3*: This is required regardless of whether or not other threads
+[*Note 5*: This is required regardless of whether or not other threads
 of executions (if any) have been or are making progress. To eventually
 fulfill this requirement means that this will happen in an unspecified
 but finite amount of time. — *end note*]
@@ -4990,7 +4990,7 @@ of execution created by `std::thread` [[thread.thread.class]] or
 `std::jthread` [[thread.jthread.class]] provide concurrent forward
 progress guarantees.
 
-[*Note 4*: General-purpose implementations should provide these
+[*Note 6*: General-purpose implementations should provide these
 guarantees. — *end note*]
 
 For a thread of execution providing *parallel forward progress
@@ -4999,7 +4999,7 @@ thread will eventually make progress if it has not yet executed any
 execution step; once this thread has executed a step, it provides
 concurrent forward progress guarantees.
 
-[*Note 5*: This does not specify a requirement for when to start this
+[*Note 7*: This does not specify a requirement for when to start this
 thread of execution, which will typically be specified by the entity
 that creates this thread of execution. For example, a thread of
 execution that provides concurrent forward progress guarantees and
@@ -5011,7 +5011,7 @@ For a thread of execution providing *weakly parallel forward progress
 guarantees*, the implementation does not ensure that the thread will
 eventually make progress.
 
-[*Note 6*: Threads of execution providing weakly parallel forward
+[*Note 8*: Threads of execution providing weakly parallel forward
 progress guarantees cannot be expected to make progress regardless of
 whether other threads make progress or not; however, blocking with
 forward progress guarantee delegation, as defined below, can be used to
@@ -5022,7 +5022,7 @@ Concurrent forward progress guarantees are stronger than parallel
 forward progress guarantees, which in turn are stronger than weakly
 parallel forward progress guarantees.
 
-[*Note 7*: For example, some kinds of synchronization between threads
+[*Note 9*: For example, some kinds of synchronization between threads
 of execution may only make progress if the respective threads of
 execution provide parallel forward progress guarantees, but will fail to
 make progress under weakly parallel guarantees. — *end note*]
@@ -5034,7 +5034,7 @@ the implementation shall ensure that the forward progress guarantees
 provided by at least one thread of execution in S is at least as strong
 as P’s forward progress guarantees.
 
-[*Note 8*: It is unspecified which thread or threads of execution in S
+[*Note 10*: It is unspecified which thread or threads of execution in S
 are chosen and for which number of execution steps. The strengthening is
 not permanent and not necessarily in place for the rest of the lifetime
 of the affected thread of execution. As long as P is blocked, the
@@ -5044,20 +5044,20 @@ thread of execution in S. — *end note*]
 Once a thread of execution in S terminates, it is removed from S. Once S
 is empty, P is unblocked.
 
-[*Note 9*: A thread of execution B thus can temporarily provide an
+[*Note 11*: A thread of execution B thus can temporarily provide an
 effectively stronger forward progress guarantee for a certain amount of
 time, due to a second thread of execution A being blocked on it with
 forward progress guarantee delegation. In turn, if B then blocks with
 forward progress guarantee delegation on C, this may also temporarily
 provide a stronger forward progress guarantee to C. — *end note*]
 
-[*Note 10*: If all threads of execution in S finish executing (e.g.,
+[*Note 12*: If all threads of execution in S finish executing (e.g.,
 they terminate and do not use blocking synchronization incorrectly),
 then P’s execution of the operation that blocks with forward progress
 guarantee delegation will not result in P’s progress guarantee being
 effectively weakened. — *end note*]
 
-[*Note 11*: This does not remove any constraints regarding blocking
+[*Note 13*: This does not remove any constraints regarding blocking
 synchronization for threads of execution providing parallel or weakly
 parallel forward progress guarantees because the implementation is not
 required to strengthen a particular thread of execution whose too-weak

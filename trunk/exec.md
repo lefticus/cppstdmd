@@ -1280,7 +1280,7 @@ struct emplace-from {
 };
 ```
 
-[*Note 1*: *`emplace-from`* is used to emplace non-movable types into
+[*Note 2*: *`emplace-from`* is used to emplace non-movable types into
 `tuple`, `optional`, `variant`, and similar types. — *end note*]
 
 ``` cpp
@@ -1307,13 +1307,13 @@ struct product-type {       // exposition only
 };
 ```
 
-[*Note 2*: *`product-type`* is presented here in pseudo-code form for
+[*Note 3*: *`product-type`* is presented here in pseudo-code form for
 the sake of exposition. It can be approximated in standard C++ with a
 tuple-like implementation that takes care to keep the type an aggregate
 that can be used as the initializer of a structured binding
 declaration. — *end note*]
 
-[*Note 3*: An expression of type *`product-type`* is usable as the
+[*Note 4*: An expression of type *`product-type`* is usable as the
 initializer of a structured binding declaration
 [[dcl.struct.bind]]. — *end note*]
 
@@ -4712,7 +4712,7 @@ The behavior of `this_thread::sync_wait(sndr)` is undefined unless:
 
 - It blocks the current thread of execution [[defns.block]] with forward
   progress guarantee delegation [[intro.progress]] until the specified
-  sender completes. \[*Note 2*: The default implementation of
+  sender completes. \[*Note 1*: The default implementation of
   `sync_wait` achieves forward progress guarantee delegation by
   providing a `run_loop` scheduler via the `get_delegation_scheduler`
   query on the *`sync-wait-receiver`*’s environment. The `run_loop` is
@@ -4759,7 +4759,7 @@ unless:
 
 - It blocks the current thread of execution [[defns.block]] with forward
   progress guarantee delegation [[intro.progress]] until the specified
-  sender completes. \[*Note 3*: The default implementation of
+  sender completes. \[*Note 1*: The default implementation of
   `sync_wait_with_variant` achieves forward progress guarantee
   delegation by relying on the forward progress guarantee delegation
   provided by `sync_wait`. — *end note*]

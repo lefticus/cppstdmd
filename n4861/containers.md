@@ -170,7 +170,7 @@ requirements:
 - no `swap()` function throws an exception.
 - no `swap()` function invalidates any references, pointers, or
   iterators referring to the elements of the containers being swapped.
-  \[*Note 1*: The `end()` iterator does not refer to any element, so it
+  \[*Note 5*: The `end()` iterator does not refer to any element, so it
   may be invalidated. — *end note*]
 
 Unless otherwise specified (either explicitly or by defining a function
@@ -192,7 +192,7 @@ operations are provided shall implement the semantics described in
 requirements [[iterator.requirements.general]] then the operations
 described in [[container.opt]] are implemented by constexpr functions.
 
-[*Note 5*: The algorithm `lexicographical_compare_three_way` is defined
+[*Note 6*: The algorithm `lexicographical_compare_three_way` is defined
 in [[algorithms]]. — *end note*]
 
 All of the containers defined in this Clause and in  [[basic.string]]
@@ -230,7 +230,7 @@ user specializations of `allocator<T>` are not instantiated:
   and its evaluation causes the following postcondition to hold: The
   value of `*p` is equivalent to the value of `rv` before the
   evaluation.
-  \[*Note 2*: `rv` remains a valid object. Its state is
+  \[*Note 7*: `rv` remains a valid object. Its state is
   unspecified — *end note*]
 - `T` is **Cpp17CopyInsertable* into `X`* means that, in addition to `T`
   being *Cpp17MoveInsertable* into `X`, the following expression is
@@ -253,7 +253,7 @@ user specializations of `allocator<T>` are not instantiated:
   allocator_traits<A>::destroy(m, p)
   ```
 
-[*Note 6*: A container calls
+[*Note 8*: A container calls
 `allocator_traits<A>::construct(m, p, args)` to construct an element at
 `p` using `args`, with `m == get_allocator()`. The default `construct`
 in `allocator` will call `::new((void*)p) T(args)`, but specialized
@@ -6990,7 +6990,7 @@ template<class It>
 
 - `It` satisfies `contiguous_iterator`.
 - `is_convertible_v<U(*)[], element_type(*)[]>` is `true`.
-  \[*Note 3*: The intent is to allow only qualification conversions of
+  \[*Note 1*: The intent is to allow only qualification conversions of
   the iterator reference type to `element_type`. — *end note*]
 
 *Preconditions:*
@@ -7013,7 +7013,7 @@ template<class It, class End>
 *Constraints:* Let `U` be `remove_reference_t<iter_reference_t<It>>`.
 
 - `is_convertible_v<U(*)[], element_type(*)[]>` is `true`.
-  \[*Note 4*: The intent is to allow only qualification conversions of
+  \[*Note 2*: The intent is to allow only qualification conversions of
   the iterator reference type to `element_type`. — *end note*]
 - `It` satisfies `contiguous_iterator`.
 - `End` satisfies `sized_sentinel_for<It>`.
@@ -7042,7 +7042,7 @@ template<class T, size_t N> constexpr span(const array<T, N>& arr) noexcept;
 
 - `extent == dynamic_extent || N == extent` is `true`, and
 - `is_convertible_v<U(*)[], element_type(*)[]>` is `true`.
-  \[*Note 5*: The intent is to allow only qualification conversions of
+  \[*Note 3*: The intent is to allow only qualification conversions of
   the array element type to `element_type`. — *end note*]
 
 *Effects:* Constructs a `span` that is a view over the supplied array.
@@ -7066,7 +7066,7 @@ template<class R> constexpr explicit(extent != dynamic_extent) span(R&& r);
 - `remove_cvref_t<R>` is not a specialization of `array`.
 - `is_array_v<remove_cvref_t<R>>` is `false`.
 - `is_convertible_v<U(*)[], element_type(*)[]>` is `true`.
-  \[*Note 6*: The intent is to allow only qualification conversions of
+  \[*Note 4*: The intent is to allow only qualification conversions of
   the range reference type to `element_type`. — *end note*]
 
 *Preconditions:*
@@ -7098,7 +7098,7 @@ template<class OtherElementType, size_t OtherExtent>
 - `extent == dynamic_extent` `||` `OtherExtent == dynamic_extent` `||`
   `extent == OtherExtent` is `true`, and
 - `is_convertible_v<OtherElementType(*)[], element_type(*)[]>` is
-  `true`. \[*Note 7*: The intent is to allow only qualification
+  `true`. \[*Note 5*: The intent is to allow only qualification
   conversions of the `OtherElementType` to
   `element_type`. — *end note*]
 

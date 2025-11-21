@@ -686,7 +686,7 @@ The following specify the *observable behavior* of the program:
 - Accesses through volatile glvalues are evaluated strictly according to
   the rules of the abstract machine.
 - Data is delivered to the host environment to be written into files ().
-  \[*Note 1*: Delivering such data is followed by an observable
+  \[*Note 4*: Delivering such data is followed by an observable
   checkpoint [[cstdio.syn]]. Not all host environments provide access to
   file contents before program termination. — *end note*]
 - The input and output dynamics of interactive devices shall take place
@@ -694,7 +694,7 @@ The following specify the *observable behavior* of the program:
   program waits for input. What constitutes an interactive device is
   *implementation-defined*.
 
-[*Note 4*: More stringent correspondences between abstract and actual
+[*Note 5*: More stringent correspondences between abstract and actual
 semantics can be defined by each implementation. — *end note*]
 
 ## Structure of this document <a id="intro.structure">[[intro.structure]]</a>

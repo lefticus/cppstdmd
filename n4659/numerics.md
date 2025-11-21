@@ -94,7 +94,7 @@ successfully instantiated and will exhibit well-defined behavior if and
 only if `T` satisfies additional requirements specified for each such
 member or related function.
 
-[*Example 1*: It is valid to instantiate `valarray<complex>`, but
+[*Example 2*: It is valid to instantiate `valarray<complex>`, but
 `operator>()` will not be successfully instantiated for
 `valarray<complex>` operands, since `complex` does not have any ordering
 operators. — *end example*]

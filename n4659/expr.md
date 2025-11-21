@@ -1646,7 +1646,7 @@ rules applies.
     *ref-qualifier*ₒₚₜ returning `T`”, then `E1.E2` is a prvalue. The
     expression designates a non-static member function. The expression
     can be used only as the left-hand operand of a member function
-    call ([[class.mfct]]). \[*Note 1*: Any redundant set of parentheses
+    call ([[class.mfct]]). \[*Note 3*: Any redundant set of parentheses
     surrounding the expression is ignored (
     [[expr.prim]]). — *end note*] The type of `E1.E2` is “function of
     parameter-type-list *cv* returning `T`”.
@@ -1659,7 +1659,7 @@ program is ill-formed if the class of which `E2` is directly a member is
 an ambiguous base ([[class.member.lookup]]) of the naming class (
 [[class.access.base]]) of `E2`.
 
-[*Note 3*: The program is also ill-formed if the naming class is an
+[*Note 4*: The program is also ill-formed if the naming class is an
 ambiguous base of the class type of the object expression; see 
 [[class.access.base]]. — *end note*]
 
@@ -2802,7 +2802,7 @@ A *new-expression* that creates an object of type `T` initializes that
 object as follows:
 
 - If the *new-initializer* is omitted, the object is
-  default-initialized ([[dcl.init]]). \[*Note 2*: If no initialization
+  default-initialized ([[dcl.init]]). \[*Note 11*: If no initialization
   is performed, the object has an indeterminate value. — *end note*]
 - Otherwise, the *new-initializer* is interpreted according to the
   initialization rules of  [[dcl.init]] for direct-initialization.
@@ -2827,7 +2827,7 @@ propagate in the context of the *new-expression*. If no unambiguous
 matching deallocation function can be found, propagating the exception
 does not cause the object’s memory to be freed.
 
-[*Note 11*: This is appropriate when the called allocation function
+[*Note 12*: This is appropriate when the called allocation function
 does not allocate memory; otherwise, it is likely to result in a memory
 leak. — *end note*]
 
@@ -3437,7 +3437,7 @@ is defined as follows:
 - If one refers to a member of class `C1` and the other refers to a
   member of a different class `C2`, where neither is a base class of the
   other, the result is unspecified.
-  \[*Example 2*:
+  \[*Example 1*:
   ``` cpp
   struct A {};
   struct B : A { int x; };
@@ -3456,7 +3456,7 @@ is defined as follows:
   to the same member of the same most derived object ([[intro.object]])
   or the same subobject if indirection with a hypothetical object of the
   associated class type were performed, otherwise they compare unequal.
-  \[*Example 3*:
+  \[*Example 2*:
   ``` cpp
   struct B {
     int f();
@@ -3589,7 +3589,7 @@ following shall hold:
   the type and value category of the other. The *conditional-expression*
   is a bit-field if that operand is a bit-field.
 - Both the second and the third operands have type `void`; the result is
-  of type `void` and is a prvalue. \[*Note 3*: This includes the case
+  of type `void` and is a prvalue. \[*Note 1*: This includes the case
   where both operands are *throw-expression*s. — *end note*]
 
 Otherwise, if the second and third operand are glvalue bit-fields of the
@@ -3604,7 +3604,7 @@ cv-qualification, an attempt is made to form an implicit conversion
 sequence ([[over.best.ics]]) from each of those operands to the type of
 the other.
 
-[*Note 1*: Properties such as access, whether an operand is a
+[*Note 2*: Properties such as access, whether an operand is a
 bit-field, or whether a conversion function is deleted are ignored for
 that determination. — *end note*]
 
@@ -3639,7 +3639,7 @@ sequence can be formed, that conversion is applied to the chosen operand
 and the converted operand is used in place of the original operand for
 the remainder of this section.
 
-[*Note 2*: The conversion might be ill-formed even if an implicit
+[*Note 3*: The conversion might be ill-formed even if an implicit
 conversion sequence could be formed. — *end note*]
 
 If the second and third operands are glvalues of the same value category
@@ -3871,7 +3871,7 @@ of `e`, following the rules of the abstract machine (
   constexpr constructor that is being evaluated as part of `e`;
 - an invocation of a function other than a constexpr constructor for a
   literal class, a constexpr function, or an implicit invocation of a
-  trivial destructor ([[class.dtor]]) \[*Note 4*: Overload resolution (
+  trivial destructor ([[class.dtor]]) \[*Note 2*: Overload resolution (
   [[over.match]]) is applied as usual — *end note*] ;
 - an invocation of an undefined constexpr function or an undefined
   constexpr constructor;
@@ -3882,7 +3882,7 @@ of `e`, following the rules of the abstract machine (
   Annex  [[implimits]]);
 - an operation that would have undefined behavior as specified in
   Clauses  [[intro]] through  [[cpp]] of this International Standard
-  \[*Note 5*: including, for example, signed integer overflow (Clause
+  \[*Note 3*: including, for example, signed integer overflow (Clause
   [[expr]]), certain pointer arithmetic ([[expr.add]]), division by
   zero ([[expr.mul]]), or certain shift operations (
   [[expr.shift]]) — *end note*] ;
@@ -3917,7 +3917,7 @@ of `e`, following the rules of the abstract machine (
   automatic storage duration defined outside that *lambda-expression*,
   where the reference would be an odr-use ([[basic.def.odr]],
   [[expr.prim.lambda]]);
-  \[*Example 4*:
+  \[*Example 1*:
   ``` cpp
   void g() {
     const int n = 0;
@@ -3929,13 +3929,13 @@ of `e`, following the rules of the abstract machine (
   ```
 
   — *end example*]
-  \[*Note 6*:
+  \[*Note 4*:
   If the odr-use occurs in an invocation of a function call operator of
   a closure type, it no longer refers to `this` or to an enclosing
   automatic variable due to the transformation (
   [[expr.prim.lambda.capture]]) of the *id-expression* into an access of
   the corresponding data member.
-  \[*Example 5*:
+  \[*Example 2*:
   ``` cpp
   auto monad = [](auto v) { return [=] { return v; }; };
   auto bind = [](auto m) {
@@ -3970,7 +3970,7 @@ behavior as specified in Clauses  [[library]] through  [[thread]] of
 this International Standard, it is unspecified whether `e` is a core
 constant expression.
 
-[*Example 1*:
+[*Example 3*:
 
 ``` cpp
 int x;                              // not constant
@@ -4016,7 +4016,7 @@ An *integral constant expression* is an expression of integral or
 unscoped enumeration type, implicitly converted to a prvalue, where the
 converted expression is a core constant expression.
 
-[*Note 2*: Such expressions may be used as bit-field lengths (
+[*Note 5*: Such expressions may be used as bit-field lengths (
 [[class.bit]]), as enumerator initializers if the underlying type is not
 fixed ([[dcl.enum]]), and as alignments (
 [[dcl.align]]). — *end note*]
@@ -4040,7 +4040,7 @@ constant expression and the implicit conversion sequence contains only
 
 and where the reference binding (if any) binds directly.
 
-[*Note 3*: Such expressions may be used in `new` expressions (
+[*Note 6*: Such expressions may be used in `new` expressions (
 [[expr.new]]), as case expressions ([[stmt.switch]]), as enumerator
 initializers if the underlying type is fixed ([[dcl.enum]]), as array
 bounds ([[dcl.array]]), and as non-type template arguments (
@@ -4071,7 +4071,7 @@ object with static storage duration that is either not a temporary
 object or is a temporary object whose value satisfies the above
 constraints, or it is a function.
 
-[*Note 4*:
+[*Note 7*:
 
 Since this International Standard imposes no restrictions on the
 accuracy of floating-point operations, it is unspecified whether the
@@ -4079,7 +4079,7 @@ evaluation of a floating-point expression during translation yields the
 same result as the evaluation of the same expression (or the same
 operations on the same values) during program execution.[^28]
 
-[*Example 2*:
+[*Example 4*:
 
 ``` cpp
 bool f() {
@@ -4101,7 +4101,7 @@ contextually implicitly converted (Clause  [[conv]]) to an integral or
 unscoped enumeration type and the selected conversion function shall be
 `constexpr`.
 
-[*Example 3*:
+[*Example 5*:
 
 ``` cpp
 struct A {

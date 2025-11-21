@@ -569,7 +569,7 @@ operand of type *cv2* `T2`, four sets of candidate functions, designated
     `y == x` that is a rewrite target with first operand `y`.
   - For all other operators, the rewritten candidate set is empty.
 
-  \[*Note 1*: A candidate synthesized from a member candidate has its
+  \[*Note 2*: A candidate synthesized from a member candidate has its
   object parameter as the second parameter, thus implicit conversions
   are considered for the first, but not for the second,
   parameter. — *end note*]
@@ -699,7 +699,7 @@ operator `->`, and there are no viable functions, then the operator is
 assumed to be the built-in operator and interpreted according to
 [[expr.compound]].
 
-[*Note 2*:
+[*Note 3*:
 
 The lookup rules for operators in expressions are different than the
 lookup rules for operator function names in a function call, as shown in
@@ -864,7 +864,7 @@ comprising:
     the constructor, if any.
   - The associated constraints [[temp.constr.decl]] are the conjunction
     of the associated constraints of `C` and the associated constraints
-    of the constructor, if any. \[*Note 2*: A *constraint-expression* in
+    of the constructor, if any. \[*Note 1*: A *constraint-expression* in
     the *template-head* of `C` is checked for satisfaction before any
     constraints from the *template-head* or trailing *requires-clause*
     of the constructor. — *end note*]
@@ -944,7 +944,7 @@ argument list of `A` [[temp.dep.type]] having a member typedef `type`
 designating a template specialization with the template argument list of
 `A` but with `C` as the template.
 
-[*Note 1*: Equivalently, the template parameter list of the
+[*Note 2*: Equivalently, the template parameter list of the
 specialization is that of `C`, the template argument list of the
 specialization is `B`, and the member typedef names `C` with the
 template argument list of `C`. — *end note*]
@@ -1499,7 +1499,7 @@ If there is exactly one viable function that is a better function than
 all other viable functions, then it is the one selected by overload
 resolution; otherwise the call is ill-formed.[^7]
 
-[*Example 1*:
+[*Example 8*:
 
 ``` cpp
 void Fcn(const int*,  short);
@@ -2031,7 +2031,7 @@ Otherwise, if the parameter type is not a class:
 - if the initializer list has one element that is not itself an
   initializer list, the implicit conversion sequence is the one required
   to convert the element to the parameter type;
-  \[*Example 8*:
+  \[*Example 11*:
   ``` cpp
   void f(int);
   f( {'a'} );             // OK, same conversion as char to int
@@ -2041,7 +2041,7 @@ Otherwise, if the parameter type is not a class:
   — *end example*]
 - if the initializer list has no elements, the implicit conversion
   sequence is the identity conversion.
-  \[*Example 9*:
+  \[*Example 12*:
   ``` cpp
   void f(int);
   f( { } );               // OK, identity conversion
@@ -2086,7 +2086,7 @@ conversion sequences unless one of the following rules applies:
 
   even if one of the other rules in this paragraph would otherwise
   apply.
-  \[*Example 10*:
+  \[*Example 1*:
   ``` cpp
   void f1(int);                                   // #1
   void f1(std::initializer_list<long>);           // #2
@@ -2098,7 +2098,7 @@ conversion sequences unless one of the following rules applies:
   ```
 
   — *end example*]
-  \[*Example 11*:
+  \[*Example 2*:
   ``` cpp
   void f(int    (&&)[] );         // #1
   void f(double (&&)[] );         // #2
@@ -2126,7 +2126,7 @@ conversion sequences unless one of the following rules applies:
     neither refers to an implicit object parameter of a non-static
     member function declared without a *ref-qualifier*, and `S1` binds
     an rvalue reference to an rvalue and `S2` binds an lvalue reference
-    \[*Example 12*:
+    \[*Example 3*:
     ``` cpp
     int i;
     int f1();
@@ -2157,7 +2157,7 @@ conversion sequences unless one of the following rules applies:
   - `S1` and `S2` include reference bindings [[dcl.init.ref]] and `S1`
     binds an lvalue reference to an lvalue of function type and `S2`
     binds an rvalue reference to an lvalue of function type
-    \[*Example 13*:
+    \[*Example 4*:
     ``` cpp
     int f(void(&)());               // #1
     int f(void(&&)());              // #2
@@ -2173,7 +2173,7 @@ conversion sequences unless one of the following rules applies:
     considered to yield the cv-unqualified referenced type), where `T1`
     and `T2` are not the same type, and `const T2` is
     reference-compatible with `T1` [[dcl.init.ref]]
-    \[*Example 14*:
+    \[*Example 5*:
     ``` cpp
     int f(const volatile int *);
     int f(const int *);
@@ -2191,7 +2191,7 @@ conversion sequences unless one of the following rules applies:
     and `S2` bind “reference to `T1`” and “reference to `T2`”,
     respectively [[dcl.init.ref]], where `T1` and `T2` are not the same
     type, and `T2` is reference-compatible with `T1`
-    \[*Example 15*:
+    \[*Example 6*:
     ``` cpp
     int f(const int &);
     int f(int &);
@@ -2225,7 +2225,7 @@ conversion sequences unless one of the following rules applies:
     have source types `V1` and `V2`, respectively, where the standard
     conversion sequence from `V1*` to `T*` is better than the standard
     conversion sequence from `V2*` to `T*`.
-    \[*Example 16*:
+    \[*Example 7*:
     ``` cpp
     struct Z {};
 
@@ -2250,7 +2250,7 @@ conversion sequences unless one of the following rules applies:
   initialize the same class in an aggregate initialization and in either
   case the second standard conversion sequence of `U1` is better than
   the second standard conversion sequence of `U2`.
-  \[*Example 17*:
+  \[*Example 8*:
   ``` cpp
   struct A {
     operator short();
@@ -2282,7 +2282,7 @@ indistinguishable unless one of the following rules applies:
     whose rank is not equal to the rank of `FP1`, or the floating-point
     conversion subrank [[conv.rank]] of `FP2` is greater than the
     subrank of `T3`.
-    \[*Example 18*:
+    \[*Example 9*:
     ``` cpp
     int f(std::float32_t);
     int f(std::float64_t);
@@ -2303,7 +2303,7 @@ indistinguishable unless one of the following rules applies:
   class `C` is derived directly or indirectly from `B`,
   - conversion of `C*` to `B*` is better than conversion of `C*` to
     `A*`,
-    \[*Example 19*:
+    \[*Example 10*:
     ``` cpp
     struct A {};
     struct B : public A {};
@@ -2330,7 +2330,7 @@ indistinguishable unless one of the following rules applies:
     to `C::*`, and
   - conversion of `B` to `A` is better than conversion of `C` to `A`.
 
-  \[*Note 3*: Compared conversion sequences will have different source
+  \[*Note 1*: Compared conversion sequences will have different source
   types only in the context of comparing the second standard conversion
   sequence of an initialization by user-defined conversion (see 
   [[over.match.best]]); in all other contexts, the source types will be

@@ -4536,7 +4536,7 @@ An evaluation is *signal-safe* unless it includes one of the following:
 
 - a call to any standard library function, except for plain lock-free
   atomic operations and functions explicitly identified as signal-safe;
-  \[*Note 2*: This implicitly excludes the use of `new` and `delete`
+  \[*Note 1*: This implicitly excludes the use of `new` and `delete`
   expressions that rely on a library-provided memory
   allocator. — *end note*]
 - an access to an object with thread storage duration;

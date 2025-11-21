@@ -1059,7 +1059,7 @@ The expression `ranges::iter_swap(E1, E2)` for subexpressions `E1` and
   function selected by overload resolution does not exchange the values
   denoted by `E1` and `E2`, the program is ill-formed, no diagnostic
   required.
-  \[*Note 2*: This precludes calling unconstrained `std::iter_swap`.
+  \[*Note 1*: This precludes calling unconstrained `std::iter_swap`.
   When the deleted overload is viable, program-defined overloads need to
   be more specialized [[temp.func.order]] to be selected. — *end note*]
 - Otherwise, if the types of `E1` and `E2` each model
@@ -1071,7 +1071,7 @@ The expression `ranges::iter_swap(E1, E2)` for subexpressions `E1` and
   `indirectly_movable_storable<T2, T1>`, then
   `(void)(*E1 = iter-exchange-move(E2, E1))`, except that `E1` is
   evaluated only once.
-- Otherwise, `ranges::iter_swap(E1, E2)` is ill-formed. \[*Note 3*: This
+- Otherwise, `ranges::iter_swap(E1, E2)` is ill-formed. \[*Note 2*: This
   case can result in substitution failure when
   `ranges::iter_swap(E1, E2)` appears in the immediate context of a
   template instantiation. — *end note*]

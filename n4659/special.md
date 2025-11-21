@@ -277,7 +277,7 @@ Even when the creation of the temporary object is unevaluated (Clause 
 [[expr]]), all the semantic restrictions shall be respected as if the
 temporary object had been created and later destroyed.
 
-[*Note 1*: This includes accessibility (Clause  [[class.access]]) and
+[*Note 2*: This includes accessibility (Clause  [[class.access]]) and
 whether it is deleted, for the constructor selected and for the
 destructor. However, in the special case of the operand of a
 *decltype-specifier* ([[expr.call]]), no temporary is introduced, so
@@ -286,7 +286,7 @@ the foregoing does not apply to such a prvalue. — *end note*]
 The materialization of a temporary object is generally delayed as long
 as possible in order to avoid creating unnecessary temporary objects.
 
-[*Note 2*:
+[*Note 3*:
 
 Temporary objects are materialized:
 
@@ -359,7 +359,7 @@ the temporary (even if that constructor is inaccessible or would not be
 selected by overload resolution to perform a copy or move of the
 object).
 
-[*Note 3*: This latitude is granted to allow objects of class type to
+[*Note 4*: This latitude is granted to allow objects of class type to
 be passed to or returned from functions in registers. — *end note*]
 
 When an implementation introduces a temporary object of a class that has
@@ -399,7 +399,7 @@ for the lifetime of the reference except:
 - A temporary bound to a reference in a *new-initializer* (
   [[expr.new]]) persists until the completion of the full-expression
   containing the *new-initializer*.
-  \[*Example 1*:
+  \[*Example 2*:
   ``` cpp
   struct S { int mi; const std::pair<int,int>& mp; };
   S a { 1, {2,3} };
@@ -407,7 +407,7 @@ for the lifetime of the reference except:
   ```
 
   — *end example*]
-  \[*Note 2*: This may introduce a dangling reference, and
+  \[*Note 5*: This may introduce a dangling reference, and
   implementations are encouraged to issue a warning in such a
   case. — *end note*]
 
@@ -427,7 +427,7 @@ created the temporary shall be destroyed before `obj1` is destroyed; if
 created after the temporary is created the temporary shall be destroyed
 after `obj2` is destroyed.
 
-[*Example 2*:
+[*Example 3*:
 
 ``` cpp
 struct S {
@@ -2389,14 +2389,14 @@ combined to eliminate multiple copies):
   as an alias for the exception object if the meaning of the program
   will be unchanged except for the execution of constructors and
   destructors for the object declared by the *exception-declaration*.
-  \[*Note 3*: There cannot be a move from the exception object because
+  \[*Note 1*: There cannot be a move from the exception object because
   it is always an lvalue. — *end note*]
 
 Copy elision is required where an expression is evaluated in a context
 requiring a constant expression ([[expr.const]]) and in constant
 initialization ([[basic.start.static]]).
 
-[*Note 1*: Copy elision might not be performed if the same expression
+[*Note 2*: Copy elision might not be performed if the same expression
 is evaluated in another context. — *end note*]
 
 [*Example 1*:
@@ -2465,7 +2465,7 @@ first parameter of the selected constructor is not an rvalue reference
 to the object’s type (possibly cv-qualified), overload resolution is
 performed again, considering the object as an lvalue.
 
-[*Note 2*: This two-stage overload resolution must be performed
+[*Note 3*: This two-stage overload resolution must be performed
 regardless of whether copy elision will occur. It determines the
 constructor to be called if elision is not performed, and the selected
 constructor must be accessible even if the call is

@@ -309,7 +309,7 @@ A function is *named by* an expression or conversion as follows:
   and either it is not a pure virtual function or the expression is an
   *id-expression* naming the function with an explicitly qualified name
   that does not form a pointer to member [[expr.unary.op]].
-  \[*Note 1*: This covers taking the address of functions
+  \[*Note 2*: This covers taking the address of functions
   [[conv.func]], [[expr.unary.op]], calls to named functions
   [[expr.call]], operator overloading [[over]], user-defined conversions
   [[class.conv.fct]], allocation functions for *new-expression*s
@@ -508,7 +508,7 @@ X* x2;                          // use X in pointer formation
 
 — *end example*]
 
-[*Note 2*:
+[*Note 3*:
 
 The rules for declarations and expressions describe in which contexts
 complete class types are required. A class type `T` must be complete if
@@ -617,7 +617,7 @@ For the purposes of the preceding requirements:
   constructor was implicitly defined in every translation unit where it
   is odr-used, and the implicit definition in every translation unit
   shall call the same constructor for a subobject of `D`.
-  \[*Example 1*:
+  \[*Example 7*:
   ``` cpp
   // translation unit 1:
   struct X {
@@ -662,14 +662,14 @@ defined within `D`). For each such entity and for `D` itself, the
 behavior is as if there is a single entity with a single definition,
 including in the application of these requirements to other entities.
 
-[*Note 3*: The entity is still declared in multiple translation units,
+[*Note 4*: The entity is still declared in multiple translation units,
 and [[basic.link]] still applies to these declarations. In particular,
 *lambda-expression*s [[expr.prim.lambda]] appearing in the type of `D`
 can result in the different declarations having distinct types, and
 *lambda-expression*s appearing in a default argument of `D` might still
 denote different types in different translation units. — *end note*]
 
-[*Example 7*:
+[*Example 8*:
 
 ``` cpp
 inline void f(bool cond, void (*p)()) {
@@ -1291,10 +1291,10 @@ appears in a translation unit D and
   *private-module-fragment* in D (if any), and
 - either X is exported or else D and L are part of the same module and X
   does not inhabit a namespace with internal linkage or declare a name
-  with internal linkage. \[*Note 3*: Names declared by a
+  with internal linkage. \[*Note 2*: Names declared by a
   *using-declaration* have no linkage. — *end note*]
 
-[*Note 2*:
+[*Note 3*:
 
 A *module-import-declaration* imports both the named translation unit(s)
 and any modules named by exported *module-import-declaration*s within
@@ -1338,7 +1338,7 @@ In certain contexts, only certain kinds of declarations are included.
 After any such restriction, any declarations of classes or enumerations
 are discarded if any other declarations are found.
 
-[*Note 3*: A type (but not a type alias or template) is therefore
+[*Note 4*: A type (but not a type alias or template) is therefore
 hidden by any other entity in its scope. — *end note*]
 
 However, if a lookup is *type-only*, only declarations of types and
@@ -1759,7 +1759,7 @@ set. The set of entities is determined in the following way:
 
 - If `T` is `std::meta::info` [[meta.syn]], its associated set of
   entities is the singleton containing the enumeration type
-  `std::meta::operators` [[meta.reflection.operators]]. \[*Note 4*: The
+  `std::meta::operators` [[meta.reflection.operators]]. \[*Note 2*: The
   `std::meta::info` type is a type alias, so an explicit rule is needed
   to associate calls whose arguments are reflections with the namespace
   `std::meta`. — *end note*]
@@ -1773,7 +1773,7 @@ set. The set of entities is determined in the following way:
   template arguments provided for template type parameters; the
   templates used as type template template arguments; and the classes of
   which any member templates used as type template template arguments
-  are members. \[*Note 5*: Constant template arguments, variable
+  are members. \[*Note 3*: Constant template arguments, variable
   template template arguments, and concept template arguments do not
   contribute to the set of associated entities. — *end note*]
 - If `T` is an enumeration type, its associated entities are `T` and, if
@@ -1869,7 +1869,7 @@ void test() {
 
 — *end example*]
 
-[*Note 2*: The associated namespace can include namespaces already
+[*Note 4*: The associated namespace can include namespaces already
 considered by ordinary unqualified lookup. — *end note*]
 
 [*Example 3*:
@@ -2552,7 +2552,7 @@ For any two declarations of an entity E:
   of the same kind [[dcl.type.elab]].
 - If one declares E to be a class template, the other shall do so with
   the same kind and an equivalent *template-head* [[temp.over.link]].
-  \[*Note 6*: The declarations can supply different default template
+  \[*Note 5*: The declarations can supply different default template
   arguments. — *end note*]
 - If one declares E to be a function template or a (partial
   specialization of a) variable template, the other shall declare E to
@@ -2580,7 +2580,7 @@ namespace h {}          // error: same entity as #2, but not a function
 
 — *end example*]
 
-[*Note 5*: Linkage to non-C++ declarations can be achieved using a
+[*Note 6*: Linkage to non-C++ declarations can be achieved using a
 *linkage-specification* [[dcl.link]]. — *end note*]
 
 A declaration D *names* an entity E if
@@ -2617,7 +2617,7 @@ A declaration is an *exposure* if it either names a TU-local entity
 or defines a constexpr variable initialized to a TU-local value (defined
 below).
 
-[*Note 6*: An inline function template can be an exposure even though
+[*Note 8*: An inline function template can be an exposure even though
 certain explicit specializations of it would be usable in other
 translation units. — *end note*]
 
@@ -2635,7 +2635,7 @@ An entity is *TU-local* if it is
 - a specialization of a TU-local template,
 - a specialization of a template with any TU-local template argument, or
 - a specialization of a template whose (possibly instantiated)
-  declaration is an exposure. \[*Note 8*: A specialization can be
+  declaration is an exposure. \[*Note 9*: A specialization can be
   produced by implicit or explicit instantiation. — *end note*]
 
 A value or object is *TU-local* if either
@@ -3957,8 +3957,8 @@ The exceptions to this lifetime rule are:
 - A temporary bound to a reference in a *new-initializer* [[expr.new]]
   persists until the completion of the full-expression containing the
   *new-initializer*.
-  \[*Note 9*: This might introduce a dangling reference. — *end note*]
-  \[*Example 2*:
+  \[*Note 6*: This might introduce a dangling reference. — *end note*]
+  \[*Example 5*:
   ``` cpp
   struct S { int mi; const std::pair<int,int>& mp; };
   S a { 1, {2,3} };
@@ -4003,7 +4003,7 @@ destroyed before `obj1` is destroyed; if `obj2` is an object with the
 same storage duration as the temporary and created after the temporary
 is created the temporary shall be destroyed after `obj2` is destroyed.
 
-[*Example 5*:
+[*Example 6*:
 
 ``` cpp
 struct S {
@@ -5415,12 +5415,12 @@ Executions of atomic functions that are either defined to be lock-free
 
 - If there is only one thread that is not blocked [[defns.block]] in a
   standard library function, a lock-free execution in that thread shall
-  complete. \[*Note 10*: Concurrently executing threads might prevent
+  complete. \[*Note 2*: Concurrently executing threads might prevent
   progress of a lock-free execution. For example, this situation can
   occur with load-locked store-conditional implementations. This
   property is sometimes termed obstruction-free. — *end note*]
 - When one or more lock-free executions run concurrently, at least one
-  should complete. \[*Note 11*: It is difficult for some implementations
+  should complete. \[*Note 3*: It is difficult for some implementations
   to provide absolute guarantees to this effect, since repeated and
   particularly inopportune interference from other threads could prevent
   forward progress, e.g., by repeatedly stealing a cache line for
@@ -5450,7 +5450,7 @@ the operation is complete. Each such check consists of one or more
 execution steps, for example using observable behavior of the abstract
 machine. — *end example*]
 
-[*Note 2*: Because of this and the preceding requirement regarding what
+[*Note 4*: Because of this and the preceding requirement regarding what
 threads of execution have to perform eventually, it follows that no
 thread of execution can execute forever without an execution step
 occurring. — *end note*]
@@ -5464,7 +5464,7 @@ For a thread of execution providing *concurrent forward progress
 guarantees*, the implementation ensures that the thread will eventually
 make progress for as long as it has not terminated.
 
-[*Note 3*: This applies regardless of whether or not other threads of
+[*Note 5*: This applies regardless of whether or not other threads of
 execution (if any) have been or are making progress. To eventually
 fulfill this requirement means that this will happen in an unspecified
 but finite amount of time. — *end note*]
@@ -5482,7 +5482,7 @@ thread will eventually make progress if it has not yet executed any
 execution step; once this thread has executed a step, it provides
 concurrent forward progress guarantees.
 
-[*Note 4*: This does not specify a requirement for when to start this
+[*Note 6*: This does not specify a requirement for when to start this
 thread of execution, which will typically be specified by the entity
 that creates this thread of execution. For example, a thread of
 execution that provides concurrent forward progress guarantees and
@@ -5494,7 +5494,7 @@ For a thread of execution providing *weakly parallel forward progress
 guarantees*, the implementation does not ensure that the thread will
 eventually make progress.
 
-[*Note 5*: Threads of execution providing weakly parallel forward
+[*Note 7*: Threads of execution providing weakly parallel forward
 progress guarantees cannot be expected to make progress regardless of
 whether other threads make progress or not; however, blocking with
 forward progress guarantee delegation, as defined below, can be used to
@@ -5505,7 +5505,7 @@ Concurrent forward progress guarantees are stronger than parallel
 forward progress guarantees, which in turn are stronger than weakly
 parallel forward progress guarantees.
 
-[*Note 6*: For example, some kinds of synchronization between threads
+[*Note 8*: For example, some kinds of synchronization between threads
 of execution might only make progress if the respective threads of
 execution provide parallel forward progress guarantees, but will fail to
 make progress under weakly parallel guarantees. — *end note*]
@@ -5517,7 +5517,7 @@ the implementation shall ensure that the forward progress guarantees
 provided by at least one thread of execution in S is at least as strong
 as P’s forward progress guarantees.
 
-[*Note 7*: It is unspecified which thread or threads of execution in S
+[*Note 9*: It is unspecified which thread or threads of execution in S
 are chosen and for which number of execution steps. The strengthening is
 not permanent and not necessarily in place for the rest of the lifetime
 of the affected thread of execution. As long as P is blocked, the
@@ -5527,20 +5527,20 @@ thread of execution in S. — *end note*]
 Once a thread of execution in S terminates, it is removed from S. Once S
 is empty, P is unblocked.
 
-[*Note 8*: A thread of execution B thus can temporarily provide an
+[*Note 10*: A thread of execution B thus can temporarily provide an
 effectively stronger forward progress guarantee for a certain amount of
 time, due to a second thread of execution A being blocked on it with
 forward progress guarantee delegation. In turn, if B then blocks with
 forward progress guarantee delegation on C, this can also temporarily
 provide a stronger forward progress guarantee to C. — *end note*]
 
-[*Note 9*: If all threads of execution in S finish executing (e.g.,
+[*Note 11*: If all threads of execution in S finish executing (e.g.,
 they terminate and do not use blocking synchronization incorrectly),
 then P’s execution of the operation that blocks with forward progress
 guarantee delegation will not result in P’s progress guarantee being
 effectively weakened. — *end note*]
 
-[*Note 10*: This does not remove any constraints regarding blocking
+[*Note 12*: This does not remove any constraints regarding blocking
 synchronization for threads of execution providing parallel or weakly
 parallel forward progress guarantees because the implementation is not
 required to strengthen a particular thread of execution whose too-weak
@@ -6011,10 +6011,10 @@ When the program is *contract-terminated*, it is
 
 - `std::terminate` is called,
 - `std::abort` is called, or
-- execution is terminated. \[*Note 12*: No further execution steps occur
+- execution is terminated. \[*Note 7*: No further execution steps occur
   [[intro.progress]]. — *end note*]
 
-[*Note 7*: Performing the actions of `std::terminate` or `std::abort`
+[*Note 8*: Performing the actions of `std::terminate` or `std::abort`
 without actually making a library call is a conforming implementation of
 contract-termination [[intro.abstract]]. — *end note*]
 
@@ -6040,7 +6040,7 @@ invoked from within an active implicit handler for that exception
 and the evaluation semantic is observe, that implicit handler is no
 longer considered active.
 
-[*Note 8*: The exception can be inspected or rethrown within the
+[*Note 9*: The exception can be inspected or rethrown within the
 contract-violation handler. — *end note*]
 
 If the contract-violation handler returns normally and the evaluation
@@ -6049,7 +6049,7 @@ occurred as the result of an uncaught exception from the evaluation of
 the predicate, the implicit handler remains active when contract
 termination occurs.
 
-[*Note 9*: If the contract-violation handler returns normally and the
+[*Note 10*: If the contract-violation handler returns normally and the
 evaluation semantic is observe, control flow continues normally after
 the point of evaluation of the contract assertion. — *end note*]
 
@@ -6058,7 +6058,7 @@ after the contract-violation handler returns normally such that any
 other operation O that happens after the contract-violation handler
 returns also happens after C.
 
-[*Note 10*: The terminating semantics terminate the program if
+[*Note 11*: The terminating semantics terminate the program if
 execution would otherwise continue normally past a contract violation:
 the enforce semantic provides the opportunity to log information about
 the contract violation before terminating the program or to throw an
@@ -6074,13 +6074,13 @@ function contract assertion [[dcl.contract.func]] exits via an
 exception, the behavior is as if the function body exits via that same
 exception.
 
-[*Note 11*: A *function-try-block* [[except.pre]] is the function body
+[*Note 12*: A *function-try-block* [[except.pre]] is the function body
 when present and thus does not have an opportunity to catch the
 exception. If the function has a non-throwing exception specification,
 the function `std::terminate` is invoked
 [[except.terminate]]. — *end note*]
 
-[*Note 12*: If a contract-violation handler invoked from an
+[*Note 13*: If a contract-violation handler invoked from an
 *assertion-statement* [[stmt.contract.assert]] exits via an exception,
 the search for a handler continues from the execution of that
 statement. — *end note*]

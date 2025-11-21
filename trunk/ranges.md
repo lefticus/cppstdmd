@@ -1130,7 +1130,7 @@ Given an lvalue `t` of type `remove_reference_t<T>`, `T` models
   to `ranges::distance(ranges::begin(t), ranges::end(t))`, and
 - if `iterator_t<T>` models `forward_iterator`, `ranges::size(t)` is
   well-defined regardless of the evaluation of `ranges::begin(t)`.
-  \[*Note 2*: `ranges::size(t)` is otherwise not required to be
+  \[*Note 1*: `ranges::size(t)` is otherwise not required to be
   well-defined after evaluating `ranges::begin(t)`. For example, it is
   possible for `ranges::size(t)` to be well-defined for a `sized_range`
   whose iterator type does not model `forward_iterator` only if
@@ -2227,7 +2227,7 @@ Let `IOTA-DIFF-T(W)` be defined as follows:
   than the width of `W` if such a type exists.
 - Otherwise, `IOTA-DIFF-T(W)` is an unspecified signed-integer-like type
   [[iterator.concept.winc]] of width not less than the width of `W`.
-  \[*Note 3*: It is unspecified whether this type satisfies
+  \[*Note 1*: It is unspecified whether this type satisfies
   `weakly_incrementable`. — *end note*]
 
 The exposition-only *decrementable* concept is equivalent to:
@@ -9113,7 +9113,7 @@ friend constexpr bool operator==(const iterator& x, const iterator& y)
 - Otherwise, `true` if there exists an integer
   0 ≤ i < `sizeof...(Views)` such that
   `bool(std::get<`i`>(x.`*`current_`*`) == std::get<`i`>(y.`*`current_`*`))`
-  is `true`. \[*Note 4*: This allows `zip_view` to model `common_range`
+  is `true`. \[*Note 1*: This allows `zip_view` to model `common_range`
   when all constituent views model `common_range`. — *end note*]
 - Otherwise, `false`.
 
@@ -13886,7 +13886,7 @@ namespace std {
   - `\texttt{common_reference_with}<RRef&&, const \exposid{value}&>`
 
   is modeled.
-  \[*Note 5*: These requirements ensure the exposition-only *`iterator`*
+  \[*Note 1*: These requirements ensure the exposition-only *`iterator`*
   type can model `indirectly_readable` and thus
   `input_iterator`. — *end note*]
 

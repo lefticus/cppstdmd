@@ -9056,7 +9056,7 @@ A *root-name* identifies the starting location for pathname resolution
 *root-name*s, at least one *implementation-defined* *root-name* is
 required.
 
-[*Note 1*: Many operating systems define a name beginning with two
+[*Note 2*: Many operating systems define a name beginning with two
 *directory-separator* characters as a *root-name* that identifies
 network or other resource locations. Some operating systems define a
 single letter followed by a colon as a drive specifier — a *root-name*
@@ -9065,7 +9065,7 @@ identifying a specific device such as a disk drive. — *end note*]
 If a *root-name* is otherwise ambiguous, the possibility with the
 longest sequence of characters is chosen.
 
-[*Note 2*: On a POSIX-like operating system, it is impossible to have a
+[*Note 3*: On a POSIX-like operating system, it is impossible to have a
 *root-name* and a *relative-path* without an intervening
 *root-directory* element. — *end note*]
 
@@ -9075,7 +9075,7 @@ longest sequence of characters is chosen.
 2.  Replace each slash character in the *root-name* with a
     *preferred-separator*.
 3.  Replace each *directory-separator* with a *preferred-separator*.
-    \[*Note 2*: The generic pathname grammar defines
+    \[*Note 4*: The generic pathname grammar defines
     *directory-separator* as one or more slashes and
     *preferred-separator*s. — *end note*]
 4.  Remove each dot filename and any immediately following
@@ -9084,7 +9084,7 @@ longest sequence of characters is chosen.
     followed by a *directory-separator* and a dot-dot filename, along
     with any immediately following *directory-separator*.
 6.  If there is a *root-directory*, remove all dot-dot filenames and any
-    *directory-separator*s immediately following them. \[*Note 3*: These
+    *directory-separator*s immediately following them. \[*Note 5*: These
     dot-dot filenames attempt to refer to nonexistent parent
     directories. — *end note*]
 7.  If the last filename is dot-dot, remove any trailing
@@ -9174,18 +9174,18 @@ value, the method of conversion and the encoding to be converted to is
 determined by its value type:
 
 - `char`: The encoding is the native ordinary encoding. The method of
-  conversion, if any, is operating system dependent. \[*Note 4*: For
+  conversion, if any, is operating system dependent. \[*Note 6*: For
   POSIX-based operating systems `path::value_type` is `char` so no
   conversion from `char` value type arguments or to `char` value type
   return values is performed. For Windows-based operating systems, the
   native ordinary encoding is determined by calling a Windows API
-  function. — *end note*] \[*Note 5*: This results in behavior
+  function. — *end note*] \[*Note 7*: This results in behavior
   identical to other C and C++ standard library functions that perform
   file operations using ordinary character strings to identify paths.
   Changing this behavior would be surprising and
   error-prone. — *end note*]
 - `wchar_t`: The encoding is the native wide encoding. The method of
-  conversion is unspecified. \[*Note 6*: For Windows-based operating
+  conversion is unspecified. \[*Note 8*: For Windows-based operating
   systems `path::value_type` is `wchar_t` so no conversion from
   `wchar_t` value type arguments or to `wchar_t` value type return
   values is performed. — *end note*]
@@ -10045,7 +10045,7 @@ For the elements of the pathname in the generic format, the forward
 traversal order is as follows:
 
 - The *root-name* element, if present.
-- The *root-directory* element, if present. \[*Note 7*: It is possible
+- The *root-directory* element, if present. \[*Note 1*: It is possible
   that the use of the generic format is needed to ensure correct
   lexicographical comparison. — *end note*]
 - Each successive *filename* element, if present.
@@ -10125,11 +10125,11 @@ Path equality and path equivalence have different semantics.
 
 - Equality is determined by the `path` non-member `operator==`, which
   considers the two paths’ lexical representations only.
-  \[*Example 2*: `path("foo") == "bar"` is never
+  \[*Example 1*: `path("foo") == "bar"` is never
   `true`. — *end example*]
 - Equivalence is determined by the `equivalent()` non-member function,
   which determines if two paths resolve [[fs.class.path]] to the same
-  file system entity. \[*Example 3*: `equivalent("foo", "bar")` will be
+  file system entity. \[*Example 2*: `equivalent("foo", "bar")` will be
   `true` when both paths resolve to the same file. — *end example*]
 
 — *end note*]
@@ -12308,21 +12308,21 @@ determined as if by converting the `st_mode` member of the obtained
     `file_status(file_type::unknown)`.
   - Otherwise, returns `file_status(file_type::none)`.
 
-  \[*Note 8*: These semantics distinguish between `p` being known not to
+  \[*Note 1*: These semantics distinguish between `p` being known not to
   exist, `p` existing but not being able to determine its attributes,
   and there being an error that prevents even knowing if `p` exists.
   These distinctions are important to some use cases. — *end note*]
 - Otherwise,
   - If the attributes indicate a regular file, as if by POSIX `S_ISREG`,
     returns `file_status(file_type::regular, prms)`.
-    \[*Note 9*: `file_type::regular` implies appropriate `<fstream>`
+    \[*Note 2*: `file_type::regular` implies appropriate `<fstream>`
     operations would succeed, assuming no hardware, permission, access,
     or file system race errors. Lack of `file_type::regular` does not
     necessarily imply `<fstream>` operations would fail on a
     directory. — *end note*]
   - Otherwise, if the attributes indicate a directory, as if by POSIX
     `S_ISDIR`, returns `file_status(file_type::directory, prms)`.
-    \[*Note 10*: `file_type::directory` implies that calling
+    \[*Note 3*: `file_type::directory` implies that calling
     `directory_iterator(p)` would succeed. — *end note*]
   - Otherwise, if the attributes indicate a block special file, as if by
     POSIX `S_ISBLK`, returns `file_status(file_type::block, prms)`.

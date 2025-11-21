@@ -1558,7 +1558,7 @@ Let `IOTA-DIFF-T(W)` be defined as follows:
   than the width of `W` if such a type exists.
 - Otherwise, `IOTA-DIFF-T(W)` is an unspecified signed-integer-like type
   [[iterator.concept.winc]] of width not less than the width of `W`.
-  \[*Note 2*: It is unspecified whether this type satisfies
+  \[*Note 1*: It is unspecified whether this type satisfies
   `weakly_incrementable`. — *end note*]
 
 The exposition-only *decrementable* concept is equivalent to:

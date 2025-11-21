@@ -1183,12 +1183,12 @@ Executions of atomic functions that are either defined to be lock-free (
 
 - If there is only one thread that is not blocked ([[defns.block]]) in
   a standard library function, a lock-free execution in that thread
-  shall complete. \[*Note 1*: Concurrently executing threads may prevent
+  shall complete. \[*Note 2*: Concurrently executing threads may prevent
   progress of a lock-free execution. For example, this situation can
   occur with load-locked store-conditional implementations. This
   property is sometimes termed obstruction-free. — *end note*]
 - When one or more lock-free executions run concurrently, at least one
-  should complete. \[*Note 2*: It is difficult for some implementations
+  should complete. \[*Note 3*: It is difficult for some implementations
   to provide absolute guarantees to this effect, since repeated and
   particularly inopportune interference from other threads may prevent
   forward progress, e.g., by repeatedly stealing a cache line for
@@ -1217,7 +1217,7 @@ the operation is complete. Each such check might consist of one or more
 execution steps, for example using observable behavior of the abstract
 machine. — *end example*]
 
-[*Note 2*: Because of this and the preceding requirement regarding what
+[*Note 4*: Because of this and the preceding requirement regarding what
 threads of execution have to perform eventually, it follows that no
 thread of execution can execute forever without an execution step
 occurring. — *end note*]
@@ -1231,7 +1231,7 @@ For a thread of execution providing *concurrent forward progress
 guarantees*, the implementation ensures that the thread will eventually
 make progress for as long as it has not terminated.
 
-[*Note 3*: This is required regardless of whether or not other threads
+[*Note 5*: This is required regardless of whether or not other threads
 of executions (if any) have been or are making progress. To eventually
 fulfill this requirement means that this will happen in an unspecified
 but finite amount of time. — *end note*]
@@ -1241,7 +1241,7 @@ of execution that executes `main` ([[basic.start.main]]) and the
 threads of execution created by `std::thread` ([[thread.thread.class]])
 provide concurrent forward progress guarantees.
 
-[*Note 4*: General-purpose implementations are encouraged to provide
+[*Note 6*: General-purpose implementations are encouraged to provide
 these guarantees. — *end note*]
 
 For a thread of execution providing *parallel forward progress
@@ -1250,7 +1250,7 @@ thread will eventually make progress if it has not yet executed any
 execution step; once this thread has executed a step, it provides
 concurrent forward progress guarantees.
 
-[*Note 5*: This does not specify a requirement for when to start this
+[*Note 7*: This does not specify a requirement for when to start this
 thread of execution, which will typically be specified by the entity
 that creates this thread of execution. For example, a thread of
 execution that provides concurrent forward progress guarantees and
@@ -1262,7 +1262,7 @@ For a thread of execution providing *weakly parallel forward progress
 guarantees*, the implementation does not ensure that the thread will
 eventually make progress.
 
-[*Note 6*: Threads of execution providing weakly parallel forward
+[*Note 8*: Threads of execution providing weakly parallel forward
 progress guarantees cannot be expected to make progress regardless of
 whether other threads make progress or not; however, blocking with
 forward progress guarantee delegation, as defined below, can be used to
@@ -1273,7 +1273,7 @@ Concurrent forward progress guarantees are stronger than parallel
 forward progress guarantees, which in turn are stronger than weakly
 parallel forward progress guarantees.
 
-[*Note 7*: For example, some kinds of synchronization between threads
+[*Note 9*: For example, some kinds of synchronization between threads
 of execution may only make progress if the respective threads of
 execution provide parallel forward progress guarantees, but will fail to
 make progress under weakly parallel guarantees. — *end note*]
@@ -1285,7 +1285,7 @@ of execution, then throughout the whole time of *P* being blocked on
 guarantees provided by at least one thread of execution in *S* is at
 least as strong as *P*’s forward progress guarantees.
 
-[*Note 8*: It is unspecified which thread or threads of execution in
+[*Note 10*: It is unspecified which thread or threads of execution in
 *S* are chosen and for which number of execution steps. The
 strengthening is not permanent and not necessarily in place for the rest
 of the lifetime of the affected thread of execution. As long as *P* is
@@ -1295,20 +1295,20 @@ strengthen a thread of execution in *S*. — *end note*]
 Once a thread of execution in *S* terminates, it is removed from *S*.
 Once *S* is empty, *P* is unblocked.
 
-[*Note 9*: A thread of execution *B* thus can temporarily provide an
+[*Note 11*: A thread of execution *B* thus can temporarily provide an
 effectively stronger forward progress guarantee for a certain amount of
 time, due to a second thread of execution *A* being blocked on it with
 forward progress guarantee delegation. In turn, if *B* then blocks with
 forward progress guarantee delegation on *C*, this may also temporarily
 provide a stronger forward progress guarantee to *C*. — *end note*]
 
-[*Note 10*: If all threads of execution in *S* finish executing (e.g.,
+[*Note 12*: If all threads of execution in *S* finish executing (e.g.,
 they terminate and do not use blocking synchronization incorrectly),
 then *P*’s execution of the operation that blocks with forward progress
 guarantee delegation will not result in *P*’s progress guarantee being
 effectively weakened. — *end note*]
 
-[*Note 11*: This does not remove any constraints regarding blocking
+[*Note 13*: This does not remove any constraints regarding blocking
 synchronization for threads of execution providing parallel or weakly
 parallel forward progress guarantees because the implementation is not
 required to strengthen a particular thread of execution whose too-weak

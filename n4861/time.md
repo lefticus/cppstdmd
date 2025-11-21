@@ -923,7 +923,7 @@ A type `TC` meets the *Cpp17TrivialClock* requirements if:
   *Cpp17EqualityComparable* ([[cpp17.equalitycomparable]]) and
   *Cpp17LessThanComparable* ([[cpp17.lessthancomparable]]) requirements
   and the requirements of numeric types [[numeric.requirements]].
-  \[*Note 1*: This means, in particular, that operations on these types
+  \[*Note 3*: This means, in particular, that operations on these types
   will not throw exceptions. — *end note*]
 - lvalues of the types `TC::rep`, `TC::duration`, and `TC::time_point`
   are swappable [[swappable.requirements]],

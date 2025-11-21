@@ -2516,7 +2516,7 @@ template<class ExecutionPolicy, class ForwardIterator1, class ForwardIterator2,
   and its value type is the same as `T`, then `T` shall be
   `CopyAssignable` (Table  [[tab:copyassignable]]). Otherwise, `T` shall
   be both `CopyConstructible` (Table  [[tab:copyconstructible]]) and
-  `CopyAssignable`. \[*Note 2*: For the overloads with an
+  `CopyAssignable`. \[*Note 1*: For the overloads with an
   `ExecutionPolicy`, there may be a performance cost if the value type
   of `ForwardIterator1` is not both `CopyConstructible` and
   `CopyAssignable`. — *end note*]
@@ -3239,7 +3239,7 @@ template <class ExecutionPolicy, class ForwardIterator, class ForwardIterator1,
 - For the overload with an `ExecutionPolicy`, `ForwardIterator`’s value
   type shall be `CopyAssignable`, and shall be writable to the
   `out_true` and `out_false` `ForwardIterator`s, and shall be
-  convertible to `Predicate`’s argument type. \[*Note 3*: There may be a
+  convertible to `Predicate`’s argument type. \[*Note 1*: There may be a
   performance cost if `ForwardIterator`’s value type is not
   `CopyConstructible`. — *end note*]
 - For both overloads, the input range shall not overlap with either of

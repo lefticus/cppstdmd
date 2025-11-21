@@ -469,8 +469,8 @@ Then specializations of each of the two templates meet the
 *Cpp17TransformationTrait* requirements with a member typedef `type`
 that names the following type:
 
-- for the first specialization, `add_volatile_t<TE>`, and
-- for the second specialization, `add_cv_t<TE>`.
+- for the first specialization, `volatile TE`, and
+- for the second specialization, `const volatile TE`.
 
 In addition to being available via inclusion of the `<tuple>` header,
 the two templates are available when any of the headers `<array>`,
@@ -510,8 +510,8 @@ Let `VA` denote `variant_alternative<I, T>` of the cv-unqualified type
 *Cpp17TransformationTrait* requirements with a member typedef `type`
 that names the following type:
 
-- for the first specialization, `add_volatile_t<VA::type>`, and
-- for the second specialization, `add_cv_t<VA::type>`.
+- for the first specialization, `volatile VA::type`, and
+- for the second specialization, `const volatile VA::type`.
 
 ## Deprecated `iterator` class template <a id="depr.iterator">[[depr.iterator]]</a>
 
