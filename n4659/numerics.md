@@ -902,10 +902,11 @@ This subclause defines a facility for generating (pseudo-)random
 numbers.
 
 In addition to a few utilities, four categories of entities are
-described: , , , and . These categorizations are applicable to types
-that satisfy the corresponding requirements, to objects instantiated
-from such types, and to templates producing such types when
-instantiated.
+described: *uniform random bit generators*, *random number engines*,
+*random number engine adaptors*, and *random number distributions*.
+These categorizations are applicable to types that satisfy the
+corresponding requirements, to objects instantiated from such types, and
+to templates producing such types when instantiated.
 
 [*Note 1*: These entities are specified in such a way as to permit the
 binding of any uniform random bit generator object `e` as the argument
@@ -919,7 +920,7 @@ With `T` as the `result_type` thus associated with such an entity, that
 entity is characterized:
 
 If integer-valued, an entity may optionally be further characterized as
-or , according to `numeric_limits<T>::is_signed`.
+*signed* or *unsigned*, according to `numeric_limits<T>::is_signed`.
 
 Unless otherwise specified, all descriptions of calculations in this
 subclause use mathematical real numbers.
@@ -945,9 +946,9 @@ this subclause shall be declared `explicit`.
 
 #### Seed sequence requirements <a id="rand.req.seedseq">[[rand.req.seedseq]]</a>
 
-A is an object that consumes a sequence of integer-valued data and
-produces a requested number of unsigned integer values i, 0 ≤ i < 2³²,
-based on the consumed data.
+A *seed sequence* is an object that consumes a sequence of
+integer-valued data and produces a requested number of unsigned integer
+values i, 0 ≤ i < 2³², based on the consumed data.
 
 [*Note 1*: Such an object provides a mechanism to avoid replication of
 streams of random variates. This can be useful, for example, in
@@ -962,26 +963,27 @@ section:
 
 #### Uniform random bit generator requirements <a id="rand.req.urng">[[rand.req.urng]]</a>
 
-A `g` of type `G` is a function object returning unsigned integer values
-such that each value in the range of possible results has (ideally)
-equal probability of being returned.
+A *uniform random bit generator* `g` of type `G` is a function object
+returning unsigned integer values such that each value in the range of
+possible results has (ideally) equal probability of being returned.
 
 [*Note 1*: The degree to which `g`’s results approximate the ideal is
 often determined statistically. — *end note*]
 
-A class `G` satisfies the requirements of a if the expressions shown in
-Table  [[tab:UniformRandomBitGenerator]] are valid and have the
-indicated semantics, and if `G` also satisfies all other requirements of
-this section [[rand.req.urng]]. In that Table and throughout this
-section:
+A class `G` satisfies the requirements of a *uniform random bit
+generator* if the expressions shown in Table 
+[[tab:UniformRandomBitGenerator]] are valid and have the indicated
+semantics, and if `G` also satisfies all other requirements of this
+section [[rand.req.urng]]. In that Table and throughout this section:
 
 The following relation shall hold: `G::min() < G::max()`.
 
 #### Random number engine requirements <a id="rand.req.eng">[[rand.req.eng]]</a>
 
-A (commonly shortened to ) `e` of type `E` is a uniform random bit
-generator that additionally meets the requirements (e.g., for seeding
-and for input/output) specified in this section.
+A *random number engine* (commonly shortened to *engine*) `e` of type
+`E` is a uniform random bit generator that additionally meets the
+requirements (e.g., for seeding and for input/output) specified in this
+section.
 
 At any given time, `e` has a state eᵢ for some integer i ≥ 0. Upon
 construction, `e` has an initial state e₀. An engine’s state may be
@@ -991,11 +993,11 @@ suitable `operator>>`.
 `E`’s specification shall define:
 
 A class `E` that satisfies the requirements of a uniform random bit
-generator ([[rand.req.urng]]) also satisfies the requirements of a if
-the expressions shown in Table  [[tab:RandomEngine]] are valid and have
-the indicated semantics, and if `E` also satisfies all other
-requirements of this section [[rand.req.eng]]. In that Table and
-throughout this section:
+generator ([[rand.req.urng]]) also satisfies the requirements of a
+*random number engine* if the expressions shown in Table 
+[[tab:RandomEngine]] are valid and have the indicated semantics, and if
+`E` also satisfies all other requirements of this section
+[[rand.req.eng]]. In that Table and throughout this section:
 
 where `charT` and `traits` are constrained according to Clause 
 [[strings]] and Clause  [[input.output]].
@@ -1007,13 +1009,13 @@ complexity no worse than 𝑂(\mbox{size of state}).
 
 #### Random number engine adaptor requirements <a id="rand.req.adapt">[[rand.req.adapt]]</a>
 
-A (commonly shortened to ) `a` of type `A` is a random number engine
-that takes values produced by some other random number engine, and
-applies an algorithm to those values in order to deliver a sequence of
-values with different randomness properties. An engine `b` of type `B`
-adapted in this way is termed a in this context. The expression
-`a.base()` shall be valid and shall return a const reference to `a`’s
-base engine.
+A *random number engine adaptor* (commonly shortened to *adaptor*) `a`
+of type `A` is a random number engine that takes values produced by some
+other random number engine, and applies an algorithm to those values in
+order to deliver a sequence of values with different randomness
+properties. An engine `b` of type `B` adapted in this way is termed a
+*base engine* in this context. The expression `a.base()` shall be valid
+and shall return a const reference to `a`’s base engine.
 
 The requirements of a random number engine type shall be interpreted as
 follows with respect to a random number engine adaptor type.
@@ -1066,24 +1068,26 @@ template<class Sseq> void seed(Sseq& q);
 
 #### Random number distribution requirements <a id="rand.req.dist">[[rand.req.dist]]</a>
 
-A (commonly shortened to ) `d` of type `D` is a function object
-returning values that are distributed according to an associated
-mathematical p(z) or according to an associated P(zᵢ). A distribution’s
-specification identifies its associated probability function p(z) or
-P(zᵢ).
+A *random number distribution* (commonly shortened to *distribution*)
+`d` of type `D` is a function object returning values that are
+distributed according to an associated mathematical *probability density
+function* p(z) or according to an associated *discrete probability
+function* P(zᵢ). A distribution’s specification identifies its
+associated probability function p(z) or P(zᵢ).
 
 An associated probability function is typically expressed using certain
-externally-supplied quantities known as the . Such distribution
-parameters are identified in this context by writing, for example,
-p(z | a,b) or P(zᵢ | a,b), to name specific parameters, or by writing,
-for example, p(z |{`p`}) or P(zᵢ |{`p`}), to denote a distribution’s
-parameters `p` taken as a whole.
+externally-supplied quantities known as the *parameters of the
+distribution*. Such distribution parameters are identified in this
+context by writing, for example, p(z | a,b) or P(zᵢ | a,b), to name
+specific parameters, or by writing, for example, p(z |{`p`}) or
+P(zᵢ |{`p`}), to denote a distribution’s parameters `p` taken as a
+whole.
 
-A class `D` satisfies the requirements of a if the expressions shown in
-Table  [[tab:RandomDistribution]] are valid and have the indicated
-semantics, and if `D` and its associated types also satisfy all other
-requirements of this section [[rand.req.dist]]. In that Table and
-throughout this section,
+A class `D` satisfies the requirements of a *random number distribution*
+if the expressions shown in Table  [[tab:RandomDistribution]] are valid
+and have the indicated semantics, and if `D` and its associated types
+also satisfy all other requirements of this section [[rand.req.dist]].
+In that Table and throughout this section,
 
 where `charT` and `traits` are constrained according to Clauses 
 [[strings]] and [[input.output]].
@@ -1396,9 +1400,9 @@ applied to X are to be taken modulo n.
 The transition algorithm employs a twisted generalized feedback shift
 register defined by shift values n and m, a twist value r, and a
 conditional xor-mask a. To improve the uniformity of the result, the
-bits of the raw shift register are additionally (i.e., scrambled)
-according to a bit-scrambling matrix defined by values u, d, s, b, t, c,
-and ℓ.
+bits of the raw shift register are additionally *tempered* (i.e.,
+scrambled) according to a bit-scrambling matrix defined by values
+u, d, s, b, t, c, and ℓ.
 
 The state transition is performed as follows:
 
@@ -1492,8 +1496,8 @@ integer random numbers.
 The state xᵢ of a `subtract_with_carry_engine` object `x` is of size
 𝑂(r), and consists of a sequence X of r integer values 0 ≤ Xᵢ < m  = 2ʷ;
 all subscripts applied to X are to be taken modulo r. The state xᵢ
-additionally consists of an integer c (known as the ) whose value is
-either 0 or 1.
+additionally consists of an integer c (known as the *carry*) whose value
+is either 0 or 1.
 
 The state transition is performed as follows:
 
@@ -2503,7 +2507,7 @@ $$%
       = \frac{ e^{-\mu} \mu^{i} }
              { i\,! }
 \; \mbox{.}$$ The distribution parameter μ is also known as this
-distribution’s .
+distribution’s *mean* .
 
 ``` cpp
 template<class IntType = int>
@@ -2807,7 +2811,7 @@ numbers x distributed according to the probability density function $$%
              \right)
             }
 \; \mbox{.}$$ The distribution parameters μ and σ are also known as this
-distribution’s and .
+distribution’s *mean* and *standard deviation* .
 
 ``` cpp
 template<class RealType = double>
@@ -3179,8 +3183,8 @@ function $$%
 
 Unless specified otherwise, the distribution parameters are calculated
 as: $p_k = {w_k / S} \; \mbox{  for } k = 0, \ldots, n\!-\!1$ , in which
-the values wₖ, commonly known as the , shall be non-negative, non-NaN,
-and non-infinity. Moreover, the following relation shall hold:
+the values wₖ, commonly known as the *weights* , shall be non-negative,
+non-NaN, and non-infinity. Moreover, the following relation shall hold:
 0 < S = w₀ + ⋯ + wₙ₋₁.
 
 ``` cpp
@@ -3284,14 +3288,14 @@ $$%
 \mbox{ for } b_i \le x < b_{i+1}
 \; \mbox{.}$$
 
-The n+1 distribution parameters bᵢ, also known as this distribution’s ,
-shall satisfy the relation bᵢ < bᵢ₊₁ for i = 0, …, n-1. Unless specified
-otherwise, the remaining n distribution parameters are calculated as:
-$$%
+The n+1 distribution parameters bᵢ, also known as this distribution’s
+*interval boundaries* , shall satisfy the relation bᵢ < bᵢ₊₁ for
+i = 0, …, n-1. Unless specified otherwise, the remaining n distribution
+parameters are calculated as: $$%
  \rho_k = \;
    \frac{w_k}{S \cdot (b_{k+1}-b_k)}
    \; \mbox{ for } k = 0, \ldots, n\!-\!1,$$ in which the values wₖ,
-commonly known as the , shall be non-negative, non-NaN, and
+commonly known as the *weights* , shall be non-negative, non-NaN, and
 non-infinity. Moreover, the following relation shall hold:
 0 < S = w₀ + ⋯ + wₙ₋₁.
 
@@ -3423,12 +3427,14 @@ random numbers x, b₀ ≤ x < bₙ, distributed over each subinterval
 \mbox{ for } b_i \le x < b_{i+1}
 \; \mbox{.}$$
 
-The n+1 distribution parameters bᵢ, also known as this distribution’s ,
-shall satisfy the relation bᵢ < bᵢ₊₁ for i = 0, …, n-1. Unless specified
-otherwise, the remaining n+1 distribution parameters are calculated as
+The n+1 distribution parameters bᵢ, also known as this distribution’s
+*interval boundaries* , shall satisfy the relation bᵢ < bᵢ₊₁ for
+i = 0, …, n-1. Unless specified otherwise, the remaining n+1
+distribution parameters are calculated as
 $\rho_k = {w_k / S} \; \mbox{ for } k = 0, \ldots, n$, in which the
-values wₖ, commonly known as the , shall be non-negative, non-NaN, and
-non-infinity. Moreover, the following relation shall hold: $$%
+values wₖ, commonly known as the *weights at boundaries* , shall be
+non-negative, non-NaN, and non-infinity. Moreover, the following
+relation shall hold: $$%
  0 < S = \frac{1}{2}
        \cdot \sum_{k=0}^{n-1} (w_k + w_{k+1}) \cdot (b_{k+1} - b_k)
 \; \mbox{.}$$

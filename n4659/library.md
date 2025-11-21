@@ -326,19 +326,19 @@ appropriate):[^4]
   the function
 
 Whenever the *Effects:* element specifies that the semantics of some
-function `F` are some code sequence, then the various elements are
-interpreted as follows. If `F`’s semantics specifies a *Requires:*
-element, then that requirement is logically imposed prior to the
-semantics. Next, the semantics of the code sequence are determined by
-the *Requires:* , *Effects:* , *Synchronization:* , *Postconditions:* ,
-*Returns:* , *Throws:* , *Complexity:* , *Remarks:* , and *Error
-conditions:* specified for the function invocations contained in the
-code sequence. The value returned from `F` is specified by `F`’s
-*Returns:* element, or if `F` has no *Returns:* element, a non-`void`
-return from `F` is specified by the `return` statements in the code
-sequence. If `F`’s semantics contains a *Throws:* , *Postconditions:* ,
-or *Complexity:* element, then that supersedes any occurrences of that
-element in the code sequence.
+function `F` are *Equivalent to* some code sequence, then the various
+elements are interpreted as follows. If `F`’s semantics specifies a
+*Requires:* element, then that requirement is logically imposed prior to
+the *equivalent-to* semantics. Next, the semantics of the code sequence
+are determined by the *Requires:* , *Effects:* , *Synchronization:* ,
+*Postconditions:* , *Returns:* , *Throws:* , *Complexity:* , *Remarks:*
+, and *Error conditions:* specified for the function invocations
+contained in the code sequence. The value returned from `F` is specified
+by `F`’s *Returns:* element, or if `F` has no *Returns:* element, a
+non-`void` return from `F` is specified by the `return` statements in
+the code sequence. If `F`’s semantics contains a *Throws:* ,
+*Postconditions:* , or *Complexity:* element, then that supersedes any
+occurrences of that element in the code sequence.
 
 For non-reserved replacement and handler functions, Clause 
 [[language.support]] specifies two behaviors for the functions in
@@ -1046,11 +1046,11 @@ program. — *end note*]
 
 #### Allocator requirements <a id="allocator.requirements">[[allocator.requirements]]</a>
 
-The library describes a standard set of requirements for , which are
-class-type objects that encapsulate the information about an allocation
-model. This information includes the knowledge of pointer types, the
-type of their difference, the type of the size of objects in this
-allocation model, as well as the memory allocation and deallocation
+The library describes a standard set of requirements for *allocators*,
+which are class-type objects that encapsulate the information about an
+allocation model. This information includes the knowledge of pointer
+types, the type of their difference, the type of the size of objects in
+this allocation model, as well as the memory allocation and deallocation
 primitives for it. All of the string types (Clause  [[strings]]),
 containers (Clause  [[containers]]) (except array), string buffers and
 string streams (Clause  [[input.output]]), and `match_results` (Clause 

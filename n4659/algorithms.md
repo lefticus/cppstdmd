@@ -2723,10 +2723,10 @@ For all algorithms that take `Compare`, there is a version that uses
 [[alg.binary.search]], `comp` shall induce a strict weak ordering on the
 values.
 
-The term refers to the requirement of an irreflexive relation
-(`!comp(x, x)` for all `x`), and the term to requirements that are not
-as strong as those for a total ordering, but stronger than those for a
-partial ordering. If we define `equiv(a, b)` as
+The term *strict* refers to the requirement of an irreflexive relation
+(`!comp(x, x)` for all `x`), and the term *weak* to requirements that
+are not as strong as those for a total ordering, but stronger than those
+for a partial ordering. If we define `equiv(a, b)` as
 `!comp(a, b) && !comp(b, a)`, then the requirements are that `comp` and
 `equiv` both be transitive relations:
 
@@ -2744,13 +2744,15 @@ Under these conditions, it can be shown that
 
 — *end note*]
 
-A sequence is `comp` if for every iterator `i` pointing to the sequence
-and every non-negative integer `n` such that `i + n` is a valid iterator
-pointing to an element of the sequence, `comp(*(i + n), *i) == false`.
+A sequence is *sorted with respect to a comparator* `comp` if for every
+iterator `i` pointing to the sequence and every non-negative integer `n`
+such that `i + n` is a valid iterator pointing to an element of the
+sequence, `comp(*(i + n), *i) == false`.
 
-A sequence \[`start`, `finish`) is `f(e)` if there exists an integer `n`
-such that for all `0 <= i < (finish - start)`, `f(*(start + i))` is
-`true` if and only if `i < n`.
+A sequence \[`start`, `finish`) is *partitioned with respect to an
+expression* `f(e)` if there exists an integer `n` such that for all
+`0 <= i < (finish - start)`, `f(*(start + i))` is `true` if and only if
+`i < n`.
 
 In the descriptions of the functions that deal with ordering
 relationships we frequently use a notion of equivalence to describe
@@ -3614,8 +3616,8 @@ copied to the output range: the last m - n of these elements from
 
 ### Heap operations <a id="alg.heap.operations">[[alg.heap.operations]]</a>
 
-A is a particular organization of elements in a range between two random
-access iterators \[`a`, `b`) such that:
+A *heap* is a particular organization of elements in a range between two
+random access iterators \[`a`, `b`) such that:
 
 - With `N = b - a`, for all i, 0 < i < N,
   `comp(a[\left \lfloor{\frac{i - 1}{2}}\right \rfloor], a[i])` is

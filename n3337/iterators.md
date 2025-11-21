@@ -44,8 +44,10 @@ Since iterators are an abstraction of pointers, their semantics is a
 generalization of most of the semantics of pointers in C++. This ensures
 that every function template that takes iterators works as well with
 regular pointers. This International Standard defines five categories of
-iterators, according to the operations defined on them: , , , and , as
-shown in Table  [[tab:iterators.relations]].
+iterators, according to the operations defined on them: *input
+iterators*, *output iterators*, *forward iterators*, *bidirectional
+iterators* and *random access iterators*, as shown in Table 
+[[tab:iterators.relations]].
 
 **Table: Relations among iterator categories**
 
@@ -109,7 +111,7 @@ requirement tables for the iterators do not have a complexity column.
 Destruction of an iterator may invalidate pointers and references
 previously obtained from that iterator.
 
-An iterator is an iterator that may be singular.[^1]
+An *invalid* iterator is an iterator that may be singular.[^1]
 
 In the following sections, `a` and `b` denote values of type `X` or
 `const X`, `difference_type` and `reference` refer to the types
@@ -148,16 +150,15 @@ iterator for the value type `T` if X satisfies the `Iterator` (
 [[tab:iterator.input.requirements]] are valid and have the indicated
 semantics.
 
-In Table  [[tab:iterator.input.requirements]], the term
-\techterm{the domain of \texttt{==}} is used in the ordinary
-mathematical sense to denote the set of values over which `==` is
-(required to be) defined. This set can change over time. Each algorithm
-places additional requirements on the domain of `==` for the iterator
-values it uses. These requirements can be inferred from the uses that
-algorithm makes of `==` and `!=`. the call `find(a,b,x)` is defined only
-if the value of `a` has the property *p* defined as follows: `b` has
-property *p* and a value `i` has property *p* if `(*i==x)` or if
-`(*i!=x` and `++i` has property `p`).
+In Table  [[tab:iterator.input.requirements]], the term *the domain of
+`==`* is used in the ordinary mathematical sense to denote the set of
+values over which `==` is (required to be) defined. This set can change
+over time. Each algorithm places additional requirements on the domain
+of `==` for the iterator values it uses. These requirements can be
+inferred from the uses that algorithm makes of `==` and `!=`. the call
+`find(a,b,x)` is defined only if the value of `a` has the property *p*
+defined as follows: `b` has property *p* and a value `i` has property
+*p* if `(*i==x)` or if `(*i!=x` and `++i` has property `p`).
 
 For input iterators, `a == b` does not imply `++a == ++b`. (Equality
 does not guarantee the substitution property or referential
@@ -523,8 +524,8 @@ namespace std {
 It is often desirable for a function template specialization to find out
 what is the most specific category of its iterator argument, so that the
 function can select the most efficient algorithm at compile time. To
-facilitate this, the library introduces classes which are used as
-compile time tags for algorithm selection. They are:
+facilitate this, the library introduces *category tag* classes which are
+used as compile time tags for algorithm selection. They are:
 `input_iterator_tag`, `output_iterator_tag`, `forward_iterator_tag`,
 `bidirectional_iterator_tag` and `random_access_iterator_tag`. For every
 iterator of type `Iterator`,
@@ -1006,8 +1007,8 @@ template <class Iterator>
 ### Insert iterators <a id="insert.iterators">[[insert.iterators]]</a>
 
 To make it possible to deal with insertion in the same way as writing
-into an array, a special kind of iterator adaptors, called , are
-provided in the library. With regular iterator classes,
+into an array, a special kind of iterator adaptors, called *insert
+iterators*, are provided in the library. With regular iterator classes,
 
 ``` cpp
 while (first != last) *result++ = *first++;
@@ -1016,8 +1017,8 @@ while (first != last) *result++ = *first++;
 causes a range \[`first`, `last`) to be copied into a range starting
 with result. The same code with `result` being an insert iterator will
 insert corresponding elements into the container. This device allows all
-of the copying algorithms in the library to work in the instead of the
-mode.
+of the copying algorithms in the library to work in the *insert mode*
+instead of the *regular overwrite* mode.
 
 An insert iterator is constructed from a container and possibly one of
 its iterators pointing to where insertion takes place if it is neither

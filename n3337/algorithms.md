@@ -1584,10 +1584,10 @@ For all algorithms that take `Compare`, there is a version that uses
 [[alg.binary.search]] to work correctly, `comp` has to induce a strict
 weak ordering on the values.
 
-The term refers to the requirement of an irreflexive relation
-(`!comp(x, x)` for all `x`), and the term to requirements that are not
-as strong as those for a total ordering, but stronger than those for a
-partial ordering. If we define `equiv(a, b)` as
+The term *strict* refers to the requirement of an irreflexive relation
+(`!comp(x, x)` for all `x`), and the term *weak* to requirements that
+are not as strong as those for a total ordering, but stronger than those
+for a partial ordering. If we define `equiv(a, b)` as
 `!comp(a, b) && !comp(b, a)`, then the requirements are that `comp` and
 `equiv` both be transitive relations:
 
@@ -1599,13 +1599,15 @@ partial ordering. If we define `equiv(a, b)` as
     determined by `equiv`
   - The induced relation is a strict total ordering.
 
-A sequence is `comp` if for any iterator `i` pointing to the sequence
-and any non-negative integer `n` such that `i + n` is a valid iterator
-pointing to an element of the sequence, `comp(*(i + n), *i) == false`.
+A sequence is *sorted with respect to a comparator* `comp` if for any
+iterator `i` pointing to the sequence and any non-negative integer `n`
+such that `i + n` is a valid iterator pointing to an element of the
+sequence, `comp(*(i + n), *i) == false`.
 
-A sequence \[`start`, `finish`) is `f(e)` if there exists an integer `n`
-such that for all `0 <= i < distance(start, finish)`, `f(*(start + i))`
-is true if and only if `i < n`.
+A sequence \[`start`, `finish`) is *partitioned with respect to an
+expression* `f(e)` if there exists an integer `n` such that for all
+`0 <= i < distance(start, finish)`, `f(*(start + i))` is true if and
+only if `i < n`.
 
 In the descriptions of the functions that deal with ordering
 relationships we frequently use a notion of equivalence to describe
@@ -2151,8 +2153,8 @@ m < n.
 
 ### Heap operations <a id="alg.heap.operations">[[alg.heap.operations]]</a>
 
-A is a particular organization of elements in a range between two random
-access iterators \[`a`, `b`). Its two key properties are:
+A *heap* is a particular organization of elements in a range between two
+random access iterators \[`a`, `b`). Its two key properties are:
 
 - **(1)} There is no element greater than
 \texttt{\*a}

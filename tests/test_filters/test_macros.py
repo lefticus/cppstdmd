@@ -1259,3 +1259,30 @@ def test_bigoh_complexity():
     assert "\\bigoh" not in output
     assert "\\tcode" not in output
     assert "\\texttt" not in output
+
+
+def test_techterm_macro():
+    r"""Test \techterm{} macro renders as italic (Issue #79)
+
+    The \techterm{} macro was used in n3337-n4659 but is obsolete in newer versions.
+    Without handling, it causes incomplete sentences like "known as the " with missing terms.
+    """
+    latex = r"""
+Externally-supplied quantities known as the \techterm{parameters of the distribution}.
+Four categories: \techterm{uniform random number generators}, \techterm{random number engines},
+\techterm{random number engine adaptors}, and \techterm{random number distributions}.
+"""
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    # Should have italic terms (may wrap across lines, so normalize whitespace)
+    output_normalized = " ".join(output.split())
+    assert "*parameters of the distribution*" in output_normalized
+    assert "*uniform random number generators*" in output_normalized
+    assert "*random number engines*" in output_normalized
+    assert "*random number engine adaptors*" in output_normalized
+    assert "*random number distributions*" in output_normalized
+    # Should NOT have raw LaTeX command
+    assert "\\techterm" not in output
+    # Should NOT have incomplete "known as the " pattern
+    assert "known as the ." not in output
+    assert "known as the \n" not in output

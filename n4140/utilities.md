@@ -2384,9 +2384,10 @@ returns `std::addressof(r)`.
 
 ### Pointer safety <a id="util.dynamic.safety">[[util.dynamic.safety]]</a>
 
-A complete object is while the number of calls to `declare_reachable`
-with an argument referencing the object exceeds the number of calls to
-`undeclare_reachable` with an argument referencing the object.
+A complete object is *declared reachable* while the number of calls to
+`declare_reachable` with an argument referencing the object exceeds the
+number of calls to `undeclare_reachable` with an argument referencing
+the object.
 
 ``` cpp
 void declare_reachable(void* p);
@@ -6064,9 +6065,10 @@ If all of `FD` and `TiD` satisfy the requirements of
 of `CopyConstructible`. This implies that all of `FD` and `TiD` are
 `MoveConstructible`.
 
-The values of the `v1, v2, ..., vN` and their corresponding types
-`V1, V2, ..., VN` depend on the types `TiD` derived from the call to
-`bind` and the *cv*-qualifiers *cv* of the call wrapper `g` as follows:
+The values of the *bound arguments* `v1, v2, ..., vN` and their
+corresponding types `V1, V2, ..., VN` depend on the types `TiD` derived
+from the call to `bind` and the *cv*-qualifiers *cv* of the call wrapper
+`g` as follows:
 
 - if `TiD` is `reference_wrapper<T>`, the argument is `tid.get()` and
   its type `Vi` is `T&`;
