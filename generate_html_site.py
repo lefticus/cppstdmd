@@ -313,13 +313,18 @@ def get_timsong_url(version: str, stable_name: str) -> str | None:
 
 
 def get_github_markdown_url(
-    version: str, stable_name: str, repo_owner: str = "lefticus", repo_name: str = "cppstdmd"
+    version: str,
+    stable_name: str,
+    sha: str = "main",
+    repo_owner: str = "lefticus",
+    repo_name: str = "cppstdmd",
 ) -> str:
     """Generate GitHub URL to markdown source for a stable name.
 
     Args:
         version: Version tag (e.g., 'n4950', 'trunk')
         stable_name: Stable name (e.g., 'array.overview')
+        sha: Git SHA or branch name (defaults to 'main')
         repo_owner: GitHub repository owner
         repo_name: GitHub repository name
 
@@ -327,12 +332,12 @@ def get_github_markdown_url(
         Full GitHub URL with fragment anchor
 
     Examples:
-        ('n4950', 'array.overview') →
-            'https://github.com/lefticus/cppstdmd/blob/main/n4950/containers.md#array.overview'
+        ('n4950', 'array.overview', 'abc123') →
+            'https://github.com/lefticus/cppstdmd/blob/abc123/n4950/containers.md#array.overview'
     """
     chapter = get_chapter_from_stable_name(stable_name)
     return (
-        f"https://github.com/{repo_owner}/{repo_name}/blob/main/"
+        f"https://github.com/{repo_owner}/{repo_name}/blob/{sha}/"
         f"{version}/{chapter}.md#{stable_name}"
     )
 
@@ -376,6 +381,28 @@ def count_diff_lines(diff_file: Path) -> int:
         return count
     except Exception:
         return 0
+
+
+def get_cppstdmd_sha() -> dict[str, str]:
+    """Get current SHA of the cppstdmd repository.
+
+    Returns:
+        Dictionary with 'sha' and 'short_sha' keys
+        Returns empty values if not in a git repo or git command fails
+    """
+    try:
+        # Get current SHA
+        success, stdout, stderr = run_command_silent(["git", "rev-parse", "HEAD"])
+        if not success:
+            return {"sha": "", "short_sha": ""}
+
+        sha = stdout.strip()
+        short_sha = sha[:7]
+
+        return {"sha": sha, "short_sha": short_sha}
+
+    except Exception:
+        return {"sha": "", "short_sha": ""}
 
 
 def extract_diff_keywords(diff_file: Path) -> list[str]:
@@ -520,7 +547,7 @@ def create_author_banner(soup):
 
     # Author name
     author_name = soup.new_tag("span", **{"class": "author-name"})
-    author_name.string = f'From {AUTHOR_INFO["name"]}'
+    author_name.string = f"From {AUTHOR_INFO['name']}"
     banner_content.append(author_name)
 
     # Social links
@@ -595,13 +622,13 @@ def inject_navigation(html_file: Path, context: dict, env: Environment) -> bool:
         breadcrumb_nav.append(home_link)
         breadcrumb_nav.append(" > ")
 
-        version_link = soup.new_tag("a", href=f'../../versions/{context["version_slug"]}.html')
-        version_link.string = f'{context["from_version"]} → {context["to_version"]}'
+        version_link = soup.new_tag("a", href=f"../../versions/{context['version_slug']}.html")
+        version_link.string = f"{context['from_version']} → {context['to_version']}"
         breadcrumb_nav.append(version_link)
         breadcrumb_nav.append(" > ")
 
         stable_name_span = soup.new_tag("span", **{"class": "current"})
-        stable_name_span.string = f'[{context["stable_name"]}]'
+        stable_name_span.string = f"[{context['stable_name']}]"
         breadcrumb_nav.append(stable_name_span)
 
         header.append(breadcrumb_nav)
@@ -609,14 +636,14 @@ def inject_navigation(html_file: Path, context: dict, env: Environment) -> bool:
         # Title section
         title_section = soup.new_tag("div", **{"class": "title-section"})
         title_h1 = soup.new_tag("h1")
-        title_h1.string = f'[{context["stable_name"]}]'
+        title_h1.string = f"[{context['stable_name']}]"
         title_section.append(title_h1)
 
         # Metadata
         metadata_div = soup.new_tag("div", **{"class": "metadata"})
 
         version_badge = soup.new_tag("span", **{"class": "badge version-badge"})
-        version_badge.string = f'{context["from_version"]} → {context["to_version"]}'
+        version_badge.string = f"{context['from_version']} → {context['to_version']}"
         metadata_div.append(version_badge)
         metadata_div.append(" ")
 
@@ -630,7 +657,7 @@ def inject_navigation(html_file: Path, context: dict, env: Environment) -> bool:
         if context.get("line_count", 0) > 0:
             metadata_div.append(" ")
             line_badge = soup.new_tag("span", **{"class": "badge line-badge"})
-            line_badge.string = f'{context["line_count"]} lines'
+            line_badge.string = f"{context['line_count']} lines"
             metadata_div.append(line_badge)
 
         title_section.append(metadata_div)
@@ -657,7 +684,7 @@ def inject_navigation(html_file: Path, context: dict, env: Environment) -> bool:
                 # Create link for available diffs or current version
                 timeline_link = soup.new_tag(
                     "a",
-                    href=f'../{slug}/{context["stable_name_file"]}.html',
+                    href=f"../{slug}/{context['stable_name_file']}.html",
                     **{"class": "active" if is_current else ""},
                 )
                 timeline_link.string = f"{from_name}→{to_name}"
@@ -681,7 +708,7 @@ def inject_navigation(html_file: Path, context: dict, env: Environment) -> bool:
 
         eelis_link = soup.new_tag(
             "a",
-            href=f'https://eel.is/c++draft/{context["stable_name"]}',
+            href=f"https://eel.is/c++draft/{context['stable_name']}",
             target="_blank",
             rel="noopener noreferrer",
         )
@@ -741,9 +768,12 @@ def inject_navigation(html_file: Path, context: dict, env: Environment) -> bool:
         md_links_div.append(markdown_icon)
         md_links_div.append(" Markdown: ")
 
+        # Use cppstdmd SHA if available, otherwise default to 'main'
+        sha = context.get("cppstdmd_sha", "main")
+
         from_md_link = soup.new_tag(
             "a",
-            href=get_github_markdown_url(context["from_tag"], context["stable_name"]),
+            href=get_github_markdown_url(context["from_tag"], context["stable_name"], sha),
             target="_blank",
             rel="noopener noreferrer",
         )
@@ -753,7 +783,7 @@ def inject_navigation(html_file: Path, context: dict, env: Environment) -> bool:
 
         to_md_link = soup.new_tag(
             "a",
-            href=get_github_markdown_url(context["to_tag"], context["stable_name"]),
+            href=get_github_markdown_url(context["to_tag"], context["stable_name"], sha),
             target="_blank",
             rel="noopener noreferrer",
         )
@@ -792,7 +822,9 @@ def inject_navigation(html_file: Path, context: dict, env: Environment) -> bool:
         # Render footer from template
         footer_template = env.get_template("_footer.html")
         footer_html = footer_template.render(
-            generated_date=context.get("generated_date", "recently")
+            generated_date=context.get("generated_date", "recently"),
+            cppstdmd_sha=context.get("cppstdmd_sha", ""),
+            cppstdmd_short_sha=context.get("cppstdmd_short_sha", ""),
         )
         footer_soup = BeautifulSoup(footer_html, "html.parser")
 
@@ -986,7 +1018,7 @@ def generate_single_diff(args: tuple) -> tuple[bool, str, str]:
     item, diff_output_dir, context, templates_dir = args
 
     stable_name = item["name"]
-    output_file = Path(diff_output_dir) / f'{item["file"]}.html'
+    output_file = Path(diff_output_dir) / f"{item['file']}.html"
 
     try:
         # Create Jinja2 environment for this worker
@@ -1054,10 +1086,14 @@ def generate_version_pair(config: VersionPairConfig) -> dict:
             "slug": config.slug,
         }
 
+    # Get cppstdmd repository SHA (do this once for all pages)
+    sha_info = get_cppstdmd_sha()
+
     # Generate overview page
     template = config.env.get_template("version_overview.html")
     generated_date = datetime.now().strftime("%Y-%m-%d")
     stats = {"generated_date": generated_date}
+
     content = template.render(
         from_name=config.from_name,
         to_name=config.to_name,
@@ -1068,6 +1104,8 @@ def generate_version_pair(config: VersionPairConfig) -> dict:
         version_pairs=VERSION_PAIRS,
         stats=stats,
         generated_date=generated_date,
+        cppstdmd_sha=sha_info["sha"],
+        cppstdmd_short_sha=sha_info["short_sha"],
     )
 
     version_dir = config.output_path / "versions"
@@ -1094,7 +1132,7 @@ def generate_version_pair(config: VersionPairConfig) -> dict:
         )
 
         context = {
-            "title": f'[{item["name"]}] - {config.from_name} → {config.to_name}',
+            "title": f"[{item['name']}] - {config.from_name} → {config.to_name}",
             "stable_name": item["name"],
             "stable_name_file": item["file"],
             "from_version": config.from_name,
@@ -1106,6 +1144,8 @@ def generate_version_pair(config: VersionPairConfig) -> dict:
             "line_count": item["line_count"],
             "generated_date": datetime.now().strftime("%Y-%m-%d"),
             "stable_name_availability": stable_name_availability,
+            "cppstdmd_sha": sha_info["sha"],
+            "cppstdmd_short_sha": sha_info["short_sha"],
         }
         # Get templates directory from config.env.loader
         templates_dir = Path(config.env.loader.searchpath[0])
@@ -1182,11 +1222,16 @@ def generate_landing_page(output_path: Path, env: Environment, stats: dict):
     """
     print("\n📄 Generating landing page...")
 
+    # Get cppstdmd SHA for footer
+    sha_info = get_cppstdmd_sha()
+
     template = env.get_template("index.html")
     content = template.render(
         version_pairs=VERSION_PAIRS,
         stats=stats,
         generated_date=stats.get("generated_date", "recently"),
+        cppstdmd_sha=sha_info["sha"],
+        cppstdmd_short_sha=sha_info["short_sha"],
     )
 
     index_file = output_path / "index.html"
@@ -1241,6 +1286,9 @@ def generate_statistics_page(output_path: Path, env: Environment, stats: dict):
         stats.get("version_pairs", []), key=lambda x: x.get("total_size_kb", 0), default={}
     )
 
+    # Get cppstdmd SHA for footer
+    sha_info = get_cppstdmd_sha()
+
     # Load template after adding filters
     template = env.get_template("statistics.html")
 
@@ -1254,6 +1302,8 @@ def generate_statistics_page(output_path: Path, env: Environment, stats: dict):
         most_active=most_active,
         largest_transition=largest_transition,
         generated_date=stats.get("generated_date", "recently"),
+        cppstdmd_sha=sha_info["sha"],
+        cppstdmd_short_sha=sha_info["short_sha"],
     )
 
     stats_file = output_path / "statistics.html"
@@ -1324,9 +1374,14 @@ def copy_static_assets(output_path: Path):
         # Need to render it with Jinja2 first
         from jinja2 import Environment, FileSystemLoader
 
+        # Get cppstdmd SHA for footer
+        sha_info = get_cppstdmd_sha()
+
         env = Environment(loader=FileSystemLoader("templates"))
         template = env.get_template("404.html")
-        content = template.render()
+        content = template.render(
+            cppstdmd_sha=sha_info["sha"], cppstdmd_short_sha=sha_info["short_sha"]
+        )
         (output_path / "404.html").write_text(content, encoding="utf-8")
         print("  ✓ Generated 404.html")
 
@@ -1391,9 +1446,9 @@ Sitemap: {base_url}/sitemap.xml
 
     for url_data in sitemap_urls:
         xml_lines.append("  <url>")
-        xml_lines.append(f'    <loc>{url_data["loc"]}</loc>')
-        xml_lines.append(f'    <priority>{url_data["priority"]}</priority>')
-        xml_lines.append(f'    <changefreq>{url_data["changefreq"]}</changefreq>')
+        xml_lines.append(f"    <loc>{url_data['loc']}</loc>")
+        xml_lines.append(f"    <priority>{url_data['priority']}</priority>")
+        xml_lines.append(f"    <changefreq>{url_data['changefreq']}</changefreq>")
         xml_lines.append("  </url>")
 
     xml_lines.append("</urlset>")

@@ -20,7 +20,7 @@
                 <a href="https://github.com/rtfpessoa/diff2html" target="_blank" rel="noopener noreferrer">diff2html</a>,
                 <a href="https://fontawesome.com" target="_blank" rel="noopener noreferrer">Font Awesome</a>
             </p>
-            <p>Last updated: {{ generated_date }}</p>
+            <p>Last updated: {{ generated_date }}{% if cppstdmd_sha %} | Converted from <a href="https://github.com/lefticus/cppstdmd/commit/{{ cppstdmd_sha }}" target="_blank" rel="noopener noreferrer" title="View commit {{ cppstdmd_sha }}"><i class="fa-brands fa-github"></i> {{ cppstdmd_short_sha }}</a>{% endif %}</p>
         </div>
 
         <div class="footer-more">
