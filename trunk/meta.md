@@ -3782,7 +3782,7 @@ variable represented by `r`.
 
 - `r` represents a variable or object of type `U`,
 - `is_convertible_v<remove_reference_t<U>(*)[], remove_reference_t<T>(*)[]>`
-  is `true`,and \[*Note 1*: The intent is to allow only qualification
+  is `true`, and \[*Note 1*: The intent is to allow only qualification
   conversion from `U` to `T`. — *end note*]
 - If `r` represents a variable, then either that variable is usable in
   constant expressions or its lifetime began within the core constant

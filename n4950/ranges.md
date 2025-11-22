@@ -12197,7 +12197,7 @@ friend constexpr auto iter_move(const iterator& i) noexcept(see below);
 the following expressions:
 
 - `noexcept(ranges::iter_move(std::get<`N`>(i.`*`current_`*`)))` for
-  every integer0 ≤ N ≤ `sizeof...(Vs)`,
+  every integer 0 ≤ N ≤ `sizeof...(Vs)`,
 - `is_nothrow_move_constructible_v<range_rvalue_reference_t<`*`maybe-const`*`<Const, T>>>`
   for every type `T` in `First, Vs...`.
 
@@ -12217,7 +12217,7 @@ ranges::iter_swap(std::get<i>(l.current_), std::get<i>(r.current_))
 the following expressions:
 
 - `noexcept(ranges::iter_swap(std::get<`i`>(l.`*`current_`*`), std::get<`i`>(r.`*`current_`*`)))`
-  forevery integer 0 ≤ i ≤ `sizeof...(Vs)`.
+  for every integer 0 ≤ i ≤ `sizeof...(Vs)`.
 
 ## Range generators <a id="coro.generator">[[coro.generator]]</a>
 

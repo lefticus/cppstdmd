@@ -979,7 +979,7 @@ template<class T1, class T2, class U1, class U2>
 
 *Constraints:* `x.first == y.first` and `x.second == y.second` are valid
 expressions and each of `decltype(x.first == y.first)` and
-`decltype(x.second == y.second)` models *`boolean-``testable`*.
+`decltype(x.second == y.second)` models *`boolean- testable`*.
 
 *Returns:* `x.first == y.first && x.second == y.second`.
 
@@ -1456,7 +1456,7 @@ Let *disambiguating-constraint* be:
 - `negation<is_same<remove_cvref_t<``U₀``>, tuple>>` if
   `sizeof...(Types)` is 1;
 - otherwise,
-  `bool_constant<!is_same_v<remove_cvref_t<``U₀``>, allocator_arg_t> || is_-`\newline`same_v<remove_cvref_t<``T₀``>, allocator_arg_t>>`
+  `bool_constant<!is_same_v<remove_cvref_t<``U₀``>, allocator_arg_t> || is_- same_v<remove_cvref_t<``T₀``>, allocator_arg_t>>`
   if `sizeof...(Types)` is 2 or 3;
 - otherwise, `true_type`.
 
@@ -1465,7 +1465,7 @@ Let *disambiguating-constraint* be:
 - `sizeof...(Types)` equals `sizeof...(UTypes)`,
 - `sizeof...(Types)` ≥ 1, and
 - `conjunction_v<`*`disambiguating-constraint`*`, is_constructible<Types, UTypes>...>`
-  is`true`.
+  is `true`.
 
 *Effects:* Initializes the elements in the tuple with the corresponding
 value in `std::forward<UTypes>(u)`.
@@ -6241,7 +6241,7 @@ template<class U = remove_cv_t<T>>
 - `remove_cvref_t<U>` is not a specialization of `unexpected`; and
 - `is_constructible_v<T, U>` is `true`; and
 - `is_assignable_v<T&, U>` is `true`; and
-- `is_nothrow_constructible_v<T, U> || is_nothrow_move_constructible_v<T> ||`` is_nothrow_move_constructible_v<E>`
+- `is_nothrow_constructible_v<T, U> || is_nothrow_move_constructible_v<T> || is_nothrow_move_constructible_v<E>`
   is `true`.
 
 *Effects:*
@@ -6270,7 +6270,7 @@ overload.
 
 - `is_constructible_v<E, GF>` is `true`; and
 - `is_assignable_v<E&, GF>` is `true`; and
-- `is_nothrow_constructible_v<E, GF> || is_nothrow_move_constructible_v<T> ||`` is_nothrow_move_constructible_v<E>`
+- `is_nothrow_constructible_v<E, GF> || is_nothrow_move_constructible_v<T> || is_nothrow_move_constructible_v<E>`
   is `true`.
 
 *Effects:*

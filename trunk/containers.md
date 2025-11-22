@@ -530,7 +530,7 @@ defined for values of type (possibly const) `T` and `<` is a total
 ordering relationship.
 
 *Returns:*
-`lexicographical_compare_three_way(a.begin(), a.end(), b.begin(), b.end(),`*`synth-three-way`*`)`
+`lexicographical_compare_three_way(a.begin(), a.end(), b.begin(), b.end(), `*`synth-three-way`*`)`
 
 [*Note 1*: The algorithm `lexicographical_compare_three_way` is defined
 in [[algorithms]]. — *end note*]
@@ -7922,10 +7922,10 @@ denotes a type.
 *Mandates:* `is_assignable_v<mapped_type&, M&&>` is `true`.
 
 *Preconditions:* `value_type` is *Cpp17EmplaceConstructible* into `map`
-from `std::forward<K>(k), std::``forward<M>(obj)`.
+from `std::forward<K>(k), std:: forward<M>(obj)`.
 
 *Effects:* If the map already contains an element `e` whose key is
-equivalent to `k`, assigns `std::forward<M>``(obj)` to `e.second`.
+equivalent to `k`, assigns `std::forward<M> (obj)` to `e.second`.
 Otherwise, let `r` be `equal_range(k)`. Constructs an object `u` of type
 `value_type` with `std::forward<K>(k), std::forward<M>(obj)`. If
 `equal_range(u.first) == r` is `false`, the behavior is undefined.
@@ -9449,7 +9449,7 @@ overload, `is_convertible_v<K&&, const_iterator>` and
 
 *Preconditions:* `value_type` is *Cpp17EmplaceConstructible* into
 `unordered_map` from
-`piecewise_construct, forward_as_tuple(std::forward<K>(k)), forward_as_tuple(std::forward<Args>``(args)...)`.
+`piecewise_construct, forward_as_tuple(std::forward<K>(k)), forward_as_tuple(std::forward<Args> (args)...)`.
 
 *Effects:* If the map already contains an element whose key is
 equivalent to `k`, there is no effect. Otherwise, let `h` be
@@ -9523,10 +9523,10 @@ template<class K, class M>
 *Mandates:* `is_assignable_v<mapped_type&, M&&>` is `true`.
 
 *Preconditions:* `value_type` is *Cpp17EmplaceConstructible* into
-`unordered_map` from `std::forward<K>``(k), std::forward<M>(obj)`.
+`unordered_map` from `std::forward<K> (k), std::forward<M>(obj)`.
 
 *Effects:* If the map already contains an element `e` whose key is
-equivalent to `k`, assigns `std::forward<M>``(obj)` to `e.second`.
+equivalent to `k`, assigns `std::forward<M> (obj)` to `e.second`.
 Otherwise, let `h` be `hash_function()(k)`. Constructs an object `u` of
 type `value_type` with `std::forward<K>(k), std::forward<M>(obj)`. If
 `hash_function()(u.first) != h || contains(u.first)` is `true`, the
@@ -10350,7 +10350,7 @@ overload, `is_convertible_v<K&&, const_iterator>` and
 `is_convertible_v<K&&, iterator>` are both `false`.
 
 *Preconditions:* `value_type` is *Cpp17EmplaceConstructible* into
-`unordered_set` from `std::forward<K>``(obj)`.
+`unordered_set` from `std::forward<K> (obj)`.
 
 *Effects:* If the set already contains an element that is equivalent to
 `obj`, there is no effect. Otherwise, let `h` be `hash_function()(obj)`.
@@ -15205,7 +15205,7 @@ template<class OtherIndexType, size_t... OtherExtents>
 *Constraints:*
 
 - `sizeof...(OtherExtents) == rank()` is `true`.
-- `((OtherExtents == dynamic_extent || Extents == dynamic_extent || OtherExtents ==``Extents) && ...)`
+- `((OtherExtents == dynamic_extent || Extents == dynamic_extent || OtherExtents == Extents) && ...)`
   is `true`.
 
 *Preconditions:*
@@ -15756,8 +15756,8 @@ template<class LayoutLeftPaddedMapping>
 
 - *`is-layout-left-padded-mapping-of`*`<LayoutLeftPaddedMapping>` is
   `true`.
-- `is_constructible_v<extents_type, typename LayoutLeftPaddedMapping::extents_type>`is
-  `true`.
+- `is_constructible_v<extents_type, typename LayoutLeftPaddedMapping::extents_type>`
+  is `true`.
 
 *Mandates:* If
 
@@ -15992,7 +15992,7 @@ template<class LayoutRightPaddedMapping>
 
 - *`is-layout-right-padded-mapping-of`*`<LayoutRightPaddedMapping>` is
   `true`.
-- `is_constructible_v<extents_type, typename LayoutRightPaddedMapping::extents_-``type>`
+- `is_constructible_v<extents_type, typename LayoutRightPaddedMapping::extents_- type>`
   is `true`.
 
 *Mandates:* If
@@ -16009,7 +16009,7 @@ then `Extents::static_extent(Extents::rank() - 1)` equals
 *Preconditions:*
 
 - If `extents_type::rank() > 1` is `true`, then
-  `other.stride(extents_type::rank() - 2)`equals
+  `other.stride(extents_type::rank() - 2)` equals
   `other.extents().extent(extents_type::rank() - 1)`.
 - `other.required_span_size()` is representable as a value of type
   `index_type`.
@@ -16718,7 +16718,7 @@ template<class LayoutRightPaddedMapping>
   `true` or *`is-mapping-of`*`<layout_right, LayoutRightPaddedMapping>`
   is `true`.
 - *rank\_* equals zero or one.
-- `is_constructible_v<extents_type, typename LayoutRightPaddedMapping::extents_-``type>`
+- `is_constructible_v<extents_type, typename LayoutRightPaddedMapping::extents_- type>`
   is `true`.
 
 *Preconditions:* `other.required_span_size()` is representable as a
@@ -16817,7 +16817,7 @@ template<class LayoutLeftPaddedMapping>
 - `LayoutLeftPaddedMapping::extents_type::rank() == rank_` is `true`.
 
 *Returns:* `true` if `x.extents() == y.extents()` is `true` and
-*`rank_`*` < 2 || x.stride(1) == y.``stride(1)` is `true`. Otherwise,
+*`rank_`*` < 2 || x.stride(1) == y. stride(1)` is `true`. Otherwise,
 `false`.
 
 ##### Class template `layout_right_padded::mapping` <a id="mdspan.layout.rightpad">[[mdspan.layout.rightpad]]</a>
@@ -17058,7 +17058,7 @@ is `true`.
 *Preconditions:*
 
 - If *`rank_`*` > 1` is `true` and `padding_value == dynamic_extent` is
-  `false`, then `other.stride(`*`rank_`*` - 2)` equals
+  `false`, then `other.stride( `*`rank_`*` - 2)` equals
   ``` cpp
   LEAST-MULTIPLE-AT-LEAST(padding_value,
                           extents_type::index-cast(other.extents().extent(rank_ - 1)))
@@ -17114,7 +17114,7 @@ template<class LayoutRightPaddedMapping>
 
 - *`is-layout-right-padded-mapping-of`*`<LayoutRightPaddedMapping>` is
   `true`.
-- `is_constructible_v<extents_type, typename LayoutRightPaddedMapping::extents_-``type>`
+- `is_constructible_v<extents_type, typename LayoutRightPaddedMapping::extents_- type>`
   is `true`.
 
 *Mandates:* If *rank\_* is greater than 1, then
@@ -17870,14 +17870,14 @@ template<class OtherElementType, class OtherExtents,
 
 *Constraints:*
 
-- `is_constructible_v<mapping_type, const OtherLayoutPolicy::template mapping<Oth-``erExtents>&>`
+- `is_constructible_v<mapping_type, const OtherLayoutPolicy::template mapping<Oth- erExtents>&>`
   is `true`, and
 - `is_constructible_v<accessor_type, const OtherAccessor&>` is `true`.
 
 *Mandates:*
 
 - `is_constructible_v<data_handle_type, const OtherAccessor::data_handle_type&>`
-  is`true`, and
+  is `true`, and
 - `is_constructible_v<extents_type, OtherExtents>` is `true`.
 
 *Preconditions:* $[0, \texttt{\textit{map_}.required_span_size()})$ is

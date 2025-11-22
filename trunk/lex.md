@@ -1237,11 +1237,11 @@ evaluation of the *string-literal* (see below).
 
 | Enco- | Kind | Type | Associated | Examples | ding | character | prefix | encoding |
 | ----- | ---- | ---- | ---------- | -------- | ---- | --------- | ------ | -------- |
-| none  | ordinary string literal | array of $n$\newline `const char` | ordinary literal encoding | `"ordinary string"`\newline `R"(ordinary raw string)"` |
-| `L`   | wide string literal | array of $n$\newline `const wchar_t` | wide literal\newline encoding | `L"wide string"`\newline `LR"w(wide raw string)w"` |
-| `u8`  | UTF-8 string literal | array of $n$\newline `const char8_t` | UTF-8      | `u8"UTF-8 string"`\newline `u8R"x(UTF-8 raw string)x"` |
-| `u`   | UTF-16 string literal | array of $n$\newline `const char16_t` | UTF-16     | `u"UTF-16 string"`\newline `uR"y(UTF-16 raw string)y"` |
-| `U`   | UTF-32 string literal | array of $n$\newline `const char32_t` | UTF-32     | `U"UTF-32 string"`\newline `UR"z(UTF-32 raw string)z"` |
+| none  | ordinary string literal | array of $n$ `const char` | ordinary literal encoding | `"ordinary string"` `R"(ordinary raw string)"` |
+| `L`   | wide string literal | array of $n$ `const wchar_t` | wide literal encoding | `L"wide string"` `LR"w(wide raw string)w"` |
+| `u8`  | UTF-8 string literal | array of $n$ `const char8_t` | UTF-8      | `u8"UTF-8 string"` `u8R"x(UTF-8 raw string)x"` |
+| `u`   | UTF-16 string literal | array of $n$ `const char16_t` | UTF-16     | `u"UTF-16 string"` `uR"y(UTF-16 raw string)y"` |
+| `U`   | UTF-32 string literal | array of $n$ `const char32_t` | UTF-32     | `U"UTF-32 string"` `UR"z(UTF-32 raw string)z"` |
 
 
 A *string-literal* that has an `R` in the prefix is a *raw string

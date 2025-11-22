@@ -530,7 +530,7 @@ const) `T`, or `<` is defined for values of type (possibly const) `T`
 and `<` is a total ordering relationship.
 
 *Returns:*
-`lexicographical_compare_three_way(a.begin(), a.end(), b.begin(), b.end(),`*`synth-three-way`*`)`
+`lexicographical_compare_three_way(a.begin(), a.end(), b.begin(), b.end(), `*`synth-three-way`*`)`
 
 [*Note 1*: The algorithm `lexicographical_compare_three_way` is defined
 in [[algorithms]]. — *end note*]
@@ -13475,7 +13475,7 @@ template<class OtherIndexType, size_t... OtherExtents>
 *Constraints:*
 
 - `sizeof...(OtherExtents) == rank()` is `true`.
-- `((OtherExtents == dynamic_extent || Extents == dynamic_extent || OtherExtents ==``Extents) && ...)`
+- `((OtherExtents == dynamic_extent || Extents == dynamic_extent || OtherExtents == Extents) && ...)`
   is `true`.
 
 *Preconditions:*
@@ -14927,14 +14927,14 @@ template<class OtherElementType, class OtherExtents,
 
 *Constraints:*
 
-- `is_constructible_v<mapping_type, const OtherLayoutPolicy::template mapping<Oth-``erExtents>&>`
+- `is_constructible_v<mapping_type, const OtherLayoutPolicy::template mapping<Oth- erExtents>&>`
   is `true`, and
 - `is_constructible_v<accessor_type, const OtherAccessor&>` is `true`.
 
 *Mandates:*
 
 - `is_constructible_v<data_handle_type, const OtherAccessor::data_handle_type&>`
-  is`true`, and
+  is `true`, and
 - `is_constructible_v<extents_type, OtherExtents>` is `true`.
 
 *Preconditions:*

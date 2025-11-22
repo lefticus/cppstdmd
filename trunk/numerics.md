@@ -8363,7 +8363,7 @@ Let `A` be
 `mdspan<typename A::element_type, Extents, Layout, A>`.
 
 - `MD(a.data_handle(), a.mapping(), a.accessor().nested_accessor())` if
-  `Accessor` is aspecialization of `conjugated_accessor`;
+  `Accessor` is a specialization of `conjugated_accessor`;
 - otherwise, `a`, if `is_same_v<A, Accessor>` is `true`;
 - otherwise,
   `MD(a.data_handle(), a.mapping(), conjugated_accessor(a.accessor()))`.

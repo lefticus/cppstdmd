@@ -479,8 +479,8 @@ modeled only if:
       - If `t.stop_requested()` evaluates to `false` at the time of
         registration, the callback invocation is added to the stop
         state’s list of callbacks such that
-        `std::forward<CallbackFn>(\newline callback_fn)()` is evaluated
-        if a stop request is made on the stop state.
+        `std::forward<CallbackFn>( callback_fn)()` is evaluated if a
+        stop request is made on the stop state.
       - Otherwise, `std::forward<CallbackFn>(callback_fn)()` shall be
         immediately evaluated on the thread executing `scb`’s
         constructor, and the callback invocation shall not be added to
@@ -819,8 +819,8 @@ template parameter `CallbackFn` that satisfies both `invocable` and
 satisfied, then
 `stoppable-callback-for<CallbackFn, stop_token, Initializer>` is
 modeled. The exposition-only *`callback-fn`* member is the associated
-callback function [[stoptoken.concepts]] of
-`stop_callback<\newline CallbackFn>` objects.
+callback function [[stoptoken.concepts]] of `stop_callback< CallbackFn>`
+objects.
 
 #### Constructors and destructor <a id="stopcallback.cons">[[stopcallback.cons]]</a>
 
@@ -9352,7 +9352,7 @@ invoked on `x` before. The assignment to *deleter* does not exit via an
 exception.
 
 *Effects:* Evaluates *`deleter`*` = std::move(d)` and schedules the
-evaluation of the expression *`deleter`*`(``addressof(x))` in the domain
+evaluation of the expression *`deleter`*`( addressof(x))` in the domain
 `dom`; the behavior is undefined if that evaluation exits via an
 exception. May invoke scheduled evaluations in `dom`.
 

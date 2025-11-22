@@ -1938,8 +1938,8 @@ of the following is `true`:
 - `T` is a specialization of `coroutine_handle`.
 
 For a subexpression `c` such that `decltype((c))` is type `C`, and an
-lvalue `p` of type `Promise`, `await-result-\newline type<C, Promise>`
-denotes the type `decltype(GET-AWAITER(c, p).await_resume())` and
+lvalue `p` of type `Promise`, `await-result- type<C, Promise>` denotes
+the type `decltype(GET-AWAITER(c, p).await_resume())` and
 `await-result-type<C>` denotes the type
 `decltype(GET-AWAITER(c).await_resume())`.
 
@@ -2634,8 +2634,8 @@ execution agent belonging to a particular scheduler’s associated
 execution resource.
 
 The name `starts_on` denotes a customization point object. For
-subexpressions `sch` and `sndr`, if `decltype((\newline sch))` does not
-satisfy `scheduler`, or `decltype((sndr))` does not satisfy `sender`,
+subexpressions `sch` and `sndr`, if `decltype(( sch))` does not satisfy
+`scheduler`, or `decltype((sndr))` does not satisfy `sender`,
 `starts_on(sch, sndr)` is ill-formed.
 
 Otherwise, the expression `starts_on(sch, sndr)` is
@@ -5234,8 +5234,8 @@ Two instances of *`run-loop-scheduler`* compare equal if and only if
 they were obtained from the same `run_loop` instance.
 
 Let *`sch`* be an expression of type *`run-loop-scheduler`*. The
-expression `schedule(sch)` has type *`run-loop-\newline sender`* and is
-not potentially-throwing if *`sch`* is not potentially-throwing.
+expression `schedule(sch)` has type *`run-loop- sender`* and is not
+potentially-throwing if *`sch`* is not potentially-throwing.
 
 ``` cpp
 class run-loop-sender;
@@ -5263,8 +5263,7 @@ be either `set_value_t` or `set_stopped_t`. Then:
 - The expression `get_completion_scheduler<C>(get_env(sndr))` is
   potentially-throwing if and only if *`sndr`* is potentially-throwing,
   has type *`run-loop-scheduler`*, and compares equal to the
-  *`run-loop-\newline scheduler`* instance from which *`sndr`* was
-  obtained.
+  *`run-loop- scheduler`* instance from which *`sndr`* was obtained.
 
 ``` cpp
 template<class Rcvr>
@@ -5454,7 +5453,7 @@ Let `rcvr` be an rvalue expression of type *`awaitable-receiver`*, let
 subexpressions, and let `err` be an expression of type `Err`. Then:
 
 - If `constructible_from<result-type, decltype((vs))...>` is satisfied,
-  the expression `set_value(\newline rcvr, vs...)` is equivalent to:
+  the expression `set_value( rcvr, vs...)` is equivalent to:
   ``` cpp
   try {
     rcvr.result-ptr->template emplace<1>(vs...);

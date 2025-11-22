@@ -3863,8 +3863,8 @@ call `s.release()` in the constructor. Otherwise, it is empty.
   ```
 
   if the expression
-  `s.reset(static_cast<SP>(p), std::forward<Args>(args)...)` is
-  well-formed;
+  `s.reset(static_cast<SP>(p), std::forward<Args>(args)...)` is well-
+  formed;
 - otherwise,
   ``` cpp
   release-statement;

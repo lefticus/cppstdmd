@@ -23,12 +23,13 @@
 %%--------------------------------------------------
 
 %%--------------------------------------------------
-%% Category A: Simple Text Substitutions (20 macros)
+%% Category A: Simple Text Substitutions (21 macros)
 %% These are constant strings with no arguments
 %%--------------------------------------------------
 %% Remove line-breaking hints - these don't apply to markdown
 \renewcommand{\-}{}           % Discretionary hyphen
 \renewcommand{\linebreak}{}   % Line break hint
+\renewcommand{\newline}{ }    % Strip line breaks - markdown doesn't support mid-table breaks (Issue #27)
 \renewcommand{\@}{}           % Sentence spacing control (LaTeX typography)
 \renewcommand{\textregistered}{®}  % Registered trademark symbol (Issue #14)
 \renewcommand{\Cpp}{C++}
@@ -53,11 +54,12 @@
 \renewcommand{\tilde}{\textasciitilde}
 
 %%--------------------------------------------------
-%% Category B: Code Formatting (8 macros)
+%% Category B: Code Formatting (9 macros)
 %% Convert to \texttt (monospace) - Pandoc renders as inline code
 %%--------------------------------------------------
 %% \tcode{} - REMOVED: contains nested macros (\keyword{}, \ctype{}, etc)
 %% \ctype{} - REMOVED: nested in \tcode{}
+%% \terminal{} - REMOVED: needs special handling in cpp-grammar.lua for BNF terminals (Issue #27)
 \renewcommand{\keyword}[1]{\texttt{#1}}
 \renewcommand{\libheader}[1]{\texttt{<#1>}}
 \renewcommand{\libheaderdef}[1]{\texttt{<#1>}}
@@ -213,7 +215,7 @@
 \renewcommand{\locnontermdef}[1]{#1:}  % Locale BNF nonterminal (13× in localization.md) - just term+colon
 
 %%--------------------------------------------------
-%% TOTAL: 93 simplified macros (was 96, removed 3 for Issue #49)
+%% TOTAL: 94 simplified macros (was 93, added 1 for Issue #27)
 %% Macros cover ~75% of macro usage in the C++ standard source
 %%
 %% Macros removed after investigation (moved back to Lua filters):
