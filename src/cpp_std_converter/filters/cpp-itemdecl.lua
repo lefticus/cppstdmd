@@ -58,6 +58,7 @@ local clean_code_common = common.clean_code_common
 local expand_macros_common = common.expand_macros_common
 local build_environment_opening = common.build_environment_opening
 local build_environment_closing = common.build_environment_closing
+local extract_footnotes_from_code = common.extract_footnotes_from_code
 
 -- Track note and example counters across itemdescr processing
 local itemdescr_note_counter = 0
@@ -498,12 +499,8 @@ function RawBlock(elem)
     -- Extract footnotes from itemdecl content before code processing
     -- Footnotes appear as \begin{footnote}...\end{footnote} and must be converted
     -- to GFM footnote syntax instead of being left as literal LaTeX in code blocks
-    local footnotes = {}
-    content = content:gsub("@?\n?\\begin{footnote}([%s%S]-)\\end{footnote}@?", function(fn_content)
-      fn_content = trim(fn_content)
-      table.insert(footnotes, fn_content)
-      return ""  -- Remove footnote from code
-    end)
+    local footnote_blocks
+    content, footnote_blocks = extract_footnotes_from_code(content)
 
     -- Clean up the code using shared function from cpp-common
     content = clean_code_common(content, false)
@@ -514,24 +511,8 @@ function RawBlock(elem)
 
     -- Build result blocks: code block followed by footnote paragraphs
     local blocks = {pandoc.CodeBlock(content, {class = "cpp"})}
-
-    -- Convert extracted footnotes to Pandoc Note elements
-    for _, fn_content in ipairs(footnotes) do
-      -- Expand macros in footnote content using shared function
-      fn_content = expand_macros_common(fn_content, {
-        convert_to_latex = true,
-        escape_at_macros = false,
-        ref_format = "wikilink",
-      })
-
-      -- Parse footnote content with Pandoc
-      local parsed = pandoc.read(fn_content, "latex+raw_tex")
-
-      -- Create Note inline element with parsed blocks as content
-      local note = pandoc.Note(parsed.blocks)
-
-      -- Add as new paragraph containing just the footnote
-      table.insert(blocks, pandoc.Para({note}))
+    for _, fn_block in ipairs(footnote_blocks) do
+      table.insert(blocks, fn_block)
     end
 
     -- Return all blocks (code + footnotes)

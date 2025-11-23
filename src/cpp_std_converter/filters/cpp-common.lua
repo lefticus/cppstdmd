@@ -2610,6 +2610,44 @@ local function build_defnote(note_content, note_counter, parse_latex)
   return pandoc.Para(note_para)
 end
 
+-- Extract footnotes from code content and convert to Pandoc Notes
+-- Returns: cleaned_code, {footnote_blocks}
+-- Used by cpp-code-blocks.lua and cpp-itemdecl.lua to handle footnotes in code
+local function extract_footnotes_from_code(code)
+  local footnotes = {}
+
+  -- Extract footnotes from code content
+  -- Pattern matches @?\n?\begin{footnote}...\end{footnote}@?
+  -- @ symbols are escape delimiters used in code blocks
+  code = code:gsub("@?\n?\\begin{footnote}([%s%S]-)\\end{footnote}@?", function(fn_content)
+    fn_content = trim(fn_content)
+    table.insert(footnotes, fn_content)
+    return ""  -- Remove footnote from code
+  end)
+
+  -- Convert extracted footnotes to Pandoc Note elements wrapped in Para
+  local footnote_blocks = {}
+  for _, fn_content in ipairs(footnotes) do
+    -- Expand macros in footnote content using shared function
+    fn_content = expand_macros_common(fn_content, {
+      convert_to_latex = true,
+      escape_at_macros = false,
+      ref_format = "wikilink",
+    })
+
+    -- Parse footnote content with Pandoc
+    local parsed = pandoc.read(fn_content, "latex+raw_tex")
+
+    -- Create Note inline element with parsed blocks as content
+    local note = pandoc.Note(parsed.blocks)
+
+    -- Add as new paragraph containing just the footnote
+    table.insert(footnote_blocks, pandoc.Para({note}))
+  end
+
+  return code, footnote_blocks
+end
+
 -- Export public API
 return {
   subscripts = subscripts,
@@ -2650,4 +2688,5 @@ return {
   build_environment_opening = build_environment_opening,
   build_environment_closing = build_environment_closing,
   build_defnote = build_defnote,
+  extract_footnotes_from_code = extract_footnotes_from_code,
 }

@@ -48,44 +48,7 @@ local trim = common.trim
 local clean_code_common = common.clean_code_common
 local remove_font_switches = common.remove_font_switches
 local handle_overlap_commands = common.handle_overlap_commands
-local expand_macros_common = common.expand_macros_common
-
--- Helper function to extract footnotes from code content and convert to Pandoc Notes
--- Returns: cleaned_code, {footnote_blocks}
-local function extract_footnotes(code)
-  local footnotes = {}
-
-  -- Extract footnotes from code content
-  -- Pattern matches @?\n?\begin{footnote}...\end{footnote}@?
-  -- @ symbols are escape delimiters used in code blocks
-  code = code:gsub("@?\n?\\begin{footnote}([%s%S]-)\\end{footnote}@?", function(fn_content)
-    fn_content = trim(fn_content)
-    table.insert(footnotes, fn_content)
-    return ""  -- Remove footnote from code
-  end)
-
-  -- Convert extracted footnotes to Pandoc Note elements wrapped in Para
-  local footnote_blocks = {}
-  for _, fn_content in ipairs(footnotes) do
-    -- Expand macros in footnote content using shared function
-    fn_content = expand_macros_common(fn_content, {
-      convert_to_latex = true,
-      escape_at_macros = false,
-      ref_format = "wikilink",
-    })
-
-    -- Parse footnote content with Pandoc
-    local parsed = pandoc.read(fn_content, "latex+raw_tex")
-
-    -- Create Note inline element with parsed blocks as content
-    local note = pandoc.Note(parsed.blocks)
-
-    -- Add as new paragraph containing just the footnote
-    table.insert(footnote_blocks, pandoc.Para({note}))
-  end
-
-  return code, footnote_blocks
-end
+local extract_footnotes_from_code = common.extract_footnotes_from_code
 
 -- Main filter function for raw blocks
 function RawBlock(elem)
@@ -117,7 +80,7 @@ function RawBlock(elem)
     -- Footnotes appear as \begin{footnote}...\end{footnote} and must be converted
     -- to GFM footnote syntax instead of being left as literal LaTeX in code blocks
     local footnote_blocks
-    code, footnote_blocks = extract_footnotes(code)
+    code, footnote_blocks = extract_footnotes_from_code(code)
 
     -- Clean up the code
     code = clean_code_common(code, false)
@@ -140,7 +103,7 @@ function RawBlock(elem)
   if code then
     -- Extract footnotes from code content
     local footnote_blocks
-    code, footnote_blocks = extract_footnotes(code)
+    code, footnote_blocks = extract_footnotes_from_code(code)
 
     code = clean_code_common(code, false)
     code = trim(code)
@@ -159,7 +122,7 @@ function RawBlock(elem)
   if code then
     -- Extract footnotes from code content
     local footnote_blocks
-    code, footnote_blocks = extract_footnotes(code)
+    code, footnote_blocks = extract_footnotes_from_code(code)
 
     code = clean_code_common(code, false)
     code = trim(code)
@@ -178,7 +141,7 @@ function RawBlock(elem)
   if code then
     -- Extract footnotes from code content
     local footnote_blocks
-    code, footnote_blocks = extract_footnotes(code)
+    code, footnote_blocks = extract_footnotes_from_code(code)
 
     code = clean_code_common(code, false)
     code = trim(code)
