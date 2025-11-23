@@ -629,3 +629,120 @@ auto y = \grammartermnc{initializer} ;
     # Should NOT have markdown asterisks (they don't work in code blocks)
     assert "*template-argument*" not in output
     assert "*initializer*" not in output
+
+
+def test_footnote_in_codeblock():
+    r"""Test that footnotes in codeblock are extracted and converted to GFM footnotes
+
+    This is a fix for Issue #39 where footnotes inside \begin{codeblock} blocks
+    were left as literal LaTeX \begin{footnote}...\end{footnote} instead of
+    being converted to GFM footnote syntax [^N].
+
+    Real-world example from cplusplus-draft/source/strings.tex lines 626-628
+    """
+    latex = r"""
+\begin{codeblock}
+namespace std {
+  template<class charT, class traits = char_traits<charT>>
+  class basic_string_view {
+    using iterator               = const_iterator;@
+\begin{footnote}
+Because \tcode{basic_string_view} refers to a constant sequence,
+\tcode{iterator} and \tcode{const_iterator} are the same type.
+\end{footnote}@
+    using const_reverse_iterator = reverse_iterator<const_iterator>;
+  };
+}
+\end{codeblock}
+"""
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0, f"Pandoc failed with code {code}"
+
+    # Code block should NOT contain literal \begin{footnote}
+    assert "\\begin{footnote}" not in output
+    assert "\\end{footnote}" not in output
+
+    # Should have GFM footnote syntax
+    assert "[^" in output
+
+    # Footnote content should be present
+    assert "constant sequence" in output
+    assert "same type" in output
+
+    # Code should be present in code block
+    assert "namespace std" in output
+    assert "using iterator" in output
+    assert "const_iterator" in output
+    assert "```" in output or "cpp" in output  # Should be fenced code
+
+
+def test_multiple_footnotes_in_codeblock():
+    r"""Test that multiple footnotes in codeblock are all extracted and converted"""
+    latex = r"""
+\begin{codeblock}
+template<class T>
+void foo(T& x)
+\begin{footnote}
+First footnote about \tcode{x}.
+\end{footnote}
+;
+
+template<class U>
+void bar(U& y)
+\begin{footnote}
+Second footnote about \tcode{y}.
+\end{footnote}
+;
+\end{codeblock}
+"""
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0, f"Pandoc failed with code {code}"
+
+    # Should NOT have literal LaTeX footnotes
+    assert "\\begin{footnote}" not in output
+    assert "\\end{footnote}" not in output
+
+    # Should have two GFM footnotes
+    assert "[^1]" in output or "[^2]" in output
+
+    # Both footnote contents should be present
+    assert "First footnote" in output
+    assert "Second footnote" in output
+
+    # Code should be in code block without footnotes
+    assert "void foo(T& x)" in output
+    assert "void bar(U& y)" in output
+
+
+def test_footnote_with_at_escape_delimiters():
+    r"""Test footnotes with @ escape delimiters are properly extracted
+
+    The @ symbols are used to mark inline code in codeblocks.
+    Example: @\tcode{value}@ becomes just "value" in the code.
+    """
+    latex = r"""
+\begin{codeblock}
+class Example {@
+\begin{footnote}
+This uses @\tcode{special}@ syntax.
+\end{footnote}@
+  int value;
+};
+\end{codeblock}
+"""
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0, f"Pandoc failed with code {code}"
+
+    # Should NOT have literal LaTeX footnote or @ delimiters in code
+    assert "\\begin{footnote}" not in output
+    assert "\\end{footnote}" not in output
+
+    # Should have GFM footnote syntax
+    assert "[^" in output
+
+    # Footnote content should be present
+    assert "special" in output
+
+    # Code should be clean without @ delimiters
+    assert "class Example" in output
+    assert "int value" in output

@@ -391,9 +391,6 @@ namespace std {
     using const_reference        = const value_type&;
     using const_iterator         = implementation-defined  // type of basic_string_view::const_iterator; // see [string.view.iterators]
     using iterator               = const_iterator;
-\begin{footnote}
-Because basic_string_view refers to a constant sequence, iterator and const_iterator are the same type.
-\end{footnote}
     using const_reverse_iterator = reverse_iterator<const_iterator>;
     using reverse_iterator       = const_reverse_iterator;
     using size_type              = size_t;
@@ -506,6 +503,8 @@ Because basic_string_view refers to a constant sequence, iterator and const_iter
     basic_string_view(R&&) -> basic_string_view<ranges::range_value_t<R>>;
 }
 ```
+
+[^2]
 
 In every specialization `basic_string_view<charT, traits>`, the type
 `traits` shall meet the character traits requirements [[char.traits]].
@@ -1761,7 +1760,7 @@ References, pointers, and iterators referring to the elements of a
 `basic_string` object:
 
 - Passing as an argument to any standard library function taking a
-  reference to non-const `basic_string` as an argument.[^2]
+  reference to non-const `basic_string` as an argument.[^3]
 - Calling non-const member functions, except `operator[]`, `at`, `data`,
   `front`, `back`, `begin`, `rbegin`, `end`, and `rend`.
 
@@ -4112,6 +4111,9 @@ introduce a data race [[res.on.data.races]] with other calls to
 [^1]: If `eof()` can be held in `char_type` then some iostreams
     operations can give surprising results.
 
-[^2]: For example, as an argument to non-member functions `swap()`
+[^2]: Because `basic_string_view` refers to a constant sequence,
+    `iterator` and `const_iterator` are the same type.
+
+[^3]: For example, as an argument to non-member functions `swap()`
     [[string.special]], `operator>{}>()` [[string.io]], and `getline()`
     [[string.io]], or as an argument to `basic_string::swap()`.
