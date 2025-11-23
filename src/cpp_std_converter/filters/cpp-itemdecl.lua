@@ -495,6 +495,16 @@ function RawBlock(elem)
   local content = text:match("\\begin{itemdecl}(.-)\\end{itemdecl}")
 
   if content then
+    -- Extract footnotes from itemdecl content before code processing
+    -- Footnotes appear as \begin{footnote}...\end{footnote} and must be converted
+    -- to GFM footnote syntax instead of being left as literal LaTeX in code blocks
+    local footnotes = {}
+    content = content:gsub("@?\n?\\begin{footnote}([%s%S]-)\\end{footnote}@?", function(fn_content)
+      fn_content = trim(fn_content)
+      table.insert(footnotes, fn_content)
+      return ""  -- Remove footnote from code
+    end)
+
     -- Clean up the code using shared function from cpp-common
     content = clean_code_common(content, false)
 
@@ -502,8 +512,30 @@ function RawBlock(elem)
     content = content:gsub("^%s+", "")
     content = content:gsub("%s+$", "")
 
-    -- Return as a code block with cpp language
-    return pandoc.CodeBlock(content, {class = "cpp"})
+    -- Build result blocks: code block followed by footnote paragraphs
+    local blocks = {pandoc.CodeBlock(content, {class = "cpp"})}
+
+    -- Convert extracted footnotes to Pandoc Note elements
+    for _, fn_content in ipairs(footnotes) do
+      -- Expand macros in footnote content using shared function
+      fn_content = expand_macros_common(fn_content, {
+        convert_to_latex = true,
+        escape_at_macros = false,
+        ref_format = "wikilink",
+      })
+
+      -- Parse footnote content with Pandoc
+      local parsed = pandoc.read(fn_content, "latex+raw_tex")
+
+      -- Create Note inline element with parsed blocks as content
+      local note = pandoc.Note(parsed.blocks)
+
+      -- Add as new paragraph containing just the footnote
+      table.insert(blocks, pandoc.Para({note}))
+    end
+
+    -- Return all blocks (code + footnotes)
+    return blocks
   end
 
   -- Match \begin{itemdescr}...\end{itemdescr}

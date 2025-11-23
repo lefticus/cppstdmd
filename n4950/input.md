@@ -2205,17 +2205,16 @@ each derived class [[filebuf.virtuals]].
 
 ``` cpp
 streamsize showmanyc();
-\begin{footnote}
-The morphemes of showmanyc are ``es-how-many-see'', not ``show-manic''.
-\end{footnote}
 ```
+
+[^13]
 
 *Returns:* An estimate of the number of characters available in the
 sequence, or -1. If it returns a positive value, then successive calls
 to `underflow()` will not return `traits::eof()` until at least that
 number of characters have been extracted from the stream. If
 `showmanyc()` returns -1, then calls to `underflow()` or `uflow()` will
-fail.[^13]
+fail.[^14]
 
 *Default behavior:* Returns zero.
 
@@ -2231,7 +2230,7 @@ are read from the input sequence as if by repeated calls to `sbumpc()`.
 Assigning stops when either `n` characters have been assigned or a call
 to `sbumpc()` would return `traits::eof()`.
 
-*Returns:* The number of characters assigned.[^14]
+*Returns:* The number of characters assigned.[^15]
 
 *Remarks:* Uses `traits::eof()`.
 
@@ -2360,7 +2359,7 @@ of
 obeys the following constraints:
 
 - The effect of consuming a character on the associated output sequence
-  is specified.[^15]
+  is specified.[^16]
 - Let `r` be the number of characters in the pending sequence not
   consumed. If `r` is nonzero then `pbase()` and `pptr()` are set so
   that: `pptr() - pbase() == r` and the `r` characters starting at
@@ -2375,7 +2374,7 @@ obeys the following constraints:
 *Returns:* `traits::eof()` or throws an exception if the function fails.
 
 Otherwise, returns some value other than `traits::eof()` to indicate
-success.[^16]
+success.[^17]
 
 *Default behavior:* Returns `traits::eof()`.
 
@@ -2698,7 +2697,7 @@ stream. Except that this call can be suppressed if the put area of
 `is.tie()` is empty. Further an implementation is allowed to defer the
 call to `flush` until a call of `is.rdbuf()->underflow()` occurs. If no
 such call occurs before the `sentry` object is destroyed, the call to
-`flush` may be eliminated entirely.[^17]
+`flush` may be eliminated entirely.[^18]
 
 If `noskipws` is zero and `is.flags() & ios_base::skipws` is nonzero,
 the function extracts and discards each character as long as the next
@@ -2728,7 +2727,7 @@ if (ctype.is(ctype.space, c) != 0)
 If, after any preparation is completed, `is.good()` is `true`,
 `ok_ != false` otherwise, `ok_ == false`. During preparation, the
 constructor may call `setstate(failbit)` (which may throw
-`ios_base::failure`[[iostate.flags]]).[^18]
+`ios_base::failure`[[iostate.flags]]).[^19]
 
 ``` cpp
 ~sentry();
@@ -2900,7 +2899,7 @@ basic_istream& operator>>(basic_istream& (*pf)(basic_istream&));
 *Effects:* None. This extractor does not behave as a formatted input
 function (as described in  [[istream.formatted.reqmts]]).
 
-*Returns:* `pf(*this)`. [^19]
+*Returns:* `pf(*this)`. [^20]
 
 ``` cpp
 basic_istream& operator>>(basic_ios<charT, traits>& (*pf)(basic_ios<charT, traits>&));
@@ -2916,7 +2915,7 @@ in  [[istream.formatted.reqmts]]).
 basic_istream& operator>>(ios_base& (*pf)(ios_base&));
 ```
 
-*Effects:* Calls `pf(*this)`.[^20]
+*Effects:* Calls `pf(*this)`.[^21]
 
 This extractor does not behave as a formatted input function (as
 described in  [[istream.formatted.reqmts]]).
@@ -3048,7 +3047,7 @@ basic_istream& get(char_type& c);
 
 *Effects:* Behaves as an unformatted input function (as described
 above). After constructing a `sentry` object, extracts a character, if
-one is available, and assigns it to `c`.[^21]
+one is available, and assigns it to `c`.[^22]
 
 Otherwise, `ios_base::failbit` is set in the input function’s local
 error state before `setstate` is called.
@@ -3062,7 +3061,7 @@ basic_istream& get(char_type* s, streamsize n, char_type delim);
 *Effects:* Behaves as an unformatted input function (as described
 above). After constructing a `sentry` object, extracts characters and
 stores them into successive locations of an array whose first element is
-designated by `s`.[^22]
+designated by `s`.[^23]
 
 Characters are extracted and stored until any of the following occurs:
 
@@ -3123,21 +3122,21 @@ basic_istream& getline(char_type* s, streamsize n, char_type delim);
 *Effects:* Behaves as an unformatted input function (as described
 above). After constructing a `sentry` object, extracts characters and
 stores them into successive locations of an array whose first element is
-designated by `s`.[^23]
+designated by `s`.[^24]
 
 Characters are extracted and stored until one of the following occurs:
 
 1.  end-of-file occurs on the input sequence;
 2.  `traits::eq(c, delim)` for the next available input character `c`
     (in which case the input character is extracted but not
-    stored);[^24]
+    stored);[^25]
 3.  `n` is less than one or `n - 1` characters are stored (in which case
     the function calls `setstate(failbit)`).
 
-These conditions are tested in the order shown.[^25]
+These conditions are tested in the order shown.[^26]
 
 If the function extracts no characters, `ios_base::failbit` is set in
-the input function’s local error state before `setstate` is called.[^26]
+the input function’s local error state before `setstate` is called.[^27]
 
 In any case, if `n` is greater than zero, it then stores a null
 character (using `charT()`) into the next successive location of the
@@ -3221,7 +3220,7 @@ basic_istream& read(char_type* s, streamsize n);
 above). After constructing a `sentry` object, if `!good()` calls
 `setstate(failbit)` which may throw an exception, and return. Otherwise
 extracts characters and stores them into successive locations of an
-array whose first element is designated by `s`.[^27]
+array whose first element is designated by `s`.[^28]
 
 Characters are extracted and stored until either of the following
 occurs:
@@ -3700,12 +3699,12 @@ explicit sentry(basic_ostream& os);
 ```
 
 If `os.good()` is nonzero, prepares for formatted or unformatted output.
-If `os.tie()` is not a null pointer, calls `os.tie()->flush()`.[^28]
+If `os.tie()` is not a null pointer, calls `os.tie()->flush()`.[^29]
 
 If, after any preparation is completed, `os.good()` is `true`,
 `ok_ == true` otherwise, `ok_ == false`. During preparation, the
 constructor may call `setstate(failbit)` (which may throw
-`ios_base::failure`[[iostate.flags]]).[^29]
+`ios_base::failure`[[iostate.flags]]).[^30]
 
 ``` cpp
 ~sentry();
@@ -3766,7 +3765,7 @@ to a value of type `bool`, the function endeavors to generate the
 requested output. If the generation fails, then the formatted output
 function does `setstate(ios_base::failbit)`, which can throw an
 exception. If an exception is thrown during output, then
-`ios_base::badbit` is set[^30]
+`ios_base::badbit` is set[^31]
 
 in `*this`’s error state. If `(exceptions()&badbit) != 0` then the
 exception is rethrown. Whether or not an exception is thrown, the
@@ -3928,7 +3927,7 @@ basic_ostream& operator<<(basic_ostream& (*pf)(basic_ostream&));
 *Effects:* None. Does not behave as a formatted output function (as
 described in  [[ostream.formatted.reqmts]]).
 
-*Returns:* `pf(*this)`.[^31]
+*Returns:* `pf(*this)`.[^32]
 
 ``` cpp
 basic_ostream& operator<<(basic_ios<charT, traits>& (*pf)(basic_ios<charT, traits>&));
@@ -3938,7 +3937,7 @@ basic_ostream& operator<<(basic_ios<charT, traits>& (*pf)(basic_ios<charT, trait
 formatted output function (as described
 in  [[ostream.formatted.reqmts]]).
 
-*Returns:* `*this`.[^32]
+*Returns:* `*this`.[^33]
 
 ``` cpp
 basic_ostream& operator<<(ios_base& (*pf)(ios_base&));
@@ -4127,7 +4126,7 @@ Each unformatted output function begins execution by constructing an
 object of class `sentry`. If that object returns `true`, while
 converting to a value of type `bool`, the function endeavors to generate
 the requested output. If an exception is thrown during output, then
-`ios_base::badbit` is set[^33]
+`ios_base::badbit` is set[^34]
 
 in `*this`’s error state. If `(exceptions() & badbit) != 0` then the
 exception is rethrown. In any case, the unformatted output function ends
@@ -4140,7 +4139,7 @@ basic_ostream& put(char_type c);
 
 *Effects:* Behaves as an unformatted output function (as described
 above). After constructing a `sentry` object, inserts the character `c`,
-if possible.[^34]
+if possible.[^35]
 
 Otherwise, calls `setstate(badbit)` (which may throw
 `ios_base::failure`[[iostate.flags]]).
@@ -4154,7 +4153,7 @@ basic_ostream& write(const char_type* s, streamsize n);
 *Effects:* Behaves as an unformatted output function (as described
 above). After constructing a `sentry` object, obtains characters to
 insert from successive locations of an array whose first element is
-designated by `s`.[^35]
+designated by `s`.[^36]
 
 Characters are inserted until either of the following occurs:
 
@@ -4285,7 +4284,7 @@ of type `basic_ostream<charT, traits>` then the expression
 `out << resetiosflags(mask)` behaves as if it called `f(out, mask)`, or
 if `in` is an object of type `basic_istream<charT, traits>` then the
 expression `in >> resetiosflags(mask)` behaves as if it called
-`f(in, mask)`, where the function `f` is defined as:[^36]
+`f(in, mask)`, where the function `f` is defined as:[^37]
 
 ``` cpp
 void f(ios_base& str, ios_base::fmtflags mask) {
@@ -6878,7 +6877,7 @@ in the table then the open fails.
 If the open operation succeeds and `ios_base::ate` is set in `mode`,
 positions the file to the end (as if by calling
 `fseek(file, 0, SEEK_END)`, where `file` is the pointer returned by
-calling `fopen`).[^37]
+calling `fopen`).[^38]
 
 If the repositioning operation fails, calls `close()` and returns a null
 pointer to indicate failure.
@@ -12586,39 +12585,39 @@ modifier for the type.
     to assure that only objects for classes derived from this class can
     be constructed.
 
-[^13]: `underflow` or `uflow` can fail by throwing an exception
+[^13]: The morphemes of `showmanyc` are “es-how-many-see”, not
+    “show-manic”.
+
+[^14]: `underflow` or `uflow` can fail by throwing an exception
     prematurely. The intention is not only that the calls will not
     return `eof()` but that they will return “immediately”.
 
-[^14]: Classes derived from `basic_streambuf` can provide more efficient
+[^15]: Classes derived from `basic_streambuf` can provide more efficient
     ways to implement `xsgetn()` and `xsputn()` by overriding these
     definitions from the base class.
 
-[^15]: That is, for each class derived from a specialization of
+[^16]: That is, for each class derived from a specialization of
     `basic_streambuf` in this Clause@@REF:stringbuf,filebuf@@, a
     specification of how consuming a character effects the associated
     output sequence is given. There is no requirement on a
     program-defined class.
 
-[^16]: Typically, `overflow` returns `c` to indicate success, except
+[^17]: Typically, `overflow` returns `c` to indicate success, except
     when `traits::eq_int_type(c, traits::eof())` returns `true`, in
     which case it returns `traits::not_eof(c)`.
 
-[^17]: This will be possible only in functions that are part of the
+[^18]: This will be possible only in functions that are part of the
     library. The semantics of the constructor used in user code is as
     specified.
 
-[^18]: The `sentry` constructor and destructor can also perform
+[^19]: The `sentry` constructor and destructor can also perform
     additional implementation-dependent operations.
 
-[^19]: See, for example, the function signature
+[^20]: See, for example, the function signature
     `ws(basic_istream&)`@@REF:istream.manip@@.
 
-[^20]: See, for example, the function signature
+[^21]: See, for example, the function signature
     `dec(ios_base&)`@@REF:basefield.manip@@.
-
-[^21]: Note that this function is not overloaded on types `signed char`
-    and `unsigned char`.
 
 [^22]: Note that this function is not overloaded on types `signed char`
     and `unsigned char`.
@@ -12626,42 +12625,45 @@ modifier for the type.
 [^23]: Note that this function is not overloaded on types `signed char`
     and `unsigned char`.
 
-[^24]: Since the final input character is “extracted”, it is counted in
+[^24]: Note that this function is not overloaded on types `signed char`
+    and `unsigned char`.
+
+[^25]: Since the final input character is “extracted”, it is counted in
     the `gcount()`, even though it is not stored.
 
-[^25]: This allows an input line which exactly fills the buffer, without
+[^26]: This allows an input line which exactly fills the buffer, without
     setting `failbit`. This is different behavior than the historical
     AT&T implementation.
 
-[^26]: This implies an empty input line will not cause `failbit` to be
+[^27]: This implies an empty input line will not cause `failbit` to be
     set.
 
-[^27]: Note that this function is not overloaded on types `signed char`
+[^28]: Note that this function is not overloaded on types `signed char`
     and `unsigned char`.
 
-[^28]: The call `os.tie()->flush()` does not necessarily occur if the
+[^29]: The call `os.tie()->flush()` does not necessarily occur if the
     function can determine that no synchronization is necessary.
 
-[^29]: The `sentry` constructor and destructor can also perform
+[^30]: The `sentry` constructor and destructor can also perform
     additional implementation-dependent operations.
 
-[^30]: This is done without causing an `ios_base::failure` to be thrown.
-
-[^31]: See, for example, the function signature
-    `endl(basic_ostream&)`@@REF:ostream.manip@@.
+[^31]: This is done without causing an `ios_base::failure` to be thrown.
 
 [^32]: See, for example, the function signature
+    `endl(basic_ostream&)`@@REF:ostream.manip@@.
+
+[^33]: See, for example, the function signature
     `dec(ios_base&)`@@REF:basefield.manip@@.
 
-[^33]: This is done without causing an `ios_base::failure` to be thrown.
-
-[^34]: Note that this function is not overloaded on types `signed char`
-    and `unsigned char`.
+[^34]: This is done without causing an `ios_base::failure` to be thrown.
 
 [^35]: Note that this function is not overloaded on types `signed char`
     and `unsigned char`.
 
-[^36]: The expression `cin >> resetiosflags(ios_base::skipws)` clears
+[^36]: Note that this function is not overloaded on types `signed char`
+    and `unsigned char`.
+
+[^37]: The expression `cin >> resetiosflags(ios_base::skipws)` clears
     `ios_base::skipws` in the format flags stored in the
     `basic_istream<charT, traits>` object `cin` (the same as
     `cin >> noskipws`), and the expression
@@ -12670,6 +12672,6 @@ modifier for the type.
     `basic_ostream<charT, traits>` object `cout` (the same as
     `cout << noshowbase`).
 
-[^37]: The macro `SEEK_END` is defined, and the function signatures
+[^38]: The macro `SEEK_END` is defined, and the function signatures
     `fopen(const char*, const char*)` and `fseek(FILE*, long, int)` are
     declared, in `<cstdio>`.

@@ -1095,3 +1095,83 @@ def test_bigoh_with_nested_braces():
 
     # Should not have malformed delimiters
     assert ")$}" not in output  # This would indicate the bug
+
+
+def test_footnote_in_itemdecl():
+    r"""Test that footnotes in itemdecl are extracted and converted to GFM footnotes
+
+    This is a fix for Issue #13 where footnotes inside \begin{itemdecl} blocks
+    were left as literal LaTeX \begin{footnote}...\end{footnote} instead of
+    being converted to GFM footnote syntax [^N].
+    """
+    latex = r"""
+\begin{itemdecl}
+namespace std {
+  template<class T>
+  constexpr T* addressof(T& r) noexcept;
+  template<class T>
+  const T* addressof(const T&&) = delete;
+\begin{footnote}
+This signature does not participate in overload resolution
+when \tcode{T} is a class type and has an accessible
+\tcode{operator\&}.
+\end{footnote}
+}
+\end{itemdecl}
+"""
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0, f"Pandoc failed with code {code}"
+
+    # Code block should NOT contain literal \begin{footnote}
+    assert "\\begin{footnote}" not in output
+    assert "\\end{footnote}" not in output
+
+    # Should have GFM footnote syntax
+    assert "[^" in output
+
+    # Footnote content should be present
+    assert "overload resolution" in output
+    assert "class type" in output
+
+    # Code should be present in code block
+    assert "namespace std" in output
+    assert "constexpr T* addressof" in output
+    assert "```" in output or "cpp" in output  # Should be fenced code
+
+
+def test_multiple_footnotes_in_itemdecl():
+    r"""Test that multiple footnotes in itemdecl are all extracted and converted"""
+    latex = r"""
+\begin{itemdecl}
+template<class T>
+void foo(T& x)
+\begin{footnote}
+First footnote about \tcode{x}.
+\end{footnote}
+;
+
+template<class U>
+void bar(U& y)
+\begin{footnote}
+Second footnote about \tcode{y}.
+\end{footnote}
+;
+\end{itemdecl}
+"""
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0, f"Pandoc failed with code {code}"
+
+    # Should NOT have literal LaTeX footnotes
+    assert "\\begin{footnote}" not in output
+    assert "\\end{footnote}" not in output
+
+    # Should have two GFM footnotes
+    assert "[^1]" in output or "[^2]" in output
+
+    # Both footnote contents should be present
+    assert "First footnote" in output
+    assert "Second footnote" in output
+
+    # Code should be in code block without footnotes
+    assert "void foo(T& x)" in output
+    assert "void bar(U& y)" in output
