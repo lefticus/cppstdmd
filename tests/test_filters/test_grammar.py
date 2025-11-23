@@ -224,6 +224,21 @@ def test_unicode():
     assert "…" in output
 
 
+def test_unicode_with_description():
+    r"""Test \unicode{}{} with two arguments (code and description) - Issue #21"""
+    latex = r"""
+\begin{ncbnf}
+\nontermdef{n-char} \textnormal{one of}\br
+     \textnormal{any member except the \unicode{007d}{right curly bracket}}
+\end{ncbnf}
+"""
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    assert "U+007d (right curly bracket)" in output
+    # Ensure malformed output is not present
+    assert "}{right curly bracket}" not in output
+
+
 def test_tcode_in_bnf():
     r"""Test \tcode{} in BNF blocks"""
     latex = r"""

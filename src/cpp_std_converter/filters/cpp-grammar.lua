@@ -51,6 +51,7 @@ local trim = common.trim
 local process_macro_with_replacement = common.process_macro_with_replacement
 local subscripts = common.subscripts
 local try_unicode_conversion = common.try_unicode_conversion
+local extract_multi_arg_macro = common.extract_multi_arg_macro
 
 
 -- Helper function to clean up grammar content
@@ -111,7 +112,26 @@ local function clean_grammar(grammar)
   -- Replace \texttt{x} with x (Pandoc may convert \keyword{} to \texttt{} in BNF blocks)
   grammar = grammar:gsub("\\texttt{([^}]*)}", "%1")
 
-  -- Replace \unicode{XXXX} with actual Unicode character
+  -- Replace \unicode{XXXX}{description} with U+XXXX (description)
+  -- This macro takes two brace-balanced arguments (Issue #21)
+  while true do
+    local start_pos = grammar:find("\\unicode{", 1, true)
+    if not start_pos then break end
+
+    -- Try to extract 2 args first (the standard form used in actual LaTeX)
+    local args, end_pos = extract_multi_arg_macro(grammar, start_pos, 8, 2)
+    if args then
+      -- Replace \unicode{XXXX}{desc} with U+XXXX (desc)
+      local replacement = "U+" .. args[1] .. " (" .. args[2] .. ")"
+      grammar = grammar:sub(1, start_pos - 1) .. replacement .. grammar:sub(end_pos)
+    else
+      -- Fallback: handle single-argument form \unicode{XXXX} (for backwards compatibility)
+      -- This form doesn't appear in actual C++ standard sources but may exist in tests
+      break  -- Exit loop and let gsub handle single-arg forms below
+    end
+  end
+
+  -- Fallback: Replace \unicode{XXXX} with actual Unicode character (single-arg form)
   grammar = grammar:gsub("\\unicode{([0-9A-Fa-f]+)}", function(hex)
     local codepoint = tonumber(hex, 16)
     if codepoint then

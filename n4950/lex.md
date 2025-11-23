@@ -195,7 +195,7 @@ characters.
 
 ``` bnf
 n-char: one of
-     any member of the translation character set except the }{right curly bracket} or new-line character
+     any member of the translation character set except the U+007d (right curly bracket) or new-line character
 ```
 
 ``` bnf
@@ -459,7 +459,7 @@ h-char-sequence:
 
 ``` bnf
 h-char:
-    any member of the translation character set except new-line and >{greater-than sign}
+    any member of the translation character set except new-line and U+003e (greater-than sign)
 ```
 
 ``` bnf
@@ -470,7 +470,7 @@ q-char-sequence:
 
 ``` bnf
 q-char:
-    any member of the translation character set except new-line and "{quotation mark}
+    any member of the translation character set except new-line and U+0022 (quotation mark)
 ```
 
 [*Note 1*: Header name preprocessing tokens only appear within a
@@ -857,8 +857,8 @@ c-char:
 
 ``` bnf
 basic-c-char:
-    any member of the translation character set except the '{apostrophe},
-      \{reverse solidus}, or new-line character
+    any member of the translation character set except the U+0027 (apostrophe),
+      U+005c (reverse solidus), or new-line character
 ```
 
 ``` bnf
@@ -1141,8 +1141,8 @@ s-char:
 
 ``` bnf
 basic-s-char:
-    any member of the translation character set except the "{quotation mark},
-      \{reverse solidus}, or new-line character
+    any member of the translation character set except the U+0022 (quotation mark),
+      U+005c (reverse solidus), or new-line character
 ```
 
 ``` bnf
@@ -1158,8 +1158,8 @@ r-char-sequence:
 
 ``` bnf
 r-char:
-    any member of the translation character set, except a ){right parenthesis} followed by
-      the initial *d-char-sequence* (which may be empty) followed by a "{quotation mark}
+    any member of the translation character set, except a U+0029 (right parenthesis) followed by
+      the initial *d-char-sequence* (which may be empty) followed by a U+0022 (quotation mark)
 ```
 
 ``` bnf
@@ -1171,8 +1171,8 @@ d-char-sequence:
 ``` bnf
 d-char:
     any member of the basic character set except:
-       {space}, ({left parenthesis}, ){right parenthesis}, \{reverse solidus},
-      	{character tabulation}, {line tabulation}, {form feed}, and new-line
+      U+0020 (space), U+0028 (left parenthesis), U+0029 (right parenthesis), U+005c (reverse solidus),
+      U+0009 (character tabulation), U+000b (line tabulation), U+000c (form feed), and new-line
 ```
 
 The kind of a *string-literal*, its type, and its associated character

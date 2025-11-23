@@ -46,6 +46,9 @@ setup(
     version="0.1.0",
     description="Pandoc-first LaTeX to Markdown converter for C++ draft standard",
     author="Jason Turner",
+    # License uses SPDX identifier (https://spdx.org/licenses/)
+    # Unlicense = public domain dedication
+    # Note: License classifiers are deprecated in favor of SPDX identifiers
     license="Unlicense",
     packages=find_packages(where="src"),
     package_dir={"": "src"},
@@ -55,7 +58,6 @@ setup(
         "cpp_std_converter": ["filters/*.lua"],
     },
     classifiers=[
-        "License :: OSI Approved :: The Unlicense (Unlicense)",
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",

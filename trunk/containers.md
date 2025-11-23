@@ -11455,7 +11455,7 @@ namespace std {
   template<class T, class Container>
     constexpr bool operator!=(const stack<T, Container>& x, const stack<T, Container>& y);
   template<class T, class Container>
-   constexpr  bool operator< (const stack<T, Container>& x, const stack<T, Container>& y);
+    constexpr bool operator< (const stack<T, Container>& x, const stack<T, Container>& y);
   template<class T, class Container>
     constexpr bool operator> (const stack<T, Container>& x, const stack<T, Container>& y);
   template<class T, class Container>

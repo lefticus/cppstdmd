@@ -26,6 +26,10 @@
 """Tests for nested content structures (examples in notes, footnotes, etc.)"""
 
 import subprocess
+from pathlib import Path
+
+# Get repository root (two levels up from this test file)
+REPO_ROOT = str(Path(__file__).parent.parent.parent)
 
 
 def test_example_nested_in_note():
@@ -66,7 +70,7 @@ fails.
         input=latex,
         capture_output=True,
         text=True,
-        cwd="/home/jason/notes/cpp_standard_tools/converted/cppstdmd",
+        cwd=REPO_ROOT,
     )
 
     output = result.stdout
@@ -125,7 +129,7 @@ T(*b)();            //  declaration
         input=latex,
         capture_output=True,
         text=True,
-        cwd="/home/jason/notes/cpp_standard_tools/converted/cppstdmd",
+        cwd=REPO_ROOT,
     )
 
     output = result.stdout
@@ -172,7 +176,7 @@ In other words, the \keyword{else} is associated with the nearest un-elsed
         input=latex,
         capture_output=True,
         text=True,
-        cwd="/home/jason/notes/cpp_standard_tools/converted/cppstdmd",
+        cwd=REPO_ROOT,
     )
 
     output = result.stdout
@@ -225,7 +229,7 @@ The transfer from the condition of a \keyword{switch} statement to a
         input=latex,
         capture_output=True,
         text=True,
-        cwd="/home/jason/notes/cpp_standard_tools/converted/cppstdmd",
+        cwd=REPO_ROOT,
     )
 
     output = result.stdout
