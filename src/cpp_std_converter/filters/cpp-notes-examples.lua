@@ -133,7 +133,7 @@ local function process_codeblock_div(block, codeblocks, titles)
   end
 
   -- Handle BulletList and OrderedList blocks - recursively process items
-  -- for placeholders (Issue #18)
+  -- for placeholders
   if (block.t == "BulletList" or block.t == "OrderedList") and codeblocks then
     return process_list_recursive(block, process_codeblock_div, codeblocks, titles)
   end
@@ -495,7 +495,7 @@ function process_block_recursive(block, codeblocks, titles)
     end
   end
 
-  -- Handle BulletList and OrderedList blocks - recursively process items (FIXES ISSUE #5!)
+  -- Handle BulletList and OrderedList blocks - recursively process items
   if block.t == "BulletList" or block.t == "OrderedList" then
     return process_list_recursive(block, process_block_recursive, codeblocks, titles)
   end

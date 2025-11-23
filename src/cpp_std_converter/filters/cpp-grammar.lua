@@ -76,13 +76,13 @@ local function clean_grammar(grammar)
   -- Replace \keyword{x} with x (keywords - macros filter may have already handled this)
   grammar = grammar:gsub("\\keyword{([^}]*)}", "%1")
 
-  -- Replace \textnormal{x} with x (normal text) - use brace-balanced extraction (Issue #22)
+  -- Replace \textnormal{x} with x (normal text) - use brace-balanced extraction
   -- This handles nested macros like \tref{} inside \textnormal{}
   grammar = process_macro_with_replacement(grammar, "textnormal", function(content)
     return content  -- Just strip the wrapper, preserve nested content
   end)
 
-  -- Replace \textbf{x} with x (bold text in BNF blocks) - Issue #69
+  -- Replace \textbf{x} with x (bold text in BNF blocks)
   -- Inside code blocks, we just unwrap since markdown bold doesn't render well
   grammar = process_macro_with_replacement(grammar, "textbf", function(content)
     return content  -- Just strip the wrapper, preserve nested content
@@ -113,7 +113,7 @@ local function clean_grammar(grammar)
   grammar = grammar:gsub("\\texttt{([^}]*)}", "%1")
 
   -- Replace \unicode{XXXX}{description} with U+XXXX (description)
-  -- This macro takes two brace-balanced arguments (Issue #21)
+  -- This macro takes two brace-balanced arguments
   while true do
     local start_pos = grammar:find("\\unicode{", 1, true)
     if not start_pos then break end
@@ -164,15 +164,15 @@ local function clean_grammar(grammar)
   -- \descr{X} renders as X (description text, just remove wrapper)
   grammar = grammar:gsub("\\descr{([^}]*)}", "%1")
 
-  -- Exposition-only identifiers and concepts (Issue #49) - strip in grammar/BNF contexts
+  -- Exposition-only identifiers and concepts - strip in grammar/BNF contexts
   grammar = grammar:gsub("\\exposid{([^}]*)}", "%1")
   grammar = grammar:gsub("\\exposidnc{([^}]*)}", "%1")
   grammar = grammar:gsub("\\exposconceptnc{([^}]*)}", "%1")
 
-  -- Process cross-reference macros that may appear in BNF blocks (Issue #22)
+  -- Process cross-reference macros that may appear in BNF blocks
   -- \tref{label} -> [[label]] (table reference)
   -- \iref{label} -> [[label]] (indexed reference)
-  -- These must be converted here since cpp-macros doesn't process BNF RawBlocks
+  -- Must be converted here since cpp-macros doesn't process BNF RawBlocks
   grammar = grammar:gsub("\\tref{([^}]*)}", "[[%1]]")
   grammar = grammar:gsub("\\iref{([^}]*)}", "[[%1]]")
 

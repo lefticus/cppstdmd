@@ -17,21 +17,20 @@
 %% WHY: One-line fixes work in ALL contexts (BNF, code, tables, text)
 %% automatically, avoiding duplication across multiple Lua filters.
 %%
-%% Example: \itcorr (Issue #74) was being stripped in 3 different places:
-%% cpp-tables.lua, cpp-common.lua, cpp-grammar.lua. Moving it here
+%% Example: \itcorr was being stripped in multiple places. Moving it here
 %% eliminated duplication and fixed bugs in one place.
 %%--------------------------------------------------
 
 %%--------------------------------------------------
-%% Category A: Simple Text Substitutions (21 macros)
+%% Category A: Simple Text Substitutions
 %% These are constant strings with no arguments
 %%--------------------------------------------------
 %% Remove line-breaking hints - these don't apply to markdown
 \renewcommand{\-}{}           % Discretionary hyphen
 \renewcommand{\linebreak}{}   % Line break hint
-\renewcommand{\newline}{ }    % Strip line breaks - markdown doesn't support mid-table breaks (Issue #27)
+\renewcommand{\newline}{ }    % Strip line breaks - markdown doesn't support mid-table breaks
 \renewcommand{\@}{}           % Sentence spacing control (LaTeX typography)
-\renewcommand{\textregistered}{®}  % Registered trademark symbol (Issue #14)
+\renewcommand{\textregistered}{®}  % Registered trademark symbol
 \renewcommand{\Cpp}{C++}
 \renewcommand{\CppIII}{C++03}
 \renewcommand{\CppXI}{C++11}
@@ -54,44 +53,44 @@
 \renewcommand{\tilde}{\textasciitilde}
 
 %%--------------------------------------------------
-%% Category B: Code Formatting (9 macros)
+%% Category B: Code Formatting
 %% Convert to \texttt (monospace) - Pandoc renders as inline code
 %%--------------------------------------------------
 %% \tcode{} - REMOVED: contains nested macros (\keyword{}, \ctype{}, etc)
 %% \ctype{} - REMOVED: nested in \tcode{}
-%% \terminal{} - REMOVED: needs special handling in cpp-grammar.lua for BNF terminals (Issue #27)
+%% \terminal{} - REMOVED: needs special handling in cpp-grammar.lua for BNF terminals
 \renewcommand{\keyword}[1]{\texttt{#1}}
 \renewcommand{\libheader}[1]{\texttt{<#1>}}
 \renewcommand{\libheaderdef}[1]{\texttt{<#1>}}
 \renewcommand{\libheaderref}[1]{\texttt{<#1>}}
-\renewcommand{\libnoheader}[1]{\texttt{<#1>}}  % Reserved/absent header name (used in n4861+) - Issue #80
+\renewcommand{\libnoheader}[1]{\texttt{<#1>}}  % Reserved/absent header name (used in n4861+)
 \renewcommand{\libconcept}[1]{\texttt{#1}}
 \renewcommand{\exposconcept}[1]{\texttt{#1}}
 \renewcommand{\libglobal}[1]{\texttt{#1}}
 \renewcommand{\deflibconcept}[1]{\texttt{#1}}
 
 %%--------------------------------------------------
-%% Category C: Emphasis Formatting (4 macros)
+%% Category C: Emphasis Formatting
 %% Convert to \textit (italic) - Pandoc renders as emphasis
 %%--------------------------------------------------
 %% \grammarterm{} - REMOVED: context-dependent (BNF vs text), nested in \opt{}
 %% \exposid{} - REMOVED: context-dependent (needs code+italic), moved to cpp-macros.lua
 %% \exposidnc{} - REMOVED: context-dependent (needs code+italic), moved to cpp-macros.lua
-%% \exposconceptnc{} - REMOVED: context-dependent (needs code+italic), moved to cpp-macros.lua - Issue #49
-\renewcommand{\seebelownc}[1]{\textit{see below}}  % See below (no correction) - Issue #49 - required arg consumes {}
+%% \exposconceptnc{} - REMOVED: context-dependent (needs code+italic), moved to cpp-macros.lua
+\renewcommand{\seebelownc}[1]{\textit{see below}}  % See below (no correction) - required arg consumes {}
 %% \placeholder{} - REMOVED: context-dependent (code blocks vs text)
 %% \placeholdernc{} - REMOVED: context-dependent (code blocks vs text)
 \renewcommand{\defn}[1]{\textit{#1}}
 \renewcommand{\defnx}[2]{\textit{#1}}
 \renewcommand{\defnadjx}[3]{\textit{#1 #2}}
 \renewcommand{\term}[1]{\textit{#1}}
-\renewcommand{\techterm}[1]{\textit{#1}}  % Technical term (obsolete macro used in n3337-n4659) - Issue #79
+\renewcommand{\techterm}[1]{\textit{#1}}  % Technical term (obsolete macro used in n3337-n4659)
 \renewcommand{\oldconcept}[1]{\textit{Cpp17#1}}
 \renewcommand{\doccite}[1]{\textit{#1}}
-\renewcommand{\exposconceptx}[2]{\texttt{\textit{#1}}}  % Exposition-only concept with index - Issue #68
+\renewcommand{\exposconceptx}[2]{\texttt{\textit{#1}}}  % Exposition-only concept with index
 
 %%--------------------------------------------------
-%% Category D: Library Specifications (7 macros)
+%% Category D: Library Specifications
 %% Convert to italic text for semantic markers
 %%--------------------------------------------------
 \renewcommand{\seebelow}{\textit{see below}}
@@ -103,7 +102,7 @@
 \renewcommand{\impdef}{\textit{implementation-defined}}
 
 %%--------------------------------------------------
-%% Category E: Fundesc Labels (24 macros)
+%% Category E: Fundesc Labels
 %% Specification section headers - italic labels
 %%--------------------------------------------------
 \renewcommand{\expects}{\textit{Preconditions:} }
@@ -130,11 +129,11 @@
 \renewcommand{\postconditions}{\textit{Postconditions:} }
 \renewcommand{\preconditions}{\textit{Preconditions:} }
 \renewcommand{\realnote}{\textit{Note:} }
-\renewcommand{\notes}{\textit{Remarks:} }  % Alias for \remarks (obsolete macro used in n3337-n4140) - Issue #80
-\renewcommand{\realnotes}{\textit{Notes:} }  % Similar to \realnote but plural (obsolete macro used in n3337-n4140) - Issue #80
+\renewcommand{\notes}{\textit{Remarks:} }  % Alias for \remarks (obsolete macro used in n3337-n4140)
+\renewcommand{\realnotes}{\textit{Notes:} }  % Similar to \realnote but plural (obsolete macro used in n3337-n4140)
 
 %%--------------------------------------------------
-%% Category F: Ranges (5 macros)
+%% Category F: Ranges
 %% Mathematical range notations with code formatting
 %% Note: Square brackets wrapped in braces {[} {]} to escape them for Pandoc
 %%--------------------------------------------------
@@ -145,7 +144,7 @@
 \renewcommand{\countedrange}[2]{\texttt{#1}+{[}0, \texttt{#2}{)}}
 
 %%--------------------------------------------------
-%% Category G: Change Descriptions (3 macros)
+%% Category G: Change Descriptions
 %% Appendix C compatibility markers
 %%--------------------------------------------------
 \renewcommand{\change}{\textbf{Change:} }
@@ -153,7 +152,7 @@
 \renewcommand{\effect}{\textbf{Effect on original feature:} }
 
 %%--------------------------------------------------
-%% Category H: Special Formatting (3 macros)
+%% Category H: Special Formatting
 %% Misc formatting helpers
 %%--------------------------------------------------
 %% \textbackslash - Removed: Already a standard LaTeX command, no need to redefine
@@ -163,7 +162,7 @@
 \renewcommand{\columnline}{}  % Strip table column separators
 
 %%--------------------------------------------------
-%% Category I: Phase 3 Additions - Simple Unwrapping (2 macros)
+%% Category I: Phase 3 Additions - Simple Unwrapping
 %%--------------------------------------------------
 \renewcommand{\deflibconcept}[1]{#1}
 \renewcommand{\uname}[1]{#1}
@@ -172,58 +171,53 @@
 %% \bigoh{} - Removed: needs special handling in cpp-itemdecl.lua
 
 %%--------------------------------------------------
-%% Category J: Phase 4 Additions (4 macros)
+%% Category J: Phase 4 Additions
 %% Additional safe migrations from Lua filters
 %%--------------------------------------------------
 \renewcommand{\descr}[1]{#1}  % Description text - simple unwrapping
 \renewcommand{\fmtgrammarterm}[1]{\textit{#1}}  % Format grammar term (always italic, unlike \grammarterm{})
-\renewcommand{\UAX}[1]{UAX \##1}  % Unicode Annex reference (e.g., UAX #44) - \# escapes the hash
-\renewcommand{\opt}[1]{#1ₒₚₜ}  % Optional grammar element (e.g., \opt{T} -> Tₒₚₜ) - consistent everywhere, uses Unicode subscripts
+\renewcommand{\UAX}[1]{UAX \##1}  % Unicode Annex reference - \# escapes the hash
+\renewcommand{\opt}[1]{#1ₒₚₜ}  % Optional grammar element - consistent everywhere, uses Unicode subscripts
 
 %%--------------------------------------------------
-%% Category K: Math Operators (2 macros)
-%% Bitwise shift operators for random number generators (Issue #71)
-%% NOTE: Unicode subscripts don't exist for all letters (e.g., 'w'), so these
-%% operators are left as LaTeX for MathJax rendering. Future improvement could
-%% handle this differently if needed.
+%% Category K: Math Operators
+%% Bitwise shift operators for random number generators
+%% NOTE: Unicode subscripts don't exist for all letters, so these
+%% operators are left as LaTeX for MathJax rendering.
 %%--------------------------------------------------
 %% \leftshift{} and \rightshift - NOT simplified due to Unicode subscript limitations
-%% See Issue #71 for details
 
 %%--------------------------------------------------
 %% Category L: Phase 5 Additions - Easy Win Macros
 %% Found by analyzing trunk/ output for unconverted patterns
 %%--------------------------------------------------
 
-%% Code formatting for C preprocessor macros (298 occurrences)
+%% Code formatting for C preprocessor macros
 \renewcommand{\libmacro}[1]{\texttt{#1}}
 
-%% Grammar non-terminals (47 occurrences)
-\renewcommand{\fmtnontermdef}[1]{\textit{#1}}  % Format string grammar (33×)
-\renewcommand{\renontermdef}[1]{#1::}   % Regex grammar (7×) - just term+:: (like \locnontermdef)
-\renewcommand{\defexposconceptnc}[1]{\textit{#1}}  % Exposition-only concepts (29×)
+%% Grammar non-terminals
+\renewcommand{\fmtnontermdef}[1]{\textit{#1}}  % Format string grammar
+\renewcommand{\renontermdef}[1]{#1::}   % Regex grammar - just term+:: (like \locnontermdef)
+\renewcommand{\defexposconceptnc}[1]{\textit{#1}}  % Exposition-only concepts
 
-%% Math state variables: \state{X}{Y} → X_Y with subscripts (27 occurrences)
+%% Math state variables: \state{X}{Y} → X_Y with subscripts
 \renewcommand{\state}[2]{#1\ensuremath{_{#2}}}
 
 %%--------------------------------------------------
-%% Category M: BNF Typography Macros (Issue #74)
+%% Category M: BNF Typography Macros
 %% Pure typesetting commands with no semantic meaning
 %%--------------------------------------------------
-\renewcommand{\BnfNontermshape}{}  % BNF font styling (small, gray, sans-serif) - strip for markdown
-\renewcommand{\itcorr}[1][]{}      % Italic correction spacing - strip for markdown (33+ occurrences)
-\renewcommand{\locnontermdef}[1]{#1:}  % Locale BNF nonterminal (13× in localization.md) - just term+colon
+\renewcommand{\BnfNontermshape}{}  % BNF font styling - strip for markdown
+\renewcommand{\itcorr}[1][]{}      % Italic correction spacing - strip for markdown
+\renewcommand{\locnontermdef}[1]{#1:}  % Locale BNF nonterminal - just term+colon
 
 %%--------------------------------------------------
-%% TOTAL: 94 simplified macros (was 93, added 1 for Issue #27)
-%% Macros cover ~75% of macro usage in the C++ standard source
-%%
 %% Macros removed after investigation (moved back to Lua filters):
 %%  - \tcode{} - contains nested macros (\keyword{}, \ctype{}, \placeholder{}, etc)
 %%  - \ctype{} - nested in \tcode{}
 %%  - \grammarterm{} - context-dependent (BNF vs text)
 %%  - \placeholder{}, \placeholdernc{} - context-dependent (code blocks vs text)
-%%  - \exposid{}, \exposidnc{}, \exposconceptnc{} - context-dependent (need code+italic) - Issue #49
+%%  - \exposid{}, \exposidnc{}, \exposconceptnc{} - context-dependent (need code+italic)
 %%  - \stage{} - requires special handling in cpp-macros.lua for description lists
 %%  - \textbackslash - already a standard LaTeX command
 %%  - \colcol{}, \mathrm{}, \bigoh{} - context-dependent, keep in Lua filters

@@ -43,8 +43,6 @@ Usage in other filters:
 ]]
 
 -- Subscript mappings (Unicode subscript characters)
--- Used by cpp-code-blocks.lua, cpp-macros.lua, cpp-math.lua
--- This is the most complete version from cpp-math.lua
 local subscripts = {
   ["0"] = "₀",
   ["1"] = "₁",
@@ -78,8 +76,6 @@ local subscripts = {
 }
 
 -- Helper function to trim leading and trailing whitespace
--- Used by many filters (13+ occurrences across 6 files)
--- Removes all leading and trailing whitespace from a string
 local function trim(text)
   return text:match("^%s*(.-)%s*$")
 end
@@ -112,7 +108,6 @@ local special_chars = {
 
 -- Helper function to unescape LaTeX escaped characters
 -- Converts LaTeX escaped characters to their actual characters
--- Used by process_code_macro and other code processing functions
 local function unescape_latex_chars(text)
   for _, char in ipairs(special_chars) do
     if char.type == "escaped" then
@@ -123,7 +118,6 @@ local function unescape_latex_chars(text)
 end
 
 -- Helper function to convert special character macros
--- Used by cpp-macros.lua, cpp-tables.lua
 -- Converts LaTeX special character commands to their Unicode/ASCII equivalents
 local function convert_special_chars(text)
   for _, char in ipairs(special_chars) do
@@ -142,7 +136,6 @@ local function convert_special_chars(text)
 end
 
 -- Helper function to extract brace-balanced content from LaTeX macros
--- Used by cpp-macros.lua, cpp-itemdecl.lua
 --
 -- Extracts content within balanced braces {} after a macro.
 -- For example, given "\foo{bar{baz}qux}" starting at position of \foo,
@@ -199,7 +192,6 @@ local function extract_braced_content(text, start_pos, macro_len)
 end
 
 -- Helper function to remove font switch commands
--- Used by cpp-code-blocks.lua, cpp-itemdecl.lua, cpp-macros.lua
 -- Removes LaTeX font formatting commands from code blocks
 local function remove_font_switches(text)
   text = text:gsub("\\normalfont%s*", "")
@@ -210,7 +202,6 @@ local function remove_font_switches(text)
 end
 
 -- Helper function to extract balanced braces with escaped character support
--- Used by process_code_macro() for table processing
 -- Differs from extract_braced_content by:
 -- - Skipping leading whitespace
 -- - Handling escaped characters (backslash followed by any char)
@@ -261,7 +252,6 @@ end
 
 -- Helper function to expand a command with balanced braces
 -- Iteratively processes nested commands until no more are found
--- Used by process_code_macro() to strip nested \texttt{} and \tcode{}
 --
 -- Parameters:
 --   text: The text to process
@@ -289,8 +279,7 @@ end
 
 -- Helper function to replace code macros with single escaped special characters
 -- Handles cases like \tcode{\{} → `{` before the balanced brace processor
--- This must run before process_code_macro() since extract_braced doesn't handle escaped braces
--- Used by cpp-tables.lua
+-- Must run before process_code_macro() since extract_braced doesn't handle escaped braces
 --
 -- Parameters:
 --   text: The text to process
@@ -316,7 +305,6 @@ end
 -- Helper function to process code macros with balanced braces
 -- Converts \macro{content} → `content` with proper special char handling
 -- Supports nested braces and escaped characters
--- Used by cpp-tables.lua and can be used by other filters
 --
 -- Parameters:
 --   text: The text to process
@@ -381,7 +369,6 @@ local function process_macro_with_replacement(text, macro_name, replacement_func
 end
 
 -- Helper function to convert LaTeX math commands to Unicode equivalents
--- Used by \bigoh{} in both cpp-macros.lua and cpp-common.lua
 -- Converts:
 --   - Function names: \log, \min, \max, \sqrt → plain text
 --   - Math operators: \times, \cdot, \leq, \geq, \neq → Unicode symbols
@@ -403,7 +390,6 @@ local function convert_latex_math_commands(text)
 end
 
 -- Helper function to extract and clean description from \impdefx macro
--- Used by cpp-macros.lua and expand_impdefx_in_text()
 -- Extracts the description argument, handling nested braces properly
 -- Parameters:
 --   text: The full text string
@@ -462,7 +448,6 @@ local function extract_impdefx_description(text, start_pos, prefix_len, suffix_c
 end
 
 -- Helper function to expand all \impdefx macros in text
--- Used by cpp-macros.lua and cpp-common.lua
 -- Processes all occurrences of \impdefx{description} → "implementation-defined  // description"
 -- Parameters:
 --   text: The text to process

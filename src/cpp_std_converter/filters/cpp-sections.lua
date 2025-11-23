@@ -212,7 +212,7 @@ function RawBlock(elem)
 end
 
 -- Export section_labels to metadata for use by cpp-macros.lua
--- This prevents duplicate link definitions (issue #2)
+-- This prevents duplicate link definitions
 function Pandoc(doc)
   -- Convert section_labels table to a list and store in metadata
   local labels_list = {}

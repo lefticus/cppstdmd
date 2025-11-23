@@ -101,7 +101,7 @@ local PATTERN = {
 
 -- Helper function to convert inline math in code (subscripts and operators)
 -- Converts $X_i$ to Xᵢ (Unicode subscript)
--- Converts $A \land B$ to A ∧ B (logical operators) - Issue #52
+-- Converts $A \land B$ to A ∧ B (logical operators)
 -- Delegates to try_unicode_conversion from cpp-common for unified behavior
 local function convert_math_in_code(text)
   -- Process $...$  patterns (inline math in code)
@@ -195,7 +195,7 @@ end
 function Str(elem)
   elem.text = expand_macros(elem.text)
 
-  -- Strip TeX dimension remnants that appear after \kern removal (Issue #58)
+  -- Strip TeX dimension remnants that appear after \kern removal
   -- Pattern: -1.2pta → a, 1ptd → d, 0.6ptti → ti
   -- These appear when \kern precedes text and Pandoc parses dimensions as part of next word
   elem.text = elem.text:gsub("^%-?%d+%.?%d*pt", "")   -- pt units (points)
@@ -224,12 +224,12 @@ function RawInline(elem)
   local text = elem.text
 
   -- Strip index generation commands - these are PDF-only and should never appear in output
-  -- Covers all 22 index macro variants: \indexlibraryctor{}, \indexlibrarymember{}, etc. (Issue #49)
+  -- Covers all index macro variants: \indexlibraryctor{}, \indexlibrarymember{}, etc.
   if text:match("^\\index") then
     return {}  -- Return empty list to remove element
   end
 
-  -- Strip TeX box/spacing primitives - PDF typesetting artifacts (Issue #58)
+  -- Strip TeX box/spacing primitives - PDF typesetting artifacts
   -- These commands have no semantic meaning in Markdown output
 
   -- \kern<dimension> - horizontal spacing (dimensions will be stripped from next Str element)
@@ -328,12 +328,12 @@ function RawInline(elem)
 
         -- Check for each macro type
         for _, macro_info in ipairs({
-          {"\\placeholder{", 12, "placeholder"},     -- \placeholder = 12 chars
-          {"\\placeholdernc{", 14, "placeholdernc"}, -- \placeholdernc = 14 chars
-          {"\\tcode{", 6, "tcode"},                   -- \tcode = 6 chars
-          {"\\grammarterm{", 12, "grammarterm"},     -- \grammarterm = 12 chars
-          -- \keyword{} now handled in simplified_macros.tex (Issue #63)
-          {"\\term{", 5, "term"},                     -- \term = 5 chars
+          {"\\placeholder{", 12, "placeholder"},
+          {"\\placeholdernc{", 14, "placeholdernc"},
+          {"\\tcode{", 6, "tcode"},
+          {"\\grammarterm{", 12, "grammarterm"},
+          -- \keyword{} now handled in simplified_macros.tex
+          {"\\term{", 5, "term"},
         }) do
           local macro_pattern = macro_info[1]
           local macro_len = macro_info[2]
@@ -431,10 +431,10 @@ function RawInline(elem)
     code = code:gsub("\\exposconcept{([^}]*)}", "%1")
     code = code:gsub("\\placeholder{([^}]*)}", "%1")
     code = code:gsub("\\placeholdernc{([^}]*)}", "%1")
-    -- Library indexing macros (issue #46)
+    -- Library indexing macros
     code = code:gsub("\\libmember{([^}]*)}{([^}]*)}", "%1")  -- Extract member name, discard class
-    code = code:gsub("\\libglobal{([^}]*)}", "%1")  -- Extract global name (issue #24)
-    -- Exposition-only identifiers and concepts (Issue #49) - strip in code contexts
+    code = code:gsub("\\libglobal{([^}]*)}", "%1")
+    -- Exposition-only identifiers and concepts - strip in code contexts
     code = code:gsub("\\exposid{([^}]*)}", "%1")
     code = code:gsub("\\exposidnc{([^}]*)}", "%1")
     code = code:gsub("\\exposconceptnc{([^}]*)}", "%1")
@@ -465,7 +465,7 @@ function RawInline(elem)
     return pandoc.Code(code)
   end
 
-  -- NOTE: \keyword{} now handled in simplified_macros.tex (Issue #63)
+  -- NOTE: \keyword{} now handled in simplified_macros.tex
 
   code = text:match("\\ctype{([^}]*)}")
   if code then return pandoc.Code(code) end
@@ -574,14 +574,14 @@ function RawInline(elem)
   end
 
   -- Exposition-only identifiers and concepts - render as italic code (*`text`*)
-  -- These need code formatting (not just italic) because they represent identifiers
+  -- These need code formatting (not just italic) since they represent identifiers
   emph = text:match("\\exposid{([^}]*)}")
   if emph then return pandoc.Emph({pandoc.Code(emph)}) end
 
   emph = text:match("\\exposidnc{([^}]*)}")
   if emph then return pandoc.Emph({pandoc.Code(emph)}) end
 
-  -- Issue #49: exposition-only concept names (like tuple-like, decrementable)
+  -- Exposition-only concept names (like tuple-like, decrementable)
   emph = text:match("\\exposconceptnc{([^}]*)}")
   if emph then return pandoc.Emph({pandoc.Code(emph)}) end
 
@@ -1182,7 +1182,7 @@ function Code(elem)
   -- Process \libglobal{name} - extract name
   text = text:gsub("\\libglobal{([^}]*)}", "%1")
 
-  -- Convert escaped tilde to plain tilde (issue #8)
+  -- Convert escaped tilde to plain tilde
   text = text:gsub("\\~{([^}]*)}", "~%1")  -- \~{identifier} → ~identifier (remove braces)
   text = text:gsub("\\~", "~")  -- any remaining \~ → ~
 
@@ -1195,7 +1195,7 @@ end
 
 function Pandoc(doc)
   -- Merge section_labels from cpp-sections.lua with our references
-  -- This ensures all section labels get link definitions, preventing duplicates (issue #2)
+  -- This ensures all section labels get link definitions, preventing duplicates
   if doc.meta['section_labels'] then
     for _, label in ipairs(doc.meta['section_labels']) do
       -- Convert MetaInlines to string if needed

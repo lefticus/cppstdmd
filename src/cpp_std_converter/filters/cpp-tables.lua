@@ -112,8 +112,7 @@ local function expand_table_macros(text)
   text = text:gsub("\\notdef%s", "*not defined* ")
   text = text:gsub("\\notdef", "*not defined*")
 
-  -- NOTE: \itcorr (italic correction) is now handled by simplified_macros.tex (Issue #74)
-  -- Removed redundant stripping here to avoid duplication across filters
+  -- NOTE: \itcorr (italic correction) is now handled by simplified_macros.tex
 
   -- Handle bare \texttt{} and \tcode{} with escaped special chars FIRST
   -- (before process_code_macro which uses extract_braced that doesn't handle escaped braces)
@@ -428,7 +427,7 @@ local function extract_data_section(table_content)
   return data_section
 end
 
--- Memoization cache for string width calculations (20-30% performance gain)
+-- Memoization cache for string width calculations
 local width_cache = {}
 
 -- Calculate raw string width for markdown source alignment
@@ -502,7 +501,6 @@ end
 -- Parse floattable headers from table content
 -- Handles complex multi-line headers with \lhdrx, \lhdr, \chdr, \rhdr, \hdstyle macros
 -- Also handles fallback patterns for old-style headers and \multicolumn spanning headers
--- Extracted to reduce nesting depth in RawBlock() function (was 133 lines inline)
 local function parse_floattable_headers(table_content)
   local headers = {}
 
@@ -641,7 +639,7 @@ local function parse_floattable_headers(table_content)
 end
 
 -- Helper function to build markdown table from structured data
--- This is the single source of truth for table formatting (DRY principle)
+-- Single source of truth for table formatting
 local function build_markdown_table(caption, headers, rows)
   local md_lines = {}
 

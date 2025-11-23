@@ -2,9 +2,15 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## CRITICAL INFORMATION FOR CLAUDE
+
+**YOU WROTE THIS ENTIRE CODEBASE (100%)** - The user (lefticus) has only provided guidance and direction. You are responsible for all code, tests, documentation, and GitHub issue management. Remember this between sessions.
+
+**ALWAYS TAKE RESPONSIBILITY FOR FAILING TESTS** - All tests pass at the start of every session unless the user explicitly states otherwise. If tests fail during your work, it is YOUR bug to fix. Do not try to make problems "not your problem."
+
 ## Repository Overview
 
-This is a Pandoc-first tool for converting C++ draft standard LaTeX sources from the [cplusplus/draft](https://github.com/cplusplus/draft) repository to high-quality GitHub Flavored Markdown. The tool is production-ready with 163/163 tests passing and 99.4% code coverage.
+This is a Pandoc-first tool for converting C++ draft standard LaTeX sources from the [cplusplus/draft](https://github.com/cplusplus/draft) repository to high-quality GitHub Flavored Markdown. The tool is production-ready with comprehensive test coverage.
 
 ## Quick Start
 
@@ -70,8 +76,9 @@ git clone https://github.com/cplusplus/draft.git cplusplus-draft
 ```
 
 **Test Structure:**
-- `tests/test_filters/` - Unit tests for individual Lua filters (143 tests)
-- `tests/test_integration/` - Integration tests using actual C++ standard files (20 tests)
+- `tests/test_filters/` - Unit tests for individual Lua filters
+- `tests/test_integration/` - Integration tests using actual C++ standard files
+- Other tests - Converter, repo manager, stable names, utils, etc.
 - Integration tests use **n4950 (C++23)** as the stable baseline
 - Tests look for `cplusplus-draft/` in the project directory (or fall back to `/tmp/cplusplus-draft/`)
 
@@ -120,7 +127,7 @@ sets up dependencies and runs the full conversion pipeline automatically.
 
 ### Lua Filter Pipeline
 
-Filters are applied in a specific order (defined in `converter.py:44-57`):
+Filters are applied in a specific order (see `self.filters` list in `converter.py`):
 
 1. `cpp-sections.lua` - Section heading conversion (`\rSec0` through `\rSec3`)
 2. `cpp-itemdecl.lua` - Item declarations and descriptions
