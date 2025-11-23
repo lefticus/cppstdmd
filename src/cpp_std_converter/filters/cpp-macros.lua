@@ -73,7 +73,7 @@ local label_index = {}
 local FIRSTLIB = "support"
 local LASTLIB = "thread"
 
--- Macro length constants (prevents off-by-one errors, improves maintainability)
+-- WHY: Macro length constants prevent off-by-one errors in brace extraction
 local MACRO_LEN = {
   term = 5,           -- \term
   mbox = 5,           -- \mbox
@@ -90,7 +90,7 @@ local MACRO_LEN = {
   description = 19,   -- \begin{description}
 }
 
--- Common pattern constants (DRY principle, improves maintainability)
+-- Pattern constants for reuse
 local PATTERN = {
   inline_math = "%$([^$]+)%$",
   subscript_braced = "([%w]+)_{([%w]+)}",
@@ -99,29 +99,19 @@ local PATTERN = {
   braced_macro = "\\([^{]*)%{([^}]*)%}",
 }
 
--- Helper function to convert inline math in code (subscripts and operators)
--- Converts $X_i$ to Xᵢ (Unicode subscript)
--- Converts $A \land B$ to A ∧ B (logical operators)
--- Delegates to try_unicode_conversion from cpp-common for unified behavior
+-- WHY: Delegates to try_unicode_conversion for consistent math conversion across filters
 local function convert_math_in_code(text)
-  -- Process $...$  patterns (inline math in code)
   text = text:gsub(PATTERN.inline_math, function(math_content)
-    -- Unescape double backslashes from Pandoc's LaTeX parsing
-    -- Pandoc escapes inner \tcode to \\tcode when parsing nested macros
-    -- Pattern: $\\tcode{T}_i$ → $\tcode{T}_i$
+    -- WHY: Pandoc escapes inner \tcode to \\tcode when parsing nested macros
     math_content = math_content:gsub("\\\\", "\\")
 
-    -- Strip nested \tcode{} since we're already in code context from outer \tcode{}
-    -- Inner \tcode{T} → T (no backticks needed, outer \tcode{} provides them)
-    -- This prevents nested backticks like `` `T` `` and allows subscripts to convert
-    -- Pattern: \tcode{decay_t<$\tcode{T}_i$>} → decay_t<Tᵢ> (wrapped by outer backticks)
+    -- WHY: Strip nested \tcode{} to prevent nested backticks like `` `T` ``
     math_content = process_macro_with_replacement(math_content, "tcode", function(content)
-      return content  -- Just strip wrapper, don't add backticks
+      return content
     end)
 
-    -- Now convert math to Unicode (subscripts, operators, etc.)
     local converted = try_unicode_conversion(math_content)
-    return converted or math_content  -- Fallback to original if conversion fails
+    return converted or math_content
   end)
   return text
 end
@@ -148,8 +138,7 @@ local function load_label_index(file_path)
   return result or {}
 end
 
--- Generate link target for a reference
--- Returns "#ref" for same-file references, "file.md#ref" for cross-file references
+-- WHY: Returns "#ref" for same-file, "file.md#ref" for cross-file
 local function generate_link_target(ref)
   -- Check if we have label index information
   if not current_file or not label_index or not label_index[ref] then
@@ -169,29 +158,22 @@ local function generate_link_target(ref)
   end
 end
 
--- Helper function to expand macros in text using shared implementation
 -- Wrapper around expand_macros_common with cpp-macros context
 local function expand_macros(text, skip_special_chars)
   if not text then return text end
 
-  -- Use shared function from cpp-common to split comma-separated references
-  -- E.g., "a,b,c" -> "[[a]], [[b]], [[c]]"
   local function split_refs(refs_str)
     return split_refs_text(refs_str, references)
   end
 
-  -- Set global FIRSTLIB and LASTLIB for expand_macros_common to use
   _G.FIRSTLIB = FIRSTLIB
   _G.LASTLIB = LASTLIB
 
-  -- Call consolidated function with cpp-macros context options
   return expand_macros_common(text, {
     skip_special_chars = skip_special_chars,
-    ref_format = split_refs,  -- Custom function that tracks references
+    ref_format = split_refs,
   })
 end
-
--- Apply to all string elements
 function Str(elem)
   elem.text = expand_macros(elem.text)
 

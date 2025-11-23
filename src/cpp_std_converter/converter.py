@@ -278,16 +278,13 @@ class Converter:
             filters_dir: Directory containing Lua filters. If None, uses default.
         """
         if filters_dir is None:
-            # Always use source directory filters (package is never installed)
-            # Filters are at src/cpp_std_converter/filters/ relative to this file
             filters_dir = Path(__file__).parent / "filters"
 
         self.filters_dir = Path(filters_dir)
 
-        # Verify filters exist
-        # Order matters: sections → itemdecl/itemdescr → code blocks → definitions → notes/examples → lists (early) → macros → math → grammar → tables → strip-metadata (LAST)
-        # cpp-lists runs early to merge multi-block list items before macro/grammar processing
-        # strip-metadata runs LAST to remove YAML front matter from output (after all filters that need metadata)
+        # WHY filter order matters: Filters run sequentially, each seeing previous transformations.
+        # cpp-lists runs early to merge multi-block items before macro/grammar processing.
+        # strip-metadata runs LAST to remove YAML after all filters that need metadata.
         self.filters = [
             self.filters_dir / "cpp-sections.lua",
             self.filters_dir / "cpp-itemdecl.lua",
@@ -339,26 +336,19 @@ class Converter:
         if not input_file.exists():
             raise ConverterError(f"Input file not found: {input_file}")
 
-        # Preprocessing: inject simplified macro definitions for Pandoc
-        # This allows Pandoc to expand common macros natively, reducing Lua filter complexity
+        # WHY: inject simplified macros so Pandoc expands them natively, reducing Lua filter complexity
         macros_file = self.filters_dir / "simplified_macros.tex"
 
-        # Read input content
         input_content = input_file.read_text(encoding="utf-8")
 
-        # Fix n3337-specific LaTeX syntax errors before processing
-        # Issue: n3337 has `[\textit{Example}` instead of `\enterexample`
-        # This confuses Pandoc's LaTeX parser (different from filter issues)
+        # WHY: n3337 has `[\textit{Example}` syntax that confuses Pandoc's LaTeX parser
         input_content = re.sub(r"\[\\textit\{Example\}", r"\\enterexample", input_content)
 
-        # Combine with macro definitions if available
         if macros_file.exists():
             macros_content = macros_file.read_text(encoding="utf-8")
             combined_content = macros_content + "\n\n" + input_content
         else:
             combined_content = input_content
-
-        # Use temp file context manager for conversion
         with temp_tex_file(combined_content) as file_to_convert:
             # Build pandoc command
             cmd = [
@@ -395,16 +385,13 @@ class Converter:
                 # Run pandoc
                 result = run_command(cmd)
 
-                # Post-process: unescape wikilinks that Pandoc escaped
                 if output_file:
-                    # Read generated markdown, unescape, and write back
                     markdown = output_file.read_text()
                     markdown = unescape_wikilinks(markdown)
                     output_file.write_text(markdown)
                     click.echo(f"Converted: {input_file} -> {output_file}", err=True)
                     return markdown
                 else:
-                    # Unescape stdout before returning
                     markdown = result.stdout
                     return unescape_wikilinks(markdown)
 
@@ -441,10 +428,7 @@ class Converter:
         if not input_dir.exists():
             raise ConverterError(f"Input directory not found: {input_dir}")
 
-        # Create output directory
         ensure_dir(output_dir)
-
-        # Build label index for cross-file references
         label_index_file = None
         if fix_cross_file_links:
             if verbose:
@@ -453,7 +437,6 @@ class Converter:
             indexer = LabelIndexer(input_dir)
             indexer.build_index(use_stable_names=True)
 
-            # Write Lua table file
             label_index_file = output_dir / "cpp_std_labels.lua"
             indexer.write_lua_table(label_index_file)
 
@@ -465,16 +448,13 @@ class Converter:
                 if stats["duplicates"] > 0:
                     click.echo(f"Warning: Found {stats['duplicates']} duplicate labels", err=True)
 
-        # Find all .tex files
         tex_files = sorted(input_dir.glob(pattern))
-
         if not tex_files:
             raise ConverterError(f"No files matching '{pattern}' found in {input_dir}")
 
         output_files = []
 
         for tex_file in tex_files:
-            # Skip common non-chapter files
             if tex_file.stem in SKIP_FILES:
                 if verbose:
                     click.echo(f"Skipping: {tex_file.name}", err=True)
@@ -482,8 +462,7 @@ class Converter:
 
             output_file = output_dir / f"{tex_file.stem}.md"
 
-            # Extract stable name for this file (e.g., "mem" from memory.tex)
-            # This is used for cross-file link resolution
+            # WHY: stable name used for cross-file link resolution (e.g., "mem" from memory.tex)
             stable_name = None
             with contextlib.suppress(Exception):
                 stable_name = extract_stable_name_from_tex(tex_file)
@@ -503,7 +482,6 @@ class Converter:
                 if not verbose:
                     click.echo("Use --verbose to see detailed errors", err=True)
 
-        # Fix cross-file links if requested
         if fix_cross_file_links and output_files:
             stats = self.fix_cross_file_links(output_files, verbose=verbose)
             if verbose and stats["links_updated"] > 0:
