@@ -40,15 +40,14 @@ If you need manual control instead of using `setup-and-build.sh`:
 python3 -m venv venv
 source venv/bin/activate
 
-# Install in development mode
-pip install -e .
-
 # Install dependencies
 pip install -r requirements.txt
 
 # Clone cplusplus/draft repository (into project directory)
 git clone https://github.com/cplusplus/draft.git cplusplus-draft
 ```
+
+**Note:** The package is **not installed** - all scripts and tests run directly from the source directory. This eliminates confusion between installed and source files.
 
 ## Testing
 

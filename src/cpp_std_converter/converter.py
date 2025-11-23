@@ -281,34 +281,9 @@ class Converter:
             filters_dir: Directory containing Lua filters. If None, uses default.
         """
         if filters_dir is None:
-            # ALWAYS use source directory filters in development mode
-            # When installed with pip install -e, package_data (Lua filters) gets copied
-            # to site-packages and is NOT live-updated. We need to use source filters.
-
-            # Try to find source directory: go up from __file__ to find src/cpp_std_converter/filters
-            current_file = Path(__file__).resolve()
-
-            # Check if we're in the source tree (src/cpp_std_converter/converter.py)
-            # by looking for the src directory structure
-            if current_file.parent.parent.name == "src":
-                # We're in source: src/cpp_std_converter/converter.py
-                filters_dir = current_file.parent / "filters"
-            else:
-                # We're in installed package: site-packages/cpp_std_converter/converter.py
-                # Try to find the source directory relative to the repository root
-                # Look for repository root by checking for setup.py or pyproject.toml
-                repo_root = None
-                for parent in current_file.parents:
-                    if (parent / "setup.py").exists() or (parent / "pyproject.toml").exists():
-                        repo_root = parent
-                        break
-
-                if repo_root and (repo_root / "src" / "cpp_std_converter" / "filters").exists():
-                    # Found source directory - use it
-                    filters_dir = repo_root / "src" / "cpp_std_converter" / "filters"
-                else:
-                    # Fall back to installed package filters
-                    filters_dir = current_file.parent / "filters"
+            # Always use source directory filters (package is never installed)
+            # Filters are at src/cpp_std_converter/filters/ relative to this file
+            filters_dir = Path(__file__).parent / "filters"
 
         self.filters_dir = Path(filters_dir)
 

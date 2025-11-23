@@ -93,15 +93,11 @@ if [ ! -f "venv/.setup_complete" ]; then
 elif [ "requirements.txt" -nt "venv/.setup_complete" ]; then
     info "requirements.txt has been modified, reinstalling..."
     NEED_INSTALL=true
-elif [ "setup.py" -nt "venv/.setup_complete" ]; then
-    info "setup.py has been modified, reinstalling..."
-    NEED_INSTALL=true
 fi
 
 if [ "$NEED_INSTALL" = true ]; then
     info "Installing/updating dependencies..."
     pip install --upgrade pip || abort "Failed to upgrade pip"
-    pip install -e . || abort "Failed to install package in development mode"
     pip install -r requirements.txt || abort "Failed to install requirements"
     touch venv/.setup_complete
     success "Dependencies installed"
