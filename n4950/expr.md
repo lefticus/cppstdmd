@@ -2974,7 +2974,8 @@ single postfix `++` operator. — *end note*]
 The result is a prvalue. The type of the result is the cv-unqualified
 version of the type of the operand. If the operand is a bit-field that
 cannot represent the incremented value, the resulting value of the
-bit-field is . See also  [[expr.add]] and  [[expr.ass]].
+bit-field is *implementation-defined*. See also  [[expr.add]] and 
+[[expr.ass]].
 
 The operand of postfix `--` is decremented analogously to the postfix
 `++` operator.
@@ -5457,7 +5458,7 @@ If the right operand is an expression, it is implicitly converted
 
 When the left operand of an assignment operator is a bit-field that
 cannot represent the value of the expression, the resulting value of the
-bit-field is .
+bit-field is *implementation-defined*.
 
 An assignment whose left operand is of a volatile-qualified type is
 deprecated [[depr.volatile.type]] unless the (possibly parenthesized)

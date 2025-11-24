@@ -6186,7 +6186,7 @@ If the right operand is an expression, it is implicitly converted
 
 When the left operand of an assignment operator is a bit-field that
 cannot represent the value of the expression, the resulting value of the
-bit-field is .
+bit-field is *implementation-defined*.
 
 An assignment whose left operand is of a volatile-qualified type is
 deprecated [[depr.volatile.type]] unless the (possibly parenthesized)

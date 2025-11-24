@@ -3642,7 +3642,7 @@ defined.
   destination type; no user-defined conversions are considered. If the
   conversion cannot be done, the initialization is ill-formed. When
   initializing a bit-field with a value that it cannot represent, the
-  resulting value of the bit-field is .
+  resulting value of the bit-field is *implementation-defined*.
   \[*Note 8*:
   An expression of type “*cv1* `T`” can initialize an object of type
   “*cv2* `T`” independently of the cv-qualifiers *cv1* and *cv2*.

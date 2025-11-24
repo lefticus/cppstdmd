@@ -1685,7 +1685,8 @@ single postfix ++ operator. — *end note*]
 The result is a prvalue. The type of the result is the cv-unqualified
 version of the type of the operand. If the operand is a bit-field that
 cannot represent the incremented value, the resulting value of the
-bit-field is . See also  [[expr.add]] and  [[expr.ass]].
+bit-field is *implementation-defined*. See also  [[expr.add]] and 
+[[expr.ass]].
 
 The operand of postfix `\dcr` is decremented analogously to the postfix
 `++` operator.
@@ -3766,7 +3767,7 @@ initialization ([[dcl.init]],  [[class.ctor]],  [[class.init]], 
 
 When the left operand of an assignment operator is a bit-field that
 cannot represent the value of the expression, the resulting value of the
-bit-field is .
+bit-field is *implementation-defined*.
 
 The behavior of an expression of the form `E1` *op*`=` `E2` is
 equivalent to `E1 = E1` *op* `E2` except that `E1` is evaluated only
