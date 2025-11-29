@@ -1,3 +1,5 @@
+# Compatibility (informative) <a id="diff" data-annex="true" data-annex-type="informative">[[diff]]</a>
+
 ## C++ and ISO C++23 <a id="diff.cpp23">[[diff.cpp23]]</a>
 
 ### General <a id="diff.cpp23.general">[[diff.cpp23.general]]</a>
@@ -3055,6 +3057,7 @@ restricted in C++. Subclause [[c.malloc]] describes the changes.
 [dcl.typedef]: dcl.md#dcl.typedef
 [depr]: #depr
 [diagnostics]: diagnostics.md#diagnostics
+[diff]: #diff
 [diff.basic]: #diff.basic
 [diff.char16]: #diff.char16
 [diff.class]: #diff.class

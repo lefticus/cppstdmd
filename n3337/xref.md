@@ -1,3 +1,5 @@
+# Cross references (informative) <a id="xref" data-annex="true" data-annex-type="informative">[[xref]]</a>
+
 This annex lists each section label and the corresponding section
 number, in alphabetical order by label. All of the section labels are
 the same as in the 2003 standard, except:

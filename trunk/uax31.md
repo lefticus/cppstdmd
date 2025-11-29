@@ -1,3 +1,5 @@
+# Conformance with UAX \#31 (informative) <a id="uaxid" data-annex="true" data-annex-type="informative">[[uaxid]]</a>
+
 ## General <a id="uaxid.general">[[uaxid.general]]</a>
 
 This Annex describes the choices made in application of UAX \#31
@@ -99,6 +101,7 @@ apply.
 
 <!-- Link reference definitions -->
 [lex.name]: lex.md#lex.name
+[uaxid]: #uaxid
 [uaxid.def]: #uaxid.def
 [uaxid.def.general]: #uaxid.def.general
 [uaxid.def.stable]: #uaxid.def.stable

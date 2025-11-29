@@ -1,3 +1,5 @@
+# Universal character names for identifier characters (normative) <a id="charname" data-annex="true" data-annex-type="normative">[[charname]]</a>
+
 ## Ranges of characters allowed <a id="charname.allowed">[[charname.allowed]]</a>
 
 ``` cpp
@@ -27,5 +29,6 @@ F900-FD3D, FD40-FDCF, FDF0-FE44, FE47-FFFD
 ```
 
 <!-- Link reference definitions -->
+[charname]: #charname
 [charname.allowed]: #charname.allowed
 [charname.disallowed]: #charname.disallowed

@@ -1,3 +1,5 @@
+# Grammar summary (informative) <a id="gram" data-annex="true" data-annex-type="informative">[[gram]]</a>
+
 ## General <a id="gram.general">[[gram.general]]</a>
 
 This summary of C++ grammar is intended to be an aid to comprehension.
@@ -55,6 +57,7 @@ template-name:
 [dcl.enum]: dcl.md#dcl.enum
 [dcl.spec]: dcl.md#dcl.spec
 [dcl.typedef]: dcl.md#dcl.typedef
+[gram]: #gram
 [gram.general]: #gram.general
 [gram.key]: #gram.key
 [namespace.def]: dcl.md#namespace.def

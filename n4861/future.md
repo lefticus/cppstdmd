@@ -1,3 +1,5 @@
+# Compatibility features (normative) <a id="depr" data-annex="true" data-annex-type="normative">[[depr]]</a>
+
 This Clause describes features of the C++ Standard that are specified
 for compatibility with existing implementations.
 
@@ -1968,6 +1970,7 @@ shall be static.
 [dcl.fct]: dcl.md#dcl.fct
 [dcl.fct.def.delete]: dcl.md#dcl.fct.def.delete
 [dcl.struct.bind]: dcl.md#dcl.struct.bind
+[depr]: #depr
 [depr.arith.conv.enum]: #depr.arith.conv.enum
 [depr.array.comp]: #depr.array.comp
 [depr.atomics]: #depr.atomics

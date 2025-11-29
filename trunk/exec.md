@@ -3340,7 +3340,7 @@ auto mkop2 = [&] {
 start(state.ops2.template emplace<decltype(mkop2())>(emplace-from{mkop2}));
 ```
 
-`\exposid{impls-for}<\exposid{decayed-typeof}<let-cpo>>::\exposid{complete}`
+`\exposid{impls-for}<\exposid{decayed-typeof}<\exposid{let-cpo}>>::\exposid{complete}`
 
 is initialized with a callable object equivalent to the following:
 

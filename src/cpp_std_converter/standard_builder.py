@@ -615,12 +615,18 @@ class StandardBuilder:
 
         # Pattern to match headings with embedded anchors
         # Matches: ## Title <a id="label">[[label]]</a>
+        # Also matches annexes: ## Title (informative) <a id="label" data-annex="true" data-annex-type="informative">[[label]]</a>
         heading_pattern = re.compile(
-            r'^(#{1,6})\s+(.+?)\s+<a id="([^"]+)">\[\[([^\]]+)\]\]</a>\s*$', re.MULTILINE
+            r'^(#{1,6})\s+(.+?)\s+<a id="([^"]+)"(?:\s+[^>]+)?>\[\[([^\]]+)\]\]</a>\s*$',
+            re.MULTILINE
         )
+        # Separate pattern to detect if heading is an annex and extract type
+        annex_pattern = re.compile(r'data-annex="true"(?:\s+data-annex-type="([^"]+)")?')
 
         # Track section numbers at each level
         section_numbers = [0, 0, 0, 0, 0, 0]  # Support up to H6
+        annex_counter = 0  # Track annex letter (A, B, C, etc.)
+        current_annex_letter = None  # Track current annex for subsections
 
         # Process files in order
         for md_file in output_files:
@@ -633,20 +639,41 @@ class StandardBuilder:
                 anchor_id = match.group(3)
                 stable_name = match.group(4)
 
+                # Check if this heading is an annex (has data-annex="true")
+                full_match = match.group(0)
+                is_annex = annex_pattern.search(full_match) is not None
+
                 level = len(hashes) - 1  # H1=0, H2=1, etc.
 
-                # Update section numbers (always update for correct numbering)
-                section_numbers[level] += 1
-                # Reset deeper levels
-                for i in range(level + 1, 6):
-                    section_numbers[i] = 0
+                # For annex headings at H1 level, use letter numbering
+                if is_annex and level == 0:
+                    annex_counter += 1
+                    current_annex_letter = chr(ord('A') + annex_counter - 1)
+                    # Reset annex subsection numbering
+                    for i in range(1, 6):
+                        section_numbers[i] = 0
+                else:
+                    # Update section numbers (always update for correct numbering)
+                    section_numbers[level] += 1
+                    # Reset deeper levels
+                    for i in range(level + 1, 6):
+                        section_numbers[i] = 0
 
                 # Skip headings deeper than max_depth
                 if level >= max_depth:
                     continue
 
-                # Build section number string (e.g., "1.2.3")
-                section_num = ".".join(str(section_numbers[i]) for i in range(level + 1))
+                # Build section number string
+                if is_annex and level == 0:
+                    # Annex A, B, C, etc.
+                    section_num = f"Annex {current_annex_letter}"
+                elif current_annex_letter and level > 0:
+                    # Annex subsections: A.1, A.2, etc.
+                    subsection = ".".join(str(section_numbers[i]) for i in range(1, level + 1))
+                    section_num = f"{current_annex_letter}.{subsection}"
+                else:
+                    # Regular numbered sections: 1.2.3, etc.
+                    section_num = ".".join(str(section_numbers[i]) for i in range(level + 1))
 
                 # Create TOC entry with cross-file link
                 indent = "  " * level

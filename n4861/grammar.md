@@ -1,3 +1,5 @@
+# Grammar summary (informative) <a id="gram" data-annex="true" data-annex-type="informative">[[gram]]</a>
+
 This summary of C++ grammar is intended to be an aid to comprehension.
 It is not an exact statement of the language. In particular, the grammar
 described here accepts a superset of valid C++ constructs.
@@ -50,6 +52,7 @@ template-name:
 [dcl.enum]: dcl.md#dcl.enum
 [dcl.spec]: dcl.md#dcl.spec
 [dcl.typedef]: dcl.md#dcl.typedef
+[gram]: #gram
 [gram.key]: #gram.key
 [namespace.def]: dcl.md#namespace.def
 [stmt.ambig]: stmt.md#stmt.ambig

@@ -1,3 +1,5 @@
+# Compatibility features (normative) <a id="depr" data-annex="true" data-annex-type="normative">[[depr]]</a>
+
 This Clause describes features of the C++Standard that are specified for
 compatibility with existing implementations.
 
@@ -1317,6 +1319,7 @@ context.
 [class.dtor]: special.md#class.dtor
 [dcl.fct.def]: dcl.md#dcl.fct.def
 [dcl.stc]: dcl.md#dcl.stc
+[depr]: #depr
 [depr.adaptors]: #depr.adaptors
 [depr.auto.ptr]: #depr.auto.ptr
 [depr.base]: #depr.base

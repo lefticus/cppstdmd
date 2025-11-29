@@ -69,15 +69,25 @@ function Para(elem)
   local headers = {}
   local i = 1
 
-  -- Pattern 1: Pandoc parses \rSec0[label]{Title} as:
-  --   Para [RawInline("\rSec0"), Str("[label]"), Span([Str("Title")]), SoftBreak, ...]
+  -- Pattern 1: Pandoc parses \rSec0[label]{Title} or \rSec{0}[label]{Title} as:
+  --   Para [RawInline("\rSec0") or RawInline("\rSec{0}"), Str("[label]"), Span([Str("Title")]), SoftBreak, ...]
+  -- Annexes have an @@ANNEX@@ marker before the \rSec{0}:
+  --   Para [Str("@@ANNEX@@"), RawInline("\rSec{0}"), Str("[label]"), Span([Str("Title")])]
   -- When multiple sections appear consecutively, they're in the SAME Para element
   -- We need to extract ALL of them
   while i <= #content do
-    -- Check if current position starts a \rSecN pattern
+    -- Check for annex marker (@@ANNEX:informative@@ or @@ANNEX:normative@@)
+    local annex_type = nil
+    if content[i].t == "Str" and content[i].text:match("^@@ANNEX:(.+)@@$") then
+      annex_type = content[i].text:match("^@@ANNEX:(.+)@@$")
+      i = i + 1  -- Skip past marker
+    end
+
+    -- Check if current position starts a \rSecN or \rSec{N} pattern
     if content[i].t == "RawInline" and content[i].format == "latex" then
       local raw_text = content[i].text
-      local level = raw_text:match("^\\rSec(%d)$")
+      -- Match either \rSec0 or \rSec{0}
+      local level = raw_text:match("^\\rSec(%d)$") or raw_text:match("^\\rSec%{(%d)%}$")
 
       if level and i + 1 <= #content and content[i + 1].t == "Str" then
         -- Extract label from [label] string
@@ -101,11 +111,24 @@ function Para(elem)
           if #title_content > 0 then
             local heading_level = tonumber(level) + 1  -- rSec0 → H1, rSec1 → H2, etc.
 
+            -- For annexes, add the type designation to the title
+            if annex_type then
+              table.insert(title_content, pandoc.Space())
+              table.insert(title_content, pandoc.Str("(" .. annex_type .. ")"))
+            end
+
             -- Append visible anchor with stable name to heading
+            -- Mark annexes with data-annex attribute for TOC generation
             table.insert(title_content, pandoc.Space())
-            table.insert(title_content,
-                         pandoc.RawInline('html', '<a id="' .. label .. '">[[' ..
-                                          label .. ']]</a>'))
+            if annex_type then
+              table.insert(title_content,
+                           pandoc.RawInline('html', '<a id="' .. label .. '" data-annex="true" data-annex-type="' .. annex_type .. '">[[' ..
+                                            label .. ']]</a>'))
+            else
+              table.insert(title_content,
+                           pandoc.RawInline('html', '<a id="' .. label .. '">[[' ..
+                                            label .. ']]</a>'))
+            end
 
             -- Create the heading with embedded anchor
             local header = pandoc.Header(heading_level, title_content)
@@ -134,6 +157,9 @@ function Para(elem)
       local label = first_str:match("^%[([^%]]+)%]$")
 
       if label then
+        -- Track this section label for link definition generation
+        section_labels[label] = true
+
         -- Determine heading level based on label structure
         -- Heuristic: count dots in label
         -- intro.scope (1 dot) → likely H1 (rSec0)
@@ -153,9 +179,13 @@ function Para(elem)
           table.insert(title_content, content[j])
         end
 
-        -- If we got content, convert to header
+        -- If we got content, convert to header with embedded anchor
         if #title_content > 0 then
-          return pandoc.Header(heading_level, title_content, {id = label})
+          table.insert(title_content, pandoc.Space())
+          table.insert(title_content,
+                       pandoc.RawInline('html', '<a id="' .. label .. '">[[' ..
+                                        label .. ']]</a>'))
+          return pandoc.Header(heading_level, title_content)
         end
       end
     end
@@ -179,14 +209,52 @@ function RawInline(elem)
   end
 
   local text = elem.text
-  -- Pattern: \rSecN[label]{title}
-  local level, label, title = text:match("\\rSec(%d)%[([^%]]*)%]%{([^}]*)%}")
 
+  -- Pattern 1: \rSecN[label]{title}
+  local level, label, title = text:match("\\rSec(%d)%[([^%]]*)%]%{([^}]*)%}")
   if level and label and title then
     -- Track this section label for link definition generation
     section_labels[label] = true
     local heading_level = tonumber(level) + 1
-    return pandoc.Header(heading_level, pandoc.Str(title), {id = label})
+    -- Create heading with embedded anchor
+    local content = {
+      pandoc.Str(title),
+      pandoc.Space(),
+      pandoc.RawInline('html', '<a id="' .. label .. '">[[' .. label .. ']]</a>')
+    }
+    return pandoc.Header(heading_level, content)
+  end
+
+  -- Pattern 2: \infannex{label}{title} or \normannex{label}{title}
+  -- These are appendix-level sections (H1)
+  local inf_label, inf_title = text:match("\\infannex%{([^}]*)%}%{([^}]*)%}")
+  if inf_label and inf_title then
+    -- Track this section label for link definition generation
+    section_labels[inf_label] = true
+    -- Create H1 heading with embedded anchor marked as informative annex
+    local content = {
+      pandoc.Str(inf_title),
+      pandoc.Space(),
+      pandoc.Str("(informative)"),
+      pandoc.Space(),
+      pandoc.RawInline('html', '<a id="' .. inf_label .. '" data-annex="true" data-annex-type="informative">[[' .. inf_label .. ']]</a>')
+    }
+    return pandoc.Header(1, content)
+  end
+
+  local norm_label, norm_title = text:match("\\normannex%{([^}]*)%}%{([^}]*)%}")
+  if norm_label and norm_title then
+    -- Track this section label for link definition generation
+    section_labels[norm_label] = true
+    -- Create H1 heading with embedded anchor marked as normative annex
+    local content = {
+      pandoc.Str(norm_title),
+      pandoc.Space(),
+      pandoc.Str("(normative)"),
+      pandoc.Space(),
+      pandoc.RawInline('html', '<a id="' .. norm_label .. '" data-annex="true" data-annex-type="normative">[[' .. norm_label .. ']]</a>')
+    }
+    return pandoc.Header(1, content)
   end
 
   return elem
@@ -198,14 +266,52 @@ function RawBlock(elem)
   end
 
   local text = elem.text
-  -- Pattern: \rSecN[label]{title}
-  local level, label, title = text:match("\\rSec(%d)%[([^%]]*)%]%{([^}]*)%}")
 
+  -- Pattern 1: \rSecN[label]{title}
+  local level, label, title = text:match("\\rSec(%d)%[([^%]]*)%]%{([^}]*)%}")
   if level and label and title then
     -- Track this section label for link definition generation
     section_labels[label] = true
     local heading_level = tonumber(level) + 1
-    return pandoc.Header(heading_level, pandoc.Str(title), {id = label})
+    -- Create heading with embedded anchor
+    local content = {
+      pandoc.Str(title),
+      pandoc.Space(),
+      pandoc.RawInline('html', '<a id="' .. label .. '">[[' .. label .. ']]</a>')
+    }
+    return pandoc.Header(heading_level, content)
+  end
+
+  -- Pattern 2: \infannex{label}{title} or \normannex{label}{title}
+  -- These are appendix-level sections (H1)
+  local inf_label, inf_title = text:match("\\infannex%{([^}]*)%}%{([^}]*)%}")
+  if inf_label and inf_title then
+    -- Track this section label for link definition generation
+    section_labels[inf_label] = true
+    -- Create H1 heading with embedded anchor marked as informative annex
+    local content = {
+      pandoc.Str(inf_title),
+      pandoc.Space(),
+      pandoc.Str("(informative)"),
+      pandoc.Space(),
+      pandoc.RawInline('html', '<a id="' .. inf_label .. '" data-annex="true" data-annex-type="informative">[[' .. inf_label .. ']]</a>')
+    }
+    return pandoc.Header(1, content)
+  end
+
+  local norm_label, norm_title = text:match("\\normannex%{([^}]*)%}%{([^}]*)%}")
+  if norm_label and norm_title then
+    -- Track this section label for link definition generation
+    section_labels[norm_label] = true
+    -- Create H1 heading with embedded anchor marked as normative annex
+    local content = {
+      pandoc.Str(norm_title),
+      pandoc.Space(),
+      pandoc.Str("(normative)"),
+      pandoc.Space(),
+      pandoc.RawInline('html', '<a id="' .. norm_label .. '" data-annex="true" data-annex-type="normative">[[' .. norm_label .. ']]</a>')
+    }
+    return pandoc.Header(1, content)
   end
 
   return elem

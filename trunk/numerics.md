@@ -8462,7 +8462,7 @@ namespace std::linalg {
       constexpr const extents_type& extents() const noexcept { return extents_; }
 
       constexpr index_type required_span_size() const
-        { return nested-mapping_.required_span_size();
+        { return nested-mapping_.required_span_size(); }
 
       template<class Index0, class Index1>
         constexpr index_type operator()(Index0 ind0, Index1 ind1) const

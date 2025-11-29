@@ -1,3 +1,5 @@
+# Compatibility features (normative) <a id="depr" data-annex="true" data-annex-type="normative">[[depr]]</a>
+
 ## General <a id="depr.general">[[depr.general]]</a>
 
 This Annex describes features of the C++ Standard that are specified for
@@ -2015,6 +2017,7 @@ atomic<int> v = ATOMIC_VAR_INIT(5);
 [dcl.fct.def.delete]: dcl.md#dcl.fct.def.delete
 [dcl.struct.bind]: dcl.md#dcl.struct.bind
 [default.allocator]: mem.md#default.allocator
+[depr]: #depr
 [depr.arith.conv.enum]: #depr.arith.conv.enum
 [depr.array.comp]: #depr.array.comp
 [depr.atomics]: #depr.atomics

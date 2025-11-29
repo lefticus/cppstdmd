@@ -1,3 +1,5 @@
+# Compatibility (informative) <a id="diff" data-annex="true" data-annex-type="informative">[[diff]]</a>
+
 ## C++ and ISO C++17 <a id="diff.cpp17">[[diff.cpp17]]</a>
 
 This subclause lists the differences between C++ and ISO C++17 (ISO/IEC
@@ -1988,6 +1990,7 @@ describes the changes.
 [depr]: #depr
 [depr.c.headers]: future.md#depr.c.headers
 [diagnostics]: diagnostics.md#diagnostics
+[diff]: #diff
 [diff.basic]: #diff.basic
 [diff.char16]: #diff.char16
 [diff.class]: #diff.class

@@ -1,3 +1,5 @@
+# Compatibility features (normative) <a id="depr" data-annex="true" data-annex-type="normative">[[depr]]</a>
+
 This Clause describes features of the C++Standard that are specified for
 compatibility with existing implementations.
 
@@ -1363,6 +1365,7 @@ serve as the implementation’s source of randomness.
 [dcl.attr.deprecated]: dcl.md#dcl.attr.deprecated
 [dcl.fct.def]: dcl.md#dcl.fct.def
 [dcl.stc]: dcl.md#dcl.stc
+[depr]: #depr
 [depr.adaptors]: #depr.adaptors
 [depr.alg.random.shuffle]: #depr.alg.random.shuffle
 [depr.auto.ptr]: #depr.auto.ptr

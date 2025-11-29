@@ -199,3 +199,16 @@
 %% WHY: These require context-dependent handling, nested macro support,
 %% or special formatting that can't be done in simple LaTeX substitution
 %%--------------------------------------------------
+
+%%--------------------------------------------------
+%% Category N: Annexes (Appendices)
+%% WHY: \infannex and \normannex create chapter-level headings in LaTeX
+%% for informative and normative annexes. We prepend @@ANNEX:type@@ marker so
+%% cpp-sections.lua can detect the annex type and generate H1 headings with:
+%% - Embedded anchors marked as annexes: <a data-annex="true" data-annex-type="...">
+%% - Type designation in title: "Title (informative)" or "Title (normative)"
+%% This allows the TOC generator to use letter numbering (A, B, C, etc.)
+%% and include the informative/normative designation.
+%%--------------------------------------------------
+\renewcommand{\infannex}[2]{@@ANNEX:informative@@\rSec{0}[#1]{#2}}
+\renewcommand{\normannex}[2]{@@ANNEX:normative@@\rSec{0}[#1]{#2}}

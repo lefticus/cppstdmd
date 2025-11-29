@@ -1,3 +1,5 @@
+# Compatibility (informative) <a id="diff" data-annex="true" data-annex-type="informative">[[diff]]</a>
+
 ## C++and ISO C <a id="diff.iso">[[diff.iso]]</a>
 
 This subclause lists the differences between C++and ISO C, by the
@@ -1174,6 +1176,7 @@ International Standard. [[c.malloc]] describes the changes.
 [dcl.typedef]: dcl.md#dcl.typedef
 [depr.c.headers]: future.md#depr.c.headers
 [diagnostics]: diagnostics.md#diagnostics
+[diff]: #diff
 [diff.basic]: #diff.basic
 [diff.char16]: #diff.char16
 [diff.class]: #diff.class

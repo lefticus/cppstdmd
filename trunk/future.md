@@ -1,3 +1,5 @@
+# Compatibility features (normative) <a id="depr" data-annex="true" data-annex-type="normative">[[depr]]</a>
+
 ## General <a id="depr.general">[[depr.general]]</a>
 
 This Annex describes features of this document that are specified for
@@ -844,6 +846,7 @@ template<class T> constexpr T kill_dependency(T y) noexcept;
 [dcl.fct]: dcl.md#dcl.fct
 [dcl.fct.def.delete]: dcl.md#dcl.fct.def.delete
 [dcl.struct.bind]: dcl.md#dcl.struct.bind
+[depr]: #depr
 [depr.atomics]: #depr.atomics
 [depr.atomics.general]: #depr.atomics.general
 [depr.atomics.nonmembers]: #depr.atomics.nonmembers

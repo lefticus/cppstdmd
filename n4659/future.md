@@ -1,3 +1,5 @@
+# Compatibility features (normative) <a id="depr" data-annex="true" data-annex-type="normative">[[depr]]</a>
+
 This Clause describes features of the C++Standard that are specified for
 compatibility with existing implementations.
 
@@ -1842,6 +1844,7 @@ initializes `cvtstate` to `state`.
 [dcl.attr.deprecated]: dcl.md#dcl.attr.deprecated
 [dcl.fct.def]: dcl.md#dcl.fct.def
 [default.allocator]: utilities.md#default.allocator
+[depr]: #depr
 [depr.c.headers]: #depr.c.headers
 [depr.ccomplex.syn]: #depr.ccomplex.syn
 [depr.codecvt.syn]: #depr.codecvt.syn

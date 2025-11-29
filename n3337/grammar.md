@@ -1,4 +1,6 @@
-## Keywords
+# Grammar summary (informative) <a id="gram" data-annex="true" data-annex-type="informative">[[gram]]</a>
+
+## Keywords <a id="gram.key">[[gram.key]]</a>
 
 ## Lexical conventions <a id="gram.lex">[[gram.lex]]</a>
 
@@ -1663,6 +1665,7 @@ new-line:
 ```
 
 <!-- Link reference definitions -->
+[gram]: #gram
 [gram.basic]: #gram.basic
 [gram.class]: class.md#gram.class
 [gram.cpp]: cpp.md#gram.cpp
