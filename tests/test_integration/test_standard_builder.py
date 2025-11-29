@@ -445,3 +445,102 @@ class TestStandardBuilder:
             assert (
                 total_cross_file_links > 50
             ), f"Should have many cross-file links, found {total_cross_file_links}"
+
+    def test_grammar_appendix_generation(self, converter, draft_repo):
+        """Test that grammar appendix is properly generated with BNF blocks"""
+        import tempfile
+
+        builder = StandardBuilder(draft_repo.source_dir)
+
+        # Monkey-patch to only convert a few chapters that have BNF blocks
+        original_extract = builder.extract_chapter_order
+
+        def limited_extract(include_frontmatter=True, include_backmatter=True):
+            # Only convert chapters known to have BNF blocks + grammar appendix
+            # Use actual chapter names (expressions, statements), not stable names (expr, stmt)
+            return ["lex", "expressions", "statements", "grammar"]
+
+        builder.extract_chapter_order = limited_extract
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            output_dir = Path(tmpdir)
+
+            # Build separate chapters (which will trigger grammar aggregation)
+            output_files = builder.build_separate_chapters(converter, output_dir, verbose=True)
+
+            # Verify grammar.md exists
+            grammar_file = output_dir / "grammar.md"
+            assert grammar_file.exists(), "grammar.md should exist"
+
+            # Read grammar.md content
+            grammar_content = grammar_file.read_text()
+
+            # Verify grammar.md is substantial (not just the stub)
+            # Stub is ~1.6 KB, full should be 50-100 KB, our subset should be 10+ KB
+            assert (
+                len(grammar_content) > 10000
+            ), f"grammar.md should be substantial (>10KB), got {len(grammar_content)} bytes"
+
+            # Verify it has BNF blocks (check for ``` bnf markers)
+            import re
+
+            bnf_blocks = re.findall(r"``` bnf\n", grammar_content)
+            # Should have much more than just the 6 keywords blocks
+            assert (
+                len(bnf_blocks) > 20
+            ), f"grammar.md should have many BNF blocks, found {len(bnf_blocks)}"
+
+            # Verify it has the expected grammar sections
+            assert (
+                "## Lexical conventions" in grammar_content
+            ), "Should have Lexical conventions section"
+            assert "## Expressions" in grammar_content, "Should have Expressions section"
+            assert "## Statements" in grammar_content, "Should have Statements section"
+
+            # Verify it still has the original intro and keywords
+            assert (
+                "# Grammar summary" in grammar_content or "Grammar summary" in grammar_content
+            ), "Should have Grammar summary heading"
+            assert "## Keywords" in grammar_content, "Should have Keywords section"
+
+            # Verify section-level H2 headings have anchors (not individual rules)
+            # Check for section anchors in aggregated sections
+            assert (
+                '<a id="gram.lex">[[gram.lex]]</a>' in grammar_content
+            ), "Should have Lexical conventions section anchor"
+            assert (
+                '<a id="gram.expr">[[gram.expr]]</a>' in grammar_content
+            ), "Should have Expressions section anchor"
+            assert (
+                '<a id="gram.stmt">[[gram.stmt]]</a>' in grammar_content
+            ), "Should have Statements section anchor"
+
+            # Verify individual grammar rules do NOT have H3 headings or anchors
+            # Individual rules should just be BNF blocks without headings
+            assert (
+                "### preprocessing-token" not in grammar_content
+            ), "Individual rules should not have H3 headings"
+            assert (
+                '<a id="gram.preprocessing-token">' not in grammar_content
+            ), "Individual rules should not have anchors"
+            assert (
+                '<a id="gram.literal">' not in grammar_content
+            ), "Individual rules should not have anchors"
+
+            # Verify proper spacing - BNF blocks should have blank lines between them
+            # Pattern: \n``` bnf\n...\n```\n\n``` bnf
+            consecutive_bnf = re.findall(r"```\n\n``` bnf", grammar_content)
+            assert (
+                len(consecutive_bnf) > 10
+            ), f"Should have many BNF blocks with spacing, found {len(consecutive_bnf)}"
+
+            # Verify link definitions exist for aggregated sections
+            assert (
+                "[gram.lex]: #gram.lex" in grammar_content
+            ), "Should have link definition for gram.lex"
+            assert (
+                "[gram.expr]: #gram.expr" in grammar_content
+            ), "Should have link definition for gram.expr"
+            assert (
+                "[gram.stmt]: #gram.stmt" in grammar_content
+            ), "Should have link definition for gram.stmt"

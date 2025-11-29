@@ -119,29 +119,10 @@ literal:
 
 ``` bnf
 integer-literal:
-    decimal-literal integer-suffix\opt
-    octal-literal integer-suffix\opt
-    hexadecimal-literal integer-suffix\opt
     binary-literal integer-suffix\opt
-```
-
-``` bnf
-decimal-literal:
-    nonzero-digit
-    decimal-literal '''dₒₚₜigit
-```
-
-``` bnf
-octal-literal:
-    '0'
-    octal-literal '''oₒₚₜctal-digit
-```
-
-``` bnf
-hexadecimal-literal:
-    '0x' hexadecimal-digit
-    '0X' hexadecimal-digit
-    hexadecimal-literal '''hₒₚₜexadecimal-digit
+    octal-literal integer-suffix\opt
+    decimal-literal integer-suffix\opt
+    hexadecimal-literal integer-suffix\opt
 ```
 
 ``` bnf
@@ -152,8 +133,28 @@ binary-literal:
 ```
 
 ``` bnf
-nonzero-digit: one of
-    '1  2  3  4  5  6  7  8  9'
+octal-literal:
+    '0'
+    octal-literal '''oₒₚₜctal-digit
+```
+
+``` bnf
+decimal-literal:
+    nonzero-digit
+    decimal-literal '''dₒₚₜigit
+```
+
+``` bnf
+hexadecimal-literal:
+    '0x' hexadecimal-digit
+    '0X' hexadecimal-digit
+    hexadecimal-literal '''hₒₚₜexadecimal-digit
+```
+
+``` bnf
+binary-digit:
+    '0'
+    '1'
 ```
 
 ``` bnf
@@ -162,16 +163,15 @@ octal-digit: one of
 ```
 
 ``` bnf
+nonzero-digit: one of
+    '1  2  3  4  5  6  7  8  9'
+```
+
+``` bnf
 hexadecimal-digit: one of
     '0  1  2  3  4  5  6  7  8  9'
     'a  b  c  d  e  f'
     'A  B  C  D  E  F'
-```
-
-``` bnf
-binary-digit:
-    '0'
-    '1'
 ```
 
 ``` bnf
@@ -356,12 +356,30 @@ ud-suffix:
     identifier
 ```
 
+
 ## Basic concepts <a id="gram.basic">[[gram.basic]]</a>
+
+``` bnf
+nested-name-specifiercₒₚₜlass-name '::' '~' class-name
+```
+
+``` bnf
+nested-name-specifier unqualified-id
+```
+
+``` bnf
+class-key attribute-specifier-seqiₒₚₜdentifier ';'
+```
+
+``` bnf
+class-key attribute-specifier-seqiₒₚₜdentifier ';'
+```
 
 ``` bnf
 translation-unit:
     declaration-seq\opt
 ```
+
 
 ## Expressions <a id="gram.expr">[[gram.expr]]</a>
 
@@ -498,6 +516,10 @@ pseudo-destructor-name:
 ```
 
 ``` bnf
+nested-name-specifiertₒₚₜype-name ':: ~' type-name
+```
+
+``` bnf
 unary-expression:
     postfix-expression
     '++' cast-expression
@@ -550,6 +572,10 @@ noptr-new-declarator:
 new-initializer:
     '(' expression-list\terminal ₒₚₜ{)}
     braced-init-list
+```
+
+``` bnf
+'(' assignment-expression ')'
 ```
 
 ``` bnf
@@ -673,6 +699,7 @@ constant-expression:
     conditional-expression
 ```
 
+
 ## Statements <a id="gram.stmt">[[gram.stmt]]</a>
 
 ``` bnf
@@ -725,6 +752,10 @@ condition:
 ```
 
 ``` bnf
+'case' constant-expression ':'
+```
+
+``` bnf
 iteration-statement:
     'while (' condition ')' statement
     'do' statement 'while (' expression ') ;'
@@ -750,6 +781,22 @@ for-range-initializer:
 ```
 
 ``` bnf
+'for (' for-init-statement condition\terminal ₒₚₜ{;} expression\terminal ₒₚₜ{)} statement
+```
+
+``` bnf
+'for (' for-range-declaration : expression ')' statement
+```
+
+``` bnf
+'(' expression ')'
+```
+
+``` bnf
+'for' '(' for-range-declaration ':' braced-init-list ')' statement
+```
+
+``` bnf
 jump-statement:
     'break ;'
     'continue ;'
@@ -762,6 +809,7 @@ jump-statement:
 declaration-statement:
     block-declaration
 ```
+
 
 ## Declarations <a id="gram.dcl">[[gram.dcl]]</a>
 
@@ -820,6 +868,10 @@ empty-declaration:
 ``` bnf
 attribute-declaration:
     attribute-specifier-seq ';'
+```
+
+``` bnf
+attribute-specifier-seqdₒₚₜecl-specifier-seqiₒₚₜnit-declarator-list\terminal ₒₚₜ{;}
 ```
 
 ``` bnf
@@ -933,6 +985,14 @@ elaborated-type-specifier:
 ```
 
 ``` bnf
+class-key attribute-specifier-seqiₒₚₜdentifier ';'
+'friend' class-key '::\opt' identifier ';'
+'friend' class-key '::\opt' simple-template-id ';'
+'friend' class-key nested-name-specifier identifier ';'
+'friend' class-key nested-name-specifier 'template\opt' simple-template-id ';'
+```
+
+``` bnf
 enum-name:
     identifier
 ```
@@ -1025,6 +1085,12 @@ unnamed-namespace-definition:
 ``` bnf
 namespace-body:
         declaration-seq\opt
+```
+
+``` bnf
+'inline'\terminal ₒₚₜ{namespace} \uniquens '{ /* empty body */ }'
+'using namespace' \uniquens ';'
+'namespace' \uniquens \terminal{\ namespace-body \terminal{\}}
 ```
 
 ``` bnf
@@ -1131,8 +1197,6 @@ balanced-token:
     \terminal{\ balanced-token-seq \terminal{\}}
     any *token* other than a parenthesis, a bracket, or a brace
 ```
-
-## Declarators <a id="gram.decl">[[gram.decl]]</a>
 
 ``` bnf
 init-declarator-list:
@@ -1249,6 +1313,38 @@ noptr-abstract-pack-declarator:
 ```
 
 ``` bnf
+( D1 )
+```
+
+``` bnf
+'*' attribute-specifier-seqcₒₚₜv-qualifier-seq\terminal ₒₚₜ{D1}
+```
+
+``` bnf
+'&' attribute-specifier-seq\terminal ₒₚₜ{D1}
+'&&' attribute-specifier-seq\terminal ₒₚₜ{D1}
+```
+
+``` bnf
+nested-name-specifier '*' attribute-specifier-seqcₒₚₜv-qualifier-seq\tcode ₒₚₜ{D1}
+```
+
+``` bnf
+'D1 [' constant-expression\opt ']' attribute-specifier-seq\opt
+```
+
+``` bnf
+'D1 (' parameter-declaration-clause ')' cv-qualifier-seq\opt
+\hspace*{  inc}ref-qualifier\opt exception-specification\opt attribute-specifier-seq\opt
+```
+
+``` bnf
+'D1 (' parameter-declaration-clause ')' cv-qualifier-seq
+ ₒₚₜ
+\hspace*{  inc}ref-qualifiereₒₚₜxception-specificationaₒₚₜttribute-specifier-seqtₒₚₜrailing-return-type
+```
+
+``` bnf
 parameter-declaration-clause:
     parameter-declaration-list.ₒₚₜ..
  ₒₚₜ
@@ -1284,6 +1380,20 @@ function-body:
 ```
 
 ``` bnf
+'D1 (' parameter-declaration-clause ')' cv-qualifier-seq\opt
+   
+    \hspace*{  inc}ref-qualifier\opt exception-specification\opt attribute-specifier-seq\opt trailing-return-type\opt
+```
+
+``` bnf
+attribute-specifier-seqdₒₚₜecl-specifier-seqdₒₚₜeclarator virt-specifier-seq\terminal ₒₚₜ{ = default ;}
+```
+
+``` bnf
+attribute-specifier-seqdₒₚₜecl-specifier-seqdₒₚₜeclarator virt-specifier-seq\terminal ₒₚₜ{ = delete ;}
+```
+
+``` bnf
 initializer:
     brace-or-equal-initializer
     '(' expression-list ')'
@@ -1312,6 +1422,7 @@ braced-init-list:
     \terminal{\ initializer-list \terminal{,\opt} \terminal{\}}
     \terminal{\ \terminal{\}}
 ```
+
 
 ## Classes <a id="gram.class">[[gram.class]]</a>
 
@@ -1398,8 +1509,6 @@ pure-specifier:
     '= 0'
 ```
 
-## Derived classes <a id="gram.derived">[[gram.derived]]</a>
-
 ``` bnf
 base-clause:
     ':' base-specifier-list
@@ -1436,48 +1545,33 @@ access-specifier:
     'public'
 ```
 
-## Special member functions <a id="gram.special">[[gram.special]]</a>
-
 ``` bnf
-conversion-function-id:
-    'operator' conversion-type-id
+'friend' elaborated-type-specifier ';'
+'friend' simple-type-specifier ';'
+'friend' typename-specifier ';'
 ```
 
-``` bnf
-conversion-type-id:
-    type-specifier-seq conversion-declarator\opt
-```
-
-``` bnf
-conversion-declarator:
-    ptr-operator conversion-declarator\opt
-```
-
-``` bnf
-ctor-initializer:
-    ':' mem-initializer-list
-```
-
-``` bnf
-mem-initializer-list:
-    mem-initializer '...'
- ₒₚₜ
-    mem-initializer '...'\terminal ₒₚₜ{,} mem-initializer-list
-```
-
-``` bnf
-mem-initializer:
-    mem-initializer-id '(' expression-list\terminal ₒₚₜ{)}
-    mem-initializer-id braced-init-list
-```
-
-``` bnf
-mem-initializer-id:
-    class-or-decltype
-    identifier
-```
 
 ## Overloading <a id="gram.over">[[gram.over]]</a>
+
+``` bnf
+postfix-expression '(' expression-list\terminal ₒₚₜ{)}
+```
+
+``` bnf
+postfix-expression:
+    postfix-expression '.' id-expression
+    postfix-expression '->' id-expression
+    primary-expression
+```
+
+``` bnf
+'operator' conversion-type-id '( )' cv-qualifier ref-qualifiereₒₚₜxception-specificationaₒₚₜttribute-specifier-seq\terminal ₒₚₜ{;}
+```
+
+``` bnf
+'R' call-function '(' conversion-type-id 'F, P1 a1, ... ,Pn an)' '{ return F (a1,... ,an); }'
+```
 
 ``` bnf
 operator-function-id:
@@ -1485,10 +1579,28 @@ operator-function-id:
 ```
 
 ``` bnf
+postfix-expression '(' expression-list\terminal ₒₚₜ{)}
+```
+
+``` bnf
+postfix-expression '[' expression ']'
+```
+
+``` bnf
+postfix-expression '[' braced-init-list ']'
+```
+
+``` bnf
+postfix-expression '->' 'template\opt' id-expression\\
+postfix-expression '->' pseudo-destructor-name
+```
+
+``` bnf
 literal-operator-id:
     'operator' string-literal identifier
     'operator' user-defined-string-literal
 ```
+
 
 ## Templates <a id="gram.temp">[[gram.temp]]</a>
 
@@ -1568,63 +1680,6 @@ explicit-specialization:
   'template < >' declaration
 ```
 
-## Exception handling <a id="gram.except">[[gram.except]]</a>
-
-``` bnf
-try-block:
-    'try' compound-statement handler-seq
-```
-
-``` bnf
-function-try-block:
-    'try' ctor-initializercₒₚₜompound-statement handler-seq
-```
-
-``` bnf
-handler-seq:
-    handler handler-seq\opt
-```
-
-``` bnf
-handler:
-    'catch (' exception-declaration ')' compound-statement
-```
-
-``` bnf
-exception-declaration:
-    attribute-specifier-seqtₒₚₜype-specifier-seq declarator
-    attribute-specifier-seqtₒₚₜype-specifier-seq abstract-declarator
- ₒₚₜ
-    '...'
-```
-
-``` bnf
-throw-expression:
-    'throw'  assignment-expression\opt
-```
-
-``` bnf
-exception-specification:
-    dynamic-exception-specification
-    noexcept-specification
-```
-
-``` bnf
-dynamic-exception-specification:
-    'throw (' type-id-list\terminal ₒₚₜ{)}
-```
-
-``` bnf
-type-id-list:
-    type-id '...'\opt
-    type-id-list ',' type-id '...'\opt
-```
-
-``` bnf
-noexcept-specification:
-    'noexcept' '(' constant-expression ')'
-    'noexcept'
-```
 
 ## Preprocessing directives <a id="gram.cpp">[[gram.cpp]]</a>
 
@@ -1695,19 +1750,139 @@ new-line:
     the new-line character
 ```
 
+``` bnf
+'defined' identifier
+```
+
+``` bnf
+'defined (' identifier ')'
+```
+
+``` bnf
+'# include <'h-char-sequence'>' new-line
+```
+
+``` bnf
+'# include "'q-char-sequence'"' new-line
+```
+
+``` bnf
+'# include <'h-char-sequence'>' new-line
+```
+
+``` bnf
+'# include' pp-tokens new-line
+```
+
+``` bnf
+'# define' identifier replacement-list new-line
+```
+
+``` bnf
+'# define' identifier lparen identifier-list\terminal ₒₚₜ{)} replacement-list new-line
+'# define' identifier lparen '...' ')' replacement-list new-line
+'# define' identifier lparen identifier-list ', ...' ')' replacement-list new-line
+```
+
+``` bnf
+'# undef' identifier new-line
+```
+
+``` bnf
+'# line' digit-sequence new-line
+```
+
+``` bnf
+'# line' digit-sequence '"' s-char-sequence\terminal ₒₚₜ{"} new-line
+```
+
+``` bnf
+'# line' pp-tokens new-line
+```
+
+``` bnf
+'# error' pp-tokensnₒₚₜew-line
+```
+
+``` bnf
+'# pragma' pp-tokensnₒₚₜew-line
+```
+
+``` bnf
+'#' new-line
+```
+
+``` bnf
+'_Pragma' '(' string-literal ')'
+```
+
+
+## Exception handling <a id="gram.except">[[gram.except]]</a>
+
+``` bnf
+try-block:
+    'try' compound-statement handler-seq
+```
+
+``` bnf
+function-try-block:
+    'try' ctor-initializercₒₚₜompound-statement handler-seq
+```
+
+``` bnf
+handler-seq:
+    handler handler-seq\opt
+```
+
+``` bnf
+handler:
+    'catch (' exception-declaration ')' compound-statement
+```
+
+``` bnf
+exception-declaration:
+    attribute-specifier-seqtₒₚₜype-specifier-seq declarator
+    attribute-specifier-seqtₒₚₜype-specifier-seq abstract-declarator
+ ₒₚₜ
+    '...'
+```
+
+``` bnf
+throw-expression:
+    'throw'  assignment-expression\opt
+```
+
+``` bnf
+exception-specification:
+    dynamic-exception-specification
+    noexcept-specification
+```
+
+``` bnf
+dynamic-exception-specification:
+    'throw (' type-id-list\terminal ₒₚₜ{)}
+```
+
+``` bnf
+type-id-list:
+    type-id '...'\opt
+    type-id-list ',' type-id '...'\opt
+```
+
+``` bnf
+noexcept-specification:
+    'noexcept' '(' constant-expression ')'
+    'noexcept'
+```
+
 <!-- Link reference definitions -->
-[gram]: #gram
-[gram.basic]: #gram.basic
-[gram.class]: class.md#gram.class
-[gram.cpp]: cpp.md#gram.cpp
-[gram.dcl]: dcl.md#gram.dcl
-[gram.decl]: #gram.decl
-[gram.derived]: class.md#gram.derived
-[gram.except]: #gram.except
-[gram.expr]: expr.md#gram.expr
-[gram.key]: #gram.key
 [gram.lex]: #gram.lex
-[gram.over]: #gram.over
-[gram.special]: #gram.special
+[gram.basic]: #gram.basic
+[gram.expr]: #gram.expr
 [gram.stmt]: #gram.stmt
-[gram.temp]: temp.md#gram.temp
+[gram.dcl]: #gram.dcl
+[gram.class]: #gram.class
+[gram.over]: #gram.over
+[gram.temp]: #gram.temp
+[gram.cpp]: #gram.cpp
+[gram.except]: #gram.except

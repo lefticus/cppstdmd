@@ -618,7 +618,7 @@ class StandardBuilder:
         # Also matches annexes: ## Title (informative) <a id="label" data-annex="true" data-annex-type="informative">[[label]]</a>
         heading_pattern = re.compile(
             r'^(#{1,6})\s+(.+?)\s+<a id="([^"]+)"(?:\s+[^>]+)?>\[\[([^\]]+)\]\]</a>\s*$',
-            re.MULTILINE
+            re.MULTILINE,
         )
         # Separate pattern to detect if heading is an annex and extract type
         annex_pattern = re.compile(r'data-annex="true"(?:\s+data-annex-type="([^"]+)")?')
@@ -648,7 +648,7 @@ class StandardBuilder:
                 # For annex headings at H1 level, use letter numbering
                 if is_annex and level == 0:
                     annex_counter += 1
-                    current_annex_letter = chr(ord('A') + annex_counter - 1)
+                    current_annex_letter = chr(ord("A") + annex_counter - 1)
                     # Reset annex subsection numbering
                     for i in range(1, 6):
                         section_numbers[i] = 0
@@ -683,6 +683,136 @@ class StandardBuilder:
                 toc_lines.append(toc_entry)
 
         return "\n".join(toc_lines)
+
+    def _generate_grammar_appendix(
+        self, output_files: list[Path], output_dir: Path, verbose: bool = False
+    ) -> None:
+        """
+        Generate complete grammar.md by aggregating BNF blocks from all chapter files.
+
+        Scans all converted chapter files, extracts BNF code blocks, groups them by
+        source file, and writes a complete grammar appendix to grammar.md.
+
+        This replaces the stub grammar.md (which only contains intro and keywords)
+        with a complete grammar summary containing ~500 BNF blocks from all chapters.
+
+        Args:
+            output_files: List of converted chapter markdown files
+            output_dir: Directory containing output files
+            verbose: Print progress messages
+        """
+        # Mapping of stable names to grammar section info (from LaTeX \gramSec commands)
+        # Order matches the sequence in which \gramSec appears in the LaTeX sources
+        grammar_sections = [
+            ("lex", "Lexical conventions"),
+            ("basic", "Basic concepts"),
+            ("expr", "Expressions"),
+            ("stmt", "Statements"),
+            ("dcl", "Declarations"),
+            ("class", "Classes"),
+            ("over", "Overloading"),
+            ("temp", "Templates"),
+            ("cpp", "Preprocessing directives"),
+            ("except", "Exception handling"),
+            ("depr", "Deprecated features"),
+        ]
+
+        # Pattern to extract BNF code blocks: ``` bnf\n...\n```
+        bnf_pattern = re.compile(r"^``` bnf\n(.*?)\n```$", re.MULTILINE | re.DOTALL)
+
+        # Collect BNF blocks by stable name
+        bnf_by_file = {}
+        file_by_stem = {f.stem: f for f in output_files}
+
+        for stable_name, section_title in grammar_sections:
+            if stable_name in file_by_stem:
+                md_file = file_by_stem[stable_name]
+                content = md_file.read_text(encoding="utf-8")
+
+                # Extract all BNF blocks from this file
+                blocks = bnf_pattern.findall(content)
+
+                if blocks:
+                    bnf_by_file[stable_name] = {
+                        "title": section_title,
+                        "blocks": blocks,
+                        "count": len(blocks),
+                    }
+
+                    if verbose:
+                        print(f"  Extracted {len(blocks)} BNF blocks from {stable_name}.md")
+
+        # Find grammar.md in output files
+        grammar_file = output_dir / "grammar.md"
+        if not grammar_file.exists():
+            if verbose:
+                print("Warning: grammar.md not found, skipping grammar aggregation")
+            return
+
+        # Read current grammar.md to preserve intro and keywords sections
+        current_content = grammar_file.read_text(encoding="utf-8")
+
+        # Extract everything up to and including the Keywords section
+        # Grammar.md has: ## General, ## Keywords with 6 BNF blocks, then other sections
+        # We want to preserve General + Keywords only, then replace everything else with aggregated sections
+        # Find "## Keywords" and then the next "##" heading after it
+        keywords_match = re.search(r"^## Keywords", current_content, re.MULTILINE)
+        if keywords_match:
+            # Find the next ## heading after Keywords
+            next_heading = re.search(
+                r"^##\s", current_content[keywords_match.end() :], re.MULTILINE
+            )
+            if next_heading:
+                # Extract up to (but not including) the next heading
+                intro_and_keywords = current_content[: keywords_match.end() + next_heading.start()]
+            else:
+                # No next heading found, use entire content (shouldn't happen)
+                intro_and_keywords = current_content
+        else:
+            # Fallback: if we can't find Keywords, just use first two headings
+            header_parts = current_content.split("\n## ", 3)
+            if len(header_parts) >= 3:
+                intro_and_keywords = "\n## ".join(header_parts[:3])
+            else:
+                intro_and_keywords = current_content
+
+        # Build new grammar.md content
+        new_content_parts = [intro_and_keywords.rstrip()]
+
+        # Add aggregated grammar sections
+        total_blocks = 0
+        aggregated_anchors = []  # Track anchors for link definitions
+        for stable_name, section_title in grammar_sections:
+            if stable_name in bnf_by_file:
+                section_info = bnf_by_file[stable_name]
+                blocks = section_info["blocks"]
+                total_blocks += len(blocks)
+
+                # Add section heading with anchor
+                anchor_id = f"gram.{stable_name}"
+                aggregated_anchors.append(anchor_id)
+                new_content_parts.append(
+                    f'\n\n## {section_title} <a id="{anchor_id}">[[{anchor_id}]]</a>\n'
+                )
+
+                # Add all BNF blocks from this section with spacing between them
+                for block in blocks:
+                    new_content_parts.append(f"\n``` bnf\n{block}\n```\n")
+
+        # Add link definitions for aggregated sections
+        if aggregated_anchors:
+            new_content_parts.append("\n<!-- Link reference definitions -->\n")
+            for anchor_id in aggregated_anchors:
+                new_content_parts.append(f"[{anchor_id}]: #{anchor_id}\n")
+
+        # Write updated grammar.md
+        new_content = "".join(new_content_parts)
+        grammar_file.write_text(new_content, encoding="utf-8")
+
+        if verbose:
+            print(
+                f"\nRegenerated grammar.md with {total_blocks} BNF blocks from {len(bnf_by_file)} sections"
+            )
 
     def build_separate_chapters(
         self,
@@ -877,6 +1007,13 @@ class StandardBuilder:
 
             if verbose:
                 print("Added table of contents to front.md")
+
+        # Generate complete grammar appendix by aggregating BNF blocks
+        if output_files:
+            if verbose:
+                print("\nGenerating grammar appendix...")
+
+            self._generate_grammar_appendix(output_files, output_dir, verbose=verbose)
 
         # Cleanup temporary files
         cleanup_temp_files(temp_files)
