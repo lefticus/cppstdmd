@@ -631,6 +631,33 @@ auto y = \grammartermnc{initializer} ;
     assert "*initializer*" not in output
 
 
+def test_grammarterm_in_code_block():
+    r"""Test \grammarterm{} grammar term macro conversion (Issue #10)
+
+    From n4950/except.md line 82:
+        if (@\grammarterm{condition}@)
+
+    \grammarterm{x} renders as italic text in LaTeX, but since we're in
+    a code block we can't use markdown italic. Just unwrap (keep content, remove wrapper).
+    """
+    latex = r"""
+\begin{codeblock}
+if (@\grammarterm{condition}@)
+    @\grammarterm{statement}@
+\end{codeblock}
+"""
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    # Should unwrap to plain text (no markdown formatting in code blocks)
+    assert "condition" in output
+    assert "statement" in output
+    # Should NOT have raw LaTeX \grammarterm
+    assert "\\grammarterm" not in output
+    # Should NOT have markdown asterisks (they don't work in code blocks)
+    assert "*condition*" not in output
+    assert "*statement*" not in output
+
+
 def test_footnote_in_codeblock():
     r"""Test that footnotes in codeblock are extracted and converted to GFM footnotes
 
