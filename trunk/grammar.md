@@ -510,7 +510,7 @@ r-char-sequence:
 ``` bnf
 r-char:
     any member of the translation character set, except a U+0029 (right parenthesis) followed by
-      the initial *d-char-sequence* (which may be empty) followed by a U+0022 (quotation mark)
+       the initial *d-char-sequence* (which may be empty) followed by a U+0022 (quotation mark)
 ```
 
 ``` bnf
@@ -2800,9 +2800,9 @@ pp-balanced-token:
     '[' pp-balanced-token-seqₒₚₜ ']'
     \terminal{\ pp-balanced-token-seqₒₚₜ \terminal{\}}
     any pp-token except:
-      parenthesis (U+0028 (left parenthesis) and U+0029 (right parenthesis)),
-      bracket (U+005b (left square bracket) and U+005d (right square bracket)), or
-      brace (U+007b (left curly bracket) and U+007d (right curly bracket)).
+       parenthesis (U+0028 (left parenthesis) and U+0029 (right parenthesis)),
+       bracket (U+005b (left square bracket) and U+005d (right square bracket)), or
+       brace (U+007b (left curly bracket) and U+007d (right curly bracket)).
 ```
 
 ``` bnf

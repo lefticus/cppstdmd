@@ -124,3 +124,22 @@ int size = sizeof(MyStruct);
     assert "\\textrm" not in output
     # Should be a code block
     assert "```" in output
+
+
+def test_textnormal_in_code_block():
+    r"""Test \textnormal{} in code blocks (BNF-style grammars)"""
+    latex = r"""\begin{codeblock}
+\d @\textnormal{and}@ [[:digit:]]
+\s @\textnormal{and}@ [[:space:]]
+\end{codeblock}"""
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    # Should have plain "and" text
+    assert "and" in output
+    # Should NOT contain LaTeX commands
+    assert "\\textnormal" not in output
+    # Should be a code block
+    assert "```" in output
+    # Verify BNF-style content is preserved
+    assert "\\d" in output or "d" in output
+    assert "[[:digit:]]" in output

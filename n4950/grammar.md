@@ -517,7 +517,7 @@ r-char-sequence:
 ``` bnf
 r-char:
     any member of the translation character set, except a U+0029 (right parenthesis) followed by
-      the initial *d-char-sequence* (which may be empty) followed by a U+0022 (quotation mark)
+       the initial *d-char-sequence* (which may be empty) followed by a U+0022 (quotation mark)
 ```
 
 ``` bnf

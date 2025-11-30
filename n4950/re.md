@@ -2643,17 +2643,17 @@ but at least the following names shall be recognized: `alnum`, `alpha`,
 shall be equivalent:
 
 ``` cpp
-\d \textnormal{and} [[:digit:]]
+\d and [[:digit:]]
 
-\D \textnormal{and} [^[:digit:]]
+\D and [^[:digit:]]
 
-\s \textnormal{and} [[:space:]]
+\s and [[:space:]]
 
-\S \textnormal{and} [^[:space:]]
+\S and [^[:space:]]
 
-\w \textnormal{and} [_[:alnum:]]
+\w and [_[:alnum:]]
 
-\W \textnormal{and} [^_[:alnum:]]
+\W and [^_[:alnum:]]
 ```
 
 A production when used in a production is not valid if the value

@@ -1127,7 +1127,7 @@ namespace std {
     constexpr typename iterator_traits<InputIterator>::difference_type
       count(InputIterator first, InputIterator last, const T& value);
   template<class ExecutionPolicy, class ForwardIterator,
-           class T = iterator_traits<InputIterator>::value_type>
+           class T = iterator_traits<ForwardIterator>::value_type>
     typename iterator_traits<ForwardIterator>::difference_type
       count(ExecutionPolicy&& exec,                             // freestanding-deleted, see [algorithms.parallel.overloads]
             ForwardIterator first, ForwardIterator last, const T& value);
@@ -4713,7 +4713,7 @@ template<execution-policy Ep, random_access_iterator I, sized_sentinel_for<I> S,
   requires indirect_binary_predicate<ranges::equal_to, projected<I, Proj>, const T*>
   subrange<I> ranges::find_last(Ep&& exec, I first, S last, const T& value, Proj proj = {});
 template<execution-policy Ep, sized-random-access-range R, class Proj = identity,
-          class T = projected_value_t<iterator_t<R>, Proj>>
+         class T = projected_value_t<iterator_t<R>, Proj>>
   requires
     indirect_binary_predicate<ranges::equal_to, projected<iterator_t<R>, Proj>, const T*>
   borrowed_subrange_t<R> ranges::find_last(Ep&& exec, R&& r, const T& value, Proj proj = {});
@@ -4729,8 +4729,8 @@ template<execution-policy Ep, random_access_iterator I, sized_sentinel_for<I> S,
          class Proj = identity, indirect_unary_predicate<projected<I, Proj>> Pred>
   subrange<I> ranges::find_last_if(Ep&& exec, I first, S last, Pred pred, Proj proj = {});
 template<execution-policy Ep, sized-random-access-range R,
-          class Proj = identity,
-          indirect_unary_predicate<projected<iterator_t<R>, Proj>> Pred>
+         class Proj = identity,
+         indirect_unary_predicate<projected<iterator_t<R>, Proj>> Pred>
   borrowed_subrange_t<R> ranges::find_last_if(Ep&& exec, R&& r, Pred pred, Proj proj = {});
 
 template<forward_iterator I, sentinel_for<I> S, class Proj = identity,

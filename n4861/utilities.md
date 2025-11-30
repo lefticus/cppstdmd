@@ -13389,7 +13389,7 @@ fill-and-align
 
 ``` bnf
 fill
-    \textnormal{any character other than \ or \texttt{\}}
+    any character other than \ or \texttt{\}
 ```
 
 ``` bnf

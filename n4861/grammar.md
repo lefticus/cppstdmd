@@ -436,7 +436,7 @@ r-char-sequence:
 ``` bnf
 r-char:
     any member of the source character set, except a right parenthesis ')' followed by
-      the initial *d-char-sequence* (which may be empty) followed by a double quote '"'.
+       the initial *d-char-sequence* (which may be empty) followed by a double quote '"'.
 ```
 
 ``` bnf
@@ -448,8 +448,8 @@ d-char-sequence:
 ``` bnf
 d-char:
     any member of the basic source character set except:
-      space, the left parenthesis '(', the right parenthesis ')', the backslash '\', and the control characters
-      representing horizontal tab, vertical tab, form feed, and newline.
+       space, the left parenthesis '(', the right parenthesis ')', the backslash '\', and the control characters
+       representing horizontal tab, vertical tab, form feed, and newline.
 ```
 
 ``` bnf
