@@ -120,8 +120,8 @@ repositional stream. — *end note*]
 
 #### 2 character <a id="defns.character">[defns.character]</a>
 
-⟨\ref{strings⟩ object which, when treated sequentially, can represent
-text
+⟨[[strings]], [[localization]], [[input.output]], and~ [[re]]⟩
+object which, when treated sequentially, can represent text
 
 [*Note 1 to entry*: The term does not mean only `char`, `char8_t`,
 `char16_t`, `char32_t`, and `wchar_t` objects, but any value that can be

@@ -393,9 +393,8 @@ and linking. — *end note*]
 
 #### 52 signature <a id="defns.signature.friend">[defns.signature.friend]</a>
 
-⟨non-template friend function with trailing \grammarterm{requires-clause⟩
-name, parameter-type-list, enclosing class, and trailing
-*requires-clause*
+⟨non-template friend function with trailing *requires-clause*⟩ name,
+parameter-type-list, enclosing class, and trailing *requires-clause*
 
 #### 53 signature <a id="defns.signature.templ">[defns.signature.templ]</a>
 
@@ -436,8 +435,8 @@ arguments (whether explicitly specified or deduced)
 
 #### 59 signature <a id="defns.signature.template.head">[defns.signature.template.head]</a>
 
-⟨\grammarterm{template-head⟩ template parameter list, excluding template
-parameter names and default arguments, and *requires-clause* (if any)
+⟨*template-head*⟩ template parameter list, excluding template parameter
+names and default arguments, and *requires-clause* (if any)
 
 #### 60 stable algorithm <a id="defns.stable">[defns.stable]</a>
 

@@ -47,10 +47,56 @@ package.path = package.path .. ";" .. script_dir .. "?.lua"
 local common = require("cpp-common")
 local trim = common.trim
 local build_defnote = common.build_defnote
+local extract_braced_content = common.extract_braced_content
 
 -- Track definition and note counters
 local definition_counter = 0
 local note_counter = 0
+
+-- Extract \defncontext{} content with balanced braces
+local function extract_defncontext(text)
+  local start = text:find("\\defncontext", 1, true)
+  if not start then return nil end
+  local content, _ = extract_braced_content(text, start, 12) -- "\\defncontext" is 12 chars
+  return content
+end
+
+-- Build Pandoc inlines from context string, converting \grammarterm{term} to Emph
+-- Returns a list of Pandoc inline elements
+local function build_context_inlines(ctx)
+  if not ctx then return nil end
+  local result = {}
+  local pos = 1
+
+  while pos <= #ctx do
+    -- Look for \grammarterm{...}
+    local gt_start = ctx:find("\\grammarterm%s*{", pos)
+    if gt_start then
+      -- Add text before \grammarterm as Str
+      if gt_start > pos then
+        table.insert(result, pandoc.Str(ctx:sub(pos, gt_start - 1)))
+      end
+      -- Extract the grammarterm content
+      local brace_start = ctx:find("{", gt_start)
+      local term, end_pos = extract_braced_content(ctx, brace_start, 0)
+      if term then
+        -- Add as Emph (italic)
+        table.insert(result, pandoc.Emph({pandoc.Str(term)}))
+        pos = end_pos
+      else
+        -- Fallback: just advance past the backslash
+        table.insert(result, pandoc.Str("\\"))
+        pos = gt_start + 1
+      end
+    else
+      -- No more \grammarterm, add remaining text
+      table.insert(result, pandoc.Str(ctx:sub(pos)))
+      break
+    end
+  end
+
+  return result
+end
 
 -- Process blocks to split Paras containing definitions
 function Blocks(blocks)
@@ -78,10 +124,10 @@ function Blocks(blocks)
         goto continue
       end
 
-      -- Pattern: \defncontext{context}
-      local ctx = text:match("\\defncontext%s*{([^}]*)}")
+      -- Pattern: \defncontext{context} - use balanced brace extraction
+      local ctx = extract_defncontext(text)
       if ctx then
-        pending_context = ctx
+        pending_context = ctx  -- Store raw context, will build inlines when used
         -- Don't add to result, will prepend to next Para
         goto continue
       end
@@ -131,9 +177,9 @@ function Blocks(blocks)
             def_term = term
             def_label = label
             -- Don't add to new_content (remove it)
-          -- Check for \defncontext{context}
-          elseif text:match("\\defncontext%s*{([^}]*)}") then
-            context = text:match("\\defncontext%s*{([^}]*)}")
+          -- Check for \defncontext{context} - use balanced brace extraction
+          elseif text:find("\\defncontext", 1, true) then
+            context = extract_defncontext(text)  -- Store raw context, will build inlines when used
             -- Don't add to new_content (remove it)
           -- Check for \indexdefn (remove it - combined with above to avoid empty branch)
           elseif not text:match("\\indexdefn") then
@@ -180,10 +226,14 @@ function Blocks(blocks)
 
         -- Prepend context if present
         if context then
-          local context_content = {
-            pandoc.Str("⟨" .. context .. "⟩"),
-            pandoc.Space()
-          }
+          -- Build context with proper inline elements (handles \grammarterm{} → Emph)
+          local context_content = {pandoc.Str("⟨")}
+          local context_inlines = build_context_inlines(context)
+          for _, inline in ipairs(context_inlines) do
+            table.insert(context_content, inline)
+          end
+          table.insert(context_content, pandoc.Str("⟩"))
+          table.insert(context_content, pandoc.Space())
           for _, item in ipairs(new_content) do
             table.insert(context_content, item)
           end

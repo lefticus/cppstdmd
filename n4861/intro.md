@@ -194,8 +194,8 @@ and linking. — *end note*]
 
 #### 21 signature <a id="defns.signature.friend">[defns.signature.friend]</a>
 
-⟨non-template friend function with trailing \grammarterm{requires-clause⟩
-name, parameter-type-list [[dcl.fct]], enclosing class, and trailing
+⟨non-template friend function with trailing *requires-clause*⟩ name,
+parameter-type-list [[dcl.fct]], enclosing class, and trailing
 *requires-clause* [[dcl.decl]]
 
 #### 22 signature <a id="defns.signature.templ">[defns.signature.templ]</a>
