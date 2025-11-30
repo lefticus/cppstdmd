@@ -7397,34 +7397,34 @@ specification as a *chrono-format-spec* according to the following
 syntax:
 
 ``` bnf
-\textit{chrono-format-spec}
+chrono-format-spec
     fill-and-alignₒₚₜ widthₒₚₜ precisionₒₚₜ 'L'ₒₚₜ chrono-specsₒₚₜ
 ```
 
 ``` bnf
-\textit{chrono-specs}
+chrono-specs
     conversion-spec
     chrono-specs conversion-spec
     chrono-specs literal-char
 ```
 
 ``` bnf
-\textit{literal-char}
+literal-char
     any character other than \{, \}, or \%
 ```
 
 ``` bnf
-\textit{conversion-spec}
+conversion-spec
     '%' modifierₒₚₜ type
 ```
 
 ``` bnf
-\textit{modifier} one of
+modifier one of
     'E O'
 ```
 
 ``` bnf
-\textit{type} one of
+type one of
     'a A b B c C d D e F g G h H I j m M n'
     'p q Q r R S t T u U V w W x X y Y z Z %'
 ```

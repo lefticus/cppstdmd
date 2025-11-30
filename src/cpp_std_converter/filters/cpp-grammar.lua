@@ -88,6 +88,12 @@ local function clean_grammar(grammar)
     return content  -- Just strip the wrapper, preserve nested content
   end)
 
+  -- Replace \textit{x} with x (italic text in BNF blocks)
+  -- BNF nonterminals from \fmtnontermdef{} preprocessing don't need italic in code blocks
+  grammar = process_macro_with_replacement(grammar, "textit", function(content)
+    return content  -- Just strip the wrapper, preserve nested content
+  end)
+
   -- Replace \terminal{x} with 'x' (terminal symbols)
   -- Use brace-balanced extraction to handle escaped braces properly
   grammar = process_macro_with_replacement(grammar, "terminal", function(content)

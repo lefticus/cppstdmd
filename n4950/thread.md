@@ -966,7 +966,7 @@ template<class charT> struct formatter<thread::id, charT>;
 follows:
 
 ``` bnf
-\textit{thread-id-format-spec}
+thread-id-format-spec
     fill-and-alignₒₚₜ widthₒₚₜ
 ```
 

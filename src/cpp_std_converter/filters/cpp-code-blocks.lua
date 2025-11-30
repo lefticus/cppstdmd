@@ -167,7 +167,7 @@ function CodeBlock(elem)
   if code:match("\\rlap") or code:match("\\llap") or code:match("\\clap") or
      code:match("\\normalfont") or code:match("\\itshape") or
      code:match("\\rmfamily") or code:match("\\bfseries") or
-     code:match("\\texttt{") or code:match("\\textit{") then
+     code:match("\\texttt{") or code:match("\\textit{") or code:match("\\textrm{") then
 
     -- Remove font switch commands
     code = remove_font_switches(code)
@@ -175,9 +175,13 @@ function CodeBlock(elem)
     -- Handle layout overlap commands
     code = handle_overlap_commands(code)
 
-    -- Strip \texttt{} and \textit{} from simplified_macros.tex preprocessing
+    -- Strip \texttt{}, \textit{}, and \textrm{} from simplified_macros.tex preprocessing
     -- Use process_macro_with_replacement for proper brace-balancing (fixes ([^}]*) anti-pattern)
+    -- Process in multiple passes to handle nesting like \textit{\textrm{C++}}
     code = common.process_macro_with_replacement(code, "texttt", function(content)
+      return content
+    end)
+    code = common.process_macro_with_replacement(code, "textrm", function(content)
       return content
     end)
     code = common.process_macro_with_replacement(code, "textit", function(content)

@@ -107,3 +107,20 @@ int main() {
     assert code == 0
     assert "int main()" in output
     assert "return 0" in output
+
+
+def test_nested_textit_textrm_in_code():
+    r"""Test deeply nested \textit{\textrm{}} gets fully stripped from code comments"""
+    latex = r"""\begin{codeblock}
+/* size of the struct in @\textit{\textrm{C++}}@ */
+int size = sizeof(MyStruct);
+\end{codeblock}"""
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    # Should have C++ in the comment
+    assert "C++" in output
+    # Should NOT have unconverted LaTeX
+    assert "\\textit" not in output
+    assert "\\textrm" not in output
+    # Should be a code block
+    assert "```" in output

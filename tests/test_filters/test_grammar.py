@@ -573,3 +573,21 @@ def test_textbf_and_textnormal_in_bnf():
     assert "\\textnormal" not in output
     # Should be in a BNF code block
     assert "``` bnf" in output or "```bnf" in output
+
+
+def test_fmtnontermdef_no_textit():
+    r"""Test \fmtnontermdef{} doesn't leave \textit{} in BNF output"""
+    latex = r"""
+\begin{ncbnf}
+\fmtnontermdef{replacement-field}\br
+    \terminal{\{} arg-idₒₚₜ format-specifierₒₚₜ \terminal{\}}
+\end{ncbnf}
+"""
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    # Should have the nonterminal name in output
+    assert "replacement-field" in output
+    # Should NOT have unconverted \textit{} LaTeX
+    assert "\\textit" not in output
+    # Should be in a BNF code block
+    assert "``` bnf" in output or "```bnf" in output

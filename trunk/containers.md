@@ -1357,11 +1357,11 @@ public:
   using allocator_type = see below;
 
 private:
-  using container_node_type = unspecified;                  // exposition only
-  using ator_traits = allocator_traits<allocator_type>;     // exposition only
+  using container-node-type = unspecified;                  // exposition only
+  using ator-traits = allocator_traits<allocator_type>;     // exposition only
 
-  typename ator_traits::template
-    rebind_traits<container_node_type>::pointer ptr_;       // exposition only
+  typename ator-traits::template
+    rebind_traits<container-node-type>::pointer ptr_;       // exposition only
   optional<allocator_type> alloc_;                          // exposition only
 
 public:
@@ -1384,8 +1384,8 @@ public:
 
   // [container.node.modifiers], modifiers
   constexpr void swap(node-handle&)
-    noexcept(ator_traits::propagate_on_container_swap::value ||
-             ator_traits::is_always_equal::value);
+    noexcept(ator-traits::propagate_on_container_swap::value ||
+             ator-traits::is_always_equal::value);
 
   friend constexpr void swap(node-handle& x, node-handle& y) noexcept(noexcept(x.swap(y))) {
     x.swap(y);
@@ -1399,29 +1399,31 @@ public:
 constexpr node-handle(node-handle&& nh) noexcept;
 ```
 
-*Effects:* Constructs a *node-handle* object initializing `ptr_` with
-`nh.ptr_`. Move constructs `alloc_` with `nh.alloc_`. Assigns `nullptr`
-to `nh.ptr_` and assigns `nullopt` to `nh.alloc_`.
+*Effects:* Constructs a *node-handle* object initializing *ptr\_* with
+`nh.`*`ptr_`*. Move constructs *alloc\_* with `nh.`*`alloc_`*. Assigns
+`nullptr` to `nh.`*`ptr_`* and assigns `nullopt` to `nh.`*`alloc_`*.
 
 ``` cpp
 constexpr node-handle& operator=(node-handle&& nh);
 ```
 
-*Preconditions:* Either `!alloc_`, or
-`ator_traits::propagate_on_container_move_assignment::value` is `true`,
-or `alloc_ == nh.alloc_`.
+*Preconditions:* Either `!`*`alloc_`* is `true`, or
+*`ator-traits`*`::propagate_on_container_move_assignment::value` is
+`true`, or *`alloc_`*` == nh.`*`alloc_`* is `true`.
 
 *Effects:*
 
-- If `ptr_ != nullptr`, destroys the `value_type` subobject in the
-  `container_node_type` object pointed to by `ptr_` by calling
-  `ator_traits::destroy`, then deallocates `ptr_` by calling
-  `ator_traits::template rebind_traits<container_node_type>::deallocate`.
-- Assigns `nh.ptr_` to `ptr_`.
-- If `!alloc` or
-  `ator_traits::propagate_on_container_move_assignment::value` is
-  `true`, move assigns `nh.alloc_` to `alloc_`.
-- Assigns `nullptr` to `nh.ptr_` and assigns `nullopt` to `nh.alloc_`.
+- If *`ptr_`*` != nullptr` is `true`, destroys the `value_type`
+  subobject in the *container-node-type* object pointed to by *ptr\_* by
+  calling *`ator-traits`*`::destroy`, then deallocates *ptr\_* by
+  calling
+  *`ator-traits`*`::template rebind_traits<`*`container-node-type`*`>::deallocate`.
+- Assigns `nh.`*`ptr_`* to *ptr\_*.
+- If `!`*`alloc_`* is `true` or
+  *`ator-traits`*`::propagate_on_container_move_assignment::value` is
+  `true`, move assigns `nh.`*`alloc_`* to *alloc\_*.
+- Assigns `nullptr` to `nh.`*`ptr_`* and assigns `nullopt` to
+  `nh.`*`alloc_`*.
 
 *Returns:* `*this`.
 
@@ -1433,10 +1435,10 @@ or `alloc_ == nh.alloc_`.
 constexpr ~node-handle();
 ```
 
-*Effects:* If `ptr_ != nullptr`, destroys the `value_type` subobject in
-the `container_node_type` object pointed to by `ptr_` by calling
-`ator_traits::destroy`, then deallocates `ptr_` by calling
-`ator_traits::template rebind_traits<container_node_type>::deallocate`.
+*Effects:* If *`ptr_`*` != nullptr` is `true`, destroys the `value_type`
+subobject in the *container-node-type* object pointed to by *ptr\_* by
+calling *`ator-traits`*`::destroy`, then deallocates *ptr\_* by calling
+*`ator-traits`*`::template rebind_traits<`*`container-node-type`*`>::deallocate`.
 
 #### Observers <a id="container.node.observers">[[container.node.observers]]</a>
 
@@ -1447,7 +1449,7 @@ constexpr value_type& value() const;
 *Preconditions:* `empty() == false`.
 
 *Returns:* A reference to the `value_type` subobject in the
-`container_node_type` object pointed to by `ptr_`.
+*container-node-type* object pointed to by *ptr\_*.
 
 *Throws:* Nothing.
 
@@ -1458,8 +1460,8 @@ key_type& key() const;
 *Preconditions:* `empty() == false`.
 
 *Returns:* A non-const reference to the `key_type` member of the
-`value_type` subobject in the `container_node_type` object pointed to by
-`ptr_`.
+`value_type` subobject in the *container-node-type* object pointed to by
+*ptr\_*.
 
 *Throws:* Nothing.
 
@@ -1473,7 +1475,7 @@ constexpr mapped_type& mapped() const;
 *Preconditions:* `empty() == false`.
 
 *Returns:* A reference to the `mapped_type` member of the `value_type`
-subobject in the `container_node_type` object pointed to by `ptr_`.
+subobject in the *container-node-type* object pointed to by *ptr\_*.
 
 *Throws:* Nothing.
 
@@ -1483,7 +1485,7 @@ constexpr allocator_type get_allocator() const;
 
 *Preconditions:* `empty() == false`.
 
-*Returns:* `*alloc_`.
+*Returns:* `*`*`alloc_`*.
 
 *Throws:* Nothing.
 
@@ -1491,29 +1493,30 @@ constexpr allocator_type get_allocator() const;
 constexpr explicit operator bool() const noexcept;
 ```
 
-*Returns:* `ptr_ != nullptr`.
+*Returns:* *`ptr_`*` != nullptr`.
 
 ``` cpp
 constexpr bool empty() const noexcept;
 ```
 
-*Returns:* `ptr_ == nullptr`.
+*Returns:* *`ptr_`*` == nullptr`.
 
 #### Modifiers <a id="container.node.modifiers">[[container.node.modifiers]]</a>
 
 ``` cpp
 constexpr void swap(node-handle& nh)
-  noexcept(ator_traits::propagate_on_container_swap::value ||
-           ator_traits::is_always_equal::value);
+  noexcept(ator-traits::propagate_on_container_swap::value ||
+           ator-traits::is_always_equal::value);
 ```
 
-*Preconditions:* `!alloc_`, or `!nh.alloc_`, or
-`ator_traits::propagate_on_container_swap::value` is `true`, or
-`alloc_ == nh.alloc_`.
+*Preconditions:* `!`*`alloc_`* is `true`, or `!nh.`*`alloc_`*, or
+*`ator-traits`*`::propagate_on_container_swap::value` is `true`, or
+*`alloc_`*` == nh.`*`alloc_`* is `true`.
 
-*Effects:* Calls `swap(ptr_, nh.ptr_)`. If `!alloc_`, or `!nh.alloc_`,
-or `ator_traits::propagate_on_container_swap::value` is `true` calls
-`swap(alloc_, nh.alloc_)`.
+*Effects:* Calls `swap(`*`ptr_`*`, nh.`*`ptr_`*`)`. If `!`*`alloc_`* is
+`true`, or `!nh.`*`alloc_`* is `true`, or
+*`ator-traits`*`::propagate_on_container_swap::value` is `true` calls
+`swap(`*`alloc_`*`, nh.`*`alloc_`*`)`.
 
 ### Insert return type <a id="container.insert.return">[[container.insert.return]]</a>
 

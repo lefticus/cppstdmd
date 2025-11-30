@@ -8984,7 +8984,7 @@ pathname:
 ``` bnf
 root-name:
     operating system dependent sequences of characters
-    \textit{implementation-defined} sequences of characters
+    implementation-defined sequences of characters
 ```
 
 ``` bnf

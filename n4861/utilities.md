@@ -13266,45 +13266,45 @@ is copied unchanged to the output. An escape sequence is one of `{{` or
 syntax of replacement fields is as follows:
 
 ``` bnf
-\textit{replacement-field}
+replacement-field
     \terminal{\ arg-idₒₚₜ format-specifierₒₚₜ \terminal{\}}
 ```
 
 ``` bnf
-\textit{arg-id}
+arg-id
     '0'
     positive-integer
 ```
 
 ``` bnf
-\textit{positive-integer}
+positive-integer
     nonzero-digit
     positive-integer digit
 ```
 
 ``` bnf
-\textit{nonnegative-integer}
+nonnegative-integer
     digit
     nonnegative-integer digit
 ```
 
 ``` bnf
-\textit{nonzero-digit} one of
+nonzero-digit one of
     '1 2 3 4 5 6 7 8 9'
 ```
 
 ``` bnf
-\textit{digit} one of
+digit one of
     '0 1 2 3 4 5 6 7 8 9'
 ```
 
 ``` bnf
-\textit{format-specifier}
+format-specifier
     ':' format-spec
 ```
 
 ``` bnf
-\textit{format-spec}
+format-spec
     as specified by the formatter specialization for the argument type
 ```
 
@@ -13378,44 +13378,44 @@ types. — *end note*]
 The syntax of format specifications is as follows:
 
 ``` bnf
-\textit{std-format-spec}
+std-format-spec
     fill-and-alignₒₚₜ signₒₚₜ '#'ₒₚₜ '0'ₒₚₜ widthₒₚₜ precisionₒₚₜ 'L'ₒₚₜ typeₒₚₜ
 ```
 
 ``` bnf
-\textit{fill-and-align}
+fill-and-align
     fillₒₚₜ align
 ```
 
 ``` bnf
-\textit{fill}
+fill
     \textnormal{any character other than \ or \texttt{\}}
 ```
 
 ``` bnf
-\textit{align} one of
+align one of
     '< > ^'
 ```
 
 ``` bnf
-\textit{sign} one of
+sign one of
     '+ -' space
 ```
 
 ``` bnf
-\textit{width}
+width
     positive-integer
     \terminal{\ arg-idₒₚₜ \terminal{\}}
 ```
 
 ``` bnf
-\textit{precision}
+precision
     '.' nonnegative-integer
     '.' \terminal{\ arg-idₒₚₜ \terminal{\}}
 ```
 
 ``` bnf
-\textit{type} one of
+type one of
     'a A b B c d e E f F g G o p s x X'
 ```
 

@@ -265,8 +265,10 @@ function Math(elem)
         return pandoc.RawInline('markdown', converted)
       else
         -- Partial conversion detected - revert to original LaTeX
+        -- Strip text macros that don't belong in math LaTeX before reverting
+        local cleaned = common.strip_text_macros_in_math(original_text)
         -- This ensures consistency: either fully readable or fully LaTeX for MathJax
-        return pandoc.RawInline('markdown', "$" .. original_text .. "$")
+        return pandoc.RawInline('markdown', "$" .. cleaned .. "$")
       end
     end
   end
