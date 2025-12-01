@@ -114,6 +114,8 @@ A separate floating-point environment is maintained for each thread.
 Each function accesses the environment corresponding to its calling
 thread.
 
+See also: ISO C 7.6
+
 ## Complex numbers <a id="complex.numbers">[[complex.numbers]]</a>
 
 The header `<complex>` defines a class template, and numerous functions
@@ -612,7 +614,8 @@ template<class T> complex<T> proj(const complex<T>& x);
 
 *Returns:* The projection of `x` onto the Riemann sphere.
 
-*Remarks:* Behaves the same as the C function `cproj`.
+*Remarks:* Behaves the same as the C function `cproj`. See also: ISO C
+7.3.9.5
 
 ``` cpp
 template<class T> complex<T> polar(const T& rho, const T& theta = T());
@@ -631,7 +634,8 @@ template<class T> complex<T> acos(const complex<T>& x);
 
 *Returns:* The complex arc cosine of `x`.
 
-*Remarks:* Behaves the same as the C function `cacos`.
+*Remarks:* Behaves the same as the C function `cacos`. See also: ISO C
+7.3.5.1
 
 ``` cpp
 template<class T> complex<T> asin(const complex<T>& x);
@@ -639,7 +643,8 @@ template<class T> complex<T> asin(const complex<T>& x);
 
 *Returns:* The complex arc sine of `x`.
 
-*Remarks:* Behaves the same as the C function `casin`.
+*Remarks:* Behaves the same as the C function `casin`. See also: ISO C
+7.3.5.2
 
 ``` cpp
 template<class T> complex<T> atan(const complex<T>& x);
@@ -647,7 +652,8 @@ template<class T> complex<T> atan(const complex<T>& x);
 
 *Returns:* The complex arc tangent of `x`.
 
-*Remarks:* Behaves the same as the C function `catan`.
+*Remarks:* Behaves the same as the C function `catan`. See also: ISO C
+7.3.5.3
 
 ``` cpp
 template<class T> complex<T> acosh(const complex<T>& x);
@@ -655,7 +661,8 @@ template<class T> complex<T> acosh(const complex<T>& x);
 
 *Returns:* The complex arc hyperbolic cosine of `x`.
 
-*Remarks:* Behaves the same as the C function `cacosh`.
+*Remarks:* Behaves the same as the C function `cacosh`. See also: ISO C
+7.3.6.1
 
 ``` cpp
 template<class T> complex<T> asinh(const complex<T>& x);
@@ -663,7 +670,8 @@ template<class T> complex<T> asinh(const complex<T>& x);
 
 *Returns:* The complex arc hyperbolic sine of `x`.
 
-*Remarks:* Behaves the same as the C function `casinh`.
+*Remarks:* Behaves the same as the C function `casinh`. See also: ISO C
+7.3.6.2
 
 ``` cpp
 template<class T> complex<T> atanh(const complex<T>& x);
@@ -671,7 +679,8 @@ template<class T> complex<T> atanh(const complex<T>& x);
 
 *Returns:* The complex arc hyperbolic tangent of `x`.
 
-*Remarks:* Behaves the same as the C function `catanh`.
+*Remarks:* Behaves the same as the C function `catanh`. See also: ISO C
+7.3.6.3
 
 ``` cpp
 template<class T> complex<T> cos(const complex<T>& x);
@@ -3867,6 +3876,8 @@ underlying algorithm is unspecified. Use of `rand` therefore continues
 to be non-portable, with unpredictable and oft-questionable quality and
 performance. — *end note*]
 
+See also: ISO C 7.22.2
+
 ## Numeric arrays <a id="numarray">[[numarray]]</a>
 
 ### Header `<valarray>` synopsis <a id="valarray.syn">[[valarray.syn]]</a>
@@ -5988,6 +5999,8 @@ integral promotion [[conv.prom]], the program is ill-formed.
 
 [*Note 1*: Arguments that can be promoted to `int` are permitted for
 compatibility with C. — *end note*]
+
+See also: ISO C 7.12.7.2, 7.22.6.1
 
 ### Three-dimensional hypotenuse <a id="c.math.hypot3">[[c.math.hypot3]]</a>
 

@@ -318,6 +318,8 @@ assertions and a mechanism for disabling the assertion checks.
 The contents are the same as the C standard library header `<assert.h>`,
 except that a macro named `static_assert` is not defined.
 
+See also: ISO C 7.2
+
 ### The `assert` macro <a id="assertions.assert">[[assertions.assert]]</a>
 
 An expression `assert(E)` is a constant subexpression
@@ -423,6 +425,8 @@ A separate `errno` value is provided for each thread.
 
 The meaning of the macros in this header is defined by the POSIX
 standard.
+
+See also: ISO C 7.5
 
 ## System error support <a id="syserr">[[syserr]]</a>
 

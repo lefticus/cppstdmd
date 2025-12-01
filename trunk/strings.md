@@ -3779,6 +3779,8 @@ value of the first parameter.
 `memchr`, have different signatures in this document, but they have the
 same behavior as in the C standard library [[library.c]]. — *end note*]
 
+See also: ISO C 7.26
+
 <!-- Link reference definitions -->
 [basic.indet]: basic.md#basic.indet
 [basic.string]: #basic.string

@@ -76,6 +76,8 @@ the type `wchar_t`, that it also declares the type `byte` and its
 associated operations [[support.types.byteops]], and as noted in
 [[support.types.nullptr]] and [[support.types.layout]].
 
+See also: ISO C 7.19
+
 ### Header `<cstdlib>` synopsis <a id="cstdlib.syn">[[cstdlib.syn]]</a>
 
 ``` cpp
@@ -177,6 +179,8 @@ the type `wchar_t`, and except as noted in [[support.types.nullptr]],
 document, but they have the same behavior as in the C standard library
 [[library.c]]. — *end note*]
 
+See also: ISO C 7.22
+
 ### Null pointers <a id="support.types.nullptr">[[support.types.nullptr]]</a>
 
 The type `nullptr_t` is a synonym for the type of a `nullptr`
@@ -189,6 +193,8 @@ taken. — *end note*]
 
 The macro `NULL` is an *implementation-defined* null pointer
 constant.[^1]
+
+See also: ISO C 7.19
 
 ### Sizes, alignments, and offsets <a id="support.types.layout">[[support.types.layout]]</a>
 
@@ -222,6 +228,8 @@ necessary to contain all the possible values.
 The type `max_align_t` is a trivial standard-layout type whose alignment
 requirement is at least as great as that of every scalar type, and whose
 alignment requirement is supported in every context [[basic.align]].
+
+See also: ISO C 7.19
 
 ### `byte` type operations <a id="support.types.byteops">[[support.types.byteops]]</a>
 
@@ -1123,6 +1131,8 @@ library header `<limits.h>`.
 an integer type `T` defines a constant whose type is the promoted type
 of `T` [[conv.prom]]. — *end note*]
 
+See also: ISO C 5.2.4.2.1
+
 ### Header `<cfloat>` synopsis <a id="cfloat.syn">[[cfloat.syn]]</a>
 
 ``` cpp
@@ -1171,6 +1181,8 @@ of `T` [[conv.prom]]. — *end note*]
 
 The header `<cfloat>` defines all macros the same as the C standard
 library header `<float.h>`.
+
+See also: ISO C 5.2.4.2.2
 
 ## Arithmetic types <a id="support.arith.types">[[support.arith.types]]</a>
 
@@ -1266,6 +1278,8 @@ namespace std {
 
 The header defines all types and macros the same as the C standard
 library header `<stdint.h>`.
+
+See also: ISO C 7.20
 
 All types that use the placeholder *N* are optional when *N* is not `8`,
 `16`, `32`, or `64`. The exact-width types `intN_t` and `uintN_t` for
@@ -1424,6 +1438,8 @@ After calling registered functions, `quick_exit` shall call
 
 *Remarks:* The function `quick_exit` is signal-safe [[support.signal]]
 when the functions registered with `at_quick_exit` are.
+
+See also: ISO C 7.22.4
 
 ## Dynamic memory management <a id="support.dynamic">[[support.dynamic]]</a>
 
@@ -3916,6 +3932,8 @@ library header `<stdarg.h>`, with the following changes:
   type that is not compatible with the type that results when passing an
   argument for which there is no parameter, the behavior is undefined.
 
+See also: ISO C 7.16.1.1
+
 ### Header `<csetjmp>` synopsis <a id="csetjmp.syn">[[csetjmp.syn]]</a>
 
 ``` cpp
@@ -3937,6 +3955,8 @@ and `throw` would invoke any non-trivial destructors for any objects
 with automatic storage duration. A call to `setjmp` or `longjmp` has
 undefined behavior if invoked in a suspension context of a coroutine
 [[expr.await]].
+
+See also: ISO C 7.13
 
 ### Header `<csignal>` synopsis <a id="csignal.syn">[[csignal.syn]]</a>
 
@@ -4006,6 +4026,8 @@ The function `signal` is signal-safe if it is invoked with the first
 argument equal to the signal number corresponding to the signal that
 caused the invocation of the handler.
 
+See also: ISO C 7.14
+
 ## C headers <a id="support.c.headers">[[support.c.headers]]</a>
 
 ### General <a id="support.c.headers.general">[[support.c.headers.general]]</a>
@@ -4066,12 +4088,16 @@ The contents of the C++ header `<stdalign.h>` are the same as the C
 standard library header `<stdalign.h>`, with the following changes: The
 header `<stdalign.h>` does not define a macro named `alignas`.
 
+See also: ISO C 7.15
+
 ### Header `<stdbool.h>` synopsis <a id="stdbool.h.syn">[[stdbool.h.syn]]</a>
 
 The contents of the C++ header `<stdbool.h>` are the same as the C
 standard library header `<stdbool.h>`, with the following changes: The
 header `<stdbool.h>` does not define macros named `bool`, `true`, or
 `false`.
+
+See also: ISO C 7.18
 
 ### Header `<tgmath.h>` synopsis <a id="tgmath.h.syn">[[tgmath.h.syn]]</a>
 

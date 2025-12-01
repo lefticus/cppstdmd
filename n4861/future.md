@@ -238,6 +238,8 @@ The contents of the C++ header `<stdalign.h>` are the same as the C
 standard library header `<stdalign.h>`, with the following changes: The
 header `<stdalign.h>` does not define a macro named `alignas`.
 
+See also: ISO C 7.15
+
 ### Header `<stdbool.h>` synopsis <a id="depr.stdbool.h.syn">[[depr.stdbool.h.syn]]</a>
 
 ``` cpp
@@ -248,6 +250,8 @@ The contents of the C++ header `<stdbool.h>` are the same as the C
 standard library header `<stdbool.h>`, with the following changes: The
 header `<stdbool.h>` does not define macros named `bool`, `true`, or
 `false`.
+
+See also: ISO C 7.18
 
 ### Header `<tgmath.h>` synopsis <a id="depr.tgmath.h.syn">[[depr.tgmath.h.syn]]</a>
 

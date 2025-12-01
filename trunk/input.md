@@ -329,6 +329,8 @@ not result in a data race [[intro.multithread]].
 [*Note 2*: Unsynchronized concurrent use of these objects and streams
 by multiple threads can result in interleaved characters. — *end note*]
 
+See also: ISO C 7.23.2
+
 ### Narrow stream objects <a id="narrow.stream.objects">[[narrow.stream.objects]]</a>
 
 ``` cpp
@@ -4769,7 +4771,7 @@ specifications given in `fmt`.
 
 Unconditionally unlocks `stream` on function exit.
 
-.
+See also: ISO C 7.23.2.
 
 [*Note 1*: On Windows the native Unicode API is `WriteConsoleW` and
 `stream` referring to a terminal means that
@@ -12504,12 +12506,14 @@ The contents and meaning of the header `<cstdio>` are the same as the C
 standard library header `<stdio.h>`.
 
 The return from each function call that delivers data to the host
-environment to be written to a file () is an observable checkpoint
-[[intro.abstract]].
+environment to be written to a file (See also: ISO C 7.23.3) is an
+observable checkpoint [[intro.abstract]].
 
 Calls to the function `tmpnam` with an argument that is a null pointer
 value may introduce a data race [[res.on.data.races]] with other calls
 to `tmpnam` with an argument that is a null pointer value.
+
+See also: ISO C 7.23
 
 ### Header `<cinttypes>` synopsis <a id="cinttypes.syn">[[cinttypes.syn]]</a>
 
@@ -12619,6 +12623,8 @@ C standard library header `<inttypes.h>`, with the following changes:
   which shall have the same semantics as the function signatures
   `constexpr intmax_t imaxabs(intmax_t)` and
   `constexpr imaxdiv_t imaxdiv(intmax_t, intmax_t)`, respectively.
+
+See also: ISO C 7.8
 
 Each of the `PRI` macros listed in this subclause is defined if and only
 if the implementation defines the corresponding *typedef-name* in 

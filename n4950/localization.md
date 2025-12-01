@@ -3282,6 +3282,8 @@ Calls to the function `setlocale` may introduce a data race
 [[res.on.data.races]] with other calls to `setlocale` or with calls to
 the functions listed in [[setlocale.data.races]].
 
+See also: ISO C 7.11
+
 **Table: Potential `setlocale` data races** <a id="setlocale.data.races">[setlocale.data.races]</a>
 
 |           |            |             |              |            |

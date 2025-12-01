@@ -165,6 +165,8 @@ the `"C"` locale with the given precision.
 
 *Throws:* Nothing.
 
+See also: ISO C 7.23.6.2
+
 ### Primitive numeric input conversion <a id="charconv.from.chars">[[charconv.from.chars]]</a>
 
 All functions named `from_chars` analyze the string \[`first`, `last`)
@@ -228,6 +230,8 @@ In any case, the resulting `value` is one of at most two floating-point
 values closest to the value of the string matching the pattern.
 
 *Throws:* Nothing.
+
+See also: ISO C 7.24.2.6, 7.24.2.8
 
 ## Localization library <a id="localization">[[localization]]</a>
 
@@ -3526,6 +3530,8 @@ standard library header `<locale.h>`.
 Calls to the function `setlocale` may introduce a data race
 [[res.on.data.races]] with other calls to `setlocale` or with calls to
 the functions listed in [[setlocale.data.races]].
+
+See also: ISO C 7.11
 
 **Table: Potential `setlocale` data races** <a id="setlocale.data.races">[setlocale.data.races]</a>
 
@@ -9163,6 +9169,8 @@ namespace std {
 The contents and meaning of the header `<cctype>` are the same as the C
 standard library header `<ctype.h>`.
 
+See also: ISO C 7.4
+
 ### Header `<cwctype>` synopsis <a id="cwctype.syn">[[cwctype.syn]]</a>
 
 ``` cpp
@@ -9196,6 +9204,8 @@ namespace std {
 
 The contents and meaning of the header `<cwctype>` are the same as the C
 standard library header `<wctype.h>`.
+
+See also: ISO C 7.32
 
 ### Header `<cwchar>` synopsis <a id="cwchar.syn">[[cwchar.syn]]</a>
 
@@ -9292,6 +9302,8 @@ type `wchar_t`.
 `wmemchr` have different signatures in this document, but they have the
 same behavior as in the C standard library [[library.c]]. — *end note*]
 
+See also: ISO C 7.31
+
 ### Header `<cuchar>` synopsis <a id="cuchar.syn">[[cuchar.syn]]</a>
 
 ``` cpp
@@ -9314,6 +9326,8 @@ The contents and meaning of the header `<cuchar>` are the same as the C
 standard library header `<uchar.h>`, except that it does not declare
 types `char8_t`, `char16_t`, or `char32_t`.
 
+See also: ISO C 7.30
+
 ### Multibyte / wide string and character conversion functions <a id="c.mb.wcs">[[c.mb.wcs]]</a>
 
 [*Note 1*: The headers `<cstdlib>`, `<cuchar>`, and `<cwchar>` declare
@@ -9329,6 +9343,8 @@ size_t wcstombs(char* s, const wchar_t* pwcs, size_t n);
 *Effects:* These functions have the semantics specified in the C
 standard library.
 
+See also: ISO C 7.24.8.2, 7.24.9, 7.31.6.3.1
+
 ``` cpp
 int mbtowc(wchar_t* pwc, const char* s, size_t n);
 int wctomb(char* s, wchar_t wchar);
@@ -9339,6 +9355,8 @@ standard library.
 
 *Remarks:* Calls to these functions may introduce a data
 race [[res.on.data.races]] with other calls to the same function.
+
+See also: ISO C 7.24.8
 
 ``` cpp
 size_t mbrlen(const char* s, size_t n, mbstate_t* ps);
@@ -9361,6 +9379,8 @@ standard library.
 a null pointer value may introduce a data race [[res.on.data.races]]
 with other calls to the same function with an `mbstate_t*` argument that
 is a null pointer value.
+
+See also: ISO C 7.30.2, 7.31.6.4, 7.31.6.5
 
 <!-- Link reference definitions -->
 [alg.lex.comparison]: algorithms.md#alg.lex.comparison

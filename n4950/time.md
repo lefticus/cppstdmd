@@ -7919,6 +7919,8 @@ library header `<time.h>`.[^1]
 The functions `asctime`, `ctime`, `gmtime`, and `localtime` are not
 required to avoid data races [[res.on.data.races]].
 
+See also: ISO C 7.27
+
 <!-- Link reference definitions -->
 [basic.lookup.argdep]: basic.md#basic.lookup.argdep
 [cpp17.equalitycomparable]: #cpp17.equalitycomparable

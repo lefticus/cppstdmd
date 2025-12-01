@@ -1467,6 +1467,8 @@ library.
 *Remarks:* This function does not attempt to deallocate storage by
 calling `::operator delete()`.
 
+See also: ISO C 7.22.3
+
 ## Smart pointers <a id="smartptr">[[smartptr]]</a>
 
 ### Unique-ownership pointers <a id="unique.ptr">[[unique.ptr]]</a>

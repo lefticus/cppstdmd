@@ -11489,12 +11489,14 @@ For a function template whose return type is not specified above, the
 return type is an *implementation-defined* unsigned integer type large
 enough to represent all possible result values. Each function template
 has the same semantics as the corresponding type-generic function with
-the same name specified in .
+the same name specified in See also: ISO C 7.18.
 
 *Mandates:* `T` is an unsigned integer type.
 
 Otherwise, the contents and meaning of the header `<stdbit.h>` are the
 same as the C standard library header `<stdbit.h>`.
+
+See also: ISO C 7.18
 
 <!-- Link reference definitions -->
 [algorithms]: algorithms.md#algorithms

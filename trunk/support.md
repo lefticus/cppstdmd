@@ -79,6 +79,8 @@ that it also declares the type `byte` and its associated operations
 [[support.types.byteops]], and as noted in [[support.types.nullptr]] and
 [[support.types.layout]].
 
+See also: ISO C 7.21
+
 ### Header `<cstdlib>` synopsis <a id="cstdlib.syn">[[cstdlib.syn]]</a>
 
 ``` cpp
@@ -191,6 +193,8 @@ the types `wchar_t` or `once_flag`, and does not declare the function
 document, but they have the same behavior as in the C standard library
 [[library.c]]. — *end note*]
 
+See also: ISO C 7.24
+
 ### Null pointers <a id="support.types.nullptr">[[support.types.nullptr]]</a>
 
 The type `nullptr_t` is a synonym for the type of a `nullptr`
@@ -203,6 +207,8 @@ taken. — *end note*]
 
 The macro `NULL` is an *implementation-defined* null pointer
 constant.[^1]
+
+See also: ISO C 7.21
 
 ### Sizes, alignments, and offsets <a id="support.types.layout">[[support.types.layout]]</a>
 
@@ -238,6 +244,8 @@ whose alignment requirement is at least as great as that of every scalar
 type, and whose alignment requirement is supported in every context
 [[basic.align]].
 `std::is_trivially_default_constructible_v<max_align_t>` is `true`.
+
+See also: ISO C 7.21
 
 ### `byte` type operations <a id="support.types.byteops">[[support.types.byteops]]</a>
 
@@ -1300,6 +1308,8 @@ library header `<limits.h>`, except that it does not define the macro
 a macro referring to an integer type `T` defines a constant whose type
 is the promoted type of `T` [[conv.prom]]. — *end note*]
 
+See also: ISO C 5.3.5.3.2
+
 ### Header `<cfloat>` synopsis <a id="cfloat.syn">[[cfloat.syn]]</a>
 
 ``` cpp
@@ -1351,6 +1361,8 @@ is the promoted type of `T` [[conv.prom]]. — *end note*]
 
 The header `<cfloat>` defines all macros the same as the C standard
 library header `<float.h>`.
+
+See also: ISO C 5.3.5.3.3
 
 ## Arithmetic types <a id="support.arith.types">[[support.arith.types]]</a>
 
@@ -1466,6 +1478,8 @@ library header `<stdint.h>`. The types denoted by `intmax_t` and
 `uintmax_t` are not required to be able to represent all values of
 extended integer types wider than `long long` and `unsigned long long`,
 respectively.
+
+See also: ISO C 7.22
 
 All types that use the placeholder *N* are optional when *N* is not `8`,
 `16`, `32`, or `64`. The exact-width types `intN_t` and `uintN_t` for
@@ -1624,6 +1638,8 @@ After calling registered functions, `quick_exit` shall call
 
 *Remarks:* The function `quick_exit` is signal-safe [[support.signal]]
 when the functions registered with `at_quick_exit` are.
+
+See also: ISO C 7.24.5
 
 ## Dynamic memory management <a id="support.dynamic">[[support.dynamic]]</a>
 
@@ -4463,6 +4479,8 @@ library header `<stdarg.h>`, with the following changes:
   accepts a second argument for compatibility with prior revisions of
   C++. — *end note*]
 
+See also: ISO C 7.16
+
 ### Header `<csetjmp>` synopsis <a id="csetjmp.syn">[[csetjmp.syn]]</a>
 
 ``` cpp
@@ -4486,6 +4504,8 @@ and `throw` would invoke any non-trivial destructors for any objects
 with automatic storage duration. A call to `setjmp` or `longjmp` has
 undefined behavior if invoked in a suspension context of a coroutine
 [[expr.await]].
+
+See also: ISO C 7.13
 
 ### Header `<csignal>` synopsis <a id="csignal.syn">[[csignal.syn]]</a>
 
@@ -4555,6 +4575,8 @@ The function `signal` is signal-safe if it is invoked with the first
 argument equal to the signal number corresponding to the signal that
 caused the invocation of the handler.
 
+See also: ISO C 7.14
+
 ## C headers <a id="support.c.headers">[[support.c.headers]]</a>
 
 ### General <a id="support.c.headers.general">[[support.c.headers.general]]</a>
@@ -4614,10 +4636,14 @@ The C++ header `<iso646.h>` is empty.
 The contents of the C++ header `<stdalign.h>` are the same as the C
 standard library header `<stdalign.h>`.
 
+See also: ISO C 7.15
+
 ### Header `<stdbool.h>` synopsis <a id="stdbool.h.syn">[[stdbool.h.syn]]</a>
 
 The contents of the C++ header `<stdbool.h>` are the same as the C
 standard library header `<stdbool.h>`.
+
+See also: ISO C 7.19
 
 ### Header `<tgmath.h>` synopsis <a id="tgmath.h.syn">[[tgmath.h.syn]]</a>
 

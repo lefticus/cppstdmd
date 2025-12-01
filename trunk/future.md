@@ -221,15 +221,21 @@ The header `<cfloat>` has the following macros:
 The header defines these macros the same as the C standard library
 header `<float.h>`.
 
+See also: ISO C 5.3.5.3.3, 7.33.6
+
 In addition to being available via inclusion of the `<cfloat>` header,
 the macros `INFINITY` and `NAN` are available when `<cmath>` is
 included.
+
+See also: ISO C 7.12
 
 The header `<stdbool.h>` has the following macro:
 
 ``` cpp
 #define \libxmacro{bool_true_false_are_defined} 1
 ```
+
+See also: ISO C 7.19
 
 ## Deprecated error numbers <a id="depr.cerrno">[[depr.cerrno]]</a>
 
@@ -641,6 +647,8 @@ char* ctime(const time_t* timer);
 
 The functions `asctime` and `ctime` are not required to avoid data races
 [[res.on.data.races]].
+
+See also: ISO C 7.29
 
 ## Deprecated file systems <a id="depr.filesystems">[[depr.filesystems]]</a>
 

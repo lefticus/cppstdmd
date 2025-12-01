@@ -10182,6 +10182,8 @@ the `"C"` locale with the given precision.
 
 *Throws:* Nothing.
 
+See also: ISO C 7.21.6.1
+
 ### Primitive numeric input conversion <a id="charconv.from.chars">[[charconv.from.chars]]</a>
 
 All functions named `from_chars` analyze the string \[`first`, `last`)
@@ -10245,6 +10247,8 @@ In any case, the resulting `value` is one of at most two floating-point
 values closest to the value of the string matching the pattern.
 
 *Throws:* Nothing.
+
+See also: ISO C 7.22.1.3, 7.22.1.4
 
 ## Formatting <a id="format">[[format]]</a>
 

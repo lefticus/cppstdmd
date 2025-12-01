@@ -9313,6 +9313,8 @@ standard library.
 
 *Throws:* Any exception thrown by `compar`[[res.on.exception.handling]].
 
+See also: ISO C 7.22.5
+
 <!-- Link reference definitions -->
 [accumulate]: #accumulate
 [adjacent.difference]: #adjacent.difference

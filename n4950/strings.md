@@ -3692,6 +3692,8 @@ namespace std {
 The contents and meaning of the header `<cctype>` are the same as the C
 standard library header `<ctype.h>`.
 
+See also: ISO C 7.4
+
 ### Header `<cwctype>` synopsis <a id="cwctype.syn">[[cwctype.syn]]</a>
 
 ``` cpp
@@ -3725,6 +3727,8 @@ namespace std {
 
 The contents and meaning of the header `<cwctype>` are the same as the C
 standard library header `<wctype.h>`.
+
+See also: ISO C 7.30
 
 ### Header `<cstring>` synopsis <a id="cstring.syn">[[cstring.syn]]</a>
 
@@ -3778,6 +3782,8 @@ of characters to the destination.
 [*Note 1*: The functions `strchr`, `strpbrk`, `strrchr`, `strstr`, and
 `memchr`, have different signatures in this document, but they have the
 same behavior as in the C standard library [[library.c]]. — *end note*]
+
+See also: ISO C 7.24
 
 ### Header `<cwchar>` synopsis <a id="cwchar.syn">[[cwchar.syn]]</a>
 
@@ -3871,6 +3877,8 @@ type `wchar_t`.
 `wmemchr` have different signatures in this document, but they have the
 same behavior as in the C standard library [[library.c]]. — *end note*]
 
+See also: ISO C 7.29
+
 ### Header `<cuchar>` synopsis <a id="cuchar.syn">[[cuchar.syn]]</a>
 
 ``` cpp
@@ -3892,6 +3900,8 @@ standard library header `<uchar.h>`, except that it declares the
 additional `mbrtoc8` and `c8rtomb` functions and does not declare types
 `char16_t` nor `char32_t`.
 
+See also: ISO C 7.28
+
 ### Multibyte / wide string and character conversion functions <a id="c.mb.wcs">[[c.mb.wcs]]</a>
 
 [*Note 1*: The headers `<cstdlib>`, `<cuchar>`, and `<cwchar>` declare
@@ -3907,6 +3917,8 @@ size_t wcstombs(char* s, const wchar_t* pwcs, size_t n);
 *Effects:* These functions have the semantics specified in the C
 standard library.
 
+See also: ISO C 7.22.7.1, 7.22.8, 7.29.6.2.1
+
 ``` cpp
 int mbtowc(wchar_t* pwc, const char* s, size_t n);
 int wctomb(char* s, wchar_t wchar);
@@ -3917,6 +3929,8 @@ standard library.
 
 *Remarks:* Calls to these functions may introduce a data
 race [[res.on.data.races]] with other calls to the same function.
+
+See also: ISO C 7.22.7
 
 ``` cpp
 size_t mbrlen(const char* s, size_t n, mbstate_t* ps);
@@ -3933,6 +3947,8 @@ standard library.
 a null pointer value may introduce a data race [[res.on.data.races]]
 with other calls to the same function with an `mbstate_t*` argument that
 is a null pointer value.
+
+See also: ISO C 7.29.6.3
 
 ``` cpp
 size_t mbrtoc8(char8_t* pc8, const char* s, size_t n, mbstate_t* ps);

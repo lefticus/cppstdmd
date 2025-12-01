@@ -75,6 +75,8 @@ the type `wchar_t`, that it also declares the type `byte` and its
 associated operations [[support.types.byteops]], and as noted in
 [[support.types.nullptr]] and [[support.types.layout]].
 
+See also: ISO C 7.19
+
 ### Header `<cstdlib>` synopsis <a id="cstdlib.syn">[[cstdlib.syn]]</a>
 
 ``` cpp
@@ -178,6 +180,8 @@ the type `wchar_t`, and except as noted in [[support.types.nullptr]],
 document, but they have the same behavior as in the C standard library
 [[library.c]]. — *end note*]
 
+See also: ISO C 7.22
+
 ### Null pointers <a id="support.types.nullptr">[[support.types.nullptr]]</a>
 
 The type `nullptr_t` is a synonym for the type of a `nullptr`
@@ -190,6 +194,8 @@ taken. — *end note*]
 
 The macro `NULL` is an *implementation-defined* null pointer constant.
 [^1]
+
+See also: ISO C 7.19
 
 ### Sizes, alignments, and offsets <a id="support.types.layout">[[support.types.layout]]</a>
 
@@ -221,6 +227,8 @@ necessary to contain all the possible values. — *end note*]
 The type `max_align_t` is a trivial standard-layout type whose alignment
 requirement is at least as great as that of every scalar type, and whose
 alignment requirement is supported in every context [[basic.align]].
+
+See also: ISO C 7.19
 
 ### `byte` type operations <a id="support.types.byteops">[[support.types.byteops]]</a>
 
@@ -1095,6 +1103,8 @@ library header `<limits.h>`.
 are not required to match the types to which the macros
 refer. — *end note*]
 
+See also: ISO C 5.2.4.2.1
+
 ### Header `<cfloat>` synopsis <a id="cfloat.syn">[[cfloat.syn]]</a>
 
 ``` cpp
@@ -1142,6 +1152,8 @@ refer. — *end note*]
 
 The header `<cfloat>` defines all macros the same as the C standard
 library header `<float.h>`.
+
+See also: ISO C 5.2.4.2.2
 
 ## Integer types <a id="cstdint">[[cstdint]]</a>
 
@@ -1206,6 +1218,8 @@ plus function macros of the form:
 
 The header defines all types and macros the same as the C standard
 library header `<stdint.h>`.
+
+See also: ISO C 7.20
 
 ## Startup and termination <a id="support.start.term">[[support.start.term]]</a>
 
@@ -1329,6 +1343,8 @@ After calling registered functions, `quick_exit` shall call
 
 *Remarks:* The function `quick_exit` is signal-safe [[support.signal]]
 when the functions registered with `at_quick_exit` are.
+
+See also: ISO C 7.22.4
 
 ## Dynamic memory management <a id="support.dynamic">[[support.dynamic]]</a>
 
@@ -3739,6 +3755,8 @@ reference type, or of a type that is not compatible with the type that
 results when passing an argument for which there is no parameter, the
 behavior is undefined.
 
+See also: ISO C 7.16.1.1
+
 ### Header `<csetjmp>` synopsis <a id="csetjmp.syn">[[csetjmp.syn]]</a>
 
 ``` cpp
@@ -3760,6 +3778,8 @@ and `throw` would invoke any non-trivial destructors for any objects
 with automatic storage duration. A call to `setjmp` or `longjmp` has
 undefined behavior if invoked in a suspension context of a coroutine
 [[expr.await]].
+
+See also: ISO C 7.13
 
 ### Header `<csignal>` synopsis <a id="csignal.syn">[[csignal.syn]]</a>
 
@@ -3826,6 +3846,8 @@ evaluation that is not signal-safe.
 The function `signal` is signal-safe if it is invoked with the first
 argument equal to the signal number corresponding to the signal that
 caused the invocation of the handler.
+
+See also: ISO C 7.14
 
 <!-- Link reference definitions -->
 [alg.c.library]: algorithms.md#alg.c.library

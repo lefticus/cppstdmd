@@ -448,6 +448,8 @@ A separate `errno` value is provided for each thread.
 The meaning of the macros in this header is defined by the POSIX
 standard.
 
+See also: ISO C 7.5
+
 ## System error support <a id="syserr">[[syserr]]</a>
 
 ### General <a id="syserr.general">[[syserr.general]]</a>

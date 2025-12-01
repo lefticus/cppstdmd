@@ -283,6 +283,8 @@ not result in a data race [[intro.multithread]].
 and streams by multiple threads if they wish to avoid interleaved
 characters. — *end note*]
 
+See also: ISO C 7.21.2
+
 ### Narrow stream objects <a id="narrow.stream.objects">[[narrow.stream.objects]]</a>
 
 ``` cpp
@@ -10971,6 +10973,8 @@ Calls to the function `tmpnam` with an argument that is a null pointer
 value may introduce a data race [[res.on.data.races]] with other calls
 to `tmpnam` with an argument that is a null pointer value.
 
+See also: ISO C 7.21
+
 ### Header `<cinttypes>` synopsis <a id="cinttypes.syn">[[cinttypes.syn]]</a>
 
 ``` cpp
@@ -11062,6 +11066,8 @@ C standard library header `<inttypes.h>`, with the following changes:
   which shall have the same semantics as the function signatures
   `intmax_t imaxabs(intmax_t)` and
   `imaxdiv_t imaxdiv(intmax_t, intmax_t)`, respectively.
+
+See also: ISO C 7.8
 
 <!-- Link reference definitions -->
 [adjustfield.manip]: #adjustfield.manip
