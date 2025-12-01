@@ -3482,6 +3482,9 @@ array type is considered to be const-qualified.
 
 ## Lvalues and rvalues <a id="basic.lval">[[basic.lval]]</a>
 
+Expressions are categorized according to the taxonomy in Figure 
+[[fig:categories]].
+
 <a id="fig:categories"></a>
 
 ![Expression category taxonomy \[fig:categories\]](images/valuecategories.svg)
@@ -3812,6 +3815,7 @@ not supported by an implementation, the program is ill-formed.
 [expr.type.conv]: expr.md#expr.type.conv
 [expr.typeid]: expr.md#expr.typeid
 [expr.unary.op]: expr.md#expr.unary.op
+[fig:categories]: #fig:categories
 [headers]: library.md#headers
 [intro.execution]: intro.md#intro.execution
 [intro.memory]: intro.md#intro.memory

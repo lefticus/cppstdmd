@@ -817,6 +817,9 @@ in the program being ill-formed. — *end note*]
 
 #### General <a id="meta.trans.general">[[meta.trans.general]]</a>
 
+Subclause [[meta.trans]] contains templates that may be used to
+transform one type to another following some predefined rule.
+
 Each of the templates in [[meta.trans]] shall be a
 *Cpp17TransformationTrait* [[meta.rqmts]].
 

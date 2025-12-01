@@ -12091,6 +12091,9 @@ in the program being ill-formed. — *end note*]
 
 ### Transformations between types <a id="meta.trans">[[meta.trans]]</a>
 
+This subclause contains templates that may be used to transform one type
+to another following some predefined rule.
+
 Each of the templates in this subclause shall be a
 `TransformationTrait` ([[meta.rqmts]]).
 

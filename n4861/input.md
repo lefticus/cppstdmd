@@ -7037,6 +7037,9 @@ account.
 
 #### POSIX conformance <a id="fs.conform.9945">[[fs.conform.9945]]</a>
 
+Some behavior is specified by reference to POSIX [[fs.norm.ref]]. How
+such behavior is actually implemented is unspecified.
+
 [*Note 1*: This constitutes an “as if” rule allowing implementations to
 call native operating system or other APIs. — *end note*]
 
@@ -7063,6 +7066,11 @@ required to support those features on the FAT file system but instead
 are required to report an error as described above. — *end example*]
 
 #### Operating system dependent behavior conformance <a id="fs.conform.os">[[fs.conform.os]]</a>
+
+Behavior that is specified as being *operating system dependent* is
+dependent upon the behavior and characteristics of an operating system.
+The operating system an implementation is dependent upon is
+*implementation-defined*.
 
 It is permissible for an implementation to be dependent upon an
 operating system emulator rather than the actual underlying operating

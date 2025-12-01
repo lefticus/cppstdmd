@@ -142,6 +142,24 @@ function Para(elem)
               i = i + 1
             end
 
+            -- Check if next element is another section or if we should stop
+            -- If it's not a section marker (@@ANNEX or \rSec), break to preserve remaining content
+            if i <= #content then
+              local next_elem = content[i]
+              local is_section_start = false
+              if next_elem.t == "Str" and next_elem.text:match("^@@ANNEX:") then
+                is_section_start = true
+              elseif next_elem.t == "RawInline" and next_elem.format == "latex" then
+                local next_text = next_elem.text
+                if next_text:match("^\\rSec%d$") or next_text:match("^\\rSec%{%d%}$") then
+                  is_section_start = true
+                end
+              end
+              if not is_section_start then
+                break  -- Stop processing, remaining content is not a section
+              end
+            end
+
             goto continue
           end
         end
@@ -194,8 +212,35 @@ function Para(elem)
     ::continue::
   end
 
-  -- If we extracted any headers, return them; otherwise keep original Para
+  -- If we extracted any headers, return them along with any remaining content
   if #headers > 0 then
+    -- Check if there's remaining content after the extracted headers
+    -- This handles cases like: \rSec2[label]{Title}\pnum Paragraph text...
+    -- where the paragraph text should be preserved as a separate paragraph
+    local remaining = {}
+    while i <= #content do
+      -- Skip leading whitespace and \pnum markers
+      if content[i].t == "SoftBreak" or content[i].t == "Space" then
+        i = i + 1
+      elseif content[i].t == "RawInline" and content[i].format == "latex" and
+             content[i].text == "\\pnum" then
+        i = i + 1
+      else
+        break
+      end
+    end
+
+    -- Collect remaining content
+    while i <= #content do
+      table.insert(remaining, content[i])
+      i = i + 1
+    end
+
+    -- If there's remaining content, add it as a paragraph after the headers
+    if #remaining > 0 then
+      table.insert(headers, pandoc.Para(remaining))
+    end
+
     return headers
   end
 

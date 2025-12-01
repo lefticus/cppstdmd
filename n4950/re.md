@@ -1223,6 +1223,9 @@ template<class charT, class traits>
 
 ### General <a id="re.submatch.general">[[re.submatch.general]]</a>
 
+Class template `sub_match` denotes the sequence of characters matched by
+a particular marked sub-expression.
+
 ``` cpp
 namespace std {
   template<class BidirectionalIterator>
@@ -1416,6 +1419,11 @@ template<class charT, class ST, class BiIter>
 ## Class template `match_results` <a id="re.results">[[re.results]]</a>
 
 ### General <a id="re.results.general">[[re.results.general]]</a>
+
+Class template `match_results` denotes a collection of character
+sequences representing the result of a regular expression match. Storage
+for the collection is allocated and freed as necessary by the member
+functions of class template `match_results`.
 
 The class template `match_results` meets the requirements of an
 allocator-aware container and of a sequence container
@@ -1833,6 +1841,11 @@ returns `true` only if:
 
 ### Exceptions <a id="re.except">[[re.except]]</a>
 
+The algorithms described in subclause  [[re.alg]] may throw an exception
+of type `regex_error`. If such an exception `e` is thrown, `e.code()`
+shall return either `regex_constants::error_complexity` or
+`regex_constants::error_stack`.
+
 ### `regex_match` <a id="re.alg.match">[[re.alg.match]]</a>
 
 ``` cpp
@@ -2155,6 +2168,27 @@ regex_replace(back_inserter(result), s, s + char_traits<charT>::length(s), e, fm
 ### Class template `regex_iterator` <a id="re.regiter">[[re.regiter]]</a>
 
 #### General <a id="re.regiter.general">[[re.regiter.general]]</a>
+
+The class template `regex_iterator` is an iterator adaptor. It
+represents a new view of an existing iterator sequence, by enumerating
+all the occurrences of a regular expression within that sequence. A
+`regex_iterator` uses `regex_search` to find successive regular
+expression matches within the sequence from which it was constructed.
+After the iterator is constructed, and every time `operator++` is used,
+the iterator finds and stores a value of
+`match_results<BidirectionalIterator>`. If the end of the sequence is
+reached (`regex_search` returns `false`), the iterator becomes equal to
+the end-of-sequence iterator value. The default constructor constructs
+an end-of-sequence iterator object, which is the only legitimate
+iterator to be used for the end condition. The result of `operator*` on
+an end-of-sequence iterator is not defined. For any other iterator value
+a const `match_results<BidirectionalIterator>&` is returned. The result
+of `operator->` on an end-of-sequence iterator is not defined. For any
+other iterator value a `const match_results<BidirectionalIterator>*` is
+returned. It is impossible to store things into `regex_iterator`s. Two
+end-of-sequence iterators are always equal. An end-of-sequence iterator
+is not equal to a non-end-of-sequence iterator. Two non-end-of-sequence
+iterators are equal when they are constructed from the same arguments.
 
 ``` cpp
 namespace std {

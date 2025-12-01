@@ -105,6 +105,9 @@ changed thereby.[^3]
 
 ### Value category <a id="basic.lval">[[basic.lval]]</a>
 
+Expressions are categorized according to the taxonomy in Figure
+[[fig:basic.lval]].
+
 <a id="fig:basic.lval"></a>
 
 ![Expression category taxonomy \[fig:basic.lval\]](images/valuecategories.svg)

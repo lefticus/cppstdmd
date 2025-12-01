@@ -1564,6 +1564,10 @@ object assigned to.
 
 ### Destructors <a id="class.dtor">[[class.dtor]]</a>
 
+A declaration whose *declarator-id* has an *unqualified-id* that begins
+with a `~` declares a *prospective destructor*; its *declarator* shall
+be a function declarator [[dcl.fct]] of the form
+
 ``` bnf
 ptr-declarator '(' parameter-declaration-clause ')' noexcept-specifierₒₚₜ attribute-specifier-seqₒₚₜ
 ```

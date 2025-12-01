@@ -27,6 +27,12 @@ operations, and algorithms from the ISO C library, as summarized in
 
 ## Algorithms requirements <a id="algorithms.requirements">[[algorithms.requirements]]</a>
 
+All of the algorithms are separated from the particular implementations
+of data structures and are parameterized by iterator types. Because of
+this, they can work with program-defined data structures, as long as
+these data structures have iterator types satisfying the assumptions on
+the algorithms.
+
 The entities defined in the `std::ranges` namespace in this Clause are
 not found by argument-dependent name lookup [[basic.lookup.argdep]].
 When found by unqualified [[basic.lookup.unqual]] name lookup for the
@@ -208,6 +214,10 @@ with different template parameters than those presented. — *end note*]
 ## Parallel algorithms <a id="algorithms.parallel">[[algorithms.parallel]]</a>
 
 ### Preamble <a id="algorithms.parallel.defns">[[algorithms.parallel.defns]]</a>
+
+Subclause [[algorithms.parallel]] describes components that C++ programs
+may use to perform operations on containers and other sequences in
+parallel.
 
 A *parallel algorithm* is a function template listed in this document
 with a template parameter named `ExecutionPolicy`.

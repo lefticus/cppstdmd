@@ -1050,6 +1050,12 @@ namespace std {
 
 ## Algorithms requirements <a id="algorithms.requirements">[[algorithms.requirements]]</a>
 
+All of the algorithms are separated from the particular implementations
+of data structures and are parameterized by iterator types. Because of
+this, they can work with program-defined data structures, as long as
+these data structures have iterator types satisfying the assumptions on
+the algorithms.
+
 For purposes of determining the existence of data races, algorithms
 shall not modify objects referenced through an iterator argument unless
 the specification requires such modification.
@@ -1147,6 +1153,10 @@ This section describes components that C++programs may use to perform
 operations on containers and other sequences in parallel.
 
 ### Terms and definitions <a id="algorithms.parallel.defns">[[algorithms.parallel.defns]]</a>
+
+A *parallel algorithm* is a function template listed in this
+International Standard with a template parameter named
+`ExecutionPolicy`.
 
 Parallel algorithms access objects indirectly accessible via their
 arguments by invoking the following functions:

@@ -833,6 +833,8 @@ ensure, for a call with at least one argument of type `complex<T>`:
 
 ### Header `<ccomplex>` <a id="ccmplx">[[ccmplx]]</a>
 
+The header behaves as if it simply includes the header `<complex>`.
+
 ## Random number generation <a id="rand">[[rand]]</a>
 
 This subclause defines a facility for generating (pseudo-)random

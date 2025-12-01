@@ -245,6 +245,10 @@ namespace std {
 
 ## Type aliases <a id="atomics.alias">[[atomics.alias]]</a>
 
+The type aliases `atomic_intN_t`, `atomic_uintN_t`, `atomic_intptr_t`,
+and `atomic_uintptr_t` are defined if and only if `intN_t`, `uintN_t`,
+`intptr_t`, and `uintptr_t` are defined, respectively.
+
 ## Order and consistency <a id="atomics.order">[[atomics.order]]</a>
 
 ``` cpp

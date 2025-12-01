@@ -332,6 +332,9 @@ denotes
 
 ### `ranges::begin` <a id="range.access.begin">[[range.access.begin]]</a>
 
+The name `ranges::begin` denotes a customization point object
+[[customization.point.object]].
+
 Given a subexpression `E` with type `T`, let `t` be an lvalue that
 denotes the reified object for `E`. Then:
 
@@ -368,6 +371,9 @@ template instantiation. — *end note*]
 models `input_or_output_iterator`. — *end note*]
 
 ### `ranges::end` <a id="range.access.end">[[range.access.end]]</a>
+
+The name `ranges::end` denotes a customization point object
+[[customization.point.object]].
 
 Given a subexpression `E` with type `T`, let `t` be an lvalue that
 denotes the reified object for `E`. Then:
@@ -408,6 +414,10 @@ template instantiation. — *end note*]
 
 ### `ranges::cbegin` <a id="range.access.cbegin">[[range.access.cbegin]]</a>
 
+The name `ranges::cbegin` denotes a customization point object
+[[customization.point.object]]. The expression `ranges::{}cbegin(E)` for
+a subexpression `E` of type `T` is expression-equivalent to:
+
 - `ranges::begin(static_cast<const T&>(E))` if `E` is an lvalue.
 - Otherwise, `ranges::begin(static_cast<const T&&>(E))`.
 
@@ -415,6 +425,10 @@ template instantiation. — *end note*]
 models `input_or_output_iterator`. — *end note*]
 
 ### `ranges::cend` <a id="range.access.cend">[[range.access.cend]]</a>
+
+The name `ranges::cend` denotes a customization point object
+[[customization.point.object]]. The expression `ranges::cend(E)` for a
+subexpression `E` of type `T` is expression-equivalent to:
 
 - `ranges::end(static_cast<const T&>(E))` if `E` is an lvalue.
 - Otherwise, `ranges::end(static_cast<const T&&>(E))`.
@@ -424,6 +438,9 @@ models `input_or_output_iterator`. — *end note*]
 `sentinel_for<S, I>`. — *end note*]
 
 ### `ranges::rbegin` <a id="range.access.rbegin">[[range.access.rbegin]]</a>
+
+The name `ranges::rbegin` denotes a customization point object
+[[customization.point.object]].
 
 Given a subexpression `E` with type `T`, let `t` be an lvalue that
 denotes the reified object for `E`. Then:
@@ -463,6 +480,9 @@ template instantiation. — *end note*]
 models `input_or_output_iterator`. — *end note*]
 
 ### `ranges::rend` <a id="range.access.rend">[[range.access.rend]]</a>
+
+The name `ranges::rend` denotes a customization point object
+[[customization.point.object]].
 
 Given a subexpression `E` with type `T`, let `t` be an lvalue that
 denotes the reified object for `E`. Then:
@@ -505,6 +525,10 @@ template instantiation. — *end note*]
 
 ### `ranges::crbegin` <a id="range.access.crbegin">[[range.access.crbegin]]</a>
 
+The name `ranges::crbegin` denotes a customization point object
+[[customization.point.object]]. The expression `ranges::{}crbegin(E)`
+for a subexpression `E` of type `T` is expression-equivalent to:
+
 - `ranges::{}rbegin(static_cast<const T&>(E))` if `E` is an lvalue.
 - Otherwise, `ranges::rbegin(static_cast<const T&&>(E))`.
 
@@ -512,6 +536,10 @@ template instantiation. — *end note*]
 type models `input_or_output_iterator`. — *end note*]
 
 ### `ranges::crend` <a id="range.access.crend">[[range.access.crend]]</a>
+
+The name `ranges::crend` denotes a customization point object
+[[customization.point.object]]. The expression `ranges::{}crend(E)` for
+a subexpression `E` of type `T` is expression-equivalent to:
 
 - `ranges::rend(static_cast<const T&>(E))` if `E` is an lvalue.
 - Otherwise, `ranges::rend(static_cast<const T&&>(E))`.
@@ -521,6 +549,9 @@ type models `input_or_output_iterator`. — *end note*]
 `sentinel_for<S, I>`. — *end note*]
 
 ### `ranges::size` <a id="range.prim.size">[[range.prim.size]]</a>
+
+The name `ranges::size` denotes a customization point object
+[[customization.point.object]].
 
 Given a subexpression `E` with type `T`, let `t` be an lvalue that
 denotes the reified object for `E`. Then:
@@ -573,6 +604,9 @@ a subexpression `E` of type `T` is expression-equivalent to:
 
 ### `ranges::empty` <a id="range.prim.empty">[[range.prim.empty]]</a>
 
+The name `ranges::empty` denotes a customization point object
+[[customization.point.object]].
+
 Given a subexpression `ranges::empty(E)` with type `T`, let `t` be an
 lvalue that denotes the reified object for `E`. Then:
 
@@ -598,6 +632,9 @@ type `bool`. — *end note*]
 
 ### `ranges::data` <a id="range.prim.data">[[range.prim.data]]</a>
 
+The name `ranges::data` denotes a customization point object
+[[customization.point.object]].
+
 Given a subexpression `E` with type `T`, let `t` be an lvalue that
 denotes the reified object for `E`. Then:
 
@@ -622,6 +659,10 @@ template instantiation. — *end note*]
 pointer to object type. — *end note*]
 
 ### `ranges::cdata` <a id="range.prim.cdata">[[range.prim.cdata]]</a>
+
+The name `ranges::cdata` denotes a customization point object
+[[customization.point.object]]. The expression `ranges::{}cdata(E)` for
+a subexpression `E` of type `T` is expression-equivalent to:
 
 - `ranges::data(static_cast<const T&>(E))` if `E` is an lvalue.
 - Otherwise, `ranges::data(static_cast<const T&&>(E))`.

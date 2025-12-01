@@ -33,6 +33,8 @@ types for enumerating regular expression matches, as described in Table 
 
 ## Definitions <a id="re.def">[[re.def]]</a>
 
+The following definitions shall apply to this Clause:
+
 #### 1 collating element <a id="defns.regex.collating.element">[defns.regex.collating.element]</a>
 
 a sequence of one or more characters within the current locale that
@@ -1217,6 +1219,9 @@ template <class charT, class traits>
 
 ## Class template `sub_match` <a id="re.submatch">[[re.submatch]]</a>
 
+Class template `sub_match` denotes the sequence of characters matched by
+a particular marked sub-expression.
+
 ``` cpp
 namespace std {
   template <class BidirectionalIterator>
@@ -1653,6 +1658,11 @@ template <class charT, class ST, class BiIter>
 
 ## Class template `match_results` <a id="re.results">[[re.results]]</a>
 
+Class template `match_results` denotes a collection of character
+sequences representing the result of a regular expression match. Storage
+for the collection is allocated and freed as necessary by the member
+functions of class template `match_results`.
+
 The class template `match_results` shall satisfy the requirements of an
 allocator-aware container and of a sequence container, as specified in 
 [[sequence.reqmts]], except that only operations defined for
@@ -1757,6 +1767,10 @@ namespace std {
 ```
 
 ### `match_results` constructors <a id="re.results.const">[[re.results.const]]</a>
+
+In all `match_results` constructors, a copy of the `Allocator` argument
+shall be used for any memory allocation performed by the constructor or
+member functions during the lifetime of the object.
 
 ``` cpp
 match_results(const Allocator& a = Allocator());
@@ -2053,6 +2067,11 @@ bool operator!=(const match_results<BidirectionalIterator, Allocator>& m1,
 ## Regular expression algorithms <a id="re.alg">[[re.alg]]</a>
 
 ### exceptions <a id="re.except">[[re.except]]</a>
+
+The algorithms described in this subclause may throw an exception of
+type `regex_error`. If such an exception `e` is thrown, `e.code()` shall
+return either `regex_constants::error_complexity` or
+`regex_constants::error_stack`.
 
 ### `regex_match` <a id="re.alg.match">[[re.alg.match]]</a>
 
@@ -2353,6 +2372,27 @@ template <class traits, class charT>
 ## Regular expression iterators <a id="re.iter">[[re.iter]]</a>
 
 ### Class template `regex_iterator` <a id="re.regiter">[[re.regiter]]</a>
+
+The class template `regex_iterator` is an iterator adaptor. It
+represents a new view of an existing iterator sequence, by enumerating
+all the occurrences of a regular expression within that sequence. A
+`regex_iterator` uses `regex_search` to find successive regular
+expression matches within the sequence from which it was constructed.
+After the iterator is constructed, and every time `operator++` is used,
+the iterator finds and stores a value of
+`match_results<BidirectionalIterator>`. If the end of the sequence is
+reached (`regex_search` returns `false`), the iterator becomes equal to
+the end-of-sequence iterator value. The default constructor constructs
+an end-of-sequence iterator object, which is the only legitimate
+iterator to be used for the end condition. The result of `operator*` on
+an end-of-sequence iterator is not defined. For any other iterator value
+a const `match_results<BidirectionalIterator>&` is returned. The result
+of `operator->` on an end-of-sequence iterator is not defined. For any
+other iterator value a `const match_results<BidirectionalIterator>*` is
+returned. It is impossible to store things into `regex_iterator`s. Two
+end-of-sequence iterators are always equal. An end-of-sequence iterator
+is not equal to a non-end-of-sequence iterator. Two non-end-of-sequence
+iterators are equal when they are constructed from the same arguments.
 
 ``` cpp
 namespace std {

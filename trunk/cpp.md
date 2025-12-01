@@ -943,6 +943,8 @@ static_assert(sizeof(sound_signature) == 4);    // OK
 
 #### prefix parameter <a id="cpp.embed.param.prefix">[[cpp.embed.param.prefix]]</a>
 
+An *embed-parameter* of the form
+
 ``` bnf
 'prefix (' pp-balanced-token-seqₒₚₜ ')'
 ```
@@ -954,6 +956,8 @@ the *pp-balanced-token-seq* is placed immediately before the
 comma-delimited list of integral literals.
 
 #### suffix parameter <a id="cpp.embed.param.suffix">[[cpp.embed.param.suffix]]</a>
+
+An *embed-parameter* of the form
 
 ``` bnf
 'suffix (' pp-balanced-token-seqₒₚₜ ')'
@@ -985,6 +989,8 @@ static_assert(is_empty || is_not_empty);
 — *end example*]
 
 #### `if_empty` parameter <a id="cpp.embed.param.if.empty">[[cpp.embed.param.if.empty]]</a>
+
+An embed-parameter of the form
 
 ``` bnf
 'if_empty (' pp-balanced-token-seqₒₚₜ ')'
