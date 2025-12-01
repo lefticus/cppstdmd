@@ -2904,9 +2904,9 @@ derived object [[intro.object]] is unspecified.
 
 [*Note 3*:  A derived class and its base class subobjects can be
 represented by a directed acyclic graph (DAG) where an arrow means
-“directly derived from” (see ). An arrow need not have a physical
-representation in memory. A DAG of subobjects is often referred to as a
-“subobject lattice”.
+“directly derived from” (see Figure [[fig:class.dag]]). An arrow
+need not have a physical representation in memory. A DAG of subobjects
+is often referred to as a “subobject lattice”.
 
 <a id="fig:class.dag"></a>
 
@@ -2992,7 +2992,7 @@ For an object of class type `C`, each distinct occurrence of a
 (non-virtual) base class `L` in the class lattice of `C` corresponds
 one-to-one with a distinct `L` subobject within the object of type `C`.
 Given the class `C` defined above, an object of class `C` will have two
-subobjects of class `L` as shown in .
+subobjects of class `L` as shown in Figure [[fig:class.nonvirt]].
 
 <a id="fig:class.nonvirt"></a>
 
@@ -3029,7 +3029,8 @@ class C : public A, public B { ... };
 For an object `c` of class type `C`, a single subobject of type `V` is
 shared by every base class subobject of `c` that has a `virtual` base
 class of type `V`. Given the class `C` defined above, an object of class
-`C` will have one subobject of class `V`, as shown in .
+`C` will have one subobject of class `V`, as shown in Figure
+[[fig:class.virt]].
 
 — *end note*]
 
@@ -3052,7 +3053,8 @@ the object of type `AA`, and every other occurrence of a (non-virtual)
 base class `B` in the class lattice of `AA` corresponds one-to-one with
 a distinct `B` subobject within the object of type `AA`. Given the class
 `AA` defined above, class `AA` has two subobjects of class `B`: `Z`’s
-`B` and the virtual `B` shared by `X` and `Y`, as shown in .
+`B` and the virtual `B` shared by `X` and `Y`, as shown in Figure
+[[fig:class.virtnonvirt]].
 
 <a id="fig:class.virtnonvirt"></a>
 
@@ -3675,9 +3677,10 @@ struct D : B, C { void glorp(); };
 
 ![Name lookup \[fig:class.lookup\]](images/figname.svg)
 
-As illustrated in , the names declared in `V` and the left-hand instance
-of `W` are hidden by those in `B`, but the names declared in the
-right-hand instance of `W` are not hidden at all.
+As illustrated in Figure [[fig:class.lookup]], the names declared in
+`V` and the left-hand instance of `W` are hidden by those in `B`, but
+the names declared in the right-hand instance of `W` are not hidden at
+all.
 
 ``` cpp
 void D::glorp() {

@@ -221,5 +221,8 @@
 %% \includegraphics. We convert to a marker that cpp-figures.lua can
 %% process after notes/examples are parsed (preserving surrounding content).
 %% Format: @@FIGURE:tag:file:caption@@
+%% \fref{tag} creates inline figure references: "Figure [[fig:tag]]"
+%% Links to anchors created by cpp-figures.lua
 %%--------------------------------------------------
 \renewenvironment{importgraphic}[3]{@@FIGURE:#2:#3:#1@@}{}
+\renewcommand{\fref}[1]{Figure [[fig:#1]]}

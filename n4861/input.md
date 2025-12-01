@@ -28,9 +28,10 @@ summarized in [[iostreams.summary]].
 | [[c.files]]                | C library files             | `<cstdio>`, `<cinttypes>`             |
 
 
-[*Note 1*:  illustrates relationships among various types described in
-this clause. A line from **A** to **B** indicates that **A** is an alias
-(e.g., a typedef) for **B** or that **A** is defined in terms of **B**.
+[*Note 1*: Figure [[fig:iostreams.streampos]] illustrates
+relationships among various types described in this clause. A line from
+**A** to **B** indicates that **A** is an alias (e.g., a typedef) for
+**B** or that **A** is defined in terms of **B**.
 
 <a id="fig:iostreams.streampos"></a>
 

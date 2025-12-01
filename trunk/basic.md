@@ -1491,9 +1491,10 @@ struct D : B, C { void glorp(); };
 
 ![Name lookup \[fig:class.lookup\]](images/figname.svg)
 
-As illustrated in , the names declared in `V` and the left-hand instance
-of `W` are hidden by those in `B`, but the names declared in the
-right-hand instance of `W` are not hidden at all.
+As illustrated in Figure [[fig:class.lookup]], the names declared in
+`V` and the left-hand instance of `W` are hidden by those in `B`, but
+the names declared in the right-hand instance of `W` are not hidden at
+all.
 
 ``` cpp
 void D::glorp() {
