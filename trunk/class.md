@@ -3000,6 +3000,10 @@ represented by a directed acyclic graph (DAG) where an arrow means
 representation in memory. A DAG of subobjects is often referred to as a
 “subobject lattice”. — *end note*]
 
+<a id="fig:class.dag"></a>
+
+![Directed acyclic graph \[fig:class.dag\]](images/figdag.svg)
+
 [*Note 4*: Initialization of objects representing base classes can be
 specified in constructors; see  [[class.base.init]]. — *end note*]
 
@@ -3079,6 +3083,10 @@ one-to-one with a distinct `L` subobject within the object of type `C`.
 Given the class `C` defined above, an object of class `C` will have two
 subobjects of class `L` as shown in .
 
+<a id="fig:class.nonvirt"></a>
+
+![Non-virtual base \[fig:class.nonvirt\]](images/fignonvirt.svg)
+
 In such lattices, explicit qualification can be used to specify which
 subobject is meant. The body of function `C::f` can refer to the member
 `next` of each `L` subobject:
@@ -3102,6 +3110,10 @@ class A : virtual public V { ... };
 class B : virtual public V { ... };
 class C : public A, public B { ... };
 ```
+
+<a id="fig:class.virt"></a>
+
+![Virtual base \[fig:class.virt\]](images/figvirt.svg)
 
 For an object `c` of class type `C`, a single subobject of type `V` is
 shared by every base class subobject of `c` that has a `virtual` base
@@ -3130,6 +3142,10 @@ base class `B` in the class lattice of `AA` corresponds one-to-one with
 a distinct `B` subobject within the object of type `AA`. Given the class
 `AA` defined above, class `AA` has two subobjects of class `B`: `Z`’s
 `B` and the virtual `B` shared by `X` and `Y`, as shown in .
+
+<a id="fig:class.virtnonvirt"></a>
+
+![Virtual and non-virtual base \[fig:class.virtnonvirt\]](images/figvirtnonvirt.svg)
 
 — *end note*]
 

@@ -124,6 +124,21 @@ fi
 success "Pandoc version $PANDOC_VERSION found"
 
 # ============================================================================
+# Step 3b: Check Graphviz (for diagram conversion)
+# ============================================================================
+info "Step 3b: Checking Graphviz installation..."
+
+if ! command -v dot &> /dev/null; then
+    abort "Graphviz is not installed. Please install it:
+    Ubuntu/Debian: sudo apt install graphviz
+    macOS: brew install graphviz
+    See: https://graphviz.org/download/"
+fi
+
+GRAPHVIZ_VERSION=$(dot -V 2>&1 | head -n1)
+success "Graphviz found: $GRAPHVIZ_VERSION"
+
+# ============================================================================
 # Step 4: Clone/update cplusplus/draft repository
 # ============================================================================
 info "Step 4: Setting up cplusplus/draft repository..."

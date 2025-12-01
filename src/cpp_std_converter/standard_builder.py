@@ -34,6 +34,7 @@ Builds a complete C++ standard document from std.tex by:
 
 import os
 import re
+import subprocess
 import sys
 from concurrent.futures import ProcessPoolExecutor, as_completed
 from pathlib import Path
@@ -161,6 +162,70 @@ class StandardBuilder:
         """
         self.draft_dir = Path(draft_dir)
         self.std_tex = self.draft_dir / "std.tex"
+
+    def convert_diagrams_to_svg(self, output_dir: Path, verbose: bool = False) -> list[Path]:
+        """
+        Convert Graphviz .dot files to SVG format for embedding in markdown.
+
+        The C++ standard uses importgraphic environments that reference PDF files
+        generated from .dot files. This method converts those .dot files directly
+        to SVG format which can be embedded in GitHub Flavored Markdown.
+
+        Args:
+            output_dir: Directory where images/ subdirectory will be created
+            verbose: Print progress messages
+
+        Returns:
+            List of generated SVG file paths
+        """
+        # Find all .dot files in the draft source directory
+        dot_files = list(self.draft_dir.glob("*.dot"))
+
+        if not dot_files:
+            if verbose:
+                print("No .dot diagram files found")
+            return []
+
+        # Create images subdirectory
+        images_dir = output_dir / "images"
+        ensure_dir(images_dir)
+
+        if verbose:
+            print(f"Converting {len(dot_files)} diagrams to SVG...")
+
+        svg_files = []
+        for dot_file in dot_files:
+            svg_file = images_dir / (dot_file.stem + ".svg")
+
+            try:
+                # Use Graphviz dot command to convert to SVG
+                subprocess.run(
+                    ["dot", "-Tsvg", str(dot_file), "-o", str(svg_file)],
+                    capture_output=True,
+                    text=True,
+                    check=True,
+                )
+                svg_files.append(svg_file)
+
+                if verbose:
+                    print(f"  {dot_file.name} → {svg_file.name}")
+
+            except subprocess.CalledProcessError as e:
+                print(
+                    f"Warning: Failed to convert {dot_file.name}: {e.stderr}",
+                    file=sys.stderr,
+                )
+            except FileNotFoundError:
+                print(
+                    "Error: Graphviz (dot) not found. Install with: apt install graphviz",
+                    file=sys.stderr,
+                )
+                break
+
+        if verbose and svg_files:
+            print(f"Generated {len(svg_files)} SVG diagrams in {images_dir}")
+
+        return svg_files
 
     def extract_chapter_order(
         self, include_frontmatter: bool = True, include_backmatter: bool = True
@@ -432,6 +497,12 @@ class StandardBuilder:
 
         if verbose:
             print(f"Found {len(chapters)} chapters in std.tex")
+
+        # Convert .dot diagrams to SVG before processing chapters
+        # Images go in the same directory as the output file
+        output_dir = Path(output_file).parent
+        ensure_dir(output_dir)
+        self.convert_diagrams_to_svg(output_dir, verbose=verbose)
 
         converted_chapters = []
         all_content_parts = []
@@ -844,6 +915,9 @@ class StandardBuilder:
 
         output_dir = Path(output_dir)
         ensure_dir(output_dir)
+
+        # Convert .dot diagrams to SVG before processing chapters
+        self.convert_diagrams_to_svg(output_dir, verbose=verbose)
 
         output_files = []
         temp_files = []  # Track temporary files for cleanup

@@ -1644,14 +1644,17 @@ A *base-specifier* followed by an ellipsis is a pack expansion (
 The order in which the base class subobjects are allocated in the most
 derived object ([[intro.object]]) is unspecified.
 
-[*Note 3*:
+[*Note 3*:  A derived class and its base class subobjects can be
+represented by a directed acyclic graph (DAG) where an arrow means
+“directly derived from”. An arrow need not have a physical
+representation in memory. A DAG of subobjects is often referred to as a
+“subobject lattice”.
 
-A derived class and its base class subobjects can be represented by a
-directed acyclic graph (DAG) where an arrow means “directly derived
-from”. An arrow need not have a physical representation in memory. A DAG
-of subobjects is often referred to as a “subobject lattice”.
+<a id="fig:dag"></a>
 
-— *end note*]
+![Directed acyclic graph \[fig:dag\]](images/figdag.svg)
+
+ — *end note*]
 
 [*Note 4*: Initialization of objects representing base classes can be
 specified in constructors; see  [[class.base.init]]. — *end note*]
@@ -1733,6 +1736,10 @@ one-to-one with a distinct `L` subobject within the object of type `C`.
 Given the class `C` defined above, an object of class `C` will have two
 subobjects of class `L` as shown in Figure  [[fig:nonvirt]].
 
+<a id="fig:nonvirt"></a>
+
+![Non-virtual base \[fig:nonvirt\]](images/fignonvirt.svg)
+
 In such lattices, explicit qualification can be used to specify which
 subobject is meant. The body of function `C::f` could refer to the
 member `next` of each `L` subobject:
@@ -1756,6 +1763,10 @@ class A : virtual public V { ... };
 class B : virtual public V { ... };
 class C : public A, public B { ... };
 ```
+
+<a id="fig:virt"></a>
+
+![Virtual base \[fig:virt\]](images/figvirt.svg)
 
 For an object `c` of class type `C`, a single subobject of type `V` is
 shared by every base class subobject of `c` that has a `virtual` base
@@ -1786,6 +1797,10 @@ a distinct `B` subobject within the object of type `AA`. Given the class
 `AA` defined above, class `AA` has two subobjects of class `B`: `Z`’s
 `B` and the virtual `B` shared by `X` and `Y`, as shown in Figure 
 [[fig:virtnonvirt]].
+
+<a id="fig:virtnonvirt"></a>
+
+![Virtual and non-virtual base \[fig:virtnonvirt\]](images/figvirtnonvirt.svg)
 
 — *end note*]
 
@@ -1953,6 +1968,10 @@ struct C : virtual V, W { };
 
 struct D : B, C { void glorp(); };
 ```
+
+<a id="fig:name"></a>
+
+![Name lookup \[fig:name\]](images/figname.svg)
 
 The names declared in `V` and the left-hand instance of `W` are hidden
 by those in `B`, but the names declared in the right-hand instance of

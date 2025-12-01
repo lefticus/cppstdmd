@@ -1249,6 +1249,10 @@ its base class subobjects can be represented by a directed acyclic graph
 (DAG) where an arrow means “directly derived from.” A DAG of subobjects
 is often referred to as a “subobject lattice.”
 
+<a id="fig:dag"></a>
+
+![Directed acyclic graph \[fig:dag\]](images/figdag.svg)
+
 The arrows need not have a physical representation in memory.
 
 Initialization of objects representing base classes can be specified in
@@ -1315,6 +1319,10 @@ corresponds one-to-one with a distinct `L` subobject within the object
 of type `C`. Given the class `C` defined above, an object of class `C`
 will have two subobjects of class `L` as shown below.
 
+<a id="fig:nonvirt"></a>
+
+![Non-virtual base \[fig:nonvirt\]](images/fignonvirt.svg)
+
 In such lattices, explicit qualification can be used to specify which
 subobject is meant. The body of function `C::f` could refer to the
 member `next` of each `L` subobject:
@@ -1340,6 +1348,10 @@ shared by every base subobject of `c` that has a `virtual` base class of
 type `V`. Given the class `C` defined above, an object of class `C` will
 have one subobject of class `V`, as shown below.
 
+<a id="fig:virt"></a>
+
+![Virtual base \[fig:virt\]](images/figvirt.svg)
+
 A class can have both virtual and non-virtual base classes of a given
 type.
 
@@ -1358,6 +1370,10 @@ base class `B` in the class lattice of `AA` corresponds one-to-one with
 a distinct `B` subobject within the object of type `AA`. Given the class
 `AA` defined above, class `AA` has two subobjects of class `B`: `Z`’s
 `B` and the virtual `B` shared by `X` and `Y`, as shown below.
+
+<a id="fig:virtnonvirt"></a>
+
+![Virtual and non-virtual base \[fig:virtnonvirt\]](images/figvirtnonvirt.svg)
 
 ## Member name lookup <a id="class.member.lookup">[[class.member.lookup]]</a>
 
@@ -1503,6 +1519,10 @@ struct C : virtual V, W { };
 
 struct D : B, C { void glorp(); };
 ```
+
+<a id="fig:name"></a>
+
+![Name lookup \[fig:name\]](images/figname.svg)
 
 The names declared in `V` and the left-hand instance of `W` are hidden
 by those in `B`, but the names declared in the right-hand instance of

@@ -28,13 +28,15 @@ summarized in [[iostreams.summary]].
 | [[c.files]]                | C library files             | `<cstdio>`, `<cinttypes>`             |
 
 
-[*Note 1*:
+[*Note 1*:  illustrates relationships among various types described in
+this clause. A line from **A** to **B** indicates that **A** is an alias
+(e.g., a typedef) for **B** or that **A** is defined in terms of **B**.
 
-illustrates relationships among various types described in this clause.
-A line from **A** to **B** indicates that **A** is an alias (e.g., a
-typedef) for **B** or that **A** is defined in terms of **B**.
+<a id="fig:iostreams.streampos"></a>
 
-— *end note*]
+![Stream position, offset, and size types \[fig:iostreams.streampos\]](images/figstreampos.svg)
+
+ — *end note*]
 
 ## Iostreams requirements <a id="iostreams.requirements">[[iostreams.requirements]]</a>
 

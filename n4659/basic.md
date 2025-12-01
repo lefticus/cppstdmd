@@ -3482,6 +3482,10 @@ array type is considered to be const-qualified.
 
 ## Lvalues and rvalues <a id="basic.lval">[[basic.lval]]</a>
 
+<a id="fig:categories"></a>
+
+![Expression category taxonomy \[fig:categories\]](images/valuecategories.svg)
+
 - A *glvalue* is an expression whose evaluation determines the identity
   of an object, bit-field, or function.
 - A *prvalue* is an expression whose evaluation initializes an object or

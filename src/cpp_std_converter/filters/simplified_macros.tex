@@ -214,3 +214,12 @@
 %%--------------------------------------------------
 \renewcommand{\infannex}[2]{@@ANNEX:informative@@\rSec{0}[#1]{#2}}
 \renewcommand{\normannex}[2]{@@ANNEX:normative@@\rSec{0}[#1]{#2}}
+
+%%--------------------------------------------------
+%% Category O: Figures (importgraphic)
+%% WHY: \begin{importgraphic}{caption}{tag}{file} creates a figure with
+%% \includegraphics. We convert to a marker that cpp-figures.lua can
+%% process after notes/examples are parsed (preserving surrounding content).
+%% Format: @@FIGURE:tag:file:caption@@
+%%--------------------------------------------------
+\renewenvironment{importgraphic}[3]{@@FIGURE:#2:#3:#1@@}{}

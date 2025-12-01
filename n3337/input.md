@@ -34,6 +34,10 @@ described in this clause. A line from **A** to **B** indicates that
 **A** is an alias (e.g. a typedef) for **B** or that **A** is defined in
 terms of **B**.
 
+<a id="fig:streampos"></a>
+
+![Stream position, offset, and size types \[non-normative\] \[fig:streampos\]](images/figstreampos.svg)
+
 ## Iostreams requirements <a id="iostreams.requirements">[[iostreams.requirements]]</a>
 
 ### Imbue limitations <a id="iostream.limits.imbue">[[iostream.limits.imbue]]</a>

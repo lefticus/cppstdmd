@@ -3002,6 +3002,10 @@ array type is considered to be `const`-qualified.
 
 ## Lvalues and rvalues <a id="basic.lval">[[basic.lval]]</a>
 
+<a id="fig:categories"></a>
+
+![Expression category taxonomy \[fig:categories\]](images/valuecategories.svg)
+
 - An *lvalue* (so called, historically, because lvalues could appear on
   the left-hand side of an assignment expression) designates a function
   or an object. If `E` is an expression of pointer type, then `*E` is an

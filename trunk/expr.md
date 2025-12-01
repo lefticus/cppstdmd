@@ -105,6 +105,10 @@ changed thereby.[^3]
 
 ### Value category <a id="basic.lval">[[basic.lval]]</a>
 
+<a id="fig:basic.lval"></a>
+
+![Expression category taxonomy \[fig:basic.lval\]](images/valuecategories.svg)
+
 - A *glvalue* is an expression whose evaluation determines the identity
   of an object, function, or non-static data member.
 - A *prvalue* is an expression whose evaluation initializes an object or
