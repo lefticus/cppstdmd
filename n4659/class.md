@@ -15,7 +15,7 @@ are used to make *class-name*s. An object of a class consists of a
 
 ``` bnf
 class-specifier:
-    class-head \terminal{\ member-specificationₒₚₜ \terminal{\}}
+    class-head '{' member-specificationₒₚₜ '}'
 ```
 
 ``` bnf

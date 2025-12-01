@@ -136,7 +136,7 @@ compound statement (also, and equivalently, called “block”) is provided.
 
 ``` bnf
 compound-statement:
-    \terminal{\ statement-seqₒₚₜ \terminal{\}}
+    '{' statement-seqₒₚₜ '}'
 ```
 
 ``` bnf
@@ -745,7 +745,7 @@ operand. Let *p* be an lvalue naming the coroutine promise object
 [[dcl.fct.def.coroutine]]. A `co_return` statement is equivalent to:
 
 ``` bnf
-\terminal{\ S\terminal{;} \terminal{goto} final-suspend\terminal{;} \terminal{\}}
+'{' S';' 'goto' final-suspend';' '}'
 ```
 
 where *`final-suspend`* is the exposition-only label defined in

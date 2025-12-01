@@ -299,7 +299,7 @@ n-char-sequence:
 
 ``` bnf
 named-universal-character:
-    \terminal{\N\ n-char-sequence \terminal{\}}
+    '\N{' n-char-sequence '}'
 ```
 
 ``` bnf
@@ -316,7 +316,7 @@ simple-hexadecimal-digit-sequence:
 universal-character-name:
     '\u' hex-quad
     '\U' hex-quad hex-quad
-    \terminal{\u\ simple-hexadecimal-digit-sequence \terminal{\}}
+    '\u{' simple-hexadecimal-digit-sequence '}'
     named-universal-character
 ```
 
@@ -944,7 +944,7 @@ simple-escape-sequence:
 
 ``` bnf
 simple-escape-sequence-char: one of
-    ''  "  ?  \a  b  f  n  r  t  v'
+    ''  "  ?  \{} a  b  f  n  r  t  v'
 ```
 
 ``` bnf
@@ -963,13 +963,13 @@ octal-escape-sequence:
     '\' octal-digit
     '\' octal-digit octal-digit
     '\' octal-digit octal-digit octal-digit
-    \terminal{\o\ simple-octal-digit-sequence \terminal{\}}
+    '\o{' simple-octal-digit-sequence '}'
 ```
 
 ``` bnf
 hexadecimal-escape-sequence:
     '\x' simple-hexadecimal-digit-sequence
-    \terminal{\x\ simple-hexadecimal-digit-sequence \terminal{\}}
+    '\x{' simple-hexadecimal-digit-sequence '}'
 ```
 
 ``` bnf

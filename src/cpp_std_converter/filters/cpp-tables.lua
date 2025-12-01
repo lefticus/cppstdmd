@@ -104,9 +104,6 @@ local function expand_table_macros(text)
   text = expand_balanced_command(text, "libglobal",
                                   function(content) return "`" .. content .. "`" end)
 
-  -- Special characters
-  text = convert_special_chars(text)
-
   -- \notdef → *not defined* (exposition-only marker)
   text = text:gsub("\\notdef{}", "*not defined*")
   text = text:gsub("\\notdef%s", "*not defined* ")
@@ -123,6 +120,10 @@ local function expand_table_macros(text)
   -- Use balanced brace extraction to handle nested braces like \tcode{T u\{\};}
   text = process_code_macro(text, "tcode")
   text = process_code_macro(text, "texttt")
+
+  -- Special characters (MUST be after \tcode{}/\texttt{} processing to avoid
+  -- converting \textbackslash inside code macros before they're handled)
+  text = convert_special_chars(text)
 
   -- \xname{X} → __X
   text = text:gsub("\\xname{([^}]*)}", "__%1")

@@ -2477,7 +2477,8 @@ local function expand_macros_common(text, options)
   end
 
   -- Tier 15: Empty braces cleanup (cpp-macros context only)
-  if not options.minimal and not options.convert_to_latex then
+  -- Skip for BNF blocks (skip_special_chars) to preserve \{} escaped braces
+  if not options.minimal and not options.convert_to_latex and not options.skip_special_chars then
     -- Strip empty braces {} that appear after C++ version identifiers
     -- BUT preserve = {} (default initializers in function signatures)
     text = text:gsub("(%S){}%s", "%1 ")

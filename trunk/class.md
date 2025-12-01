@@ -17,7 +17,7 @@ is used to make a *class-name*. An object of a class consists of a
 
 ``` bnf
 class-specifier:
-    class-head \terminal{\ member-specificationₒₚₜ \terminal{\}}
+    class-head '{' member-specificationₒₚₜ '}'
 ```
 
 ``` bnf
@@ -2752,7 +2752,7 @@ new (&u.n) N;
 A union of the form
 
 ``` bnf
-union \terminal{\ member-specification \terminal{\}} \terminal{;}
+union '{' member-specification '}' ';'
 ```
 
 is called an *anonymous union*; it defines an unnamed type and an

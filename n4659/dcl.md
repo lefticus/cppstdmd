@@ -1638,8 +1638,8 @@ enum-name:
 
 ``` bnf
 enum-specifier:
-    enum-head \terminal{\ enumerator-listₒₚₜ \terminal{\}}
-    enum-head \terminal{\ enumerator-list \terminal{, \}}
+    enum-head '{' enumerator-listₒₚₜ '}'
+    enum-head '{' enumerator-list ', }'
 ```
 
 ``` bnf
@@ -1955,17 +1955,17 @@ namespace-definition:
 
 ``` bnf
 named-namespace-definition:
-        'inline\opt' 'namespace' attribute-specifier-seqiₒₚₜdentifier \terminal{\ namespace-body \terminal{\}}
+        'inline\opt' 'namespace' attribute-specifier-seqiₒₚₜdentifier '{' namespace-body '}'
 ```
 
 ``` bnf
 unnamed-namespace-definition:
-        'inline\opt' 'namespace' attribute-specifier-seqₒₚₜ \terminal{\ namespace-body \terminal{\}}
+        'inline\opt' 'namespace' attribute-specifier-seqₒₚₜ '{' namespace-body '}'
 ```
 
 ``` bnf
 nested-namespace-definition:
-        'namespace' enclosing-namespace-specifier '::' identifier \terminal{\ namespace-body \terminal{\}}
+        'namespace' enclosing-namespace-specifier '::' identifier '{' namespace-body '}'
 ```
 
 ``` bnf
@@ -2106,7 +2106,7 @@ An *unnamed-namespace-definition* behaves as if it were replaced by
 ``` bnf
 'inline'ₒₚₜ 'namespace' '\uniquens' '{ /* empty body */ }'
 'using namespace' '\uniquens' ';'
-'namespace' '\uniquens' \terminal{\ namespace-body \terminal{\}}
+'namespace' '\uniquens' '{' namespace-body '}'
 ```
 
 where `inline` appears if and only if it appears in the
@@ -3014,8 +3014,8 @@ achieved using a *linkage-specification*:
 
 ``` bnf
 linkage-specification:
-    'extern' string-literal \terminal{\ declaration-seqₒₚₜ \terminal{\}}
-    \terminal{extern} string-literal declaration
+    'extern' string-literal '{' declaration-seqₒₚₜ '}'
+    'extern' string-literal declaration
 ```
 
 The *string-literal* indicates the required language linkage. This
@@ -3282,7 +3282,7 @@ balanced-token-seq:
 balanced-token:
     '(' balanced-token-seqₒₚₜ ')'
     '[' balanced-token-seqₒₚₜ ']'
-    \terminal{\ balanced-token-seqₒₚₜ \terminal{\}}
+    '{' balanced-token-seqₒₚₜ '}'
     any *token* other than a parenthesis, a bracket, or a brace
 ```
 
@@ -4405,7 +4405,7 @@ syntax, and never by the pointer declarator syntax. There is no
 In a declaration `T` `D` where `D` has the form
 
 ``` bnf
-'D1 [' constant-expression\opt ']' attribute-specifier-seq\opt
+'D1 [' constant-expression\opt{} ']' attribute-specifier-seq\opt
 ```
 
 and the type of the identifier in the declaration `T` `D1` is
@@ -5538,8 +5538,8 @@ initializer-list:
 
 ``` bnf
 braced-init-list:
-    \terminal{\ initializer-list \terminal{,\opt} \terminal{\}}
-    \terminal{\ \terminal{\}}
+    '{' initializer-list ',\opt' '}'
+    '{' '}'
 ```
 
 ``` bnf

@@ -1176,3 +1176,38 @@ def test_libtab2_simple():
     # Should NOT have LaTeX commands
     assert "\\tcode" not in output
     assert "\\begin" not in output
+
+
+def test_floattable_with_textbackslash():
+    r"""Test floattable with \textbackslash inside \tcode{} (Issue #27)
+
+    The C++ standard uses \tcode{\textbackslash} to represent a backslash character
+    in code. This must be converted to `\` in markdown, not \texttt{\}.
+    """
+    latex = r"""
+\begin{floattable}{Basic character set}{lex.charset.basic}{lll}
+\topline
+\lhdrx{2}{character} & \rhdr{glyph} \\ \capsep
+\ucode{005c} & \uname{reverse solidus} & \tcode{\textbackslash} \\
+\ucode{005e} & \uname{circumflex accent} & \tcode{\caret} \\
+\ucode{007b} & \uname{left curly bracket} & \tcode{\{} \\
+\ucode{007d} & \uname{right curly bracket} & \tcode{\}} \\
+\ucode{007e} & \uname{tilde} & \tcode{\textasciitilde} \\
+\end{floattable}
+"""
+    output, returncode = run_pandoc_with_filter(latex)
+    assert returncode == 0, f"Pandoc failed with output: {output}"
+
+    # All special characters should be converted to backtick-wrapped chars
+    assert r"`\`" in output, "Backslash should be converted to `\\`"
+    assert "`^`" in output, "Caret should be converted to `^`"
+    assert "`{`" in output, "Left brace should be converted to `{`"
+    assert "`}`" in output, "Right brace should be converted to `}`"
+    assert "`~`" in output, "Tilde should be converted to `~`"
+
+    # Should NOT have unconverted LaTeX
+    assert "\\textbackslash" not in output
+    assert "\\caret" not in output
+    assert "\\textasciitilde" not in output
+    assert "\\tcode" not in output
+    assert "\\texttt" not in output

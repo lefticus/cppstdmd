@@ -171,7 +171,7 @@ statements into a single statement.
 
 ``` bnf
 compound-statement:
-    \terminal{\ statement-seqₒₚₜ label-seqₒₚₜ \terminal{\}}
+    '{' statement-seqₒₚₜ label-seqₒₚₜ '}'
 ```
 
 ``` bnf
@@ -342,7 +342,7 @@ is not itself a consteval if statement, but is equivalent to the
 consteval if statement
 
 ``` bnf
-if consteval \terminal{\ \terminal{\}} else compound-statement
+if consteval '{' '}' else compound-statement
 ```
 
 An `if` statement of the form
@@ -684,7 +684,7 @@ expansion-initializer:
 
 ``` bnf
 expansion-init-list:
-    \terminal{\ expression-listₒₚₜ \terminal{\}}
+    '{' expression-listₒₚₜ '}'
 ```
 
 The *compound-statement* of an *expansion-statement* is a
@@ -995,7 +995,7 @@ operand. Let *p* be an lvalue naming the coroutine promise object
 [[dcl.fct.def.coroutine]]. A `co_return` statement is equivalent to:
 
 ``` bnf
-\terminal{\ S\terminal{;} goto final-suspend\terminal{;} \terminal{\}}
+'{' S';' goto final-suspend';' '}'
 ```
 
 where *`final-suspend`* is the exposition-only label defined in

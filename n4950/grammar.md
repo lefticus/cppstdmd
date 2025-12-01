@@ -79,7 +79,7 @@ n-char-sequence:
 
 ``` bnf
 named-universal-character:
-    \terminal{\N\ n-char-sequence \terminal{\}}
+    '\N{' n-char-sequence '}'
 ```
 
 ``` bnf
@@ -97,7 +97,7 @@ simple-hexadecimal-digit-sequence:
 universal-character-name:
     '\u' hex-quad
     '\U' hex-quad hex-quad
-    \terminal{\u\ simple-hexadecimal-digit-sequence \terminal{\}}
+    '\u{' simple-hexadecimal-digit-sequence '}'
     named-universal-character
 ```
 
@@ -381,7 +381,7 @@ simple-escape-sequence:
 
 ``` bnf
 simple-escape-sequence-char: one of
-    ''  "  ?  \a  b  f  n  r  t  v'
+    ''  "  ?  \{} a  b  f  n  r  t  v'
 ```
 
 ``` bnf
@@ -401,13 +401,13 @@ octal-escape-sequence:
     '\' octal-digit
     '\' octal-digit octal-digit
     '\' octal-digit octal-digit octal-digit
-    \terminal{\o\ simple-octal-digit-sequence \terminal{\}}
+    '\o{' simple-octal-digit-sequence '}'
 ```
 
 ``` bnf
 hexadecimal-escape-sequence:
     '\x' simple-hexadecimal-digit-sequence
-    \terminal{\x\ simple-hexadecimal-digit-sequence \terminal{\}}
+    '\x{' simple-hexadecimal-digit-sequence '}'
 ```
 
 ``` bnf
@@ -740,7 +740,7 @@ requirement-parameter-list:
 
 ``` bnf
 requirement-body:
-    \terminal{\ requirement-seq \terminal{\}}
+    '{' requirement-seq '}'
 ```
 
 ``` bnf
@@ -769,7 +769,7 @@ type-requirement:
 
 ``` bnf
 compound-requirement:
-    \terminal{\ expression \terminal{\}} noexceptₒₚₜ return-type-requirementₒₚₜ \terminal{;}
+    '{' expression '}' noexceptₒₚₜ return-type-requirementₒₚₜ ';'
 ```
 
 ``` bnf
@@ -1058,7 +1058,7 @@ expression-statement:
 
 ``` bnf
 compound-statement:
-    \terminal{\ statement-seqₒₚₜ label-seqₒₚₜ \terminal{\}}
+    '{' statement-seqₒₚₜ label-seqₒₚₜ '}'
 ```
 
 ``` bnf
@@ -1109,7 +1109,7 @@ if '!' consteval compound-statement
 ```
 
 ``` bnf
-if consteval \terminal{\ \terminal{\}} else compound-statement
+if consteval '{' '}' else compound-statement
 ```
 
 ``` bnf
@@ -1210,7 +1210,7 @@ coroutine-return-statement:
 ```
 
 ``` bnf
-\terminal{\ S\terminal{;} \terminal{goto} final-suspend\terminal{;} \terminal{\}}
+'{' S';' 'goto' final-suspend';' '}'
 ```
 
 ``` bnf
@@ -1631,9 +1631,9 @@ initializer-clause:
 
 ``` bnf
 braced-init-list:
-    \terminal{\ initializer-list \terminal{,}ₒₚₜ \terminal{\}}
-    \terminal{\ designated-initializer-list \terminal{,}ₒₚₜ \terminal{\}}
-    \terminal{\ \terminal{\}}
+    '{' initializer-list ','ₒₚₜ '}'
+    '{' designated-initializer-list ','ₒₚₜ '}'
+    '{' '}'
 ```
 
 ``` bnf
@@ -1697,7 +1697,7 @@ final-suspend ':'
 ```
 
 ``` bnf
-attribute-specifier-seqₒₚₜ *S* cv 'A' e ';'
+attribute-specifier-seqₒₚₜ *S* cv{} 'A' e ';'
 ```
 
 ``` bnf
@@ -1715,8 +1715,8 @@ enum-name:
 
 ``` bnf
 enum-specifier:
-    enum-head \terminal{\ enumerator-listₒₚₜ \terminal{\}}
-    enum-head \terminal{\ enumerator-list \terminal{,} \terminal{\}}
+    enum-head '{' enumerator-listₒₚₜ '}'
+    enum-head '{' enumerator-list ',' '}'
 ```
 
 ``` bnf
@@ -1789,17 +1789,17 @@ namespace-definition:
 
 ``` bnf
 named-namespace-definition:
-        inlineₒₚₜ namespace attribute-specifier-seqₒₚₜ identifier \terminal{\ namespace-body \terminal{\}}
+        inlineₒₚₜ namespace attribute-specifier-seqₒₚₜ identifier '{' namespace-body '}'
 ```
 
 ``` bnf
 unnamed-namespace-definition:
-        inlineₒₚₜ namespace attribute-specifier-seqₒₚₜ \terminal{\ namespace-body \terminal{\}}
+        inlineₒₚₜ namespace attribute-specifier-seqₒₚₜ '{' namespace-body '}'
 ```
 
 ``` bnf
 nested-namespace-definition:
-        namespace enclosing-namespace-specifier '::' inlineₒₚₜ identifier \terminal{\ namespace-body \terminal{\}}
+        namespace enclosing-namespace-specifier '::' inlineₒₚₜ identifier '{' namespace-body '}'
 ```
 
 ``` bnf
@@ -1814,9 +1814,9 @@ namespace-body:
 ```
 
 ``` bnf
-inlineₒₚₜ namespace unique \terminal{\ \terminal{/* empty body */} \terminal{\}}
-using namespace unique \terminal{;}
-namespace unique \terminal{\ namespace-body \terminal{\}}
+inlineₒₚₜ namespace unique '{' '/* empty body */' '}'
+using namespace unique ';'
+namespace unique '{' namespace-body '}'
 ```
 
 ``` bnf
@@ -1862,7 +1862,7 @@ asm-declaration:
 
 ``` bnf
 linkage-specification:
-    extern string-literal \terminal{\ declaration-seqₒₚₜ \terminal{\}}
+    extern string-literal '{' declaration-seqₒₚₜ '}'
     extern string-literal name-declaration
 ```
 
@@ -1932,7 +1932,7 @@ balanced-token-seq:
 balanced-token:
     '(' balanced-token-seqₒₚₜ ')'
     '[' balanced-token-seqₒₚₜ ']'
-    \terminal{\ balanced-token-seqₒₚₜ \terminal{\}}
+    '{' balanced-token-seqₒₚₜ '}'
     any *token* other than a parenthesis, a bracket, or a brace
 ```
 
@@ -1959,7 +1959,7 @@ class-name:
 
 ``` bnf
 class-specifier:
-    class-head \terminal{\ member-specificationₒₚₜ \terminal{\}}
+    class-head '{' member-specificationₒₚₜ '}'
 ```
 
 ``` bnf
@@ -2070,7 +2070,7 @@ identifierₒₚₜ attribute-specifier-seqₒₚₜ ':' constant-expression bra
 ```
 
 ``` bnf
-union \terminal{\ member-specification \terminal{\}} \terminal{;}
+union '{' member-specification '}' ';'
 ```
 
 ``` bnf

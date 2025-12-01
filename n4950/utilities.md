@@ -10430,7 +10430,7 @@ syntax of replacement fields is as follows:
 
 ``` bnf
 replacement-field
-    \terminal{\ arg-idₒₚₜ format-specifierₒₚₜ \terminal{\}}
+    '{' arg-idₒₚₜ format-specifierₒₚₜ '}'
 ```
 
 ``` bnf
@@ -10552,7 +10552,7 @@ fill-and-align
 
 ``` bnf
 fill
-    any character other than \ or \texttt{\}
+    any character other than \{ or \}
 ```
 
 ``` bnf
@@ -10568,13 +10568,13 @@ sign one of
 ``` bnf
 width
     positive-integer
-    \terminal{\ arg-idₒₚₜ \terminal{\}}
+    '{' arg-idₒₚₜ '}'
 ```
 
 ``` bnf
 precision
     '.' nonnegative-integer
-    '.' \terminal{\ arg-idₒₚₜ \terminal{\}}
+    '.' '{' arg-idₒₚₜ '}'
 ```
 
 ``` bnf
@@ -11677,7 +11677,7 @@ range-fill-and-align
 
 ``` bnf
 range-fill
-    any character other than \terminal{\ or \terminal{\}} or \terminal{:}
+    any character other than '{' or '}' or ':'
 ```
 
 ``` bnf
@@ -12288,7 +12288,7 @@ tuple-fill-and-align
 
 ``` bnf
 tuple-fill
-    any character other than \terminal{\ or \terminal{\}} or \terminal{:}
+    any character other than '{' or '}' or ':'
 ```
 
 ``` bnf

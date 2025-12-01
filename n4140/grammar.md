@@ -728,7 +728,7 @@ expression-statement:
 
 ``` bnf
 compound-statement:
-    \terminal{\ statement-seq\terminal ₒₚₜ{\}}
+    '{' statement-seq\terminal ₒₚₜ{\}}
 ```
 
 ``` bnf
@@ -999,8 +999,8 @@ enum-name:
 
 ``` bnf
 enum-specifier:
-    enum-head \terminal{\ enumerator-list\terminal ₒₚₜ{\}}
-    enum-head \terminal{\ enumerator-list \terminal{, \}}
+    enum-head '{' enumerator-list\terminal ₒₚₜ{\}}
+    enum-head '{' enumerator-list ', }'
 ```
 
 ``` bnf
@@ -1069,17 +1069,17 @@ named-namespace-definition:
 
 ``` bnf
 original-namespace-definition:
-        'inline\opt' 'namespace' identifier \terminal{\ namespace-body \terminal{\}}
+        'inline\opt' 'namespace' identifier '{' namespace-body '}'
 ```
 
 ``` bnf
 extension-namespace-definition:
-        'inline\opt' 'namespace' original-namespace-name \terminal{\ namespace-body \terminal{\}}
+        'inline\opt' 'namespace' original-namespace-name '{' namespace-body '}'
 ```
 
 ``` bnf
 unnamed-namespace-definition:
-        'inline\opt' \terminal{namespace \ namespace-body \terminal{\}}
+        'inline\opt' 'namespace {' namespace-body '}'
 ```
 
 ``` bnf
@@ -1090,7 +1090,7 @@ namespace-body:
 ``` bnf
 'inline'\terminal ₒₚₜ{namespace} \uniquens '{ /* empty body */ }'
 'using namespace' \uniquens ';'
-'namespace' \uniquens \terminal{\ namespace-body \terminal{\}}
+'namespace' \uniquens '{' namespace-body '}'
 ```
 
 ``` bnf
@@ -1126,8 +1126,8 @@ asm-definition:
 
 ``` bnf
 linkage-specification:
-    'extern' string-literal \terminal{\ declaration-seq\terminal ₒₚₜ{\}}
-    \terminal{extern} string-literal declaration
+    'extern' string-literal '{' declaration-seq\terminal ₒₚₜ{\}}
+    'extern' string-literal declaration
 ```
 
 ``` bnf
@@ -1194,7 +1194,7 @@ balanced-token-seq:
 balanced-token:
     '(' balanced-token-seq ')'
     '[' balanced-token-seq ']'
-    \terminal{\ balanced-token-seq \terminal{\}}
+    '{' balanced-token-seq '}'
     any *token* other than a parenthesis, a bracket, or a brace
 ```
 
@@ -1419,8 +1419,8 @@ initializer-list:
 
 ``` bnf
 braced-init-list:
-    \terminal{\ initializer-list \terminal{,\opt} \terminal{\}}
-    \terminal{\ \terminal{\}}
+    '{' initializer-list ',\opt' '}'
+    '{' '}'
 ```
 
 
@@ -1434,7 +1434,7 @@ class-name:
 
 ``` bnf
 class-specifier:
-    class-head \terminal{\ member-specification\terminal ₒₚₜ{\}}
+    class-head '{' member-specification\terminal ₒₚₜ{\}}
 ```
 
 ``` bnf

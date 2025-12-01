@@ -3338,9 +3338,9 @@ initializer-clause:
 
 ``` bnf
 braced-init-list:
-    \terminal{\ initializer-list \terminal{,}ₒₚₜ \terminal{\}}
-    \terminal{\ designated-initializer-list \terminal{,}ₒₚₜ \terminal{\}}
-    \terminal{\ \terminal{\}}
+    '{' initializer-list ','ₒₚₜ '}'
+    '{' designated-initializer-list ','ₒₚₜ '}'
+    '{' '}'
 ```
 
 ``` bnf
@@ -5262,7 +5262,7 @@ First, a variable with a unique name *`e`* is introduced. If the
 *ref-qualifier* is present, *`e`* is defined by
 
 ``` bnf
-attribute-specifier-seqₒₚₜ *S* cv 'A' e ';'
+attribute-specifier-seqₒₚₜ *S* cv{} 'A' e ';'
 ```
 
 and each element is copy-initialized or direct-initialized from the
@@ -5369,8 +5369,8 @@ enum-name:
 
 ``` bnf
 enum-specifier:
-    enum-head \terminal{\ enumerator-listₒₚₜ \terminal{\}}
-    enum-head \terminal{\ enumerator-list \terminal{,} \terminal{\}}
+    enum-head '{' enumerator-listₒₚₜ '}'
+    enum-head '{' enumerator-list ',' '}'
 ```
 
 ``` bnf
@@ -5756,17 +5756,17 @@ namespace-definition:
 
 ``` bnf
 named-namespace-definition:
-        inlineₒₚₜ namespace attribute-specifier-seqₒₚₜ identifier \terminal{\ namespace-body \terminal{\}}
+        inlineₒₚₜ namespace attribute-specifier-seqₒₚₜ identifier '{' namespace-body '}'
 ```
 
 ``` bnf
 unnamed-namespace-definition:
-        inlineₒₚₜ namespace attribute-specifier-seqₒₚₜ \terminal{\ namespace-body \terminal{\}}
+        inlineₒₚₜ namespace attribute-specifier-seqₒₚₜ '{' namespace-body '}'
 ```
 
 ``` bnf
 nested-namespace-definition:
-        namespace enclosing-namespace-specifier '::' inlineₒₚₜ identifier \terminal{\ namespace-body \terminal{\}}
+        namespace enclosing-namespace-specifier '::' inlineₒₚₜ identifier '{' namespace-body '}'
 ```
 
 ``` bnf
@@ -5908,9 +5908,9 @@ namespace A {
 An *unnamed-namespace-definition* behaves as if it were replaced by
 
 ``` bnf
-inlineₒₚₜ namespace unique \terminal{\ \terminal{/* empty body */} \terminal{\}}
-using namespace unique \terminal{;}
-namespace unique \terminal{\ namespace-body \terminal{\}}
+inlineₒₚₜ namespace unique '{' '/* empty body */' '}'
+using namespace unique ';'
+namespace unique '{' namespace-body '}'
 ```
 
 where `inline` appears if and only if it appears in the
@@ -6837,7 +6837,7 @@ achieved using a *linkage-specification*:
 
 ``` bnf
 linkage-specification:
-    extern string-literal \terminal{\ declaration-seqₒₚₜ \terminal{\}}
+    extern string-literal '{' declaration-seqₒₚₜ '}'
     extern string-literal declaration
 ```
 
@@ -7109,7 +7109,7 @@ balanced-token-seq:
 balanced-token:
     '(' balanced-token-seqₒₚₜ ')'
     '[' balanced-token-seqₒₚₜ ']'
-    \terminal{\ balanced-token-seqₒₚₜ \terminal{\}}
+    '{' balanced-token-seqₒₚₜ '}'
     any *token* other than a parenthesis, a bracket, or a brace
 ```
 

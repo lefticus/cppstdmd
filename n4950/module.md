@@ -181,7 +181,7 @@ int &c = n;                     // OK
 ``` bnf
 export-declaration:
     export name-declaration
-    export \terminal{\ declaration-seqₒₚₜ \terminal{\}}
+    export '{' declaration-seqₒₚₜ '}'
     export-keyword module-import-declaration
 ```
 

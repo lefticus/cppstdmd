@@ -646,8 +646,8 @@ unary-operator: one of
 
 ``` bnf
 new-expression:
-    '::'\opt 'new' new-placement\opt new-type-id new-initializer\opt 
-    '::'\opt 'new' new-placement\opt '(' type-id ')' new-initializer\opt
+    '::'\opt{} 'new' new-placement\opt new-type-id new-initializer\opt 
+    '::'\opt{} 'new' new-placement\opt{} '(' type-id ')' new-initializer\opt
 ```
 
 ``` bnf
@@ -842,7 +842,7 @@ expression-statement:
 
 ``` bnf
 compound-statement:
-    \terminal{\ statement-seqₒₚₜ \terminal{\}}
+    '{' statement-seqₒₚₜ '}'
 ```
 
 ``` bnf
@@ -1112,8 +1112,8 @@ enum-name:
 
 ``` bnf
 enum-specifier:
-    enum-head \terminal{\ enumerator-listₒₚₜ \terminal{\}}
-    enum-head \terminal{\ enumerator-list \terminal{, \}}
+    enum-head '{' enumerator-listₒₚₜ '}'
+    enum-head '{' enumerator-list ', }'
 ```
 
 ``` bnf
@@ -1175,17 +1175,17 @@ namespace-definition:
 
 ``` bnf
 named-namespace-definition:
-        'inline\opt' 'namespace' attribute-specifier-seqiₒₚₜdentifier \terminal{\ namespace-body \terminal{\}}
+        'inline\opt' 'namespace' attribute-specifier-seqiₒₚₜdentifier '{' namespace-body '}'
 ```
 
 ``` bnf
 unnamed-namespace-definition:
-        'inline\opt' 'namespace' attribute-specifier-seqₒₚₜ \terminal{\ namespace-body \terminal{\}}
+        'inline\opt' 'namespace' attribute-specifier-seqₒₚₜ '{' namespace-body '}'
 ```
 
 ``` bnf
 nested-namespace-definition:
-        'namespace' enclosing-namespace-specifier '::' identifier \terminal{\ namespace-body \terminal{\}}
+        'namespace' enclosing-namespace-specifier '::' identifier '{' namespace-body '}'
 ```
 
 ``` bnf
@@ -1202,7 +1202,7 @@ namespace-body:
 ``` bnf
 'inline'ₒₚₜ 'namespace' '\uniquens' '{ /* empty body */ }'
 'using namespace' '\uniquens' ';'
-'namespace' '\uniquens' \terminal{\ namespace-body \terminal{\}}
+'namespace' '\uniquens' '{' namespace-body '}'
 ```
 
 ``` bnf
@@ -1248,8 +1248,8 @@ asm-definition:
 
 ``` bnf
 linkage-specification:
-    'extern' string-literal \terminal{\ declaration-seqₒₚₜ \terminal{\}}
-    \terminal{extern} string-literal declaration
+    'extern' string-literal '{' declaration-seqₒₚₜ '}'
+    'extern' string-literal declaration
 ```
 
 ``` bnf
@@ -1320,7 +1320,7 @@ balanced-token-seq:
 balanced-token:
     '(' balanced-token-seqₒₚₜ ')'
     '[' balanced-token-seqₒₚₜ ']'
-    \terminal{\ balanced-token-seqₒₚₜ \terminal{\}}
+    '{' balanced-token-seqₒₚₜ '}'
     any *token* other than a parenthesis, a bracket, or a brace
 ```
 
@@ -1461,7 +1461,7 @@ nested-name-specifier '*' attribute-specifier-seqcₒₚₜv-qualifier-seqₒₚ
 ```
 
 ``` bnf
-'D1 [' constant-expression\opt ']' attribute-specifier-seq\opt
+'D1 [' constant-expression\opt{} ']' attribute-specifier-seq\opt
 ```
 
 ``` bnf
@@ -1548,8 +1548,8 @@ initializer-list:
 
 ``` bnf
 braced-init-list:
-    \terminal{\ initializer-list \terminal{,\opt} \terminal{\}}
-    \terminal{\ \terminal{\}}
+    '{' initializer-list ',\opt' '}'
+    '{' '}'
 ```
 
 ``` bnf
@@ -1569,7 +1569,7 @@ class-name:
 
 ``` bnf
 class-specifier:
-    class-head \terminal{\ member-specificationₒₚₜ \terminal{\}}
+    class-head '{' member-specificationₒₚₜ '}'
 ```
 
 ``` bnf

@@ -2082,7 +2082,7 @@ requirement-parameter-list:
 
 ``` bnf
 requirement-body:
-    \terminal{\ requirement-seq \terminal{\}}
+    '{' requirement-seq '}'
 ```
 
 ``` bnf
@@ -2251,7 +2251,7 @@ require that type to be complete [[basic.types]].
 
 ``` bnf
 compound-requirement:
-    \terminal{\ expression \terminal{\}} noexceptₒₚₜ return-type-requirementₒₚₜ \terminal{;}
+    '{' expression '}' noexceptₒₚₜ return-type-requirementₒₚₜ ';'
 ```
 
 ``` bnf

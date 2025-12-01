@@ -429,7 +429,7 @@ returning `R`”, a *surrogate call function* with the unique name
 
 ``` bnf
 'R' *call-function* '(' conversion-type-id \ %
-'F, P₁ a₁, …, Pₙ aₙ)' \terminal{\ return \terminal{F (a₁, …, aₙ); \}}
+'F, P₁ a₁, …, Pₙ aₙ)' '{' return 'F (a₁, …, aₙ); }'
 ```
 
 is also considered as a candidate function. Similarly, surrogate call

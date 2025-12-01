@@ -126,7 +126,7 @@ compound statement (also, and equivalently, called “block”) is provided.
 
 ``` bnf
 compound-statement:
-    \terminal{\ statement-seqₒₚₜ \terminal{\}}
+    '{' statement-seqₒₚₜ '}'
 ```
 
 ``` bnf

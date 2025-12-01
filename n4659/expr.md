@@ -2464,8 +2464,8 @@ type. — *end note*]
 
 ``` bnf
 new-expression:
-    '::'\opt 'new' new-placement\opt new-type-id new-initializer\opt 
-    '::'\opt 'new' new-placement\opt '(' type-id ')' new-initializer\opt
+    '::'\opt{} 'new' new-placement\opt new-type-id new-initializer\opt 
+    '::'\opt{} 'new' new-placement\opt{} '(' type-id ')' new-initializer\opt
 ```
 
 ``` bnf

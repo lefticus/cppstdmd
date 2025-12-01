@@ -62,7 +62,7 @@ compound statement (also, and equivalently, called “block”) is provided.
 
 ``` bnf
 compound-statement:
-    \terminal{\ statement-seq\terminal ₒₚₜ{\}}
+    '{' statement-seq\terminal ₒₚₜ{\}}
 ```
 
 ``` bnf

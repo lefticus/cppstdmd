@@ -334,7 +334,7 @@ from the first one. An optional terminal or non-terminal symbol is
 indicated by the subscript “’ₒₚₜ’, so
 
 ``` bnf
-\terminal{\ expression\terminal ₒₚₜ{\}}
+'{' expression\terminal ₒₚₜ{\}}
 ```
 
 indicates an optional expression enclosed in braces.

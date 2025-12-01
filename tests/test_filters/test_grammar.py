@@ -591,3 +591,47 @@ def test_fmtnontermdef_no_textit():
     assert "\\textit" not in output
     # Should be in a BNF code block
     assert "``` bnf" in output or "```bnf" in output
+
+
+def test_terminal_with_escaped_braces_full_pipeline():
+    r"""Test \terminal{} with escaped braces through full pipeline (Issue #27)
+
+    The C++ standard uses \terminal{\textbackslash N\{} for the literal '\N{'
+    in BNF grammar. This test verifies the full conversion pipeline:
+    cpp-macros.lua → cpp-grammar.lua preserves escaped braces correctly.
+
+    Bug: Tier 15 in expand_macros_common was stripping {} after backslash,
+    converting \{} to just \ which broke terminal symbol extraction.
+    """
+    # This test uses the full pipeline with cpp-macros.lua first
+    MACROS_FILTER = Path("src/cpp_std_converter/filters/cpp-macros.lua")
+    GRAMMAR_FILTER = Path("src/cpp_std_converter/filters/cpp-grammar.lua")
+
+    latex = r"""
+\begin{bnf}
+\nontermdef{named-universal-character}\br
+    \terminal{\textbackslash N\{} n-char-sequence \terminal{\}}
+\end{bnf}
+"""
+    latex_with_macros = inject_macros(latex)
+
+    cmd = [
+        "pandoc",
+        "--from=latex+raw_tex",
+        "--to=gfm",
+        f"--lua-filter={MACROS_FILTER}",
+        f"--lua-filter={GRAMMAR_FILTER}",
+    ]
+    result = subprocess.run(cmd, input=latex_with_macros, capture_output=True, text=True)
+
+    assert result.returncode == 0
+    output = result.stdout
+
+    # The terminal symbols should be properly converted
+    assert "named-universal-character:" in output
+    # \terminal{\textbackslash N\{} should become '\N{'
+    assert r"'\N{'" in output
+    # \terminal{\}} should become '}'
+    assert "'}'" in output
+    # Should NOT have unconverted \terminal{}
+    assert r"\terminal" not in output
