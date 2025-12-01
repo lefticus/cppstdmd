@@ -1174,7 +1174,7 @@ type, a type determined from an expression, or one of the fundamental
 types [[basic.fundamental]]. [[dcl.type.simple]] summarizes the valid
 combinations of *simple-type-specifier*s and the types they specify.
 
-**Table: *simple-type-specifier*{s} and the types they specify**
+**Table: *simple-type-specifier*{s} and the types they specify** <a id="dcl.type.simple">[dcl.type.simple]</a>
 
 | Specifier(s)                 | Type                                              |
 | ---------------------------- | ------------------------------------------------- |

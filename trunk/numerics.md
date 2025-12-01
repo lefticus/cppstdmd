@@ -10,7 +10,7 @@ random number generation, numeric ( *n*-at-a-time) arrays, generalized
 numeric algorithms, and mathematical constants and functions for
 floating-point types, as summarized in [[numerics.summary]].
 
-**Table: Numerics library summary**
+**Table: Numerics library summary** <a id="numerics.summary">[numerics.summary]</a>
 
 | Subclause                |                                                 | Header                 |
 | ------------------------ | ----------------------------------------------- | ---------------------- |
@@ -1783,7 +1783,7 @@ the generation algorithm performs the following steps:
   ```
 
   where j = 0, …, n - 1 and fₙ(j) is defined in [[rand.eng.philox.f]].
-  **Table: Values for the word permutation $\bm{f}_{\bm{n}}\bm{(j)}$**
+  **Table: Values for the word permutation $\bm{f}_{\bm{n}}\bm{(j)}$** <a id="rand.eng.philox.f">[rand.eng.philox.f]</a>
 
   |                                               |                              |
   | --------------------------------------------- | ---------------------------- |

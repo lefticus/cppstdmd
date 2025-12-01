@@ -9,7 +9,7 @@ The following subclauses describe container requirements, and components
 for sequence containers and associative containers, as summarized in
 Table  [[tab:containers.lib.summary]].
 
-**Table: Containers library summary**
+**Table: Containers library summary** <a id="tab:containers.lib.summary">[tab:containers.lib.summary]</a>
 
 | Subclause                  |                                  | Header            |
 | -------------------------- | -------------------------------- | ----------------- |

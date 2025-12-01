@@ -11,7 +11,7 @@ iostreams objects, base iostreams classes, stream buffering, stream
 formatting and manipulators, string streams, and file streams, as
 summarized in Table  [[tab:iostreams.lib.summary]].
 
-**Table: Input/output library summary**
+**Table: Input/output library summary** <a id="tab:iostreams.lib.summary">[tab:iostreams.lib.summary]</a>
 
 | Subclause                  |                             | Header        |
 | -------------------------- | --------------------------- | ------------- |
@@ -598,7 +598,7 @@ The type `fmtflags` is a bitmask type ([[bitmask.types]]). Setting its
 elements has the effects indicated in
 Table  [[tab:iostreams.fmtflags.effects]].
 
-**Table: `fmtflags` effects**
+**Table: `fmtflags` effects** <a id="tab:iostreams.fmtflags.effects">[tab:iostreams.fmtflags.effects]</a>
 
 | Element      | Effect(s) if set                                                                                                                        |
 | ------------ | --------------------------------------------------------------------------------------------------------------------------------------- |
@@ -622,7 +622,7 @@ Table  [[tab:iostreams.fmtflags.effects]].
 Type `fmtflags` also defines the constants indicated in
 Table  [[tab:iostreams.fmtflags.constants]].
 
-**Table: `fmtflags` constants**
+**Table: `fmtflags` constants** <a id="tab:iostreams.fmtflags.constants">[tab:iostreams.fmtflags.constants]</a>
 
 | Constant      | Allowable values          |
 | ------------- | ------------------------- |
@@ -640,7 +640,7 @@ typedef T2 iostate;
 The type `iostate` is a bitmask type ([[bitmask.types]]) that contains
 the elements indicated in Table  [[tab:iostreams.iostate.effects]].
 
-**Table: `iostate` effects**
+**Table: `iostate` effects** <a id="tab:iostreams.iostate.effects">[tab:iostreams.iostate.effects]</a>
 
 | Element   | Effect(s) if set                                                                                                                                 |
 | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -662,7 +662,7 @@ typedef T3 openmode;
 The type `openmode` is a bitmask type ([[bitmask.types]]). It contains
 the elements indicated in Table  [[tab:iostreams.openmode.effects]].
 
-**Table: `openmode` effects**
+**Table: `openmode` effects** <a id="tab:iostreams.openmode.effects">[tab:iostreams.openmode.effects]</a>
 
 | Element  | Effect(s) if set                                                  |
 | -------- | ----------------------------------------------------------------- |
@@ -684,7 +684,7 @@ The type `seekdir` is an enumerated type ([[enumerated.types]]) that
 contains the elements indicated in
 Table  [[tab:iostreams.seekdir.effects]].
 
-**Table: `seekdir` effects**
+**Table: `seekdir` effects** <a id="tab:iostreams.seekdir.effects">[tab:iostreams.seekdir.effects]</a>
 
 | Element | Meaning                                                                                 |
 | ------- | --------------------------------------------------------------------------------------- |
@@ -1124,7 +1124,7 @@ void init(basic_streambuf<charT,traits>* sb);
 *Postconditions:* The postconditions of this function are indicated in
 Table  [[tab:iostreams.basicios.init.effects]].
 
-**Table: `basic_ios::init()` effects**
+**Table: `basic_ios::init()` effects** <a id="tab:iostreams.basicios.init.effects">[tab:iostreams.basicios.init.effects]</a>
 
 | Element        | Value                                                        |
 | -------------- | ------------------------------------------------------------ |
@@ -1244,7 +1244,7 @@ reference counted, or to have other special action taken.
 *Postconditions:* The postconditions of this function are indicated in
 Table  [[tab:iostreams.copyfmt.effects]].
 
-**Table: `basic_ios::copyfmt()` effects**
+**Table: `basic_ios::copyfmt()` effects** <a id="tab:iostreams.copyfmt.effects">[tab:iostreams.copyfmt.effects]</a>
 
 | Element                      |
 | ---------------------------- |
@@ -4367,7 +4367,7 @@ pos_type seekoff(off_type off, ios_base::seekdir way,
 sequences, if possible, as indicated in
 Table  [[tab:iostreams.seekoff.positioning]].
 
-**Table: `seekoff` positioning**
+**Table: `seekoff` positioning** <a id="tab:iostreams.seekoff.positioning">[tab:iostreams.seekoff.positioning]</a>
 
 | Conditions                                                                                                                                                          | Result                                            |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------- |
@@ -4382,7 +4382,7 @@ For a sequence to be positioned, if its next pointer (either `gptr()` or
 positioning operation fails. Otherwise, the function determines `newoff`
 as indicated in Table  [[tab:iostreams.newoff.values]].
 
-**Table: `newoff` values**
+**Table: `newoff` values** <a id="tab:iostreams.newoff.values">[tab:iostreams.newoff.values]</a>
 
 | Condition              | `newoff` Value                                                          |
 | ---------------------- | ----------------------------------------------------------------------- |
@@ -5035,7 +5035,7 @@ possible, whose name is the NTBS`s` (as if by calling
 Table  [[tab:iostreams.file.open.modes]]. If `mode` is not some
 combination of flags shown in the table then the open fails.
 
-**Table: File open modes**
+**Table: File open modes** <a id="tab:iostreams.file.open.modes">[tab:iostreams.file.open.modes]</a>
 
 | `binary` | `in` | `out` | `trunc` | `app` |     | `stdio` equivalent |
 | -------- | ---- | ----- | ------- | ----- | --- | ------------------ |
@@ -5238,7 +5238,7 @@ resulting unshift sequence. The function determines one of three values
 for the argument `whence`, of type `int`, as indicated in
 Table  [[tab:iostreams.seekoff.effects]].
 
-**Table: `seekoff` effects**
+**Table: `seekoff` effects** <a id="tab:iostreams.seekoff.effects">[tab:iostreams.seekoff.effects]</a>
 
 | `way` Value      | `stdio` Equivalent |
 | ---------------- | ------------------ |

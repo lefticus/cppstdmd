@@ -12,7 +12,7 @@ The following subclauses describe language-related concepts, comparison
 concepts, object concepts, and callable concepts as summarized in
 [[concepts.summary]].
 
-**Table: Fundamental concepts library summary**
+**Table: Fundamental concepts library summary** <a id="concepts.summary">[concepts.summary]</a>
 
 | Subclause             |                           | Header       |
 | --------------------- | ------------------------- | ------------ |

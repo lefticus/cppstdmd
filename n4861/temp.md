@@ -2445,7 +2445,7 @@ If N is zero for a unary fold-expression, the value of the expression is
 shown in [[temp.fold.empty]]; if the operator is not listed in
 [[temp.fold.empty]], the instantiation is ill-formed.
 
-**Table: Value of folding empty sequences**
+**Table: Value of folding empty sequences** <a id="temp.fold.empty">[temp.fold.empty]</a>
 
 | Operator | Value when pack is empty |
 | -------- | ------------------------ |

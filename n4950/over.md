@@ -479,7 +479,7 @@ denotes one of the operators covered in the specified subclause).
 However, the operands are sequenced in the order prescribed for the
 built-in operator [[expr.compound]].
 
-**Table: Relationship between operator and function call notation**
+**Table: Relationship between operator and function call notation** <a id="over.match.oper">[over.match.oper]</a>
 
 | Subclause    | Expression | As member function  | As non-member function |
 | ------------ | ---------- | ------------------- | ---------------------- |
@@ -1630,7 +1630,7 @@ of those has Conversion rank, the sequence has Conversion rank;
 otherwise, if any of those has Promotion rank, the sequence has
 Promotion rank; otherwise, the sequence has Exact Match rank.
 
-**Table: Conversions**
+**Table: Conversions** <a id="over.ics.scs">[over.ics.scs]</a>
 
 | Conversion              | Category | Rank | Subclause         |
 | ----------------------- | -------- | ---- | ----------------- |

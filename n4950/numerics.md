@@ -10,7 +10,7 @@ random number generation, numeric ( *n*-at-a-time) arrays, generalized
 numeric algorithms, and mathematical constants and functions for
 floating-point types, as summarized in [[numerics.summary]].
 
-**Table: Numerics library summary**
+**Table: Numerics library summary** <a id="numerics.summary">[numerics.summary]</a>
 
 | Subclause                |                                                 | Header                 |
 | ------------------------ | ----------------------------------------------- | ---------------------- |

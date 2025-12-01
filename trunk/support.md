@@ -15,7 +15,7 @@ support for contract-violation handling, support for exception
 processing, support for initializer lists, and other runtime support, as
 summarized in [[support.summary]].
 
-**Table: Language support library summary**
+**Table: Language support library summary** <a id="support.summary">[support.summary]</a>
 
 | Subclause               |                             | Header                                             |
 | ----------------------- | --------------------------- | -------------------------------------------------- |
@@ -3074,7 +3074,7 @@ The enumerators of `assertion_kind` correspond to the syntactic forms of
 a contract assertion [[basic.contract.general]], with meanings listed in
 Table  [[tab:support.contract.enum.kind]].
 
-**Table: Enum `assertion_kind`**
+**Table: Enum `assertion_kind`** <a id="support.contract.enum.kind">[support.contract.enum.kind]</a>
 
 | Name     | Meaning                   |
 | -------- | ------------------------- |
@@ -3088,7 +3088,7 @@ semantics with which a contract assertion may be evaluated
 [[basic.contract.eval]], with meanings listed in Table 
 [[tab:support.contract.enum.semantic]].
 
-**Table: Enum `evaluation_semantic`**
+**Table: Enum `evaluation_semantic`** <a id="support.contract.enum.semantic">[support.contract.enum.semantic]</a>
 
 | Name            | Meaning                           |
 | --------------- | --------------------------------- |
@@ -3102,7 +3102,7 @@ The enumerators of `detection_mode` correspond to the manners in which a
 contract violation can be identified [[basic.contract.eval]], with
 meanings listed in Table~ [[tab:support.contract.enum.detection]].
 
-**Table: Enum `detection_mode`**
+**Table: Enum `detection_mode`** <a id="support.contract.enum.detection">[support.contract.enum.detection]</a>
 
 | Name                   | Meaning                                                                                          |
 | ---------------------- | ------------------------------------------------------------------------------------------------ |

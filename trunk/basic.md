@@ -4270,7 +4270,7 @@ representation.[^16]
 representation as the largest value of the corresponding unsigned
 type. — *end example*]
 
-**Table: Minimum width**
+**Table: Minimum width** <a id="basic.fundamental.width">[basic.fundamental.width]</a>
 
 | Type            | Minimum width $N$ |
 | --------------- | ----------------- |
@@ -4563,7 +4563,7 @@ the beginning of the significand, so the storage used for the
 significand is p-1 bits. ISO/IEC 60559 does not assign a name for a type
 having the parameters specified for `std::bfloat16_t`. — *end note*]
 
-**Table: Properties of named extended floating-point types**
+**Table: Properties of named extended floating-point types** <a id="basic.extended.fp">[basic.extended.fp]</a>
 
 | Parameter                         | `float16_t` | `float32_t` | `float64_t` | `float128_t` | `bfloat16_t` |
 | --------------------------------- | ----------- | ----------- | ----------- | ------------ | ------------ |
@@ -4765,7 +4765,7 @@ There is a partial ordering on cv-qualifiers, so that a type can be said
 to be *more cv-qualified* than another. [[basic.type.qualifier.rel]]
 shows the relations that constitute this ordering.
 
-**Table: Relations on `const` and `volatile`**
+**Table: Relations on `const` and `volatile`** <a id="basic.type.qualifier.rel">[basic.type.qualifier.rel]</a>
 
 |                 |     |                  |
 | --------------- | --- | ---------------- |

@@ -11,7 +11,7 @@ The following subclauses describe a character traits class, a string
 class, and null-terminated sequence utilities, as summarized in Table 
 [[tab:strings.lib.summary]].
 
-**Table: Strings library summary**
+**Table: Strings library summary** <a id="tab:strings.lib.summary">[tab:strings.lib.summary]</a>
 
 | Subclause          |                                    | Header      |
 | ------------------ | ---------------------------------- | ----------- |
@@ -823,7 +823,7 @@ explicit basic_string(const Allocator& a);
 postconditions of this function are indicated in
 Table  [[tab:strings.ctr.1]].
 
-**Table: `basic_string(const Allocator&)` effects**
+**Table: `basic_string(const Allocator&)` effects** <a id="tab:strings.ctr.1">[tab:strings.ctr.1]</a>
 
 | Element      | Value                                                          |
 | ------------ | -------------------------------------------------------------- |
@@ -840,7 +840,7 @@ basic_string(basic_string&& str) noexcept;
 Table  [[tab:strings.ctr.cpy]]. In the second form, `str` is left in a
 valid state with an unspecified value.
 
-**Table: `basic_string(const basic_string&)` effects**
+**Table: `basic_string(const basic_string&)` effects** <a id="tab:strings.ctr.cpy">[tab:strings.ctr.cpy]</a>
 
 | Element      | Value                                                                                                           |
 | ------------ | --------------------------------------------------------------------------------------------------------------- |
@@ -863,7 +863,7 @@ the effective length `rlen` of the initial string value as the smaller
 of `n` and `str.size() - pos`, as indicated in
 Table  [[tab:strings.ctr.2]].
 
-**Table: `basic_string(const basic_string&, size_type, size_type, const Allocator&)` effects**
+**Table: `basic_string(const basic_string&, size_type, size_type, const Allocator&)` effects** <a id="tab:strings.ctr.2">[tab:strings.ctr.2]</a>
 
 | Element      | Value                                                                                                                                         |
 | ------------ | --------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -883,7 +883,7 @@ its initial string value from the array of `charT` of length `n` whose
 first element is designated by `s`, as indicated in
 Table  [[tab:strings.ctr.3]].
 
-**Table: `basic_string(const charT*, size_type, const Allocator&)` effects**
+**Table: `basic_string(const charT*, size_type, const Allocator&)` effects** <a id="tab:strings.ctr.3">[tab:strings.ctr.3]</a>
 
 | Element      | Value                                                                                                  |
 | ------------ | ------------------------------------------------------------------------------------------------------ |
@@ -903,7 +903,7 @@ its initial string value from the array of `charT` of length
 `traits::length(s)` whose first element is designated by `s`, as
 indicated in Table  [[tab:strings.ctr.4]].
 
-**Table: `basic_string(const charT*, const Allocator&)` effects**
+**Table: `basic_string(const charT*, const Allocator&)` effects** <a id="tab:strings.ctr.4">[tab:strings.ctr.4]</a>
 
 | Element      | Value                                                                                                  |
 | ------------ | ------------------------------------------------------------------------------------------------------ |
@@ -924,7 +924,7 @@ basic_string(size_type n, charT c, const Allocator& a = Allocator());
 its initial string value by repeating the char-like object `c` for all
 `n` elements, as indicated in Table  [[tab:strings.ctr.5]].
 
-**Table: `basic_string(size_t, charT, const Allocator&)` effects**
+**Table: `basic_string(size_t, charT, const Allocator&)` effects** <a id="tab:strings.ctr.5">[tab:strings.ctr.5]</a>
 
 | Element      | Value                                                                                                 |
 | ------------ | ----------------------------------------------------------------------------------------------------- |
@@ -965,7 +965,7 @@ Table  [[tab:strings.ctr.6]]. The stored allocator is constructed from
 unspecified value.
 
 **Table: `basic_string(const basic_string&, const Allocator&)` and
-`basic_string(basic_string&&, const Allocator&)` effects**
+`basic_string(basic_string&&, const Allocator&)` effects** <a id="tab:strings.ctr.6">[tab:strings.ctr.6]</a>
 
 | Element           | Value                                                                                                                                  |
 | ----------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
@@ -989,7 +989,7 @@ If `*this` and `str` are the same object, the member has no effect.
 
 *Returns:* `*this`
 
-**Table: `operator=(const basic_string&)` effects**
+**Table: `operator=(const basic_string&)` effects** <a id="tab:strings.op=">[tab:strings.op=]</a>
 
 | Element      | Value                                                                                                           |
 | ------------ | --------------------------------------------------------------------------------------------------------------- |
@@ -1009,7 +1009,7 @@ If `*this` and `str` are the same object, the member has no effect.
 
 *Returns:* `*this`
 
-**Table: `operator=(basic_string&&)` effects**
+**Table: `operator=(basic_string&&)` effects** <a id="tab:strings.op=rv">[tab:strings.op=rv]</a>
 
 | Element      | Value                                                                  |
 | ------------ | ---------------------------------------------------------------------- |
@@ -2088,7 +2088,7 @@ compares the two strings by calling
 nonzero. Otherwise, returns a value as indicated in
 Table  [[tab:strings.compare]].
 
-**Table: `compare()` results**
+**Table: `compare()` results** <a id="tab:strings.compare">[tab:strings.compare]</a>
 
 | Condition               | Return Value |
 | ----------------------- | ------------ |
@@ -2822,7 +2822,7 @@ an `mbstate_t*` argument of `NULL` may introduce a data race (
 [[res.on.data.races]]) with other calls to these functions with an
 `mbstate_t*` argument of `NULL`.
 
-**Table: Potential `mbstate_t` data races**
+**Table: Potential `mbstate_t` data races** <a id="tab:mbstate.data.races">[tab:mbstate.data.races]</a>
 
 |            |           |            |          |           |
 | ---------- | --------- | ---------- | -------- | --------- |

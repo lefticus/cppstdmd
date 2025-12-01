@@ -7,7 +7,7 @@ threads [[intro.multithread]], perform mutual exclusion, and communicate
 conditions and values between threads, as summarized in
 [[thread.summary]].
 
-**Table: Thread support library summary**
+**Table: Thread support library summary** <a id="thread.summary">[thread.summary]</a>
 
 | Subclause            |                     | Header                      |
 | -------------------- | ------------------- | --------------------------- |

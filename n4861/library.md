@@ -16,7 +16,7 @@ conforming implementations.
 Detailed specifications for each of the components in the library are in
 [[support]]– [[thread]], as shown in [[library.categories]].
 
-**Table: Library categories**
+**Table: Library categories** <a id="library.categories">[library.categories]</a>
 
 | Clause           | Category                    |
 | ---------------- | --------------------------- |
@@ -927,7 +927,7 @@ A freestanding implementation has an *implementation-defined* set of
 headers. This set shall include at least the headers shown in
 [[headers.cpp.fs]].
 
-**Table: C++ headers for freestanding implementations**
+**Table: C++ headers for freestanding implementations** <a id="headers.cpp.fs">[headers.cpp.fs]</a>
 
 | Subclause              |                           | Header                                           |
 | ---------------------- | ------------------------- | ------------------------------------------------ |
@@ -1034,21 +1034,21 @@ class member function signatures specify `T()` as a default argument.
 `T()` shall be a well-defined expression [[dcl.init]] if one of those
 signatures is called using the default argument [[dcl.fct.default]].
 
-**Table: Cpp17EqualityComparable requirements**
+**Table: Cpp17EqualityComparable requirements** <a id="cpp17.equalitycomparable">[cpp17.equalitycomparable]</a>
 
 | Expression | Return type |
 | ---------- | ----------- |
 | `a == b`   | convertible to `bool` | `==` is an equivalence relation, that is, it has the following properties: For all `a`, `a == a`.; If `a == b`, then `b == a`.; If `a == b` and `b == c`, then `a == c`. |
 
 
-**Table: Cpp17LessThanComparable requirements**
+**Table: Cpp17LessThanComparable requirements** <a id="cpp17.lessthancomparable">[cpp17.lessthancomparable]</a>
 
 | Expression | Return type           | Requirement                                            |
 | ---------- | --------------------- | ------------------------------------------------------ |
 | `a < b`    | convertible to `bool` | `<` is a strict weak ordering relation [[alg.sorting]] |
 
 
-**Table: Cpp17DefaultConstructible requirements**
+**Table: Cpp17DefaultConstructible requirements** <a id="cpp17.defaultconstructible">[cpp17.defaultconstructible]</a>
 
 | Expression     | Post-condition                                                      |
 | -------------- | ------------------------------------------------------------------- |
@@ -1062,7 +1062,7 @@ component that is using it. The operations listed in those requirements
 must work as specified whether `rv` has been moved from or
 not. — *end note*]
 
-**Table: Cpp17CopyConstructible requirements (in addition to Cpp17MoveConstructible)**
+**Table: Cpp17CopyConstructible requirements (in addition to Cpp17MoveConstructible)** <a id="cpp17.copyconstructible">[cpp17.copyconstructible]</a>
 
 | Expression | Post-condition                                            |
 | ---------- | --------------------------------------------------------- |
@@ -1075,7 +1075,7 @@ component that is using it, whether or not `t` and `rv` refer to the
 same object. The operations listed in those requirements must work as
 specified whether `rv` has been moved from or not. — *end note*]
 
-**Table: Cpp17CopyAssignable requirements (in addition to Cpp17MoveAssignable)**
+**Table: Cpp17CopyAssignable requirements (in addition to Cpp17MoveAssignable)** <a id="cpp17.copyassignable">[cpp17.copyassignable]</a>
 
 | Expression | Return type | Return value | Post-condition                                          |
 | ---------- | ----------- | ------------ | ------------------------------------------------------- |
@@ -1205,7 +1205,7 @@ non-`const` lvalue of type `P`, `a` and `b` denote values of type
 (possibly `const`) `P`, and `np` denotes a value of type (possibly
 `const`) `std::nullptr_t`.
 
-**Table: Cpp17NullablePointer requirements**
+**Table: Cpp17NullablePointer requirements** <a id="cpp17.nullablepointer">[cpp17.nullablepointer]</a>
 
 | Expression     | Return type                        | Operational semantics       |
 | -------------- | ---------------------------------- | --------------------------- |

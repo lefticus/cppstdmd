@@ -627,7 +627,7 @@ appropriate) in a *header*.[^14]
 The C++standard library provides the *C++library headers*, shown in
 Table  [[tab:cpp.library.headers]].
 
-**Table: C++library headers**
+**Table: C++library headers** <a id="tab:cpp.library.headers">[tab:cpp.library.headers]</a>
 
 |                        |                      |                      |                   |
 | ---------------------- | -------------------- | -------------------- | ----------------- |
@@ -652,7 +652,7 @@ Table  [[tab:cpp.library.headers]].
 The facilities of the C standard library are provided in the additional
 headers shown in Table  [[tab:cpp.c.headers]]. [^15]
 
-**Table: C++headers for C library facilities**
+**Table: C++headers for C library facilities** <a id="tab:cpp.c.headers">[tab:cpp.c.headers]</a>
 
 |              |               |               |             |             |
 | ------------ | ------------- | ------------- | ----------- | ----------- |
@@ -707,7 +707,7 @@ Table  [[tab:c.annex.k.names]] lists the Annex K names that may be
 declared in some header. These names are also subject to the
 restrictions of  [[macro.names]].
 
-**Table: C standard Annex K names**
+**Table: C standard Annex K names** <a id="tab:c.annex.k.names">[tab:c.annex.k.names]</a>
 
 |                        |                            |                |               |
 | ---------------------- | -------------------------- | -------------- | ------------- |
@@ -742,7 +742,7 @@ A freestanding implementation has an *implementation-defined* set of
 headers. This set shall include at least the headers shown in Table 
 [[tab:cpp.headers.freestanding]].
 
-**Table: C++headers for freestanding implementations**
+**Table: C++headers for freestanding implementations** <a id="tab:cpp.headers.freestanding">[tab:cpp.headers.freestanding]</a>
 
 | Subclause                                     |                           | Header                            |
 | --------------------------------------------- | ------------------------- | --------------------------------- |
@@ -837,19 +837,19 @@ class member function signatures specify `T()` as a default argument.
 `T()` shall be a well-defined expression ([[dcl.init]]) if one of those
 signatures is called using the default argument ([[dcl.fct.default]]).
 
-**Table: `EqualityComparable` requirements**
+**Table: `EqualityComparable` requirements** <a id="equalitycomparable">[equalitycomparable]</a>
 
 | Expression | Return type |
 | ---------- | ----------- |
 | `a == b`   | convertible to `bool` | `==` is an equivalence relation, that is, it has the following properties: For all `a`, `a == a`.; If `a == b`, then `b == a`.; If `a == b` and `b == c`, then `a == c`. |
 
-**Table: `LessThanComparable` requirements**
+**Table: `LessThanComparable` requirements** <a id="lessthancomparable">[lessthancomparable]</a>
 
 | Expression | Return type           | Requirement                                               |
 | ---------- | --------------------- | --------------------------------------------------------- |
 | `a < b`    | convertible to `bool` | `<` is a strict weak ordering relation~([[alg.sorting]]) |
 
-**Table: `DefaultConstructible` requirements**
+**Table: `DefaultConstructible` requirements** <a id="defaultconstructible">[defaultconstructible]</a>
 
 | Expression     | Post-condition                                                      |
 | -------------- | ------------------------------------------------------------------- |
@@ -862,7 +862,7 @@ component that is using it. The operations listed in those requirements
 must work as specified whether `rv` has been moved from or
 not. — *end note*]
 
-**Table: `CopyConstructible` requirements (in addition to `MoveConstructible`)**
+**Table: `CopyConstructible` requirements (in addition to `MoveConstructible`)** <a id="copyconstructible">[copyconstructible]</a>
 
 | Expression | Post-condition                                            |
 | ---------- | --------------------------------------------------------- |
@@ -874,14 +874,14 @@ component that is using it, whether or not `t` and `rv` refer to the
 same object. The operations listed in those requirements must work as
 specified whether `rv` has been moved from or not. — *end note*]
 
-**Table: `CopyAssignable` requirements (in addition to `MoveAssignable`)**
+**Table: `CopyAssignable` requirements (in addition to `MoveAssignable`)** <a id="copyassignable">[copyassignable]</a>
 
 | Expression | Return type | Return value | Post-condition                                          |
 | ---------- | ----------- | ------------ | ------------------------------------------------------- |
 | `t = v`    | `T&`        | `t`          | `t` is equivalent to `v`, the value of `v` is unchanged |
 
 
-**Table: `Destructible` requirements**
+**Table: `Destructible` requirements** <a id="destructible">[destructible]</a>
 
 | Expression | Post-condition                                                        |
 | ---------- | --------------------------------------------------------------------- |
@@ -1010,7 +1010,7 @@ denotes a non-`const` lvalue of type `P`, `a` and `b` denote values of
 type (possibly `const`) `P`, and `np` denotes a value of type (possibly
 `const`) `std::nullptr_t`.
 
-**Table: `NullablePointer` requirements**
+**Table: `NullablePointer` requirements** <a id="nullablepointer">[nullablepointer]</a>
 
 |                |                                    |                                    |
 | -------------- | ---------------------------------- | ---------------------------------- |

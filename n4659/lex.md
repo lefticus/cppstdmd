@@ -397,7 +397,7 @@ encoding falls into one of the ranges specified in Table 
 [[tab:charname.disallowed]]. Upper- and lower-case letters are
 different. All characters are significant.[^10]
 
-**Table: Ranges of characters allowed**
+**Table: Ranges of characters allowed** <a id="tab:charname.allowed">[tab:charname.allowed]</a>
 
 |               |               |               |               |               |
 | ------------- | ------------- | ------------- | ------------- | ------------- |
@@ -413,7 +413,7 @@ different. All characters are significant.[^10]
 | `B0000-BFFFD` | `C0000-CFFFD` | `D0000-DFFFD` | `E0000-EFFFD` |               |
 
 
-**Table: Ranges of characters disallowed initially (combining characters)**
+**Table: Ranges of characters disallowed initially (combining characters)** <a id="tab:charname.disallowed">[tab:charname.disallowed]</a>
 
 |             |                                                |             |             |
 | ----------- | ---------------------------------------------- | ----------- | ----------- |
@@ -427,7 +427,7 @@ grammar, these identifiers are used explicitly rather than using the
 ambiguity as to whether a given *identifier* has a special meaning is
 resolved to interpret the token as a regular *identifier*.
 
-**Table: Identifiers with special meaning**
+**Table: Identifiers with special meaning** <a id="tab:identifiers.special">[tab:identifiers.special]</a>
 
 |            |         |
 | ---------- | ------- |
@@ -450,7 +450,7 @@ The identifiers shown in Table  [[tab:keywords]] are reserved for use as
 keywords (that is, they are unconditionally treated as keywords in phase
 7) except in an *attribute-token* ([[dcl.attr.grammar]]):
 
-**Table: Keywords**
+**Table: Keywords** <a id="tab:keywords">[tab:keywords]</a>
 
 |              |                |             |                    |            |
 | ------------ | -------------- | ----------- | ------------------ | ---------- |
@@ -479,7 +479,7 @@ Furthermore, the alternative representations shown in Table 
 punctuators ([[lex.digraph]]) are reserved and shall not be used
 otherwise:
 
-**Table: Alternative representations**
+**Table: Alternative representations** <a id="tab:alternative.representations">[tab:alternative.representations]</a>
 
 |          |          |          |         |          |       |
 | -------- | -------- | -------- | ------- | -------- | ----- |
@@ -627,7 +627,7 @@ The type of an integer literal is the first of the corresponding list in
 Table  [[tab:lex.type.integer.literal]] in which its value can be
 represented.
 
-**Table: Types of integer literals**
+**Table: Types of integer literals** <a id="tab:lex.type.integer.literal">[tab:lex.type.integer.literal]</a>
 
 |                  |                          |                          |
 | ---------------- | ------------------------ | ------------------------ |
@@ -772,7 +772,7 @@ following the backslash is not listed in Table  [[tab:escape.sequences]]
 are conditionally-supported, with *implementation-defined* semantics. An
 escape sequence specifies a single character.
 
-**Table: Escape sequences**
+**Table: Escape sequences** <a id="tab:escape.sequences">[tab:escape.sequences]</a>
 
 |                 |                |                    |
 | --------------- | -------------- | ------------------ |
@@ -1060,7 +1060,7 @@ concatenation. — *end note*]
 Table  [[tab:lex.string.concat]] has some examples of valid
 concatenations.
 
-**Table: String literal concatenations**
+**Table: String literal concatenations** <a id="tab:lex.string.concat">[tab:lex.string.concat]</a>
 
 |                            |       |                            |       |                            |       |
 | -------------------------- | ----- | -------------------------- | ----- | -------------------------- | ----- |

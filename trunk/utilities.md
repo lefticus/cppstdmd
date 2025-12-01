@@ -7,7 +7,7 @@ programs; some of these utilities are used by other elements of the C++
 standard library. These utilities are summarized in
 [[utilities.summary]].
 
-**Table: General utilities library summary**
+**Table: General utilities library summary** <a id="utilities.summary">[utilities.summary]</a>
 
 | Subclause            |                              | Header         |
 | -------------------- | ---------------------------- | -------------- |
@@ -2756,7 +2756,7 @@ constexpr optional<T>& operator=(const optional& rhs);
 
 *Effects:* See [[optional.assign.copy]].
 
-**Table: `optional::operator=(const optional&)` effects**
+**Table: `optional::operator=(const optional&)` effects** <a id="optional.assign.copy">[optional.assign.copy]</a>
 
 |                                | `*this` contains a value                               | `*this` does not contain a value                            |
 | ------------------------------ | ------------------------------------------------------ | ----------------------------------------------------------- |
@@ -2789,7 +2789,7 @@ constexpr optional& operator=(optional&& rhs) noexcept(see below);
 *Effects:* See [[optional.assign.move]]. The result of the expression
 `rhs.has_value()` remains unchanged.
 
-**Table: `optional::operator=(optional&&)` effects**
+**Table: `optional::operator=(optional&&)` effects** <a id="optional.assign.move">[optional.assign.move]</a>
 
 |                                | `*this` contains a value                               | `*this` does not contain a value                                       |
 | ------------------------------ | ------------------------------------------------------ | ---------------------------------------------------------------------- |
@@ -2860,7 +2860,7 @@ template<class U> constexpr optional<T>& operator=(const optional<U>& rhs);
 
 *Effects:* See [[optional.assign.copy.templ]].
 
-**Table: `optional::operator=(const optional<U>&)` effects**
+**Table: `optional::operator=(const optional<U>&)` effects** <a id="optional.assign.copy.templ">[optional.assign.copy.templ]</a>
 
 |                                | `*this` contains a value                               | `*this` does not contain a value                            |
 | ------------------------------ | ------------------------------------------------------ | ----------------------------------------------------------- |
@@ -2897,7 +2897,7 @@ template<class U> constexpr optional<T>& operator=(optional<U>&& rhs);
 *Effects:* See [[optional.assign.move.templ]]. The result of the
 expression `rhs.has_value()` remains unchanged.
 
-**Table: `optional::operator=(optional<U>&&)` effects**
+**Table: `optional::operator=(optional<U>&&)` effects** <a id="optional.assign.move.templ">[optional.assign.move.templ]</a>
 
 |                                | `*this` contains a value                               | `*this` does not contain a value                                       |
 | ------------------------------ | ------------------------------------------------------ | ---------------------------------------------------------------------- |
@@ -2969,7 +2969,7 @@ requirements [[swappable.requirements]].
 
 *Effects:* See [[optional.swap]].
 
-**Table: `optional::swap(optional&)` effects**
+**Table: `optional::swap(optional&)` effects** <a id="optional.swap">[optional.swap]</a>
 
 |                                | `*this` contains a value                                                                                                                                                                           | `*this` does not contain a value                                                                                                                                                                     |
 | ------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -6341,7 +6341,7 @@ constexpr void swap(expected& rhs) noexcept(see below);
 
 *Effects:* See [[expected.object.swap]].
 
-**Table: `swap(expected&)` effects**
+**Table: `swap(expected&)` effects** <a id="expected.object.swap">[expected.object.swap]</a>
 
 | `this->has_value()` | `!this->has_value()` |
 | ------------------- | -------------------- |
@@ -7078,7 +7078,7 @@ constexpr void swap(expected& rhs) noexcept(see below);
 
 *Effects:* See [[expected.void.swap]].
 
-**Table: `swap(expected&)` effects**
+**Table: `swap(expected&)` effects** <a id="expected.void.swap">[expected.void.swap]</a>
 
 | `this->has_value()` | `!this->has_value()` |
 | ------------------- | -------------------- |

@@ -10,7 +10,7 @@ of exceptional conditions, documenting program assertions, and a global
 variable for error number codes, as summarized in Table 
 [[tab:diagnostics.lib.summary]].
 
-**Table: Diagnostics library summary**
+**Table: Diagnostics library summary** <a id="tab:diagnostics.lib.summary">[tab:diagnostics.lib.summary]</a>
 
 | Subclause          |                      | Header           |
 | ------------------ | -------------------- | ---------------- |

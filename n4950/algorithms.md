@@ -10,7 +10,7 @@ operations, mutating sequence operations, sorting and related
 operations, and algorithms from the ISO C library, as summarized in
 [[algorithms.summary]].
 
-**Table: Algorithms library summary**
+**Table: Algorithms library summary** <a id="algorithms.summary">[algorithms.summary]</a>
 
 | Subclause                    |                                   | Header        |
 | ---------------------------- | --------------------------------- | ------------- |

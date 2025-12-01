@@ -14,7 +14,7 @@ allow a character sequence to be operated upon by a regular expression,
 and two iterator types for enumerating regular expression matches, as
 summarized in [[re.summary]].
 
-**Table: Regular expressions library summary**
+**Table: Regular expressions library summary** <a id="re.summary">[re.summary]</a>
 
 | Subclause       |                             | Header    |
 | --------------- | --------------------------- | --------- |
@@ -494,7 +494,7 @@ most one of the grammar elements `ECMAScript`, `basic`, `extended`,
 `awk`, `grep`, `egrep`, set. If no grammar element is set, the default
 grammar is `ECMAScript`.
 
-**Table: `syntax_option_type` effects**
+**Table: `syntax_option_type` effects** <a id="re.synopt">[re.synopt]</a>
 
 | Element        | Effect(s) if set                                                                                                                                                                                                                                                                                                             |
 | -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -542,7 +542,7 @@ specified for the regular expression object, modified according to the
 effects listed in [[re.matchflag]] for any bitmask elements set.
 
 **Table: `regex_constants::match_flag_type` effects when obtaining a match against a
-     character container sequence {[}`first`, `last`{)}.**
+     character container sequence {[}`first`, `last`{)}.** <a id="re.matchflag">[re.matchflag]</a>
 
 | Element                                                       | Effect(s) if set                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
 | ------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -585,7 +585,7 @@ The type `error_type` is an *implementation-defined* enumerated type
 [[enumerated.types]]. Values of type `error_type` represent the error
 conditions described in [[re.err]]:
 
-**Table: `error_type` values in the C locale**
+**Table: `error_type` values in the C locale** <a id="re.err">[re.err]</a>
 
 | Value                | Error condition                                                                                                    |
 | -------------------- | ------------------------------------------------------------------------------------------------------------------ |
@@ -850,7 +850,7 @@ locale_type getloc() const;
 in effect at the time of construction of `*this`, otherwise a copy of
 the last argument passed to `imbue`.
 
-**Table: Character class names and corresponding `ctype` masks**
+**Table: Character class names and corresponding `ctype` masks** <a id="re.traits.classnames">[re.traits.classnames]</a>
 
 | Narrow character name | Wide character name | Corresponding `ctype_base::mask` value |
 | --------------------- | ------------------- | -------------------------------------- |
@@ -1576,7 +1576,7 @@ match_results& operator=(match_results&& m);
 
 *Ensures:* As specified in [[re.results.const]].
 
-**Table: `match_results` copy/move operation postconditions**
+**Table: `match_results` copy/move operation postconditions** <a id="re.results.const">[re.results.const]</a>
 
 | Element       | Value                                                        |
 | ------------- | ------------------------------------------------------------ |
@@ -1871,7 +1871,7 @@ regex_match ("GetValues", m, re);       // returns false
 `m.size()` returns `0` and `m.empty()` returns `true`. Otherwise the
 effects on parameter `m` are given in [[re.alg.match]].
 
-**Table: Effects of `regex_match` algorithm**
+**Table: Effects of `regex_match` algorithm** <a id="re.alg.match">[re.alg.match]</a>
 
 | Element              | Value                                                                                                                                                                               |
 | -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -1966,7 +1966,7 @@ exists, `false` otherwise.
 `m.size()` returns `0` and `m.empty()` returns `true`. Otherwise the
 effects on parameter `m` are given in [[re.alg.search]].
 
-**Table: Effects of `regex_search` algorithm**
+**Table: Effects of `regex_search` algorithm** <a id="re.alg.search">[re.alg.search]</a>
 
 | Element              | Value                                                                                                                                                                               |
 | -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |

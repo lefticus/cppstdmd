@@ -7,7 +7,7 @@ C++programs; some of these utilities are used by other elements of the
 C++standard library. These utilities are summarized in Table 
 [[tab:util.lib.summary]].
 
-**Table: General utilities library summary**
+**Table: General utilities library summary** <a id="tab:util.lib.summary">[tab:util.lib.summary]</a>
 
 | Subclause             |                                  | Header               |
 | --------------------- | -------------------------------- | -------------------- |
@@ -2306,7 +2306,7 @@ optional<T>& operator=(const optional& rhs);
 
 *Effects:* See Table  [[tab:optional.assign.copy]].
 
-**Table: `optional::operator=(const optional&)` effects**
+**Table: `optional::operator=(const optional&)` effects** <a id="tab:optional.assign.copy">[tab:optional.assign.copy]</a>
 
 |                                | `*this` contains a value                               | `*this` does not contain a value                                                                     |
 | ------------------------------ | ------------------------------------------------------ | ---------------------------------------------------------------------------------------------------- |
@@ -2334,7 +2334,7 @@ optional<T>& operator=(optional&& rhs) noexcept(see below);
 *Effects:* See Table  [[tab:optional.assign.move]]. The result of the
 expression `bool(rhs)` remains unchanged.
 
-**Table: `optional::operator=(optional&&)` effects**
+**Table: `optional::operator=(optional&&)` effects** <a id="tab:optional.assign.move">[tab:optional.assign.move]</a>
 
 |                                | `*this` contains a value                               | `*this` does not contain a value                                                                                |
 | ------------------------------ | ------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------- |
@@ -2393,7 +2393,7 @@ template <class U> optional<T>& operator=(const optional<U>& rhs);
 
 *Effects:* See Table  [[tab:optional.assign.copy.templ]].
 
-**Table: `optional::operator=(const optional<U>&)` effects**
+**Table: `optional::operator=(const optional<U>&)` effects** <a id="tab:optional.assign.copy.templ">[tab:optional.assign.copy.templ]</a>
 
 |                                | `*this` contains a value                               | `*this` does not contain a value                                                                     |
 | ------------------------------ | ------------------------------------------------------ | ---------------------------------------------------------------------------------------------------- |
@@ -2436,7 +2436,7 @@ template <class U> optional<T>& operator=(optional<U>&& rhs);
 *Effects:* See Table  [[tab:optional.assign.move.templ]]. The result of
 the expression `bool(rhs)` remains unchanged.
 
-**Table: `optional::operator=(optional<U>&&)` effects**
+**Table: `optional::operator=(optional<U>&&)` effects** <a id="tab:optional.assign.move.templ">[tab:optional.assign.move.templ]</a>
 
 |                                | `*this` contains a value                               | `*this` does not contain a value                                                                                |
 | ------------------------------ | ------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------- |
@@ -2523,7 +2523,7 @@ void swap(optional& rhs) noexcept(see below);
 
 *Effects:* See Table  [[tab:optional.swap]].
 
-**Table: `optional::swap(optional&)` effects**
+**Table: `optional::swap(optional&)` effects** <a id="tab:optional.swap">[tab:optional.swap]</a>
 
 |                                | `*this` contains a value                                                                                                                                                                                                                                   | `*this` does not contain a value                                                                                                                                                                                                                             |
 | ------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -12448,7 +12448,7 @@ values of `U` and `V`. If it is not possible to represent `X` or `Y`
 with `intmax_t`, the program is ill-formed unless the implementation
 yields correct values of `U` and `V`.
 
-**Table: Expressions used to perform ratio arithmetic**
+**Table: Expressions used to perform ratio arithmetic** <a id="tab:ratio.arithmetic">[tab:ratio.arithmetic]</a>
 
 |                          |                       |                     |
 | ------------------------ | --------------------- | ------------------- |

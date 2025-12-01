@@ -640,11 +640,15 @@ end
 
 -- Helper function to build markdown table from structured data
 -- Single source of truth for table formatting
-local function build_markdown_table(caption, headers, rows)
+local function build_markdown_table(caption, headers, rows, label)
   local md_lines = {}
 
-  -- Add caption as heading
-  table.insert(md_lines, "**Table: " .. caption .. "**\n")
+  -- Add caption as heading with optional anchor for cross-references
+  if label and label ~= "" then
+    table.insert(md_lines, "**Table: " .. caption .. "** <a id=\"" .. label .. "\">[" .. label .. "]</a>\n")
+  else
+    table.insert(md_lines, "**Table: " .. caption .. "**\n")
+  end
 
   -- If no headers provided but we have rows, generate empty headers based on column count
   -- This ensures valid markdown table structure
@@ -771,7 +775,7 @@ local function handle_libeff_family_table(text, env_name, header_config, skip_ar
   local rows = parse_table_rows(normalized)
 
   -- Generate markdown table using shared helper
-  local markdown = build_markdown_table(caption, extracted_headers, rows)
+  local markdown = build_markdown_table(caption, extracted_headers, rows, label)
   return pandoc.RawBlock('markdown', markdown)
 end
 
@@ -811,7 +815,7 @@ function RawBlock(elem)
         local rows = parse_table_rows(normalized)
 
         -- Generate markdown table using shared helper (DRY)
-        local markdown = build_markdown_table(caption, headers, rows)
+        local markdown = build_markdown_table(caption, headers, rows, label)
         return pandoc.RawBlock('markdown', markdown)
       end
     end
@@ -845,7 +849,7 @@ function RawBlock(elem)
         local rows = parse_table_rows(normalized)
 
         -- Generate markdown table using shared helper
-        local markdown = build_markdown_table(caption, headers, rows)
+        local markdown = build_markdown_table(caption, headers, rows, label)
         return pandoc.RawBlock('markdown', markdown)
       end
     end
@@ -924,7 +928,7 @@ function RawBlock(elem)
         end
 
         -- Generate markdown table using shared helper
-        local markdown = build_markdown_table(caption, headers, rows)
+        local markdown = build_markdown_table(caption, headers, rows, label)
         return pandoc.RawBlock('markdown', markdown)
       end
     end
@@ -968,7 +972,7 @@ function RawBlock(elem)
         local rows = parse_table_rows(normalized)
 
         -- Generate markdown table using shared helper
-        local markdown = build_markdown_table(caption, headers, rows)
+        local markdown = build_markdown_table(caption, headers, rows, label)
         return pandoc.RawBlock('markdown', markdown)
       end
     end
@@ -1001,7 +1005,7 @@ function RawBlock(elem)
         local rows = parse_table_rows(normalized)
 
         -- Generate markdown table using shared helper
-        local markdown = build_markdown_table(caption, headers, rows)
+        local markdown = build_markdown_table(caption, headers, rows, label)
         return pandoc.RawBlock('markdown', markdown)
       end
     end
@@ -1034,7 +1038,7 @@ function RawBlock(elem)
         local rows = parse_table_rows(normalized)
 
         -- Generate markdown table using shared helper
-        local markdown = build_markdown_table(caption, headers, rows)
+        local markdown = build_markdown_table(caption, headers, rows, label)
         return pandoc.RawBlock('markdown', markdown)
       end
     end
@@ -1067,7 +1071,7 @@ function RawBlock(elem)
         local rows = parse_table_rows(normalized)
 
         -- Generate markdown table using shared helper
-        local markdown = build_markdown_table(caption, headers, rows)
+        local markdown = build_markdown_table(caption, headers, rows, label)
         return pandoc.RawBlock('markdown', markdown)
       end
     end
@@ -1143,7 +1147,7 @@ function RawBlock(elem)
         local rows = parse_table_rows(normalized)
 
         -- Generate markdown table using shared helper (DRY)
-        local markdown = build_markdown_table(caption, headers, rows)
+        local markdown = build_markdown_table(caption, headers, rows, label)
         return pandoc.RawBlock('markdown', markdown)
       end
     end
@@ -1180,7 +1184,7 @@ function RawBlock(elem)
         local rows = parse_table_rows(normalized)
 
         -- Generate markdown table
-        local markdown = build_markdown_table(caption, headers, rows)
+        local markdown = build_markdown_table(caption, headers, rows, label)
         return pandoc.RawBlock('markdown', markdown)
       end
     end
@@ -1217,7 +1221,7 @@ function RawBlock(elem)
         local rows = parse_table_rows(normalized)
 
         -- Generate markdown table
-        local markdown = build_markdown_table(caption, headers, rows)
+        local markdown = build_markdown_table(caption, headers, rows, label)
         return pandoc.RawBlock('markdown', markdown)
       end
     end
@@ -1260,7 +1264,7 @@ function RawBlock(elem)
         local rows = parse_table_rows(normalized)
 
         -- Generate markdown table using shared helper (DRY)
-        local markdown = build_markdown_table(caption, headers, rows)
+        local markdown = build_markdown_table(caption, headers, rows, label)
         return pandoc.RawBlock('markdown', markdown)
       end
     end

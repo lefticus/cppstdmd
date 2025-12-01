@@ -7,7 +7,7 @@ C++programs; some of these utilities are used by other elements of the
 C++standard library. These utilities are summarized in Table 
 [[tab:util.lib.summary]].
 
-**Table: General utilities library summary**
+**Table: General utilities library summary** <a id="tab:util.lib.summary">[tab:util.lib.summary]</a>
 
 | Subclause             |                                  | Header               |
 | --------------------- | -------------------------------- | -------------------- |
@@ -6600,7 +6600,7 @@ values of `U` and `V`. If it is not possible to represent `X` or `Y`
 with `intmax_t`, the program is ill-formed unless the implementation
 yields correct values of `U` and `V`.
 
-**Table: Expressions used to perform ratio arithmetic**
+**Table: Expressions used to perform ratio arithmetic** <a id="tab:ratio.arithmetic">[tab:ratio.arithmetic]</a>
 
 |                          |                       |                     |
 | ------------------------ | --------------------- | ------------------- |

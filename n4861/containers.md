@@ -9,7 +9,7 @@ The following subclauses describe container requirements, and components
 for sequence containers and associative containers, as summarized in
 [[containers.summary]].
 
-**Table: Containers library summary**
+**Table: Containers library summary** <a id="containers.summary">[containers.summary]</a>
 
 | Subclause                  |                                  | Header                                                       |
 | -------------------------- | -------------------------------- | ------------------------------------------------------------ |
@@ -426,7 +426,7 @@ compatible nodes have the same node handle type. Elements may be
 transferred in either direction between container types in the same row
 of [[container.node.compat]].
 
-**Table: Container types with compatible nodes**
+**Table: Container types with compatible nodes** <a id="container.node.compat">[container.node.compat]</a>
 
 |                                  |                                       |
 | -------------------------------- | ------------------------------------- |

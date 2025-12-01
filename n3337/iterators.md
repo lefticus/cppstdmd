@@ -10,7 +10,7 @@ The following subclauses describe iterator requirements, and components
 for iterator primitives, predefined iterators, and stream iterators, as
 summarized in Table  [[tab:iterators.lib.summary]].
 
-**Table: Iterators library summary**
+**Table: Iterators library summary** <a id="tab:iterators.lib.summary">[tab:iterators.lib.summary]</a>
 
 | Subclause                 |                      | Header       |
 | ------------------------- | -------------------- | ------------ |
@@ -49,7 +49,7 @@ iterators*, *output iterators*, *forward iterators*, *bidirectional
 iterators* and *random access iterators*, as shown in Table 
 [[tab:iterators.relations]].
 
-**Table: Relations among iterator categories**
+**Table: Relations among iterator categories** <a id="tab:iterators.relations">[tab:iterators.relations]</a>
 
 |                   |                                 |                           |                          |
 | ----------------- | ------------------------------- | ------------------------- | ------------------------ |

@@ -468,7 +468,7 @@ explicit strstreambuf(streamsize alsize_arg);
 postconditions of this function are indicated in
 [[depr.strstreambuf.cons.sz]].
 
-**Table: `strstreambuf(streamsize)` effects**
+**Table: `strstreambuf(streamsize)` effects** <a id="depr.strstreambuf.cons.sz">[depr.strstreambuf.cons.sz]</a>
 
 | Element   | Value          |
 | --------- | -------------- |
@@ -485,7 +485,7 @@ strstreambuf(void* (*palloc_arg)(size_t), void (*pfree_arg)(void*));
 postconditions of this function are indicated in
 [[depr.strstreambuf.cons.alloc]].
 
-**Table: `strstreambuf(void* (*)(size_t), void (*)(void*))` effects**
+**Table: `strstreambuf(void* (*)(size_t), void (*)(void*))` effects** <a id="depr.strstreambuf.cons.alloc">[depr.strstreambuf.cons.alloc]</a>
 
 | Element   | Value                |
 | --------- | -------------------- |
@@ -506,7 +506,7 @@ strstreambuf(unsigned char* gnext_arg, streamsize n,
 postconditions of this function are indicated in
 [[depr.strstreambuf.cons.ptr]].
 
-**Table: `strstreambuf(charT*, streamsize, charT*)` effects**
+**Table: `strstreambuf(charT*, streamsize, charT*)` effects** <a id="depr.strstreambuf.cons.ptr">[depr.strstreambuf.cons.ptr]</a>
 
 | Element   | Value                |
 | --------- | -------------------- |
@@ -675,7 +675,7 @@ pos_type seekoff(off_type off, seekdir way, openmode which = in | out) override;
 sequences, if possible, as indicated in
 [[depr.strstreambuf.seekoff.pos]].
 
-**Table: `seekoff` positioning**
+**Table: `seekoff` positioning** <a id="depr.strstreambuf.seekoff.pos">[depr.strstreambuf.seekoff.pos]</a>
 
 | Conditions                                                                                                           | Result                                            |
 | -------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------- |
@@ -689,7 +689,7 @@ For a sequence to be positioned, if its next pointer is a null pointer,
 the positioning operation fails. Otherwise, the function determines
 `newoff` as indicated in [[depr.strstreambuf.seekoff.newoff]].
 
-**Table: `newoff` values**
+**Table: `newoff` values** <a id="depr.strstreambuf.seekoff.newoff">[depr.strstreambuf.seekoff.newoff]</a>
 
 | Condition         | `newoff` Value                                                 |
 | ----------------- | -------------------------------------------------------------- |

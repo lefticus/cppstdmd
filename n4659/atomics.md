@@ -8,7 +8,7 @@ access is provided via operations on atomic objects.
 The following subclauses describe atomics requirements and components
 for types and operations, as summarized below.
 
-**Table: Atomics library summary**
+**Table: Atomics library summary** <a id="tab:atomics.lib.summary">[tab:atomics.lib.summary]</a>
 
 | Subclause                    |                            | Header     |
 | ---------------------------- | -------------------------- | ---------- |
@@ -828,7 +828,7 @@ primary template.
 The following operations perform arithmetic computations. The key,
 operator, and computation correspondence is:
 
-**Table: Atomic arithmetic computations**
+**Table: Atomic arithmetic computations** <a id="tab:atomic.arithmetic.computations">[tab:atomic.arithmetic.computations]</a>
 
 | Op  | Computation |
 | --- | ----------- |
@@ -927,7 +927,7 @@ primary template.
 The following operations perform pointer arithmetic. The key, operator,
 and computation correspondence is:
 
-**Table: Atomic pointer computations**
+**Table: Atomic pointer computations** <a id="tab:atomic.pointer.computations">[tab:atomic.pointer.computations]</a>
 
 |       |     |          |       |     |             |
 | ----- | --- | -------- | ----- | --- | ----------- |

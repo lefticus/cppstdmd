@@ -7,7 +7,7 @@ This clause describes components for dealing with ranges of elements.
 The following subclauses describe range and view requirements, and
 components for range primitives as summarized in [[range.summary]].
 
-**Table: Ranges library summary**
+**Table: Ranges library summary** <a id="range.summary">[range.summary]</a>
 
 | Subclause           |                 | Header     |
 | ------------------- | --------------- | ---------- |

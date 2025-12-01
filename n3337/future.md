@@ -37,7 +37,7 @@ For compatibility with the C standard library and the C Unicode TR, the
 C++standard library provides the 25 *C headers*, as shown in Table 
 [[tab:future.c.headers]].
 
-**Table: C headers**
+**Table: C headers** <a id="tab:future.c.headers">[tab:future.c.headers]</a>
 
 |               |                |                |              |              |
 | ------------- | -------------- | -------------- | ------------ | ------------ |
@@ -268,7 +268,7 @@ explicit strstreambuf(streamsize alsize_arg = 0);
 the base class with `streambuf()`. The postconditions of this function
 are indicated in Table  [[tab:future.strstreambuf.effects]].
 
-**Table: `strstreambuf(streamsize)` effects**
+**Table: `strstreambuf(streamsize)` effects** <a id="tab:future.strstreambuf.effects">[tab:future.strstreambuf.effects]</a>
 
 | Element   | Value          |
 | --------- | -------------- |
@@ -285,7 +285,7 @@ strstreambuf(void* (*palloc_arg)(size_t), void (*pfree_arg)(void*));
 the base class with `streambuf()`. The postconditions of this function
 are indicated in Table  [[tab:future.strstreambuf1.effects]].
 
-**Table: `strstreambuf(void* (*)(size_t), void (*)(void*))` effects**
+**Table: `strstreambuf(void* (*)(size_t), void (*)(void*))` effects** <a id="tab:future.strstreambuf1.effects">[tab:future.strstreambuf1.effects]</a>
 
 | Element   | Value                |
 | --------- | -------------------- |
@@ -436,7 +436,7 @@ pos_type seekoff(off_type off, seekdir way, openmode which = in | out);
 sequences, if possible, as indicated in
 Table  [[tab:future.seekoff.positioning]].
 
-**Table: `seekoff` positioning**
+**Table: `seekoff` positioning** <a id="tab:future.seekoff.positioning">[tab:future.seekoff.positioning]</a>
 
 | Conditions                                                                                                                     | Result                                            |
 | ------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------- |
@@ -450,7 +450,7 @@ For a sequence to be positioned, if its next pointer is a null pointer,
 the positioning operation fails. Otherwise, the function determines
 `newoff` as indicated in Table  [[tab:future.newoff.values]].
 
-**Table: `newoff` values**
+**Table: `newoff` values** <a id="tab:future.newoff.values">[tab:future.newoff.values]</a>
 
 | Condition                                                                                       | `newoff` Value                                                 |
 | ----------------------------------------------------------------------------------------------- | -------------------------------------------------------------- |

@@ -1619,7 +1619,7 @@ If N is zero for a unary fold-expression, the value of the expression is
 shown in Table  [[tab:fold.empty]]; if the operator is not listed in
 Table  [[tab:fold.empty]], the instantiation is ill-formed.
 
-**Table: Value of folding empty sequences**
+**Table: Value of folding empty sequences** <a id="tab:fold.empty">[tab:fold.empty]</a>
 
 | Operator | Value when parameter pack is empty |
 | -------- | ---------------------------------- |

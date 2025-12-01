@@ -4012,7 +4012,7 @@ representation.[^22]
 representation as the largest value of the corresponding unsigned
 type. — *end example*]
 
-**Table: Minimum width**
+**Table: Minimum width** <a id="basic.fundamental.width">[basic.fundamental.width]</a>
 
 | Type          | Minimum width $N$ |
 | ------------- | ----------------- |
@@ -4308,7 +4308,7 @@ There is a partial ordering on cv-qualifiers, so that a type can be said
 to be *more cv-qualified* than another. [[basic.type.qualifier.rel]]
 shows the relations that constitute this ordering.
 
-**Table: Relations on `const` and `volatile`**
+**Table: Relations on `const` and `volatile`** <a id="basic.type.qualifier.rel">[basic.type.qualifier.rel]</a>
 
 |                 |     |                  |
 | --------------- | --- | ---------------- |

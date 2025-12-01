@@ -7,7 +7,7 @@ programs; some of these utilities are used by other elements of the C++
 standard library. These utilities are summarized in
 [[utilities.summary]].
 
-**Table: General utilities library summary**
+**Table: General utilities library summary** <a id="utilities.summary">[utilities.summary]</a>
 
 | Subclause             |                                  | Header                  |
 | --------------------- | -------------------------------- | ----------------------- |
@@ -2145,7 +2145,7 @@ constexpr optional<T>& operator=(const optional& rhs);
 
 *Effects:* See [[optional.assign.copy]].
 
-**Table: `optional::operator=(const optional&)` effects**
+**Table: `optional::operator=(const optional&)` effects** <a id="optional.assign.copy">[optional.assign.copy]</a>
 
 |                                | `*this` contains a value                               | `*this` does not contain a value                                                                     |
 | ------------------------------ | ------------------------------------------------------ | ---------------------------------------------------------------------------------------------------- |
@@ -2178,7 +2178,7 @@ constexpr optional& operator=(optional&& rhs) noexcept(see below);
 *Effects:* See [[optional.assign.move]]. The result of the expression
 `bool(rhs)` remains unchanged.
 
-**Table: `optional::operator=(optional&&)` effects**
+**Table: `optional::operator=(optional&&)` effects** <a id="optional.assign.move">[optional.assign.move]</a>
 
 |                                | `*this` contains a value                               | `*this` does not contain a value                                                                                |
 | ------------------------------ | ------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------- |
@@ -2254,7 +2254,7 @@ template<class U> optional<T>& operator=(const optional<U>& rhs);
 
 *Effects:* See [[optional.assign.copy.templ]].
 
-**Table: `optional::operator=(const optional<U>&)` effects**
+**Table: `optional::operator=(const optional<U>&)` effects** <a id="optional.assign.copy.templ">[optional.assign.copy.templ]</a>
 
 |                                | `*this` contains a value                               | `*this` does not contain a value                                                                     |
 | ------------------------------ | ------------------------------------------------------ | ---------------------------------------------------------------------------------------------------- |
@@ -2298,7 +2298,7 @@ template<class U> optional<T>& operator=(optional<U>&& rhs);
 *Effects:* See [[optional.assign.move.templ]]. The result of the
 expression `bool(rhs)` remains unchanged.
 
-**Table: `optional::operator=(optional<U>&&)` effects**
+**Table: `optional::operator=(optional<U>&&)` effects** <a id="optional.assign.move.templ">[optional.assign.move.templ]</a>
 
 |                                | `*this` contains a value                               | `*this` does not contain a value                                                                                |
 | ------------------------------ | ------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------- |
@@ -2371,7 +2371,7 @@ void swap(optional& rhs) noexcept(see below);
 
 *Effects:* See [[optional.swap]].
 
-**Table: `optional::swap(optional&)` effects**
+**Table: `optional::swap(optional&)` effects** <a id="optional.swap">[optional.swap]</a>
 
 |                                | `*this` contains a value                                                                                                                                                                                                                                   | `*this` does not contain a value                                                                                                                                                                                                                             |
 | ------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -12544,7 +12544,7 @@ values of `U` and `V`. If it is not possible to represent `X` or `Y`
 with `intmax_t`, the program is ill-formed unless the implementation
 yields correct values of `U` and `V`.
 
-**Table: Expressions used to perform ratio arithmetic**
+**Table: Expressions used to perform ratio arithmetic** <a id="ratio.arithmetic">[ratio.arithmetic]</a>
 
 |                          |                       |                     |
 | ------------------------ | --------------------- | ------------------- |
@@ -13448,7 +13448,7 @@ string s6 = format("{:6}", true);       // value of s6 is "true\ \ "
 determined by the size of the content and the alignment option has no
 effect. — *end note*]
 
-**Table: Meaning of align options**
+**Table: Meaning of align options** <a id="format.align">[format.align]</a>
 
 | Option | Meaning                                                                                                                                                                                                                                                             |
 | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -13592,7 +13592,7 @@ The *type* determines how the data should be presented.
 The available string presentation types are specified in
 [[format.type.string]].
 
-**Table: Meaning of type options for strings**
+**Table: Meaning of type options for strings** <a id="format.type.string">[format.type.string]</a>
 
 | Type      | Meaning                          |
 | --------- | -------------------------------- |
@@ -13631,7 +13631,7 @@ default is instead `c` or `s`, respectively. — *end note*]
 The available `charT` presentation types are specified in
 [[format.type.char]].
 
-**Table: Meaning of type options for `charT`**
+**Table: Meaning of type options for `charT`** <a id="format.type.char">[format.type.char]</a>
 
 | Type                           | Meaning                              |
 | ------------------------------ | ------------------------------------ |
@@ -13642,7 +13642,7 @@ The available `charT` presentation types are specified in
 The available `bool` presentation types are specified in
 [[format.type.bool]].
 
-**Table: Meaning of type options for `bool`**
+**Table: Meaning of type options for `bool`** <a id="format.type.bool">[format.type.bool]</a>
 
 | Type                                | Meaning                                                                                |
 | ----------------------------------- | -------------------------------------------------------------------------------------- |
@@ -13660,7 +13660,7 @@ respectively.
 [*Note 9*: In either case, a sign is included if indicated by the
 *sign* option. — *end note*]
 
-**Table: Meaning of type options for floating-point types**
+**Table: Meaning of type options for floating-point types** <a id="format.type.float">[format.type.float]</a>
 
 | Type       | Meaning                                                                                                                                                                                                                                                                                                   |
 | ---------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -13680,7 +13680,7 @@ are specified in [[format.type.ptr]].
 [*Note 10*: Pointer presentation types also apply to
 `nullptr_t`. — *end note*]
 
-**Table: Meaning of type options for pointer types**
+**Table: Meaning of type options for pointer types** <a id="format.type.ptr">[format.type.ptr]</a>
 
 | Type      | Meaning                                                                                                                                                                                                 |
 | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |

@@ -420,7 +420,7 @@ specified in [[lex.name.allowed]]. The initial element shall not be a
 into one of the ranges specified in [[lex.name.disallowed]]. Upper- and
 lower-case letters are different. All characters are significant.[^10]
 
-**Table: Ranges of characters allowed**
+**Table: Ranges of characters allowed** <a id="lex.name.allowed">[lex.name.allowed]</a>
 
 |               |               |               |               |               |
 | ------------- | ------------- | ------------- | ------------- | ------------- |
@@ -436,7 +436,7 @@ lower-case letters are different. All characters are significant.[^10]
 | `B0000-BFFFD` | `C0000-CFFFD` | `D0000-DFFFD` | `E0000-EFFFD` |               |
 
 
-**Table: Ranges of characters disallowed initially (combining characters)**
+**Table: Ranges of characters disallowed initially (combining characters)** <a id="lex.name.disallowed">[lex.name.disallowed]</a>
 
 |             |                                                |             |             |
 | ----------- | ---------------------------------------------- | ----------- | ----------- |
@@ -481,7 +481,7 @@ Furthermore, the alternative representations shown in
 [[lex.key.digraph]] for certain operators and punctuators
 [[lex.digraph]] are reserved and shall not be used otherwise.
 
-**Table: Alternative representations**
+**Table: Alternative representations** <a id="lex.key.digraph">[lex.key.digraph]</a>
 
 |          |          |          |         |          |       |
 | -------- | -------- | -------- | ------- | -------- | ----- |
@@ -637,7 +637,7 @@ digit of the sequence of digits is the most significant.
 [*Note 1*: The prefix and any optional separating single quotes are
 ignored when determining the value. — *end note*]
 
-**Table: Base of *integer-literal*{s}**
+**Table: Base of *integer-literal*{s}** <a id="lex.icon.base">[lex.icon.base]</a>
 
 | Kind of *integer-literal* | base $N$ |
 | ------------------------- | -------- |
@@ -659,7 +659,7 @@ The type of an *integer-literal* is the first type in the list in
 [[lex.icon.type]] corresponding to its optional *integer-suffix* in
 which its value can be represented. An *integer-literal* is a prvalue.
 
-**Table: Types of *integer-literal*s**
+**Table: Types of *integer-literal*s** <a id="lex.icon.type">[lex.icon.type]</a>
 
 | *integer-suffix* | *decimal-literal*        | *integer-literal* other than *decimal-literal* |
 | ---------------- | ------------------------ | ---------------------------------------------- |
@@ -815,7 +815,7 @@ backslash is not listed in [[lex.ccon.esc]] are conditionally-supported,
 with *implementation-defined* semantics. An escape sequence specifies a
 single character.
 
-**Table: Escape sequences**
+**Table: Escape sequences** <a id="lex.ccon.esc">[lex.ccon.esc]</a>
 
 |                 |                |                    |
 | --------------- | -------------- | ------------------ |
@@ -926,7 +926,7 @@ floating-point-suffix: one of
 The type of a *floating-point-literal* is determined by its
 *floating-point-suffix* as specified in [[lex.fcon.type]].
 
-**Table: Types of *floating-point-literal*{s}**
+**Table: Types of *floating-point-literal*{s}** <a id="lex.fcon.type">[lex.fcon.type]</a>
 
 | *floating-point-suffix* | type            |
 | ----------------------- | --------------- |
@@ -1118,7 +1118,7 @@ concatenation. — *end note*]
 
 [[lex.string.concat]] has some examples of valid concatenations.
 
-**Table: String literal concatenations**
+**Table: String literal concatenations** <a id="lex.string.concat">[lex.string.concat]</a>
 
 |                            |       |                            |       |                            |       |
 | -------------------------- | ----- | -------------------------- | ----- | -------------------------- | ----- |

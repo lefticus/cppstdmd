@@ -8,7 +8,7 @@ The following subclauses describe general memory management facilities,
 smart pointers, memory resources, and scoped allocators, as summarized
 in [[mem.summary]].
 
-**Table: Memory management library summary**
+**Table: Memory management library summary** <a id="mem.summary">[mem.summary]</a>
 
 | Subclause             |                   | Header                  |
 | --------------------- | ----------------- | ----------------------- |

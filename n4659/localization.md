@@ -12,7 +12,7 @@ The following subclauses describe components for locales themselves, the
 standard facets, and facilities from the ISO C library, as summarized in
 Table  [[tab:localization.lib.summary]].
 
-**Table: Localization library summary**
+**Table: Localization library summary** <a id="tab:localization.lib.summary">[tab:localization.lib.summary]</a>
 
 | Subclause             |                              | Header      |
 | --------------------- | ---------------------------- | ----------- |
@@ -257,7 +257,7 @@ Each locale category, in turn, identifies a set of locale facets,
 including at least those shown in Table 
 [[tab:localization.category.facets]].
 
-**Table: Locale category facets**
+**Table: Locale category facets** <a id="tab:localization.category.facets">[tab:localization.category.facets]</a>
 
 | Category | Includes facets                                       |
 | -------- | ----------------------------------------------------- |
@@ -289,7 +289,7 @@ An implementation is required to provide those specializations for facet
 templates identified as members of a category, and for those shown in
 Table  [[tab:localization.required.specializations]].
 
-**Table: Required specializations**
+**Table: Required specializations** <a id="tab:localization.required.specializations">[tab:localization.required.specializations]</a>
 
 | Category | Includes facets                                           |
 | -------- | --------------------------------------------------------- |
@@ -1372,7 +1372,7 @@ identify a cache of seek offsets. — *end note*]
 *Returns:* An enumeration value, as summarized in
 Table  [[tab:localization.convert.result.values.out.in]].
 
-**Table: `do_in/do_out` result values**
+**Table: `do_in/do_out` result values** <a id="tab:localization.convert.result.values.out.in">[tab:localization.convert.result.values.out.in]</a>
 
 | Value     | Meaning                                                                                          |
 | --------- | ------------------------------------------------------------------------------------------------ |
@@ -1404,7 +1404,7 @@ stored.
 *Returns:* An enumeration value, as summarized in
 Table  [[tab:localization.convert.result.values.unshift]].
 
-**Table: `do_unshift` result values**
+**Table: `do_unshift` result values** <a id="tab:localization.convert.result.values.unshift">[tab:localization.convert.result.values.unshift]</a>
 
 | Value     | Meaning                                                                                                              |
 | --------- | -------------------------------------------------------------------------------------------------------------------- |
@@ -1647,7 +1647,7 @@ conversion specifier as indicated in
 Table [[tab:localization.integer.conversions.in]]. The table is
 ordered. That is, the first line whose condition is true applies.
 
-**Table: Integer conversions**
+**Table: Integer conversions** <a id="tab:localization.integer.conversions.in">[tab:localization.integer.conversions.in]</a>
 
 | State |
 | ----- |
@@ -1664,7 +1664,7 @@ For conversions to `void*` the specifier is `%p`.
 A length modifier is added to the conversion specification, if needed,
 as indicated in Table [[tab:localization.length.modifier.in]].
 
-**Table: Length modifier**
+**Table: Length modifier** <a id="tab:localization.length.modifier.in">[tab:localization.length.modifier.in]</a>
 
 | Type |
 | ---- |
@@ -1915,7 +1915,7 @@ For conversion from an integral type other than a character type, the
 function determines the integral conversion specifier as indicated in
 Table [[tab:localization.integer.conversions.out]].
 
-**Table: Integer conversions**
+**Table: Integer conversions** <a id="tab:localization.integer.conversions.out">[tab:localization.integer.conversions.out]</a>
 
 | State |
 | ----- |
@@ -1930,7 +1930,7 @@ For conversion from a floating-point type, the function determines the
 floating-point conversion specifier as indicated in
 Table [[tab:localization.fp.conversions.out]].
 
-**Table: Floating-point conversions**
+**Table: Floating-point conversions** <a id="tab:localization.fp.conversions.out">[tab:localization.fp.conversions.out]</a>
 
 | State |
 | ----- |
@@ -1947,7 +1947,7 @@ For conversions from an integral or floating-point type a length
 modifier is added to the conversion specifier as indicated in
 Table [[tab:localization.length.modifier.out]].
 
-**Table: Length modifier**
+**Table: Length modifier** <a id="tab:localization.length.modifier.out">[tab:localization.length.modifier.out]</a>
 
 | Type |
 | ---- |
@@ -1963,7 +1963,7 @@ The conversion specifier has the following optional additional
 qualifiers prepended as indicated in
 Table [[tab:localization.numeric.conversions]].
 
-**Table: Numeric conversions**
+**Table: Numeric conversions** <a id="tab:localization.numeric.conversions">[tab:localization.numeric.conversions]</a>
 
 | Type(s) | State |
 | ------- | ----- |
@@ -2013,7 +2013,7 @@ fmtflags adjustfield = (flags & (ios_base::adjustfield));
 The location of any padding[^12] is determined according to
 Table [[tab:localization.fill.padding]].
 
-**Table: Fill padding**
+**Table: Fill padding** <a id="tab:localization.fill.padding">[tab:localization.fill.padding]</a>
 
 | State                                                                          | Location           |
 | ------------------------------------------------------------------------------ | ------------------ |
@@ -2536,7 +2536,7 @@ encounters an error. The format depends on the value returned by
 `date_order()` as shown in
 Table  [[tab:lib.locale.time.get.virtuals.dogetdate]].
 
-**Table: `do_get_date` effects**
+**Table: `do_get_date` effects** <a id="tab:lib.locale.time.get.virtuals.dogetdate">[tab:lib.locale.time.get.virtuals.dogetdate]</a>
 
 | `date_order()` | Format     |
 | -------------- | ---------- |
@@ -3509,7 +3509,7 @@ the functions listed in Table  [[tab:setlocale.data.races]].
 
 ISO C 7.11.
 
-**Table: Potential `setlocale` data races**
+**Table: Potential `setlocale` data races** <a id="tab:setlocale.data.races">[tab:setlocale.data.races]</a>
 
 |           |            |             |              |            |
 | --------- | ---------- | ----------- | ------------ | ---------- |

@@ -12,7 +12,7 @@ The following subclauses describe components for locales themselves, the
 standard facets, and facilities from the ISO C library, as summarized in
 [[localization.summary]].
 
-**Table: Localization library summary** <a id="localization.summary">[localization.summary]</a>
+**Table: Localization library summary**
 
 | Subclause             |                              | Header      |
 | --------------------- | ---------------------------- | ----------- |
@@ -105,6 +105,8 @@ encapsulate and manipulate the information peculiar to a locale.[^1]
 
 ### Class `locale` <a id="locale">[[locale]]</a>
 
+#### General <a id="locale.general">[[locale.general]]</a>
+
 ``` cpp
 namespace std {
   class locale {
@@ -159,7 +161,7 @@ Access to the facets of a `locale` is via two function templates,
 
 [*Example 1*:
 
-An iostream `operator<<` might be implemented as: [^2]
+An iostream `operator<<` can be implemented as:[^2]
 
 ``` cpp
 template<class charT, class traits>
@@ -172,7 +174,7 @@ operator<< (basic_ostream<charT, traits>& s, Date d) {
       use_facet<time_put<charT, ostreambuf_iterator<charT, traits>>>(
         s.getloc()).put(s, s, s.fill(), &tmbuf, 'x').failed();
     if (failed)
-      s.setstate(s.badbit);     // might throw
+      s.setstate(s.badbit);     // can throw
   }
   return s;
 }
@@ -193,8 +195,11 @@ All locale semantics are accessed via `use_facet<>` and `has_facet<>`,
 except that:
 
 - A member operator template
-  `operator()(const basic_string<C, T, A>&, const basic_string<{}C, T, A>&)`
-  is provided so that a locale may be used as a predicate argument to
+  ``` cpp
+  operator()(const basic_string<C, T, A>&, const basic_string<C, T, A>&)
+  ```
+
+  is provided so that a locale can be used as a predicate argument to
   the standard collections, to collate strings.
 - Convenient global interfaces are provided for traditional `ctype`
   functions such as `isdigit()` and `isspace()`, so that given a locale
@@ -247,15 +252,13 @@ is `true`, and represents the union of all categories. Further, the
 expression `(X | Y)`, where `X` and `Y` each represent a single
 category, represents the union of the two categories.
 
-`locale`
-
-member functions expecting a `category` argument require one of the
-`category` values defined above, or the union of two or more such
+`locale` member functions expecting a `category` argument require one of
+the `category` values defined above, or the union of two or more such
 values. Such a `category` value identifies a set of locale categories.
 Each locale category, in turn, identifies a set of locale facets,
 including at least those shown in [[locale.category.facets]].
 
-**Table: Locale category facets** <a id="locale.category.facets">[locale.category.facets]</a>
+**Table: Locale category facets**
 
 | Category | Includes facets                                       |
 | -------- | ----------------------------------------------------- |
@@ -287,7 +290,7 @@ An implementation is required to provide those specializations for facet
 templates identified as members of a category, and for those shown in
 [[locale.spec]].
 
-**Table: Required specializations** <a id="locale.spec">[locale.spec]</a>
+**Table: Required specializations**
 
 | Category | Includes facets                                           |
 | -------- | --------------------------------------------------------- |
@@ -348,7 +351,7 @@ namespace std {
 Class `facet` is the base class for locale feature sets. A class is a
 *facet* if it is publicly derived from another facet, or if it is a
 class derived from `locale::facet` and contains a publicly accessible
-declaration as follows: [^3]
+declaration as follows:[^3]
 
 ``` cpp
 static ::std::locale::id id;
@@ -371,7 +374,7 @@ for `refs == 1`, the implementation never destroys the facet.
 Constructors of all facets defined in this Clause take such an argument
 and pass it along to their `facet` base class constructor. All
 one-argument constructors defined in this Clause are *explicit*,
-preventing their participation in automatic conversions.
+preventing their participation in implicit conversions.
 
 For some standard facets a standard “…`_byname`” class, derived from it,
 implements the virtual function semantics equivalent to that facet of
@@ -442,25 +445,28 @@ any *implementation-defined* values.
 explicit locale(const string& std_name);
 ```
 
-*Effects:* The same as `locale(std_name.c_str())`.
+*Effects:* Equivalent to `locale(std_name.c_str())`.
 
 ``` cpp
-locale(const locale& other, const char* std_name, category);
+locale(const locale& other, const char* std_name, category cats);
 ```
+
+*Preconditions:* `cats` is a valid `category` value [[locale.category]].
 
 *Effects:* Constructs a locale as a copy of `other` except for the
 facets identified by the `category` argument, which instead implement
 the same semantics as `locale(std_name)`.
 
-*Throws:* `runtime_error` if the argument is not valid, or is null.
+*Throws:* `runtime_error` if the second argument is not valid, or is
+null.
 
 *Remarks:* The locale has a name if and only if `other` has a name.
 
 ``` cpp
-locale(const locale& other, const string& std_name, category cat);
+locale(const locale& other, const string& std_name, category cats);
 ```
 
-*Effects:* The same as `locale(other, std_name.c_str(), cat)`.
+*Effects:* Equivalent to `locale(other, std_name.c_str(), cats)`.
 
 ``` cpp
 template<class Facet> locale(const locale& other, Facet* f);
@@ -471,18 +477,23 @@ argument except that of type `Facet`, and installs the second argument
 as the remaining facet. If `f` is null, the resulting object is a copy
 of `other`.
 
-*Remarks:* The resulting locale has no name.
+*Remarks:* If `f` is null, the resulting locale has the same name as
+`other`. Otherwise, the resulting locale has no name.
 
 ``` cpp
 locale(const locale& other, const locale& one, category cats);
 ```
 
+*Preconditions:* `cats` is a valid `category` value.
+
 *Effects:* Constructs a locale incorporating all facets from the first
 argument except those that implement `cats`, which are instead
 incorporated from the second argument.
 
-*Remarks:* The resulting locale has a name if and only if the first two
-arguments have names.
+*Remarks:* If `cats` is equal to `locale::none`, the resulting locale
+has a name if and only if the first argument has a name. Otherwise, the
+resulting locale has a name if and only if the first two arguments both
+have names.
 
 ``` cpp
 const locale& operator=(const locale& other) noexcept;
@@ -532,10 +543,6 @@ template<class charT, class traits, class Allocator>
 
 *Effects:* Compares two strings according to the `collate<charT>` facet.
 
-*Remarks:* This member operator template (and therefore `locale` itself)
-meets the requirements for a comparator predicate template
-argument [[algorithms]] applied to strings.
-
 *Returns:*
 
 ``` cpp
@@ -543,10 +550,14 @@ use_facet<collate<charT>>(*this).compare(s1.data(), s1.data() + s1.size(),
                                          s2.data(), s2.data() + s2.size()) < 0
 ```
 
+*Remarks:* This member operator template (and therefore `locale` itself)
+meets the requirements for a comparator predicate template
+argument [[algorithms]] applied to strings.
+
 [*Example 1*:
 
 A vector of strings `v` can be collated according to collation rules in
-locale `loc` simply by ([[alg.sort]], [[vector]]):
+locale `loc` simply by [[alg.sort,vector]]:
 
 ``` cpp
 std::sort(v.begin(), v.end(), loc);
@@ -571,13 +582,13 @@ setlocale(LC_ALL, loc.name().c_str());
 otherwise, the effect on the C locale, if any, is
 *implementation-defined*.
 
+*Returns:* The previous value of `locale()`.
+
 *Remarks:* No library function other than `locale::global()` affects the
 value returned by `locale()`.
 
 [*Note 1*: See  [[c.locales]] for data race considerations when
 `setlocale` is invoked. — *end note*]
-
-*Returns:* The previous value of `locale()`.
 
 ``` cpp
 static const locale& classic();
@@ -642,9 +653,7 @@ use_facet<ctype<charT>>(loc).is(ctype_base::F, c)
 where `F` is the `ctype_base::mask` value corresponding to that function
 [[category.ctype]].[^4]
 
-#### Conversions <a id="conversions">[[conversions]]</a>
-
-##### Character conversions <a id="conversions.character">[[conversions.character]]</a>
+#### Character conversions <a id="conversions.character">[[conversions.character]]</a>
 
 ``` cpp
 template<class charT> charT toupper(charT c, const locale& loc);
@@ -659,6 +668,8 @@ template<class charT> charT tolower(charT c, const locale& loc);
 *Returns:* `use_facet<ctype<charT>>(loc).tolower(c)`.
 
 ## Standard `locale` categories <a id="locale.categories">[[locale.categories]]</a>
+
+### General <a id="locale.categories.general">[[locale.categories.general]]</a>
 
 Each of the standard categories includes a family of facets. Some of
 these implement formatting or parsing of a datum, for use by standard or
@@ -676,10 +687,12 @@ iterator.) The `get()` members take an `ios_base::iostate&` argument
 whose value they ignore, but set to `ios_base::failbit` in case of a
 parse error.
 
-Within this clause it is unspecified whether one virtual function calls
-another virtual function.
+Within subclause [[locale.categories]] it is unspecified whether one
+virtual function calls another virtual function.
 
 ### The `ctype` category <a id="category.ctype">[[category.ctype]]</a>
+
+#### General <a id="category.ctype.general">[[category.ctype.general]]</a>
 
 ``` cpp
 namespace std {
@@ -707,6 +720,8 @@ namespace std {
 The type `mask` is a bitmask type [[bitmask.types]].
 
 #### Class template `ctype` <a id="locale.ctype">[[locale.ctype]]</a>
+
+##### General <a id="locale.ctype.general">[[locale.ctype.general]]</a>
 
 ``` cpp
 namespace std {
@@ -881,10 +896,12 @@ const char*  do_widen(const char* low, const char* high, charT* dest) const;
 
 *Effects:* Applies the simplest reasonable transformation from a `char`
 value or sequence of `char` values to the corresponding `charT` value or
-values.[^5] The only characters for which unique transformations are
-required are those in the basic source character set [[lex.charset]].
+values.[^5]
 
-For any named `ctype` category with a `ctype <charT>` facet `ctc` and
+The only characters for which unique transformations are required are
+those in the basic character set [[lex.charset]].
+
+For any named `ctype` category with a `ctype<charT>` facet `ctc` and
 valid `ctype_base::mask` value `M`,
 `(ctc.is(M, c) || !is(M, do_widen(c)) )` is `true`.[^6]
 
@@ -903,8 +920,8 @@ const charT* do_narrow(const charT* low, const charT* high, char dfault, char* d
 value or sequence of `charT` values to the corresponding `char` value or
 values.
 
-For any character `c` in the basic source character set [[lex.charset]]
-the transformation is such that
+For any character `c` in the basic character set [[lex.charset]] the
+transformation is such that
 
 ``` cpp
 do_widen(do_narrow(c, 0)) == c
@@ -945,6 +962,8 @@ namespace std {
 ```
 
 #### `ctype<char>` specialization <a id="facet.ctype.special">[[facet.ctype.special]]</a>
+
+##### General <a id="facet.ctype.special.general">[[facet.ctype.special.general]]</a>
 
 ``` cpp
 namespace std {
@@ -993,8 +1012,10 @@ namespace std {
 ```
 
 A specialization `ctype<char>` is provided so that the member functions
-on type `char` can be implemented inline.[^7] The
-*implementation-defined* value of member `table_size` is at least 256.
+on type `char` can be implemented inline.[^7]
+
+The *implementation-defined* value of member `table_size` is at least
+256.
 
 ##### Destructor <a id="facet.ctype.char.dtor">[[facet.ctype.char.dtor]]</a>
 
@@ -1122,6 +1143,8 @@ name in the `ctype` class template [[locale.ctype.members]].
 
 #### Class template `codecvt` <a id="locale.codecvt">[[locale.codecvt]]</a>
 
+##### General <a id="locale.codecvt.general">[[locale.codecvt.general]]</a>
+
 ``` cpp
 namespace std {
   class codecvt_base {
@@ -1139,18 +1162,18 @@ namespace std {
       explicit codecvt(size_t refs = 0);
 
       result out(
-          stateT& state,
-          const internT* from, const internT* from_end, const internT*& from_next,
-                externT*   to,       externT*   to_end,       externT*&   to_next) const;
+        stateT& state,
+        const internT* from, const internT* from_end, const internT*& from_next,
+              externT*   to,       externT*   to_end,       externT*&   to_next) const;
 
       result unshift(
-          stateT& state,
-                externT*    to,      externT*   to_end,       externT*&   to_next) const;
+        stateT& state,
+              externT*    to,      externT*   to_end,       externT*&   to_next) const;
 
       result in(
-          stateT& state,
-          const externT* from, const externT* from_end, const externT*& from_next,
-                internT*   to,       internT*   to_end,       internT*&   to_next) const;
+        stateT& state,
+        const externT* from, const externT* from_end, const externT*& from_next,
+              internT*   to,       internT*   to_end,       internT*&   to_next) const;
 
       int encoding() const noexcept;
       bool always_noconv() const noexcept;
@@ -1162,16 +1185,16 @@ namespace std {
     protected:
       ~codecvt();
       virtual result do_out(
-          stateT& state,
-          const internT* from, const internT* from_end, const internT*& from_next,
-                externT* to,         externT*   to_end,       externT*&   to_next) const;
+        stateT& state,
+        const internT* from, const internT* from_end, const internT*& from_next,
+              externT* to,         externT*   to_end,       externT*&   to_next) const;
       virtual result do_in(
-          stateT& state,
-          const externT* from, const externT* from_end, const externT*& from_next,
-                internT* to,         internT*   to_end,       internT*&   to_next) const;
+        stateT& state,
+        const externT* from, const externT* from_end, const externT*& from_next,
+              internT* to,         internT*   to_end,       internT*&   to_next) const;
       virtual result do_unshift(
-          stateT& state,
-                externT* to,         externT*   to_end,       externT*&   to_next) const;
+        stateT& state,
+              externT* to,         externT*   to_end,       externT*&   to_next) const;
 
       virtual int do_encoding() const noexcept;
       virtual bool do_always_noconv() const noexcept;
@@ -1194,23 +1217,23 @@ The specializations required in [[locale.category.facets]]
 set. `codecvt<char, char, mbstate_t>` implements a degenerate
 conversion; it does not convert at all. The specialization
 `codecvt<char16_t, char8_t, mbstate_t>` converts between the UTF-16 and
-UTF-8 encoding forms, and the specialization `codecvt`
-`<char32_t, char8_t, mbstate_t>` converts between the UTF-32 and UTF-8
-encoding forms. `codecvt<wchar_t, char, mbstate_t>` converts between the
-native character sets for ordinary and wide characters. Specializations
-on `mbstate_t` perform conversion between encodings known to the library
-implementer. Other encodings can be converted by specializing on a
-program-defined `stateT` type. Objects of type `stateT` can contain any
-state that is useful to communicate to or from the specialized `do_in`
-or `do_out` members.
+UTF-8 encoding forms, and the specialization
+`codecvt<char32_t, char8_t, mbstate_t>` converts between the UTF-32 and
+UTF-8 encoding forms. `codecvt<wchar_t, char, mbstate_t>` converts
+between the native character sets for ordinary and wide characters.
+Specializations on `mbstate_t` perform conversion between encodings
+known to the library implementer. Other encodings can be converted by
+specializing on a program-defined `stateT` type. Objects of type
+`stateT` can contain any state that is useful to communicate to or from
+the specialized `do_in` or `do_out` members.
 
 ##### Members <a id="locale.codecvt.members">[[locale.codecvt.members]]</a>
 
 ``` cpp
 result out(
-    stateT& state,
-    const internT* from, const internT* from_end, const internT*& from_next,
-    externT* to, externT* to_end, externT*& to_next) const;
+  stateT& state,
+  const internT* from, const internT* from_end, const internT*& from_next,
+  externT* to, externT* to_end, externT*& to_next) const;
 ```
 
 *Returns:*
@@ -1224,9 +1247,9 @@ result unshift(stateT& state, externT* to, externT* to_end, externT*& to_next) c
 
 ``` cpp
 result in(
-    stateT& state,
-    const externT* from, const externT* from_end, const externT*& from_next,
-    internT* to, internT* to_end, internT*& to_next) const;
+  stateT& state,
+  const externT* from, const externT* from_end, const externT*& from_next,
+  internT* to, internT* to_end, internT*& to_next) const;
 ```
 
 *Returns:*
@@ -1260,14 +1283,14 @@ int max_length() const noexcept;
 
 ``` cpp
 result do_out(
-    stateT& state,
-    const internT* from, const internT* from_end, const internT*& from_next,
-    externT* to, externT* to_end, externT*& to_next) const;
+  stateT& state,
+  const internT* from, const internT* from_end, const internT*& from_next,
+  externT* to, externT* to_end, externT*& to_next) const;
 
 result do_in(
-    stateT& state,
-    const externT* from, const externT* from_end, const externT*& from_next,
-    internT* to, internT* to_end, internT*& to_next) const;
+  stateT& state,
+  const externT* from, const externT* from_end, const externT*& from_next,
+  internT* to, internT* to_end, internT*& to_next) const;
 ```
 
 *Preconditions:* `(from <= from_end && to <= to_end)` is well-defined
@@ -1319,22 +1342,16 @@ shall also return `ok`.[^8]
 `partial` and set `from_next == from` and
 `to_next != to`. — *end note*]
 
-*Remarks:* Its operations on `state` are unspecified.
-
-[*Note 2*: This argument can be used, for example, to maintain shift
-state, to specify conversion options (such as count only), or to
-identify a cache of seek offsets. — *end note*]
-
 *Returns:* An enumeration value, as summarized in
 [[locale.codecvt.inout]].
 
-**Table: `do_in/do_out` result values** <a id="locale.codecvt.inout">[locale.codecvt.inout]</a>
+**Table: `do_in/do_out` result values**
 
 | Value     | Meaning                                                                                          |
 | --------- | ------------------------------------------------------------------------------------------------ |
 | `ok`      | completed the conversion                                                                         |
 | `partial` | not all source characters converted                                                              |
-| `error`   | encountered a character in {[}`from`, `from_end`{)} that it could not convert                    |
+| `error`   | encountered a character in {[}`from`, `from_end`{)} that cannot be converted                     |
 | `noconv`  | `internT` and `externT` are the same type, and input sequence is identical to converted sequence |
 
 
@@ -1342,6 +1359,12 @@ A return value of `partial`, if `(from_next == from_end)`, indicates
 that either the destination sequence has not absorbed all the available
 destination elements, or that additional source elements are needed
 before another destination element can be produced.
+
+*Remarks:* Its operations on `state` are unspecified.
+
+[*Note 2*: This argument can be used, for example, to maintain shift
+state, to specify conversion options (such as count only), or to
+identify a cache of seek offsets. — *end note*]
 
 ``` cpp
 result do_unshift(stateT& state, externT* to, externT* to_end, externT*& to_next) const;
@@ -1353,6 +1376,7 @@ result of converting the preceding characters in the sequence.
 
 *Effects:* Places characters starting at `to` that should be appended to
 terminate a sequence when the current `stateT` is given by `state`.[^9]
+
 Stores no more than `(to_end - to)` destination elements, and leaves the
 `to_next` pointer pointing one beyond the last element successfully
 stored.
@@ -1360,7 +1384,7 @@ stored.
 *Returns:* An enumeration value, as summarized in
 [[locale.codecvt.unshift]].
 
-**Table: `do_unshift` result values** <a id="locale.codecvt.unshift">[locale.codecvt.unshift]</a>
+**Table: `do_unshift` result values**
 
 | Value     | Meaning                                                                                                              |
 | --------- | -------------------------------------------------------------------------------------------------------------------- |
@@ -1432,6 +1456,8 @@ namespace std {
 
 ### The numeric category <a id="category.numeric">[[category.numeric]]</a>
 
+#### General <a id="category.numeric.general">[[category.numeric.general]]</a>
+
 The classes `num_get<>` and `num_put<>` handle numeric formatting and
 parsing. Virtual functions are provided for several numeric types.
 Implementations may (but are not required to) delegate extraction of
@@ -1450,9 +1476,11 @@ also for the `ctype<>` facet to perform character classification.
 
 Extractor and inserter members of the standard iostreams use `num_get<>`
 and `num_put<>` member functions for formatting and parsing numeric
-values ([[istream.formatted.reqmts]], [[ostream.formatted.reqmts]]).
+values [[istream.formatted.reqmts]], [[ostream.formatted.reqmts]].
 
 #### Class template `num_get` <a id="locale.num.get">[[locale.num.get]]</a>
+
+##### General <a id="locale.num.get.general">[[locale.num.get.general]]</a>
 
 ``` cpp
 namespace std {
@@ -1588,125 +1616,23 @@ The details of this operation occur in three stages
 
 The details of the stages are presented below.
 
-- **Stage 1:**
+[*Example 1*:
 
-The function initializes local variables via
+Given an input sequence of `"0x1a.bp+07p"`,
 
-``` cpp
-fmtflags flags = str.flags();
-fmtflags basefield = (flags & ios_base::basefield);
-fmtflags uppercase = (flags & ios_base::uppercase);
-fmtflags boolalpha = (flags & ios_base::boolalpha);
-```
+- if the conversion specifier returned by Stage 1 is `%d`, `"0"` is
+  accumulated;
+- if the conversion specifier returned by Stage 1 is `%i`, `"0x1a"` are
+  accumulated;
+- if the conversion specifier returned by Stage 1 is `%g`,
+  `"0x1a.bp+07"` are accumulated.
 
-For conversion to an integral type, the function determines the integral
-conversion specifier as indicated in [[facet.num.get.int]]. The
-table is ordered. That is, the first line whose condition is true
-applies.
+In all cases, the remainder is left in the input.
 
-**Table: Integer conversions** <a id="facet.num.get.int">[facet.num.get.int]</a>
-
-| State |
-| ----- |
-| `basefield == oct` | `%o` |
-| `basefield == hex` | `%X` |
-| `basefield == 0` | `%i` `signed` integral type | `%d` |
-| `unsigned` integral type | `%u` |
-
-
-For conversions to a floating-point type the specifier is `%g`.
-
-For conversions to `void*` the specifier is `%p`.
-
-A length modifier is added to the conversion specification, if needed,
-as indicated in [[facet.num.get.length]].
-
-**Table: Length modifier** <a id="facet.num.get.length">[facet.num.get.length]</a>
-
-| Type |
-| ---- |
-| `short` | `h` |
-| `unsigned short` | `h` |
-| `long` | `l` |
-| `unsigned long` | `l` |
-| `long long` | `ll` |
-| `unsigned long long` | `ll` |
-| `double` | `l` |
-| `long double` | `L` |
-
-- **Stage 2:**
-
-If `in == end` then stage 2 terminates. Otherwise a `charT` is taken
-from `in` and local variables are initialized as if by
-
-``` cpp
-char_type ct = *in;
-char c = src[find(atoms, atoms + sizeof(src) - 1, ct) - atoms];
-if (ct == use_facet<numpunct<charT>>(loc).decimal_point())
-c = '.';
-bool discard =
-  ct == use_facet<numpunct<charT>>(loc).thousands_sep()
-  && use_facet<numpunct<charT>>(loc).grouping().length() != 0;
-```
-
-where the values `src` and `atoms` are defined as if by:
-
-``` cpp
-static const char src[] = "0123456789abcdefxABCDEFX+-";
-char_type atoms[sizeof(src)];
-use_facet<ctype<charT>>(loc).widen(src, src + sizeof(src), atoms);
-```
-
-for this value of `loc`.
-
-If `discard` is `true`, then if `’.’` has not yet been accumulated, then
-the position of the character is remembered, but the character is
-otherwise ignored. Otherwise, if `’.’` has already been accumulated, the
-character is discarded and Stage 2 terminates. If it is not discarded,
-then a check is made to determine if `c` is allowed as the next
-character of an input field of the conversion specifier returned by
-Stage 1. If so, it is accumulated.
-
-If the character is either discarded or accumulated then `in` is
-advanced by `++in` and processing returns to the beginning of stage 2.
-
-- **Stage 3:**
-
-The sequence of `char`s accumulated in stage 2 (the field) is converted
-to a numeric value by the rules of one of the functions declared in the
-header `<cstdlib>`:
-
-- For a signed integer value, the function `strtoll`.
-
-- For an unsigned integer value, the function `strtoull`.
-
-- For a `float` value, the function `strtof`.
-
-- For a `double` value, the function `strtod`.
-
-- For a `long double` value, the function `strtold`.
-
-The numeric value to be stored can be one of:
-
-- zero, if the conversion function does not convert the entire field.
-
-- the most positive (or negative) representable value, if the field to
-  be converted to a signed integer type represents a value too large
-  positive (or negative) to be represented in `val`.
-
-- the most positive representable value, if the field to be converted to
-  an unsigned integer type represents a value that cannot be represented
-  in `val`.
-
-- the converted value, otherwise.
-
-The resultant numeric value is stored in `val`. If the conversion
-function does not convert the entire field, or if the field represents a
-value outside the range of representable values, `ios_base::failbit` is
-assigned to `err`.
+— *end example*]
 
 Digit grouping is checked. That is, the positions of discarded
-separators is examined for consistency with
+separators are examined for consistency with
 `use_facet<numpunct<charT>>(loc).grouping()`. If they are not consistent
 then `ios_base::failbit` is assigned to `err`.
 
@@ -1743,7 +1669,7 @@ match, it is found that `(in == end)`. If `val` is not set, then `err`
 is set to `str.failbit`; or to `(str.failbit|str.eofbit)` if the reason
 for the failure was that `(in == end)`.
 
-[*Example 1*: For targets `true`: `"a"` and `false`: `"abb"`, the input
+[*Example 2*: For targets `true`: `"a"` and `false`: `"abb"`, the input
 sequence `"a"` yields `val == true` and `err == str.eofbit`; the input
 sequence `"abc"` yields `err = str.failbit`, with `in` ending at the
 `’c’` element. For targets `true`: `"1"` and `false`: `"0"`, the input
@@ -1754,6 +1680,8 @@ targets `("")`, any input sequence yields
 *Returns:* `in`.
 
 #### Class template `num_put` <a id="locale.nm.put">[[locale.nm.put]]</a>
+
+##### General <a id="locale.nm.put.general">[[locale.nm.put.general]]</a>
 
 ``` cpp
 namespace std {
@@ -1872,7 +1800,7 @@ For conversion from an integral type other than a character type, the
 function determines the integral conversion specifier as indicated in
 [[facet.num.put.int]].
 
-**Table: Integer conversions** <a id="facet.num.put.int">[facet.num.put.int]</a>
+**Table: Integer conversions**
 
 | State |
 | ----- |
@@ -1887,7 +1815,7 @@ For conversion from a floating-point type, the function determines the
 floating-point conversion specifier as indicated in
 [[facet.num.put.fp]].
 
-**Table: Floating-point conversions** <a id="facet.num.put.fp">[facet.num.put.fp]</a>
+**Table: Floating-point conversions**
 
 | State |
 | ----- |
@@ -1904,7 +1832,7 @@ For conversions from an integral or floating-point type a length
 modifier is added to the conversion specifier as indicated in
 [[facet.num.put.length]].
 
-**Table: Length modifier** <a id="facet.num.put.length">[facet.num.put.length]</a>
+**Table: Length modifier**
 
 | Type |
 | ---- |
@@ -1919,7 +1847,7 @@ modifier is added to the conversion specifier as indicated in
 The conversion specifier has the following optional additional
 qualifiers prepended as indicated in [[facet.num.put.conv]].
 
-**Table: Numeric conversions** <a id="facet.num.put.conv">[facet.num.put.conv]</a>
+**Table: Numeric conversions**
 
 | Type(s) | State |
 | ------- | ----- |
@@ -1958,9 +1886,9 @@ const numpunct<charT>& punct = use_facet<numpunct<charT>>(loc);
 For arithmetic types, `punct.thousands_sep()` characters are inserted
 into the sequence as determined by the value returned by
 `punct.do_grouping()` using the method described
-in [[facet.numpunct.virtuals]]
+in [[facet.numpunct.virtuals]].
 
-Decimal point characters(.) are replaced by `punct.decimal_point()`
+Decimal point characters(.) are replaced by `punct.decimal_point()`.
 
 - **Stage 3:**
 
@@ -1970,10 +1898,11 @@ A local variable is initialized as
 fmtflags adjustfield = (flags & (ios_base::adjustfield));
 ```
 
-The location of any padding[^12] is determined according to
-[[facet.num.put.fill]].
+The location of any padding[^12]
 
-**Table: Fill padding** <a id="facet.num.put.fill">[facet.num.put.fill]</a>
+is determined according to [[facet.num.put.fill]].
+
+**Table: Fill padding**
 
 | State                                                                          | Location           |
 | ------------------------------------------------------------------------------ | ------------------ |
@@ -2020,6 +1949,8 @@ and returns `out`.
 
 #### Class template `numpunct` <a id="locale.numpunct">[[locale.numpunct]]</a>
 
+##### General <a id="locale.numpunct.general">[[locale.numpunct.general]]</a>
+
 ``` cpp
 namespace std {
   template<class charT>
@@ -2049,10 +1980,8 @@ namespace std {
 }
 ```
 
-`numpunct<>`
-
-specifies numeric punctuation. The specializations required in
-[[locale.category.facets]] [[locale.category]], namely
+`numpunct<>` specifies numeric punctuation. The specializations required
+in [[locale.category.facets]] [[locale.category]], namely
 `numpunct<{}wchar_t>` and `numpunct<char>`, provide classic `"C"`
 numeric formats, i.e., they contain information equivalent to that
 contained in the `"C"` locale or their wide character counterparts as if
@@ -2161,10 +2090,11 @@ string do_grouping() const;
 ```
 
 *Returns:* A `string` `vec` used as a vector of integer values, in which
-each element `vec[i]` represents the number of digits[^13] in the group
-at position `i`, starting with position 0 as the rightmost group. If
-`vec.size() <= i`, the number is the same as group `(i - 1)`; if
-`(i < 0 || vec[i] <= 0 || vec[i] == CHAR_MAX)`, the size of the digit
+each element `vec[i]` represents the number of digits[^13]
+
+in the group at position `i`, starting with position 0 as the rightmost
+group. If `vec.size() <= i`, the number is the same as group `(i - 1)`;
+if `(i < 0 || vec[i] <= 0 || vec[i] == CHAR_MAX)`, the size of the digit
 group is unlimited.
 
 The required specializations return the empty string, indicating no
@@ -2205,6 +2135,8 @@ namespace std {
 
 #### Class template `collate` <a id="locale.collate">[[locale.collate]]</a>
 
+##### General <a id="locale.collate.general">[[locale.collate.general]]</a>
+
 ``` cpp
 namespace std {
   template<class charT>
@@ -2238,7 +2170,7 @@ The class `collate<charT>` provides features for use in the collation
 as the predicate argument for standard algorithms [[algorithms]] and
 containers operating on strings. The specializations required in
 [[locale.category.facets]] [[locale.category]], namely `collate<char>`
-and `collate<wchar_t>`, apply lexicographic ordering
+and `collate<wchar_t>`, apply lexicographical ordering
 [[alg.lex.comparison]].
 
 Each function compares a string of characters `*p` in the range \[`low`,
@@ -2295,9 +2227,9 @@ long do_hash(const charT* low, const charT* high) const;
 any other string for which `do_compare()` returns 0 (equal) when passed
 the two strings.
 
-[*Note 1*: The probability that the result equals that for another
-string which does not compare equal should be very small, approaching
-`(1.0/numeric_limits<unsigned long>::max())`. — *end note*]
+*Recommended practice:* The probability that the result equals that for
+another string which does not compare equal should be very small,
+approaching `(1.0/numeric_limits<unsigned long>::max())`.
 
 #### Class template `collate_byname` <a id="locale.collate.byname">[[locale.collate.byname]]</a>
 
@@ -2319,6 +2251,8 @@ namespace std {
 
 ### The time category <a id="category.time">[[category.time]]</a>
 
+#### General <a id="category.time.general">[[category.time.general]]</a>
+
 Templates `time_get<charT, InputIterator>` and
 `time_put<charT, OutputIterator>` provide date and time formatting and
 parsing. All specifications of member functions for `time_put` and
@@ -2330,6 +2264,8 @@ specializations required in Tables  [[tab:locale.category.facets]] and 
 details.
 
 #### Class template `time_get` <a id="locale.time.get">[[locale.time.get]]</a>
+
+##### General <a id="locale.time.get.general">[[locale.time.get.general]]</a>
 
 ``` cpp
 namespace std {
@@ -2384,15 +2320,13 @@ namespace std {
 }
 ```
 
-`time_get`
-
-is used to parse a character sequence, extracting components of a time
-or date into a `struct tm` object. Each `get` member parses a format as
-produced by a corresponding format specifier to `time_put<>::put`. If
+`time_get` is used to parse a character sequence, extracting components
+of a time or date into a `tm` object. Each `get` member parses a format
+as produced by a corresponding format specifier to `time_put<>::put`. If
 the sequence being parsed matches the correct format, the corresponding
-members of the `struct tm` argument are set to the values used to
-produce the sequence; otherwise either an error is reported or
-unspecified values are assigned.[^15]
+members of the `tm` argument are set to the values used to produce the
+sequence; otherwise either an error is reported or unspecified values
+are assigned.[^15]
 
 If the end iterator is reached during parsing by any of the `get()`
 member functions, the member sets `ios_base::eofbit` in `err`.
@@ -2462,8 +2396,8 @@ the first of the following conditions holds:
 - The next element of `fmt` is equal to `’%’`, optionally followed by a
   modifier character, followed by a conversion specifier character,
   `format`, together forming a conversion specification valid for the
-  ISO/IEC 9945 function `strptime`. If the number of elements in the
-  range \[`fmt`, `fmtend`) is not sufficient to unambiguously determine
+  POSIX function `strptime`. If the number of elements in the range
+  \[`fmt`, `fmtend`) is not sufficient to unambiguously determine
   whether the conversion specification is complete and valid, the
   function evaluates `err = ios_base::failbit`. Otherwise, the function
   evaluates `s = do_get(s, end, f, err, t, format, modifier)`, where the
@@ -2498,9 +2432,10 @@ dateorder do_date_order() const;
 
 *Returns:* An enumeration value indicating the preferred order of
 components for those date formats that are composed of day, month, and
-year.[^16] Returns `no_order` if the date format specified by `’x’`
-contains other variable components (e.g., Julian day, week number, week
-day).
+year.[^16]
+
+Returns `no_order` if the date format specified by `’x’` contains other
+variable components (e.g., Julian day, week number, week day).
 
 ``` cpp
 iter_type do_get_time(iter_type s, iter_type end, ios_base& str,
@@ -2508,9 +2443,9 @@ iter_type do_get_time(iter_type s, iter_type end, ios_base& str,
 ```
 
 *Effects:* Reads characters starting at `s` until it has extracted those
-`struct tm` members, and remaining format characters, used by
-`time_put<>::put` to produce the format specified by `"%H:%M:%S"`, or
-until it encounters an error or end of sequence.
+`tm` members, and remaining format characters, used by `time_put<>::put`
+to produce the format specified by `"%H:%M:%S"`, or until it encounters
+an error or end of sequence.
 
 *Returns:* An iterator pointing immediately beyond the last character
 recognized as possibly part of a valid time.
@@ -2521,12 +2456,12 @@ iter_type do_get_date(iter_type s, iter_type end, ios_base& str,
 ```
 
 *Effects:* Reads characters starting at `s` until it has extracted those
-`struct tm` members and remaining format characters used by
-`time_put<>::put` to produce one of the following formats, or until it
-encounters an error. The format depends on the value returned by
-`date_order()` as shown in [[locale.time.get.dogetdate]].
+`tm` members and remaining format characters used by `time_put<>::put`
+to produce one of the following formats, or until it encounters an
+error. The format depends on the value returned by `date_order()` as
+shown in [[locale.time.get.dogetdate]].
 
-**Table: `do_get_date` effects** <a id="locale.time.get.dogetdate">[locale.time.get.dogetdate]</a>
+**Table: `do_get_date` effects**
 
 | `date_order()` | Format     |
 | -------------- | ---------- |
@@ -2552,9 +2487,9 @@ iter_type do_get_monthname(iter_type s, iter_type end, ios_base& str,
 
 *Effects:* Reads characters starting at `s` until it has extracted the
 (perhaps abbreviated) name of a weekday or month. If it finds an
-abbreviation that is followed by characters that could match a full
-name, it continues reading until it matches the full name or fails. It
-sets the appropriate `struct tm` member accordingly.
+abbreviation that is followed by characters that can match a full name,
+it continues reading until it matches the full name or fails. It sets
+the appropriate `tm` member accordingly.
 
 *Returns:* An iterator pointing immediately beyond the last character
 recognized as part of a valid name.
@@ -2581,31 +2516,31 @@ iter_type do_get(iter_type s, iter_type end, ios_base& f,
 
 *Effects:* The function starts by evaluating `err = ios_base::goodbit`.
 It then reads characters starting at `s` until it encounters an error,
-or until it has extracted and assigned those `struct tm` members, and
-any remaining format characters, corresponding to a conversion directive
-appropriate for the ISO/IEC 9945 function `strptime`, formed by
-concatenating `’%’`, the `modifier` character, when non-NUL, and the
-`format` character. When the concatenation fails to yield a complete
-valid directive the function leaves the object pointed to by `t`
-unchanged and evaluates `err |= ios_base::failbit`. When `s == end`
-evaluates to `true` after reading a character the function evaluates
+or until it has extracted and assigned those `tm` members, and any
+remaining format characters, corresponding to a conversion specification
+appropriate for the POSIX function `strptime`, formed by concatenating
+`’%’`, the `modifier` character, when non-NUL, and the `format`
+character. When the concatenation fails to yield a complete valid
+directive the function leaves the object pointed to by `t` unchanged and
+evaluates `err |= ios_base::failbit`. When `s == end` evaluates to
+`true` after reading a character the function evaluates
 `err |= ios_base::eofbit`.
 
-For complex conversion directives such as `%c`, `%x`, or `%X`, or
-directives that involve the optional modifiers `E` or `O`, when the
-function is unable to unambiguously determine some or all `struct tm`
-members from the input sequence \[`s`, `end`), it evaluates
-`err |= ios_base::eofbit`. In such cases the values of those `struct tm`
+For complex conversion specifications such as `%c`, `%x`, or `%X`, or
+conversion specifications that involve the optional modifiers `E` or
+`O`, when the function is unable to unambiguously determine some or all
+`tm` members from the input sequence \[`s`, `end`), it evaluates
+`err |= ios_base::eofbit`. In such cases the values of those `tm`
 members are unspecified and may be outside their valid range.
-
-*Remarks:* It is unspecified whether multiple calls to `do_get()` with
-the address of the same `struct tm` object will update the current
-contents of the object or simply overwrite its members. Portable
-programs should zero out the object before invoking the function.
 
 *Returns:* An iterator pointing immediately beyond the last character
 recognized as possibly part of a valid input sequence for the given
 `format` and `modifier`.
+
+*Remarks:* It is unspecified whether multiple calls to `do_get()` with
+the address of the same `tm` object will update the current contents of
+the object or simply overwrite its members. Portable programs should
+zero out the object before invoking the function.
 
 #### Class template `time_get_byname` <a id="locale.time.get.byname">[[locale.time.get.byname]]</a>
 
@@ -2673,14 +2608,16 @@ pattern. Format sequences are identified by converting each character
 `c` to a `char` value as if by `ct.narrow(c, 0)`, where `ct` is a
 reference to `ctype<charT>` obtained from `str.getloc()`. The first
 character of each sequence is equal to `’%’`, followed by an optional
-modifier character `mod`[^17] and a format specifier character `spec` as
-defined for the function `strftime`. If no modifier character is
-present, `mod` is zero. For each valid format sequence identified, calls
+modifier character `mod`[^17]
+
+and a format specifier character `spec` as defined for the function
+`strftime`. If no modifier character is present, `mod` is zero. For each
+valid format sequence identified, calls
 `do_put(s, str, fill, t, spec, mod)`.
 
 The second form calls `do_put(s, str, fill, t, format, modifier)`.
 
-[*Note 1*: The `fill` argument may be used in the
+[*Note 1*: The `fill` argument can be used in the
 implementation-defined formats or by derivations. A space character is a
 reasonable default for this argument. — *end note*]
 
@@ -2698,16 +2635,24 @@ iter_type do_put(iter_type s, ios_base&, char_type fill, const tm* t,
 placed on the output sequence `s`. Formatting is controlled by the
 parameters `format` and `modifier`, interpreted identically as the
 format specifiers in the string argument to the standard library
-function `strftime()`[^18], except that the sequence of characters
-produced for those specifiers that are described as depending on the C
-locale are instead *implementation-defined*.[^19]
+function `strftime()`, except that the sequence of characters produced
+for those specifiers that are described as depending on the C locale are
+instead *implementation-defined*.
+
+[*Note 2*: Interpretation of the `modifier` argument is
+implementation-defined. — *end note*]
 
 *Returns:* An iterator pointing immediately after the last character
 produced.
 
-[*Note 2*: The `fill` argument may be used in the
+[*Note 3*: The `fill` argument can be used in the
 implementation-defined formats or by derivations. A space character is a
 reasonable default for this argument. — *end note*]
+
+*Recommended practice:* Interpretation of the `modifier` should follow
+POSIX conventions. Implementations should refer to other standards such
+as POSIX for a specification of the character sequences produced for
+those specifiers described as depending on the C locale.
 
 #### Class template `time_put_byname` <a id="locale.time.put.byname">[[locale.time.put.byname]]</a>
 
@@ -2729,6 +2674,8 @@ namespace std {
 ```
 
 ### The monetary category <a id="category.monetary">[[category.monetary]]</a>
+
+#### General <a id="category.monetary.general">[[category.monetary.general]]</a>
 
 These templates handle monetary formats. A template parameter indicates
 whether local or international monetary formats are to be used.
@@ -2818,11 +2765,11 @@ if present, they are checked for correct placement only after all format
 components have been read.
 
 Where `money_base::space` or `money_base::none` appears as the last
-element in the format pattern, no white space is consumed. Otherwise,
+element in the format pattern, no whitespace is consumed. Otherwise,
 where `money_base::space` appears in any of the initial elements of the
-format pattern, at least one white space character is required. Where
+format pattern, at least one whitespace character is required. Where
 `money_base::none` appears in any of the initial elements of the format
-pattern, white space is allowed but not required. If
+pattern, whitespace is allowed but not required. If
 `(str.flags() & str.showbase)` is `false`, the currency symbol is
 optional and is consumed only if other characters are needed to complete
 the format; otherwise, the currency symbol is required.
@@ -2850,7 +2797,7 @@ Digits in the numeric monetary component are extracted and placed in
 `digits`, or into a character buffer `buf1` for conversion to produce a
 value for `units`, in the order in which they appear, preceded by a
 minus sign if and only if the result is negative. The value `units` is
-produced as if by[^20]
+produced as if by[^18]
 
 ``` cpp
 for (int i = 0; i < n; ++i)
@@ -2941,6 +2888,9 @@ classified according to `ct`) are used; any trailing characters
 (including digits appearing after a non-digit character) are ignored.
 Calls `str.width(0)`.
 
+*Returns:* An iterator pointing immediately after the last character
+produced.
+
 *Remarks:* The currency symbol is generated if and only if
 `(str.flags() & str.showbase)` is nonzero. If the number of characters
 generated for the specified format is less than the value returned by
@@ -2956,10 +2906,9 @@ before the other characters.
 and flag values, to produce output that cannot be parsed using
 `num_get<>::get`. — *end note*]
 
-*Returns:* An iterator pointing immediately after the last character
-produced.
-
 #### Class template `moneypunct` <a id="locale.moneypunct">[[locale.moneypunct]]</a>
+
+##### General <a id="locale.moneypunct.general">[[locale.moneypunct.general]]</a>
 
 ``` cpp
 namespace std {
@@ -3009,13 +2958,15 @@ The `moneypunct<>` facet defines monetary formatting parameters used by
 `money_get<>` and `money_put<>`. A monetary format is a sequence of four
 components, specified by a `pattern` value `p`, such that the `part`
 value `static_cast<part>(p.field[i])` determines the `i`ᵗʰ component of
-the format[^21] In the `field` member of a `pattern` object, each value
-`symbol`, `sign`, `value`, and either `space` or `none` appears exactly
-once. The value `none`, if present, is not first; the value `space`, if
-present, is neither first nor last.
+the format[^19]
 
-Where `none` or `space` appears, white space is permitted in the format,
-except where `none` appears at the end, in which case no white space is
+In the `field` member of a `pattern` object, each value `symbol`,
+`sign`, `value`, and either `space` or `none` appears exactly once. The
+value `none`, if present, is not first; the value `space`, if present,
+is neither first nor last.
+
+Where `none` or `space` appears, whitespace is permitted in the format,
+except where `none` appears at the end, in which case no whitespace is
 permitted. The value `space` indicates that at least one space is
 required at that position. Where `symbol` appears, the sequence of
 characters returned by `curr_symbol()` is permitted, and can be
@@ -3065,7 +3016,7 @@ In the syntax specification, the symbol is any of the values
 `ct` is a reference of type `const ctype<charT>&` obtained as described
 in the definitions of `money_get<>` and `money_put<>`. The symbol is the
 character returned by `thousands_sep()`. The space character used is the
-value `ct.widen(' ')`. White space characters are those characters `c`
+value `ct.widen(' ')`. Whitespace characters are those characters `c`
 for which `ci.is(space, c)` returns `true`. The number of digits
 required after the decimal point (if any) is exactly the value returned
 by `frac_digits()`.
@@ -3098,21 +3049,21 @@ charT do_decimal_point() const;
 ```
 
 *Returns:* The radix separator to use in case `do_frac_digits()` is
-greater than zero.[^22]
+greater than zero.[^20]
 
 ``` cpp
 charT do_thousands_sep() const;
 ```
 
 *Returns:* The digit group separator to use in case `do_grouping()`
-specifies a digit grouping pattern.[^23]
+specifies a digit grouping pattern.[^21]
 
 ``` cpp
 string do_grouping() const;
 ```
 
 *Returns:* A pattern defined identically as, but not necessarily equal
-to, the result of `numpunct<charT>::do_grouping()`.[^24]
+to, the result of `numpunct<charT>::do_grouping()`.[^22]
 
 ``` cpp
 string_type do_curr_symbol() const;
@@ -3130,15 +3081,17 @@ string_type do_negative_sign() const;
 ```
 
 *Returns:* `do_positive_sign()` returns the string to use to indicate a
-positive monetary value;[^25] `do_negative_sign()` returns the string to
-use to indicate a negative value.
+positive monetary value;[^23]
+
+`do_negative_sign()` returns the string to use to indicate a negative
+value.
 
 ``` cpp
 int do_frac_digits() const;
 ```
 
 *Returns:* The number of digits after the decimal radix separator, if
-any.[^26]
+any.[^24]
 
 ``` cpp
 pattern do_pos_format() const;
@@ -3154,7 +3107,7 @@ pattern do_neg_format() const;
 - `moneypunct<wchar_t, true>`,
 
 return an object of type `pattern` initialized to
-`{ symbol, sign, none, value }`.[^27]
+`{ symbol, sign, none, value }`.[^25]
 
 #### Class template `moneypunct_byname` <a id="locale.moneypunct.byname">[[locale.moneypunct.byname]]</a>
 
@@ -3177,10 +3130,14 @@ namespace std {
 
 ### The message retrieval category <a id="category.messages">[[category.messages]]</a>
 
+#### General <a id="category.messages.general">[[category.messages.general]]</a>
+
 Class `messages<charT>` implements retrieval of strings from message
 catalogs.
 
 #### Class template `messages` <a id="locale.messages">[[locale.messages]]</a>
+
+##### General <a id="locale.messages.general">[[locale.messages.general]]</a>
 
 ``` cpp
 namespace std {
@@ -3199,7 +3156,7 @@ namespace std {
 
       catalog open(const string& fn, const locale&) const;
       string_type get(catalog c, int set, int msgid,
-                       const string_type& dfault) const;
+                      const string_type& dfault) const;
       void close(catalog c) const;
 
       static locale::id id;
@@ -3319,11 +3276,13 @@ namespace std {
 The contents and meaning of the header `<clocale>` are the same as the C
 standard library header `<locale.h>`.
 
+### Data races <a id="clocale.data.races">[[clocale.data.races]]</a>
+
 Calls to the function `setlocale` may introduce a data race
 [[res.on.data.races]] with other calls to `setlocale` or with calls to
 the functions listed in [[setlocale.data.races]].
 
-**Table: Potential `setlocale` data races** <a id="setlocale.data.races">[setlocale.data.races]</a>
+**Table: Potential `setlocale` data races**
 
 |           |            |             |              |            |
 | --------- | ---------- | ----------- | ------------ | ---------- |
@@ -3341,7 +3300,7 @@ the functions listed in [[setlocale.data.races]].
 
 <!-- Link reference definitions -->
 [alg.lex.comparison]: algorithms.md#alg.lex.comparison
-[alg.sort]: algorithms.md#alg.sort
+[alg.sort,vector]: #alg.sort,vector
 [algorithms]: algorithms.md#algorithms
 [basic.start.static]: basic.md#basic.start.static
 [bitmask.types]: library.md#bitmask.types
@@ -3349,19 +3308,25 @@ the functions listed in [[setlocale.data.races]].
 [c.locales]: #c.locales
 [category.collate]: #category.collate
 [category.ctype]: #category.ctype
+[category.ctype.general]: #category.ctype.general
 [category.messages]: #category.messages
+[category.messages.general]: #category.messages.general
 [category.monetary]: #category.monetary
+[category.monetary.general]: #category.monetary.general
 [category.numeric]: #category.numeric
+[category.numeric.general]: #category.numeric.general
 [category.time]: #category.time
+[category.time.general]: #category.time.general
 [classification]: #classification
+[clocale.data.races]: #clocale.data.races
 [clocale.syn]: #clocale.syn
-[conversions]: #conversions
 [conversions.character]: #conversions.character
 [facet.ctype.char.dtor]: #facet.ctype.char.dtor
 [facet.ctype.char.members]: #facet.ctype.char.members
 [facet.ctype.char.statics]: #facet.ctype.char.statics
 [facet.ctype.char.virtuals]: #facet.ctype.char.virtuals
 [facet.ctype.special]: #facet.ctype.special
+[facet.ctype.special.general]: #facet.ctype.special.general
 [facet.num.get.members]: #facet.num.get.members
 [facet.num.get.virtuals]: #facet.num.get.virtuals
 [facet.num.put.members]: #facet.num.put.members
@@ -3377,30 +3342,36 @@ the functions listed in [[setlocale.data.races]].
 [lex.charset]: lex.md#lex.charset
 [locale]: #locale
 [locale.categories]: #locale.categories
+[locale.categories.general]: #locale.categories.general
 [locale.category]: #locale.category
 [locale.category.facets]: #locale.category.facets
 [locale.codecvt]: #locale.codecvt
 [locale.codecvt.byname]: #locale.codecvt.byname
+[locale.codecvt.general]: #locale.codecvt.general
 [locale.codecvt.inout]: #locale.codecvt.inout
 [locale.codecvt.members]: #locale.codecvt.members
 [locale.codecvt.unshift]: #locale.codecvt.unshift
 [locale.codecvt.virtuals]: #locale.codecvt.virtuals
 [locale.collate]: #locale.collate
 [locale.collate.byname]: #locale.collate.byname
+[locale.collate.general]: #locale.collate.general
 [locale.collate.members]: #locale.collate.members
 [locale.collate.virtuals]: #locale.collate.virtuals
 [locale.cons]: #locale.cons
 [locale.convenience]: #locale.convenience
 [locale.ctype]: #locale.ctype
 [locale.ctype.byname]: #locale.ctype.byname
+[locale.ctype.general]: #locale.ctype.general
 [locale.ctype.members]: #locale.ctype.members
 [locale.ctype.virtuals]: #locale.ctype.virtuals
 [locale.facet]: #locale.facet
+[locale.general]: #locale.general
 [locale.global.templates]: #locale.global.templates
 [locale.id]: #locale.id
 [locale.members]: #locale.members
 [locale.messages]: #locale.messages
 [locale.messages.byname]: #locale.messages.byname
+[locale.messages.general]: #locale.messages.general
 [locale.messages.members]: #locale.messages.members
 [locale.messages.virtuals]: #locale.messages.virtuals
 [locale.money.get]: #locale.money.get
@@ -3411,12 +3382,16 @@ the functions listed in [[setlocale.data.races]].
 [locale.money.put.virtuals]: #locale.money.put.virtuals
 [locale.moneypunct]: #locale.moneypunct
 [locale.moneypunct.byname]: #locale.moneypunct.byname
+[locale.moneypunct.general]: #locale.moneypunct.general
 [locale.moneypunct.members]: #locale.moneypunct.members
 [locale.moneypunct.virtuals]: #locale.moneypunct.virtuals
 [locale.nm.put]: #locale.nm.put
+[locale.nm.put.general]: #locale.nm.put.general
 [locale.num.get]: #locale.num.get
+[locale.num.get.general]: #locale.num.get.general
 [locale.numpunct]: #locale.numpunct
 [locale.numpunct.byname]: #locale.numpunct.byname
+[locale.numpunct.general]: #locale.numpunct.general
 [locale.operators]: #locale.operators
 [locale.spec]: #locale.spec
 [locale.statics]: #locale.statics
@@ -3424,6 +3399,7 @@ the functions listed in [[setlocale.data.races]].
 [locale.time.get]: #locale.time.get
 [locale.time.get.byname]: #locale.time.get.byname
 [locale.time.get.dogetdate]: #locale.time.get.dogetdate
+[locale.time.get.general]: #locale.time.get.general
 [locale.time.get.members]: #locale.time.get.members
 [locale.time.get.virtuals]: #locale.time.get.virtuals
 [locale.time.put]: #locale.time.put
@@ -3441,10 +3417,9 @@ the functions listed in [[setlocale.data.races]].
 [setlocale.data.races]: #setlocale.data.races
 [tab:locale.category.facets]: #tab:locale.category.facets
 [tab:locale.spec]: #tab:locale.spec
-[vector]: containers.md#vector
 
-[^1]: In this subclause, the type name `struct tm` is an incomplete type
-    that is defined in `<ctime>`.
+[^1]: In this subclause, the type name `tm` is an incomplete type that
+    is defined in `<ctime>`.
 
 [^2]: Note that in the call to `put`, the stream is implicitly converted
     to an `ostreambuf_iterator<charT, traits>`.
@@ -3456,7 +3431,7 @@ the functions listed in [[setlocale.data.races]].
 [^4]: When used in a loop, it is faster to cache the `ctype<>` facet and
     use it directly, or use the vector form of `ctype<>::is`.
 
-[^5]: The char argument of `do_widen` is intended to accept values
+[^5]: The parameter `c` of `do_widen` is intended to accept values
     derived from *character-literal*s for conversion to the locale’s
     encoding.
 
@@ -3469,16 +3444,16 @@ the functions listed in [[setlocale.data.races]].
     interface for `ctype<char>`.
 
 [^8]: Informally, this means that `basic_filebuf` assumes that the
-    mappings from internal to external characters is 1 to N: a `codecvt`
-    facet that is used by `basic_filebuf` must be able to translate
+    mappings from internal to external characters is 1 to N: that a
+    `codecvt` facet that is used by `basic_filebuf` can translate
     characters one internal character at a time.
 
 [^9]: Typically these will be characters to return the state to
     `stateT()`.
 
 [^10]: If `encoding()` yields `-1`, then more than `max_length()`
-    `externT` elements may be consumed when producing a single `internT`
-    character, and additional `externT` elements may appear at the end
+    `externT` elements can be consumed when producing a single `internT`
+    character, and additional `externT` elements can appear at the end
     of a sequence after those that yield the final `internT` character.
 
 [^11]: Parsing `"-1"` correctly into, e.g., an `unsigned short` requires
@@ -3501,31 +3476,25 @@ the functions listed in [[setlocale.data.races]].
     about interpreting user variations on standard formats.
 
 [^16]: This function is intended as a convenience only, for common
-    formats, and may return `no_order` in valid locales.
+    formats, and can return `no_order` in valid locales.
 
 [^17]: Although the C programming language defines no modifiers, most
     vendors do.
 
-[^18]: Interpretation of the `modifier` argument is
-    implementation-defined, but should follow POSIX conventions.
+[^18]: The semantics here are different from `ct.narrow`.
 
-[^19]: Implementations should refer to other standards such as POSIX for
-    these definitions.
-
-[^20]: The semantics here are different from `ct.narrow`.
-
-[^21]: An array of `char`, rather than an array of `part`, is specified
+[^19]: An array of `char`, rather than an array of `part`, is specified
     for `pattern::field` purely for efficiency.
 
-[^22]: In common U.S. locales this is `’.’`.
+[^20]: In common U.S. locales this is `’.’`.
 
-[^23]: In common U.S. locales this is `’,’`.
+[^21]: In common U.S. locales this is `’,’`.
 
-[^24]: To specify grouping by 3s, the value is `"\003"` *not* `"3"`.
+[^22]: To specify grouping by 3s, the value is `"\003"` *not* `"3"`.
 
-[^25]: This is usually the empty string.
+[^23]: This is usually the empty string.
 
-[^26]: In common U.S. locales, this is 2.
+[^24]: In common U.S. locales, this is 2.
 
-[^27]: Note that the international symbol returned by `do_curr_symbol()`
+[^25]: Note that the international symbol returned by `do_curr_symbol()`
     usually contains a space, itself; for example, `"USD "`.

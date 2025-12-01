@@ -7,7 +7,7 @@ threads [[intro.multithread]], perform mutual exclusion, and communicate
 conditions and values between threads, as summarized in
 [[thread.summary]].
 
-**Table: Concurrency support library summary**
+**Table: Concurrency support library summary** <a id="thread.summary">[thread.summary]</a>
 
 | Subclause            |                     | Header                      |
 | -------------------- | ------------------- | --------------------------- |
@@ -3762,7 +3762,7 @@ The following operations perform arithmetic computations. The
 correspondence among key, operator, and computation is specified in
 [[atomic.types.int.comp]].
 
-**Table: Atomic arithmetic computations**
+**Table: Atomic arithmetic computations** <a id="atomic.types.int.comp">[atomic.types.int.comp]</a>
 
 | Op  | Computation |
 | --- | ----------- |
@@ -4218,7 +4218,7 @@ The following operations perform pointer arithmetic. The correspondence
 among key, operator, and computation is specified in
 [[atomic.types.pointer.comp]].
 
-**Table: Atomic pointer computations**
+**Table: Atomic pointer computations** <a id="atomic.types.pointer.comp">[atomic.types.pointer.comp]</a>
 
 | Op  | Computation |
 | --- | ----------- |

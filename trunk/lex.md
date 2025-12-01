@@ -193,7 +193,7 @@ consisting of 99 characters as specified in [[lex.charset.basic]].
 the character; the numerical value has no other meaning in this
 context. — *end note*]
 
-**Table: Basic character set**
+**Table: Basic character set** <a id="lex.charset.basic">[lex.charset.basic]</a>
 
 | character            |                             | glyph                       |
 | -------------------- | --------------------------- | --------------------------- |
@@ -245,7 +245,7 @@ The *basic literal character set* consists of all characters of the
 basic character set, plus the control characters specified in
 [[lex.charset.literal]].
 
-**Table: Additional control characters in the basic literal character set**
+**Table: Additional control characters in the basic literal character set** <a id="lex.charset.literal">[lex.charset.literal]</a>
 
 |          |                 |
 | -------- | --------------- |
@@ -702,7 +702,7 @@ Furthermore, the alternative representations shown in
 [[lex.key.digraph]] for certain operators and punctuators
 [[lex.digraph]] are reserved and shall not be used otherwise.
 
-**Table: Alternative representations**
+**Table: Alternative representations** <a id="lex.key.digraph">[lex.key.digraph]</a>
 
 |          |          |          |         |          |       |
 | -------- | -------- | -------- | ------- | -------- | ----- |
@@ -834,7 +834,7 @@ of the sequence of digits is the most significant.
 [*Note 1*: The prefix and any optional separating single quotes are
 ignored when determining the value. — *end note*]
 
-**Table: Base of *integer-literal*{s}**
+**Table: Base of *integer-literal*{s}** <a id="lex.icon.base">[lex.icon.base]</a>
 
 | Kind of *integer-literal* | base $N$ |
 | ------------------------- | -------- |
@@ -856,7 +856,7 @@ The type of an *integer-literal* is the first type in the list in
 [[lex.icon.type]] corresponding to its optional *integer-suffix* in
 which its value can be represented.
 
-**Table: Types of *integer-literal*s**
+**Table: Types of *integer-literal*s** <a id="lex.icon.type">[lex.icon.type]</a>
 
 | *integer-suffix* | *decimal-literal*                         | *integer-literal* other than *decimal-literal* |
 | ---------------- | ----------------------------------------- | ---------------------------------------------- |
@@ -994,7 +994,7 @@ character encoding [[lex.charset]] are determined by its
 *encoding-prefix* and its *c-char-sequence* as defined by
 [[lex.ccon.literal]].
 
-**Table: Character literals**
+**Table: Character literals** <a id="lex.ccon.literal">[lex.ccon.literal]</a>
 
 | Encoding | Kind | Type | Associated char- | Example | prefix | acter encoding |
 | -------- | ---- | ---- | ---------------- | ------- | ------ | -------------- |
@@ -1044,7 +1044,7 @@ The character specified by a *simple-escape-sequence* is specified in
 [*Note 1*: Using an escape sequence for a question mark is supported
 for compatibility with C++14 and C. — *end note*]
 
-**Table: Simple escape sequences**
+**Table: Simple escape sequences** <a id="lex.ccon.esc">[lex.ccon.esc]</a>
 
 | character |                      | *simple-escape-sequence* |
 | --------- | -------------------- | ------------------------ |
@@ -1129,7 +1129,7 @@ The type of a *floating-point-literal*
 `bf16`, `F16`, `F32`, `F64`, `F128`, and `BF16` are
 conditionally-supported. See [[basic.extended.fp]]. — *end note*]
 
-**Table: Types of *floating-point-literal*{s}**
+**Table: Types of *floating-point-literal*{s}** <a id="lex.fcon.type">[lex.fcon.type]</a>
 
 | *floating-point-suffix* | type              |
 | ----------------------- | ----------------- |
@@ -1233,7 +1233,7 @@ sequence of *s-char*s or *r-char*s as defined by [[lex.string.literal]]
 where n is the number of encoded code units that would result from an
 evaluation of the *string-literal* (see below).
 
-**Table: String literals**
+**Table: String literals** <a id="lex.string.literal">[lex.string.literal]</a>
 
 | Enco- | Kind | Type | Associated | Examples | ding | character | prefix | encoding |
 | ----- | ---- | ---- | ---------- | -------- | ---- | --------- | ------ | -------- |
@@ -1325,7 +1325,7 @@ digit `1` (and not the single character `'A'` specified by a
 
 — *end example*]
 
-**Table: String literal concatenations**
+**Table: String literal concatenations** <a id="lex.string.concat">[lex.string.concat]</a>
 
 |                            |       |                            |       |                            |       |
 | -------------------------- | ----- | -------------------------- | ----- | -------------------------- | ----- |

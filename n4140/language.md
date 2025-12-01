@@ -15,7 +15,7 @@ support for exception processing, support for initializer lists, and
 other runtime support, as summarized in Table 
 [[tab:lang.sup.lib.summary]].
 
-**Table: Language support library summary**
+**Table: Language support library summary** <a id="tab:lang.sup.lib.summary">[tab:lang.sup.lib.summary]</a>
 
 | Subclause              |                           | Header               |
 | ---------------------- | ------------------------- | -------------------- |

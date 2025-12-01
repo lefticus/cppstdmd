@@ -9,7 +9,7 @@ The following subclauses describe the requirements, concepts, and
 components for execution control primitives as summarized in
 [[exec.summary]].
 
-**Table: Execution control library summary**
+**Table: Execution control library summary** <a id="exec.summary">[exec.summary]</a>
 
 | Subclause        |                  | Header        |
 | ---------------- | ---------------- | ------------- |
@@ -22,7 +22,7 @@ components for execution control primitives as summarized in
 [[exec.pos]] shows the types of customization point objects
 [[customization.point.object]] used in the execution control library.
 
-**Table: Types of customization point objects in the execution control library**
+**Table: Types of customization point objects in the execution control library** <a id="exec.pos">[exec.pos]</a>
 
 | Customization point | Purpose | Examples | object type |
 | ------------------- | ------- | -------- | ----------- |

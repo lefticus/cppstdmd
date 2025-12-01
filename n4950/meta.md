@@ -5,7 +5,7 @@
 This Clause describes metaprogramming facilities. These facilities are
 summarized in [[meta.summary]].
 
-**Table: Metaprogramming library summary**
+**Table: Metaprogramming library summary** <a id="meta.summary">[meta.summary]</a>
 
 | Subclause       |                     | Header          |
 | --------------- | ------------------- | --------------- |
@@ -1323,7 +1323,7 @@ values of `U` and `V`. If it is not possible to represent `X` or `Y`
 with `intmax_t`, the program is ill-formed unless the implementation
 yields correct values of `U` and `V`.
 
-**Table: Expressions used to perform ratio arithmetic**
+**Table: Expressions used to perform ratio arithmetic** <a id="ratio.arithmetic">[ratio.arithmetic]</a>
 
 |                          |                       |                     |
 | ------------------------ | --------------------- | ------------------- |

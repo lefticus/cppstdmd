@@ -5,7 +5,7 @@
 This Clause describes components for dealing with text. These components
 are summarized in [[text.summary]].
 
-**Table: Text library summary**
+**Table: Text library summary** <a id="text.summary">[text.summary]</a>
 
 | Subclause          |                                    | Header                                                       |
 | ------------------ | ---------------------------------- | ------------------------------------------------------------ |
@@ -243,7 +243,7 @@ The following subclauses describe components for locales themselves, the
 standard facets, and facilities from the C library, as summarized in
 [[localization.summary]].
 
-**Table: Localization library summary**
+**Table: Localization library summary** <a id="localization.summary">[localization.summary]</a>
 
 | Subclause             |                              | Header      |
 | --------------------- | ---------------------------- | ----------- |
@@ -493,7 +493,7 @@ values. Such a `category` value identifies a set of locale categories.
 Each locale category, in turn, identifies a set of locale facets,
 including at least those shown in [[locale.category.facets]].
 
-**Table: Locale category facets**
+**Table: Locale category facets** <a id="locale.category.facets">[locale.category.facets]</a>
 
 | Category | Includes facets                                       |
 | -------- | ----------------------------------------------------- |
@@ -523,7 +523,7 @@ An implementation is required to provide those specializations for facet
 templates identified as members of a category, and for those shown in
 [[locale.spec]].
 
-**Table: Required specializations**
+**Table: Required specializations** <a id="locale.spec">[locale.spec]</a>
 
 | Category | Includes facets                                           |
 | -------- | --------------------------------------------------------- |
@@ -1585,7 +1585,7 @@ shall also return `ok`.[^8]
 *Returns:* An enumeration value, as summarized in
 [[locale.codecvt.inout]].
 
-**Table: `do_in/do_out` result values**
+**Table: `do_in/do_out` result values** <a id="locale.codecvt.inout">[locale.codecvt.inout]</a>
 
 | Value     | Meaning                                                                                          |
 | --------- | ------------------------------------------------------------------------------------------------ |
@@ -1624,7 +1624,7 @@ stored.
 *Returns:* An enumeration value, as summarized in
 [[locale.codecvt.unshift]].
 
-**Table: `do_unshift` result values**
+**Table: `do_unshift` result values** <a id="locale.codecvt.unshift">[locale.codecvt.unshift]</a>
 
 | Value     | Meaning                                                                                                              |
 | --------- | -------------------------------------------------------------------------------------------------------------------- |
@@ -2040,7 +2040,7 @@ For conversion from an integral type other than a character type, the
 function determines the integral conversion specifier as indicated in
 [[facet.num.put.int]].
 
-**Table: Integer conversions**
+**Table: Integer conversions** <a id="facet.num.put.int">[facet.num.put.int]</a>
 
 | State                                        | `stdio` equivalent |
 | -------------------------------------------- | ------------------ |
@@ -2055,7 +2055,7 @@ For conversion from a floating-point type, the function determines the
 floating-point conversion specifier as indicated in
 [[facet.num.put.fp]].
 
-**Table: Floating-point conversions**
+**Table: Floating-point conversions** <a id="facet.num.put.fp">[facet.num.put.fp]</a>
 
 | State                                                                  | `stdio` equivalent |
 | ---------------------------------------------------------------------- | ------------------ |
@@ -2073,7 +2073,7 @@ For conversions from an integral or floating-point type a length
 modifier is added to the conversion specifier as indicated in
 [[facet.num.put.length]].
 
-**Table: Length modifier**
+**Table: Length modifier** <a id="facet.num.put.length">[facet.num.put.length]</a>
 
 | Type                 | Length modifier |
 | -------------------- | --------------- |
@@ -2088,7 +2088,7 @@ modifier is added to the conversion specifier as indicated in
 The conversion specifier has the following optional additional
 qualifiers prepended as indicated in [[facet.num.put.conv]].
 
-**Table: Numeric conversions**
+**Table: Numeric conversions** <a id="facet.num.put.conv">[facet.num.put.conv]</a>
 
 | Type(s)               | State       | `stdio` equivalent |
 | --------------------- | ----------- | ------------------ |
@@ -2143,7 +2143,7 @@ The location of any padding[^12]
 
 is determined according to [[facet.num.put.fill]].
 
-**Table: Fill padding**
+**Table: Fill padding** <a id="facet.num.put.fill">[facet.num.put.fill]</a>
 
 | State                                                                          | Location           |
 | ------------------------------------------------------------------------------ | ------------------ |
@@ -2702,7 +2702,7 @@ to produce one of the following formats, or until it encounters an
 error. The format depends on the value returned by `date_order()` as
 shown in [[locale.time.get.dogetdate]].
 
-**Table: `do_get_date` effects**
+**Table: `do_get_date` effects** <a id="locale.time.get.dogetdate">[locale.time.get.dogetdate]</a>
 
 | `date_order()` | Format     |
 | -------------- | ---------- |
@@ -3527,7 +3527,7 @@ Calls to the function `setlocale` may introduce a data race
 [[res.on.data.races]] with other calls to `setlocale` or with calls to
 the functions listed in [[setlocale.data.races]].
 
-**Table: Potential `setlocale` data races**
+**Table: Potential `setlocale` data races** <a id="setlocale.data.races">[setlocale.data.races]</a>
 
 |           |            |             |              |            |
 | --------- | ---------- | ----------- | ------------ | ---------- |
@@ -4529,7 +4529,7 @@ above that include that character illustrate the effect of the field
 width when that character is used as a fill character as opposed to when
 it is used as a formatting argument. — *end note*]
 
-**Table: Meaning of align options**
+**Table: Meaning of align options** <a id="format.align">[format.align]</a>
 
 | Option | Meaning                                                                                                                                                                                                                                                                                                      |
 | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -4542,7 +4542,7 @@ The *sign* option is only valid for arithmetic types other than `charT`
 and `bool` or when an integer presentation type is specified. The
 meaning of the various options is as specified in [[format.sign]].
 
-**Table: Meaning of sign options**
+**Table: Meaning of sign options** <a id="format.sign">[format.sign]</a>
 
 | Option  | Meaning                                                                                                                                                                                                                                                                                                                                    |
 | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -4673,7 +4673,7 @@ The *type* determines how the data should be presented.
 The available string presentation types are specified in
 [[format.type.string]].
 
-**Table: Meaning of type options for strings**
+**Table: Meaning of type options for strings** <a id="format.type.string">[format.type.string]</a>
 
 | Type      | Meaning                                                            |
 | --------- | ------------------------------------------------------------------ |
@@ -4707,7 +4707,7 @@ string s3 = format("{:L}", 1234);                       // value of s3 can be "1
 
 — *end example*]
 
-**Table: Meaning of type options for integer types**
+**Table: Meaning of type options for integer types** <a id="format.type.int">[format.type.int]</a>
 
 | Type   | Meaning                                                                                                                                                   |
 | ------ | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -4724,7 +4724,7 @@ string s3 = format("{:L}", 1234);                       // value of s3 can be "1
 The available `charT` presentation types are specified in
 [[format.type.char]].
 
-**Table: Meaning of type options for `charT`**
+**Table: Meaning of type options for `charT`** <a id="format.type.char">[format.type.char]</a>
 
 | Type                           | Meaning                                                                                                    |
 | ------------------------------ | ---------------------------------------------------------------------------------------------------------- |
@@ -4736,7 +4736,7 @@ The available `charT` presentation types are specified in
 The available `bool` presentation types are specified in
 [[format.type.bool]].
 
-**Table: Meaning of type options for `bool`**
+**Table: Meaning of type options for `bool`** <a id="format.type.bool">[format.type.bool]</a>
 
 | Type                           | Meaning                                                                                |
 | ------------------------------ | -------------------------------------------------------------------------------------- |
@@ -4754,7 +4754,7 @@ respectively.
 [*Note 7*: In either case, a sign is included if indicated by the
 *sign* option. — *end note*]
 
-**Table: Meaning of type options for floating-point types**
+**Table: Meaning of type options for floating-point types** <a id="format.type.float">[format.type.float]</a>
 
 | Type       | Meaning                                                                                                                                                                                                                                                                                                   |
 | ---------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -4774,7 +4774,7 @@ are specified in [[format.type.ptr]].
 [*Note 8*: Pointer presentation types also apply to
 `nullptr_t`. — *end note*]
 
-**Table: Meaning of type options for pointer types**
+**Table: Meaning of type options for pointer types** <a id="format.type.ptr">[format.type.ptr]</a>
 
 | Type      | Meaning                                                                                                                                                                                                                                  |
 | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -5058,7 +5058,7 @@ string. If *format-spec* is not present or empty then either
 [*Note 1*: This allows formatters to emit meaningful error
 messages. — *end note*]
 
-**Table: \newoldconcept{Formatter} requirements**
+**Table: \newoldconcept{Formatter} requirements** <a id="formatter">[formatter]</a>
 
 | Expression        | Return type    | Requirement                                                                                                                                                                                                                                                                                                                                 |
 | ----------------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -5270,7 +5270,7 @@ interpret *S* and construct *E*.
     digits.
 - Finally, U+0022 (quotation mark) (`"`) is appended to *E*.
 
-**Table: Mapping of characters to escape sequences**
+**Table: Mapping of characters to escape sequences** <a id="format.escape.sequences">[format.escape.sequences]</a>
 
 | Character                     | Escape sequence |
 | ----------------------------- | --------------- |
@@ -5700,7 +5700,7 @@ The *range-type* specifier changes the way a range is formatted, with
 certain options only valid with certain argument types. The meaning of
 the various type options is as specified in [[formatter.range.type]].
 
-**Table: Meaning of range-type options**
+**Table: Meaning of range-type options** <a id="formatter.range.type">[formatter.range.type]</a>
 
 | Option | Requirements                                                                                                      | Meaning                                                                                                                                                                                                                                                                                                                                |
 | ------ | ----------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -6308,7 +6308,7 @@ formatted, with certain options only valid with certain argument types.
 The meaning of the various type options is as specified in
 [[formatter.tuple.type]].
 
-**Table: Meaning of tuple-type options**
+**Table: Meaning of tuple-type options** <a id="formatter.tuple.type">[formatter.tuple.type]</a>
 
 | Option | Requirements | Meaning                                |
 | ------ | ------------ | -------------------------------------- |
@@ -6417,7 +6417,7 @@ allow a character sequence to be operated upon by a regular expression,
 and two iterator types for enumerating regular expression matches, as
 summarized in [[re.summary]].
 
-**Table: Regular expressions library summary**
+**Table: Regular expressions library summary** <a id="re.summary">[re.summary]</a>
 
 | Subclause       |                             | Header    |
 | --------------- | --------------------------- | --------- |
@@ -6900,7 +6900,7 @@ most one of the grammar elements `ECMAScript`, `basic`, `extended`,
 `awk`, `grep`, `egrep`, set. If no grammar element is set, the default
 grammar is `ECMAScript`.
 
-**Table: `syntax_option_type` effects**
+**Table: `syntax_option_type` effects** <a id="re.synopt">[re.synopt]</a>
 
 | Element        | Effect(s) if set                                                                                                                                                                                                                                                                                                             |
 | -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -6947,7 +6947,7 @@ Matching a regular expression against a sequence of characters
 specified for the regular expression object, modified according to the
 effects listed in [[re.matchflag]] for any bitmask elements set.
 
-**Table: `regex_constants::match_flag_type` effects**
+**Table: `regex_constants::match_flag_type` effects** <a id="re.matchflag">[re.matchflag]</a>
 
 | Element                                                       | Effect(s) if set                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
 | ------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -6990,7 +6990,7 @@ The type `error_type` is an *implementation-defined* enumerated type
 [[enumerated.types]]. Values of type `error_type` represent the error
 conditions described in [[re.err]]:
 
-**Table: `error_type` values in the C locale**
+**Table: `error_type` values in the C locale** <a id="re.err">[re.err]</a>
 
 | Value                | Error condition                                                                                                    |
 | -------------------- | ------------------------------------------------------------------------------------------------------------------ |
@@ -7255,7 +7255,7 @@ locale_type getloc() const;
 in effect at the time of construction of `*this`, otherwise a copy of
 the last argument passed to `imbue`.
 
-**Table: Character class names and corresponding `ctype` masks**
+**Table: Character class names and corresponding `ctype` masks** <a id="re.traits.classnames">[re.traits.classnames]</a>
 
 | Narrow character name | Wide character name | Corresponding `ctype_base::mask` value |
 | --------------------- | ------------------- | -------------------------------------- |
@@ -7977,7 +7977,7 @@ match_results& operator=(match_results&& m);
 
 *Ensures:* As specified in [[re.results.const]].
 
-**Table: `match_results` copy/move operation postconditions**
+**Table: `match_results` copy/move operation postconditions** <a id="re.results.const">[re.results.const]</a>
 
 | Element       | Value                                                        |
 | ------------- | ------------------------------------------------------------ |
@@ -8272,7 +8272,7 @@ regex_match ("GetValues", m, re);       // returns false
 `m.size()` returns `0` and `m.empty()` returns `true`. Otherwise the
 effects on parameter `m` are given in [[re.alg.match]].
 
-**Table: Effects of `regex_match` algorithm**
+**Table: Effects of `regex_match` algorithm** <a id="re.alg.match">[re.alg.match]</a>
 
 | Element              | Value                                                                                                                                                                               |
 | -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -8367,7 +8367,7 @@ exists, `false` otherwise.
 `m.size()` returns `0` and `m.empty()` returns `true`. Otherwise the
 effects on parameter `m` are given in [[re.alg.search]].
 
-**Table: Effects of `regex_search` algorithm**
+**Table: Effects of `regex_search` algorithm** <a id="re.alg.search">[re.alg.search]</a>
 
 | Element              | Value                                                                                                                                                                               |
 | -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |

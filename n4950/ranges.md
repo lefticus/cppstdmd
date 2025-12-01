@@ -8,7 +8,7 @@ The following subclauses describe range and view requirements, and
 components for range primitives and range generators as summarized in
 [[range.summary]].
 
-**Table: Ranges library summary**
+**Table: Ranges library summary** <a id="range.summary">[range.summary]</a>
 
 | Subclause           |                  | Header        |
 | ------------------- | ---------------- | ------------- |

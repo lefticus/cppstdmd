@@ -410,7 +410,7 @@ grammar, these identifiers are used explicitly rather than using the
 ambiguity as to whether a given *identifier* has a special meaning is
 resolved to interpret the token as a regular *identifier*.
 
-**Table: Identifiers with special meaning**
+**Table: Identifiers with special meaning** <a id="tab:identifiers.special">[tab:identifiers.special]</a>
 
 |            |         |
 | ---------- | ------- |
@@ -428,7 +428,7 @@ keywords (that is, they are unconditionally treated as keywords in phase
 7) except in an *attribute-token* ([[dcl.attr.grammar]]) The `export`
 keyword is unused but is reserved for future use.:
 
-**Table: Keywords**
+**Table: Keywords** <a id="tab:keywords">[tab:keywords]</a>
 
 |              |                |             |                    |            |
 | ------------ | -------------- | ----------- | ------------------ | ---------- |
@@ -454,7 +454,7 @@ Furthermore, the alternative representations shown in Table 
 punctuators ([[lex.digraph]]) are reserved and shall not be used
 otherwise:
 
-**Table: Alternative representations**
+**Table: Alternative representations** <a id="tab:alternative.representations">[tab:alternative.representations]</a>
 
 |          |          |          |         |          |       |
 | -------- | -------- | -------- | ------- | -------- | ----- |
@@ -590,7 +590,7 @@ The type of an integer literal is the first of the corresponding list in
 Table  [[tab:lex.type.integer.literal]] in which its value can be
 represented.
 
-**Table: Types of integer literals**
+**Table: Types of integer literals** <a id="tab:lex.type.integer.literal">[tab:lex.type.integer.literal]</a>
 
 |                  |                          |                          |
 | ---------------- | ------------------------ | ------------------------ |
@@ -715,7 +715,7 @@ following the backslash is not listed in Table  [[tab:escape.sequences]]
 are conditionally-supported, with *implementation-defined* semantics. An
 escape sequence specifies a single character.
 
-**Table: Escape sequences**
+**Table: Escape sequences** <a id="tab:escape.sequences">[tab:escape.sequences]</a>
 
 |                 |                |                    |
 | --------------- | -------------- | ------------------ |
@@ -957,7 +957,7 @@ character set), a string literal’s initial rawness has no effect on the
 interpretation or well-formedness of the concatenation. Table 
 [[tab:lex.string.concat]] has some examples of valid concatenations.
 
-**Table: String literal concatenations**
+**Table: String literal concatenations** <a id="tab:lex.string.concat">[tab:lex.string.concat]</a>
 
 |                            |       |                            |       |                            |       |
 | -------------------------- | ----- | -------------------------- | ----- | -------------------------- | ----- |

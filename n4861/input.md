@@ -11,7 +11,7 @@ iostreams objects, base iostreams classes, stream buffering, stream
 formatting and manipulators, string streams, and file streams, as
 summarized in [[iostreams.summary]].
 
-**Table: Input/output library summary**
+**Table: Input/output library summary** <a id="iostreams.summary">[iostreams.summary]</a>
 
 | Subclause                  |                             | Header                                |
 | -------------------------- | --------------------------- | ------------------------------------- |
@@ -631,7 +631,7 @@ using fmtflags = T1;
 The type `fmtflags` is a bitmask type [[bitmask.types]]. Setting its
 elements has the effects indicated in [[ios.fmtflags]].
 
-**Table: `fmtflags` effects**
+**Table: `fmtflags` effects** <a id="ios.fmtflags">[ios.fmtflags]</a>
 
 | Element      | Effect(s) if set                                                                                                                        |
 | ------------ | --------------------------------------------------------------------------------------------------------------------------------------- |
@@ -655,7 +655,7 @@ elements has the effects indicated in [[ios.fmtflags]].
 Type `fmtflags` also defines the constants indicated in
 [[ios.fmtflags.const]].
 
-**Table: `fmtflags` constants**
+**Table: `fmtflags` constants** <a id="ios.fmtflags.const">[ios.fmtflags.const]</a>
 
 | Constant      | Allowable values          |
 | ------------- | ------------------------- |
@@ -673,7 +673,7 @@ using iostate = T2;
 The type `iostate` is a bitmask type [[bitmask.types]] that contains the
 elements indicated in [[ios.iostate]].
 
-**Table: `iostate` effects**
+**Table: `iostate` effects** <a id="ios.iostate">[ios.iostate]</a>
 
 | Element   | Effect(s) if set                                                                                                                                 |
 | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -695,7 +695,7 @@ using openmode = T3;
 The type `openmode` is a bitmask type [[bitmask.types]]. It contains the
 elements indicated in [[ios.openmode]].
 
-**Table: `openmode` effects**
+**Table: `openmode` effects** <a id="ios.openmode">[ios.openmode]</a>
 
 | Element  | Effect(s) if set                                                  |
 | -------- | ----------------------------------------------------------------- |
@@ -716,7 +716,7 @@ using seekdir = T4;
 The type `seekdir` is an enumerated type [[enumerated.types]] that
 contains the elements indicated in [[ios.seekdir]].
 
-**Table: `seekdir` effects**
+**Table: `seekdir` effects** <a id="ios.seekdir">[ios.seekdir]</a>
 
 | Element | Meaning                                                                                 |
 | ------- | --------------------------------------------------------------------------------------- |
@@ -1169,7 +1169,7 @@ void init(basic_streambuf<charT, traits>* sb);
 *Ensures:* The postconditions of this function are indicated in
 [[basic.ios.cons]].
 
-**Table: `basic_ios::init()` effects**
+**Table: `basic_ios::init()` effects** <a id="basic.ios.cons">[basic.ios.cons]</a>
 
 | Element        | Value                                                        |
 | -------------- | ------------------------------------------------------------ |
@@ -1289,7 +1289,7 @@ reference counted, or to have other special action taken. — *end note*]
 *Ensures:* The postconditions of this function are indicated in
 [[basic.ios.copyfmt]].
 
-**Table: `basic_ios::copyfmt()` effects**
+**Table: `basic_ios::copyfmt()` effects** <a id="basic.ios.copyfmt">[basic.ios.copyfmt]</a>
 
 | Element                      |
 | ---------------------------- |
@@ -4850,7 +4850,7 @@ pos_type seekoff(off_type off, ios_base::seekdir way,
 *Effects:* Alters the stream position within one of the controlled
 sequences, if possible, as indicated in [[stringbuf.seekoff.pos]].
 
-**Table: `seekoff` positioning**
+**Table: `seekoff` positioning** <a id="stringbuf.seekoff.pos">[stringbuf.seekoff.pos]</a>
 
 | Conditions                                                                                                                     | Result                                            |
 | ------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------- |
@@ -4865,7 +4865,7 @@ indicated in [[stringbuf.seekoff.newoff]]. If the sequence’s next
 pointer (either `gptr()` or `pptr()`) is a null pointer and `newoff` is
 nonzero, the positioning operation fails.
 
-**Table: `newoff` values**
+**Table: `newoff` values** <a id="stringbuf.seekoff.newoff">[stringbuf.seekoff.newoff]</a>
 
 | Condition              | `newoff` Value                                                          |
 | ---------------------- | ----------------------------------------------------------------------- |
@@ -5809,7 +5809,7 @@ argument determined from `mode & ~ios_base::ate` as indicated in
 [[filebuf.open.modes]]. If `mode` is not some combination of flags shown
 in the table then the open fails.
 
-**Table: File open modes**
+**Table: File open modes** <a id="filebuf.open.modes">[filebuf.open.modes]</a>
 
 | `binary` | `in` | `out` | `trunc` | `app` |     | `stdio` equivalent |
 | -------- | ---- | ----- | ------- | ----- | --- | ------------------ |
@@ -6014,7 +6014,7 @@ resulting unshift sequence. The function determines one of three values
 for the argument `whence`, of type `int`, as indicated in
 [[filebuf.seekoff]].
 
-**Table: `seekoff` effects**
+**Table: `seekoff` effects** <a id="filebuf.seekoff">[filebuf.seekoff]</a>
 
 | `way` Value      | `stdio` Equivalent |
 | ---------------- | ------------------ |
@@ -8849,7 +8849,7 @@ the empty bitmask, and is shown in each option group for purposes of
 exposition; implementations shall provide only a single definition.
 Every other constant in the table represents a distinct bitmask element.
 
-**Table: Enum class `copy_options`**
+**Table: Enum class `copy_options`** <a id="fs.enum.copy.opts">[fs.enum.copy.opts]</a>
 
 | Constant             | Meaning                                                                                                                                               |
 | -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -8871,7 +8871,7 @@ The `enum class` type `perms` is a bitmask type [[bitmask.types]] that
 specifies bitmask constants used to identify file permissions, with the
 meanings listed in [[fs.enum.perms]].
 
-**Table: Enum class `perms`**
+**Table: Enum class `perms`** <a id="fs.enum.perms">[fs.enum.perms]</a>
 
 | Name | Value | POSIX | Definition or notes | (octal) | macro |
 | ---- | ----- | ----- | ------------------- | ------- | ----- |
@@ -8905,7 +8905,7 @@ permissions operations, with the meanings listed in
 [[fs.enum.perm.opts]] `perm` denotes a value of type `perms` passed to
 `permissions`.
 
-**Table: Enum class `perm_options`**
+**Table: Enum class `perm_options`** <a id="fs.enum.perm.opts">[fs.enum.perm.opts]</a>
 
 | Name       | Meaning                                                                                                                                                 |
 | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -8923,7 +8923,7 @@ directory traversal options, with the meanings listed in
 [[fs.enum.dir.opts]]. The constant `none` represents the empty bitmask;
 every other constant in the table represents a distinct bitmask element.
 
-**Table: Enum class `directory_options`**
+**Table: Enum class `directory_options`** <a id="fs.enum.dir.opts">[fs.enum.dir.opts]</a>
 
 | Name                       | Meaning                                                            |
 | -------------------------- | ------------------------------------------------------------------ |

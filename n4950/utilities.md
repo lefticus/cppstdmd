@@ -7,7 +7,7 @@ programs; some of these utilities are used by other elements of the C++
 standard library. These utilities are summarized in
 [[utilities.summary]].
 
-**Table: General utilities library summary**
+**Table: General utilities library summary** <a id="utilities.summary">[utilities.summary]</a>
 
 | Subclause            |                               | Header         |
 | -------------------- | ----------------------------- | -------------- |
@@ -2691,7 +2691,7 @@ constexpr optional<T>& operator=(const optional& rhs);
 
 *Effects:* See [[optional.assign.copy]].
 
-**Table: `optional::operator=(const optional&)` effects**
+**Table: `optional::operator=(const optional&)` effects** <a id="optional.assign.copy">[optional.assign.copy]</a>
 
 |                                | `*this` contains a value                               | `*this` does not contain a value                            |
 | ------------------------------ | ------------------------------------------------------ | ----------------------------------------------------------- |
@@ -2724,7 +2724,7 @@ constexpr optional& operator=(optional&& rhs) noexcept(see below);
 *Effects:* See [[optional.assign.move]]. The result of the expression
 `rhs.has_value()` remains unchanged.
 
-**Table: `optional::operator=(optional&&)` effects**
+**Table: `optional::operator=(optional&&)` effects** <a id="optional.assign.move">[optional.assign.move]</a>
 
 |                                | `*this` contains a value                               | `*this` does not contain a value                                       |
 | ------------------------------ | ------------------------------------------------------ | ---------------------------------------------------------------------- |
@@ -2793,7 +2793,7 @@ template<class U> constexpr optional<T>& operator=(const optional<U>& rhs);
 
 *Effects:* See [[optional.assign.copy.templ]].
 
-**Table: `optional::operator=(const optional<U>&)` effects**
+**Table: `optional::operator=(const optional<U>&)` effects** <a id="optional.assign.copy.templ">[optional.assign.copy.templ]</a>
 
 |                                | `*this` contains a value                               | `*this` does not contain a value                            |
 | ------------------------------ | ------------------------------------------------------ | ----------------------------------------------------------- |
@@ -2830,7 +2830,7 @@ template<class U> constexpr optional<T>& operator=(optional<U>&& rhs);
 *Effects:* See [[optional.assign.move.templ]]. The result of the
 expression `rhs.has_value()` remains unchanged.
 
-**Table: `optional::operator=(optional<U>&&)` effects**
+**Table: `optional::operator=(optional<U>&&)` effects** <a id="optional.assign.move.templ">[optional.assign.move.templ]</a>
 
 |                                | `*this` contains a value                               | `*this` does not contain a value                                       |
 | ------------------------------ | ------------------------------------------------------ | ---------------------------------------------------------------------- |
@@ -2902,7 +2902,7 @@ requirements [[swappable.requirements]].
 
 *Effects:* See [[optional.swap]].
 
-**Table: `optional::swap(optional&)` effects**
+**Table: `optional::swap(optional&)` effects** <a id="optional.swap">[optional.swap]</a>
 
 |                                | `*this` contains a value                                                                                                                                                                           | `*this` does not contain a value                                                                                                                                                                     |
 | ------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -5736,7 +5736,7 @@ constexpr void swap(expected& rhs) noexcept(see below);
 
 *Effects:* See [[expected.object.swap]].
 
-**Table: `swap(expected&)` effects**
+**Table: `swap(expected&)` effects** <a id="expected.object.swap">[expected.object.swap]</a>
 
 | `this->has_value()` | `!this->has_value()` |
 | ------------------- | -------------------- |
@@ -6473,7 +6473,7 @@ constexpr void swap(expected& rhs) noexcept(see below);
 
 *Effects:* See [[expected.void.swap]].
 
-**Table: `swap(expected&)` effects**
+**Table: `swap(expected&)` effects** <a id="expected.void.swap">[expected.void.swap]</a>
 
 | `this->has_value()` | `!this->has_value()` |
 | ------------------- | -------------------- |
@@ -10636,7 +10636,7 @@ above that include that character illustrate the effect of the field
 width when that character is used as a fill character as opposed to when
 it is used as a formatting argument. — *end note*]
 
-**Table: Meaning of align options**
+**Table: Meaning of align options** <a id="format.align">[format.align]</a>
 
 | Option | Meaning                                                                                                                                                                                                                                                                                                      |
 | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -10649,7 +10649,7 @@ The *sign* option is only valid for arithmetic types other than `charT`
 and `bool` or when an integer presentation type is specified. The
 meaning of the various options is as specified in [[format.sign]].
 
-**Table: Meaning of sign options**
+**Table: Meaning of sign options** <a id="format.sign">[format.sign]</a>
 
 | Option  | Meaning                                                                                                                                                                                                                                                                                                                                    |
 | ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -10779,7 +10779,7 @@ The *type* determines how the data should be presented.
 The available string presentation types are specified in
 [[format.type.string]].
 
-**Table: Meaning of type options for strings**
+**Table: Meaning of type options for strings** <a id="format.type.string">[format.type.string]</a>
 
 | Type      | Meaning                                                            |
 | --------- | ------------------------------------------------------------------ |
@@ -10813,7 +10813,7 @@ string s3 = format("{:L}", 1234);                       // value of s3 can be "1
 
 — *end example*]
 
-**Table: Meaning of type options for integer types**
+**Table: Meaning of type options for integer types** <a id="format.type.int">[format.type.int]</a>
 
 | Type   | Meaning                                                                                                                                                   |
 | ------ | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -10830,7 +10830,7 @@ string s3 = format("{:L}", 1234);                       // value of s3 can be "1
 The available `charT` presentation types are specified in
 [[format.type.char]].
 
-**Table: Meaning of type options for `charT`**
+**Table: Meaning of type options for `charT`** <a id="format.type.char">[format.type.char]</a>
 
 | Type                           | Meaning                                                               |
 | ------------------------------ | --------------------------------------------------------------------- |
@@ -10842,7 +10842,7 @@ The available `charT` presentation types are specified in
 The available `bool` presentation types are specified in
 [[format.type.bool]].
 
-**Table: Meaning of type options for `bool`**
+**Table: Meaning of type options for `bool`** <a id="format.type.bool">[format.type.bool]</a>
 
 | Type                           | Meaning                                                                                |
 | ------------------------------ | -------------------------------------------------------------------------------------- |
@@ -10860,7 +10860,7 @@ respectively.
 [*Note 7*: In either case, a sign is included if indicated by the
 *sign* option. — *end note*]
 
-**Table: Meaning of type options for floating-point types**
+**Table: Meaning of type options for floating-point types** <a id="format.type.float">[format.type.float]</a>
 
 | Type       | Meaning                                                                                                                                                                                                                                                                                                   |
 | ---------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -10880,7 +10880,7 @@ are specified in [[format.type.ptr]].
 [*Note 8*: Pointer presentation types also apply to
 `nullptr_t`. — *end note*]
 
-**Table: Meaning of type options for pointer types**
+**Table: Meaning of type options for pointer types** <a id="format.type.ptr">[format.type.ptr]</a>
 
 | Type      | Meaning                                                                                                                                                                                                                                  |
 | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -11162,7 +11162,7 @@ or `*pc.begin() == '}'`.
 [*Note 1*: This allows formatters to emit meaningful error
 messages. — *end note*]
 
-**Table: \newoldconcept{Formatter} requirements**
+**Table: \newoldconcept{Formatter} requirements** <a id="formatter">[formatter]</a>
 
 | Expression        | Return type    | Requirement                                                                                                                                                                                                                                                                                                                                 |
 | ----------------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -11340,7 +11340,7 @@ interpret *S* and construct *E*.
     digits.
 - Finally, U+0022 (quotation mark) (`"`) is appended to *E*.
 
-**Table: Mapping of characters to escape sequences**
+**Table: Mapping of characters to escape sequences** <a id="format.escape.sequences">[format.escape.sequences]</a>
 
 | Character                     | Escape sequence |
 | ----------------------------- | --------------- |
@@ -11706,7 +11706,7 @@ The *range-type* specifier changes the way a range is formatted, with
 certain options only valid with certain argument types. The meaning of
 the various type options is as specified in [[formatter.range.type]].
 
-**Table: Meaning of range-type options**
+**Table: Meaning of range-type options** <a id="formatter.range.type">[formatter.range.type]</a>
 
 | Option | Requirements                                                                                                      | Meaning                                                                                                                                                                                                                                                                                                                                |
 | ------ | ----------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -12302,7 +12302,7 @@ formatted, with certain options only valid with certain argument types.
 The meaning of the various type options is as specified in
 [[formatter.tuple.type]].
 
-**Table: Meaning of tuple-type options**
+**Table: Meaning of tuple-type options** <a id="formatter.tuple.type">[formatter.tuple.type]</a>
 
 | Option | Requirements | Meaning                                |
 | ------ | ------------ | -------------------------------------- |

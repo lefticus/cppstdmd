@@ -14,11 +14,10 @@ allow a character sequence to be operated upon by a regular expression,
 and two iterator types for enumerating regular expression matches, as
 summarized in [[re.summary]].
 
-**Table: Regular expressions library summary** <a id="re.summary">[re.summary]</a>
+**Table: Regular expressions library summary**
 
 | Subclause       |                             | Header    |
 | --------------- | --------------------------- | --------- |
-| [[re.def]]      | Definitions                 |           |
 | [[re.req]]      | Requirements                |           |
 | [[re.const]]    | Constants                   | `<regex>` |
 | [[re.badexp]]   | Exception type              |           |
@@ -30,46 +29,6 @@ summarized in [[re.summary]].
 | [[re.iter]]     | Iterators                   |           |
 | [[re.grammar]]  | Grammar                     |           |
 
-
-## Definitions <a id="re.def">[[re.def]]</a>
-
-The following definitions shall apply to this Clause:
-
-#### 1 collating element <a id="defns.regex.collating.element">[defns.regex.collating.element]</a>
-
-a sequence of one or more characters within the current locale that
-collate as if they were a single character.
-
-#### 2 finite state machine <a id="defns.regex.finite.state.machine">[defns.regex.finite.state.machine]</a>
-
-an unspecified data structure that is used to represent a regular
-expression, and which permits efficient matches against the regular
-expression to be obtained.
-
-#### 3 format specifier <a id="defns.regex.format.specifier">[defns.regex.format.specifier]</a>
-
-a sequence of one or more characters that is to be replaced with some
-part of a regular expression match.
-
-#### 4 matched <a id="defns.regex.matched">[defns.regex.matched]</a>
-
-a sequence of zero or more characters is matched by a regular expression
-when the characters in the sequence correspond to a sequence of
-characters defined by the pattern.
-
-#### 5 primary equivalence class <a id="defns.regex.primary.equivalence.class">[defns.regex.primary.equivalence.class]</a>
-
-a set of one or more characters which share the same primary sort key:
-that is the sort key weighting that depends only upon character shape,
-and not accents, case, or locale specific tailorings.
-
-#### 6 regular expression <a id="defns.regex.regular.expression">[defns.regex.regular.expression]</a>
-
-a pattern that selects specific strings from a set of character strings.
-
-#### 7 sub-expression <a id="defns.regex.subexpression">[defns.regex.subexpression]</a>
-
-a subset of a regular expression that has been marked by parenthesis.
 
 ## Requirements <a id="re.req">[[re.req]]</a>
 
@@ -90,20 +49,171 @@ To specialize class template `basic_regex` for a character container
 `CharT` and its related regular expression traits class `Traits`, use
 `basic_regex<CharT, Traits>`.
 
-In [[re.req]] `X` denotes a traits class defining types and functions
-for the character container type `charT`; `u` is an object of type `X`;
-`v` is an object of type `const
-X`; `p` is a value of type `const charT*`; `I1` and `I2` are input
-iterators [[input.iterators]]; `F1` and `F2` are forward iterators
-[[forward.iterators]]; `c` is a value of type `const charT`; `s` is an
-object of type `X::string_type`; `cs` is an object of type
-`const X::string_type`; `b` is a value of type `bool`; `I` is a value of
-type `int`; `cl` is an object of type `X::char_class_type`, and `loc` is
-an object of type `X::locale_type`.
+In the following requirements,
 
-[*Note 2*: The value of *I* will only be 8, 10, or 16. — *end note*]
+- `X` denotes a traits class defining types and functions for the
+  character container type `charT`;
+- `u` is an object of type `X`;
+- `v` is an object of type `const X`;
+- `p` is a value of type `const charT*`;
+- `I1` and `I2` are input iterators [[input.iterators]];
+- `F1` and `F2` are forward iterators [[forward.iterators]];
+- `c` is a value of type `const charT`;
+- `s` is an object of type `X::string_type`;
+- `cs` is an object of type `const X::string_type`;
+- `b` is a value of type `bool`;
+- `I` is a value of type `int`;
+- `cl` is an object of type `X::char_class_type`; and
+- `loc` is an object of type `X::locale_type`.
 
-[*Note 3*: Class template `regex_traits` meets the requirements for a
+A traits class `X` meets the regular expression traits requirements if
+the following types and expressions are well-formed and have the
+specified semantics.
+
+``` cpp
+typename X::char_type
+```
+
+*Result:* `charT`, the character container type used in the
+implementation of class template `basic_regex`.
+
+``` cpp
+typename X::string_type
+```
+
+*Result:* `basic_string<charT>`
+
+``` cpp
+typename X::locale_type
+```
+
+*Result:* A copy constructible type that represents the locale used by
+the traits class.
+
+``` cpp
+typename X::char_class_type
+```
+
+*Result:* A bitmask type [[bitmask.types]] representing a particular
+character classification.
+
+``` cpp
+X::length(p)
+```
+
+*Result:* `size_t`
+
+*Returns:* The smallest `i` such that `p[i] == 0`.
+
+*Complexity:* Linear in `i`.
+
+``` cpp
+v.translate(c)
+```
+
+*Result:* `X::char_type`
+
+*Returns:* A character such that for any character `d` that is to be
+considered equivalent to `c` then `v.translate(c) == v.translate(d)`.
+
+``` cpp
+v.translate_nocase(c)
+```
+
+*Result:* `X::char_type`
+
+*Returns:* For all characters `C` that are to be considered equivalent
+to `c` when comparisons are to be performed without regard to case, then
+`v.translate_nocase(c) == v.translate_nocase(C)`.
+
+``` cpp
+v.transform(F1, F2)
+```
+
+*Result:* `X::string_type`
+
+*Returns:* A sort key for the character sequence designated by the
+iterator range \[`F1`, `F2`) such that if the character sequence \[`G1`,
+`G2`) sorts before the character sequence \[`H1`, `H2`) then
+`v.transform(G1, G2) < v.transform(H1, H2)`.
+
+``` cpp
+v.transform_primary(F1, F2)
+```
+
+*Result:* `X::string_type`
+
+*Returns:* A sort key for the character sequence designated by the
+iterator range \[`F1`, `F2`) such that if the character sequence \[`G1`,
+`G2`) sorts before the character sequence \[`H1`, `H2`) when character
+case is not considered then
+`v.transform_primary(G1, G2) < v.transform_primary(H1, H2)`.
+
+``` cpp
+v.lookup_collatename(F1, F2)
+```
+
+*Result:* `X::string_type`
+
+*Returns:* A sequence of characters that represents the collating
+element consisting of the character sequence designated by the iterator
+range \[`F1`, `F2`). Returns an empty string if the character sequence
+is not a valid collating element.
+
+``` cpp
+v.lookup_classname(F1, F2, b)
+```
+
+*Result:* `X::char_class_type`
+
+*Returns:* Converts the character sequence designated by the iterator
+range \[`F1`, `F2`) into a value of a bitmask type that can subsequently
+be passed to `isctype`. Values returned from `lookup_classname` can be
+bitwise ’ed together; the resulting value represents membership in
+either of the corresponding character classes. If `b` is `true`, the
+returned bitmask is suitable for matching characters without regard to
+their case. Returns `0` if the character sequence is not the name of a
+character class recognized by `X`. The value returned shall be
+independent of the case of the characters in the sequence.
+
+``` cpp
+v.isctype(c, cl)
+```
+
+*Result:* `bool`
+
+*Returns:* Returns `true` if character `c` is a member of one of the
+character classes designated by `cl`, `false` otherwise.
+
+``` cpp
+v.value(c, I)
+```
+
+*Result:* `int`
+
+*Returns:* Returns the value represented by the digit *c* in base *I* if
+the character *c* is a valid digit in base *I*; otherwise returns `-1`.
+
+[*Note 1*: The value of *I* will only be 8, 10, or 16. — *end note*]
+
+``` cpp
+u.imbue(loc)
+```
+
+*Result:* `X::locale_type`
+
+*Effects:* Imbues `u` with the locale `loc` and returns the previous
+locale used by `u` if any.
+
+``` cpp
+v.getloc()
+```
+
+*Result:* `X::locale_type`
+
+*Returns:* Returns the current locale used by `v`, if any.
+
+[*Note 2*: Class template `regex_traits` meets the requirements for a
 regular expression traits class when it is specialized for `char` or
 `wchar_t`. This class template is described in the header `<regex>`, and
 is described in [[re.traits]]. — *end note*]
@@ -351,6 +461,8 @@ namespace std {
 
 ## Namespace `std::regex_constants` <a id="re.const">[[re.const]]</a>
 
+### General <a id="re.const.general">[[re.const.general]]</a>
+
 The namespace `std::regex_constants` holds symbolic constants used by
 the regular expression library. This namespace provides three types,
 `syntax_option_type`, `match_flag_type`, and `error_type`, along with
@@ -382,21 +494,21 @@ most one of the grammar elements `ECMAScript`, `basic`, `extended`,
 `awk`, `grep`, `egrep`, set. If no grammar element is set, the default
 grammar is `ECMAScript`.
 
-**Table: `syntax_option_type` effects** <a id="re.synopt">[re.synopt]</a>
+**Table: `syntax_option_type` effects**
 
 | Element        | Effect(s) if set                                                                                                                                                                                                                                                                                                             |
 | -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | % `icase`      | Specifies that matching of regular expressions against a character container sequence shall be performed without regard to case. \indexlibrarymember{syntax_option_type}{icase}%                                                                                                                                             |
 | % `nosubs`     | Specifies that no sub-expressions shall be considered to be marked, so that when a regular expression is matched against a character container sequence, no sub-expression matches shall be stored in the supplied `match_results` object. \indexlibrarymember{syntax_option_type}{nosubs}%                                  |
 | % `optimize`   | Specifies that the regular expression engine should pay more attention to the speed with which regular expressions are matched, and less to the speed with which regular expression objects are constructed. Otherwise it has no detectable effect on the program output. \indexlibrarymember{syntax_option_type}{optimize}% |
-| % `collate`    | Specifies that character ranges of the form `"[a-b]"` shall be locale sensitive. \indexlibrarymember{syntax_option_type}{collate}% \indextext{locale}%                                                                                                                                                                       |
+| % `collate`    | Specifies that character ranges of the form `"[a-b]"` shall be locale sensitive.% \indexlibrarymember{syntax_option_type}{collate}% \indextext{locale}%                                                                                                                                                                      |
 | % `ECMAScript` | Specifies that the grammar recognized by the regular expression engine shall be that used by ECMAScript in ECMA-262, as modified in~ [[re.grammar]]. \xref ECMA-262 15.10 \indextext{ECMAScript}% \indexlibrarymember{syntax_option_type}{ECMAScript}%                                                                       |
 | % `basic`      | Specifies that the grammar recognized by the regular expression engine shall be that used by basic regular expressions in POSIX. \xref POSIX, Base Definitions and Headers, Section 9.3 \indextext{POSIX!regular expressions}% \indexlibrarymember{syntax_option_type}{basic}%                                               |
 | % `extended`   | Specifies that the grammar recognized by the regular expression engine shall be that used by extended regular expressions in POSIX. \xref POSIX, Base Definitions and Headers, Section 9.4 \indextext{POSIX!extended regular expressions}% \indexlibrarymember{syntax_option_type}{extended}%                                |
-| % `awk`        | Specifies that the grammar recognized by the regular expression engine shall be that used by the utility awk in POSIX. \indextext{\idxcode{awk}}% \indexlibrarymember{syntax_option_type}{awk}%                                                                                                                              |
-| % `grep`       | Specifies that the grammar recognized by the regular expression engine shall be that used by the utility grep in POSIX. \indextext{\idxcode{grep}}% \indexlibrarymember{syntax_option_type}{grep}%                                                                                                                           |
-| % `egrep`      | Specifies that the grammar recognized by the regular expression engine shall be that used by the utility grep when given the -E option in POSIX. \indextext{\idxcode{egrep}}% \indexlibrarymember{syntax_option_type}{egrep}%                                                                                                |
-| % `multiline`  | Specifies that `^` shall match the beginning of a line and `$` shall match the end of a line, if the `ECMAScript` engine is selected. \indextext{\idxcode{multiline}}% \indexlibrarymember{syntax_option_type}{multiline}%                                                                                                   |
+| % `awk`        | Specifies that the grammar recognized by the regular expression engine shall be that used by the utility awk in POSIX. \indexlibrarymember{syntax_option_type}{awk}%                                                                                                                                                         |
+| % `grep`       | Specifies that the grammar recognized by the regular expression engine shall be that used by the utility grep in POSIX. \indexlibrarymember{syntax_option_type}{grep}%                                                                                                                                                       |
+| % `egrep`      | Specifies that the grammar recognized by the regular expression engine shall be that used by the utility grep when given the -E option in POSIX. \indexlibrarymember{syntax_option_type}{egrep}%                                                                                                                             |
+| % `multiline`  | Specifies that `^` shall match the beginning of a line and `$` shall match the end of a line, if the `ECMAScript` engine is selected. \indexlibrarymember{syntax_option_type}{multiline}%                                                                                                                                    |
 
 
 ### Bitmask type `match_flag_type` <a id="re.matchflag">[[re.matchflag]]</a>
@@ -430,7 +542,7 @@ specified for the regular expression object, modified according to the
 effects listed in [[re.matchflag]] for any bitmask elements set.
 
 **Table: `regex_constants::match_flag_type` effects when obtaining a match against a
-     character container sequence {[}`first`, `last`{)}.** <a id="re.matchflag">[re.matchflag]</a>
+     character container sequence {[}`first`, `last`{)}.**
 
 | Element                                                       | Effect(s) if set                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
 | ------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -473,33 +585,35 @@ The type `error_type` is an *implementation-defined* enumerated type
 [[enumerated.types]]. Values of type `error_type` represent the error
 conditions described in [[re.err]]:
 
-**Table: `error_type` values in the C locale** <a id="re.err">[re.err]</a>
+**Table: `error_type` values in the C locale**
 
-| Value                | Error condition                                                                                                         |
-| -------------------- | ----------------------------------------------------------------------------------------------------------------------- |
-| `error_collate`      | The expression contained an invalid collating element name.                                                             |
-| % `error_ctype`      | The expression contained an invalid character class name.                                                               |
-| % `error_escape`     | The expression contained an invalid escaped character, or a trailing escape.                                            |
-| % `error_backref`    | The expression contained an invalid back reference.                                                                     |
-| % `error_brack`      | The expression contained mismatched \verb|[| and \verb|]|.                                                              |
-| % `error_paren`      | The expression contained mismatched \verb|(| and \verb|)|.                                                              |
-| % `error_brace`      | The expression contained mismatched \verb|{| and \verb|}|                                                               |
-| % `error_badbrace`   | The expression contained an invalid range in a \verb|{}| expression.                                                    |
-| % `error_range`      | The expression contained an invalid character range, such as \verb|[b-a]| in most encodings.                            |
-| % `error_space`      | There was insufficient memory to convert the expression into a finite state machine.                                    |
-| % `error_badrepeat`  | One of \verb|*?+{| was not preceded by a valid regular expression.                                                      |
-| % `error_complexity` | The complexity of an attempted match against a regular expression exceeded a pre-set level.                             |
-| % `error_stack`      | There was insufficient memory to determine whether the regular expression could match the specified character sequence. |
+| Value                | Error condition                                                                                                    |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| `error_collate`      | The expression contains an invalid collating element name.                                                         |
+| % `error_ctype`      | The expression contains an invalid character class name.                                                           |
+| % `error_escape`     | The expression contains an invalid escaped character, or a trailing escape.                                        |
+| % `error_backref`    | The expression contains an invalid back reference.                                                                 |
+| % `error_brack`      | The expression contains mismatched \verb|[| and \verb|]|.                                                          |
+| % `error_paren`      | The expression contains mismatched \verb|(| and \verb|)|.                                                          |
+| % `error_brace`      | The expression contains mismatched \verb|{| and \verb|}|                                                           |
+| % `error_badbrace`   | The expression contains an invalid range in a \verb|{}| expression.                                                |
+| % `error_range`      | The expression contains an invalid character range, such as \verb|[b-a]| in most encodings.                        |
+| % `error_space`      | There is insufficient memory to convert the expression into a finite state machine.                                |
+| % `error_badrepeat`  | One of \verb|*?+{| is not preceded by a valid regular expression.                                                  |
+| % `error_complexity` | The complexity of an attempted match against a regular expression exceeds a pre-set level.                         |
+| % `error_stack`      | There is insufficient memory to determine whether the regular expression matches the specified character sequence. |
 
 
 ## Class `regex_error` <a id="re.badexp">[[re.badexp]]</a>
 
 ``` cpp
-class regex_error : public runtime_error {
-public:
-  explicit regex_error(regex_constants::error_type ecode);
-  regex_constants::error_type code() const;
-};
+namespace std {
+  class regex_error : public runtime_error {
+  public:
+    explicit regex_error(regex_constants::error_type ecode);
+    regex_constants::error_type code() const;
+  };
+}
 ```
 
 The class `regex_error` defines the type of objects thrown as exceptions
@@ -630,9 +744,10 @@ classification named by the character sequence designated by the
 iterator range \[`first`, `last`). If the parameter `icase` is `true`
 then the returned mask identifies the character classification without
 regard to the case of the characters being matched, otherwise it does
-honor the case of the characters being matched.[^1] The value returned
-shall be independent of the case of the characters in the character
-sequence. If the name is not recognized then returns
+honor the case of the characters being matched.[^1]
+
+The value returned shall be independent of the case of the characters in
+the character sequence. If the name is not recognized then returns
 `char_class_type()`.
 
 *Remarks:* For `regex_traits<char>`, at least the narrow character names
@@ -721,11 +836,11 @@ locale_type imbue(locale_type loc);
 currently in use invalidates all cached data held by
 `*this`. — *end note*]
 
+*Ensures:* `getloc() == loc`.
+
 *Returns:* If no locale has been previously imbued then a copy of the
 global locale in effect at the time of construction of `*this`,
 otherwise a copy of the last argument passed to `imbue`.
-
-*Ensures:* `getloc() == loc`.
 
 ``` cpp
 locale_type getloc() const;
@@ -735,7 +850,7 @@ locale_type getloc() const;
 in effect at the time of construction of `*this`, otherwise a copy of
 the last argument passed to `imbue`.
 
-**Table: Character class names and corresponding `ctype` masks** <a id="re.traits.classnames">[re.traits.classnames]</a>
+**Table: Character class names and corresponding `ctype` masks**
 
 | Narrow character name | Wide character name | Corresponding `ctype_base::mask` value |
 | --------------------- | ------------------- | -------------------------------------- |
@@ -758,6 +873,8 @@ the last argument passed to `imbue`.
 
 ## Class template `basic_regex` <a id="re.regex">[[re.regex]]</a>
 
+### General <a id="re.regex.general">[[re.regex.general]]</a>
+
 For a char-like type `charT`, specializations of class template
 `basic_regex` represent regular expressions constructed from character
 sequences of `charT` characters. In the rest of  [[re.regex]], `charT`
@@ -774,7 +891,7 @@ expressions.
 [*Note 1*: Implementations will typically declare some function
 templates as friends of `basic_regex` to achieve this. — *end note*]
 
-The functions described in this Clause report errors by throwing
+The functions described in [[re.regex]] report errors by throwing
 exceptions of type `regex_error`.
 
 ``` cpp
@@ -1018,8 +1135,6 @@ template<class ST, class SA>
                       flag_type f = regex_constants::ECMAScript);
 ```
 
-*Returns:* `*this`.
-
 *Effects:* Assigns the regular expression contained in the string `s`,
 interpreted according the flags specified in `f`. If an exception is
 thrown, `*this` is unchanged.
@@ -1027,6 +1142,8 @@ thrown, `*this` is unchanged.
 *Ensures:* If no exception is thrown, `flags()` returns `f` and
 `mark_count()` returns the number of marked sub-expressions within the
 expression.
+
+*Returns:* `*this`.
 
 *Throws:* `regex_error` if `s` is not a valid regular expression.
 
@@ -1104,6 +1221,8 @@ template<class charT, class traits>
 
 ## Class template `sub_match` <a id="re.submatch">[[re.submatch]]</a>
 
+### General <a id="re.submatch.general">[[re.submatch.general]]</a>
+
 ``` cpp
 namespace std {
   template<class BidirectionalIterator>
@@ -1127,6 +1246,8 @@ namespace std {
       int compare(const sub_match& s) const;
       int compare(const string_type& s) const;
       int compare(const value_type* s) const;
+
+      void swap(sub_match& s) noexcept(see below);
     };
 }
 ```
@@ -1175,6 +1296,23 @@ int compare(const value_type* s) const;
 ```
 
 *Returns:* `str().compare(s)`.
+
+``` cpp
+void swap(sub_match& s) noexcept(see below);
+```
+
+*Preconditions:* `BidirectionalIterator` meets the *Cpp17Swappable*
+requirements [[swappable.requirements]].
+
+*Effects:* Equivalent to:
+
+``` cpp
+this->pair<BidirectionalIterator, BidirectionalIterator>::swap(s);
+std::swap(matched, s.matched);
+```
+
+*Remarks:* The exception specification is equivalent to
+`is_nothrow_swappable_v<BidirectionalIterator>`.
 
 ### Non-member operators <a id="re.submatch.op">[[re.submatch.op]]</a>
 
@@ -1277,13 +1415,15 @@ template<class charT, class ST, class BiIter>
 
 ## Class template `match_results` <a id="re.results">[[re.results]]</a>
 
+### General <a id="re.results.general">[[re.results.general]]</a>
+
 The class template `match_results` meets the requirements of an
-allocator-aware container and of a sequence container (
-[[container.requirements.general]], [[sequence.reqmts]]) except that
-only copy assignment, move assignment, and operations defined for
+allocator-aware container and of a sequence container
+[[container.requirements.general]], [[sequence.reqmts]] except that only
+copy assignment, move assignment, and operations defined for
 const-qualified sequence containers are supported and that the semantics
-of comparison functions are different from those required for a
-container.
+of the comparison operator functions are different from those required
+for a container.
 
 A default-constructed `match_results` object has no fully established
 result state. A match result is *ready* when, as a consequence of a
@@ -1314,7 +1454,7 @@ namespace std {
       using value_type      = sub_match<BidirectionalIterator>;
       using const_reference = const value_type&;
       using reference       = value_type&;
-      using const_iterator  = {implementation-defined};
+      using const_iterator  = implementation-defined  // type of match_results::const_iterator;
       using iterator        = const_iterator;
       using difference_type =
               typename iterator_traits<BidirectionalIterator>::difference_type;
@@ -1326,9 +1466,11 @@ namespace std {
 
       // [re.results.const], construct/copy/destroy
       match_results() : match_results(Allocator()) {}
-      explicit match_results(const Allocator&);
+      explicit match_results(const Allocator& a);
       match_results(const match_results& m);
+      match_results(const match_results& m, const Allocator& a);
       match_results(match_results&& m) noexcept;
+      match_results(match_results&& m, const Allocator& a);
       match_results& operator=(const match_results& m);
       match_results& operator=(match_results&& m);
       ~match_results();
@@ -1384,20 +1526,43 @@ namespace std {
 
 ### Constructors <a id="re.results.const">[[re.results.const]]</a>
 
+[[re.results.const]] lists the postconditions of `match_results`
+copy/move constructors and copy/move assignment operators. For move
+operations, the results of the expressions depending on the parameter
+`m` denote the values they had before the respective function calls.
+
 ``` cpp
 explicit match_results(const Allocator& a);
 ```
 
+*Effects:* The stored `Allocator` value is constructed from `a`.
+
 *Ensures:* `ready()` returns `false`. `size()` returns `0`.
 
 ``` cpp
-match_results(match_results&& m) noexcept;
+match_results(const match_results& m);
+match_results(const match_results& m, const Allocator& a);
 ```
 
-*Effects:* The stored `Allocator` value is move constructed from
-`m.get_allocator()`.
+*Effects:* For the first form, the stored `Allocator` value is obtained
+as specified in [[container.reqmts]]. For the second form, the stored
+`Allocator` value is constructed from `a`.
 
 *Ensures:* As specified in [[re.results.const]].
+
+``` cpp
+match_results(match_results&& m) noexcept;
+match_results(match_results&& m, const Allocator& a);
+```
+
+*Effects:* For the first form, the stored `Allocator` value is move
+constructed from `m.get_allocator()`. For the second form, the stored
+`Allocator` value is constructed from `a`.
+
+*Ensures:* As specified in [[re.results.const]].
+
+*Throws:* The second form throws nothing if `a == m.get_allocator()` is
+`true`.
 
 ``` cpp
 match_results& operator=(const match_results& m);
@@ -1411,18 +1576,18 @@ match_results& operator=(match_results&& m);
 
 *Ensures:* As specified in [[re.results.const]].
 
-**Table: `match_results` assignment operator effects** <a id="re.results.const">[re.results.const]</a>
+**Table: `match_results` copy/move operation postconditions**
 
-| Element       | Value                                           |
-| ------------- | ----------------------------------------------- |
-| `ready()`     | `m.ready()`                                     |
-| `size()`      | `m.size()`                                      |
-| `str(n)`      | `m.str(n)` for all integers `n < m.size()`      |
-| `prefix()`    | `m.prefix()`                                    |
-| `suffix()`    | `m.suffix()`                                    |
-| `(*this)[n]`  | `m[n]` for all integers `n < m.size()`          |
-| `length(n)`   | `m.length(n)` for all integers `n < m.size()`   |
-| `position(n)` | `m.position(n)` for all integers `n < m.size()` |
+| Element       | Value                                                        |
+| ------------- | ------------------------------------------------------------ |
+| `ready()`     | `m.ready()`                                                  |
+| `size()`      | `m.size()`                                                   |
+| `str(n)`      | `m.str(n)` for all non-negative integers `n < m.size()`      |
+| `prefix()`    | `m.prefix()`                                                 |
+| `suffix()`    | `m.suffix()`                                                 |
+| `(*this)[n]`  | `m[n]` for all non-negative integers `n < m.size()`          |
+| `length(n)`   | `m.length(n)` for all non-negative integers `n < m.size()`   |
+| `position(n)` | `m.position(n)` for all non-negative integers `n < m.size()` |
 
 
 ### State <a id="re.results.state">[[re.results.state]]</a>
@@ -1678,8 +1843,8 @@ template<class BidirectionalIterator, class Allocator, class charT, class traits
                    regex_constants::match_flag_type flags = regex_constants::match_default);
 ```
 
-*Preconditions:* `BidirectionalIterator` meets the
-*Cpp17BidirectionalIterator* requirements [[bidirectional.iterators]].
+*Preconditions:* `BidirectionalIterator` models
+`bidirectional_iterator`[[iterator.concept.bidir]].
 
 *Effects:* Determines whether there is a match between the regular
 expression `e`, and all of the character sequence \[`first`, `last`).
@@ -1706,7 +1871,7 @@ regex_match ("GetValues", m, re);       // returns false
 `m.size()` returns `0` and `m.empty()` returns `true`. Otherwise the
 effects on parameter `m` are given in [[re.alg.match]].
 
-**Table: Effects of `regex_match` algorithm** <a id="re.alg.match">[re.alg.match]</a>
+**Table: Effects of `regex_match` algorithm**
 
 | Element              | Value                                                                                                                                                                               |
 | -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -1787,8 +1952,8 @@ template<class BidirectionalIterator, class Allocator, class charT, class traits
                     regex_constants::match_flag_type flags = regex_constants::match_default);
 ```
 
-*Preconditions:* `BidirectionalIterator` meets the
-*Cpp17BidirectionalIterator* requirements [[bidirectional.iterators]].
+*Preconditions:* `BidirectionalIterator` models
+`bidirectional_iterator`[[iterator.concept.bidir]].
 
 *Effects:* Determines whether there is some sub-sequence within
 \[`first`, `last`) that matches the regular expression `e`. The
@@ -1801,7 +1966,7 @@ exists, `false` otherwise.
 `m.size()` returns `0` and `m.empty()` returns `true`. Otherwise the
 effects on parameter `m` are given in [[re.alg.search]].
 
-**Table: Effects of `regex_search` algorithm** <a id="re.alg.search">[re.alg.search]</a>
+**Table: Effects of `regex_search` algorithm**
 
 | Element              | Value                                                                                                                                                                               |
 | -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -1817,7 +1982,7 @@ effects on parameter `m` are given in [[re.alg.search]].
 | `m[0].second`        | The end of the sequence of characters that matched the regular expression                                                                                                           |
 | `m[0].matched`       | `true`                                                                                                                                                                              |
 | `m[n].first`         | For all integers `0 < n < m.size()`, the start of the sequence that matched sub-expression `n`. Alternatively, if sub-expression `n` did not participate in the match, then `last`. |
-| `m[n].second`        | For all integers `0 < n < m.size()`, the end of the sequence that matched sub-expression `n`. Alternatively, if sub-expression `n` did not participate in the match, then `last` .  |
+| `m[n].second`        | For all integers `0 < n < m.size()`, the end of the sequence that matched sub-expression `n`. Alternatively, if sub-expression `n` did not participate in the match, then `last`.   |
 | `m[n].matched`       | For all integers `0 < n < m.size()`, `true` if sub-expression `n` participated in the match, `false` otherwise.                                                                     |
 
 ``` cpp
@@ -1989,6 +2154,8 @@ regex_replace(back_inserter(result), s, s + char_traits<charT>::length(s), e, fm
 
 ### Class template `regex_iterator` <a id="re.regiter">[[re.regiter]]</a>
 
+#### General <a id="re.regiter.general">[[re.regiter.general]]</a>
+
 ``` cpp
 namespace std {
   template<class BidirectionalIterator,
@@ -1998,6 +2165,7 @@ namespace std {
     public:
       using regex_type        = basic_regex<charT, traits>;
       using iterator_category = forward_iterator_tag;
+      using iterator_concept  = input_iterator_tag;
       using value_type        = match_results<BidirectionalIterator>;
       using difference_type   = ptrdiff_t;
       using pointer           = const value_type*;
@@ -2013,6 +2181,7 @@ namespace std {
       regex_iterator(const regex_iterator&);
       regex_iterator& operator=(const regex_iterator&);
       bool operator==(const regex_iterator&) const;
+      bool operator==(default_sentinel_t) const { return *this == regex_iterator(); }
       const value_type& operator*() const;
       const value_type* operator->() const;
       regex_iterator& operator++();
@@ -2131,7 +2300,7 @@ offset from the sequence passed in the call to
 
 It is unspecified how the implementation makes these adjustments.
 
-[*Note 2*: This means that a compiler may call an
+[*Note 2*: This means that an implementation can call an
 implementation-specific search function, in which case a program-defined
 specialization of `regex_search` will not be called. — *end note*]
 
@@ -2148,6 +2317,8 @@ return tmp;
 ```
 
 ### Class template `regex_token_iterator` <a id="re.tokiter">[[re.tokiter]]</a>
+
+#### General <a id="re.tokiter.general">[[re.tokiter.general]]</a>
 
 The class template `regex_token_iterator` is an iterator adaptor; that
 is to say it represents a new view of an existing iterator sequence, by
@@ -2201,6 +2372,7 @@ namespace std {
     public:
       using regex_type        = basic_regex<charT, traits>;
       using iterator_category = forward_iterator_tag;
+      using iterator_concept  = input_iterator_tag;
       using value_type        = sub_match<BidirectionalIterator>;
       using difference_type   = ptrdiff_t;
       using pointer           = const value_type*;
@@ -2252,6 +2424,7 @@ namespace std {
       regex_token_iterator(const regex_token_iterator&);
       regex_token_iterator& operator=(const regex_token_iterator&);
       bool operator==(const regex_token_iterator&) const;
+      bool operator==(default_sentinel_t) const { return *this == regex_token_iterator(); }
       const value_type& operator*() const;
       const value_type* operator->() const;
       regex_token_iterator& operator++();
@@ -2418,7 +2591,9 @@ ClassAtom::
   ClassAtomExClass
   ClassAtomCollatingElement
   ClassAtomEquivalence
+```
 
+``` bnf
 IdentityEscape::
   SourceCharacter but not 'c'
 ```
@@ -2428,17 +2603,25 @@ The following new productions are then added:
 ``` bnf
 ClassAtomExClass::
   '[:' ClassName ':]'
+```
 
+``` bnf
 ClassAtomCollatingElement::
   '[.' ClassName '.]'
+```
 
+``` bnf
 ClassAtomEquivalence::
   '[=' ClassName '=]'
+```
 
+``` bnf
 ClassName::
   ClassNameCharacter
   ClassNameCharacter ClassName
+```
 
+``` bnf
 ClassNameCharacter::
   SourceCharacter but not one of '.' or '=' or ':'
 ```
@@ -2557,12 +2740,13 @@ ECMA-262 15.10
 
 <!-- Link reference definitions -->
 [algorithms]: algorithms.md#algorithms
-[bidirectional.iterators]: iterators.md#bidirectional.iterators
 [bitmask.types]: library.md#bitmask.types
+[container.reqmts]: containers.md#container.reqmts
 [container.requirements.general]: containers.md#container.requirements.general
 [enumerated.types]: library.md#enumerated.types
 [forward.iterators]: iterators.md#forward.iterators
 [input.iterators]: iterators.md#input.iterators
+[iterator.concept.bidir]: iterators.md#iterator.concept.bidir
 [output.iterators]: iterators.md#output.iterators
 [re]: #re
 [re.alg]: #re.alg
@@ -2571,7 +2755,7 @@ ECMA-262 15.10
 [re.alg.search]: #re.alg.search
 [re.badexp]: #re.badexp
 [re.const]: #re.const
-[re.def]: #re.def
+[re.const.general]: #re.const.general
 [re.err]: #re.err
 [re.except]: #re.except
 [re.general]: #re.general
@@ -2581,6 +2765,7 @@ ECMA-262 15.10
 [re.regex]: #re.regex
 [re.regex.assign]: #re.regex.assign
 [re.regex.construct]: #re.regex.construct
+[re.regex.general]: #re.regex.general
 [re.regex.locale]: #re.regex.locale
 [re.regex.nonmemb]: #re.regex.nonmemb
 [re.regex.operations]: #re.regex.operations
@@ -2589,6 +2774,7 @@ ECMA-262 15.10
 [re.regiter.cnstr]: #re.regiter.cnstr
 [re.regiter.comp]: #re.regiter.comp
 [re.regiter.deref]: #re.regiter.deref
+[re.regiter.general]: #re.regiter.general
 [re.regiter.incr]: #re.regiter.incr
 [re.req]: #re.req
 [re.results]: #re.results
@@ -2596,11 +2782,13 @@ ECMA-262 15.10
 [re.results.all]: #re.results.all
 [re.results.const]: #re.results.const
 [re.results.form]: #re.results.form
+[re.results.general]: #re.results.general
 [re.results.nonmember]: #re.results.nonmember
 [re.results.size]: #re.results.size
 [re.results.state]: #re.results.state
 [re.results.swap]: #re.results.swap
 [re.submatch]: #re.submatch
+[re.submatch.general]: #re.submatch.general
 [re.submatch.members]: #re.submatch.members
 [re.submatch.op]: #re.submatch.op
 [re.summary]: #re.summary
@@ -2610,11 +2798,13 @@ ECMA-262 15.10
 [re.tokiter.cnstr]: #re.tokiter.cnstr
 [re.tokiter.comp]: #re.tokiter.comp
 [re.tokiter.deref]: #re.tokiter.deref
+[re.tokiter.general]: #re.tokiter.general
 [re.tokiter.incr]: #re.tokiter.incr
 [re.traits]: #re.traits
 [re.traits.classnames]: #re.traits.classnames
 [sequence.reqmts]: containers.md#sequence.reqmts
 [strings.general]: strings.md#strings.general
+[swappable.requirements]: library.md#swappable.requirements
 
 [^1]: For example, if the parameter `icase` is `true` then `[[:lower:]]`
     is the same as `[[:alpha:]]`.

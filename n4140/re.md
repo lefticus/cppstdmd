@@ -14,7 +14,7 @@ sequence to be operated upon by a regular expression, and two iterator
 types for enumerating regular expression matches, as described in Table 
 [[tab:re.lib.summary]].
 
-**Table: Regular expressions library summary**
+**Table: Regular expressions library summary** <a id="tab:re.lib.summary">[tab:re.lib.summary]</a>
 
 | Subclause       |                             | Header    |
 | --------------- | --------------------------- | --------- |
@@ -519,7 +519,7 @@ in table  [[tab:re:syntaxoption]]. A valid value of type
 `ECMAScript`, `basic`, `extended`, `awk`, `grep`, `egrep`, set. If no
 grammar element is set, the default grammar is `ECMAScript`.
 
-**Table: `syntax_option_type` effects**
+**Table: `syntax_option_type` effects** <a id="tab:re:syntaxoption">[tab:re:syntaxoption]</a>
 
 | Element        | Effect(s) if set                                                                                                                                                                                                                                                                                                                          |
 | -------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -569,7 +569,7 @@ effects listed in Table  [[tab:re:matchflag]] for any bitmask elements
 set.
 
 **Table: `regex_constants::match_flag_type` effects when obtaining a match against a
-     character container sequence {[}`first`, `last`{)}.**
+     character container sequence {[}`first`, `last`{)}.** <a id="tab:re:matchflag">[tab:re:matchflag]</a>
 
 | Element                                                           | Effect(s) if set                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
 | ----------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -614,7 +614,7 @@ The type `error_type` is an *implementation-defined* enumerated type (
 [[enumerated.types]]). Values of type `error_type` represent the error
 conditions described in Table  [[tab:re:errortype]]:
 
-**Table: `error_type` values in the C locale**
+**Table: `error_type` values in the C locale** <a id="tab:re:errortype">[tab:re:errortype]</a>
 
 | Value                | Error condition                                                                                                         |
 | -------------------- | ----------------------------------------------------------------------------------------------------------------------- |
@@ -867,7 +867,7 @@ locale_type getloc() const;
 in effect at the time of construction of `*this`, otherwise a copy of
 the last argument passed to `imbue`.
 
-**Table: Character class names and corresponding `ctype` masks**
+**Table: Character class names and corresponding `ctype` masks** <a id="tab:re.traits.classnames">[tab:re.traits.classnames]</a>
 
 | Narrow character name | Wide character name | Corresponding `ctype_base::mask` value |
 | --------------------- | ------------------- | -------------------------------------- |
@@ -1873,7 +1873,7 @@ match_results& operator=(match_results&& m);
 *Effects:*  Move-assigns `m` to `*this`. The postconditions of this
 function are indicated in Table  [[tab:re:results:assign]].
 
-**Table: `match_results` assignment operator effects**
+**Table: `match_results` assignment operator effects** <a id="tab:re:results:assign">[tab:re:results:assign]</a>
 
 | Element       | Value                                           |
 | ------------- | ----------------------------------------------- |
@@ -2155,7 +2155,7 @@ returns `false`, then the effect on parameter `m` is unspecified except
 that `m.size()` returns `0` and `m.empty()` returns `true`. Otherwise
 the effects on parameter `m` are given in Table  [[tab:re:alg:match]].
 
-**Table: Effects of `regex_match` algorithm**
+**Table: Effects of `regex_match` algorithm** <a id="tab:re:alg:match">[tab:re:alg:match]</a>
 
 | Element              | Value                                                                                                                                                                               |
 | -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -2257,7 +2257,7 @@ returns `false`, then the effect on parameter `m` is unspecified except
 that `m.size()` returns `0` and `m.empty()` returns `true`. Otherwise
 the effects on parameter `m` are given in Table  [[tab:re:alg:search]].
 
-**Table: Effects of `regex_search` algorithm**
+**Table: Effects of `regex_search` algorithm** <a id="tab:re:alg:search">[tab:re:alg:search]</a>
 
 | Element              | Value                                                                                                                                                                               |
 | -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |

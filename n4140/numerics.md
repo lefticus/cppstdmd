@@ -10,7 +10,7 @@ random number generation, numeric ( *n*-at-a-time) arrays, generalized
 numeric algorithms, and facilities included from the ISO C library, as
 summarized in Table  [[tab:numerics.lib.summary]].
 
-**Table: Numerics library summary**
+**Table: Numerics library summary** <a id="tab:numerics.lib.summary">[tab:numerics.lib.summary]</a>
 
 | Subclause                |                                | Header       |
 | ------------------------ | ------------------------------ | ------------ |

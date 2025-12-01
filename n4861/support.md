@@ -14,7 +14,7 @@ dynamic memory management, support for dynamic type identification,
 support for exception processing, support for initializer lists, and
 other runtime support, as summarized in [[support.summary]].
 
-**Table: Language support library summary**
+**Table: Language support library summary** <a id="support.summary">[support.summary]</a>
 
 | Subclause              |                           | Header                                             |
 | ---------------------- | ------------------------- | -------------------------------------------------- |

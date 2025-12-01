@@ -1082,7 +1082,7 @@ of the fundamental types ([[basic.fundamental]]). Table 
 [[tab:simple.type.specifiers]] summarizes the valid combinations of
 *simple-type-specifier*s and the types they specify.
 
-**Table: *simple-type-specifier*{s} and the types they specify**
+**Table: *simple-type-specifier*{s} and the types they specify** <a id="tab:simple.type.specifiers">[tab:simple.type.specifiers]</a>
 
 | Specifier(s)           | Type                                   |
 | ---------------------- | -------------------------------------- |

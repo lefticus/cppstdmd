@@ -299,7 +299,7 @@ attributes recognized by the implementation, the value is
 [*Note 1*: It is expected that the availability of an attribute can be
 detected by any non-zero result. — *end note*]
 
-**Table: __has_cpp_attribute values**
+**Table: __has_cpp_attribute values** <a id="cpp.cond.ha">[cpp.cond.ha]</a>
 
 | Attribute            | Value     |
 | -------------------- | --------- |
@@ -1340,7 +1340,7 @@ corresponding integer literal.
 [*Note 3*: Future versions of this International Standard might replace
 the values of these macros with greater values. — *end note*]
 
-**Table: Feature-test macros**
+**Table: Feature-test macros** <a id="cpp.predefined.ft">[cpp.predefined.ft]</a>
 
 | Macro name                              | Value     |
 | --------------------------------------- | --------- |

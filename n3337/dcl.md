@@ -968,7 +968,7 @@ previously-declared user-defined type or one of the fundamental types (
 the valid combinations of *simple-type-specifier*s and the types they
 specify.
 
-**Table: *simple-type-specifier*{s} and the types they specify**
+**Table: *simple-type-specifier*{s} and the types they specify** <a id="tab:simple.type.specifiers">[tab:simple.type.specifiers]</a>
 
 |                        |                                        |
 | ---------------------- | -------------------------------------- |

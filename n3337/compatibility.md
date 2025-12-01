@@ -958,7 +958,7 @@ The header names (enclosed in `<` and `>`) indicate that the macro may
 be defined in more than one header. All such definitions are equivalent
 ([[basic.def.odr]]).
 
-**Table: Standard macros**
+**Table: Standard macros** <a id="tab:diff.standard.macros">[tab:diff.standard.macros]</a>
 
 |                  |                  |                 |           |                  |
 | ---------------- | ---------------- | --------------- | --------- | ---------------- |
@@ -978,7 +978,7 @@ be defined in more than one header. All such definitions are equivalent
 The C++standard library provides 57 standard values from the C library,
 as shown in Table  [[tab:diff.standard.values]].
 
-**Table: Standard values**
+**Table: Standard values** <a id="tab:diff.standard.values">[tab:diff.standard.values]</a>
 
 |                  |                  |                   |             |
 | ---------------- | ---------------- | ----------------- | ----------- |
@@ -998,7 +998,7 @@ as shown in Table  [[tab:diff.standard.values]].
 The C++standard library provides 20 standard types from the C library,
 as shown in Table  [[tab:diff.standard.types]].
 
-**Table: Standard types**
+**Table: Standard types** <a id="tab:diff.standard.types">[tab:diff.standard.types]</a>
 
 |           |                    |                    |                    |
 | --------- | ------------------ | ------------------ | ------------------ |
@@ -1011,14 +1011,14 @@ as shown in Table  [[tab:diff.standard.types]].
 The C++standard library provides 2 standard `struct`s from the C
 library, as shown in Table  [[tab:diff.standard.structs]].
 
-**Table: Standard structs**
+**Table: Standard structs** <a id="tab:diff.standard.structs">[tab:diff.standard.structs]</a>
 
 
 
 The C++standard library provides 209 standard functions from the C
 library, as shown in Table  [[tab:diff.standard.functions]].
 
-**Table: Standard functions**
+**Table: Standard functions** <a id="tab:diff.standard.functions">[tab:diff.standard.functions]</a>
 
 |            |            |              |             |             |             |
 | ---------- | ---------- | ------------ | ----------- | ----------- | ----------- |

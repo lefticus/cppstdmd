@@ -6,7 +6,7 @@ This Clause describes the chrono library [[time.syn]] and various C
 functions [[ctime.syn]] that provide generally useful time utilities, as
 summarized in [[time.summary]].
 
-**Table: Time library summary**
+**Table: Time library summary** <a id="time.summary">[time.summary]</a>
 
 | Subclause          |                             | Header     |
 | ------------------ | --------------------------- | ---------- |
@@ -5997,7 +5997,7 @@ See  [[time.hms.width]] for some durations, the resulting
 `fractional_width`, and the formatted fractional second output of
 `Duration{1}`.
 
-**Table: Examples for `fractional_width`**
+**Table: Examples for `fractional_width`** <a id="time.hms.width">[time.hms.width]</a>
 
 |                                   |     |               |
 | --------------------------------- | --- | ------------- |
@@ -7467,7 +7467,7 @@ However, if a flag refers to a “time of day” (e.g. `%H`, `%I`, `%p`,
 etc.), then a specialization of `duration` is interpreted as the time of
 day elapsed since midnight.
 
-**Table: Meaning of conversion specifiers**
+**Table: Meaning of conversion specifiers** <a id="time.format.spec">[time.format.spec]</a>
 
 | Specifier | Replacement                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
 | --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |

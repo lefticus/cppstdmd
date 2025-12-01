@@ -561,7 +561,7 @@ function-call notation as summarized in Table  [[tab:over.rel.op.func]]
 (where `@` denotes one of the operators covered in the specified
 subclause).
 
-**Table: Relationship between operator and function call notation**
+**Table: Relationship between operator and function call notation** <a id="tab:over.rel.op.func">[tab:over.rel.op.func]</a>
 
 | Subclause    | Expression | As member function | As non-member function |
 | ------------ | ---------- | ------------------ | ---------------------- |
@@ -1100,7 +1100,7 @@ Conversion rank; otherwise, if any of those has Promotion rank, the
 sequence has Promotion rank; otherwise, the sequence has Exact Match
 rank.
 
-**Table: Conversions**
+**Table: Conversions** <a id="tab:over.conversions">[tab:over.conversions]</a>
 
 | Conversion              | Category | Rank | Subclause         |
 | ----------------------- | -------- | ---- | ----------------- |

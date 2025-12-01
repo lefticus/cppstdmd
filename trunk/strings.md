@@ -822,7 +822,7 @@ compare. The function then compares the two strings by calling
 nonzero. Otherwise, returns a value as indicated in
 [[string.view.compare]].
 
-**Table: `compare()` results**
+**Table: `compare()` results** <a id="string.view.compare">[string.view.compare]</a>
 
 | Condition              | Return Value |
 | ---------------------- | ------------ |

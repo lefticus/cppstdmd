@@ -814,7 +814,7 @@ compare. The function then compares the two strings by calling
 nonzero. Otherwise, returns a value as indicated in
 [[string.view.compare]].
 
-**Table: `compare()` results**
+**Table: `compare()` results** <a id="string.view.compare">[string.view.compare]</a>
 
 | Condition              | Return Value |
 | ---------------------- | ------------ |
@@ -1046,7 +1046,7 @@ marked `constexpr` and `noexcept` so that an object `t` with an implicit
 conversion to `S` can be compared according to
 [[string.view.comparison.overloads]].
 
-**Table: Additional `basic_string_view` comparison overloads**
+**Table: Additional `basic_string_view` comparison overloads** <a id="string.view.comparison.overloads">[string.view.comparison.overloads]</a>
 
 | Expression | Equivalent to |
 | ---------- | ------------- |

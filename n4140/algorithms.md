@@ -11,7 +11,7 @@ operation, modifying sequence operations, sorting and related
 operations, and algorithms from the ISO C library, as summarized in
 Table  [[tab:algorithms.summary]].
 
-**Table: Algorithms library summary**
+**Table: Algorithms library summary** <a id="tab:algorithms.summary">[tab:algorithms.summary]</a>
 
 | Subclause                    |                                   | Header        |
 | ---------------------------- | --------------------------------- | ------------- |
