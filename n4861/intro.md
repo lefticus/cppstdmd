@@ -432,12 +432,13 @@ terminated by “”. Each note is introduced by “” or “” and terminated
 ## Syntax notation <a id="syntax">[[syntax]]</a>
 
 In the syntax notation used in this document, syntactic categories are
-indicated by type, and literal words and characters in `constant`
-`width` type. Alternatives are listed on separate lines except in a few
-cases where a long set of alternatives is marked by the phrase “one of”.
-If the text of an alternative is too long to fit on a line, the text is
-continued on subsequent lines indented from the first one. An optional
-terminal or non-terminal symbol is indicated by the subscript “ₒₚₜ”, so
+indicated by *italic* type, and literal words and characters in
+`constant` `width` type. Alternatives are listed on separate lines
+except in a few cases where a long set of alternatives is marked by the
+phrase “one of”. If the text of an alternative is too long to fit on a
+line, the text is continued on subsequent lines indented from the first
+one. An optional terminal or non-terminal symbol is indicated by the
+subscript “ₒₚₜ”, so
 
 ``` bnf
 '{' expressionₒₚₜ '}'
@@ -448,13 +449,13 @@ indicates an optional expression enclosed in braces.
 Names for syntactic categories have generally been chosen according to
 the following rules:
 
--  is a use of an identifier in a context that determines its meaning
-  (e.g., *class-name*, *typedef-name*).
--  is an identifier with no context-dependent meaning (e.g.,
+- *X-name* is a use of an identifier in a context that determines its
+  meaning (e.g., *class-name*, *typedef-name*).
+- *X-id* is an identifier with no context-dependent meaning (e.g.,
   *qualified-id*).
--  is one or more ’s without intervening delimiters (e.g.,
+- *X-seq* is one or more *X*’s without intervening delimiters (e.g.,
   *declaration-seq* is a sequence of declarations).
--  is one or more ’s separated by intervening commas (e.g.,
+- *X-list* is one or more *X*’s separated by intervening commas (e.g.,
   *identifier-list* is a sequence of identifiers separated by commas).
 
 ## Acknowledgments <a id="intro.ack">[[intro.ack]]</a>

@@ -1339,3 +1339,24 @@ The header names \libnoheader{ccomplex}, \libnoheader{ciso646}, \libnoheader{cst
     assert "\\libnoheader" not in output
     # Should NOT have incomplete "header names , , " pattern
     assert "header names , ," not in output
+
+
+def test_fakegrammarterm_macro():
+    r"""Test \fakegrammarterm{} macro renders as italics (Issue #27/#17)
+
+    This macro is used in intro.tex to explain grammar naming conventions.
+    For example: \fakegrammarterm{X-name} is a use of an identifier...
+    """
+    latex = r"""
+\fakegrammarterm{X-name} is a use of an identifier in a context that determines its meaning.
+\fakegrammarterm{X-id} is an identifier with no context-dependent meaning.
+"""
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    # Should have italicized placeholder names
+    assert "*X-name*" in output
+    assert "*X-id*" in output
+    # Should NOT have raw LaTeX command
+    assert "\\fakegrammarterm" not in output
+    # Should NOT have the content stripped entirely
+    assert "is a use of an identifier" in output

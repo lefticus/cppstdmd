@@ -51,8 +51,8 @@ stable references to subclauses across editions that are unaffected by
 changes of subclause numbering.
 
 Aspects of the language syntax of C++ are distinguished typographically
-by the use of type or `constant width` type to avoid ambiguities; see
-[[syntax]].
+by the use of *italic, sans-serif* type or `constant width` type to
+avoid ambiguities; see [[syntax]].
 
 <!-- Link reference definitions -->
 [lex.token]: lex.md#lex.token

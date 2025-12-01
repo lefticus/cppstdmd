@@ -953,7 +953,7 @@ complete *decl-specifier-seq*.[^1]
 [[temp.res]], respectively. The remaining *type-specifier*s are
 discussed in the rest of [[dcl.type]]. — *end note*]
 
-#### The  <a id="dcl.type.cv">[[dcl.type.cv]]</a>
+#### The *cv-qualifier*s <a id="dcl.type.cv">[[dcl.type.cv]]</a>
 
 There are two *cv-qualifier*s, `const` and `volatile`. Each
 *cv-qualifier* shall appear at most once in a *cv-qualifier-seq*. If a
