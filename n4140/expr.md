@@ -1632,7 +1632,7 @@ conversions.
 An object pointer can be explicitly converted to an object pointer of a
 different type.[^12] When a prvalue `v` of object pointer type is
 converted to the object pointer type “pointer to cv `T`”, the result is
-`static_cast<cv\ T*>(static_cast<cv\
+`static_cast<cv T*>(static_cast<cv\
 void*>(v))`. Converting a prvalue of type “pointer to `T1`” to the type
 “pointer to `T2`” (where `T1` and `T2` are object types and where the
 alignment requirements of `T2` are no stricter than those of `T1`) and
@@ -2731,17 +2731,17 @@ promoted left operand. The behavior is undefined if the right operand is
 negative, or greater than or equal to the length in bits of the promoted
 left operand.
 
-The value of `E1 <<\ E2` is `E1` left-shifted `E2` bit positions;
-vacated bits are zero-filled. If `E1` has an unsigned type, the value of
-the result is $\mathrm{E1}\times2^\mathrm{E2}$, reduced modulo one more
-than the maximum value representable in the result type. Otherwise, if
-`E1` has a signed type and non-negative value, and
+The value of `E1 << E2` is `E1` left-shifted `E2` bit positions; vacated
+bits are zero-filled. If `E1` has an unsigned type, the value of the
+result is $\mathrm{E1}\times2^\mathrm{E2}$, reduced modulo one more than
+the maximum value representable in the result type. Otherwise, if `E1`
+has a signed type and non-negative value, and
 $\mathrm{E1}\times2^\mathrm{E2}$ is representable in the corresponding
 unsigned type of the result type, then that value, converted to the
 result type, is the resulting value; otherwise, the behavior is
 undefined.
 
-The value of `E1 >>\ E2` is `E1` right-shifted `E2` bit positions. If
+The value of `E1 >> E2` is `E1` right-shifted `E2` bit positions. If
 `E1` has an unsigned type or if `E1` has a signed type and a
 non-negative value, the value of the result is the integral part of the
 quotient of $\mathrm{E1}/2^\mathrm{E2}$. If `E1` has a signed type and a

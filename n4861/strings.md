@@ -3099,7 +3099,7 @@ nonzero. Otherwise, returns a value as indicated in
 | Condition              | Return Value |
 | ---------------------- | ------------ |
 | `size() < str.size()`  | `< 0`        |
-| `size() == str.size()` | ` \ 0`       |
+| `size() == str.size()` | `  0`        |
 | `size() > str.size()`  | `> 0`        |
 
 ``` cpp

@@ -881,7 +881,7 @@ Let:
   \[*Example 1*: `COPYCV(const int, volatile short)` is an alias for
   `const volatile short`. — *end example*]
 - `COND-RES(X, Y)` be
-  `decltype(false ?\ declval<X(&)()>()() :\ declval<Y(&)()>()())`.
+  `decltype(false ? declval<X(&)()>()() : declval<Y(&)()>()())`.
 
 Given types `A` and `B`, let `X` be `remove_reference_t<A>`, let `Y` be
 `remove_reference_t<B>`, and let `COMMON-{REF}(A, B)` be:

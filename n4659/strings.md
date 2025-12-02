@@ -2354,11 +2354,11 @@ Table  [[tab:strings.compare]].
 
 **Table: `compare()` results** <a id="tab:strings.compare">[tab:strings.compare]</a>
 
-| Condition              | Return Value |
-| ---------------------- | ------------ |
-| `size() < \ sv.size()` | `< 0`        |
-| `size() == sv.size()`  | ` \ 0`       |
-| `size() > \ sv.size()` | `> 0`        |
+| Condition             | Return Value |
+| --------------------- | ------------ |
+| `size() <  sv.size()` | `< 0`        |
+| `size() == sv.size()` | `  0`        |
+| `size() >  sv.size()` | `> 0`        |
 
 ``` cpp
 int compare(size_type pos1, size_type n1, basic_string_view<charT, traits> sv) const;
@@ -3424,7 +3424,7 @@ Table  [[tab:string.view.compare]].
 | Condition              | Return Value |
 | ---------------------- | ------------ |
 | `size() < str.size()`  | `< 0`        |
-| `size() == str.size()` | ` \ 0`       |
+| `size() == str.size()` | `  0`        |
 | `size() > str.size()`  | `> 0`        |
 
 ``` cpp
