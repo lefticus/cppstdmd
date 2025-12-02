@@ -48,6 +48,7 @@ local common = require("cpp-common")
 local trim = common.trim
 local build_defnote = common.build_defnote
 local extract_braced_content = common.extract_braced_content
+local build_anchor_inline = common.build_anchor_inline
 
 -- Track definition and note counters
 local definition_counter = 0
@@ -216,11 +217,10 @@ function Blocks(blocks)
 
         -- Create header
         local heading_text = def_num .. " " .. def_term
-        local anchor = '<a id="' .. def_label .. '">[' .. def_label .. ']</a>'
         local header = pandoc.Header(4, {
           pandoc.Str(heading_text),
           pandoc.Space(),
-          pandoc.RawInline('html', anchor)
+          build_anchor_inline(def_label, {format = "bracket"})
         })
         table.insert(result, header)
 

@@ -40,6 +40,14 @@ This filter detects this pattern and converts to proper headers:
   etc.
 ]]
 
+-- Add current directory to Lua search path for local modules
+local script_dir = debug.getinfo(1, "S").source:match("@?(.*/)") or "./"
+package.path = package.path .. ";" .. script_dir .. "?.lua"
+
+-- Import shared utilities
+local common = require("cpp-common")
+local build_anchor_inline = common.build_anchor_inline
+
 -- Global table to track all section labels for link definition generation
 local section_labels = {}
 
@@ -120,15 +128,7 @@ function Para(elem)
             -- Append visible anchor with stable name to heading
             -- Mark annexes with data-annex attribute for TOC generation
             table.insert(title_content, pandoc.Space())
-            if annex_type then
-              table.insert(title_content,
-                           pandoc.RawInline('html', '<a id="' .. label .. '" data-annex="true" data-annex-type="' .. annex_type .. '">[[' ..
-                                            label .. ']]</a>'))
-            else
-              table.insert(title_content,
-                           pandoc.RawInline('html', '<a id="' .. label .. '">[[' ..
-                                            label .. ']]</a>'))
-            end
+            table.insert(title_content, build_anchor_inline(label, {annex_type = annex_type}))
 
             -- Create the heading with embedded anchor
             local header = pandoc.Header(heading_level, title_content)
@@ -200,9 +200,7 @@ function Para(elem)
         -- If we got content, convert to header with embedded anchor
         if #title_content > 0 then
           table.insert(title_content, pandoc.Space())
-          table.insert(title_content,
-                       pandoc.RawInline('html', '<a id="' .. label .. '">[[' ..
-                                        label .. ']]</a>'))
+          table.insert(title_content, build_anchor_inline(label))
           return pandoc.Header(heading_level, title_content)
         end
       end
@@ -265,7 +263,7 @@ function RawInline(elem)
     local content = {
       pandoc.Str(title),
       pandoc.Space(),
-      pandoc.RawInline('html', '<a id="' .. label .. '">[[' .. label .. ']]</a>')
+      build_anchor_inline(label)
     }
     return pandoc.Header(heading_level, content)
   end
@@ -282,7 +280,7 @@ function RawInline(elem)
       pandoc.Space(),
       pandoc.Str("(informative)"),
       pandoc.Space(),
-      pandoc.RawInline('html', '<a id="' .. inf_label .. '" data-annex="true" data-annex-type="informative">[[' .. inf_label .. ']]</a>')
+      build_anchor_inline(inf_label, {annex_type = "informative"})
     }
     return pandoc.Header(1, content)
   end
@@ -297,7 +295,7 @@ function RawInline(elem)
       pandoc.Space(),
       pandoc.Str("(normative)"),
       pandoc.Space(),
-      pandoc.RawInline('html', '<a id="' .. norm_label .. '" data-annex="true" data-annex-type="normative">[[' .. norm_label .. ']]</a>')
+      build_anchor_inline(norm_label, {annex_type = "normative"})
     }
     return pandoc.Header(1, content)
   end
@@ -322,7 +320,7 @@ function RawBlock(elem)
     local content = {
       pandoc.Str(title),
       pandoc.Space(),
-      pandoc.RawInline('html', '<a id="' .. label .. '">[[' .. label .. ']]</a>')
+      build_anchor_inline(label)
     }
     return pandoc.Header(heading_level, content)
   end
@@ -339,7 +337,7 @@ function RawBlock(elem)
       pandoc.Space(),
       pandoc.Str("(informative)"),
       pandoc.Space(),
-      pandoc.RawInline('html', '<a id="' .. inf_label .. '" data-annex="true" data-annex-type="informative">[[' .. inf_label .. ']]</a>')
+      build_anchor_inline(inf_label, {annex_type = "informative"})
     }
     return pandoc.Header(1, content)
   end
@@ -354,7 +352,7 @@ function RawBlock(elem)
       pandoc.Space(),
       pandoc.Str("(normative)"),
       pandoc.Space(),
-      pandoc.RawInline('html', '<a id="' .. norm_label .. '" data-annex="true" data-annex-type="normative">[[' .. norm_label .. ']]</a>')
+      build_anchor_inline(norm_label, {annex_type = "normative"})
     }
     return pandoc.Header(1, content)
   end

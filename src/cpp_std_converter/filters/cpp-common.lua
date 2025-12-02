@@ -2657,6 +2657,68 @@ local function extract_footnotes_from_code(code)
   return code, footnote_blocks
 end
 
+-- Build anchor inline element for section headers and definitions
+-- Consolidates the repeated anchor HTML generation pattern across filters
+-- @param label: string anchor ID
+-- @param opts: optional table with:
+--   format: "wikilink" (default, [[label]]) or "bracket" ([label])
+--   annex_type: nil, "informative", or "normative" (adds data-annex attributes)
+-- @return pandoc.RawInline with <a id="label">[[label]]</a> or similar
+local function build_anchor_inline(label, opts)
+  opts = opts or {}
+  local format = opts.format or "wikilink"
+  local link_text = format == "wikilink" and ("[[" .. label .. "]]") or ("[" .. label .. "]")
+
+  local attrs = 'id="' .. label .. '"'
+  if opts.annex_type then
+    attrs = attrs .. ' data-annex="true" data-annex-type="' .. opts.annex_type .. '"'
+  end
+
+  return pandoc.RawInline('html', '<a ' .. attrs .. '>' .. link_text .. '</a>')
+end
+
+-- Walk blocks recursively, applying processor function to each block
+-- Consolidates duplicate recursive block traversal patterns across filters
+-- Handles: BulletList, OrderedList, DefinitionList, BlockQuote, Div
+-- @param blocks: array of Pandoc blocks
+-- @param processor: function(block) -> block, {blocks}, or nil (keep original)
+-- @return: processed blocks array
+local function walk_blocks(blocks, processor)
+  local result = {}
+  for _, block in ipairs(blocks) do
+    -- Apply processor to get transformed block(s)
+    local processed = processor(block)
+    if processed == nil then
+      processed = {block}
+    elseif processed.t then  -- Single block returned
+      processed = {processed}
+    end
+
+    -- Recursively process container blocks
+    for _, b in ipairs(processed) do
+      if (b.t == "BulletList" or b.t == "OrderedList") and b.content then
+        for i, item in ipairs(b.content) do
+          b.content[i] = walk_blocks(item, processor)
+        end
+      elseif b.t == "DefinitionList" and b.content then
+        for i, item in ipairs(b.content) do
+          -- item is [term, definitions] where definitions is list of block lists
+          for j, def_blocks in ipairs(item[2]) do
+            item[2][j] = walk_blocks(def_blocks, processor)
+          end
+          b.content[i] = item
+        end
+      elseif b.t == "Div" and b.content then
+        b.content = walk_blocks(b.content, processor)
+      elseif b.t == "BlockQuote" and b.content then
+        b.content = walk_blocks(b.content, processor)
+      end
+      table.insert(result, b)
+    end
+  end
+  return result
+end
+
 -- Export public API
 return {
   subscripts = subscripts,
@@ -2698,4 +2760,6 @@ return {
   build_environment_closing = build_environment_closing,
   build_defnote = build_defnote,
   extract_footnotes_from_code = extract_footnotes_from_code,
+  build_anchor_inline = build_anchor_inline,
+  walk_blocks = walk_blocks,
 }

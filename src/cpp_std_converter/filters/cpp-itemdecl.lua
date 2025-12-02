@@ -59,6 +59,7 @@ local expand_macros_common = common.expand_macros_common
 local build_environment_opening = common.build_environment_opening
 local build_environment_closing = common.build_environment_closing
 local extract_footnotes_from_code = common.extract_footnotes_from_code
+local walk_blocks = common.walk_blocks
 
 -- Track note and example counters across itemdescr processing
 local itemdescr_note_counter = 0
@@ -78,39 +79,18 @@ end
 -- Helper function to upgrade code blocks to fenced format for consistency
 -- Pandoc converts \begin{verbatim} to indented code blocks (no language class)
 -- We want all code blocks to use ``` cpp fences like cpp-code-blocks.lua produces
--- This function recursively processes nested structures (Div, BlockQuote, lists)
+-- Uses walk_blocks from cpp-common for recursive traversal
 local function upgrade_code_blocks(blocks)
-  local result = {}
-
-  for _, block in ipairs(blocks) do
+  return walk_blocks(blocks, function(block)
     if block.t == "CodeBlock" then
       -- Check if this is an indented code block (no classes)
-      -- or already has a language class
       if not block.classes or #block.classes == 0 then
         -- Upgrade to fenced code block with cpp class
         block.classes = {"cpp"}
       end
-      table.insert(result, block)
-    elseif block.t == "Div" and block.content then
-      -- Recursively process content inside Div blocks (notes/examples)
-      block.content = upgrade_code_blocks(block.content)
-      table.insert(result, block)
-    elseif block.t == "BlockQuote" and block.content then
-      -- Recursively process content inside BlockQuote
-      block.content = upgrade_code_blocks(block.content)
-      table.insert(result, block)
-    elseif (block.t == "BulletList" or block.t == "OrderedList") and block.content then
-      -- Recursively process list items
-      for i, item in ipairs(block.content) do
-        block.content[i] = upgrade_code_blocks(item)
-      end
-      table.insert(result, block)
-    else
-      table.insert(result, block)
     end
-  end
-
-  return result
+    return nil  -- Return nil to keep block (possibly modified)
+  end)
 end
 
 -- Helper function to convert @@REF:label@@ placeholders to [[label]] markdown links
@@ -176,57 +156,23 @@ local function convert_ref_placeholders(inlines)
 end
 
 -- Recursive helper to convert @@REF:label@@ placeholders in all block types
--- This handles nested structures like BulletList, OrderedList, etc.
+-- Uses walk_blocks from cpp-common for recursive traversal
 local function convert_ref_placeholders_in_blocks(blocks)
-  local result = {}
-  for _, block in ipairs(blocks) do
+  return walk_blocks(blocks, function(block)
     if block.t == "Para" and block.content then
       -- Convert placeholders in paragraph inline content
       block.content = convert_ref_placeholders(block.content)
-      table.insert(result, block)
     elseif block.t == "Plain" and block.content then
       -- Convert placeholders in plain inline content
       block.content = convert_ref_placeholders(block.content)
-      table.insert(result, block)
-    elseif block.t == "BulletList" and block.content then
-      -- Recursively process each list item
-      for i, item in ipairs(block.content) do
-        block.content[i] = convert_ref_placeholders_in_blocks(item)
-      end
-      table.insert(result, block)
-    elseif block.t == "OrderedList" and block.content then
-      -- Recursively process each list item
-      for i, item in ipairs(block.content) do
-        block.content[i] = convert_ref_placeholders_in_blocks(item)
-      end
-      table.insert(result, block)
     elseif block.t == "DefinitionList" and block.content then
-      -- Recursively process definition list items
-      for i, item in ipairs(block.content) do
-        -- item is a pair: [term, definitions]
-        -- term is a list of inlines
+      -- Process term inlines (walk_blocks handles definition blocks recursion)
+      for _, item in ipairs(block.content) do
         item[1] = convert_ref_placeholders(item[1])
-        -- definitions is a list of block lists
-        for j, def_blocks in ipairs(item[2]) do
-          item[2][j] = convert_ref_placeholders_in_blocks(def_blocks)
-        end
-        block.content[i] = item
       end
-      table.insert(result, block)
-    elseif block.t == "BlockQuote" and block.content then
-      -- Recursively process blockquote content
-      block.content = convert_ref_placeholders_in_blocks(block.content)
-      table.insert(result, block)
-    elseif block.t == "Div" and block.content then
-      -- Recursively process div content
-      block.content = convert_ref_placeholders_in_blocks(block.content)
-      table.insert(result, block)
-    else
-      -- Other block types (CodeBlock, RawBlock, etc.) - keep as-is
-      table.insert(result, block)
     end
-  end
-  return result
+    return nil  -- Keep block (possibly modified)
+  end)
 end
 
 -- Forward declaration (defined later, after all helper functions)
