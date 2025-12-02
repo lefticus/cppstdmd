@@ -53,27 +53,21 @@ local has_complex_blocks = common.has_complex_blocks
 local build_environment_opening = common.build_environment_opening
 local build_environment_closing = common.build_environment_closing
 
--- Track note and example counters
-local note_counter = 0
-local example_counter = 0
+-- Import shared counter module
+local Counter = require("cpp-counters")
+local capitalize = Counter.capitalize
 
--- Helper: Capitalize first letter of string
-local function capitalize(str)
-  return str:sub(1,1):upper() .. str:sub(2)
-end
+-- Create counter instance for note and example tracking
+local env_counters = Counter.new({"note", "example"})
 
 -- Helper: Get counter value for environment type
 local function get_counter_for_env(env_type)
-  return env_type == "note" and note_counter or example_counter
+  return env_counters:get(env_type)
 end
 
 -- Helper: Set counter value for environment type
 local function set_counter_for_env(env_type, value)
-  if env_type == "note" then
-    note_counter = value
-  else
-    example_counter = value
-  end
+  env_counters:set(env_type, value)
 end
 
 -- Helper: Prepare environment by incrementing counter and getting label
@@ -538,8 +532,7 @@ function Blocks(blocks)
   for i, block in ipairs(blocks) do
     -- Reset counters when we encounter a new section (any header level 1-4)
     if block.t == "Header" and block.level <= 4 then
-      note_counter = 0
-      example_counter = 0
+      env_counters:reset_all()
       table.insert(result, block)
       goto continue
     end

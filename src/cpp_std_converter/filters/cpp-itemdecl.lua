@@ -61,15 +61,16 @@ local build_environment_closing = common.build_environment_closing
 local extract_footnotes_from_code = common.extract_footnotes_from_code
 local walk_blocks = common.walk_blocks
 
--- Track note and example counters across itemdescr processing
-local itemdescr_note_counter = 0
-local itemdescr_example_counter = 0
+-- Import shared counter module
+local Counter = require("cpp-counters")
+
+-- Create counter instance for note and example tracking in itemdescr contexts
+local itemdescr_counters = Counter.new({"note", "example"})
 
 -- Reset counters when encountering headers (same logic as cpp-notes-examples.lua)
 function Header(elem)
   if elem.level <= 4 then
-    itemdescr_note_counter = 0
-    itemdescr_example_counter = 0
+    itemdescr_counters:reset_all()
   end
   return elem
 end
@@ -296,12 +297,12 @@ local function process_notes_examples_blocks(blocks)
       -- Check for note environment
       local note_content = text:match("\\begin{note}([%s%S]-)\\end{note}")
       if note_content then
-        local note_counter_ref = {itemdescr_note_counter}
+        local note_counter_ref = {itemdescr_counters:get("note")}
         -- Pass true for already_expanded since content comes from RawBlock
         -- after macro expansion
         local blocks_to_insert = process_itemdescr_environment(
           note_content, "note", note_counter_ref, true)
-        itemdescr_note_counter = note_counter_ref[1]
+        itemdescr_counters:set("note", note_counter_ref[1])
         for _, b in ipairs(blocks_to_insert) do
           table.insert(result, b)
         end
@@ -311,12 +312,12 @@ local function process_notes_examples_blocks(blocks)
       -- Check for example environment
       local example_content = text:match("\\begin{example}([%s%S]-)\\end{example}")
       if example_content then
-        local example_counter_ref = {itemdescr_example_counter}
+        local example_counter_ref = {itemdescr_counters:get("example")}
         -- Pass true for already_expanded since content comes from RawBlock
         -- after macro expansion
         local blocks_to_insert = process_itemdescr_environment(
           example_content, "example", example_counter_ref, true)
-        itemdescr_example_counter = example_counter_ref[1]
+        itemdescr_counters:set("example", example_counter_ref[1])
         for _, b in ipairs(blocks_to_insert) do
           table.insert(result, b)
         end

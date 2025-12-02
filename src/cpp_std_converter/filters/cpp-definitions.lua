@@ -50,9 +50,12 @@ local build_defnote = common.build_defnote
 local extract_braced_content = common.extract_braced_content
 local build_anchor_inline = common.build_anchor_inline
 
--- Track definition and note counters
-local definition_counter = 0
-local note_counter = 0
+-- Import shared counter module
+local Counter = require("cpp-counters")
+
+-- Create counter instance for definition and note tracking
+-- Note: note_counter resets when a new definition starts (local scope)
+local def_counters = Counter.new({"definition", "note"})
 
 -- Extract \defncontext{} content with balanced braces
 local function extract_defncontext(text)
@@ -136,8 +139,8 @@ function Blocks(blocks)
       -- Check for defnote
       local note_content = text:match("\\begin{defnote}([%s%S]-)\\end{defnote}")
       if note_content then
-        note_counter = note_counter + 1
-        table.insert(result, build_defnote(note_content, note_counter, true))
+        local note_num = def_counters:increment("note")
+        table.insert(result, build_defnote(note_content, note_num, true))
         goto continue
       end
     end
@@ -211,9 +214,8 @@ function Blocks(blocks)
 
       -- If we found a definition, create header and modified para
       if has_definition and def_term and def_label then
-        definition_counter = definition_counter + 1
-        note_counter = 0  -- Reset note counter for new definition
-        local def_num = tostring(definition_counter)
+        local def_num = tostring(def_counters:increment("definition"))
+        def_counters:reset("note")  -- Reset note counter for new definition
 
         -- Create header
         local heading_text = def_num .. " " .. def_term
@@ -255,8 +257,8 @@ function Blocks(blocks)
       -- Use [%s%S] to match any character including newlines
       local note_content = text:match("\\begin{defnote}([%s%S]-)\\end{defnote}")
       if note_content then
-        note_counter = note_counter + 1
-        table.insert(result, build_defnote(note_content, note_counter, false))
+        local note_num = def_counters:increment("note")
+        table.insert(result, build_defnote(note_content, note_num, false))
       else
         table.insert(result, block)
       end
@@ -267,8 +269,8 @@ function Blocks(blocks)
       -- Use [%s%S] to match any character including newlines
       local note_content = text:match("\\begin{defnote}([%s%S]-)\\end{defnote}")
       if note_content then
-        note_counter = note_counter + 1
-        table.insert(result, build_defnote(note_content, note_counter, false))
+        local note_num = def_counters:increment("note")
+        table.insert(result, build_defnote(note_content, note_num, false))
       else
         table.insert(result, block)
       end
