@@ -99,6 +99,55 @@ local PATTERN = {
   braced_macro = "\\([^{]*)%{([^}]*)%}",
 }
 
+-- ============================================================================
+-- Simple Inline Macro Configurations (Table-Driven)
+-- ============================================================================
+-- Handler types:
+--   "code"        → pandoc.Code(match)
+--   "code_angle"  → pandoc.Code("<" .. match .. ">")
+--   "code_prefix" → pandoc.Code(prefix .. match)
+--   "code_wrap"   → pandoc.Code(prefix .. match .. suffix)
+--   "emph"        → pandoc.Emph({pandoc.Str(match)})
+--   "emph_code"   → pandoc.Emph({pandoc.Code(match)})
+--   "emph_prefix" → pandoc.Emph({pandoc.Str(prefix .. match)})
+--   "str_suffix"  → pandoc.Str(match .. suffix)
+--   "refs"        → split_refs_inline(match)  -- defined later, uses forward reference
+--
+-- Format: {pattern, handler_type, prefix, suffix}
+local SIMPLE_INLINE_MACROS = {
+  -- Code macros (render as inline code)
+  {"\\ctype{([^}]*)}", "code", nil, nil},
+  {"\\libheader{([^}]*)}", "code_angle", nil, nil},
+  {"\\libheaderdef{([^}]*)}", "code_angle", nil, nil},
+  {"\\libheaderref{([^}]*)}", "code_angle", nil, nil},
+  {"\\libheaderrefx{([^}]*)}{[^}]*}", "code_angle", nil, nil},  -- Extract first arg only
+  {"\\libconcept{([^}]*)}", "code", nil, nil},
+  {"\\libglobal{([^}]*)}", "code", nil, nil},
+  {"\\exposconcept{([^}]*)}", "code", nil, nil},
+  {"\\ucode{([^}]*)}", "code_prefix", "U+", nil},
+  {"\\xname{([^}]*)}", "code_prefix", "__", nil},
+  {"\\mname{([^}]*)}", "code_wrap", "__", "__"},
+
+  -- Emph with Code macros (italic code for exposition-only identifiers)
+  {"\\exposid{([^}]*)}", "emph_code", nil, nil},
+  {"\\exposidnc{([^}]*)}", "emph_code", nil, nil},
+  {"\\exposconceptnc{([^}]*)}", "emph_code", nil, nil},
+
+  -- Emph with Str macros (italic text)
+  {"\\placeholder{([^}]*)}", "emph", nil, nil},
+  {"\\placeholdernc{([^}]*)}", "emph", nil, nil},
+  {"\\defnxname{([^}]*)}", "emph_prefix", "__", nil},
+  {"\\defnlibxname{([^}]*)}", "emph_prefix", "__", nil},
+
+  -- Simple Str macros
+  {"\\opt{([^}]*)}", "str_suffix", nil, "ₒₚₜ "},
+
+  -- Reference macros (all use same handler)
+  {"\\ref{([^}]*)}", "refs", nil, nil},
+  {"\\iref{([^}]*)}", "refs", nil, nil},
+  {"\\tref{([^}]*)}", "refs", nil, nil},
+}
+
 -- WHY: Delegates to try_unicode_conversion for consistent math conversion across filters
 local function convert_math_in_code(text)
   text = text:gsub(PATTERN.inline_math, function(math_content)
@@ -174,6 +223,63 @@ local function expand_macros(text, skip_special_chars)
     ref_format = split_refs,
   })
 end
+
+-- ============================================================================
+-- Simple Inline Macro Dispatcher
+-- ============================================================================
+
+-- Helper function to split comma-separated refs and build inline elements
+-- E.g., "a,b,c" -> Space, "[a], [b], [c]"
+-- Moved to module level for use by dispatcher
+local function split_refs_inline(refs_str)
+  local parts = {}
+  for ref in refs_str:gmatch("([^,]+)") do
+    ref = trim(ref)  -- trim whitespace
+    -- Expand macros in reference (e.g., \firstlibchapter -> support)
+    ref = expand_macros(ref)
+    references[ref] = true
+    if #parts > 0 then
+      table.insert(parts, pandoc.Str(", "))
+    end
+    table.insert(parts, pandoc.RawInline('markdown', '[[' .. ref .. ']]'))
+  end
+  -- Add leading space before the first reference
+  table.insert(parts, 1, pandoc.Space())
+  return parts
+end
+
+-- Dispatch simple inline macros using table-driven configuration
+-- Returns nil if no match, allowing fallthrough to complex handlers
+local function dispatch_simple_inline(text)
+  for _, config in ipairs(SIMPLE_INLINE_MACROS) do
+    local pattern, handler_type, prefix, suffix = config[1], config[2], config[3], config[4]
+
+    local match = text:match(pattern)
+    if match then
+      if handler_type == "code" then
+        return pandoc.Code(match)
+      elseif handler_type == "code_angle" then
+        return pandoc.Code("<" .. match .. ">")
+      elseif handler_type == "code_prefix" then
+        return pandoc.Code(prefix .. match)
+      elseif handler_type == "code_wrap" then
+        return pandoc.Code(prefix .. match .. suffix)
+      elseif handler_type == "emph" then
+        return pandoc.Emph({pandoc.Str(match)})
+      elseif handler_type == "emph_code" then
+        return pandoc.Emph({pandoc.Code(match)})
+      elseif handler_type == "emph_prefix" then
+        return pandoc.Emph({pandoc.Str(prefix .. match)})
+      elseif handler_type == "str_suffix" then
+        return pandoc.Str(match .. suffix)
+      elseif handler_type == "refs" then
+        return split_refs_inline(match)
+      end
+    end
+  end
+  return nil
+end
+
 function Str(elem)
   elem.text = expand_macros(elem.text)
 
@@ -456,38 +562,12 @@ function RawInline(elem)
 
   -- NOTE: \keyword{} now handled in simplified_macros.tex
 
-  code = text:match("\\ctype{([^}]*)}")
-  if code then return pandoc.Code(code) end
-
-  -- Library header macros - return Code with angle brackets
-  code = text:match("\\libheader{([^}]*)}")
-  if code then return pandoc.Code("<" .. code .. ">") end
-
-  code = text:match("\\libheaderdef{([^}]*)}")
-  if code then return pandoc.Code("<" .. code .. ">") end
-
-  code = text:match("\\libheaderref{([^}]*)}")
-  if code then return pandoc.Code("<" .. code .. ">") end
-
-  -- \libheaderrefx{header}{section} - extract just the header name
-  code = text:match("\\libheaderrefx{([^}]*)}{[^}]*}")
-  if code then return pandoc.Code("<" .. code .. ">") end
-
-  -- Library concept - return Code element
-  code = text:match("\\libconcept{([^}]*)}")
-  if code then return pandoc.Code(code) end
-
-  -- \libglobal{x} - library global function/type - return Code element
-  code = text:match("\\libglobal{([^}]*)}")
-  if code then return pandoc.Code(code) end
-
-  -- Exposition-only concept - return Code element
-  code = text:match("\\exposconcept{([^}]*)}")
-  if code then return pandoc.Code(code) end
-
-  -- \ucode{XXXX} - Unicode code point - return Code element
-  code = text:match("\\ucode{([^}]*)}")
-  if code then return pandoc.Code("U+" .. code) end
+  -- Dispatch simple inline macros via table-driven configuration
+  -- Handles: \ctype, \libheader*, \libconcept, \libglobal, \exposconcept,
+  --          \ucode, \xname, \mname, \exposid*, \placeholder*, \defnxname,
+  --          \defnlibxname, \opt, \ref, \iref, \tref
+  local simple_result = dispatch_simple_inline(text)
+  if simple_result then return simple_result end
 
   -- Document citations - use brace-balanced parsing to handle nested macros like \Cpp{}
   local doccite_start = text:find("\\doccite{", 1, true)
@@ -571,28 +651,8 @@ function RawInline(elem)
     end
   end
 
-  -- Exposition-only identifiers and concepts - render as italic code (*`text`*)
-  -- These need code formatting (not just italic) since they represent identifiers
-  emph = text:match("\\exposid{([^}]*)}")
-  if emph then return pandoc.Emph({pandoc.Code(emph)}) end
-
-  emph = text:match("\\exposidnc{([^}]*)}")
-  if emph then return pandoc.Emph({pandoc.Code(emph)}) end
-
-  -- Exposition-only concept names (like tuple-like, decrementable)
-  emph = text:match("\\exposconceptnc{([^}]*)}")
-  if emph then return pandoc.Emph({pandoc.Code(emph)}) end
-
-  emph = text:match("\\placeholder{([^}]*)}")
-  if emph then return pandoc.Emph({pandoc.Str(emph)}) end
-
-  emph = text:match("\\placeholdernc{([^}]*)}")
-  if emph then return pandoc.Emph({pandoc.Str(emph)}) end
-
-  -- \opt{arg} - optional element marker (n4950 style)
-  -- Renders as argₒₚₜ (subscript "opt")
-  local opt_arg = text:match("\\opt{([^}]*)}")
-  if opt_arg then return pandoc.Str(opt_arg .. "ₒₚₜ ") end
+  -- NOTE: \exposid*, \exposidnc*, \exposconceptnc*, \placeholder*, \placeholdernc*,
+  -- and \opt{} are now handled by dispatch_simple_inline above
 
   -- \defn{x} - use brace-balanced parsing to handle nested macros like \Cpp{}
   local defn_start = text:find("\\defn{", 1, true)
@@ -646,79 +706,12 @@ function RawInline(elem)
     end
   end
 
-  -- \defnxname{x} - define identifier with __ prefix (italic)
-  local defnxname = text:match("\\defnxname{([^}]*)}")
-  if defnxname then
-    return pandoc.Emph({pandoc.Str("__" .. defnxname)})
-  end
-
-  -- \defnlibxname{x} - define library identifier with __ prefix (italic)
-  local defnlibxname = text:match("\\defnlibxname{([^}]*)}")
-  if defnlibxname then
-    return pandoc.Emph({pandoc.Str("__" .. defnlibxname)})
-  end
-
-  -- Helper function to split comma-separated refs and build inline elements
-  -- E.g., "a,b,c" -> Space, "[a], [b], [c]"
-  local function split_refs_inline(refs_str)
-    local parts = {}
-    for ref in refs_str:gmatch("([^,]+)") do
-      ref = trim(ref)  -- trim whitespace
-      -- Expand macros in reference (e.g., \firstlibchapter -> support)
-      ref = expand_macros(ref)
-      references[ref] = true
-      if #parts > 0 then
-        table.insert(parts, pandoc.Str(", "))
-      end
-      table.insert(parts, pandoc.RawInline('markdown', '[[' .. ref .. ']]'))
-    end
-    -- Add leading space before the first reference
-    table.insert(parts, 1, pandoc.Space())
-    return parts
-  end
-
-  -- Cross-reference macros - return as reference-style link [ref]
-  -- These will need link definitions added at end of document
-  -- Return with leading space for readability
-  -- Handles comma-separated refs: \ref{a,b,c} -> [a], [b], [c]
-  local refs = text:match("\\ref{([^}]*)}")
-  if refs then
-    return split_refs_inline(refs)
-  end
-
-  -- \iref is "inline ref" - also use [ref] format
-  -- Track this reference for link definitions
-  -- Return with leading space for readability
-  -- Handles comma-separated refs: \iref{a,b,c} -> [a], [b], [c]
-  refs = text:match("\\iref{([^}]*)}")
-  if refs then
-    return split_refs_inline(refs)
-  end
-
-  -- \tref is "table ref" - also use [ref] format
-  -- Track this reference for link definitions
-  -- Return with leading space for readability
-  -- Handles comma-separated refs: \tref{a,b,c} -> [a], [b], [c]
-  refs = text:match("\\tref{([^}]*)}")
-  if refs then
-    return split_refs_inline(refs)
-  end
+  -- NOTE: \defnxname, \defnlibxname, \ref, \iref, \tref, \xname, \mname
+  -- are now handled by dispatch_simple_inline above
 
   -- Strip \brk{} line break hints - not needed in markdown
   if text:match("^\\brk{}$") then
     return {}  -- Return empty list to remove element
-  end
-
-  -- \xname{X} - special identifier with underscore prefix
-  local xname = text:match("\\xname{([^}]*)}")
-  if xname then
-    return pandoc.Code("__" .. xname)
-  end
-
-  -- \mname{X} - preprocessor macro name with underscore wrapper
-  local mname = text:match("\\mname{([^}]*)}")
-  if mname then
-    return pandoc.Code("__" .. mname .. "__")
   end
 
   -- \range{first}{last} - half-open range [first, last)
