@@ -165,20 +165,20 @@ preprocessing-op-or-punc:
 %% Ed. note: character protrusion would misalign various operators.
 
 preprocessing-operator: one of
-    '# \ \ \ \ \ \ \ ## \ \ \ \ \ \ %: \ \ \ \ \ \ %:%:'
+    '# ## %: %:%:'
 ```
 
 ``` bnf
 operator-or-punctuator: one of
-    '{ \ \ \ \ \ \ \ } \ \ \ \ \ \ \ [ \ \ \ \ \ \ \ ] \ \ \ \ \ \ \ ( \ \ \ \ \ \ \ ) \ \ \ \ \ \ \ [: \ \ \ \ \ \ :]'
-    '<% \ \ \ \ \ \ %> \ \ \ \ \ \ <: \ \ \ \ \ \ :> \ \ \ \ \ \ ; \ \ \ \ \ \ \ : \ \ \ \ \ \ \ ...'
-    '? \ \ \ \ \ \ \ :: \ \ \ \ \ \ . \ \ \ \ \ \ \ .* \ \ \ \ \ \ -> \ \ \ \ \ \ ->* \ \ \ \ \ ^^ \ \ \ \ \ \ ~'
-    '! \ \ \ \ \ \ \ + \ \ \ \ \ \ \ - \ \ \ \ \ \ \ * \ \ \ \ \ \ \ / \ \ \ \ \ \ \ % \ \ \ \ \ \ \ ^ \ \ \ \ \ \ \ & \ \ \ \ \ \ \ |'
-    '= \ \ \ \ \ \ \ += \ \ \ \ \ \ -= \ \ \ \ \ \ *= \ \ \ \ \ \ /= \ \ \ \ \ \ %= \ \ \ \ \ \ ^= \ \ \ \ \ \ &= \ \ \ \ \ \ |='
-    '== \ \ \ \ \ \ != \ \ \ \ \ \ < \ \ \ \ \ \ \ > \ \ \ \ \ \ \ <= \ \ \ \ \ \ >= \ \ \ \ \ \ <=> \ \ \ \ \ && \ \ \ \ \ \ ||'
-    '<< \ \ \ \ \ \ >> \ \ \ \ \ \ <<= \ \ \ \ \ >>= \ \ \ \ \ ++ \ \ \ \ \ \ -- \ \ \ \ \ \ ,'
-    'and \ \ \ \ \ or \ \ \ \ \ \ xor \ \ \ \ \ not \ \ \ \ \ bitand \ \ bitor \ \ \ compl'
-    'and_eq \ \ or_eq \ \ \ xor_eq \ \ not_eq'
+    '{ } [ ] ( ) [: :]'
+    '<% %> <: :> ; : ...'
+    '? :: . .* -> ->* ^^ ~'
+    '! + - * / % ^ & |'
+    '= += -= *= /= %= ^= &= |='
+    '== != < > <= >= <=> && ||'
+    '<< >> <<= >>= ++ -- ,'
+    'and or xor not bitand bitor compl'
+    'and_eq or_eq xor_eq not_eq'
 ```
 
 ``` bnf
@@ -2114,11 +2114,11 @@ operator-function-id:
 %% Ed. note: character protrusion would misalign various operators.
 
 operator: one of
-    'new \ \ \ \ \ delete \ \ new[] \ \ \ delete[] co_await (\rlap{ )} \ \ \ \ \ \ \ [\rlap{ ]} \ \ \ \ \ \ \ -> \ \ \ \ \ \ ->*'
-    '~\ \ \ \ \ \ \ ! \ \ \ \ \ \ \ + \ \ \ \ \ \ \ - \ \ \ \ \ \ \ * \ \ \ \ \ \ \ / \ \ \ \ \ \ \ % \ \ \ \ \ \ \ ^ \ \ \ \ \ \ \ &'
-    '| \ \ \ \ \ \ \ = \ \ \ \ \ \ \ += \ \ \ \ \ \ -= \ \ \ \ \ \ *= \ \ \ \ \ \ /= \ \ \ \ \ \ %= \ \ \ \ \ \ ^= \ \ \ \ \ \ &='
-    '|= \ \ \ \ \ \ == \ \ \ \ \ \ != \ \ \ \ \ \ < \ \ \ \ \ \ \ > \ \ \ \ \ \ \ <= \ \ \ \ \ \ >= \ \ \ \ \ \ <=> \ \ \ \ \ &&'
-    '|| \ \ \ \ \ \ << \ \ \ \ \ \ >> \ \ \ \ \ \ <<= \ \ \ \ \ >>= \ \ \ \ \ ++ \ \ \ \ \ \ -- \ \ \ \ \ \ ,'
+    'new delete new[] delete[] co_await (\rlap{ )} [\rlap{ ]} -> ->*'
+    '~ ! + - * / % ^ &'
+    '| = += -= *= /= %= ^= &='
+    '|= == != < > <= >= <=> &&'
+    '|| << >> <<= >>= ++ -- ,'
 ```
 
 ``` bnf
@@ -2327,14 +2327,14 @@ group-part:
 control-line:
     '# include' pp-tokens new-line
     pp-import
-    '# embed \ ' pp-tokens new-line
+    '# embed ' pp-tokens new-line
     '# define ' identifier replacement-list new-line
     '# define ' identifier lparen identifier-listₒₚₜ ')' replacement-list new-line
     '# define ' identifier lparen '... )' replacement-list new-line
     '# define ' identifier lparen identifier-list ', ... )' replacement-list new-line
-    '# undef \ ' identifier new-line
-    '# line \ \ ' pp-tokens new-line
-    '# error \ ' pp-tokensₒₚₜ new-line
+    '# undef ' identifier new-line
+    '# line ' pp-tokens new-line
+    '# error ' pp-tokensₒₚₜ new-line
     '# warning' pp-tokensₒₚₜ new-line
     '# pragma ' pp-tokensₒₚₜ new-line
     '# 'new-line
@@ -2347,8 +2347,8 @@ if-section:
 
 ``` bnf
 if-group:
-    '# if \ \ \ \ ' constant-expression new-line groupₒₚₜ 
-    '# ifdef \ ' identifier new-line groupₒₚₜ 
+    '# if ' constant-expression new-line groupₒₚₜ 
+    '# ifdef ' identifier new-line groupₒₚₜ 
     '# ifndef ' identifier new-line groupₒₚₜ
 ```
 
@@ -2359,19 +2359,19 @@ elif-groups:
 
 ``` bnf
 elif-group:
-    '# elif \ \ \ ' constant-expression new-line groupₒₚₜ 
+    '# elif ' constant-expression new-line groupₒₚₜ 
     '# elifdef ' identifier new-line groupₒₚₜ 
     '# elifndef' identifier new-line groupₒₚₜ
 ```
 
 ``` bnf
 else-group:
-    '# else \ \ ' new-line groupₒₚₜ
+    '# else ' new-line groupₒₚₜ
 ```
 
 ``` bnf
 endif-line:
-    '# endif \ ' new-line
+    '# endif ' new-line
 ```
 
 ``` bnf

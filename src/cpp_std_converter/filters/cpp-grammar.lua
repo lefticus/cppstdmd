@@ -47,6 +47,7 @@ package.path = package.path .. ";" .. script_dir .. "?.lua"
 -- Import shared utilities
 local common = require("cpp-common")
 local convert_special_chars = common.convert_special_chars
+local unescape_latex_chars = common.unescape_latex_chars
 local trim = common.trim
 local process_macro_with_replacement = common.process_macro_with_replacement
 local subscripts = common.subscripts
@@ -131,18 +132,9 @@ local function clean_grammar(grammar)
       content = content:gsub("\\opt$", "")
     end
 
-    -- Unescape common LaTeX special characters
-    content = content:gsub("\\#", "#")
-    content = content:gsub("\\%$", "$")
-    content = content:gsub("\\%%", "%%")
-    content = content:gsub("\\&", "&")
-    content = content:gsub("\\_", "_")
-    content = content:gsub("\\{", "{")
-    content = content:gsub("\\}", "}")
-    -- Handle \textbackslash macro (may appear in terminal symbols)
-    -- Note: Pandoc adds a space after macro names, so handle both variants
-    content = content:gsub("\\textbackslash%s", "\\")  -- with trailing space
-    content = content:gsub("\\textbackslash", "\\")
+    -- Unescape LaTeX special characters and convert \textbackslash
+    content = unescape_latex_chars(content)
+    content = convert_special_chars(content)
 
     if has_opt_suffix then
       return "'" .. content .. "'ₒₚₜ "

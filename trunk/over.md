@@ -2494,11 +2494,11 @@ operator-function-id:
 %% Ed. note: character protrusion would misalign various operators.
 
 operator: one of
-    'new \ \ \ \ \ delete \ \ new[] \ \ \ delete[] co_await (\rlap{ )} \ \ \ \ \ \ \ [\rlap{ ]} \ \ \ \ \ \ \ -> \ \ \ \ \ \ ->*'
-    '~\ \ \ \ \ \ \ ! \ \ \ \ \ \ \ + \ \ \ \ \ \ \ - \ \ \ \ \ \ \ * \ \ \ \ \ \ \ / \ \ \ \ \ \ \ % \ \ \ \ \ \ \ ^ \ \ \ \ \ \ \ &'
-    '| \ \ \ \ \ \ \ = \ \ \ \ \ \ \ += \ \ \ \ \ \ -= \ \ \ \ \ \ *= \ \ \ \ \ \ /= \ \ \ \ \ \ %= \ \ \ \ \ \ ^= \ \ \ \ \ \ &='
-    '|= \ \ \ \ \ \ == \ \ \ \ \ \ != \ \ \ \ \ \ < \ \ \ \ \ \ \ > \ \ \ \ \ \ \ <= \ \ \ \ \ \ >= \ \ \ \ \ \ <=> \ \ \ \ \ &&'
-    '|| \ \ \ \ \ \ << \ \ \ \ \ \ >> \ \ \ \ \ \ <<= \ \ \ \ \ >>= \ \ \ \ \ ++ \ \ \ \ \ \ -- \ \ \ \ \ \ ,'
+    'new delete new[] delete[] co_await (\rlap{ )} [\rlap{ ]} -> ->*'
+    '~ ! + - * / % ^ &'
+    '| = += -= *= /= %= ^= &='
+    '|= == != < > <= >= <=> &&'
+    '|| << >> <<= >>= ++ -- ,'
 ```
 
 [*Note 1*: The operators `new[]`, `delete[]`, `()`, and `[]` are formed
@@ -2508,7 +2508,7 @@ from more than one token. The latter two operators are function call
 Both the unary and binary forms of
 
 ``` bnf
-'+ \ \ \ \ \ - \ \ \ \ \ * \ \ \ \ \ &'
+'+ - * &'
 ```
 
 can be overloaded.
@@ -2518,7 +2518,7 @@ can be overloaded.
 The following operators cannot be overloaded:
 
 ``` bnf
-'. \ \ \ \ \ .* \ \ \ \ :: \ \ \ \ ?:'
+'. .* :: ?:'
 ```
 
 nor can the preprocessing symbols `#` [[cpp.stringize]] and `##`
