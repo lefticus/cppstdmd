@@ -47,14 +47,12 @@ package.path = package.path .. ";" .. script_dir .. "?.lua"
 
 -- Import shared utilities
 local common = require("cpp-common")
-local convert_special_chars = common.convert_special_chars
 local trim = common.trim
 local extract_braced = common.extract_braced
 local expand_balanced_command = common.expand_balanced_command
-local replace_code_macro_special_chars = common.replace_code_macro_special_chars
-local process_code_macro = common.process_code_macro
 local extract_multi_arg_macro = common.extract_multi_arg_macro
 local split_refs_text = common.split_refs_text
+local expand_text_macros = common.expand_text_macros
 
 -- Initialize references table if not already created by cpp-macros.lua
 -- This allows cpp-tables.lua to work standalone or as part of filter chain
@@ -78,86 +76,17 @@ local ENV_BEGIN_LEN = {
 }
 
 -- Helper function to expand common macros in table cells
+-- Uses shared expand_text_macros() for common macros, then handles table-specific ones
 local function expand_table_macros(text)
   if not text then return text end
 
-  -- \keyword{X} → X (strip keyword markup, keep content)
-  -- Process this first and repeatedly until all nested keywords are removed
-  text = expand_balanced_command(text, "keyword", function(content) return content end)
+  -- Use shared function for common macros (keyword, textbf, tcode, xname, etc.)
+  text = expand_text_macros(text, {references_table = references})
 
-  -- \hdstyle{X} → X (strip header style markup, keep content)
-  -- Used in table headers to make text bold
-  text = expand_balanced_command(text, "hdstyle", function(content) return content end)
-
-  -- \uname{X} → X (Unicode character names - strip small caps formatting)
-  text = expand_balanced_command(text, "uname", function(content) return content end)
-
-  -- \textbf{X} → **X** (bold text in markdown)
-  text = expand_balanced_command(text, "textbf",
-                                  function(content) return "**" .. content .. "**" end)
-
-  -- \textit{X} → X (strip italic wrapper - tailnotes are already italicized)
-  text = expand_balanced_command(text, "textit",
-                                  function(content) return content end)
-
-  -- \libglobal{X} → `X` (library global identifiers)
-  text = expand_balanced_command(text, "libglobal",
-                                  function(content) return "`" .. content .. "`" end)
-
-  -- \notdef → *not defined* (exposition-only marker)
-  text = text:gsub("\\notdef{}", "*not defined*")
-  text = text:gsub("\\notdef%s", "*not defined* ")
-  text = text:gsub("\\notdef", "*not defined*")
-
-  -- NOTE: \itcorr (italic correction) is now handled by simplified_macros.tex
-
-  -- Handle bare \texttt{} and \tcode{} with escaped special chars FIRST
-  -- (before process_code_macro which uses extract_braced that doesn't handle escaped braces)
-  text = replace_code_macro_special_chars(text, "tcode")
-  text = replace_code_macro_special_chars(text, "texttt")
-
-  -- \tcode{X} → `X` and \texttt{X} → `X`
-  -- Use balanced brace extraction to handle nested braces like \tcode{T u\{\};}
-  text = process_code_macro(text, "tcode")
-  text = process_code_macro(text, "texttt")
-
-  -- Special characters (MUST be after \tcode{}/\texttt{} processing to avoid
-  -- converting \textbackslash inside code macros before they're handled)
-  text = convert_special_chars(text)
-
-  -- \xname{X} → __X
-  text = text:gsub("\\xname{([^}]*)}", "__%1")
-
-  -- \defnxname{X} → `__X` (for feature-test macros, uses \xname which only adds prefix)
-  -- Wrapped in backticks to render as code, not markdown bold
-  text = text:gsub("\\defnxname{([^}]*)}", "`__%1`")
-
-  -- \defnlibxname{X} → `__X` (for library feature-test macros, uses \xname which only adds prefix)
-  -- Wrapped in backticks to render as code, not markdown bold
-  text = text:gsub("\\defnlibxname{([^}]*)}", "`__%1`")
-
-  -- \mname{X} → __X__
-  text = text:gsub("\\mname{([^}]*)}", "__%1__")
-
-
-  -- \unicode{XXXX}{description} → U+XXXX (description)
-  -- This macro takes two brace-balanced arguments
-  while true do
-    local start_pos = text:find("\\unicode{", 1, true)
-    if not start_pos then break end
-
-    -- \unicode is 8 chars, 2 args
-    local args, end_pos = extract_multi_arg_macro(text, start_pos, 8, 2)
-    if not args then break end
-
-    -- Replace \unicode{XXXX}{desc} with U+XXXX (desc)
-    text = text:sub(1, start_pos - 1) .. "U+" .. args[1] .. " (" .. args[2] ..
-           ")" .. text:sub(end_pos)
-  end
+  -- === TABLE-SPECIFIC HANDLING BELOW ===
 
   -- \multicolumn{N}{alignment}{content} → content
   -- Markdown doesn't support column spans, so just extract the content
-  -- This macro takes three brace-balanced arguments
   while true do
     local start_pos = text:find("\\multicolumn{", 1, true)
     if not start_pos then break end
@@ -166,7 +95,6 @@ local function expand_table_macros(text)
     -- "\\multicolumn{" is 12 chars total, so first { after it is at start_pos + 12
     local num_cols, pos1 = extract_braced(text, start_pos + 12)
     if not num_cols then
-      -- Debug: extraction failed, add marker and break
       text = text:gsub("\\multicolumn{", "[MULTICOLUMN-EXTRACT-FAILED]{", 1)
       break
     end
@@ -183,13 +111,11 @@ local function expand_table_macros(text)
     content = expand_table_macros(content)
 
     -- Replace \multicolumn{...}{...}{content} with just content
-    -- Prefix with note about column span for clarity
     local replacement = "*[spans " .. num_cols .. " columns]* " .. content
     text = text:sub(1, start_pos - 1) .. replacement .. text:sub(pos3)
   end
 
   -- \begin{itemize} ... \end{itemize} → semicolon-separated list
-  -- Convert itemized lists to readable inline format
   while true do
     local itemize_start = text:find("\\begin{itemize}", 1, true)
     if not itemize_start then break end
@@ -197,28 +123,23 @@ local function expand_table_macros(text)
     local itemize_end = text:find("\\end{itemize}", itemize_start, true)
     if not itemize_end then break end
 
-    local list_content = text:sub(itemize_start + 15, itemize_end - 1)  -- +15 for "\begin{itemize}"
+    local list_content = text:sub(itemize_start + 15, itemize_end - 1)
 
     -- Split on \item and collect items
     local items = {}
     for item in list_content:gmatch("\\item%s*([^\\]*)") do
-      item = trim(item)  -- trim whitespace
+      item = trim(item)
       if item ~= "" then
-        -- Recursively expand any macros in the item
         item = expand_table_macros(item)
         table.insert(items, item)
       end
     end
 
-    -- Join with semicolons for readability
     local replacement = table.concat(items, "; ")
-    -- +14 for "\end{itemize}"
-    text = text:sub(1, itemize_start - 1) .. replacement ..
-           text:sub(itemize_end + 14)
+    text = text:sub(1, itemize_start - 1) .. replacement .. text:sub(itemize_end + 14)
   end
 
   -- \begin{tailnote} ... \end{tailnote} → italic text
-  -- Tailnotes are footnotes/clarifications, render as emphasized text
   while true do
     local note_start = text:find("\\begin{tailnote}", 1, true)
     if not note_start then break end
@@ -226,45 +147,19 @@ local function expand_table_macros(text)
     local note_end = text:find("\\end{tailnote}", note_start, true)
     if not note_end then break end
 
-    -- +16 for "\begin{tailnote}"
     local note_content = text:sub(note_start + 16, note_end - 1)
-
-    -- Recursively expand any macros in the note
     note_content = expand_table_macros(note_content)
-    note_content = trim(note_content)  -- trim whitespace
+    note_content = trim(note_content)
 
-    -- Wrap in italic markers
     local replacement = "*" .. note_content .. "*"
-    -- +15 for "\end{tailnote}"
     text = text:sub(1, note_start - 1) .. replacement .. text:sub(note_end + 15)
   end
 
-  -- \br → <br> (line break within table cell)
-  text = text:gsub("\\br{}", "<br>")
-  text = text:gsub("\\br%s", "<br> ")
-  text = text:gsub("\\br", "<br>")
-
-  -- \oldconcept{X} → Cpp17X
-  text = expand_balanced_command(text, "oldconcept", function(content)
-    return "Cpp17" .. content
-  end)
-
   -- Strip LaTeX table formatting commands that may leak into cells
-  -- These can appear after \\ at end of rows: \\ \hline, \\ \cline{...}
-  text = text:gsub("\\\\%s*\\hline[^a-zA-Z]*", "")  -- Remove \\ \hline
-  text = text:gsub("\\\\%s*\\cline{[^}]*}", "")  -- Remove \\ \cline{...}
-  text = text:gsub("\\\\%s*\\rowsep[^a-zA-Z]*", "")  -- Remove \\ \rowsep
-  text = text:gsub("\\\\%s*", "")  -- Remove remaining bare \\
-
-  -- Cross-reference macros - use shared function from cpp-common
-  -- Track references and handle comma-separated refs: {a,b,c} → [[a]], [[b]], [[c]]
-  local function process_refs(refs)
-    return split_refs_text(refs, references)
-  end
-
-  text = text:gsub("\\ref{([^}]*)}", process_refs)
-  text = text:gsub("\\iref{([^}]*)}", process_refs)
-  text = text:gsub("\\tref{([^}]*)}", process_refs)
+  text = text:gsub("\\\\%s*\\hline[^a-zA-Z]*", "")
+  text = text:gsub("\\\\%s*\\cline{[^}]*}", "")
+  text = text:gsub("\\\\%s*\\rowsep[^a-zA-Z]*", "")
+  text = text:gsub("\\\\%s*", "")
 
   return text
 end

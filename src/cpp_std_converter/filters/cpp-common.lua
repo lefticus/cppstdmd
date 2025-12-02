@@ -2719,6 +2719,77 @@ local function walk_blocks(blocks, processor)
   return result
 end
 
+-- Expand common macros in raw text (for tables, grammar, etc.)
+-- Consolidates duplicate macro expansion from cpp-tables.lua and other filters
+-- @param text: Raw LaTeX text string
+-- @param options: optional table with:
+--   references_table: table to track cross-references (ref -> true)
+--   context: "table" | "grammar" | "general" (for future context-specific handling)
+-- @return: Expanded text string
+local function expand_text_macros(text, options)
+  if not text then return text end
+  options = options or {}
+
+  -- Strip markup macros (keep content only)
+  text = expand_balanced_command(text, "keyword", function(c) return c end)
+  text = expand_balanced_command(text, "hdstyle", function(c) return c end)
+  text = expand_balanced_command(text, "uname", function(c) return c end)
+
+  -- Formatting macros
+  text = expand_balanced_command(text, "textbf", function(c) return "**" .. c .. "**" end)
+  text = expand_balanced_command(text, "textit", function(c) return c end)
+  text = expand_balanced_command(text, "libglobal", function(c) return "`" .. c .. "`" end)
+
+  -- \notdef variants → *not defined*
+  text = text:gsub("\\notdef{}", "*not defined*")
+  text = text:gsub("\\notdef%s", "*not defined* ")
+  text = text:gsub("\\notdef", "*not defined*")
+
+  -- Code macros: handle escaped special chars FIRST (before process_code_macro)
+  text = replace_code_macro_special_chars(text, "tcode")
+  text = replace_code_macro_special_chars(text, "texttt")
+  text = process_code_macro(text, "tcode")
+  text = process_code_macro(text, "texttt")
+
+  -- Special characters (MUST be after code macros to avoid converting inside them)
+  text = convert_special_chars(text)
+
+  -- Identifier macros
+  text = text:gsub("\\xname{([^}]*)}", "__%1")
+  text = text:gsub("\\defnxname{([^}]*)}", "`__%1`")
+  text = text:gsub("\\defnlibxname{([^}]*)}", "`__%1`")
+  text = convert_mname(text)
+
+  -- \unicode{XXXX}{description} → U+XXXX (description)
+  while true do
+    local start_pos = text:find("\\unicode{", 1, true)
+    if not start_pos then break end
+    local args, end_pos = extract_multi_arg_macro(text, start_pos, 8, 2)
+    if not args then break end
+    text = text:sub(1, start_pos - 1) .. "U+" .. args[1] .. " (" .. args[2] .. ")" .. text:sub(end_pos)
+  end
+
+  -- Line breaks: \br → <br>
+  text = text:gsub("\\br{}", "<br>")
+  text = text:gsub("\\br%s", "<br> ")
+  text = text:gsub("\\br", "<br>")
+
+  -- Concepts: \oldconcept{X} → Cpp17X
+  text = expand_balanced_command(text, "oldconcept", function(c) return "Cpp17" .. c end)
+
+  -- Cross-references (if tracking table provided)
+  if options.references_table then
+    local function process_refs(refs)
+      return split_refs_text(refs, options.references_table)
+    end
+    text = text:gsub("\\ref{([^}]*)}", process_refs)
+    text = text:gsub("\\iref{([^}]*)}", process_refs)
+    text = text:gsub("\\tref{([^}]*)}", process_refs)
+  end
+
+  return text
+end
+
 -- Export public API
 return {
   subscripts = subscripts,
@@ -2762,4 +2833,5 @@ return {
   extract_footnotes_from_code = extract_footnotes_from_code,
   build_anchor_inline = build_anchor_inline,
   walk_blocks = walk_blocks,
+  expand_text_macros = expand_text_macros,
 }
