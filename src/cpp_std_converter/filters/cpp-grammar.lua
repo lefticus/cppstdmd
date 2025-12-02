@@ -92,6 +92,9 @@ local function clean_grammar(grammar)
   -- n3337 suffix style: \opt followed by backslash-space (LaTeX forced space: \ )
   -- The \ becomes just a space in the output
   grammar = grammar:gsub("(%w[%w%-]*)\\opt\\ ", "%1ₒₚₜ ")
+  -- n3337 suffix style: \opt after ellipsis (...\opt)
+  grammar = grammar:gsub("%.%.%.\\opt([%s\n])", "...ₒₚₜ %1")
+  grammar = grammar:gsub("%.%.%.\\opt$", "...ₒₚₜ ")
 
   -- Replace \placeholder{x} with x (placeholder names in pseudo-code BNF)
   -- In BNF contexts, just show the name without markdown formatting

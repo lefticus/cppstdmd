@@ -3120,7 +3120,7 @@ Thus, a declaration of a particular identifier has the form
 T D
 ```
 
-where `T` is of the form *attribute-specifier-seq\opt*
+where `T` is of the form *attribute-specifier-seqₒₚₜ*
 *decl-specifier-seq* and `D` is a declarator. Following is a recursive
 procedure for determining the type specified for the contained
 *declarator-id* by such a declaration.
@@ -3140,7 +3140,7 @@ int unsigned i;
 the type specifiers `int` `unsigned` determine the type “`unsigned int`”
 ([[dcl.type.simple]]).
 
-In a declaration *attribute-specifier-seq\opt* `T` `D` where `D` is an
+In a declaration *attribute-specifier-seqₒₚₜ* `T` `D` where `D` is an
 unadorned identifier the type of this identifier is “`T`”.
 
 In a declaration `T` `D` where `D` has the form
@@ -3559,7 +3559,7 @@ A type of either form is a *function type*.[^10]
 
 ``` bnf
 parameter-declaration-clause:
-    parameter-declaration-listₒₚₜ ...\opt
+    parameter-declaration-listₒₚₜ ...ₒₚₜ 
     parameter-declaration-list ',' ...
 ```
 

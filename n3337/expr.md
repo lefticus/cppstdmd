@@ -1010,7 +1010,7 @@ rules applies.
     of parameter-type-list returning `T`”.
   - Otherwise, if `E1.E2` refers to a non-static member function and the
     type of `E2` is “function of parameter-type-list *cv*
-    *ref-qualifier\opt* returning `T`”, then `E1.E2` is a prvalue. The
+    *ref-qualifierₒₚₜ* returning `T`”, then `E1.E2` is a prvalue. The
     expression designates a non-static member function. The expression
     can be used only as the left-hand operand of a member function
     call ([[class.mfct]]). Any redundant set of parentheses surrounding

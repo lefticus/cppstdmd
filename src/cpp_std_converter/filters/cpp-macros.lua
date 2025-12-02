@@ -349,6 +349,10 @@ function RawInline(elem)
             if next_macro_name[3] == "tcode" or next_macro_name[3] == "keyword" then
               table.insert(inlines, pandoc.Code(macro_content))
             elseif next_macro_name[3] == "grammarterm" then
+              -- Handle \opt suffix inside grammarterm (n3337 style)
+              if macro_content:match("\\opt$") then
+                macro_content = macro_content:gsub("\\opt$", "ₒₚₜ")
+              end
               table.insert(inlines, pandoc.Emph({pandoc.Str(macro_content)}))
             elseif next_macro_name[3] == "placeholder" or next_macro_name[3] == "placeholdernc" then
               table.insert(inlines, pandoc.Emph({pandoc.Str(macro_content)}))
@@ -515,10 +519,19 @@ function RawInline(elem)
     -- \grammarterm is 12 chars
     local term, pos_after_term = extract_braced_content(text, grammarterm_start, 12)
     if term then
+      -- Handle \opt suffix inside grammarterm (n3337 style: \grammarterm{foo\opt})
+      if term:match("\\opt$") then
+        term = term:gsub("\\opt$", "ₒₚₜ")
+      end
       -- Check if there's a second argument (suffix or actual term if first is empty)
       if pos_after_term and pos_after_term <= #text and
          text:sub(pos_after_term, pos_after_term) == "{" then
         local suffix, pos_after_suffix = extract_braced_content(text, pos_after_term, 0)
+
+        -- Handle \opt suffix in suffix variable (for empty first arg cases)
+        if suffix and suffix:match("\\opt$") then
+          suffix = suffix:gsub("\\opt$", "ₒₚₜ")
+        end
 
         -- Handle empty first argument (LaTeX source bug in n3337/n4140)
         if term == "" and suffix then

@@ -1334,7 +1334,7 @@ nested-name-specifier '*' attribute-specifier-seqₒₚₜ cv-qualifier-seqₒ�
 
 ``` bnf
 parameter-declaration-clause:
-    parameter-declaration-listₒₚₜ ...\opt
+    parameter-declaration-listₒₚₜ ...ₒₚₜ 
     parameter-declaration-list ',' ...
 ```
 
