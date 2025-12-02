@@ -694,8 +694,8 @@ feature:** Change to semantics of well-defined expression. A valid
 C++03expression containing a right angle bracket (“`>`”) followed
 immediately by another right angle bracket may now be treated as closing
 two templates. For example, the following code is valid in C++03because
-“`\shr`” is a right-shift operator, but invalid in this International
-Standard because “`\shr`” closes two templates.
+“`>>`” is a right-shift operator, but invalid in this International
+Standard because “`>>`” closes two templates.
 
 ``` cpp
 template <class T> struct X { };

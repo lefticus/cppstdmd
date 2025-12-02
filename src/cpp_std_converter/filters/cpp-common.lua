@@ -863,7 +863,13 @@ local code_block_macro_patterns = {
   {pattern = "\\grammarterm{([^}]*)}", replacement = "%1"},
 
   -- \term{x} in code comments
-  {pattern = "\\term{([^}]*)}", replacement = "%1"}
+  {pattern = "\\term{([^}]*)}", replacement = "%1"},
+
+  -- Shift operators (n3337/n4140 style) - handle @\shl@ escapes in code blocks
+  {pattern = "@\\shl@", replacement = "<<"},
+  {pattern = "@\\shr@", replacement = ">>"},
+  {pattern = "\\shl", replacement = "<<"},
+  {pattern = "\\shr", replacement = ">>"}
 }
 
 -- Helper function to handle layout overlap commands

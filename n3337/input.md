@@ -2644,7 +2644,7 @@ if (lval < numeric_limits<int>::min()) {
 setstate(err);
 ```
 
-##### `basic_istream::operator\shr` <a id="istream::extractors">[[istream::extractors]]</a>
+##### `basic_istream::operator>>` <a id="istream::extractors">[[istream::extractors]]</a>
 
 ``` cpp
 basic_istream<charT,traits>& operator>>
@@ -2692,7 +2692,7 @@ template<class traits>
 
 *Effects:* Behaves like a formatted input member (as described
 in  [[istream.formatted.reqmts]]) of `in`. After a `sentry` object is
-constructed, `operator` extracts characters and stores them into
+constructed, `operator>>` extracts characters and stores them into
 successive locations of an array whose first element is designated by
 `s`. If `width()` is greater than zero, `n` is `width()`. Otherwise `n`
 is the number of elements of the largest array of `char_type` that can
@@ -2706,9 +2706,9 @@ Characters are extracted and stored until any of the following occurs:
 - `ct.is(ct.space,c)` is `true` for the next available input character
   `c`, where `ct` is `use_facet<ctype<charT> >(in.getloc())`.
 
-`operator` then stores a null byte (`charT()`) in the next position,
+`operator>>` then stores a null byte (`charT()`) in the next position,
 which may be the first position if no characters were extracted.
-`operator` then calls `width(0)`.
+`operator>>` then calls `width(0)`.
 
 If the function extracted no characters, it calls `setstate(failbit)`,
 which may throw `ios_base::failure` ([[iostate.flags]]).
@@ -3557,7 +3557,7 @@ from which to obtain other facets. If `failed` is `true` then does
 
 *Returns:* `*this`.
 
-##### `basic_ostream::operator\shl` <a id="ostream.inserters">[[ostream.inserters]]</a>
+##### `basic_ostream::operator<<` <a id="ostream.inserters">[[ostream.inserters]]</a>
 
 ``` cpp
 basic_ostream<charT,traits>& operator<<
@@ -3810,9 +3810,9 @@ unspecified resetiosflags(ios_base::fmtflags mask);
 
 *Returns:* An object of unspecified type such that if `out` is an object
 of type `basic_ostream<charT, traits>` then the expression
-`out `` resetiosflags(mask)` behaves as if it called `f(out, mask)`, or
+`out << resetiosflags(mask)` behaves as if it called `f(out, mask)`, or
 if `in` is an object of type `basic_istream<charT, traits>` then the
-expression `in `` resetiosflags(mask)` behaves as if it called
+expression `in >> resetiosflags(mask)` behaves as if it called
 `f(in, mask)`, where the function `f` is defined as:[^37]
 
 ``` cpp
@@ -3822,9 +3822,9 @@ void f(ios_base& str, ios_base::fmtflags mask) {
 }
 ```
 
-The expression `out `` resetiosflags(mask)` shall have type
+The expression `out << resetiosflags(mask)` shall have type
 `basic_ostream<charT,traits>&` and value `out`. The expression
-`in `` resetiosflags(mask)` shall have type
+`in >> resetiosflags(mask)` shall have type
 `basic_istream<charT, traits>&` and value `in`.
 
 ``` cpp
@@ -3833,9 +3833,9 @@ unspecified setiosflags(ios_base::fmtflags mask);
 
 *Returns:* An object of unspecified type such that if `out` is an object
 of type `basic_ostream<charT, traits>` then the expression
-`out `` setiosflags(mask)` behaves as if it called `f(out, mask)`, or if
+`out << setiosflags(mask)` behaves as if it called `f(out, mask)`, or if
 `in` is an object of type `basic_istream<charT, traits>` then the
-expression `in `` setiosflags(mask)` behaves as if it called
+expression `in >> setiosflags(mask)` behaves as if it called
 `f(in, mask)`, where the function `f` is defined as:
 
 ``` cpp
@@ -3845,9 +3845,9 @@ void f(ios_base& str, ios_base::fmtflags mask) {
 }
 ```
 
-The expression `out `` setiosflags(mask)` shall have type
+The expression `out << setiosflags(mask)` shall have type
 `basic_ostream<charT, traits>&` and value `out`. The expression
-`in `` setiosflags(mask)` shall have type `basic_istream<charT,`  
+`in >> setiosflags(mask)` shall have type `basic_istream<charT,`  
 `traits>&` and value `in`.
 
 ``` cpp
@@ -3856,9 +3856,9 @@ unspecified setbase(int base);
 
 *Returns:* An object of unspecified type such that if `out` is an object
 of type `basic_ostream<charT, traits>` then the expression
-`out `` setbase(base)` behaves as if it called `f(out, base)`, or if
+`out << setbase(base)` behaves as if it called `f(out, base)`, or if
 `in` is an object of type `basic_istream<charT, traits>` then the
-expression `in `` setbase(base)` behaves as if it called `f(in, base)`,
+expression `in >> setbase(base)` behaves as if it called `f(in, base)`,
 where the function `f` is defined as:
 
 ``` cpp
@@ -3871,9 +3871,9 @@ void f(ios_base& str, int base) {
 }
 ```
 
-The expression `out `` setbase(base)` shall have type
+The expression `out << setbase(base)` shall have type
 `basic_ostream<charT, traits>&` and value `out`. The expression
-`in `` setbase(base)` shall have type `basic_istream<charT, traits>&`
+`in >> setbase(base)` shall have type `basic_istream<charT, traits>&`
 and value `in`.
 
 ``` cpp
@@ -3882,7 +3882,7 @@ unspecified setfill(char_type c);
 
 *Returns:* An object of unspecified type such that if `out` is an object
 of type `basic_ostream<charT, traits>` and `c` has type `charT` then the
-expression `out `` setfill(c)` behaves as if it called `f(out, c)`,
+expression `out << setfill(c)` behaves as if it called `f(out, c)`,
 where the function `f` is defined as:
 
 ``` cpp
@@ -3893,7 +3893,7 @@ void f(basic_ios<charT,traits>& str, charT c) {
 }
 ```
 
-The expression `out `` setfill(c)` shall have type
+The expression `out << setfill(c)` shall have type
 `basic_ostream<charT, traits>&` and value `out`.
 
 ``` cpp
@@ -3902,9 +3902,9 @@ unspecified setprecision(int n);
 
 *Returns:* An object of unspecified type such that if `out` is an object
 of type `basic_ostream<charT, traits>` then the expression
-`out `` setprecision(n)` behaves as if it called `f(out, n)`, or if `in`
+`out << setprecision(n)` behaves as if it called `f(out, n)`, or if `in`
 is an object of type `basic_istream<charT, traits>` then the expression
-`in `` setprecision(n)` behaves as if it called `f(in, n)`, where the
+`in >> setprecision(n)` behaves as if it called `f(in, n)`, where the
 function `f` is defined as:
 
 ``` cpp
@@ -3914,9 +3914,9 @@ void f(ios_base& str, int n) {
 }
 ```
 
-The expression `out `` setprecision(n)` shall have type
+The expression `out << setprecision(n)` shall have type
 `basic_ostream<charT, traits>&` and value `out`. The expression
-`in `` setprecision(n)` shall have type `basic_istream<charT, traits>&`
+`in >> setprecision(n)` shall have type `basic_istream<charT, traits>&`
 and value `in`.
 
 ``` cpp
@@ -3925,9 +3925,9 @@ unspecified setw(int n);
 
 *Returns:* An object of unspecified type such that if `out` is an
 instance of `basic_ostream<charT, traits>` then the expression
-`out `` setw(n)` behaves as if it called `f(out, n)`, or if `in` is an
+`out << setw(n)` behaves as if it called `f(out, n)`, or if `in` is an
 object of type `basic_istream<charT, traits>` then the expression
-`in `` setw(n)` behaves as if it called `f(in, n)`, where the function
+`in >> setw(n)` behaves as if it called `f(in, n)`, where the function
 `f` is defined as:
 
 ``` cpp
@@ -3937,9 +3937,9 @@ void f(ios_base& str, int n) {
 }
 ```
 
-The expression `out `` setw(n)` shall have type
+The expression `out << setw(n)` shall have type
 `basic_ostream<charT, traits>&` and value `out`. The expression
-`in `` setw(n)` shall have type `basic_istream<charT, traits>&` and
+`in >> setw(n)` shall have type `basic_istream<charT, traits>&` and
 value `in`.
 
 ### Extended manipulators <a id="ext.manip">[[ext.manip]]</a>
@@ -3960,7 +3960,7 @@ behaves as a formatted input function ([[istream.formatted.reqmts]]).
 
 *Returns:* An object of unspecified type such that if `in` is an object
 of type `basic_istream<charT, traits>` then the expression
-`in `` get_money(mon, intl)` behaves as if it called `f(in, mon, intl)`,
+`in >> get_money(mon, intl)` behaves as if it called `f(in, mon, intl)`,
 where the function `f` is defined as:
 
 ``` cpp
@@ -3979,7 +3979,7 @@ void f(basic_ios<charT, traits>& str, moneyT& mon, bool intl) {
 }
 ```
 
-The expression `in `` get_money(mon, intl)` shall have type
+The expression `in >> get_money(mon, intl)` shall have type
 `basic_istream<charT, traits>&` and value `in`.
 
 ``` cpp
@@ -3991,7 +3991,7 @@ specialization of the `basic_string` template (Clause  [[strings]]).
 
 *Returns:* An object of unspecified type such that if `out` is an object
 of type `basic_ostream<charT, traits>` then the expression
-`out `` put_money(mon, intl)` behaves as a formatted input function that
+`out << put_money(mon, intl)` behaves as a formatted input function that
 calls `f(out, mon, intl)`, where the function `f` is defined as:
 
 ``` cpp
@@ -4008,7 +4008,7 @@ void f(basic_ios<charT, traits>& str, const moneyT& mon, bool intl) {
 }
 ```
 
-The expression `out `` put_money(mon, intl)` shall have type
+The expression `out << put_money(mon, intl)` shall have type
 `basic_ostream<charT, traits>&` and value `out`.
 
 ``` cpp
@@ -4022,7 +4022,7 @@ elements.
 
 *Returns:* An object of unspecified type such that if `in` is an object
 of type `basic_istream<charT, traits>` then the expression
-`in `` get_time(tmb, fmt)` behaves as if it called `f(in, tmb, fmt)`,
+`in >> get_time(tmb, fmt)` behaves as if it called `f(in, tmb, fmt)`,
 where the function `f` is defined as:
 
 ``` cpp
@@ -4042,7 +4042,7 @@ void f(basic_ios<charT, traits>& str, struct tm* tmb, const charT* fmt) {
 }
 ```
 
-The expression `in `` get_time(tmb, fmt)` shall have type
+The expression `in >> get_time(tmb, fmt)` shall have type
 `basic_istream<charT, traits>&` and value `in`.
 
 ``` cpp
@@ -4056,7 +4056,7 @@ elements.
 
 *Returns:* An object of unspecified type such that if `out` is an object
 of type `basic_ostream<charT, traits>` then the expression
-`out `` put_time(tmb, fmt)` behaves as if it called `f(out, tmb, fmt)`,
+`out << put_time(tmb, fmt)` behaves as if it called `f(out, tmb, fmt)`,
 where the function `f` is defined as:
 
 ``` cpp
@@ -4074,7 +4074,7 @@ void f(basic_ios<charT, traits>& str, const struct tm* tmb, const charT* fmt) {
 }
 ```
 
-The expression `out `` put_time(tmb, fmt)` shall have type
+The expression `out << put_time(tmb, fmt)` shall have type
 `basic_istream<charT, traits>&` and value `out`.
 
 ## String-based streams <a id="string.streams">[[string.streams]]</a>
@@ -6005,8 +6005,8 @@ Library header `<inttypes.h>`, with the following changes:
 
 [^12]: The function signature `dec(ios_base&)` can be called by the
     function signature
-    `basic_ostream& stream::operator``(ios_base& (*)(ios_base&))` to
-    permit expressions of the form `cout ``dec` to change the format
+    `basic_ostream& stream::operator<<(ios_base& (*)(ios_base&))` to
+    permit expressions of the form `cout <<dec` to change the format
     flags stored in `cout`.
 
 [^13]: The default constructor is protected for class `basic_streambuf`
@@ -6082,14 +6082,14 @@ Library header `<inttypes.h>`, with the following changes:
 [^36]: Note that this function is not overloaded on types `signed char`
     and `unsigned char`.
 
-[^37]: The expression `cin ``resetiosflags(ios_base::skipws)` clears
+[^37]: The expression `cin >>resetiosflags(ios_base::skipws)` clears
     `ios_base::skipws` in the format flags stored in the
     `basic_istream<charT,traits>` object `cin` (the same as
-    `cin ``noskipws`), and the expression
-    `cout `` resetiosflags(ios_base::showbase)` clears
+    `cin >>noskipws`), and the expression
+    `cout << resetiosflags(ios_base::showbase)` clears
     `ios_base::showbase` in the format flags stored in the
     `basic_ostream<charT,traits>` object `cout` (the same as
-    `cout ``noshowbase`).
+    `cout <<noshowbase`).
 
 [^38]: The macro `SEEK_END` is defined, and the function signatures
     `fopen(const char*, const char*)` and `fseek(FILE*, long, int)` are

@@ -2202,10 +2202,10 @@ in the example, `i` is the local variable `i` declared in `printall`,
 output stream declared in `iostream`. However, not every declaration can
 be found this way; the resolution of some names must be postponed until
 the actual *template-argument*s are known. For example, even though the
-name `operator\shl` is known within the definition of `printall()` and a
+name `operator<<` is known within the definition of `printall()` and a
 declaration of it can be found in `<iostream>`, the actual declaration
-of `operator\shl` needed to print `p[i]` cannot be known until it is
-known what type `T` is ([[temp.dep]]).
+of `operator<<` needed to print `p[i]` cannot be known until it is known
+what type `T` is ([[temp.dep]]).
 
 If a name does not depend on a *template-parameter* (as defined in 
 [[temp.dep]]), a declaration (or set of declarations) for that name

@@ -1441,9 +1441,9 @@ Each bit represents either the value zero (reset) or one (set). To
 *toggle* a bit is to change the value zero to one, or the value one to
 zero. Each bit has a non-negative position `pos`. When converting
 between an object of class `bitset<N>` and a value of some integral
-type, bit position `pos` corresponds to the *bit value* `1 \shl pos`.
-The integral value corresponding to two or more bits is the sum of their
-bit values.
+type, bit position `pos` corresponds to the *bit value* `1 <<pos`. The
+integral value corresponding to two or more bits is the sum of their bit
+values.
 
 The functions described in this subclause can report three kinds of
 errors, each associated with a distinct exception:
@@ -1753,13 +1753,13 @@ bool none() const noexcept;
 bitset<N> operator<<(size_t pos) const noexcept;
 ```
 
-*Returns:* `bitset<N>(*this) ``= pos`.
+*Returns:* `bitset<N>(*this) <<= pos`.
 
 ``` cpp
 bitset<N> operator>>(size_t pos) const noexcept;
 ```
 
-*Returns:* `bitset<N>(*this) ``= pos`.
+*Returns:* `bitset<N>(*this) >>= pos`.
 
 ``` cpp
 constexpr bool operator[](size_t pos);
@@ -1852,7 +1852,7 @@ template <class charT, class traits, size_t N>
 *Returns:*
 
 ``` cpp
-os \shl x.template to_string<charT,traits,allocator<charT> >(
+os << x.template to_string<charT,traits,allocator<charT> >(
   use_facet<ctype<charT> >(os.getloc()).widen('0'),
   use_facet<ctype<charT> >(os.getloc()).widen('1'))
 ```

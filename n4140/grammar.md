@@ -619,8 +619,8 @@ additive-expression:
 ``` bnf
 shift-expression:
     additive-expression
-    shift-expression '\shl' additive-expression
-    shift-expression '\shr' additive-expression
+    shift-expression '<<' additive-expression
+    shift-expression '>>' additive-expression
 ```
 
 ``` bnf
@@ -648,7 +648,7 @@ and-expression:
 ``` bnf
 exclusive-or-expression:
     and-expression
-    exclusive-or-expression '\^' and-expression
+    exclusive-or-expression '^' and-expression
 ```
 
 ``` bnf
@@ -684,7 +684,7 @@ assignment-expression:
 
 ``` bnf
 assignment-operator: one of
-    '= *= /= %= += -= \shr= \shl= &= \^= |='
+    '= *= /= %= += -= >>= <<= &= ^= |='
 ```
 
 ``` bnf

@@ -49,7 +49,7 @@ namespace std {
     class Wide_alloc = std::allocator<Elem>,
     class Byte_alloc = std::allocator<char> > class wstring_convert;
   template <class Codecvt, class Elem = wchar_t,
-     class Tr = char_traits<Elem\shr{} class wbuffer_convert;
+     class Tr = char_traits<Elem>>{} class wbuffer_convert;
 
   // [category.ctype], ctype:
   class ctype_base;
@@ -155,7 +155,7 @@ locale’s set of facets.
 Access to the facets of a `locale` is via two function templates,
 `use_facet<>` and `has_facet<>`.
 
-An iostream `operator\shl` might be implemented as:[^2]
+An iostream `operator<<` might be implemented as:[^2]
 
 ``` cpp
 template <class charT, class traits>
@@ -944,13 +944,13 @@ initializes `cvtstate` to `state`.
 
 Each of the standard categories includes a family of facets. Some of
 these implement formatting or parsing of a datum, for use by standard or
-users’ iostream operators `\shl` and `\shr`, as members `put()` and
-`get()`, respectively. Each such member function takes an `ios_base&`
-argument whose members `flags()`, `precision()`, and `width()`, specify
-the format of the corresponding datum ([[ios.base]]). Those functions
-which need to use other facets call its member `getloc()` to retrieve
-the locale imbued there. Formatting facets use the character argument
-`fill` to fill out the specified width where necessary.
+users’ iostream operators `<<` and `>>`, as members `put()` and `get()`,
+respectively. Each such member function takes an `ios_base&` argument
+whose members `flags()`, `precision()`, and `width()`, specify the
+format of the corresponding datum ([[ios.base]]). Those functions which
+need to use other facets call its member `getloc()` to retrieve the
+locale imbued there. Formatting facets use the character argument `fill`
+to fill out the specified width where necessary.
 
 The `put()` members make no provision for error reporting. (Any failures
 of the OutputIterator argument must be extracted from the returned
@@ -3622,7 +3622,7 @@ This example illustrates two architectural uses of class `locale`.
 The first is as a default argument in `Date::asString()`, where the
 default is the global (presumably user-preferred) locale.
 
-The second is in the operators `\shl` and `\shr`, where a locale
+The second is in the operators `<<` and `>>`, where a locale
 “hitchhikes” on another object, in this case a stream, to the point
 where it is needed.
 

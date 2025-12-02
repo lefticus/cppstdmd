@@ -2716,13 +2716,13 @@ compares equal to the value 0 converted to the type `std::ptrdiff_t`.
 
 ## Shift operators <a id="expr.shift">[[expr.shift]]</a>
 
-The shift operators `\shl` and `\shr` group left-to-right.
+The shift operators `<<` and `>>` group left-to-right.
 
 ``` bnf
 shift-expression:
     additive-expression
-    shift-expression '\shl' additive-expression
-    shift-expression '\shr' additive-expression
+    shift-expression '<<' additive-expression
+    shift-expression '>>' additive-expression
 ```
 
 The operands shall be of integral or unscoped enumeration type and
@@ -2731,7 +2731,7 @@ promoted left operand. The behavior is undefined if the right operand is
 negative, or greater than or equal to the length in bits of the promoted
 left operand.
 
-The value of `E1 \shl\ E2` is `E1` left-shifted `E2` bit positions;
+The value of `E1 <<\ E2` is `E1` left-shifted `E2` bit positions;
 vacated bits are zero-filled. If `E1` has an unsigned type, the value of
 the result is $\mathrm{E1}\times2^\mathrm{E2}$, reduced modulo one more
 than the maximum value representable in the result type. Otherwise, if
@@ -2741,7 +2741,7 @@ unsigned type of the result type, then that value, converted to the
 result type, is the resulting value; otherwise, the behavior is
 undefined.
 
-The value of `E1 \shr\ E2` is `E1` right-shifted `E2` bit positions. If
+The value of `E1 >>\ E2` is `E1` right-shifted `E2` bit positions. If
 `E1` has an unsigned type or if `E1` has a signed type and a
 non-negative value, the value of the result is the integral part of the
 quotient of $\mathrm{E1}/2^\mathrm{E2}$. If `E1` has a signed type and a
@@ -2899,7 +2899,7 @@ or unscoped enumeration operands.
 ``` bnf
 exclusive-or-expression:
     and-expression
-    exclusive-or-expression '\^' and-expression
+    exclusive-or-expression '^' and-expression
 ```
 
 The usual arithmetic conversions are performed; the result is the
@@ -3090,7 +3090,7 @@ assignment-expression:
 
 ``` bnf
 assignment-operator: one of
-    '= *= /= %= += -= \shr= \shl= &= \^= |='
+    '= *= /= %= += -= >>= <<= &= ^= |='
 ```
 
 In simple assignment (`=`), the value of the expression replaces that of

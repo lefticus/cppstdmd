@@ -1631,8 +1631,8 @@ the partial sums onto `cout`.
 ### Class template `istream_iterator` <a id="istream.iterator">[[istream.iterator]]</a>
 
 The class template `istream_iterator` is an input iterator (
-[[input.iterators]]) that reads (using `operator\shr`) successive
-elements from the input stream for which it was constructed. After it is
+[[input.iterators]]) that reads (using `operator>>`) successive elements
+from the input stream for which it was constructed. After it is
 constructed, and every time `++` is used, the iterator reads and stores
 a value of `T`. If the iterator fails to read and store a value of `T`
 (`fail()` on the stream returns `true`), the iterator becomes equal to
@@ -1775,12 +1775,12 @@ template <class T, class charT, class traits, class Distance>
 
 ### Class template `ostream_iterator` <a id="ostream.iterator">[[ostream.iterator]]</a>
 
-`ostream_iterator` writes (using `operator\shl`) successive elements
-onto the output stream from which it was constructed. If it was
-constructed with `charT*` as a constructor argument, this string, called
-a *delimiter string*, is written to the stream after every `T` is
-written. It is not possible to get a value out of the output iterator.
-Its only use is as an output iterator in situations like
+`ostream_iterator` writes (using `operator<<`) successive elements onto
+the output stream from which it was constructed. If it was constructed
+with `charT*` as a constructor argument, this string, called a
+*delimiter string*, is written to the stream after every `T` is written.
+It is not possible to get a value out of the output iterator. Its only
+use is as an output iterator in situations like
 
 ``` cpp
 while (first != last)

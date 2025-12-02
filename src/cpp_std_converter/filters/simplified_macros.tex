@@ -52,6 +52,11 @@
 %% \unun - Pandoc can't handle \string_ properly, needs Lua filter
 \renewcommand{\brk}{}
 \renewcommand{\tilde}{\textasciitilde}
+%% Shift operators (n3337/n4140 style - later versions use \terminal{<<} etc.)
+\renewcommand{\shl}{<<}
+\renewcommand{\shr}{>>}
+%% Circumflex/XOR (n3337 style) - \^{} becomes ^ via \caret{}
+\renewcommand{\^}[1]{\caret{}}
 
 %%--------------------------------------------------
 %% Category B: Code Formatting

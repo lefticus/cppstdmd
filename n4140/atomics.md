@@ -851,11 +851,11 @@ operator, and computation correspondence is:
 
 **Table: Atomic arithmetic computations** <a id="tab:atomic.arithmetic.computations">[tab:atomic.arithmetic.computations]</a>
 
-|       |     |                      |       |        |                      |
-| ----- | --- | -------------------- | ----- | ------ | -------------------- |
-| `add` | `+` | addition             | `sub` | `-`    | subtraction          |
-| `or`  | `|` | bitwise inclusive or | `xor` | `\^{}` | bitwise exclusive or |
-| `and` | `&` | bitwise and          |       |        |                      |
+|       |     |                      |       |     |                      |
+| ----- | --- | -------------------- | ----- | --- | -------------------- |
+| `add` | `+` | addition             | `sub` | `-` | subtraction          |
+| `or`  | `|` | bitwise inclusive or | `xor` | `^` | bitwise exclusive or |
+| `and` | `&` | bitwise and          |       |     |                      |
 
 ``` cpp
 C atomic_fetch_key(volatile A* object, M operand) noexcept;

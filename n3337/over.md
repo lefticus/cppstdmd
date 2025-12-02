@@ -1331,11 +1331,11 @@ conversion sequences unless one of the following rules applies:
       void p() &&;
     };
     A& operator<<(A&&, char);
-    A() << 1;                       // calls A::operator\shl(int)
-    A() << 'c';                     // calls operator\shl(A&&, char)
+    A() << 1;                       // calls A::operator<<(int)
+    A() << 'c';                     // calls operator<<(A&&, char)
     A a;
-    a << 1;                         // calls A::operator\shl(int)
-    a << 'c';                       // calls A::operator\shl(int)
+    a << 1;                         // calls A::operator<<(int)
+    a << 'c';                       // calls A::operator<<(int)
     A().p();                        // calls A::p()&&
     a.p();                          // calls A::p()&
     ```

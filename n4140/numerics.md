@@ -963,7 +963,7 @@ this section.
 At any given time, `e` has a state eᵢ for some integer i ≥ 0. Upon
 construction, `e` has an initial state e₀. An engine’s state may be
 established via a constructor, a `seed` function, assignment, or a
-suitable `operator\shr{}`.
+suitable `operator>>{}`.
 
 `E`’s specification shall define:
 
@@ -1072,12 +1072,12 @@ where `charT` and `traits` are constrained according to Clauses 
 types.
 
 The sequence of numbers produced by repeated invocations of `d(g)` shall
-be independent of any invocation of `os \shl{} d` or of any `const`
-member function of `D` between any of the invocations `d(g)`.
+be independent of any invocation of `os <<{} d` or of any `const` member
+function of `D` between any of the invocations `d(g)`.
 
-If a textual representation is written using `os \shl{} x` and that
+If a textual representation is written using `os <<{} x` and that
 representation is restored into the same or a different object `y` of
-the same type using `is \shr{} y`, repeated invocations of `y(g)` shall
+the same type using `is >>{} y`, repeated invocations of `y(g)` shall
 produce the same sequence of numbers as would repeated invocations of
 `x(g)`.
 
@@ -1423,9 +1423,9 @@ public:
 
 The following relations shall hold: `0 < m`, `m <= n`, `2u < w`,
 `r <= w`, `u <= w`, `s <= w`, `t <= w`, `l <= w`,
-`w <= numeric_limits<UIntType>::digits`, `a <= (1u\shl{}w) - 1u`,
-`b <= (1u\shl{}w) - 1u`, `c <= (1u\shl{}w) - 1u`,
-`d <= (1u\shl{}w) - 1u`, and `f <= (1u\shl{}w) - 1u`.
+`w <= numeric_limits<UIntType>::digits`, `a <= (1u<<{}w) - 1u`,
+`b <= (1u<<{}w) - 1u`, `c <= (1u<<{}w) - 1u`, `d <= (1u<<{}w) - 1u`, and
+`f <= (1u<<{}w) - 1u`.
 
 The textual representation of xᵢ consists of the values of
 Xᵢ₋ₙ, …, Xᵢ₋₁, in that order.
