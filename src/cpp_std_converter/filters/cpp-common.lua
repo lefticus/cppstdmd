@@ -95,6 +95,7 @@ local special_chars = {
   {pattern = "\\%$", replacement = "$", type = "escaped"},
   {pattern = "\\_", replacement = "_", type = "escaped"},
   {pattern = "\\ ", replacement = " ", type = "escaped"},  -- LaTeX forced space
+  {pattern = "\\\n", replacement = " ", type = "escaped"}, -- LaTeX line continuation
 
   -- Special character macros (with optional {} and space variants)
   {pattern = "\\textbackslash", replacement = "\\", type = "macro", preserve_space = false},

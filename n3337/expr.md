@@ -1395,15 +1395,14 @@ conversions.
 An object pointer can be explicitly converted to an object pointer of a
 different type.[^13] When a prvalue `v` of type “pointer to `T1`” is
 converted to the type “pointer to cv `T2`”, the result is
-`static_cast<cv T2*>(static_cast<cv\
-void*>(v))` if both `T1` and `T2` are standard-layout types (
-[[basic.types]]) and the alignment requirements of `T2` are no stricter
-than those of `T1`, or if either type is `void`. Converting a prvalue of
-type “pointer to `T1`” to the type “pointer to `T2`” (where `T1` and
-`T2` are object types and where the alignment requirements of `T2` are
-no stricter than those of `T1`) and back to its original type yields the
-original pointer value. The result of any other such pointer conversion
-is unspecified.
+`static_cast<cv T2*>(static_cast<cv void*>(v))` if both `T1` and `T2`
+are standard-layout types ([[basic.types]]) and the alignment
+requirements of `T2` are no stricter than those of `T1`, or if either
+type is `void`. Converting a prvalue of type “pointer to `T1`” to the
+type “pointer to `T2`” (where `T1` and `T2` are object types and where
+the alignment requirements of `T2` are no stricter than those of `T1`)
+and back to its original type yields the original pointer value. The
+result of any other such pointer conversion is unspecified.
 
 Converting a function pointer to an object pointer type or vice versa is
 conditionally-supported. The meaning of such a conversion is
