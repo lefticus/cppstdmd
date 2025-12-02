@@ -1070,7 +1070,7 @@ decltype-specifier:
 
 The *simple-type-specifier* `auto` is a placeholder for a type to be
 deduced ([[dcl.spec.auto]]). A *type-specifier* of the form
-`typename`ₒₚₜ *nested-name-specifier*ₒₚₜ *template-name* is a
+`typename`ₒₚₜ  *nested-name-specifier*ₒₚₜ  *template-name* is a
 placeholder for a deduced class type ([[dcl.type.class.deduct]]). The
 *template-name* shall name a class template that is not an
 injected-class-name. The other *simple-type-specifier*s specify either a
@@ -1239,10 +1239,10 @@ specialization ([[temp.expl.spec]]), an explicit instantiation (
 
 ``` bnf
 class-key attribute-specifier-seqₒₚₜ identifier ';'
-'friend' class-key '::ₒₚₜ ' identifier ';'
-'friend' class-key '::ₒₚₜ ' simple-template-id ';'
+'friend' class-key '::'ₒₚₜ identifier ';'
+'friend' class-key '::'ₒₚₜ simple-template-id ';'
 'friend' class-key nested-name-specifier identifier ';'
-'friend' class-key nested-name-specifier 'templateₒₚₜ ' simple-template-id ';'
+'friend' class-key nested-name-specifier 'template'ₒₚₜ simple-template-id ';'
 ```
 
 In the first case, the *attribute-specifier-seq*, if any, appertains to
@@ -1687,8 +1687,9 @@ The optional *attribute-specifier-seq* in the *enum-head* and the
 *opaque-enum-declaration* appertains to the enumeration; the attributes
 in that *attribute-specifier-seq* are thereafter considered attributes
 of the enumeration whenever it is named. A `:` following “`enum`
-*nested-name-specifier*ₒₚₜ *identifier*” within the *decl-specifier-seq*
-of a *member-declaration* is parsed as part of an *enum-base*.
+*nested-name-specifier*ₒₚₜ  *identifier*” within the
+*decl-specifier-seq* of a *member-declaration* is parsed as part of an
+*enum-base*.
 
 [*Note 1*:
 
@@ -1952,12 +1953,12 @@ namespace-definition:
 
 ``` bnf
 named-namespace-definition:
-        'inlineₒₚₜ ' 'namespace' attribute-specifier-seqₒₚₜ identifier '{' namespace-body '}'
+        'inline'ₒₚₜ 'namespace' attribute-specifier-seqₒₚₜ identifier '{' namespace-body '}'
 ```
 
 ``` bnf
 unnamed-namespace-definition:
-        'inlineₒₚₜ ' 'namespace' attribute-specifier-seqₒₚₜ '{' namespace-body '}'
+        'inline'ₒₚₜ 'namespace' attribute-specifier-seqₒₚₜ '{' namespace-body '}'
 ```
 
 ``` bnf
@@ -2143,7 +2144,7 @@ A declaration in a namespace `N` (excluding declarations in nested
 scopes) whose *declarator-id* is an *unqualified-id* ([[dcl.meaning]]),
 whose *class-head-name* (Clause [[class]]) or *enum-head-name* (
 [[dcl.enum]]) is an *identifier*, or whose *elaborated-type-specifier*
-is of the form *class-key* *attribute-specifier-seq*ₒₚₜ *identifier* (
+is of the form *class-key* *attribute-specifier-seq*ₒₚₜ  *identifier* (
 [[dcl.type.elab]]), or that is an *opaque-enum-declaration*, declares
 (or redeclares) its *unqualified-id* or *identifier* as a member of `N`.
 
@@ -2315,7 +2316,7 @@ using-declarator-list:
 
 ``` bnf
 using-declarator:
-    'typenameₒₚₜ ' nested-name-specifier unqualified-id
+    'typename'ₒₚₜ nested-name-specifier unqualified-id
 ```
 
 Each *using-declarator* in a *using-declaration* [^6] introduces a set
@@ -4074,7 +4075,7 @@ Thus, a declaration of a particular identifier has the form
 T D
 ```
 
-where `T` is of the form *attribute-specifier-seq*ₒₚₜ
+where `T` is of the form *attribute-specifier-seq*ₒₚₜ 
 *decl-specifier-seq* and `D` is a declarator. Following is a recursive
 procedure for determining the type specified for the contained
 *declarator-id* by such a declaration.
@@ -4100,7 +4101,7 @@ the type specifiers `int` `unsigned` determine the type “`unsigned int`”
 
 — *end example*]
 
-In a declaration *attribute-specifier-seq*ₒₚₜ `T` `D` where `D` is an
+In a declaration *attribute-specifier-seq*ₒₚₜ  `T` `D` where `D` is an
 unadorned identifier the type of this identifier is “`T`”.
 
 In a declaration `T` `D` where `D` has the form
@@ -4554,9 +4555,9 @@ In a declaration `T` `D` where `D` has the form
 
 and the type of the contained *declarator-id* in the declaration `T`
 `D1` is “*derived-declarator-type-list* `T`”, the type of the
-*declarator-id* in `D` is “*derived-declarator-type-list* `noexcept`ₒₚₜ
-function of (*parameter-declaration-clause*) *cv-qualifier-seq*ₒₚₜ
-*ref-qualifier*ₒₚₜ returning `T`”, where the optional `noexcept` is
+*declarator-id* in `D` is “*derived-declarator-type-list* `noexcept`
+function of (*parameter-declaration-clause*) *cv-qualifier-seq*ₒₚₜ 
+*ref-qualifier*ₒₚₜ  returning `T`”, where the optional `noexcept` is
 present if and only if the exception specification ([[except.spec]]) is
 non-throwing. The optional *attribute-specifier-seq* appertains to the
 function type.
@@ -4571,11 +4572,11 @@ In a declaration `T` `D` where `D` has the form
 and the type of the contained *declarator-id* in the declaration `T`
 `D1` is “*derived-declarator-type-list* `T`”, `T` shall be the single
 *type-specifier* `auto`. The type of the *declarator-id* in `D` is
-“*derived-declarator-type-list* `noexcept`ₒₚₜ function of
-(*parameter-declaration-clause*) *cv-qualifier-seq*ₒₚₜ
-*ref-qualifier*ₒₚₜ returning `U`”, where `U` is the type specified by
-the *trailing-return-type*, and where the optional `noexcept` is present
-if and only if the exception specification is non-throwing. The optional
+“*derived-declarator-type-list* `noexcept` function of
+(*parameter-declaration-clause*) *cv-qualifier-seq**ref-qualifier*
+returning `U`”, where `U` is the type specified by the
+*trailing-return-type*, and where the optional `noexcept` is present if
+and only if the exception specification is non-throwing. The optional
 *attribute-specifier-seq* appertains to the function type.
 
 A type of either form is a *function type*.[^8]
@@ -5525,7 +5526,7 @@ initializer-list:
 
 ``` bnf
 braced-init-list:
-    '{' initializer-list ',ₒₚₜ ' '}'
+    '{' initializer-list ','ₒₚₜ '}'
     '{' '}'
 ```
 

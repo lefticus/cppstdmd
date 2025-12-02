@@ -449,8 +449,8 @@ capture-default:
 
 ``` bnf
 capture-list:
-    capture '...ₒₚₜ '
-    capture-list ',' capture '...ₒₚₜ '
+    capture '...'ₒₚₜ 
+    capture-list ',' capture '...'ₒₚₜ
 ```
 
 ``` bnf
@@ -982,10 +982,10 @@ elaborated-type-specifier:
 
 ``` bnf
 class-key attribute-specifier-seqₒₚₜ identifier ';'
-'friend' class-key '::ₒₚₜ ' identifier ';'
-'friend' class-key '::ₒₚₜ ' simple-template-id ';'
+'friend' class-key '::'ₒₚₜ identifier ';'
+'friend' class-key '::'ₒₚₜ simple-template-id ';'
 'friend' class-key nested-name-specifier identifier ';'
-'friend' class-key nested-name-specifier 'templateₒₚₜ ' simple-template-id ';'
+'friend' class-key nested-name-specifier 'template'ₒₚₜ simple-template-id ';'
 ```
 
 ``` bnf
@@ -1065,17 +1065,17 @@ named-namespace-definition:
 
 ``` bnf
 original-namespace-definition:
-        'inlineₒₚₜ ' 'namespace' identifier '{' namespace-body '}'
+        'inline'ₒₚₜ 'namespace' identifier '{' namespace-body '}'
 ```
 
 ``` bnf
 extension-namespace-definition:
-        'inlineₒₚₜ ' 'namespace' original-namespace-name '{' namespace-body '}'
+        'inline'ₒₚₜ 'namespace' original-namespace-name '{' namespace-body '}'
 ```
 
 ``` bnf
 unnamed-namespace-definition:
-        'inlineₒₚₜ ' 'namespace {' namespace-body '}'
+        'inline'ₒₚₜ 'namespace {' namespace-body '}'
 ```
 
 ``` bnf
@@ -1106,7 +1106,7 @@ qualified-namespace-specifier:
 
 ``` bnf
 using-declaration:
-    'using typenameₒₚₜ ' nested-name-specifier unqualified-id ';'
+    'using typename'ₒₚₜ nested-name-specifier unqualified-id ';'
     'using ::' unqualified-id ';'
 ```
 
@@ -1297,7 +1297,7 @@ abstract-pack-declarator:
 ``` bnf
 noptr-abstract-pack-declarator:
     noptr-abstract-pack-declarator parameters-and-qualifiers
-    noptr-abstract-pack-declarator '[' constant-expressionₒₚₜ \ ']' attribute-specifier-seqₒₚₜ 
+    noptr-abstract-pack-declarator '[' constant-expression\opt\ ']' attribute-specifier-seqₒₚₜ 
     '...'
 ```
 
@@ -1334,7 +1334,7 @@ nested-name-specifier '*' attribute-specifier-seqₒₚₜ cv-qualifier-seqₒ�
 
 ``` bnf
 parameter-declaration-clause:
-    parameter-declaration-listₒₚₜ ...ₒₚₜ 
+    parameter-declaration-listₒₚₜ ...\opt
     parameter-declaration-list ',' ...
 ```
 
@@ -1405,7 +1405,7 @@ initializer-list:
 
 ``` bnf
 braced-init-list:
-    '{' initializer-list ',ₒₚₜ ' '}'
+    '{' initializer-list ','ₒₚₜ '}'
     '{' '}'
 ```
 
@@ -1575,7 +1575,7 @@ postfix-expression '[' braced-init-list ']'
 ```
 
 ``` bnf
-postfix-expression '->' 'templateₒₚₜ ' id-expression\\
+postfix-expression '->' 'template'ₒₚₜ id-expression\\
 postfix-expression '->' pseudo-destructor-name
 ```
 
@@ -1648,12 +1648,12 @@ template-argument:
 ``` bnf
 typename-specifier:
   'typename' nested-name-specifier identifier
-  'typename' nested-name-specifier 'templateₒₚₜ ' simple-template-id
+  'typename' nested-name-specifier 'template'ₒₚₜ simple-template-id
 ```
 
 ``` bnf
 explicit-instantiation:
-  'externₒₚₜ ' 'template' declaration
+  'extern'ₒₚₜ 'template' declaration
 ```
 
 ``` bnf

@@ -8789,8 +8789,8 @@ and to perform conversions between encodings when
 necessary. — *end note*]
 
 A *path* is a sequence of elements that identify the location of a file
-within a filesystem. The elements are the ₒₚₜ *root-name*, ₒₚₜ
-*root-directory*, and an optional sequence of *filename*s
+within a filesystem. The elements are the \grammarterm{root-nameₒₚₜ ,
+\grammarterm{root-directoryₒₚₜ , and an optional sequence of *filename*s
 [[fs.path.generic]]. The maximum number of elements in the sequence is
 operating system dependent [[fs.conform.os]].
 
@@ -8988,7 +8988,7 @@ Windows-based operating systems, `value_type` is `wchar_t` and
 
 ``` bnf
 pathname:
-    ₒₚₜ {root-name} ₒₚₜ {root-directory} relative-path
+    root-nameₒₚₜ root-directoryₒₚₜ relative-path
 ```
 
 ``` bnf
@@ -9016,8 +9016,8 @@ filename:
 
 ``` bnf
 directory-separator:
-    preferred-separator ₒₚₜ {directory-separator}
-    fallback-separator ₒₚₜ {directory-separator}
+    preferred-separator directory-separatorₒₚₜ 
+    fallback-separator directory-separatorₒₚₜ
 ```
 
 ``` bnf
@@ -10180,7 +10180,7 @@ Formatting of paths uses formatting specifiers of the form
 
 ``` bnf
 path-format-spec:
-    ₒₚₜ {fill-and-align} ₒₚₜ {width} ₒₚₜ {'?'} ₒₚₜ {'g'}
+    fill-and-alignₒₚₜ widthₒₚₜ '?'ₒₚₜ 'g'ₒₚₜ
 ```
 
 where the productions *fill-and-align* and *width* are described in

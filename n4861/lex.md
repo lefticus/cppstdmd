@@ -229,7 +229,8 @@ given character:
   (*universal-character-name*s and line splicing) are reverted; this
   reversion shall apply before any *d-char*, *r-char*, or delimiting
   parenthesis is identified. The raw string literal is defined as the
-  shortest sequence of characters that matches the raw-string pattern
+  shortest sequence of characters that matches the raw-string
+  patternencoding-prefixₒₚₜ 
 - Otherwise, if the next three characters are `<::` and the subsequent
   character is neither `:` nor `>`, the `<` is treated as a
   preprocessing token by itself and not as the first character of the
@@ -543,29 +544,29 @@ literal:
 
 ``` bnf
 integer-literal:
-    binary-literal ₒₚₜ {integer-suffix}
-    octal-literal ₒₚₜ {integer-suffix}
-    decimal-literal ₒₚₜ {integer-suffix}
-    hexadecimal-literal ₒₚₜ {integer-suffix}
+    binary-literal integer-suffixₒₚₜ 
+    octal-literal integer-suffixₒₚₜ 
+    decimal-literal integer-suffixₒₚₜ 
+    hexadecimal-literal integer-suffixₒₚₜ
 ```
 
 ``` bnf
 binary-literal:
     '0b' binary-digit
     '0B' binary-digit
-    binary-literal ₒₚₜ {'''} binary-digit
+    binary-literal '''ₒₚₜ binary-digit
 ```
 
 ``` bnf
 octal-literal:
     '0'
-    octal-literal ₒₚₜ {'''} octal-digit
+    octal-literal '''ₒₚₜ octal-digit
 ```
 
 ``` bnf
 decimal-literal:
     nonzero-digit
-    decimal-literal ₒₚₜ {'''} digit
+    decimal-literal '''ₒₚₜ digit
 ```
 
 ``` bnf
@@ -596,7 +597,7 @@ hexadecimal-prefix: one of
 ``` bnf
 hexadecimal-digit-sequence:
     hexadecimal-digit
-    hexadecimal-digit-sequence ₒₚₜ {'''} hexadecimal-digit
+    hexadecimal-digit-sequence '''ₒₚₜ hexadecimal-digit
 ```
 
 ``` bnf
@@ -608,10 +609,10 @@ hexadecimal-digit: one of
 
 ``` bnf
 integer-suffix:
-    unsigned-suffix ₒₚₜ {long-suffix} 
-    unsigned-suffix ₒₚₜ {long-long-suffix} 
-    long-suffix ₒₚₜ {unsigned-suffix} 
-    long-long-suffix ₒₚₜ {unsigned-suffix}
+    unsigned-suffix long-suffixₒₚₜ 
+    unsigned-suffix long-long-suffixₒₚₜ 
+    long-suffix unsigned-suffixₒₚₜ 
+    long-long-suffix unsigned-suffixₒₚₜ
 ```
 
 ``` bnf
@@ -699,7 +700,7 @@ cannot be represented by any of the allowed types.
 
 ``` bnf
 character-literal:
-    ₒₚₜ {encoding-prefix} ''' c-char-sequence '''
+    encoding-prefixₒₚₜ ''' c-char-sequence '''
 ```
 
 ``` bnf
@@ -873,38 +874,38 @@ floating-point-literal:
 
 ``` bnf
 decimal-floating-point-literal:
-    fractional-constant ₒₚₜ {exponent-part} ₒₚₜ {floating-point-suffix}
-    digit-sequence exponent-part ₒₚₜ {floating-point-suffix}
+    fractional-constant exponent-partₒₚₜ floating-point-suffixₒₚₜ 
+    digit-sequence exponent-part floating-point-suffixₒₚₜ
 ```
 
 ``` bnf
 hexadecimal-floating-point-literal:
-    hexadecimal-prefix hexadecimal-fractional-constant binary-exponent-part ₒₚₜ {floating-point-suffix}
-    hexadecimal-prefix hexadecimal-digit-sequence binary-exponent-part ₒₚₜ {floating-point-suffix}
+    hexadecimal-prefix hexadecimal-fractional-constant binary-exponent-part floating-point-suffixₒₚₜ 
+    hexadecimal-prefix hexadecimal-digit-sequence binary-exponent-part floating-point-suffixₒₚₜ
 ```
 
 ``` bnf
 fractional-constant:
-    ₒₚₜ {digit-sequence} '.' digit-sequence
+    digit-sequenceₒₚₜ '.' digit-sequence
     digit-sequence '.'
 ```
 
 ``` bnf
 hexadecimal-fractional-constant:
-    ₒₚₜ {hexadecimal-digit-sequence} '.' hexadecimal-digit-sequence
+    hexadecimal-digit-sequenceₒₚₜ '.' hexadecimal-digit-sequence
     hexadecimal-digit-sequence '.'
 ```
 
 ``` bnf
 exponent-part:
-    'e' ₒₚₜ {sign} digit-sequence
-    'E' ₒₚₜ {sign} digit-sequence
+    'e' signₒₚₜ digit-sequence
+    'E' signₒₚₜ digit-sequence
 ```
 
 ``` bnf
 binary-exponent-part:
-    'p' ₒₚₜ {sign} digit-sequence
-    'P' ₒₚₜ {sign} digit-sequence
+    'p' signₒₚₜ digit-sequence
+    'P' signₒₚₜ digit-sequence
 ```
 
 ``` bnf
@@ -915,7 +916,7 @@ sign: one of
 ``` bnf
 digit-sequence:
     digit
-    digit-sequence ₒₚₜ {'''} digit
+    digit-sequence '''ₒₚₜ digit
 ```
 
 ``` bnf
@@ -969,8 +970,8 @@ in an *implementation-defined* manner.
 
 ``` bnf
 string-literal:
-    ₒₚₜ {encoding-prefix} '"' ₒₚₜ {s-char-sequence} '"'
-    ₒₚₜ {encoding-prefix} 'R' raw-string
+    encoding-prefixₒₚₜ '"' s-char-sequenceₒₚₜ '"'
+    encoding-prefixₒₚₜ 'R' raw-string
 ```
 
 ``` bnf
@@ -988,7 +989,7 @@ s-char:
 
 ``` bnf
 raw-string:
-    '"' ₒₚₜ {d-char-sequence} '(' ₒₚₜ {r-char-sequence} ')' ₒₚₜ {d-char-sequence} '"'
+    '"' d-char-sequenceₒₚₜ '(' r-char-sequenceₒₚₜ ')' d-char-sequenceₒₚₜ '"'
 ```
 
 ``` bnf
@@ -1229,7 +1230,7 @@ user-defined-integer-literal:
 
 ``` bnf
 user-defined-floating-point-literal:
-    fractional-constant ₒₚₜ {exponent-part} ud-suffix
+    fractional-constant exponent-partₒₚₜ ud-suffix
     digit-sequence exponent-part ud-suffix
     hexadecimal-prefix hexadecimal-fractional-constant binary-exponent-part ud-suffix
     hexadecimal-prefix hexadecimal-digit-sequence binary-exponent-part ud-suffix

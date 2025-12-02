@@ -1710,7 +1710,7 @@ as follows:
 
 ``` bnf
 stacktrace-entry-format-spec
-    ₒₚₜ {fill-and-align} ₒₚₜ {width}
+    fill-and-alignₒₚₜ widthₒₚₜ
 ```
 
 [*Note 1*: The productions *fill-and-align* and *width* are described

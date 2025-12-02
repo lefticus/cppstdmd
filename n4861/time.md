@@ -7384,7 +7384,7 @@ syntax:
 
 ``` bnf
 chrono-format-spec
-    ₒₚₜ {fill-and-align} ₒₚₜ {width} ₒₚₜ {precision} ₒₚₜ {chrono-specs}
+    fill-and-alignₒₚₜ widthₒₚₜ precisionₒₚₜ chrono-specsₒₚₜ
 ```
 
 ``` bnf
@@ -7401,7 +7401,7 @@ literal-char
 
 ``` bnf
 conversion-spec
-    '%' ₒₚₜ {modifier} type
+    '%' modifierₒₚₜ type
 ```
 
 ``` bnf

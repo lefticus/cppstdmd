@@ -438,10 +438,10 @@ except in a few cases where a long set of alternatives is marked by the
 phrase “one of”. If the text of an alternative is too long to fit on a
 line, the text is continued on subsequent lines indented from the first
 one. An optional terminal or non-terminal symbol is indicated by the
-subscript “ₒₚₜ ”, so
+subscript “\relaxₒₚₜ ”, so
 
 ``` bnf
-'{' ₒₚₜ {expression} '}'
+'{' expressionₒₚₜ '}'
 ```
 
 indicates an optional expression enclosed in braces.

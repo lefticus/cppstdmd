@@ -573,6 +573,11 @@ function RawInline(elem)
   emph = text:match("\\placeholdernc{([^}]*)}")
   if emph then return pandoc.Emph({pandoc.Str(emph)}) end
 
+  -- \opt{arg} - optional element marker (n4950 style)
+  -- Renders as argₒₚₜ (subscript "opt")
+  local opt_arg = text:match("\\opt{([^}]*)}")
+  if opt_arg then return pandoc.Str(opt_arg .. "ₒₚₜ ") end
+
   -- \defn{x} - use brace-balanced parsing to handle nested macros like \Cpp{}
   local defn_start = text:find("\\defn{", 1, true)
   if defn_start then

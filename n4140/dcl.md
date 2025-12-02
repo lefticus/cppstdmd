@@ -1060,10 +1060,10 @@ specialization ([[temp.expl.spec]]), an explicit instantiation (
 
 ``` bnf
 class-key attribute-specifier-seqₒₚₜ identifier ';'
-'friend' class-key '::ₒₚₜ ' identifier ';'
-'friend' class-key '::ₒₚₜ ' simple-template-id ';'
+'friend' class-key '::'ₒₚₜ identifier ';'
+'friend' class-key '::'ₒₚₜ simple-template-id ';'
 'friend' class-key nested-name-specifier identifier ';'
-'friend' class-key nested-name-specifier 'templateₒₚₜ ' simple-template-id ';'
+'friend' class-key nested-name-specifier 'template'ₒₚₜ simple-template-id ';'
 ```
 
 In the first case, the *attribute-specifier-seq*, if any, appertains to
@@ -1623,17 +1623,17 @@ named-namespace-definition:
 
 ``` bnf
 original-namespace-definition:
-        'inlineₒₚₜ ' 'namespace' identifier '{' namespace-body '}'
+        'inline'ₒₚₜ 'namespace' identifier '{' namespace-body '}'
 ```
 
 ``` bnf
 extension-namespace-definition:
-        'inlineₒₚₜ ' 'namespace' original-namespace-name '{' namespace-body '}'
+        'inline'ₒₚₜ 'namespace' original-namespace-name '{' namespace-body '}'
 ```
 
 ``` bnf
 unnamed-namespace-definition:
-        'inlineₒₚₜ ' 'namespace {' namespace-body '}'
+        'inline'ₒₚₜ 'namespace {' namespace-body '}'
 ```
 
 ``` bnf
@@ -1895,7 +1895,7 @@ which the *using-declaration* appears.
 
 ``` bnf
 using-declaration:
-    'using typenameₒₚₜ ' nested-name-specifier unqualified-id ';'
+    'using typename'ₒₚₜ nested-name-specifier unqualified-id ';'
     'using ::' unqualified-id ';'
 ```
 
@@ -3119,7 +3119,7 @@ abstract-pack-declarator:
 ``` bnf
 noptr-abstract-pack-declarator:
     noptr-abstract-pack-declarator parameters-and-qualifiers
-    noptr-abstract-pack-declarator '[' constant-expressionₒₚₜ \ ']' attribute-specifier-seqₒₚₜ 
+    noptr-abstract-pack-declarator '[' constant-expression\opt\ ']' attribute-specifier-seqₒₚₜ 
     '...'
 ```
 
@@ -3283,7 +3283,7 @@ Thus, a declaration of a particular identifier has the form
 T D
 ```
 
-where `T` is of the form *attribute-specifier-seqₒₚₜ *
+where `T` is of the form *attribute-specifier-seq\opt*
 *decl-specifier-seq* and `D` is a declarator. Following is a recursive
 procedure for determining the type specified for the contained
 *declarator-id* by such a declaration.
@@ -3303,7 +3303,7 @@ int unsigned i;
 the type specifiers `int` `unsigned` determine the type “`unsigned int`”
 ([[dcl.type.simple]]).
 
-In a declaration *attribute-specifier-seqₒₚₜ * `T` `D` where `D` is an
+In a declaration *attribute-specifier-seq\opt* `T` `D` where `D` is an
 unadorned identifier the type of this identifier is “`T`”.
 
 In a declaration `T` `D` where `D` has the form
@@ -3720,15 +3720,15 @@ and the type of the contained *declarator-id* in the declaration `T`
 `D1` is “*derived-declarator-type-list* `T`”, `T` shall be the single
 *type-specifier* `auto`. The type of the *declarator-id* in `D` is
 “*derived-declarator-type-list* function of
-(*parameter-declaration-clause*) *cv-qualifier-seq*ₒₚₜ
-*ref-qualifier*ₒₚₜ returning *trailing-return-type*”. The optional
+(*parameter-declaration-clause*) *cv-qualifier-seq*
+*ref-qualifier*returning *trailing-return-type*”. The optional
 *attribute-specifier-seq* appertains to the function type.
 
 A type of either form is a *function type*.[^9]
 
 ``` bnf
 parameter-declaration-clause:
-    parameter-declaration-listₒₚₜ ...ₒₚₜ 
+    parameter-declaration-listₒₚₜ ...\opt
     parameter-declaration-list ',' ...
 ```
 
@@ -4459,7 +4459,7 @@ initializer-list:
 
 ``` bnf
 braced-init-list:
-    '{' initializer-list ',ₒₚₜ ' '}'
+    '{' initializer-list ','ₒₚₜ '}'
     '{' '}'
 ```
 

@@ -4,17 +4,17 @@
 
 ``` bnf
 module-declaration:
-    ₒₚₜ {export-keyword} module-keyword module-name ₒₚₜ {module-partition} ₒₚₜ {attribute-specifier-seq} ';'
+    export-keywordₒₚₜ module-keyword module-name module-partitionₒₚₜ attribute-specifier-seqₒₚₜ ';'
 ```
 
 ``` bnf
 module-name:
-    ₒₚₜ {module-name-qualifier} identifier
+    module-name-qualifierₒₚₜ identifier
 ```
 
 ``` bnf
 module-partition:
-    ':' ₒₚₜ {module-name-qualifier} identifier
+    ':' module-name-qualifierₒₚₜ identifier
 ```
 
 ``` bnf
@@ -177,7 +177,7 @@ int &c = n;                     // OK
 ``` bnf
 export-declaration:
     export declaration
-    export '{' ₒₚₜ {declaration-seq} '}'
+    export '{' declaration-seqₒₚₜ '}'
     export-keyword module-import-declaration
 ```
 
@@ -422,9 +422,9 @@ export namespace N {
 
 ``` bnf
 module-import-declaration:
-    import-keyword module-name ₒₚₜ {attribute-specifier-seq} ';'
-    import-keyword module-partition ₒₚₜ {attribute-specifier-seq} ';'
-    import-keyword header-name ₒₚₜ {attribute-specifier-seq} ';'
+    import-keyword module-name attribute-specifier-seqₒₚₜ ';'
+    import-keyword module-partition attribute-specifier-seqₒₚₜ ';'
+    import-keyword header-name attribute-specifier-seqₒₚₜ ';'
 ```
 
 A *module-import-declaration* shall only appear at global namespace
@@ -567,7 +567,7 @@ import M1;              // error: cyclic interface dependency M3 → M1 → M2 �
 
 ``` bnf
 global-module-fragment:
-    module-keyword ';' ₒₚₜ {declaration-seq}
+    module-keyword ';' declaration-seqₒₚₜ
 ```
 
 [*Note 1*: Prior to phase 4 of translation, only preprocessing
@@ -587,12 +587,13 @@ translation unit if:
   *concept-name* naming D, or
 - D declares a function or function template that is named by an
   expression [[basic.def.odr]] appearing in S, or
-- S contains an expression `E` of the form whose *postfix-expression*
-  denotes a dependent name, or for an operator expression whose operator
-  denotes a dependent name, and D is found by name lookup for the
-  corresponding name in an expression synthesized from `E` by replacing
-  each type-dependent argument or operand with a value of a placeholder
-  type with no associated namespaces or entities, or
+- S contains an expression `E` of the formexpression-listₒₚₜ  whose
+  *postfix-expression* denotes a dependent name, or for an operator
+  expression whose operator denotes a dependent name, and D is found by
+  name lookup for the corresponding name in an expression synthesized
+  from `E` by replacing each type-dependent argument or operand with a
+  value of a placeholder type with no associated namespaces or entities,
+  or
 - S contains an expression that takes the address of an overloaded
   function [[over.over]] whose set of overloads contains D and for which
   the target type is dependent, or
@@ -719,7 +720,7 @@ int c = use_h<int>();           // OK
 
 ``` bnf
 private-module-fragment:
-    module-keyword ':' private ';' ₒₚₜ {declaration-seq}
+    module-keyword ':' private ';' declaration-seqₒₚₜ
 ```
 
 A *private-module-fragment* shall appear only in a primary module

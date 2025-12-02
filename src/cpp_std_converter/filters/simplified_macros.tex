@@ -168,7 +168,8 @@
 \renewcommand{\descr}[1]{#1}
 \renewcommand{\fmtgrammarterm}[1]{\textit{#1}}
 \renewcommand{\UAX}[1]{UAX \##1}
-\renewcommand{\opt}{ₒₚₜ }
+%% \opt - NOT defined here because it would break BNF blocks
+%% Handled in cpp-grammar.lua (BNF) and cpp-macros.lua (text)
 
 %%--------------------------------------------------
 %% Category K: Math Operators

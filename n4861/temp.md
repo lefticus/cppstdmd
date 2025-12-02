@@ -13,7 +13,7 @@ template-declaration:
 
 ``` bnf
 template-head:
-  template '<' template-parameter-list '>' ₒₚₜ {requires-clause}
+  template '<' template-parameter-list '>' requires-clauseₒₚₜ
 ```
 
 ``` bnf
@@ -178,12 +178,12 @@ template-parameter:
 
 ``` bnf
 type-parameter:
-  type-parameter-key ₒₚₜ {'...'} ₒₚₜ {identifier}
-  type-parameter-key ₒₚₜ {identifier} '=' type-id
-  type-constraint ₒₚₜ {'...'} ₒₚₜ {identifier}
-  type-constraint ₒₚₜ {identifier} '=' type-id
-  template-head type-parameter-key ₒₚₜ {'...'} ₒₚₜ {identifier}
-  template-head type-parameter-key ₒₚₜ {identifier} '=' id-expression
+  type-parameter-key '...'ₒₚₜ identifierₒₚₜ 
+  type-parameter-key identifierₒₚₜ '=' type-id
+  type-constraint '...'ₒₚₜ identifierₒₚₜ 
+  type-constraint identifierₒₚₜ '=' type-id
+  template-head type-parameter-key '...'ₒₚₜ identifierₒₚₜ 
+  template-head type-parameter-key identifierₒₚₜ '=' id-expression
 ```
 
 ``` bnf
@@ -194,8 +194,8 @@ type-parameter-key:
 
 ``` bnf
 type-constraint:
-  ₒₚₜ {nested-name-specifier} concept-name
-  ₒₚₜ {nested-name-specifier} concept-name '<' ₒₚₜ {template-argument-list} '>'
+  nested-name-specifierₒₚₜ concept-name
+  nested-name-specifierₒₚₜ concept-name '<' template-argument-listₒₚₜ '>'
 ```
 
 [*Note 1*: The `>` token following the *template-parameter-list* of a
@@ -523,14 +523,14 @@ A template specialization [[temp.spec]] can be referred to by a
 
 ``` bnf
 simple-template-id:
-  template-name '<' ₒₚₜ {template-argument-list} '>'
+  template-name '<' template-argument-listₒₚₜ '>'
 ```
 
 ``` bnf
 template-id:
   simple-template-id
-  operator-function-id '<' ₒₚₜ {template-argument-list} '>'
-  literal-operator-id '<' ₒₚₜ {template-argument-list} '>'
+  operator-function-id '<' template-argument-listₒₚₜ '>'
+  literal-operator-id '<' template-argument-listₒₚₜ '>'
 ```
 
 ``` bnf
@@ -540,8 +540,8 @@ template-name:
 
 ``` bnf
 template-argument-list:
-  template-argument ₒₚₜ {'...'}
-  template-argument-list ',' template-argument ₒₚₜ {'...'}
+  template-argument '...'ₒₚₜ 
+  template-argument-list ',' template-argument '...'ₒₚₜ
 ```
 
 ``` bnf
@@ -1957,7 +1957,7 @@ guides declared for the class template are considered.
 
 ``` bnf
 deduction-guide:
-    ₒₚₜ {explicit-specifier} template-name '(' parameter-declaration-clause ')' '->' simple-template-id ';'
+    explicit-specifierₒₚₜ template-name '(' parameter-declaration-clause ')' '->' simple-template-id ';'
 ```
 
 [*Example 1*:
@@ -3663,7 +3663,7 @@ template<class T> class Y {
 ``` bnf
 typename-specifier:
   typename nested-name-specifier identifier
-  typename nested-name-specifier 'ₒₚₜ {template}' simple-template-id
+  typename nested-name-specifier 'templateₒₚₜ ' simple-template-id
 ```
 
 A *typename-specifier* denotes the type or class template denoted by the
@@ -4149,7 +4149,7 @@ template parameter) as described in this subclause.
 In an expression of the form:
 
 ``` bnf
-postfix-expression '(' ₒₚₜ {expression-list} ')'
+postfix-expression '(' expression-listₒₚₜ ')'
 ```
 
 where the *postfix-expression* is an *unqualified-id*, the
@@ -4539,9 +4539,9 @@ only if the type specified by the *type-id*, *simple-type-specifier* or
 *new-type-id* is dependent, even if any subexpression is type-dependent:
 
 ``` bnf
-simple-type-specifier '(' ₒₚₜ {expression-list} ')'
-ₒₚₜ {'::'} new ₒₚₜ {new-placement} new-type-id ₒₚₜ {new-initializer}
-ₒₚₜ {'::'} new ₒₚₜ {new-placement} '(' type-id ')' ₒₚₜ {new-initializer}
+simple-type-specifier '(' expression-listₒₚₜ ')'
+'::'ₒₚₜ new new-placementₒₚₜ new-type-id new-initializerₒₚₜ 
+'::'ₒₚₜ new new-placementₒₚₜ '(' type-id ')' new-initializerₒₚₜ 
 dynamic_cast '<' type-id '>' '(' expression ')'
 static_cast '<' type-id '>' '(' expression ')'
 const_cast '<' type-id '>' '(' expression ')'
@@ -4560,9 +4560,9 @@ sizeof '...' '(' identifier ')'
 alignof '(' type-id ')'
 typeid '(' expression ')'
 typeid '(' type-id ')'
-ₒₚₜ {'::'} delete cast-expression
-ₒₚₜ {'::'} delete '[' ']' cast-expression
-throw ₒₚₜ {assignment-expression}
+'::'ₒₚₜ delete cast-expression
+'::'ₒₚₜ delete '[' ']' cast-expression
+throw assignment-expressionₒₚₜ 
 noexcept '(' expression ')'
 ```
 
@@ -4626,7 +4626,7 @@ Expressions of the following form are value-dependent if either the
 *cast-expression* is value-dependent:
 
 ``` bnf
-simple-type-specifier '(' ₒₚₜ {expression-list} ')'
+simple-type-specifier '(' expression-listₒₚₜ ')'
 static_cast '<' type-id '>' '(' expression ')'
 const_cast '<' type-id '>' '(' expression ')'
 reinterpret_cast '<' type-id '>' '(' expression ')'
@@ -5567,7 +5567,7 @@ The syntax for explicit instantiation is:
 
 ``` bnf
 explicit-instantiation:
-  ₒₚₜ {extern} template declaration
+  externₒₚₜ template declaration
 ```
 
 There are two forms of explicit instantiation: an explicit instantiation

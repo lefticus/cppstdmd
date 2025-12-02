@@ -295,7 +295,7 @@ member-specification:
 ``` bnf
 member-declaration:
     attribute-specifier-seqₒₚₜ decl-specifier-seqₒₚₜ member-declarator-listₒₚₜ ';'
-    function-definition ';ₒₚₜ '
+    function-definition ';'ₒₚₜ 
     using-declaration
     static_assert-declaration
     template-declaration

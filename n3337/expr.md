@@ -368,8 +368,8 @@ capture-default:
 
 ``` bnf
 capture-list:
-    capture '...ₒₚₜ '
-    capture-list ',' capture '...ₒₚₜ '
+    capture '...'ₒₚₜ 
+    capture-list ',' capture '...'ₒₚₜ
 ```
 
 ``` bnf
@@ -419,7 +419,7 @@ not include a *trailing-return-type*, it is as if the
 *trailing-return-type* denotes the following type:
 
 - if the *compound-statement* is of the form\begin{ncbnf}
-  \terminal{\\attribute-specifier-seqₒₚₜ \terminal{return} expression \terminal{;} \terminal{\\}
+  \terminal{\\attribute-specifier-seq\opt \terminal{return} expression \terminal{;} \terminal{\\}
   \end{ncbnf} the type of the returned expression after lvalue-to-rvalue
   conversion ([[conv.lval]]), array-to-pointer conversion (
   [[conv.array]]), and function-to-pointer conversion ([[conv.func]]);
@@ -1010,7 +1010,7 @@ rules applies.
     of parameter-type-list returning `T`”.
   - Otherwise, if `E1.E2` refers to a non-static member function and the
     type of `E2` is “function of parameter-type-list *cv*
-    *ref-qualifierₒₚₜ * returning `T`”, then `E1.E2` is a prvalue. The
+    *ref-qualifier\opt* returning `T`”, then `E1.E2` is a prvalue. The
     expression designates a non-static member function. The expression
     can be used only as the left-hand operand of a member function
     call ([[class.mfct]]). Any redundant set of parentheses surrounding

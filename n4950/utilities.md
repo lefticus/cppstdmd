@@ -9076,10 +9076,10 @@ unevaluated operand and either
 
 - `F::operator()` is a non-static member function and
   `decltype(&F::operator())` is either of the form
-  `R(G::*)(A...)` cv `ₒₚₜ ``&`` ₒₚₜ ``noexcept` or of the form
-  `R(*)(G, A...) ₒₚₜ ``noexcept` for a type `G`, or
+  `R(G::*)(A...)` cv \\ₒₚₜ ` `noexceptₒₚₜ  or of the form
+  `R(*)(G, A...) `noexceptₒₚₜ  for a type `G`, or
 - `F::operator()` is a static member function and
-  `decltype(&F::operator())` is of the form `R(*)(A...) ₒₚₜ ``noexcept`.
+  `decltype(&F::operator())` is of the form `R(*)(A...) `noexceptₒₚₜ .
 
 *Remarks:* The deduced type is `function<R(A...)>`.
 
@@ -10430,7 +10430,7 @@ syntax of replacement fields is as follows:
 
 ``` bnf
 replacement-field
-    '{' ₒₚₜ {arg-id} ₒₚₜ {format-specifier} '}'
+    '{' arg-idₒₚₜ format-specifierₒₚₜ '}'
 ```
 
 ``` bnf
@@ -10542,12 +10542,12 @@ The syntax of format specifications is as follows:
 
 ``` bnf
 std-format-spec
-    ₒₚₜ {fill-and-align} ₒₚₜ {sign} ₒₚₜ {'#'} ₒₚₜ {'0'} ₒₚₜ {width} ₒₚₜ {precision} ₒₚₜ {'L'} ₒₚₜ {type}
+    fill-and-alignₒₚₜ signₒₚₜ '#'ₒₚₜ '0'ₒₚₜ widthₒₚₜ precisionₒₚₜ 'L'ₒₚₜ typeₒₚₜ
 ```
 
 ``` bnf
 fill-and-align
-    ₒₚₜ {fill} align
+    fillₒₚₜ align
 ```
 
 ``` bnf
@@ -10568,13 +10568,13 @@ sign one of
 ``` bnf
 width
     positive-integer
-    '{' ₒₚₜ {arg-id} '}'
+    '{' arg-idₒₚₜ '}'
 ```
 
 ``` bnf
 precision
     '.' nonnegative-integer
-    '.' '{' ₒₚₜ {arg-id} '}'
+    '.' '{' arg-idₒₚₜ '}'
 ```
 
 ``` bnf
@@ -10712,7 +10712,7 @@ string s4 = format("{:06}", inf);       // value of s4 is "\ \ \ inf" (0 has no 
 The *width* option specifies the minimum field width. If the *width*
 option is absent, the minimum field width is `0`.
 
-If `{ ₒₚₜ {arg-id} }` is used in a *width* or *precision* option, the
+If `{ \opt{arg-id} }` is used in a *width* or *precision* option, the
 value of the corresponding formatting argument is used as the value of
 the option. If the corresponding formatting argument is not of standard
 signed or unsigned integer type, or its value is negative, an exception
@@ -11667,12 +11667,12 @@ syntax of format specifications is as follows:
 
 ``` bnf
 range-format-spec
-    ₒₚₜ {range-fill-and-align} ₒₚₜ {width} ₒₚₜ {'n'} ₒₚₜ {range-type} ₒₚₜ {range-underlying-spec}
+    range-fill-and-alignₒₚₜ widthₒₚₜ 'n'ₒₚₜ range-typeₒₚₜ range-underlying-specₒₚₜ
 ```
 
 ``` bnf
 range-fill-and-align
-    ₒₚₜ {range-fill} align
+    range-fillₒₚₜ align
 ```
 
 ``` bnf
@@ -12278,12 +12278,12 @@ syntax:
 
 ``` bnf
 tuple-format-spec
-    ₒₚₜ {tuple-fill-and-align} ₒₚₜ {width} ₒₚₜ {tuple-type}
+    tuple-fill-and-alignₒₚₜ widthₒₚₜ tuple-typeₒₚₜ
 ```
 
 ``` bnf
 tuple-fill-and-align
-    ₒₚₜ {tuple-fill} align
+    tuple-fillₒₚₜ align
 ```
 
 ``` bnf

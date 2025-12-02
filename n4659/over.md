@@ -2169,7 +2169,7 @@ shall be a non-static member function taking no parameters. It
 implements the class member access syntax that uses `->`.
 
 ``` bnf
-postfix-expression '->' 'templateₒₚₜ ' id-expression\\
+postfix-expression '->' 'template'ₒₚₜ id-expression\\
 postfix-expression '->' pseudo-destructor-name
 ```
 

@@ -2065,7 +2065,7 @@ format:
 
 ``` bnf
 intval:
-    ₒₚₜ {sign} units
+    signₒₚₜ units
 ```
 
 ``` bnf
@@ -2082,25 +2082,25 @@ units:
 
 ``` bnf
 digits:
-    digit ₒₚₜ {digits}
+    digit digitsₒₚₜ
 ```
 
 and floating-point values have:
 
 ``` bnf
 floatval:
-    ₒₚₜ {sign} units ₒₚₜ {fractional} ₒₚₜ {exponent}
-    ₒₚₜ {sign} decimal-point digits ₒₚₜ {exponent}
+    signₒₚₜ units fractionalₒₚₜ exponentₒₚₜ 
+    signₒₚₜ decimal-point digits exponentₒₚₜ
 ```
 
 ``` bnf
 fractional:
-    decimal-point ₒₚₜ {digits}
+    decimal-point digitsₒₚₜ
 ```
 
 ``` bnf
 exponent:
-    e ₒₚₜ {sign} digits
+    e signₒₚₜ digits
 ```
 
 ``` bnf
@@ -3030,13 +3030,13 @@ The format of the numeric monetary value is a decimal number:
 
 ``` bnf
 value:
-    units ₒₚₜ {fractional}
+    units fractionalₒₚₜ 
     decimal-point digits
 ```
 
 ``` bnf
 fractional:
-    decimal-point ₒₚₜ {digits}
+    decimal-point digitsₒₚₜ
 ```
 
 if `frac_digits()` returns a positive value, or
@@ -3057,7 +3057,7 @@ units:
 
 ``` bnf
 digits:
-    adigit ₒₚₜ {digits}
+    adigit digitsₒₚₜ
 ```
 
 In the syntax specification, the symbol is any of the values

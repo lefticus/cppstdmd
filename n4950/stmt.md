@@ -7,13 +7,13 @@ Except as indicated, statements are executed in sequence.
 ``` bnf
 statement:
     labeled-statement
-    ₒₚₜ {attribute-specifier-seq} expression-statement
-    ₒₚₜ {attribute-specifier-seq} compound-statement
-    ₒₚₜ {attribute-specifier-seq} selection-statement
-    ₒₚₜ {attribute-specifier-seq} iteration-statement
-    ₒₚₜ {attribute-specifier-seq} jump-statement
+    attribute-specifier-seqₒₚₜ expression-statement
+    attribute-specifier-seqₒₚₜ compound-statement
+    attribute-specifier-seqₒₚₜ selection-statement
+    attribute-specifier-seqₒₚₜ iteration-statement
+    attribute-specifier-seqₒₚₜ jump-statement
     declaration-statement
-    ₒₚₜ {attribute-specifier-seq} try-block
+    attribute-specifier-seqₒₚₜ try-block
 ```
 
 ``` bnf
@@ -26,7 +26,7 @@ init-statement:
 ``` bnf
 condition:
     expression
-    ₒₚₜ {attribute-specifier-seq} decl-specifier-seq declarator brace-or-equal-initializer
+    attribute-specifier-seqₒₚₜ decl-specifier-seq declarator brace-or-equal-initializer
 ```
 
 The optional *attribute-specifier-seq* appertains to the respective
@@ -89,9 +89,9 @@ A label can be added to a statement or used anywhere in a
 
 ``` bnf
 label:
-    ₒₚₜ {attribute-specifier-seq} identifier ':'
-    ₒₚₜ {attribute-specifier-seq} case constant-expression ':'
-    ₒₚₜ {attribute-specifier-seq} default ':'
+    attribute-specifier-seqₒₚₜ identifier ':'
+    attribute-specifier-seqₒₚₜ case constant-expression ':'
+    attribute-specifier-seqₒₚₜ default ':'
 ```
 
 ``` bnf
@@ -120,7 +120,7 @@ Expression statements have the form
 
 ``` bnf
 expression-statement:
-    ₒₚₜ {expression} ';'
+    expressionₒₚₜ ';'
 ```
 
 The expression is a discarded-value expression [[expr.context]]. All
@@ -140,7 +140,7 @@ statements into a single statement.
 
 ``` bnf
 compound-statement:
-    '{' ₒₚₜ {statement-seq} ₒₚₜ {label-seq} '}'
+    '{' statement-seqₒₚₜ label-seqₒₚₜ '}'
 ```
 
 ``` bnf
@@ -169,11 +169,11 @@ Selection statements choose one of several flows of control.
 
 ``` bnf
 selection-statement:
-    if ₒₚₜ {constexpr} '(' ₒₚₜ {init-statement} condition ')' statement
-    if ₒₚₜ {constexpr} '(' ₒₚₜ {init-statement} condition ')' statement else statement
-    if ₒₚₜ {'!'} consteval compound-statement
-    if ₒₚₜ {'!'} consteval compound-statement else statement
-    switch '(' ₒₚₜ {init-statement} condition ')' statement
+    if constexprₒₚₜ '(' init-statementₒₚₜ condition ')' statement
+    if constexprₒₚₜ '(' init-statementₒₚₜ condition ')' statement else statement
+    if '!'ₒₚₜ consteval compound-statement
+    if '!'ₒₚₜ consteval compound-statement else statement
+    switch '(' init-statementₒₚₜ condition ')' statement
 ```
 
 See  [[dcl.meaning]] for the optional *attribute-specifier-seq* in a
@@ -246,7 +246,7 @@ int f() {
 An `if` statement of the form
 
 ``` bnf
-if ₒₚₜ {constexpr} '(' init-statement condition ')' statement
+if constexprₒₚₜ '(' init-statement condition ')' statement
 ```
 
 is equivalent to
@@ -254,14 +254,14 @@ is equivalent to
 ``` bnf
 '{'
    init-statement
-   if ₒₚₜ {constexpr} '(' condition ')' statement
+   if constexprₒₚₜ '(' condition ')' statement
 '}'
 ```
 
 and an `if` statement of the form
 
 ``` bnf
-if ₒₚₜ {constexpr} '(' init-statement condition ')' statement else statement
+if constexprₒₚₜ '(' init-statement condition ')' statement else statement
 ```
 
 is equivalent to
@@ -269,7 +269,7 @@ is equivalent to
 ``` bnf
 '{'
    init-statement
-   if ₒₚₜ {constexpr} '(' condition ')' statement else statement
+   if constexprₒₚₜ '(' condition ')' statement else statement
 '}'
 ```
 
@@ -410,14 +410,14 @@ Iteration statements specify looping.
 iteration-statement:
     while '(' condition ')' statement
     do statement while '(' expression ')' ';'
-    for '(' init-statement ₒₚₜ {condition} ';' ₒₚₜ {expression} ')' statement
-    for '(' ₒₚₜ {init-statement} for-range-declaration ':' for-range-initializer ')' statement
+    for '(' init-statement conditionₒₚₜ ';' expressionₒₚₜ ')' statement
+    for '(' init-statementₒₚₜ for-range-declaration ':' for-range-initializer ')' statement
 ```
 
 ``` bnf
 for-range-declaration:
-    ₒₚₜ {attribute-specifier-seq} decl-specifier-seq declarator
-    ₒₚₜ {attribute-specifier-seq} decl-specifier-seq ₒₚₜ {ref-qualifier} '[' identifier-list ']'
+    attribute-specifier-seqₒₚₜ decl-specifier-seq declarator
+    attribute-specifier-seqₒₚₜ decl-specifier-seq ref-qualifierₒₚₜ '[' identifier-list ']'
 ```
 
 ``` bnf
@@ -516,7 +516,7 @@ execution of the statement.
 The `for` statement
 
 ``` bnf
-for '(' init-statement ₒₚₜ {condition} ';' ₒₚₜ {expression} ')' statement
+for '(' init-statement conditionₒₚₜ ';' expressionₒₚₜ ')' statement
 ```
 
 is equivalent to
@@ -551,14 +551,14 @@ missing *condition* makes the implied `while` clause equivalent to
 The range-based `for` statement
 
 ``` bnf
-for '(' ₒₚₜ {init-statement} for-range-declaration ':' for-range-initializer ')' statement
+for '(' init-statementₒₚₜ for-range-declaration ':' for-range-initializer ')' statement
 ```
 
 is equivalent to
 
 ``` bnf
 '{'
-   ₒₚₜ {init-statement}
+   init-statementₒₚₜ 
    auto '&&'range '=' for-range-initializer ';'
    auto begin '=' begin-expr ';'
    auto end '=' end-expr ';'
@@ -637,7 +637,7 @@ Jump statements unconditionally transfer control.
 jump-statement:
     break ';'
     continue ';'
-    return ₒₚₜ {expr-or-braced-init-list} ';'
+    return expr-or-braced-init-listₒₚₜ ';'
     coroutine-return-statement
     goto identifier ';'
 ```
@@ -754,7 +754,7 @@ block enclosing the `return` statement.
 
 ``` bnf
 coroutine-return-statement:
-    'co_return' ₒₚₜ {expr-or-braced-init-list} ';'
+    'co_return' expr-or-braced-init-listₒₚₜ ';'
 ```
 
 A coroutine returns to its caller or resumer [[dcl.fct.def.coroutine]]
@@ -779,9 +779,9 @@ where *`final-suspend`* is the exposition-only label defined in
 - If the operand is a *braced-init-list* or an expression of non-`void`
   type, *S* is *p*`.return_value(`*expr-or-braced-init-list*`)`. The
   expression *S* shall be a prvalue of type `void`.
-- Otherwise, *S* is the *compound-statement* `{` ₒₚₜ *expression* `;`
-  *p*`.return_void()``; }`. The expression *p*`.return_void()` shall be
-  a prvalue of type `void`.
+- Otherwise, *S* is the *compound-statement*
+  `{` \grammarterm{expressionₒₚₜ  `;` *p*`.return_void()``; }`. The
+  expression *p*`.return_void()` shall be a prvalue of type `void`.
 
 If *p*`.return_void()` is a valid expression, flowing off the end of a
 coroutine’s *function-body* is equivalent to a `co_return` with no

@@ -9870,10 +9870,10 @@ unevaluated operand and either
 
 - `F::operator()` is a non-static member function and
   `decltype(&F::operator())` is either of the form
-  `R(G::*)(A...)` cv `ₒₚₜ ``&`` ₒₚₜ ``noexcept` or of the form
-  `R(*)(G, A...) ₒₚₜ ``noexcept` for a type `G`, or
+  `R(G::*)(A...)` cv \\ₒₚₜ ` `noexceptₒₚₜ  or of the form
+  `R(*)(G, A...) `noexceptₒₚₜ  for a type `G`, or
 - `F::operator()` is a static member function and
-  `decltype(&F::operator())` is of the form `R(*)(A...) ₒₚₜ ``noexcept`.
+  `decltype(&F::operator())` is of the form `R(*)(A...) `noexceptₒₚₜ .
 
 *Remarks:* The deduced type is `function<R(A...)>`.
 
@@ -10788,7 +10788,7 @@ Let `F` be `decltype(f)`.
 
 *Constraints:*
 
-- `F` is of the form `R(G::*)(A...) cv ₒₚₜ ``&`` noexcept(E)` for a type
+- `F` is of the form `R(G::*)(A...) cv `\\ₒₚₜ ` noexcept(E)` for a type
   `G`, or
 - `F` is of the form `M G::*` for a type `G` and an object type `M`, in
   which case let `R` be `invoke_result_t<F, T&>`, `A...` be an empty

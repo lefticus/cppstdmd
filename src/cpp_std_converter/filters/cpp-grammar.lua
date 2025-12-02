@@ -76,6 +76,24 @@ local function clean_grammar(grammar)
   -- Replace \keyword{x} with x (keywords - macros filter may have already handled this)
   grammar = grammar:gsub("\\keyword{([^}]*)}", "%1")
 
+  -- Handle both \opt styles (n3337 suffix vs n4950 prefix)
+  -- IMPORTANT: Must run BEFORE \terminal{} processing so \terminal{;}\opt works
+  --
+  -- n4950 prefix style: \opt{arg} -> argₒₚₜ (use brace-balanced extraction)
+  grammar = process_macro_with_replacement(grammar, "opt", function(content)
+    return content .. "ₒₚₜ "
+  end)
+  -- n3337 suffix style: \opt after closing brace (handles \terminal{;}\opt, etc.)
+  grammar = grammar:gsub("}\\opt([%s\n])", "}ₒₚₜ %1")
+  grammar = grammar:gsub("}\\opt$", "}ₒₚₜ ")
+  -- n3337 suffix style: \opt after word (handles member-specification\opt)
+  grammar = grammar:gsub("(%w[%w%-]*)\\opt([%s\n])", "%1ₒₚₜ %2")
+  grammar = grammar:gsub("(%w[%w%-]*)\\opt$", "%1ₒₚₜ ")
+
+  -- Replace \placeholder{x} with x (placeholder names in pseudo-code BNF)
+  -- In BNF contexts, just show the name without markdown formatting
+  grammar = grammar:gsub("\\placeholder{([^}]*)}", "%1")
+
   -- Replace \textnormal{x} with x (normal text) - use brace-balanced extraction
   -- This handles nested macros like \tref{} inside \textnormal{}
   grammar = process_macro_with_replacement(grammar, "textnormal", function(content)
@@ -97,6 +115,13 @@ local function clean_grammar(grammar)
   -- Replace \terminal{x} with 'x' (terminal symbols)
   -- Use brace-balanced extraction to handle escaped braces properly
   grammar = process_macro_with_replacement(grammar, "terminal", function(content)
+    -- Check for \opt suffix INSIDE terminal (n3337 style: \terminal{;\opt})
+    -- Must handle BEFORE quoting so ';'ₒₚₜ not ';\opt'
+    local has_opt_suffix = content:match("\\opt$")
+    if has_opt_suffix then
+      content = content:gsub("\\opt$", "")
+    end
+
     -- Unescape common LaTeX special characters
     content = content:gsub("\\#", "#")
     content = content:gsub("\\%$", "$")
@@ -109,7 +134,12 @@ local function clean_grammar(grammar)
     -- Note: Pandoc adds a space after macro names, so handle both variants
     content = content:gsub("\\textbackslash%s", "\\")  -- with trailing space
     content = content:gsub("\\textbackslash", "\\")
-    return "'" .. content .. "'"
+
+    if has_opt_suffix then
+      return "'" .. content .. "'ₒₚₜ "
+    else
+      return "'" .. content .. "'"
+    end
   end)
 
   -- Replace \tcode{x} with x (code - macros filter may have already handled this)

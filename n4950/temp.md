@@ -13,7 +13,7 @@ template-declaration:
 
 ``` bnf
 template-head:
-  template '<' template-parameter-list '>' ₒₚₜ {requires-clause}
+  template '<' template-parameter-list '>' requires-clauseₒₚₜ
 ```
 
 ``` bnf
@@ -179,12 +179,12 @@ template-parameter:
 
 ``` bnf
 type-parameter:
-  type-parameter-key ₒₚₜ {'...'} ₒₚₜ {identifier}
-  type-parameter-key ₒₚₜ {identifier} '=' type-id
-  type-constraint ₒₚₜ {'...'} ₒₚₜ {identifier}
-  type-constraint ₒₚₜ {identifier} '=' type-id
-  template-head type-parameter-key ₒₚₜ {'...'} ₒₚₜ {identifier}
-  template-head type-parameter-key ₒₚₜ {identifier} '=' id-expression
+  type-parameter-key '...'ₒₚₜ identifierₒₚₜ 
+  type-parameter-key identifierₒₚₜ '=' type-id
+  type-constraint '...'ₒₚₜ identifierₒₚₜ 
+  type-constraint identifierₒₚₜ '=' type-id
+  template-head type-parameter-key '...'ₒₚₜ identifierₒₚₜ 
+  template-head type-parameter-key identifierₒₚₜ '=' id-expression
 ```
 
 ``` bnf
@@ -195,8 +195,8 @@ type-parameter-key:
 
 ``` bnf
 type-constraint:
-  ₒₚₜ {nested-name-specifier} concept-name
-  ₒₚₜ {nested-name-specifier} concept-name '<' ₒₚₜ {template-argument-list} '>'
+  nested-name-specifierₒₚₜ concept-name
+  nested-name-specifierₒₚₜ concept-name '<' template-argument-listₒₚₜ '>'
 ```
 
 The component names of a *type-constraint* are its *concept-name* and
@@ -517,14 +517,14 @@ A template specialization [[temp.spec]] can be referred to by a
 
 ``` bnf
 simple-template-id:
-  template-name '<' ₒₚₜ {template-argument-list} '>'
+  template-name '<' template-argument-listₒₚₜ '>'
 ```
 
 ``` bnf
 template-id:
   simple-template-id
-  operator-function-id '<' ₒₚₜ {template-argument-list} '>'
-  literal-operator-id '<' ₒₚₜ {template-argument-list} '>'
+  operator-function-id '<' template-argument-listₒₚₜ '>'
+  literal-operator-id '<' template-argument-listₒₚₜ '>'
 ```
 
 ``` bnf
@@ -534,8 +534,8 @@ template-name:
 
 ``` bnf
 template-argument-list:
-  template-argument ₒₚₜ {'...'}
-  template-argument-list ',' template-argument ₒₚₜ {'...'}
+  template-argument '...'ₒₚₜ 
+  template-argument-list ',' template-argument '...'ₒₚₜ
 ```
 
 ``` bnf
@@ -1955,7 +1955,7 @@ deduction guides declared for the class template are considered.
 
 ``` bnf
 deduction-guide:
-    ₒₚₜ {explicit-specifier} template-name '(' parameter-declaration-clause ')' '->' simple-template-id ';'
+    explicit-specifierₒₚₜ template-name '(' parameter-declaration-clause ')' '->' simple-template-id ';'
 ```
 
 [*Example 1*:
@@ -3544,7 +3544,7 @@ arguments.
 
 ``` bnf
 concept-definition:
-  concept concept-name ₒₚₜ {attribute-specifier-seq} '=' constraint-expression ';'
+  concept concept-name attribute-specifier-seqₒₚₜ '=' constraint-expression ';'
 ```
 
 ``` bnf
@@ -3684,7 +3684,7 @@ specialization, the program is ill-formed, no diagnostic required.
 ``` bnf
 typename-specifier:
   typename nested-name-specifier identifier
-  typename nested-name-specifier 'ₒₚₜ {template}' simple-template-id
+  typename nested-name-specifier 'templateₒₚₜ ' simple-template-id
 ```
 
 The component names of a *typename-specifier* are its *identifier* (if
@@ -4056,7 +4056,7 @@ A *dependent call* is an expression, possibly formed as a non-member
 candidate for an operator [[over.match.oper]], of the form:
 
 ``` bnf
-postfix-expression '(' ₒₚₜ {expression-list} ')'
+postfix-expression '(' expression-listₒₚₜ ')'
 ```
 
 where the *postfix-expression* is an *unqualified-id* and
@@ -4362,12 +4362,12 @@ only if the type specified by the *type-id*, *simple-type-specifier*,
 subexpression is type-dependent:
 
 ``` bnf
-simple-type-specifier '(' ₒₚₜ {expression-list} ')'
+simple-type-specifier '(' expression-listₒₚₜ ')'
 simple-type-specifier braced-init-list
-typename-specifier '(' ₒₚₜ {expression-list} ')'
+typename-specifier '(' expression-listₒₚₜ ')'
 typename-specifier braced-init-list
-ₒₚₜ {'::'} new ₒₚₜ {new-placement} new-type-id ₒₚₜ {new-initializer}
-ₒₚₜ {'::'} new ₒₚₜ {new-placement} '(' type-id ')' ₒₚₜ {new-initializer}
+'::'ₒₚₜ new new-placementₒₚₜ new-type-id new-initializerₒₚₜ 
+'::'ₒₚₜ new new-placementₒₚₜ '(' type-id ')' new-initializerₒₚₜ 
 dynamic_cast '<' type-id '>' '(' expression ')'
 static_cast '<' type-id '>' '(' expression ')'
 const_cast '<' type-id '>' '(' expression ')'
@@ -4386,9 +4386,9 @@ sizeof '...' '(' identifier ')'
 alignof '(' type-id ')'
 typeid '(' expression ')'
 typeid '(' type-id ')'
-ₒₚₜ {'::'} delete cast-expression
-ₒₚₜ {'::'} delete '[' ']' cast-expression
-throw ₒₚₜ {assignment-expression}
+'::'ₒₚₜ delete cast-expression
+'::'ₒₚₜ delete '[' ']' cast-expression
+throw assignment-expressionₒₚₜ 
 noexcept '(' expression ')'
 ```
 
@@ -4450,7 +4450,7 @@ Expressions of the following form are value-dependent if either the
 *cast-expression* is value-dependent:
 
 ``` bnf
-simple-type-specifier '(' ₒₚₜ {expression-list} ')'
+simple-type-specifier '(' expression-listₒₚₜ ')'
 static_cast '<' type-id '>' '(' expression ')'
 const_cast '<' type-id '>' '(' expression ')'
 reinterpret_cast '<' type-id '>' '(' expression ')'
@@ -5297,7 +5297,7 @@ The syntax for explicit instantiation is:
 
 ``` bnf
 explicit-instantiation:
-  ₒₚₜ {extern} template declaration
+  externₒₚₜ template declaration
 ```
 
 There are two forms of explicit instantiation: an explicit instantiation
@@ -7091,32 +7091,32 @@ template non-type argument `i` can be deduced if `P` and `A` have one of
 the following forms:
 
 ``` cpp
-ₒₚₜ {cv} T
+\opt{cv} T
 T*
 T&
 T&&
-ₒₚₜ {T}[ₒₚₜ {i}]
-ₒₚₜ {T}(ₒₚₜ {T}) noexcept(ₒₚₜ {i})
-ₒₚₜ {T} ₒₚₜ {T}::*
-ₒₚₜ {TT}<T>
-ₒₚₜ {TT}<i>
-ₒₚₜ {TT}<TT>
-ₒₚₜ {TT}<>
+\opt{T}[\opt{i}]
+\opt{T}(\opt{T}) noexcept(\opt{i})
+\opt{T} \opt{T}::*
+\opt{TT}<T>
+\opt{TT}<i>
+\opt{TT}<TT>
+\opt{TT}<>
 ```
 
 where
 
-- `ₒₚₜ {T}` represents a type or parameter-type-list that either
+- `\opt{T}` represents a type or parameter-type-list that either
   satisfies these rules recursively, is a non-deduced context in `P` or
   `A`, or is the same non-dependent type in `P` and `A`,
-- `ₒₚₜ {TT}` represents either a class template or a template template
+- `\opt{TT}` represents either a class template or a template template
   parameter,
-- `ₒₚₜ {i}` represents an expression that either is an `i`, is
+- `\opt{i}` represents an expression that either is an `i`, is
   value-dependent in `P` or `A`, or has the same constant value in `P`
   and `A`, and
-- `noexcept(ₒₚₜ {i})` represents an exception specification
+- `noexcept(\opt{i})` represents an exception specification
   [[except.spec]] in which the (possibly-implicit, see  [[dcl.fct]])
-  *noexcept-specifier*’s operand satisfies the rules for an `ₒₚₜ {i}`
+  *noexcept-specifier*’s operand satisfies the rules for an `\opt{i}`
   above.
 
 [*Note 2*: If a type matches such a form but contains no `T`s, `i`s, or

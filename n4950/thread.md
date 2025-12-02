@@ -967,7 +967,7 @@ follows:
 
 ``` bnf
 thread-id-format-spec
-    ₒₚₜ {fill-and-align} ₒₚₜ {width}
+    fill-and-alignₒₚₜ widthₒₚₜ
 ```
 
 [*Note 1*: The productions *fill-and-align* and *width* are described
@@ -8207,10 +8207,10 @@ unevaluated operand [[term.unevaluated.operand]] and either
 
 - `F::operator()` is a non-static member function and
   `decltype(&F::operator())` is either of the form
-  `R(G::*)(A...)` cv `ₒₚₜ ``&`` ₒₚₜ ``noexcept` or of the form
-  `R(*)(G, A...) ₒₚₜ ``noexcept` for a type `G`, or
+  `R(G::*)(A...)` cv \\ₒₚₜ ` `noexceptₒₚₜ  or of the form
+  `R(*)(G, A...) `noexceptₒₚₜ  for a type `G`, or
 - `F::operator()` is a static member function and
-  `decltype(&F::operator())` is of the form `R(*)(A...) ₒₚₜ ``noexcept`.
+  `decltype(&F::operator())` is of the form `R(*)(A...) `noexceptₒₚₜ .
 
 *Remarks:* The deduced type is `packaged_task<R(A...)>`.
 

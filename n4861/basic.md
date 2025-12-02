@@ -212,7 +212,7 @@ follows:
 - If E is a subscripting operation [[expr.sub]] with an array operand,
   the set contains the potential results of that operand.
 - If E is a class member access expression [[expr.ref]] of the form E₁
-  `.` ₒₚₜ `template` E₂ naming a non-static data member, the set
+  `.` \tcode{templateₒₚₜ  E₂ naming a non-static data member, the set
   contains the potential results of E₁.
 - If E is a class member access expression naming a static data member,
   the set contains the *id-expression* designating the data member.
@@ -742,8 +742,9 @@ struct X {
 The point of declaration of a class first declared in an
 *elaborated-type-specifier* is as follows:
 
-- for a declaration of the form the *identifier* is declared to be a
-  *class-name* in the scope that contains the declaration, otherwise
+- for a declaration of the formattribute-specifier-seqₒₚₜ  the
+  *identifier* is declared to be a *class-name* in the scope that
+  contains the declaration, otherwise
 - for an *elaborated-type-specifier* of the form if the
   *elaborated-type-specifier* is used in the *decl-specifier-seq* or
   *parameter-declaration-clause* of a function defined in namespace
@@ -1726,7 +1727,7 @@ enumeration type shall represent an *enumerator* of that enumeration.
 In a *qualified-id* of the form:
 
 ``` bnf
-ₒₚₜ {nested-name-specifier} type-name '::' '~' type-name
+nested-name-specifierₒₚₜ type-name '::' '~' type-name
 ```
 
 the second *type-name* is looked up in the same scope as the first.
@@ -2076,7 +2077,7 @@ unless the *elaborated-type-specifier* appears in a declaration with the
 following form:
 
 ``` bnf
-class-key ₒₚₜ {attribute-specifier-seq} identifier ';'
+class-key attribute-specifier-seqₒₚₜ identifier ';'
 ```
 
 the *identifier* is looked up according to  [[basic.lookup.unqual]] but
@@ -2089,7 +2090,7 @@ lookup does not find a previously declared *type-name*, or if the
 *elaborated-type-specifier* appears in a declaration with the form:
 
 ``` bnf
-class-key ₒₚₜ {attribute-specifier-seq} identifier ';'
+class-key attribute-specifier-seqₒₚₜ identifier ';'
 ```
 
 the *elaborated-type-specifier* is a declaration that introduces the
@@ -2242,8 +2243,8 @@ declarations.
 
 ``` bnf
 translation-unit:
-    ₒₚₜ {declaration-seq}
-    ₒₚₜ {global-module-fragment} module-declaration ₒₚₜ {declaration-seq} ₒₚₜ {private-module-fragment}
+    declaration-seqₒₚₜ 
+    global-module-fragmentₒₚₜ module-declaration declaration-seqₒₚₜ private-module-fragmentₒₚₜ
 ```
 
 A name is said to have *linkage* when it might denote the same object,

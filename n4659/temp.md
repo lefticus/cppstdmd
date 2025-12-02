@@ -2561,7 +2561,7 @@ class template, the program is ill-formed.
 ``` bnf
 typename-specifier:
   'typename' nested-name-specifier identifier
-  'typename' nested-name-specifier 'templateₒₚₜ ' simple-template-id
+  'typename' nested-name-specifier 'template'ₒₚₜ simple-template-id
 ```
 
 If a specialization of a template is instantiated for a set of
@@ -4016,7 +4016,7 @@ The syntax for explicit instantiation is:
 
 ``` bnf
 explicit-instantiation:
-  'externₒₚₜ ' 'template' declaration
+  'extern'ₒₚₜ 'template' declaration
 ```
 
 There are two forms of explicit instantiation: an explicit instantiation

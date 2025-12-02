@@ -544,8 +544,8 @@ capture-default:
 
 ``` bnf
 capture-list:
-    capture '...ₒₚₜ '
-    capture-list ',' capture '...ₒₚₜ '
+    capture '...'ₒₚₜ 
+    capture-list ',' capture '...'ₒₚₜ
 ```
 
 ``` bnf
@@ -1095,10 +1095,10 @@ elaborated-type-specifier:
 
 ``` bnf
 class-key attribute-specifier-seqₒₚₜ identifier ';'
-'friend' class-key '::ₒₚₜ ' identifier ';'
-'friend' class-key '::ₒₚₜ ' simple-template-id ';'
+'friend' class-key '::'ₒₚₜ identifier ';'
+'friend' class-key '::'ₒₚₜ simple-template-id ';'
 'friend' class-key nested-name-specifier identifier ';'
-'friend' class-key nested-name-specifier 'templateₒₚₜ ' simple-template-id ';'
+'friend' class-key nested-name-specifier 'template'ₒₚₜ simple-template-id ';'
 ```
 
 ``` bnf
@@ -1171,12 +1171,12 @@ namespace-definition:
 
 ``` bnf
 named-namespace-definition:
-        'inlineₒₚₜ ' 'namespace' attribute-specifier-seqₒₚₜ identifier '{' namespace-body '}'
+        'inline'ₒₚₜ 'namespace' attribute-specifier-seqₒₚₜ identifier '{' namespace-body '}'
 ```
 
 ``` bnf
 unnamed-namespace-definition:
-        'inlineₒₚₜ ' 'namespace' attribute-specifier-seqₒₚₜ '{' namespace-body '}'
+        'inline'ₒₚₜ 'namespace' attribute-specifier-seqₒₚₜ '{' namespace-body '}'
 ```
 
 ``` bnf
@@ -1229,7 +1229,7 @@ using-declarator-list:
 
 ``` bnf
 using-declarator:
-    'typenameₒₚₜ ' nested-name-specifier unqualified-id
+    'typename'ₒₚₜ nested-name-specifier unqualified-id
 ```
 
 ``` bnf
@@ -1535,7 +1535,7 @@ initializer-list:
 
 ``` bnf
 braced-init-list:
-    '{' initializer-list ',ₒₚₜ ' '}'
+    '{' initializer-list ','ₒₚₜ '}'
     '{' '}'
 ```
 
@@ -1705,7 +1705,7 @@ postfix-expression '[' expr-or-braced-init-list ']'
 ```
 
 ``` bnf
-postfix-expression '->' 'templateₒₚₜ ' id-expression\\
+postfix-expression '->' 'template'ₒₚₜ id-expression\\
 postfix-expression '->' pseudo-destructor-name
 ```
 
@@ -1782,12 +1782,12 @@ template-argument:
 ``` bnf
 typename-specifier:
   'typename' nested-name-specifier identifier
-  'typename' nested-name-specifier 'templateₒₚₜ ' simple-template-id
+  'typename' nested-name-specifier 'template'ₒₚₜ simple-template-id
 ```
 
 ``` bnf
 explicit-instantiation:
-  'externₒₚₜ ' 'template' declaration
+  'extern'ₒₚₜ 'template' declaration
 ```
 
 ``` bnf

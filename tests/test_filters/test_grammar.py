@@ -98,6 +98,22 @@ string:\br
     assert "encodingₒₚₜ " in output or "encodingₒₚₜ" in output
 
 
+def test_ncbnf_with_terminal_opt():
+    r"""Test \terminal{;\opt} pattern (n3337 style - opt inside terminal)"""
+    latex = r"""
+\begin{ncbnf}
+member-declaration:\br
+    function-definition \terminal{;\opt}
+\end{ncbnf}
+"""
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    # \terminal{;\opt} should become ';'ₒₚₜ (semicolon quoted, then subscript OUTSIDE quotes)
+    assert "';'ₒₚₜ" in output
+    # \opt should not appear raw
+    assert "\\opt" not in output
+
+
 def test_ncsimplebnf():
     """Test ncsimplebnf environment"""
     latex = r"""

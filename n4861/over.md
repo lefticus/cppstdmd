@@ -499,7 +499,7 @@ B b3 = C();                             // calls #4
 In a function call [[expr.call]]
 
 ``` bnf
-postfix-expression '(' ₒₚₜ {expression-list} ')'
+postfix-expression '(' expression-listₒₚₜ ')'
 ```
 
 if the *postfix-expression* names at least one function or function
@@ -581,7 +581,7 @@ In addition, for each non-explicit conversion function declared in `T`
 of the form
 
 ``` bnf
-operator conversion-type-id '( )' ₒₚₜ {cv-qualifier-seq} ₒₚₜ {ref-qualifier} ₒₚₜ {noexcept-specifier} ₒₚₜ {attribute-specifier-seq} ';'
+operator conversion-type-id '( )' cv-qualifier-seqₒₚₜ ref-qualifierₒₚₜ noexcept-specifierₒₚₜ attribute-specifier-seqₒₚₜ ';'
 ```
 
 where the optional *cv-qualifier-seq* is the same cv-qualification as,
@@ -1065,7 +1065,7 @@ When resolving a placeholder for a deduced class type
 `A`, the *defining-type-id* of `A` must be of the form
 
 ``` bnf
-ₒₚₜ {typename} ₒₚₜ {nested-name-specifier} ₒₚₜ {template} simple-template-id
+typenameₒₚₜ nested-name-specifierₒₚₜ templateₒₚₜ simple-template-id
 ```
 
 as specified in [[dcl.type.simple]]. The guides of `A` are the set of
@@ -2603,7 +2603,7 @@ that is a non-static member function with an arbitrary number of
 parameters. It may have default arguments. For an expression of the form
 
 ``` bnf
-postfix-expression '(' ₒₚₜ {expression-list} ')'
+postfix-expression '(' expression-listₒₚₜ ')'
 ```
 
 where the *postfix-expression* is of class type, the operator function
@@ -2612,13 +2612,13 @@ call function for a conversion function named `operator`
 *conversion-type-id* is selected, the expression is interpreted as
 
 ``` bnf
-postfix-expression '.' operator conversion-type-id '('')' '(' ₒₚₜ {expression-list} ')'
+postfix-expression '.' operator conversion-type-id '('')' '(' expression-listₒₚₜ ')'
 ```
 
 Otherwise, the expression is interpreted as
 
 ``` bnf
-postfix-expression '.' operator '('')' '(' ₒₚₜ {expression-list} ')'
+postfix-expression '.' operator '('')' '(' expression-listₒₚₜ ')'
 ```
 
 ### Subscripting <a id="over.sub">[[over.sub]]</a>
@@ -2660,14 +2660,14 @@ A *class member access operator function* is a function named
 For an expression of the form
 
 ``` bnf
-postfix-expression '->' ₒₚₜ {template} id-expression
+postfix-expression '->' templateₒₚₜ id-expression
 ```
 
 the operator function is selected by overload resolution
 [[over.match.oper]], and the expression is interpreted as
 
 ``` bnf
-'(' postfix-expression . operator '->' '('')' ')' '->' ₒₚₜ {template} id-expression
+'(' postfix-expression . operator '->' '('')' ')' '->' templateₒₚₜ id-expression
 ```
 
 ### Increment and decrement <a id="over.inc">[[over.inc]]</a>
