@@ -755,6 +755,25 @@ class StandardBuilder:
 
         return "\n".join(toc_lines)
 
+    @staticmethod
+    def _is_grammar_definition(block: str) -> bool:
+        """
+        Check if a BNF block contains a grammar definition (nonterminal:).
+
+        Grammar definitions have lines like "nonterminal-name:" that define
+        production rules. Example/explanation blocks (like "behaves as if")
+        don't have these and should be excluded from grammar.md.
+
+        Args:
+            block: Content of a BNF code block
+
+        Returns:
+            True if block contains at least one grammar definition
+        """
+        # Pattern: lowercase word (with optional hyphens/digits), followed by colon
+        # at the start of a line. Examples: "declaration:", "namespace-alias-definition:"
+        return bool(re.search(r"^[a-z][a-z0-9-]*:", block, re.MULTILINE))
+
     def _generate_grammar_appendix(
         self, output_files: list[Path], output_dir: Path, verbose: bool = False
     ) -> None:
@@ -800,8 +819,10 @@ class StandardBuilder:
                 md_file = file_by_stem[stable_name]
                 content = md_file.read_text(encoding="utf-8")
 
-                # Extract all BNF blocks from this file
-                blocks = bnf_pattern.findall(content)
+                # Extract BNF blocks that contain grammar definitions
+                # Filter out example/explanation blocks (like "behaves as if")
+                all_blocks = bnf_pattern.findall(content)
+                blocks = [b for b in all_blocks if self._is_grammar_definition(b)]
 
                 if blocks:
                     bnf_by_file[stable_name] = {

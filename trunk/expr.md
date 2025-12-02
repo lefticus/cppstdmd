@@ -1189,7 +1189,7 @@ of the expression is that of the copy of the parameter
 [[dcl.fct.def.coroutine]], and the result is that copy.
 
 Otherwise, if the *unqualified-id* names a result binding
-[[dcl.contract.res]] attached to a function *f* with return type `U`,
+[[dcl.contract.res]] attached to a function with return type `U`,
 
 - if `U` is “reference to `T`”, then the type of the expression is
   `const T`;

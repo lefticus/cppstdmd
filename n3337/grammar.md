@@ -343,22 +343,6 @@ ud-suffix:
 ## Basic concepts <a id="gram.basic">[[gram.basic]]</a>
 
 ``` bnf
-nested-name-specifierₒₚₜ class-name '::' '~' class-name
-```
-
-``` bnf
-nested-name-specifier unqualified-id
-```
-
-``` bnf
-class-key attribute-specifier-seqₒₚₜ identifier ';'
-```
-
-``` bnf
-class-key attribute-specifier-seqₒₚₜ identifier ';'
-```
-
-``` bnf
 translation-unit:
     declaration-seqₒₚₜ
 ```
@@ -490,10 +474,6 @@ pseudo-destructor-name:
 ```
 
 ``` bnf
-nested-name-specifierₒₚₜ type-name ':: ~' type-name
-```
-
-``` bnf
 unary-expression:
     postfix-expression
     '++' cast-expression
@@ -545,10 +525,6 @@ noptr-new-declarator:
 new-initializer:
     '(' expression-listₒₚₜ ')'
     braced-init-list
-```
-
-``` bnf
-'(' assignment-expression ')'
 ```
 
 ``` bnf
@@ -725,10 +701,6 @@ condition:
 ```
 
 ``` bnf
-'case' constant-expression ':'
-```
-
-``` bnf
 iteration-statement:
     'while (' condition ')' statement
     'do' statement 'while (' expression ') ;'
@@ -751,22 +723,6 @@ for-range-declaration:
 for-range-initializer:
     expression
     braced-init-list
-```
-
-``` bnf
-'for (' for-init-statement conditionₒₚₜ ';' expressionₒₚₜ ')' statement
-```
-
-``` bnf
-'for (' for-range-declaration : expression ')' statement
-```
-
-``` bnf
-'(' expression ')'
-```
-
-``` bnf
-'for' '(' for-range-declaration ':' braced-init-list ')' statement
 ```
 
 ``` bnf
@@ -829,11 +785,6 @@ simple-declaration:
 ```
 
 ``` bnf
-static_assert-declaration:
-  'static_assert' '(' constant-expression ',' string-literal ')' ';'
-```
-
-``` bnf
 empty-declaration:
     ';'
 ```
@@ -841,10 +792,6 @@ empty-declaration:
 ``` bnf
 attribute-declaration:
     attribute-specifier-seq ';'
-```
-
-``` bnf
-attribute-specifier-seqₒₚₜ decl-specifier-seqₒₚₜ init-declarator-listₒₚₜ ';'
 ```
 
 ``` bnf
@@ -953,14 +900,6 @@ elaborated-type-specifier:
 ```
 
 ``` bnf
-class-key attribute-specifier-seqₒₚₜ identifier ';'
-'friend' class-key '::'ₒₚₜ identifier ';'
-'friend' class-key '::'ₒₚₜ simple-template-id ';'
-'friend' class-key nested-name-specifier identifier ';'
-'friend' class-key nested-name-specifier 'template'ₒₚₜ simple-template-id ';'
-```
-
-``` bnf
 enum-name:
     identifier
 ```
@@ -1053,12 +992,6 @@ unnamed-namespace-definition:
 ``` bnf
 namespace-body:
         declaration-seqₒₚₜ
-```
-
-``` bnf
-'inline'ₒₚₜ 'namespace' unique '{ /* empty body */ }'
-'using namespace' unique ';'
-'namespace' unique '{' namespace-body '}'
 ```
 
 ``` bnf
@@ -1275,37 +1208,6 @@ noptr-abstract-pack-declarator:
 ```
 
 ``` bnf
-( D1 )
-```
-
-``` bnf
-'*' attribute-specifier-seqₒₚₜ cv-qualifier-seqₒₚₜ 'D1'
-```
-
-``` bnf
-'&' attribute-specifier-seqₒₚₜ 'D1'
-'&&' attribute-specifier-seqₒₚₜ 'D1'
-```
-
-``` bnf
-nested-name-specifier '*' attribute-specifier-seqₒₚₜ cv-qualifier-seqₒₚₜ D1
-```
-
-``` bnf
-'D1 [' constant-expressionₒₚₜ ']' attribute-specifier-seqₒₚₜ
-```
-
-``` bnf
-'D1 (' parameter-declaration-clause ')' cv-qualifier-seqₒₚₜ 
-  ref-qualifierₒₚₜ exception-specificationₒₚₜ attribute-specifier-seqₒₚₜ
-```
-
-``` bnf
-'D1 (' parameter-declaration-clause ')' cv-qualifier-seqₒₚₜ 
-  ref-qualifierₒₚₜ exception-specificationₒₚₜ attribute-specifier-seqₒₚₜ trailing-return-type
-```
-
-``` bnf
 parameter-declaration-clause:
     parameter-declaration-listₒₚₜ ...ₒₚₜ 
     parameter-declaration-list ',' ...
@@ -1336,20 +1238,6 @@ function-body:
     function-try-block
     '= default ;'
     '= delete ;'
-```
-
-``` bnf
-'D1 (' parameter-declaration-clause ')' cv-qualifier-seqₒₚₜ 
-   
-      ref-qualifierₒₚₜ exception-specificationₒₚₜ attribute-specifier-seqₒₚₜ trailing-return-typeₒₚₜ
-```
-
-``` bnf
-attribute-specifier-seqₒₚₜ decl-specifier-seqₒₚₜ declarator ' = default ;'
-```
-
-``` bnf
-attribute-specifier-seqₒₚₜ decl-specifier-seqₒₚₜ declarator ' = delete ;'
 ```
 
 ``` bnf
@@ -1501,18 +1389,8 @@ access-specifier:
     'public'
 ```
 
-``` bnf
-'friend' elaborated-type-specifier ';'
-'friend' simple-type-specifier ';'
-'friend' typename-specifier ';'
-```
-
 
 ## Overloading <a id="gram.over">[[gram.over]]</a>
-
-``` bnf
-postfix-expression '(' expression-listₒₚₜ ')'
-```
 
 ``` bnf
 postfix-expression:
@@ -1522,33 +1400,8 @@ postfix-expression:
 ```
 
 ``` bnf
-'operator' conversion-type-id '( )' attribute-specifier-seqₒₚₜ cv-qualifier ';'
-```
-
-``` bnf
-'R' call-function '(' conversion-type-id 'F, P1 a1, ... ,Pn an)' '{ return F (a1,... ,an); }'
-```
-
-``` bnf
 operator-function-id:
     'operator' operator
-```
-
-``` bnf
-postfix-expression '(' expression-listₒₚₜ ')'
-```
-
-``` bnf
-postfix-expression '[' expression ']'
-```
-
-``` bnf
-postfix-expression '[' braced-init-list ']'
-```
-
-``` bnf
-postfix-expression '->' 'template'ₒₚₜ id-expression
-postfix-expression '->' pseudo-destructor-name
 ```
 
 ``` bnf
@@ -1700,72 +1553,6 @@ pp-tokens:
 ``` bnf
 new-line:
     the new-line character
-```
-
-``` bnf
-'defined' identifier
-```
-
-``` bnf
-'defined (' identifier ')'
-```
-
-``` bnf
-'# include <'h-char-sequence'>' new-line
-```
-
-``` bnf
-'# include "'q-char-sequence'"' new-line
-```
-
-``` bnf
-'# include <'h-char-sequence'>' new-line
-```
-
-``` bnf
-'# include' pp-tokens new-line
-```
-
-``` bnf
-'# define' identifier replacement-list new-line
-```
-
-``` bnf
-'# define' identifier lparen identifier-listₒₚₜ ')' replacement-list new-line
-'# define' identifier lparen '...' ')' replacement-list new-line
-'# define' identifier lparen identifier-list ', ...' ')' replacement-list new-line
-```
-
-``` bnf
-'# undef' identifier new-line
-```
-
-``` bnf
-'# line' digit-sequence new-line
-```
-
-``` bnf
-'# line' digit-sequence '"' s-char-sequenceₒₚₜ '"' new-line
-```
-
-``` bnf
-'# line' pp-tokens new-line
-```
-
-``` bnf
-'# error' pp-tokensₒₚₜ new-line
-```
-
-``` bnf
-'# pragma' pp-tokensₒₚₜ new-line
-```
-
-``` bnf
-'#' new-line
-```
-
-``` bnf
-'_Pragma' '(' string-literal ')'
 ```
 
 
