@@ -395,7 +395,7 @@ otherwise; it is a bit-field if the identifier designates a bit-field (
 
 ``` bnf
 qualified-id:
-    nested-name-specifier 'template'uₒₚₜnqualified-id
+    nested-name-specifier 'template'ₒₚₜ unqualified-id
 ```
 
 ``` bnf
@@ -405,7 +405,7 @@ nested-name-specifier:
     namespace-name '::'
     decltype-specifier '::'
     nested-name-specifier identifier '::'
-    nested-name-specifier 'template'sₒₚₜimple-template-id '::'
+    nested-name-specifier 'template'ₒₚₜ simple-template-id '::'
 ```
 
 The type denoted by a *decltype-specifier* in a *nested-name-specifier*
@@ -458,7 +458,7 @@ in the context of the class denoted by the *nested-name-specifier*.
 
 ``` bnf
 lambda-expression:
-    lambda-introducer lambda-declaratorcₒₚₜompound-statement
+    lambda-introducer lambda-declaratorₒₚₜ compound-statement
 ```
 
 ``` bnf
@@ -468,8 +468,8 @@ lambda-introducer:
 
 ``` bnf
 lambda-declarator:
-    '(' parameter-declaration-clause ')' decl-specifier-seq\opt
-    \hspace*{  inc}noexcept-specifier\opt attribute-specifier-seq\opt trailing-return-type\opt
+    '(' parameter-declaration-clause ')' decl-specifier-seqₒₚₜ 
+    \hspace*{ inc}noexcept-specifierₒₚₜ attribute-specifier-seqₒₚₜ trailing-return-typeₒₚₜ
 ```
 
 Lambda expressions provide a concise way to create simple function
@@ -825,8 +825,8 @@ capture-default:
 
 ``` bnf
 capture-list:
-    capture '...\opt'
-    capture-list ',' capture '...\opt'
+    capture '...ₒₚₜ '
+    capture-list ',' capture '...ₒₚₜ '
 ```
 
 ``` bnf
@@ -1251,7 +1251,7 @@ fold-expression:
 fold-operator: one of
     '+ ' '- ' '* ' '/ ' '% ' '^ ' '& ' '| ' '<< ' '>> '
     '+=' '-=' '*=' '/=' '%=' '^=' '&=' '|=' '<<=' '>>=' '='
-    '==' '!=' '< ' '> ' '<=' '>=' '&&' '||' ',  ' '.* ' '->*'
+    '==' '!=' '< ' '> ' '<=' '>=' '&&' '||' ', ' '.* ' '->*'
 ```
 
 An expression of the form `(...` *op* `e)` where *op* is a
@@ -1299,8 +1299,8 @@ postfix-expression:
     typename-specifier '(' expression-listₒₚₜ ')'
     simple-type-specifier braced-init-list
     typename-specifier braced-init-list
-    postfix-expression '. template'iₒₚₜd-expression
-    postfix-expression '-> template'iₒₚₜd-expression
+    postfix-expression '. template'ₒₚₜ id-expression
+    postfix-expression '-> template'ₒₚₜ id-expression
     postfix-expression '.' pseudo-destructor-name
     postfix-expression '->' pseudo-destructor-name
     postfix-expression '++'
@@ -1320,7 +1320,7 @@ expression-list:
 
 ``` bnf
 pseudo-destructor-name:
-    nested-name-specifiertₒₚₜype-name ':: ~' type-name
+    nested-name-specifierₒₚₜ type-name ':: ~' type-name
     nested-name-specifier 'template' simple-template-id ':: ~' type-name
     '~' type-name
     '~' decltype-specifier
@@ -1577,7 +1577,7 @@ the object type and of the type designated by the
 *type-name*s in a *pseudo-destructor-name* of the form
 
 ``` bnf
-nested-name-specifiertₒₚₜype-name ':: ~' type-name
+nested-name-specifierₒₚₜ type-name ':: ~' type-name
 ```
 
 shall designate the same scalar type (ignoring cv-qualification).
@@ -2257,7 +2257,7 @@ unary-expression:
 
 ``` bnf
 unary-operator: one of
-    '*  &  +  -  !  ~'
+    '* & + - ! ~'
 ```
 
 ### Unary operators <a id="expr.unary.op">[[expr.unary.op]]</a>
@@ -2464,8 +2464,8 @@ type. — *end note*]
 
 ``` bnf
 new-expression:
-    '::'\opt{} 'new' new-placement\opt new-type-id new-initializer\opt 
-    '::'\opt{} 'new' new-placement\opt{} '(' type-id ')' new-initializer\opt
+    '::'ₒₚₜ 'new' new-placementₒₚₜ new-type-id new-initializerₒₚₜ 
+    '::'ₒₚₜ 'new' new-placementₒₚₜ '(' type-id ')' new-initializerₒₚₜ
 ```
 
 ``` bnf
@@ -2475,20 +2475,19 @@ new-placement:
 
 ``` bnf
 new-type-id:
-    type-specifier-seq new-declarator\opt
+    type-specifier-seq new-declaratorₒₚₜ
 ```
 
 ``` bnf
 new-declarator:
-    ptr-operator new-declarator
- ₒₚₜ
+    ptr-operator new-declaratorₒₚₜ 
     noptr-new-declarator
 ```
 
 ``` bnf
 noptr-new-declarator:
-    '[' expression ']' attribute-specifier-seq\opt
-    noptr-new-declarator '[' constant-expression ']' attribute-specifier-seq\opt
+    '[' expression ']' attribute-specifier-seqₒₚₜ 
+    noptr-new-declarator '[' constant-expression ']' attribute-specifier-seqₒₚₜ
 ```
 
 ``` bnf
@@ -3686,7 +3685,7 @@ of the following shall hold:
 
 ``` bnf
 throw-expression:
-    'throw'  assignment-expression\opt
+    'throw' assignment-expressionₒₚₜ
 ```
 
 A *throw-expression* is of type `void`.
@@ -3747,7 +3746,7 @@ assignment-expression:
 
 ``` bnf
 assignment-operator: one of
-    '=  *=  /=  %=   +=  -=  >>=  <<=  &=  ^=  |='
+    '= *= /= %= += -= >>= <<= &= ^= |='
 ```
 
 In simple assignment (`=`), the value of the expression replaces that of

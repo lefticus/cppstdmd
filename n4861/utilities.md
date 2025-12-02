@@ -10876,7 +10876,7 @@ template<class F> function(F) -> function<see below>;
 
 *Constraints:* `&F::operator()` is well-formed when treated as an
 unevaluated operand and `decltype(&F::operator())` is of the form
-`R(G::*)(A...)` cv `&ₒₚₜ noexceptₒₚₜ` for a class type `G`.
+`R(G::*)(A...)` cv `ₒₚₜ ``&`` ₒₚₜ ``noexcept` for a class type `G`.
 
 *Remarks:* The deduced type is `function<R(A...)>`.
 
@@ -13276,7 +13276,7 @@ syntax of replacement fields is as follows:
 
 ``` bnf
 replacement-field
-    '{' arg-idₒₚₜ format-specifierₒₚₜ '}'
+    '{' ₒₚₜ {arg-id} ₒₚₜ {format-specifier} '}'
 ```
 
 ``` bnf
@@ -13388,12 +13388,12 @@ The syntax of format specifications is as follows:
 
 ``` bnf
 std-format-spec
-    fill-and-alignₒₚₜ signₒₚₜ '#'ₒₚₜ '0'ₒₚₜ widthₒₚₜ precisionₒₚₜ 'L'ₒₚₜ typeₒₚₜ
+    ₒₚₜ {fill-and-align} ₒₚₜ {sign} ₒₚₜ {'#'} ₒₚₜ {'0'} ₒₚₜ {width} ₒₚₜ {precision} ₒₚₜ {'L'} ₒₚₜ {type}
 ```
 
 ``` bnf
 fill-and-align
-    fillₒₚₜ align
+    ₒₚₜ {fill} align
 ```
 
 ``` bnf
@@ -13414,13 +13414,13 @@ sign one of
 ``` bnf
 width
     positive-integer
-    '{' arg-idₒₚₜ '}'
+    '{' ₒₚₜ {arg-id} '}'
 ```
 
 ``` bnf
 precision
     '.' nonnegative-integer
-    '.' '{' arg-idₒₚₜ '}'
+    '.' '{' ₒₚₜ {arg-id} '}'
 ```
 
 ``` bnf
@@ -13502,8 +13502,8 @@ Normally, a decimal-point character appears in the result of these
 conversions only if a digit follows it. In addition, for `g` and `G`
 conversions, trailing zeros are not removed from the result.
 
-If `{ arg-idₒₚₜ }` is used in a *width* or *precision*, the value of the
-corresponding formatting argument is used in its place. If the
+If `{ ₒₚₜ {arg-id} }` is used in a *width* or *precision*, the value of
+the corresponding formatting argument is used in its place. If the
 corresponding formatting argument is not of integral type, or its value
 is negative for *precision* or non-positive for *width*, an exception of
 type `format_error` is thrown.

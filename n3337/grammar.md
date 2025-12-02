@@ -117,9 +117,9 @@ literal:
 
 ``` bnf
 integer-literal:
-    decimal-literal integer-suffix\opt
-    octal-literal integer-suffix\opt
-    hexadecimal-literal integer-suffix\opt
+    decimal-literal integer-suffixₒₚₜ 
+    octal-literal integer-suffixₒₚₜ 
+    hexadecimal-literal integer-suffixₒₚₜ
 ```
 
 ``` bnf
@@ -143,42 +143,42 @@ hexadecimal-literal:
 
 ``` bnf
 nonzero-digit: one of
-    '1  2  3  4  5  6  7  8  9'
+    '1 2 3 4 5 6 7 8 9'
 ```
 
 ``` bnf
 octal-digit: one of
-    '0  1  2  3  4  5  6  7'
+    '0 1 2 3 4 5 6 7'
 ```
 
 ``` bnf
 hexadecimal-digit: one of
-    '0  1  2  3  4  5  6  7  8  9'
-    'a  b  c  d  e  f'
-    'A  B  C  D  E  F'
+    '0 1 2 3 4 5 6 7 8 9'
+    'a b c d e f'
+    'A B C D E F'
 ```
 
 ``` bnf
 integer-suffix:
-    unsigned-suffix long-suffix\opt 
-    unsigned-suffix long-long-suffix\opt 
-    long-suffix unsigned-suffix\opt 
-    long-long-suffix unsigned-suffix\opt
+    unsigned-suffix long-suffixₒₚₜ 
+    unsigned-suffix long-long-suffixₒₚₜ 
+    long-suffix unsigned-suffixₒₚₜ 
+    long-long-suffix unsigned-suffixₒₚₜ
 ```
 
 ``` bnf
 unsigned-suffix: one of
-    'u  U'
+    'u U'
 ```
 
 ``` bnf
 long-suffix: one of
-    'l  L'
+    'l L'
 ```
 
 ``` bnf
 long-long-suffix: one of
-    'll  LL'
+    'll LL'
 ```
 
 ``` bnf
@@ -223,25 +223,25 @@ hexadecimal-escape-sequence:
 
 ``` bnf
 floating-literal:
-    fractional-constant exponent-part\opt floating-suffix\opt
-    digit-sequence exponent-part floating-suffix\opt
+    fractional-constant exponent-partₒₚₜ floating-suffixₒₚₜ 
+    digit-sequence exponent-part floating-suffixₒₚₜ
 ```
 
 ``` bnf
 fractional-constant:
-    digit-sequence\terminal ₒₚₜ{.} digit-sequence
+    digit-sequenceₒₚₜ '.' digit-sequence
     digit-sequence '.'
 ```
 
 ``` bnf
 exponent-part:
-    'e' signdₒₚₜigit-sequence
-    'E' signdₒₚₜigit-sequence
+    'e' signₒₚₜ digit-sequence
+    'E' signₒₚₜ digit-sequence
 ```
 
 ``` bnf
 sign: one of
-    '+  -'
+    '+ -'
 ```
 
 ``` bnf
@@ -252,13 +252,13 @@ digit-sequence:
 
 ``` bnf
 floating-suffix: one of
-    'f  l  F  L'
+    'f l F L'
 ```
 
 ``` bnf
 string-literal:
-    encoding-prefix\terminal ₒₚₜ{"} s-char-sequence\terminal ₒₚₜ{"}
-    encoding-prefix\terminal ₒₚₜ{R} raw-string
+    encoding-prefixₒₚₜ '"' s-char-sequenceₒₚₜ '"'
+    encoding-prefixₒₚₜ 'R' raw-string
 ```
 
 ``` bnf
@@ -277,7 +277,7 @@ s-char-sequence:
 
 ``` bnf
 raw-string:
-    '"' d-char-sequence\terminal ₒₚₜ{(} r-char-sequence\terminal ₒₚₜ{)} d-char-sequence\terminal ₒₚₜ{"}
+    '"' d-char-sequenceₒₚₜ '(' r-char-sequenceₒₚₜ ')' d-char-sequenceₒₚₜ '"'
 ```
 
 ``` bnf
@@ -320,7 +320,7 @@ user-defined-integer-literal:
 
 ``` bnf
 user-defined-floating-literal:
-    fractional-constant exponent-partuₒₚₜd-suffix
+    fractional-constant exponent-partₒₚₜ ud-suffix
     digit-sequence exponent-part ud-suffix
 ```
 
@@ -343,7 +343,7 @@ ud-suffix:
 ## Basic concepts <a id="gram.basic">[[gram.basic]]</a>
 
 ``` bnf
-nested-name-specifiercₒₚₜlass-name '::' '~' class-name
+nested-name-specifierₒₚₜ class-name '::' '~' class-name
 ```
 
 ``` bnf
@@ -351,16 +351,16 @@ nested-name-specifier unqualified-id
 ```
 
 ``` bnf
-class-key attribute-specifier-seqiₒₚₜdentifier ';'
+class-key attribute-specifier-seqₒₚₜ identifier ';'
 ```
 
 ``` bnf
-class-key attribute-specifier-seqiₒₚₜdentifier ';'
+class-key attribute-specifier-seqₒₚₜ identifier ';'
 ```
 
 ``` bnf
 translation-unit:
-    declaration-seq\opt
+    declaration-seqₒₚₜ
 ```
 
 
@@ -394,7 +394,7 @@ unqualified-id:
 
 ``` bnf
 qualified-id:
-    nested-name-specifier 'template'uₒₚₜnqualified-id
+    nested-name-specifier 'template'ₒₚₜ unqualified-id
     '::' identifier
     '::' operator-function-id
     '::' literal-operator-id
@@ -403,21 +403,21 @@ qualified-id:
 
 ``` bnf
 nested-name-specifier:
-    '::'tₒₚₜype-name '::'
-    '::'nₒₚₜamespace-name '::'
+    '::'ₒₚₜ type-name '::'
+    '::'ₒₚₜ namespace-name '::'
     decltype-specifier '::'
     nested-name-specifier identifier '::'
-    nested-name-specifier 'template'sₒₚₜimple-template-id '::'
+    nested-name-specifier 'template'ₒₚₜ simple-template-id '::'
 ```
 
 ``` bnf
 lambda-expression:
-    lambda-introducer lambda-declaratorcₒₚₜompound-statement
+    lambda-introducer lambda-declaratorₒₚₜ compound-statement
 ```
 
 ``` bnf
 lambda-introducer:
-    '[' lambda-capture\terminal ₒₚₜ{]}
+    '[' lambda-captureₒₚₜ ']'
 ```
 
 ``` bnf
@@ -435,8 +435,8 @@ capture-default:
 
 ``` bnf
 capture-list:
-    capture '...\opt'
-    capture-list ',' capture '...\opt'
+    capture '...ₒₚₜ '
+    capture-list ',' capture '...ₒₚₜ '
 ```
 
 ``` bnf
@@ -448,8 +448,8 @@ capture:
 
 ``` bnf
 lambda-declarator:
-    '(' parameter-declaration-clause ')' 'mutable'\opt
-    \hspace*{  inc}exception-specification\opt attribute-specifier-seq\opt trailing-return-type\opt
+    '(' parameter-declaration-clause ')' 'mutable'ₒₚₜ 
+    \hspace*{ inc}exception-specificationₒₚₜ attribute-specifier-seqₒₚₜ trailing-return-typeₒₚₜ
 ```
 
 ``` bnf
@@ -457,13 +457,13 @@ postfix-expression:
     primary-expression
     postfix-expression '[' expression ']'
     postfix-expression '[' braced-init-list ']'
-    postfix-expression '(' expression-list\terminal ₒₚₜ{)}
-    simple-type-specifier '(' expression-list\terminal ₒₚₜ{)}
-    typename-specifier '(' expression-list\terminal ₒₚₜ{)}
+    postfix-expression '(' expression-listₒₚₜ ')'
+    simple-type-specifier '(' expression-listₒₚₜ ')'
+    typename-specifier '(' expression-listₒₚₜ ')'
     simple-type-specifier braced-init-list
     typename-specifier braced-init-list
-    postfix-expression '. template'iₒₚₜd-expression
-    postfix-expression '-> template'iₒₚₜd-expression
+    postfix-expression '. template'ₒₚₜ id-expression
+    postfix-expression '-> template'ₒₚₜ id-expression
     postfix-expression '.' pseudo-destructor-name
     postfix-expression '->' pseudo-destructor-name
     postfix-expression '++'
@@ -483,14 +483,14 @@ expression-list:
 
 ``` bnf
 pseudo-destructor-name:
-    nested-name-specifiertₒₚₜype-name ':: ~' type-name
+    nested-name-specifierₒₚₜ type-name ':: ~' type-name
     nested-name-specifier 'template' simple-template-id ':: ~' type-name
-    nested-name-specifier\terminal ₒₚₜ{~} type-name
+    nested-name-specifierₒₚₜ '~' type-name
     '~' decltype-specifier
 ```
 
 ``` bnf
-nested-name-specifiertₒₚₜype-name ':: ~' type-name
+nested-name-specifierₒₚₜ type-name ':: ~' type-name
 ```
 
 ``` bnf
@@ -510,13 +510,13 @@ unary-expression:
 
 ``` bnf
 unary-operator: one of
-    '*  &  +  -  !  ~'
+    '* & + - ! ~'
 ```
 
 ``` bnf
 new-expression:
-    '::'\opt 'new' new-placement\opt new-type-id new-initializer\opt 
-    '::'\opt 'new' new-placement\opt '(' type-id ')' new-initializer\opt
+    '::'ₒₚₜ 'new' new-placementₒₚₜ new-type-id new-initializerₒₚₜ 
+    '::'ₒₚₜ 'new' new-placementₒₚₜ '(' type-id ')' new-initializerₒₚₜ
 ```
 
 ``` bnf
@@ -526,25 +526,24 @@ new-placement:
 
 ``` bnf
 new-type-id:
-    type-specifier-seq new-declarator\opt
+    type-specifier-seq new-declaratorₒₚₜ
 ```
 
 ``` bnf
 new-declarator:
-    ptr-operator new-declarator
- ₒₚₜ
+    ptr-operator new-declaratorₒₚₜ 
     noptr-new-declarator
 ```
 
 ``` bnf
 noptr-new-declarator:
-    '[' expression ']' attribute-specifier-seq\opt
-    noptr-new-declarator '[' constant-expression ']' attribute-specifier-seq\opt
+    '[' expression ']' attribute-specifier-seqₒₚₜ 
+    noptr-new-declarator '[' constant-expression ']' attribute-specifier-seqₒₚₜ
 ```
 
 ``` bnf
 new-initializer:
-    '(' expression-list\terminal ₒₚₜ{)}
+    '(' expression-listₒₚₜ ')'
     braced-init-list
 ```
 
@@ -554,8 +553,8 @@ new-initializer:
 
 ``` bnf
 delete-expression:
-    '::'\terminal ₒₚₜ{delete} cast-expression
-    '::'\terminal ₒₚₜ{delete [ ]} cast-expression
+    '::'ₒₚₜ 'delete' cast-expression
+    '::'ₒₚₜ 'delete [ ]' cast-expression
 ```
 
 ``` bnf
@@ -623,7 +622,7 @@ and-expression:
 ``` bnf
 exclusive-or-expression:
     and-expression
-    exclusive-or-expression '\^{}' and-expression
+    exclusive-or-expression '\^' and-expression
 ```
 
 ``` bnf
@@ -659,7 +658,7 @@ assignment-expression:
 
 ``` bnf
 assignment-operator: one of
-    '=  *=  /=  %=   +=  -=  \shr=  \shl=  &=  \^{}=  |='
+    '= *= /= %= += -= \shr= \shl= &= \^= |='
 ```
 
 ``` bnf
@@ -679,30 +678,30 @@ constant-expression:
 ``` bnf
 statement:
     labeled-statement
-    attribute-specifier-seqeₒₚₜxpression-statement
-    attribute-specifier-seqcₒₚₜompound-statement
-    attribute-specifier-seqsₒₚₜelection-statement
-    attribute-specifier-seqiₒₚₜteration-statement
-    attribute-specifier-seqjₒₚₜump-statement
+    attribute-specifier-seqₒₚₜ expression-statement
+    attribute-specifier-seqₒₚₜ compound-statement
+    attribute-specifier-seqₒₚₜ selection-statement
+    attribute-specifier-seqₒₚₜ iteration-statement
+    attribute-specifier-seqₒₚₜ jump-statement
     declaration-statement
-    attribute-specifier-seqtₒₚₜry-block
+    attribute-specifier-seqₒₚₜ try-block
 ```
 
 ``` bnf
 labeled-statement:
-    attribute-specifier-seqiₒₚₜdentifier ':' statement
-    attribute-specifier-seq\terminal ₒₚₜ{case} constant-expression ':' statement
-    attribute-specifier-seq\terminal ₒₚₜ{default :} statement
+    attribute-specifier-seqₒₚₜ identifier ':' statement
+    attribute-specifier-seqₒₚₜ 'case' constant-expression ':' statement
+    attribute-specifier-seqₒₚₜ 'default :' statement
 ```
 
 ``` bnf
 expression-statement:
-    expression\terminal ₒₚₜ{;}
+    expressionₒₚₜ ';'
 ```
 
 ``` bnf
 compound-statement:
-    '{' statement-seq\terminal ₒₚₜ{\}}
+    '{' statement-seqₒₚₜ '}'
 ```
 
 ``` bnf
@@ -721,8 +720,8 @@ selection-statement:
 ``` bnf
 condition:
     expression
-    attribute-specifier-seqdₒₚₜecl-specifier-seq declarator '=' initializer-clause
-    attribute-specifier-seqdₒₚₜecl-specifier-seq declarator braced-init-list
+    attribute-specifier-seqₒₚₜ decl-specifier-seq declarator '=' initializer-clause
+    attribute-specifier-seqₒₚₜ decl-specifier-seq declarator braced-init-list
 ```
 
 ``` bnf
@@ -733,7 +732,7 @@ condition:
 iteration-statement:
     'while (' condition ')' statement
     'do' statement 'while (' expression ') ;'
-    'for (' for-init-statement condition\terminal ₒₚₜ{;} expression\terminal ₒₚₜ{)} statement
+    'for (' for-init-statement conditionₒₚₜ ';' expressionₒₚₜ ')' statement
     'for (' for-range-declaration ':' for-range-initializer ')' statement
 ```
 
@@ -745,7 +744,7 @@ for-init-statement:
 
 ``` bnf
 for-range-declaration:
-    attribute-specifier-seqdₒₚₜecl-specifier-seq declarator
+    attribute-specifier-seqₒₚₜ decl-specifier-seq declarator
 ```
 
 ``` bnf
@@ -755,7 +754,7 @@ for-range-initializer:
 ```
 
 ``` bnf
-'for (' for-init-statement condition\terminal ₒₚₜ{;} expression\terminal ₒₚₜ{)} statement
+'for (' for-init-statement conditionₒₚₜ ';' expressionₒₚₜ ')' statement
 ```
 
 ``` bnf
@@ -774,7 +773,7 @@ for-range-initializer:
 jump-statement:
     'break ;'
     'continue ;'
-    'return' expression\terminal ₒₚₜ{;}
+    'return' expressionₒₚₜ ';'
     'return' braced-init-list ';'
     'goto' identifier ';'
 ```
@@ -820,13 +819,13 @@ block-declaration:
 
 ``` bnf
 alias-declaration:
-    'using' identifier attribute-specifier-seq=ₒₚₜ type-id ';'
+    'using' identifier attribute-specifier-seqₒₚₜ = type-id ';'
 ```
 
 ``` bnf
 simple-declaration:
-    decl-specifier-seqiₒₚₜnit-declarator-list\terminal ₒₚₜ{;}
-    attribute-specifier-seq decl-specifier-seqiₒₚₜnit-declarator-list ';'
+    decl-specifier-seqₒₚₜ init-declarator-listₒₚₜ ';'
+    attribute-specifier-seq decl-specifier-seqₒₚₜ init-declarator-list ';'
 ```
 
 ``` bnf
@@ -845,7 +844,7 @@ attribute-declaration:
 ```
 
 ``` bnf
-attribute-specifier-seqdₒₚₜecl-specifier-seqiₒₚₜnit-declarator-list\terminal ₒₚₜ{;}
+attribute-specifier-seqₒₚₜ decl-specifier-seqₒₚₜ init-declarator-listₒₚₜ ';'
 ```
 
 ``` bnf
@@ -860,8 +859,7 @@ decl-specifier:
 
 ``` bnf
 decl-specifier-seq:
-    decl-specifier attribute-specifier-seq
- ₒₚₜ
+    decl-specifier attribute-specifier-seqₒₚₜ 
     decl-specifier decl-specifier-seq
 ```
 
@@ -903,21 +901,19 @@ trailing-type-specifier:
 
 ``` bnf
 type-specifier-seq:
-    type-specifier attribute-specifier-seq
- ₒₚₜ
+    type-specifier attribute-specifier-seqₒₚₜ 
     type-specifier type-specifier-seq
 ```
 
 ``` bnf
 trailing-type-specifier-seq:
-  trailing-type-specifier attribute-specifier-seq
- ₒₚₜ
+  trailing-type-specifier attribute-specifier-seqₒₚₜ 
   trailing-type-specifier trailing-type-specifier-seq
 ```
 
 ``` bnf
 simple-type-specifier:
-    nested-name-specifiertₒₚₜype-name
+    nested-name-specifierₒₚₜ type-name
     nested-name-specifier 'template' simple-template-id
     'char'
     'char16_t'
@@ -951,17 +947,17 @@ decltype-specifier:
 
 ``` bnf
 elaborated-type-specifier:
-    class-key attribute-specifier-seqnₒₚₜested-name-specifieriₒₚₜdentifier
-    class-key nested-name-specifier\terminal ₒₚₜ{template}sₒₚₜimple-template-id
-    'enum' nested-name-specifieriₒₚₜdentifier
+    class-key attribute-specifier-seqₒₚₜ nested-name-specifierₒₚₜ identifier
+    class-key nested-name-specifierₒₚₜ 'template'ₒₚₜ simple-template-id
+    'enum' nested-name-specifierₒₚₜ identifier
 ```
 
 ``` bnf
-class-key attribute-specifier-seqiₒₚₜdentifier ';'
-'friend' class-key '::\opt' identifier ';'
-'friend' class-key '::\opt' simple-template-id ';'
+class-key attribute-specifier-seqₒₚₜ identifier ';'
+'friend' class-key '::ₒₚₜ ' identifier ';'
+'friend' class-key '::ₒₚₜ ' simple-template-id ';'
 'friend' class-key nested-name-specifier identifier ';'
-'friend' class-key nested-name-specifier 'template\opt' simple-template-id ';'
+'friend' class-key nested-name-specifier 'templateₒₚₜ ' simple-template-id ';'
 ```
 
 ``` bnf
@@ -971,20 +967,20 @@ enum-name:
 
 ``` bnf
 enum-specifier:
-    enum-head '{' enumerator-list\terminal ₒₚₜ{\}}
+    enum-head '{' enumerator-listₒₚₜ '}'
     enum-head '{' enumerator-list ', }'
 ```
 
 ``` bnf
 enum-head:
-    enum-key attribute-specifier-seq\opt identifier\opt enum-base\opt
-    enum-key attribute-specifier-seq\opt nested-name-specifier identifier
-\hspace*{  inc}enum-base\opt
+    enum-key attribute-specifier-seqₒₚₜ identifierₒₚₜ enum-baseₒₚₜ 
+    enum-key attribute-specifier-seqₒₚₜ nested-name-specifier identifier
+\hspace*{ inc}enum-baseₒₚₜ
 ```
 
 ``` bnf
 opaque-enum-declaration:
-    enum-key attribute-specifier-seqiₒₚₜdentifier enum-base\terminal ₒₚₜ{;}
+    enum-key attribute-specifier-seqₒₚₜ identifier enum-baseₒₚₜ ';'
 ```
 
 ``` bnf
@@ -1041,26 +1037,26 @@ named-namespace-definition:
 
 ``` bnf
 original-namespace-definition:
-        'inline\opt' 'namespace' identifier '{' namespace-body '}'
+        'inlineₒₚₜ ' 'namespace' identifier '{' namespace-body '}'
 ```
 
 ``` bnf
 extension-namespace-definition:
-        'inline\opt' 'namespace' original-namespace-name '{' namespace-body '}'
+        'inlineₒₚₜ ' 'namespace' original-namespace-name '{' namespace-body '}'
 ```
 
 ``` bnf
 unnamed-namespace-definition:
-        'inline\opt' 'namespace {' namespace-body '}'
+        'inlineₒₚₜ ' 'namespace {' namespace-body '}'
 ```
 
 ``` bnf
 namespace-body:
-        declaration-seq\opt
+        declaration-seqₒₚₜ
 ```
 
 ``` bnf
-'inline'\terminal ₒₚₜ{namespace} \uniquens '{ /* empty body */ }'
+'inline'ₒₚₜ 'namespace' \uniquens '{ /* empty body */ }'
 'using namespace' \uniquens ';'
 'namespace' \uniquens '{' namespace-body '}'
 ```
@@ -1077,18 +1073,18 @@ namespace-alias-definition:
 
 ``` bnf
 qualified-namespace-specifier:
-    nested-name-specifiernₒₚₜamespace-name
+    nested-name-specifierₒₚₜ namespace-name
 ```
 
 ``` bnf
 using-declaration:
-    'using typename\opt' nested-name-specifier unqualified-id ';'
+    'using typenameₒₚₜ ' nested-name-specifier unqualified-id ';'
     'using ::' unqualified-id ';'
 ```
 
 ``` bnf
 using-directive:
-    attribute-specifier-seq\terminal ₒₚₜ{using  namespace} nested-name-specifiernₒₚₜamespace-name ';'
+    attribute-specifier-seqₒₚₜ 'using namespace' nested-name-specifierₒₚₜ namespace-name ';'
 ```
 
 ``` bnf
@@ -1098,13 +1094,13 @@ asm-definition:
 
 ``` bnf
 linkage-specification:
-    'extern' string-literal '{' declaration-seq\terminal ₒₚₜ{\}}
+    'extern' string-literal '{' declaration-seqₒₚₜ '}'
     'extern' string-literal declaration
 ```
 
 ``` bnf
 attribute-specifier-seq:
-  attribute-specifier-seqaₒₚₜttribute-specifier
+  attribute-specifier-seqₒₚₜ attribute-specifier
 ```
 
 ``` bnf
@@ -1115,23 +1111,21 @@ attribute-specifier:
 
 ``` bnf
 alignment-specifier:
-  'alignas (' type-id '...'\terminal ₒₚₜ{)}
-  'alignas (' alignment-expression '...'\terminal ₒₚₜ{)}
+  'alignas (' type-id '...'ₒₚₜ ')'
+  'alignas (' alignment-expression '...'ₒₚₜ ')'
 ```
 
 ``` bnf
 attribute-list:
-  attribute
- ₒₚₜ
-  attribute-list ',' attribute
- ₒₚₜ
+  attributeₒₚₜ 
+  attribute-list ',' attributeₒₚₜ 
   attribute '...'
   attribute-list ',' attribute '...'
 ```
 
 ``` bnf
 attribute:
-    attribute-token attribute-argument-clause\opt
+    attribute-token attribute-argument-clauseₒₚₜ
 ```
 
 ``` bnf
@@ -1157,8 +1151,7 @@ attribute-argument-clause:
 
 ``` bnf
 balanced-token-seq:
-    balanced-token
- ₒₚₜ
+    balanced-tokenₒₚₜ 
     balanced-token-seq balanced-token
 ```
 
@@ -1178,7 +1171,7 @@ init-declarator-list:
 
 ``` bnf
 init-declarator:
-    declarator initializer\opt
+    declarator initializerₒₚₜ
 ```
 
 ``` bnf
@@ -1195,36 +1188,34 @@ ptr-declarator:
 
 ``` bnf
 noptr-declarator:
-    declarator-id attribute-specifier-seq
- ₒₚₜ
+    declarator-id attribute-specifier-seqₒₚₜ 
     noptr-declarator parameters-and-qualifiers
-    noptr-declarator '[' constant-expression\terminal ₒₚₜ{]} attribute-specifier-seq
- ₒₚₜ
+    noptr-declarator '[' constant-expressionₒₚₜ ']' attribute-specifier-seqₒₚₜ 
     '(' ptr-declarator ')'
 ```
 
 ``` bnf
 parameters-and-qualifiers:
-    '(' parameter-declaration-clause ')' attribute-specifier-seq\opt cv-qualifier-seq\opt
-\hspace*{  inc}ref-qualifier\opt exception-specification\opt
+    '(' parameter-declaration-clause ')' attribute-specifier-seqₒₚₜ cv-qualifier-seqₒₚₜ 
+\hspace*{ inc}ref-qualifierₒₚₜ exception-specificationₒₚₜ
 ```
 
 ``` bnf
 trailing-return-type:
-    '->' trailing-type-specifier-seq abstract-declarator\opt
+    '->' trailing-type-specifier-seq abstract-declaratorₒₚₜ
 ```
 
 ``` bnf
 ptr-operator:
-    '*' attribute-specifier-seq\opt cv-qualifier-seq\opt
-    '&' attribute-specifier-seq\opt
-    '&&' attribute-specifier-seq\opt
-    nested-name-specifier '*' attribute-specifier-seq\opt cv-qualifier-seq\opt
+    '*' attribute-specifier-seqₒₚₜ cv-qualifier-seqₒₚₜ 
+    '&' attribute-specifier-seqₒₚₜ 
+    '&&' attribute-specifier-seqₒₚₜ 
+    nested-name-specifier '*' attribute-specifier-seqₒₚₜ cv-qualifier-seqₒₚₜ
 ```
 
 ``` bnf
 cv-qualifier-seq:
-    cv-qualifier cv-qualifier-seq\opt
+    cv-qualifier cv-qualifier-seqₒₚₜ
 ```
 
 ``` bnf
@@ -1241,33 +1232,32 @@ ref-qualifier:
 
 ``` bnf
 declarator-id:
-    '...'iₒₚₜd-expression
-    nested-name-specifiercₒₚₜlass-name
+    '...'ₒₚₜ id-expression
+    nested-name-specifierₒₚₜ class-name
 ```
 
 ``` bnf
 type-id:
-    type-specifier-seq abstract-declarator\opt
+    type-specifier-seq abstract-declaratorₒₚₜ
 ```
 
 ``` bnf
 abstract-declarator:
     ptr-abstract-declarator
-    noptr-abstract-declaratorpₒₚₜarameters-and-qualifiers trailing-return-type
+    noptr-abstract-declaratorₒₚₜ parameters-and-qualifiers trailing-return-type
     abstract-pack-declarator
 ```
 
 ``` bnf
 ptr-abstract-declarator:
     noptr-abstract-declarator
-    ptr-operator ptr-abstract-declarator\opt
+    ptr-operator ptr-abstract-declaratorₒₚₜ
 ```
 
 ``` bnf
 noptr-abstract-declarator:
-    noptr-abstract-declaratorpₒₚₜarameters-and-qualifiers
-    noptr-abstract-declarator\terminal ₒₚₜ{[} constant-expressionₒₚₜ ']' attribute-specifier-seq
- ₒₚₜ
+    noptr-abstract-declaratorₒₚₜ parameters-and-qualifiers
+    noptr-abstract-declaratorₒₚₜ '[' constant-expressionₒₚₜ ']' attribute-specifier-seqₒₚₜ 
     '(' ptr-abstract-declarator ')'
 ```
 
@@ -1280,8 +1270,7 @@ abstract-pack-declarator:
 ``` bnf
 noptr-abstract-pack-declarator:
     noptr-abstract-pack-declarator parameters-and-qualifiers
-    noptr-abstract-pack-declarator '[' constant-expression\ ₒₚₜ']' attribute-specifier-seq
- ₒₚₜ
+    noptr-abstract-pack-declarator '[' constant-expressionₒₚₜ \ ']' attribute-specifier-seqₒₚₜ 
     '...'
 ```
 
@@ -1290,37 +1279,35 @@ noptr-abstract-pack-declarator:
 ```
 
 ``` bnf
-'*' attribute-specifier-seqcₒₚₜv-qualifier-seq\terminal ₒₚₜ{D1}
+'*' attribute-specifier-seqₒₚₜ cv-qualifier-seqₒₚₜ 'D1'
 ```
 
 ``` bnf
-'&' attribute-specifier-seq\terminal ₒₚₜ{D1}
-'&&' attribute-specifier-seq\terminal ₒₚₜ{D1}
+'&' attribute-specifier-seqₒₚₜ 'D1'
+'&&' attribute-specifier-seqₒₚₜ 'D1'
 ```
 
 ``` bnf
-nested-name-specifier '*' attribute-specifier-seqcₒₚₜv-qualifier-seq\tcode ₒₚₜ{D1}
+nested-name-specifier '*' attribute-specifier-seqₒₚₜ cv-qualifier-seqₒₚₜ D1
 ```
 
 ``` bnf
-'D1 [' constant-expression\opt ']' attribute-specifier-seq\opt
+'D1 [' constant-expressionₒₚₜ ']' attribute-specifier-seqₒₚₜ
 ```
 
 ``` bnf
-'D1 (' parameter-declaration-clause ')' cv-qualifier-seq\opt
-\hspace*{  inc}ref-qualifier\opt exception-specification\opt attribute-specifier-seq\opt
+'D1 (' parameter-declaration-clause ')' cv-qualifier-seqₒₚₜ 
+\hspace*{ inc}ref-qualifierₒₚₜ exception-specificationₒₚₜ attribute-specifier-seqₒₚₜ
 ```
 
 ``` bnf
-'D1 (' parameter-declaration-clause ')' cv-qualifier-seq
- ₒₚₜ
-\hspace*{  inc}ref-qualifiereₒₚₜxception-specificationaₒₚₜttribute-specifier-seqtₒₚₜrailing-return-type
+'D1 (' parameter-declaration-clause ')' cv-qualifier-seqₒₚₜ 
+\hspace*{ inc}ref-qualifierₒₚₜ exception-specificationₒₚₜ attribute-specifier-seqₒₚₜ trailing-return-type
 ```
 
 ``` bnf
 parameter-declaration-clause:
-    parameter-declaration-list.ₒₚₜ..
- ₒₚₜ
+    parameter-declaration-listₒₚₜ ...ₒₚₜ 
     parameter-declaration-list ',' ...
 ```
 
@@ -1332,38 +1319,37 @@ parameter-declaration-list:
 
 ``` bnf
 parameter-declaration:
-    attribute-specifier-seqdₒₚₜecl-specifier-seq declarator
-    attribute-specifier-seqdₒₚₜecl-specifier-seq declarator '=' initializer-clause
-    attribute-specifier-seqdₒₚₜecl-specifier-seq abstract-declarator
- ₒₚₜ
-    attribute-specifier-seqdₒₚₜecl-specifier-seq abstract-declarator\terminal ₒₚₜ{=} initializer-clause
+    attribute-specifier-seqₒₚₜ decl-specifier-seq declarator
+    attribute-specifier-seqₒₚₜ decl-specifier-seq declarator '=' initializer-clause
+    attribute-specifier-seqₒₚₜ decl-specifier-seq abstract-declaratorₒₚₜ 
+    attribute-specifier-seqₒₚₜ decl-specifier-seq abstract-declaratorₒₚₜ '=' initializer-clause
 ```
 
 ``` bnf
 function-definition:
-    attribute-specifier-seqdₒₚₜecl-specifier-seqdₒₚₜeclarator virt-specifier-seqfₒₚₜunction-body
+    attribute-specifier-seqₒₚₜ decl-specifier-seqₒₚₜ declarator virt-specifier-seqₒₚₜ function-body
 ```
 
 ``` bnf
 function-body:
-    ctor-initializercₒₚₜompound-statement
+    ctor-initializerₒₚₜ compound-statement
     function-try-block
     '= default ;'
     '= delete ;'
 ```
 
 ``` bnf
-'D1 (' parameter-declaration-clause ')' cv-qualifier-seq\opt
+'D1 (' parameter-declaration-clause ')' cv-qualifier-seqₒₚₜ 
    
-    \hspace*{  inc}ref-qualifier\opt exception-specification\opt attribute-specifier-seq\opt trailing-return-type\opt
+    \hspace*{ inc}ref-qualifierₒₚₜ exception-specificationₒₚₜ attribute-specifier-seqₒₚₜ trailing-return-typeₒₚₜ
 ```
 
 ``` bnf
-attribute-specifier-seqdₒₚₜecl-specifier-seqdₒₚₜeclarator ' = default ;'
+attribute-specifier-seqₒₚₜ decl-specifier-seqₒₚₜ declarator ' = default ;'
 ```
 
 ``` bnf
-attribute-specifier-seqdₒₚₜecl-specifier-seqdₒₚₜeclarator ' = delete ;'
+attribute-specifier-seqₒₚₜ decl-specifier-seqₒₚₜ declarator ' = delete ;'
 ```
 
 ``` bnf
@@ -1386,13 +1372,13 @@ initializer-clause:
 
 ``` bnf
 initializer-list:
-    initializer-clause '...'\opt
-    initializer-list ',' initializer-clause '...'\opt
+    initializer-clause '...'ₒₚₜ 
+    initializer-list ',' initializer-clause '...'ₒₚₜ
 ```
 
 ``` bnf
 braced-init-list:
-    '{' initializer-list ',\opt' '}'
+    '{' initializer-list ',ₒₚₜ ' '}'
     '{' '}'
 ```
 
@@ -1407,18 +1393,18 @@ class-name:
 
 ``` bnf
 class-specifier:
-    class-head '{' member-specification\terminal ₒₚₜ{\}}
+    class-head '{' member-specificationₒₚₜ '}'
 ```
 
 ``` bnf
 class-head:
-    class-key attribute-specifier-seq\opt class-head-name class-virt-specifier\opt base-clause\opt
-    class-key attribute-specifier-seq\opt base-clause\opt
+    class-key attribute-specifier-seqₒₚₜ class-head-name class-virt-specifierₒₚₜ base-clauseₒₚₜ 
+    class-key attribute-specifier-seqₒₚₜ base-clauseₒₚₜ
 ```
 
 ``` bnf
 class-head-name:
-    nested-name-specifiercₒₚₜlass-name
+    nested-name-specifierₒₚₜ class-name
 ```
 
 ``` bnf
@@ -1435,14 +1421,14 @@ class-key:
 
 ``` bnf
 member-specification:
-    member-declaration member-specification\opt
-    access-specifier ':' member-specification\opt
+    member-declaration member-specificationₒₚₜ 
+    access-specifier ':' member-specificationₒₚₜ
 ```
 
 ``` bnf
 member-declaration:
-    attribute-specifier-seqdₒₚₜecl-specifier-seqmₒₚₜember-declarator-list\terminal ₒₚₜ{;}
-    function-definition ';\opt'
+    attribute-specifier-seqₒₚₜ decl-specifier-seqₒₚₜ member-declarator-listₒₚₜ ';'
+    function-definition ';ₒₚₜ '
     using-declaration
     static_assert-declaration
     template-declaration
@@ -1457,11 +1443,9 @@ member-declarator-list:
 
 ``` bnf
 member-declarator:
-    declarator virt-specifier-seqpₒₚₜure-specifier
- ₒₚₜ
-    declarator brace-or-equal-initializer
- ₒₚₜ
-    identifieraₒₚₜttribute-specifier-seq\terminal ₒₚₜ{:} constant-expression
+    declarator virt-specifier-seqₒₚₜ pure-specifierₒₚₜ 
+    declarator brace-or-equal-initializerₒₚₜ 
+    identifierₒₚₜ attribute-specifier-seqₒₚₜ ':' constant-expression
 ```
 
 ``` bnf
@@ -1488,20 +1472,20 @@ base-clause:
 
 ``` bnf
 base-specifier-list:
-    base-specifier '...'\opt
-    base-specifier-list ',' base-specifier '...'\opt
+    base-specifier '...'ₒₚₜ 
+    base-specifier-list ',' base-specifier '...'ₒₚₜ
 ```
 
 ``` bnf
 base-specifier:
-    attribute-specifier-seqbₒₚₜase-type-specifier
-    attribute-specifier-seq\terminal ₒₚₜ{virtual} access-specifierbₒₚₜase-type-specifier
-    attribute-specifier-seqaₒₚₜccess-specifier 'virtual'bₒₚₜase-type-specifier
+    attribute-specifier-seqₒₚₜ base-type-specifier
+    attribute-specifier-seqₒₚₜ 'virtual' access-specifierₒₚₜ base-type-specifier
+    attribute-specifier-seqₒₚₜ access-specifier 'virtual'ₒₚₜ base-type-specifier
 ```
 
 ``` bnf
 class-or-decltype:
-    nested-name-specifiercₒₚₜlass-name
+    nested-name-specifierₒₚₜ class-name
     decltype-specifier
 ```
 
@@ -1527,7 +1511,7 @@ access-specifier:
 ## Overloading <a id="gram.over">[[gram.over]]</a>
 
 ``` bnf
-postfix-expression '(' expression-list\terminal ₒₚₜ{)}
+postfix-expression '(' expression-listₒₚₜ ')'
 ```
 
 ``` bnf
@@ -1538,7 +1522,7 @@ postfix-expression:
 ```
 
 ``` bnf
-'operator' conversion-type-id '( )' attribute-specifier-seqcₒₚₜv-qualifier ';'
+'operator' conversion-type-id '( )' attribute-specifier-seqₒₚₜ cv-qualifier ';'
 ```
 
 ``` bnf
@@ -1551,7 +1535,7 @@ operator-function-id:
 ```
 
 ``` bnf
-postfix-expression '(' expression-list\terminal ₒₚₜ{)}
+postfix-expression '(' expression-listₒₚₜ ')'
 ```
 
 ``` bnf
@@ -1563,7 +1547,7 @@ postfix-expression '[' braced-init-list ']'
 ```
 
 ``` bnf
-postfix-expression '->' 'template\opt' id-expression\\
+postfix-expression '->' 'templateₒₚₜ ' id-expression\\
 postfix-expression '->' pseudo-destructor-name
 ```
 
@@ -1594,27 +1578,24 @@ template-parameter:
 
 ``` bnf
 type-parameter:
-  'class' '...'iₒₚₜdentifier
- ₒₚₜ
-  'class' identifier\terminal ₒₚₜ{=} type-id
-  'typename' '...'iₒₚₜdentifier
- ₒₚₜ
-  'typename' identifier\terminal ₒₚₜ{=} type-id
-  'template <' template-parameter-list '> class' '...'iₒₚₜdentifier
- ₒₚₜ
-  'template <' template-parameter-list '> class' identifier\terminal ₒₚₜ{=} id-expression
+  'class' '...'ₒₚₜ identifierₒₚₜ 
+  'class' identifierₒₚₜ '=' type-id
+  'typename' '...'ₒₚₜ identifierₒₚₜ 
+  'typename' identifierₒₚₜ '=' type-id
+  'template <' template-parameter-list '> class' '...'ₒₚₜ identifierₒₚₜ 
+  'template <' template-parameter-list '> class' identifierₒₚₜ '=' id-expression
 ```
 
 ``` bnf
 simple-template-id:
-  template-name '<' template-argument-list\terminal ₒₚₜ{>}
+  template-name '<' template-argument-listₒₚₜ '>'
 ```
 
 ``` bnf
 template-id:
   simple-template-id
-  operator-function-id '<' template-argument-list\terminal ₒₚₜ{>}
-  literal-operator-id '<' template-argument-list\terminal ₒₚₜ{>}
+  operator-function-id '<' template-argument-listₒₚₜ '>'
+  literal-operator-id '<' template-argument-listₒₚₜ '>'
 ```
 
 ``` bnf
@@ -1624,8 +1605,8 @@ template-name:
 
 ``` bnf
 template-argument-list:
-  template-argument '...'\opt
-  template-argument-list ',' template-argument '...'\opt
+  template-argument '...'ₒₚₜ 
+  template-argument-list ',' template-argument '...'ₒₚₜ
 ```
 
 ``` bnf
@@ -1638,12 +1619,12 @@ template-argument:
 ``` bnf
 typename-specifier:
   'typename' nested-name-specifier identifier
-  'typename' nested-name-specifier 'template\opt' simple-template-id
+  'typename' nested-name-specifier 'templateₒₚₜ ' simple-template-id
 ```
 
 ``` bnf
 explicit-instantiation:
-  'extern\opt' 'template' declaration
+  'externₒₚₜ ' 'template' declaration
 ```
 
 ``` bnf
@@ -1656,7 +1637,7 @@ explicit-specialization:
 
 ``` bnf
 preprocessing-file:
-    group\opt
+    groupₒₚₜ
 ```
 
 ``` bnf
@@ -1675,7 +1656,7 @@ group-part:
 
 ``` bnf
 if-section:
-    if-group elif-groupseₒₚₜlse-groupeₒₚₜndif-line
+    if-group elif-groupsₒₚₜ else-groupₒₚₜ endif-line
 ```
 
 ``` bnf
@@ -1707,7 +1688,7 @@ identifier-list:
 
 ``` bnf
 replacement-list:
-    pp-tokens\opt
+    pp-tokensₒₚₜ
 ```
 
 ``` bnf
@@ -1750,7 +1731,7 @@ new-line:
 ```
 
 ``` bnf
-'# define' identifier lparen identifier-list\terminal ₒₚₜ{)} replacement-list new-line
+'# define' identifier lparen identifier-listₒₚₜ ')' replacement-list new-line
 '# define' identifier lparen '...' ')' replacement-list new-line
 '# define' identifier lparen identifier-list ', ...' ')' replacement-list new-line
 ```
@@ -1764,7 +1745,7 @@ new-line:
 ```
 
 ``` bnf
-'# line' digit-sequence '"' s-char-sequence\terminal ₒₚₜ{"} new-line
+'# line' digit-sequence '"' s-char-sequenceₒₚₜ '"' new-line
 ```
 
 ``` bnf
@@ -1772,11 +1753,11 @@ new-line:
 ```
 
 ``` bnf
-'# error' pp-tokensnₒₚₜew-line
+'# error' pp-tokensₒₚₜ new-line
 ```
 
 ``` bnf
-'# pragma' pp-tokensnₒₚₜew-line
+'# pragma' pp-tokensₒₚₜ new-line
 ```
 
 ``` bnf
@@ -1797,12 +1778,12 @@ try-block:
 
 ``` bnf
 function-try-block:
-    'try' ctor-initializercₒₚₜompound-statement handler-seq
+    'try' ctor-initializerₒₚₜ compound-statement handler-seq
 ```
 
 ``` bnf
 handler-seq:
-    handler handler-seq\opt
+    handler handler-seqₒₚₜ
 ```
 
 ``` bnf
@@ -1812,15 +1793,14 @@ handler:
 
 ``` bnf
 exception-declaration:
-    attribute-specifier-seqtₒₚₜype-specifier-seq declarator
-    attribute-specifier-seqtₒₚₜype-specifier-seq abstract-declarator
- ₒₚₜ
+    attribute-specifier-seqₒₚₜ type-specifier-seq declarator
+    attribute-specifier-seqₒₚₜ type-specifier-seq abstract-declaratorₒₚₜ 
     '...'
 ```
 
 ``` bnf
 throw-expression:
-    'throw'  assignment-expression\opt
+    'throw' assignment-expressionₒₚₜ
 ```
 
 ``` bnf
@@ -1831,13 +1811,13 @@ exception-specification:
 
 ``` bnf
 dynamic-exception-specification:
-    'throw (' type-id-list\terminal ₒₚₜ{)}
+    'throw (' type-id-listₒₚₜ ')'
 ```
 
 ``` bnf
 type-id-list:
-    type-id '...'\opt
-    type-id-list ',' type-id '...'\opt
+    type-id '...'ₒₚₜ 
+    type-id-list ',' type-id '...'ₒₚₜ
 ```
 
 ``` bnf

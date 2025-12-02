@@ -384,7 +384,7 @@ non-template candidate functions.
 In a function call ([[expr.call]])
 
 ``` bnf
-postfix-expression '(' expression-list\terminal ₒₚₜ{)}
+postfix-expression '(' expression-listₒₚₜ ')'
 ```
 
 if the *postfix-expression* denotes a set of overloaded functions and/or
@@ -465,7 +465,7 @@ In addition, for each non-explicit conversion function declared in `T`
 of the form
 
 ``` bnf
-'operator' conversion-type-id '( )' attribute-specifier-seqcₒₚₜv-qualifier ';'
+'operator' conversion-type-id '( )' attribute-specifier-seqₒₚₜ cv-qualifier ';'
 ```
 
 where *cv-qualifier* is the same cv-qualification as, or a greater
@@ -1688,7 +1688,7 @@ parameters. It can have default arguments. It implements the function
 call syntax
 
 ``` bnf
-postfix-expression '(' expression-list\terminal ₒₚₜ{)}
+postfix-expression '(' expression-listₒₚₜ ')'
 ```
 
 where the *postfix-expression* evaluates to a class object and the
@@ -1740,7 +1740,7 @@ shall be a non-static member function taking no parameters. It
 implements the class member access syntax that uses `->`.
 
 ``` bnf
-postfix-expression '->' 'template\opt' id-expression\\
+postfix-expression '->' 'templateₒₚₜ ' id-expression\\
 postfix-expression '->' pseudo-destructor-name
 ```
 

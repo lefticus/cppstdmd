@@ -20,13 +20,13 @@ class-specifier:
 
 ``` bnf
 class-head:
-    class-key attribute-specifier-seq\opt class-head-name class-virt-specifier\opt base-clause\opt
-    class-key attribute-specifier-seq\opt base-clause\opt
+    class-key attribute-specifier-seqₒₚₜ class-head-name class-virt-specifierₒₚₜ base-clauseₒₚₜ 
+    class-key attribute-specifier-seqₒₚₜ base-clauseₒₚₜ
 ```
 
 ``` bnf
 class-head-name:
-    nested-name-specifiercₒₚₜlass-name
+    nested-name-specifierₒₚₜ class-name
 ```
 
 ``` bnf
@@ -374,13 +374,13 @@ cv-qualified version thereof, is also a *class-name*. If a
 
 ``` bnf
 member-specification:
-    member-declaration member-specification\opt
-    access-specifier ':' member-specification\opt
+    member-declaration member-specificationₒₚₜ 
+    access-specifier ':' member-specificationₒₚₜ
 ```
 
 ``` bnf
 member-declaration:
-    attribute-specifier-seqdₒₚₜecl-specifier-seqmₒₚₜember-declarator-listₒₚₜ ';'
+    attribute-specifier-seqₒₚₜ decl-specifier-seqₒₚₜ member-declarator-listₒₚₜ ';'
     function-definition
     using-declaration
     static_assert-declaration
@@ -398,11 +398,9 @@ member-declarator-list:
 
 ``` bnf
 member-declarator:
-    declarator virt-specifier-seqpₒₚₜure-specifier
- ₒₚₜ
-    declarator brace-or-equal-initializer
- ₒₚₜ
-    identifieraₒₚₜttribute-specifier-seqₒₚₜ ':' constant-expression
+    declarator virt-specifier-seqₒₚₜ pure-specifierₒₚₜ 
+    declarator brace-or-equal-initializerₒₚₜ 
+    identifierₒₚₜ attribute-specifier-seqₒₚₜ ':' constant-expression
 ```
 
 ``` bnf
@@ -1549,20 +1547,20 @@ base-clause:
 
 ``` bnf
 base-specifier-list:
-    base-specifier '...'\opt
-    base-specifier-list ',' base-specifier '...'\opt
+    base-specifier '...'ₒₚₜ 
+    base-specifier-list ',' base-specifier '...'ₒₚₜ
 ```
 
 ``` bnf
 base-specifier:
-    attribute-specifier-seqcₒₚₜlass-or-decltype
-    attribute-specifier-seqₒₚₜ 'virtual' access-specifiercₒₚₜlass-or-decltype
-    attribute-specifier-seqaₒₚₜccess-specifier 'virtual'cₒₚₜlass-or-decltype
+    attribute-specifier-seqₒₚₜ class-or-decltype
+    attribute-specifier-seqₒₚₜ 'virtual' access-specifierₒₚₜ class-or-decltype
+    attribute-specifier-seqₒₚₜ access-specifier 'virtual'ₒₚₜ class-or-decltype
 ```
 
 ``` bnf
 class-or-decltype:
-    nested-name-specifiercₒₚₜlass-name
+    nested-name-specifierₒₚₜ class-name
     nested-name-specifier 'template' simple-template-id
     decltype-specifier
 ```

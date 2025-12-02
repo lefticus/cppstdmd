@@ -516,29 +516,29 @@ literal:
 
 ``` bnf
 integer-literal:
-    binary-literal integer-suffix\opt
-    octal-literal integer-suffix\opt
-    decimal-literal integer-suffix\opt
-    hexadecimal-literal integer-suffix\opt
+    binary-literal integer-suffixₒₚₜ 
+    octal-literal integer-suffixₒₚₜ 
+    decimal-literal integer-suffixₒₚₜ 
+    hexadecimal-literal integer-suffixₒₚₜ
 ```
 
 ``` bnf
 binary-literal:
     '0b' binary-digit
     '0B' binary-digit
-    binary-literal '''bₒₚₜinary-digit
+    binary-literal '''ₒₚₜ binary-digit
 ```
 
 ``` bnf
 octal-literal:
     '0'
-    octal-literal '''oₒₚₜctal-digit
+    octal-literal '''ₒₚₜ octal-digit
 ```
 
 ``` bnf
 decimal-literal:
     nonzero-digit
-    decimal-literal '''dₒₚₜigit
+    decimal-literal '''ₒₚₜ digit
 ```
 
 ``` bnf
@@ -554,53 +554,53 @@ binary-digit:
 
 ``` bnf
 octal-digit: one of
-    '0  1  2  3  4  5  6  7'
+    '0 1 2 3 4 5 6 7'
 ```
 
 ``` bnf
 nonzero-digit: one of
-    '1  2  3  4  5  6  7  8  9'
+    '1 2 3 4 5 6 7 8 9'
 ```
 
 ``` bnf
 hexadecimal-prefix: one of
-    '0x  0X'
+    '0x 0X'
 ```
 
 ``` bnf
 hexadecimal-digit-sequence:
     hexadecimal-digit
-    hexadecimal-digit-sequence '''hₒₚₜexadecimal-digit
+    hexadecimal-digit-sequence '''ₒₚₜ hexadecimal-digit
 ```
 
 ``` bnf
 hexadecimal-digit: one of
-    '0  1  2  3  4  5  6  7  8  9'
-    'a  b  c  d  e  f'
-    'A  B  C  D  E  F'
+    '0 1 2 3 4 5 6 7 8 9'
+    'a b c d e f'
+    'A B C D E F'
 ```
 
 ``` bnf
 integer-suffix:
-    unsigned-suffix long-suffix\opt 
-    unsigned-suffix long-long-suffix\opt 
-    long-suffix unsigned-suffix\opt 
-    long-long-suffix unsigned-suffix\opt
+    unsigned-suffix long-suffixₒₚₜ 
+    unsigned-suffix long-long-suffixₒₚₜ 
+    long-suffix unsigned-suffixₒₚₜ 
+    long-long-suffix unsigned-suffixₒₚₜ
 ```
 
 ``` bnf
 unsigned-suffix: one of
-    'u  U'
+    'u U'
 ```
 
 ``` bnf
 long-suffix: one of
-    'l  L'
+    'l L'
 ```
 
 ``` bnf
 long-long-suffix: one of
-    'll  LL'
+    'll LL'
 ```
 
 An *integer literal* is a sequence of digits that has no period or
@@ -830,14 +830,14 @@ floating-literal:
 
 ``` bnf
 decimal-floating-literal:
-    fractional-constant exponent-part\opt floating-suffix\opt
-    digit-sequence exponent-part floating-suffix\opt
+    fractional-constant exponent-partₒₚₜ floating-suffixₒₚₜ 
+    digit-sequence exponent-part floating-suffixₒₚₜ
 ```
 
 ``` bnf
 hexadecimal-floating-literal:
-    hexadecimal-prefix hexadecimal-fractional-constant binary-exponent-part floating-suffix\opt
-    hexadecimal-prefix hexadecimal-digit-sequence binary-exponent-part floating-suffix\opt
+    hexadecimal-prefix hexadecimal-fractional-constant binary-exponent-part floating-suffixₒₚₜ 
+    hexadecimal-prefix hexadecimal-digit-sequence binary-exponent-part floating-suffixₒₚₜ
 ```
 
 ``` bnf
@@ -854,30 +854,30 @@ hexadecimal-fractional-constant:
 
 ``` bnf
 exponent-part:
-    'e' signdₒₚₜigit-sequence
-    'E' signdₒₚₜigit-sequence
+    'e' signₒₚₜ digit-sequence
+    'E' signₒₚₜ digit-sequence
 ```
 
 ``` bnf
 binary-exponent-part:
-    'p' signdₒₚₜigit-sequence
-    'P' signdₒₚₜigit-sequence
+    'p' signₒₚₜ digit-sequence
+    'P' signₒₚₜ digit-sequence
 ```
 
 ``` bnf
 sign: one of
-    '+  -'
+    '+ -'
 ```
 
 ``` bnf
 digit-sequence:
     digit
-    digit-sequence '''dₒₚₜigit
+    digit-sequence '''ₒₚₜ digit
 ```
 
 ``` bnf
 floating-suffix: one of
-    'f  l  F  L'
+    'f l F L'
 ```
 
 A floating literal consists of an optional prefix specifying a base, an
@@ -1168,7 +1168,7 @@ user-defined-integer-literal:
 
 ``` bnf
 user-defined-floating-literal:
-    fractional-constant exponent-partuₒₚₜd-suffix
+    fractional-constant exponent-partₒₚₜ ud-suffix
     digit-sequence exponent-part ud-suffix
     hexadecimal-prefix hexadecimal-fractional-constant binary-exponent-part ud-suffix
     hexadecimal-prefix hexadecimal-digit-sequence binary-exponent-part ud-suffix

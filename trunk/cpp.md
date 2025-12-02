@@ -4,23 +4,23 @@
 
 ``` bnf
 preprocessing-file:
-    groupₒₚₜ
+    ₒₚₜ {group}
     module-file
 ```
 
 ``` bnf
 module-file:
-    pp-global-module-fragmentₒₚₜ pp-module groupₒₚₜ pp-private-module-fragmentₒₚₜ
+    ₒₚₜ {pp-global-module-fragment} pp-module ₒₚₜ {group} ₒₚₜ {pp-private-module-fragment}
 ```
 
 ``` bnf
 pp-global-module-fragment:
-    module ';' new-line groupₒₚₜ
+    module ';' new-line ₒₚₜ {group}
 ```
 
 ``` bnf
 pp-private-module-fragment:
-    module ':' private ';' new-line groupₒₚₜ
+    module ':' private ';' new-line ₒₚₜ {group}
 ```
 
 ``` bnf
@@ -43,44 +43,44 @@ control-line:
     pp-import
     '# embed \ ' pp-tokens new-line
     '# define ' identifier replacement-list new-line
-    '# define ' identifier lparen identifier-listₒₚₜ ')' replacement-list new-line
+    '# define ' identifier lparen ₒₚₜ {identifier-list} ')' replacement-list new-line
     '# define ' identifier lparen '... )' replacement-list new-line
     '# define ' identifier lparen identifier-list ', ... )' replacement-list new-line
     '# undef \ ' identifier new-line
     '# line \ \ ' pp-tokens new-line
-    '# error \ ' pp-tokensₒₚₜ new-line
-    '# warning' pp-tokensₒₚₜ new-line
-    '# pragma ' pp-tokensₒₚₜ new-line
+    '# error \ ' ₒₚₜ {pp-tokens} new-line
+    '# warning' ₒₚₜ {pp-tokens} new-line
+    '# pragma ' ₒₚₜ {pp-tokens} new-line
     '# 'new-line
 ```
 
 ``` bnf
 if-section:
-    if-group elif-groupsₒₚₜ else-groupₒₚₜ endif-line
+    if-group ₒₚₜ {elif-groups} ₒₚₜ {else-group} endif-line
 ```
 
 ``` bnf
 if-group:
-    '# if \ \ \ \ ' constant-expression new-line groupₒₚₜ
-    '# ifdef \ ' identifier new-line groupₒₚₜ
-    '# ifndef ' identifier new-line groupₒₚₜ
+    '# if \ \ \ \ ' constant-expression new-line ₒₚₜ {group}
+    '# ifdef \ ' identifier new-line ₒₚₜ {group}
+    '# ifndef ' identifier new-line ₒₚₜ {group}
 ```
 
 ``` bnf
 elif-groups:
-    elif-group elif-groupsₒₚₜ
+    elif-group ₒₚₜ {elif-groups}
 ```
 
 ``` bnf
 elif-group:
-    '# elif \ \ \ ' constant-expression new-line groupₒₚₜ
-    '# elifdef ' identifier new-line groupₒₚₜ
-    '# elifndef' identifier new-line groupₒₚₜ
+    '# elif \ \ \ ' constant-expression new-line ₒₚₜ {group}
+    '# elifdef ' identifier new-line ₒₚₜ {group}
+    '# elifndef' identifier new-line ₒₚₜ {group}
 ```
 
 ``` bnf
 else-group:
-    '# else \ \ ' new-line groupₒₚₜ
+    '# else \ \ ' new-line ₒₚₜ {group}
 ```
 
 ``` bnf
@@ -90,7 +90,7 @@ endif-line:
 
 ``` bnf
 text-line:
-    pp-tokensₒₚₜ new-line
+    ₒₚₜ {pp-tokens} new-line
 ```
 
 ``` bnf
@@ -111,17 +111,17 @@ identifier-list:
 
 ``` bnf
 replacement-list:
-    pp-tokensₒₚₜ
+    ₒₚₜ {pp-tokens}
 ```
 
 ``` bnf
 pp-tokens:
-    preprocessing-token pp-tokensₒₚₜ
+    preprocessing-token ₒₚₜ {pp-tokens}
 ```
 
 ``` bnf
 embed-parameter-seq:
-    embed-parameter embed-parameter-seqₒₚₜ
+    embed-parameter ₒₚₜ {embed-parameter-seq}
 ```
 
 ``` bnf
@@ -133,27 +133,27 @@ embed-parameter:
 ``` bnf
 embed-standard-parameter:
     'limit' '(' pp-balanced-token-seq ')'
-    'prefix' '(' pp-balanced-token-seqₒₚₜ ')'
-    'suffix' '(' pp-balanced-token-seqₒₚₜ ')'
-    'if_empty' '(' pp-balanced-token-seqₒₚₜ ')'
+    'prefix' '(' ₒₚₜ {pp-balanced-token-seq} ')'
+    'suffix' '(' ₒₚₜ {pp-balanced-token-seq} ')'
+    'if_empty' '(' ₒₚₜ {pp-balanced-token-seq} ')'
 ```
 
 ``` bnf
 embed-prefixed-parameter:
     identifier :: identifier
-    identifier :: identifier '(' pp-balanced-token-seqₒₚₜ ')'
+    identifier :: identifier '(' ₒₚₜ {pp-balanced-token-seq} ')'
 ```
 
 ``` bnf
 pp-balanced-token-seq:
-    pp-balanced-token pp-balanced-token-seqₒₚₜ
+    pp-balanced-token ₒₚₜ {pp-balanced-token-seq}
 ```
 
 ``` bnf
 pp-balanced-token:
-    '(' pp-balanced-token-seqₒₚₜ ')'
-    '[' pp-balanced-token-seqₒₚₜ ']'
-    '{' pp-balanced-token-seqₒₚₜ '}'
+    '(' ₒₚₜ {pp-balanced-token-seq} ')'
+    '[' ₒₚₜ {pp-balanced-token-seq} ']'
+    '{' ₒₚₜ {pp-balanced-token-seq} '}'
     any pp-token except:
        parenthesis (U+0028 (left parenthesis) and U+0029 (right parenthesis)),
        bracket (U+005b (left square bracket) and U+005d (right square bracket)), or
@@ -303,7 +303,7 @@ h-preprocessing-token:
 
 ``` bnf
 h-pp-tokens:
-    h-preprocessing-token h-pp-tokensₒₚₜ
+    h-preprocessing-token ₒₚₜ {h-pp-tokens}
 ```
 
 ``` bnf
@@ -320,8 +320,8 @@ has-include-expression:
 
 ``` bnf
 has-embed-expression:
-    '__has_embed' '(' header-name pp-balanced-token-seqₒₚₜ ')'
-    '__has_embed' '(' header-name-tokens pp-balanced-token-seqₒₚₜ ')'
+    '__has_embed' '(' header-name ₒₚₜ {pp-balanced-token-seq} ')'
+    '__has_embed' '(' header-name-tokens ₒₚₜ {pp-balanced-token-seq} ')'
 ```
 
 ``` bnf
@@ -421,8 +421,8 @@ replacements have occurred shall be in the lexical form of a token
 Preprocessing directives of the forms
 
 ``` bnf
-'# if \ \ \ \ ' constant-expression new-line groupₒₚₜ
-'# elif \ \ ' constant-expression new-line groupₒₚₜ
+'# if \ \ \ \ ' constant-expression new-line ₒₚₜ {group}
+'# elif \ \ ' constant-expression new-line ₒₚₜ {group}
 ```
 
 check whether the controlling constant expression evaluates to nonzero.
@@ -478,10 +478,10 @@ before processing continues.
 Preprocessing directives of the forms
 
 ``` bnf
-'# ifdef \ \ ' identifier new-line groupₒₚₜ
-'# ifndef \ ' identifier new-line groupₒₚₜ
-'# elifdef ' identifier new-line groupₒₚₜ
-'# elifndef' identifier new-line groupₒₚₜ
+'# ifdef \ \ ' identifier new-line ₒₚₜ {group}
+'# ifndef \ ' identifier new-line ₒₚₜ {group}
+'# elifdef ' identifier new-line ₒₚₜ {group}
+'# elifndef' identifier new-line ₒₚₜ {group}
 ```
 
 check whether the identifier is or is not currently defined as a macro
@@ -689,7 +689,7 @@ sequence of characters.
 A preprocessing directive of the form
 
 ``` bnf
-'# embed' header-name pp-tokensₒₚₜ new-line
+'# embed' header-name ₒₚₜ {pp-tokens} new-line
 ```
 
 causes the replacement of that directive by preprocessing tokens derived
@@ -946,7 +946,7 @@ static_assert(sizeof(sound_signature) == 4);    // OK
 An *embed-parameter* of the form
 
 ``` bnf
-'prefix (' pp-balanced-token-seqₒₚₜ ')'
+'prefix (' ₒₚₜ {pp-balanced-token-seq} ')'
 ```
 
 shall appear at most once in the *embed-parameter-seq*.
@@ -960,7 +960,7 @@ comma-delimited list of integral literals.
 An *embed-parameter* of the form
 
 ``` bnf
-'suffix (' pp-balanced-token-seqₒₚₜ ')'
+'suffix (' ₒₚₜ {pp-balanced-token-seq} ')'
 ```
 
 shall appear at most once in the *embed-parameter-seq*.
@@ -993,7 +993,7 @@ static_assert(is_empty || is_not_empty);
 An embed-parameter of the form
 
 ``` bnf
-'if_empty (' pp-balanced-token-seqₒₚₜ ')'
+'if_empty (' ₒₚₜ {pp-balanced-token-seq} ')'
 ```
 
 shall appear at most once in the *embed-parameter-seq*.
@@ -1043,7 +1043,7 @@ int infinity_zero () {
 
 ``` bnf
 pp-module:
-    exportₒₚₜ module pp-tokensₒₚₜ ';' new-line
+    ₒₚₜ {export} module ₒₚₜ {pp-tokens} ';' new-line
 ```
 
 A *pp-module* shall not appear in a context where `module` or (if it is
@@ -1053,7 +1053,7 @@ identifier defined as an object-like macro.
 The *pp-tokens*, if any, of a *pp-module* shall be of the form:
 
 ``` bnf
-pp-module-name pp-module-partitionₒₚₜ pp-tokensₒₚₜ
+pp-module-name ₒₚₜ {pp-module-partition} ₒₚₜ {pp-tokens}
 ```
 
 where the *pp-tokens* (if any) shall not begin with a `(` preprocessing
@@ -1061,12 +1061,12 @@ token and the grammar non-terminals are defined as:
 
 ``` bnf
 pp-module-name:
-    pp-module-name-qualifierₒₚₜ identifier
+    ₒₚₜ {pp-module-name-qualifier} identifier
 ```
 
 ``` bnf
 pp-module-partition:
-    ':' pp-module-name-qualifierₒₚₜ identifier
+    ':' ₒₚₜ {pp-module-name-qualifier} identifier
 ```
 
 ``` bnf
@@ -1095,9 +1095,9 @@ removed at the end of phase 4. — *end note*]
 
 ``` bnf
 pp-import:
-    exportₒₚₜ import header-name pp-tokensₒₚₜ ';' new-line
-    exportₒₚₜ import header-name-tokens pp-tokensₒₚₜ ';' new-line
-    exportₒₚₜ import pp-tokens ';' new-line
+    ₒₚₜ {export} import header-name ₒₚₜ {pp-tokens} ';' new-line
+    ₒₚₜ {export} import header-name-tokens ₒₚₜ {pp-tokens} ';' new-line
+    ₒₚₜ {export} import pp-tokens ';' new-line
 ```
 
 A *pp-import* shall not appear in a context where `import` or (if it is
@@ -1344,7 +1344,7 @@ int table[TABSIZE];
 A preprocessing directive of the form
 
 ``` bnf
-'# define' identifier lparen identifier-listₒₚₜ ')' replacement-list new-line
+'# define' identifier lparen ₒₚₜ {identifier-list} ')' replacement-list new-line
 '# define' identifier lparen '...' ')' replacement-list new-line
 '# define' identifier lparen identifier-list ', ...' ')' replacement-list new-line
 ```
@@ -1400,7 +1400,7 @@ one more than the number of parameters in the macro definition
 
 ``` bnf
 va-opt-replacement:
-    '__VA_OPT__ (' pp-tokensₒₚₜ ')'
+    '__VA_OPT__ (' ₒₚₜ {pp-tokens} ')'
 ```
 
 After the arguments for the invocation of a function-like macro have
@@ -1779,7 +1779,7 @@ the program is ill-formed.
 A preprocessing directive of the form
 
 ``` bnf
-'# line' digit-sequence '"' s-char-sequenceₒₚₜ '"' new-line
+'# line' digit-sequence '"' ₒₚₜ {s-char-sequence} '"' new-line
 ```
 
 sets the presumed line number similarly and changes the presumed name of
@@ -1804,13 +1804,13 @@ processed as appropriate.
 A preprocessing directive of the form
 
 ``` bnf
-'# error' pp-tokensₒₚₜ new-line
+'# error' ₒₚₜ {pp-tokens} new-line
 ```
 
 renders the program ill-formed. A preprocessing directive of the form
 
 ``` bnf
-'# warning' pp-tokensₒₚₜ new-line
+'# warning' ₒₚₜ {pp-tokens} new-line
 ```
 
 requires the implementation to produce at least one diagnostic message
@@ -1825,7 +1825,7 @@ tokens.
 A preprocessing directive of the form
 
 ``` bnf
-'# pragma' pp-tokensₒₚₜ new-line
+'# pragma' ₒₚₜ {pp-tokens} new-line
 ```
 
 causes the implementation to behave in an *implementation-defined*

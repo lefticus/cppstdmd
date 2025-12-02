@@ -13,7 +13,7 @@ of a function-like macro.
 
 ``` bnf
 preprocessing-file:
-    group\opt
+    groupₒₚₜ
 ```
 
 ``` bnf
@@ -32,7 +32,7 @@ group-part:
 
 ``` bnf
 if-section:
-    if-group elif-groupseₒₚₜlse-groupeₒₚₜndif-line
+    if-group elif-groupsₒₚₜ else-groupₒₚₜ endif-line
 ```
 
 ``` bnf
@@ -43,7 +43,7 @@ elif-groups:
 
 ``` bnf
 text-line:
-    pp-tokensnₒₚₜew-line
+    pp-tokensₒₚₜ new-line
 ```
 
 ``` bnf
@@ -64,7 +64,7 @@ identifier-list:
 
 ``` bnf
 replacement-list:
-    pp-tokens\opt
+    pp-tokensₒₚₜ
 ```
 
 ``` bnf
@@ -142,8 +142,8 @@ h-pp-tokens:
 has-include-expression:
     '__has_include ( <' h-char-sequence '> )'
     '__has_include ( "' q-char-sequence '" )'
-    '__has_include ('   string-literal  ')'
-    '__has_include ( <' h-pp-tokens     '> )'
+    '__has_include (' string-literal ')'
+    '__has_include ( <' h-pp-tokens '> )'
 ```
 
 The expression that controls conditional inclusion shall be an integral
@@ -839,7 +839,7 @@ processed as appropriate.
 A preprocessing directive of the form
 
 ``` bnf
-'# error' pp-tokensnₒₚₜew-line
+'# error' pp-tokensₒₚₜ new-line
 ```
 
 causes the implementation to produce a diagnostic message that includes
@@ -851,7 +851,7 @@ ill-formed.
 A preprocessing directive of the form
 
 ``` bnf
-'# pragma' pp-tokensnₒₚₜew-line
+'# pragma' pp-tokensₒₚₜ new-line
 ```
 
 causes the implementation to behave in an *implementation-defined*

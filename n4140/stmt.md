@@ -5,13 +5,13 @@ Except as indicated, statements are executed in sequence.
 ``` bnf
 statement:
     labeled-statement
-    attribute-specifier-seqeₒₚₜxpression-statement
-    attribute-specifier-seqcₒₚₜompound-statement
-    attribute-specifier-seqsₒₚₜelection-statement
-    attribute-specifier-seqiₒₚₜteration-statement
-    attribute-specifier-seqjₒₚₜump-statement
+    attribute-specifier-seqₒₚₜ expression-statement
+    attribute-specifier-seqₒₚₜ compound-statement
+    attribute-specifier-seqₒₚₜ selection-statement
+    attribute-specifier-seqₒₚₜ iteration-statement
+    attribute-specifier-seqₒₚₜ jump-statement
     declaration-statement
-    attribute-specifier-seqtₒₚₜry-block
+    attribute-specifier-seqₒₚₜ try-block
 ```
 
 The optional *attribute-specifier-seq* appertains to the respective
@@ -23,9 +23,9 @@ A statement can be labeled.
 
 ``` bnf
 labeled-statement:
-    attribute-specifier-seqiₒₚₜdentifier ':' statement
-    attribute-specifier-seq\terminal ₒₚₜ{case} constant-expression ':' statement
-    attribute-specifier-seq\terminal ₒₚₜ{default :} statement
+    attribute-specifier-seqₒₚₜ identifier ':' statement
+    attribute-specifier-seqₒₚₜ 'case' constant-expression ':' statement
+    attribute-specifier-seqₒₚₜ 'default :' statement
 ```
 
 The optional *attribute-specifier-seq* appertains to the label. An
@@ -43,7 +43,7 @@ Expression statements have the form
 
 ``` bnf
 expression-statement:
-    expression\terminal ₒₚₜ{;}
+    expressionₒₚₜ ';'
 ```
 
 The expression is a discarded-value expression (Clause  [[expr]]). All
@@ -62,7 +62,7 @@ compound statement (also, and equivalently, called “block”) is provided.
 
 ``` bnf
 compound-statement:
-    '{' statement-seq\terminal ₒₚₜ{\}}
+    '{' statement-seqₒₚₜ '}'
 ```
 
 ``` bnf
@@ -88,8 +88,8 @@ selection-statement:
 ``` bnf
 condition:
     expression
-    attribute-specifier-seqdₒₚₜecl-specifier-seq declarator '=' initializer-clause
-    attribute-specifier-seqdₒₚₜecl-specifier-seq declarator braced-init-list
+    attribute-specifier-seqₒₚₜ decl-specifier-seq declarator '=' initializer-clause
+    attribute-specifier-seqₒₚₜ decl-specifier-seq declarator braced-init-list
 ```
 
 See  [[dcl.meaning]] for the optional *attribute-specifier-seq* in a
@@ -228,7 +228,7 @@ Iteration statements specify looping.
 iteration-statement:
     'while (' condition ')' statement
     'do' statement 'while (' expression ') ;'
-    'for (' for-init-statement condition\terminal ₒₚₜ{;} expression\terminal ₒₚₜ{)} statement
+    'for (' for-init-statement conditionₒₚₜ ';' expressionₒₚₜ ')' statement
     'for (' for-range-declaration ':' for-range-initializer ')' statement
 ```
 
@@ -240,7 +240,7 @@ for-init-statement:
 
 ``` bnf
 for-range-declaration:
-    attribute-specifier-seqdₒₚₜecl-specifier-seq declarator
+    attribute-specifier-seqₒₚₜ decl-specifier-seq declarator
 ```
 
 ``` bnf
@@ -341,7 +341,7 @@ execution of the statement.
 The `for` statement
 
 ``` bnf
-'for (' for-init-statement condition\terminal ₒₚₜ{;} expression\terminal ₒₚₜ{)} statement
+'for (' for-init-statement conditionₒₚₜ ';' expressionₒₚₜ ')' statement
 ```
 
 is equivalent to
@@ -446,7 +446,7 @@ Jump statements unconditionally transfer control.
 jump-statement:
     'break ;'
     'continue ;'
-    'return' expression\terminal ₒₚₜ{;}
+    'return' expressionₒₚₜ ';'
     'return' braced-init-list ';'
     'goto' identifier ';'
 ```

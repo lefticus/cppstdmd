@@ -623,20 +623,20 @@ preprocessing-op-or-punc:
 ``` bnf
 %% Ed. note: character protrusion would misalign various operators.
 preprocessing-operator: one of
-    '#        ##       %:       %:%:'
+    '# ## %: %:%:'
 ```
 
 ``` bnf
 operator-or-punctuator: one of
-    '{        }        [        ]        (        )'
-    '<:       :>       <%       %>       ;        :        ...'
-    '?        ::       .        .*       ->       ->*      ~'
-    '!        +        -        *        /        %        ^        &        |'
-    '=        +=       -=       *=       /=       %=       ^=       &=       |='
-    '==       !=       <        >        <=       >=       <=>      &&       ||'
-    '<<       >>       <<=      >>=      ++       --       ,'
-    'and      or       xor      not      bitand   bitor    compl'
-    'and_eq   or_eq    xor_eq   not_eq'
+    '{ } [ ] ( )'
+    '<: :> <% %> ; : ...'
+    '? :: . .* -> ->* ~'
+    '! + - * / % ^ & |'
+    '= += -= *= /= %= ^= &= |='
+    '== != < > <= >= <=> && ||'
+    '<< >> <<= >>= ++ -- ,'
+    'and or xor not bitand bitor compl'
+    'and_eq or_eq xor_eq not_eq'
 ```
 
 Each *operator-or-punctuator* is converted to a single token in
@@ -666,29 +666,29 @@ a value category [[expr.prim.literal]]. — *end note*]
 
 ``` bnf
 integer-literal:
-    binary-literal integer-suffixₒₚₜ
-    octal-literal integer-suffixₒₚₜ
-    decimal-literal integer-suffixₒₚₜ
-    hexadecimal-literal integer-suffixₒₚₜ
+    binary-literal ₒₚₜ {integer-suffix}
+    octal-literal ₒₚₜ {integer-suffix}
+    decimal-literal ₒₚₜ {integer-suffix}
+    hexadecimal-literal ₒₚₜ {integer-suffix}
 ```
 
 ``` bnf
 binary-literal:
     '0b' binary-digit
     '0B' binary-digit
-    binary-literal '''ₒₚₜ binary-digit
+    binary-literal ₒₚₜ {'''} binary-digit
 ```
 
 ``` bnf
 octal-literal:
     '0'
-    octal-literal '''ₒₚₜ octal-digit
+    octal-literal ₒₚₜ {'''} octal-digit
 ```
 
 ``` bnf
 decimal-literal:
     nonzero-digit
-    decimal-literal '''ₒₚₜ digit
+    decimal-literal ₒₚₜ {'''} digit
 ```
 
 ``` bnf
@@ -698,65 +698,65 @@ hexadecimal-literal:
 
 ``` bnf
 binary-digit: one of
-    '0  1'
+    '0 1'
 ```
 
 ``` bnf
 octal-digit: one of
-    '0  1  2  3  4  5  6  7'
+    '0 1 2 3 4 5 6 7'
 ```
 
 ``` bnf
 nonzero-digit: one of
-    '1  2  3  4  5  6  7  8  9'
+    '1 2 3 4 5 6 7 8 9'
 ```
 
 ``` bnf
 hexadecimal-prefix: one of
-    '0x  0X'
+    '0x 0X'
 ```
 
 ``` bnf
 hexadecimal-digit-sequence:
     hexadecimal-digit
-    hexadecimal-digit-sequence '''ₒₚₜ hexadecimal-digit
+    hexadecimal-digit-sequence ₒₚₜ {'''} hexadecimal-digit
 ```
 
 ``` bnf
 hexadecimal-digit: one of
-    '0  1  2  3  4  5  6  7  8  9'
-    'a  b  c  d  e  f'
-    'A  B  C  D  E  F'
+    '0 1 2 3 4 5 6 7 8 9'
+    'a b c d e f'
+    'A B C D E F'
 ```
 
 ``` bnf
 integer-suffix:
-    unsigned-suffix long-suffixₒₚₜ 
-    unsigned-suffix long-long-suffixₒₚₜ 
-    unsigned-suffix size-suffixₒₚₜ 
-    long-suffix unsigned-suffixₒₚₜ 
-    long-long-suffix unsigned-suffixₒₚₜ 
-    size-suffix unsigned-suffixₒₚₜ
+    unsigned-suffix ₒₚₜ {long-suffix} 
+    unsigned-suffix ₒₚₜ {long-long-suffix} 
+    unsigned-suffix ₒₚₜ {size-suffix} 
+    long-suffix ₒₚₜ {unsigned-suffix} 
+    long-long-suffix ₒₚₜ {unsigned-suffix} 
+    size-suffix ₒₚₜ {unsigned-suffix}
 ```
 
 ``` bnf
 unsigned-suffix: one of
-    'u  U'
+    'u U'
 ```
 
 ``` bnf
 long-suffix: one of
-    'l  L'
+    'l L'
 ```
 
 ``` bnf
 long-long-suffix: one of
-    'll  LL'
+    'll LL'
 ```
 
 ``` bnf
 size-suffix: one of
-   'z  Z'
+   'z Z'
 ```
 
 In an *integer-literal*, the sequence of *binary-digit*s,
@@ -834,7 +834,7 @@ cannot be represented by any of the allowed types.
 
 ``` bnf
 character-literal:
-    encoding-prefixₒₚₜ ''' c-char-sequence '''
+    ₒₚₜ {encoding-prefix} ''' c-char-sequence '''
 ```
 
 ``` bnf
@@ -875,7 +875,7 @@ simple-escape-sequence:
 
 ``` bnf
 simple-escape-sequence-char: one of
-    ''  "  ?  \{} a  b  f  n  r  t  v'
+    '' " ? \ a b f n r t v'
 ```
 
 ``` bnf
@@ -1016,54 +1016,54 @@ floating-point-literal:
 
 ``` bnf
 decimal-floating-point-literal:
-    fractional-constant exponent-partₒₚₜ floating-point-suffixₒₚₜ
-    digit-sequence exponent-part floating-point-suffixₒₚₜ
+    fractional-constant ₒₚₜ {exponent-part} ₒₚₜ {floating-point-suffix}
+    digit-sequence exponent-part ₒₚₜ {floating-point-suffix}
 ```
 
 ``` bnf
 hexadecimal-floating-point-literal:
-    hexadecimal-prefix hexadecimal-fractional-constant binary-exponent-part floating-point-suffixₒₚₜ
-    hexadecimal-prefix hexadecimal-digit-sequence binary-exponent-part floating-point-suffixₒₚₜ
+    hexadecimal-prefix hexadecimal-fractional-constant binary-exponent-part ₒₚₜ {floating-point-suffix}
+    hexadecimal-prefix hexadecimal-digit-sequence binary-exponent-part ₒₚₜ {floating-point-suffix}
 ```
 
 ``` bnf
 fractional-constant:
-    digit-sequenceₒₚₜ '.' digit-sequence
+    ₒₚₜ {digit-sequence} '.' digit-sequence
     digit-sequence '.'
 ```
 
 ``` bnf
 hexadecimal-fractional-constant:
-    hexadecimal-digit-sequenceₒₚₜ '.' hexadecimal-digit-sequence
+    ₒₚₜ {hexadecimal-digit-sequence} '.' hexadecimal-digit-sequence
     hexadecimal-digit-sequence '.'
 ```
 
 ``` bnf
 exponent-part:
-    'e' signₒₚₜ digit-sequence
-    'E' signₒₚₜ digit-sequence
+    'e' ₒₚₜ {sign} digit-sequence
+    'E' ₒₚₜ {sign} digit-sequence
 ```
 
 ``` bnf
 binary-exponent-part:
-    'p' signₒₚₜ digit-sequence
-    'P' signₒₚₜ digit-sequence
+    'p' ₒₚₜ {sign} digit-sequence
+    'P' ₒₚₜ {sign} digit-sequence
 ```
 
 ``` bnf
 sign: one of
-    '+  -'
+    '+ -'
 ```
 
 ``` bnf
 digit-sequence:
     digit
-    digit-sequence '''ₒₚₜ digit
+    digit-sequence ₒₚₜ {'''} digit
 ```
 
 ``` bnf
 floating-point-suffix: one of
-    'f  l  f16  f32  f64  f128  bf16  F  L  F16  F32  F64  F128  BF16'
+    'f l f16 f32 f64 f128 bf16 F L F16 F32 F64 F128 BF16'
 ```
 
 The type of a *floating-point-literal*
@@ -1122,8 +1122,8 @@ in an *implementation-defined* manner.
 
 ``` bnf
 string-literal:
-    encoding-prefixₒₚₜ '"' s-char-sequenceₒₚₜ '"'
-    encoding-prefixₒₚₜ 'R' raw-string
+    ₒₚₜ {encoding-prefix} '"' ₒₚₜ {s-char-sequence} '"'
+    ₒₚₜ {encoding-prefix} 'R' raw-string
 ```
 
 ``` bnf
@@ -1147,7 +1147,7 @@ basic-s-char:
 
 ``` bnf
 raw-string:
-    '"' d-char-sequenceₒₚₜ '(' r-char-sequenceₒₚₜ ')' d-char-sequenceₒₚₜ '"'
+    '"' ₒₚₜ {d-char-sequence} '(' ₒₚₜ {r-char-sequence} ')' ₒₚₜ {d-char-sequence} '"'
 ```
 
 ``` bnf
@@ -1385,7 +1385,7 @@ user-defined-integer-literal:
 
 ``` bnf
 user-defined-floating-point-literal:
-    fractional-constant exponent-partₒₚₜ ud-suffix
+    fractional-constant ₒₚₜ {exponent-part} ud-suffix
     digit-sequence exponent-part ud-suffix
     hexadecimal-prefix hexadecimal-fractional-constant binary-exponent-part ud-suffix
     hexadecimal-prefix hexadecimal-digit-sequence binary-exponent-part ud-suffix

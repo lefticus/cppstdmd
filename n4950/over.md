@@ -259,7 +259,7 @@ B b3 = C();                             // calls #4
 In a function call [[expr.call]]
 
 ``` bnf
-postfix-expression '(' expression-listₒₚₜ ')'
+postfix-expression '(' ₒₚₜ {expression-list} ')'
 ```
 
 if the *postfix-expression* names at least one function or function
@@ -386,7 +386,7 @@ In addition, for each non-explicit conversion function declared in `T`
 of the form
 
 ``` bnf
-operator conversion-type-id '( )' cv-qualifier-seqₒₚₜ ref-qualifierₒₚₜ noexcept-specifierₒₚₜ attribute-specifier-seqₒₚₜ ';'
+operator conversion-type-id '( )' ₒₚₜ {cv-qualifier-seq} ₒₚₜ {ref-qualifier} ₒₚₜ {noexcept-specifier} ₒₚₜ {attribute-specifier-seq} ';'
 ```
 
 where the optional *cv-qualifier-seq* is the same cv-qualification as,
@@ -972,7 +972,7 @@ When resolving a placeholder for a deduced class type
 `A`, the *defining-type-id* of `A` must be of the form
 
 ``` bnf
-typenameₒₚₜ nested-name-specifierₒₚₜ templateₒₚₜ simple-template-id
+ₒₚₜ {typename} ₒₚₜ {nested-name-specifier} ₒₚₜ {template} simple-template-id
 ```
 
 as specified in [[dcl.type.simple]]. The guides of `A` are the set of
@@ -2334,11 +2334,11 @@ operator-function-id:
 ``` bnf
 %% Ed. note: character protrusion would misalign various operators.
 operator: one of
-    'new      delete   new[]    delete[] co_await (\rlap{ )}        [\rlap{ ]}        ->       ->*'
-    '~       !        +        -        *        /        %        ^        &'
-    '|        =        +=       -=       *=       /=       %=       ^=       &='
-    '|=       ==       !=       <        >        <=       >=       <=>      &&'
-    '||       <<       >>       <<=      >>=      ++       --       ,'
+    'new delete new[] delete[] co_await (\rlap{ )} [\rlap{ ]} -> ->*'
+    '~ ! + - * / % ^ &'
+    '| = += -= *= /= %= ^= &='
+    '|= == != < > <= >= <=> &&'
+    '|| << >> <<= >>= ++ -- ,'
 ```
 
 [*Note 1*: The operators `new[]`, `delete[]`, `()`, and `[]` are formed
@@ -2348,7 +2348,7 @@ from more than one token. The latter two operators are function call
 Both the unary and binary forms of
 
 ``` bnf
-'+      -      *      &'
+'+ - * &'
 ```
 
 can be overloaded.
@@ -2358,7 +2358,7 @@ can be overloaded.
 The following operators cannot be overloaded:
 
 ``` bnf
-'.      .*     ::     ?:'
+'. .* :: ?:'
 ```
 
 nor can the preprocessing symbols `#` [[cpp.stringize]] and `##`
@@ -2545,7 +2545,7 @@ that is a member function with an arbitrary number of parameters. It may
 have default arguments. For an expression of the form
 
 ``` bnf
-postfix-expression '(' expression-listₒₚₜ ')'
+postfix-expression '(' ₒₚₜ {expression-list} ')'
 ```
 
 where the *postfix-expression* is of class type, the operator function
@@ -2556,13 +2556,13 @@ corresponding conversion operator function on the *postfix-expression*;
 the expression is interpreted as
 
 ``` bnf
-e '(' expression-listₒₚₜ ')'
+e '(' ₒₚₜ {expression-list} ')'
 ```
 
 Otherwise, the expression is interpreted as
 
 ``` bnf
-postfix-expression '.' operator '('')' '(' expression-listₒₚₜ ')'
+postfix-expression '.' operator '('')' '(' ₒₚₜ {expression-list} ')'
 ```
 
 ### Subscripting <a id="over.sub">[[over.sub]]</a>
@@ -2572,7 +2572,7 @@ A *subscripting operator function* is a member function named
 arguments. For an expression of the form
 
 ``` bnf
-postfix-expression '[' expression-listₒₚₜ ']'
+postfix-expression '[' ₒₚₜ {expression-list} ']'
 ```
 
 the operator function is selected by overload resolution
@@ -2580,7 +2580,7 @@ the operator function is selected by overload resolution
 interpreted as
 
 ``` bnf
-postfix-expression . operator '['']' '(' expression-listₒₚₜ ')'
+postfix-expression . operator '['']' '(' ₒₚₜ {expression-list} ')'
 ```
 
 [*Example 1*:
@@ -2607,14 +2607,14 @@ A *class member access operator function* is a function named
 parameters. For an expression of the form
 
 ``` bnf
-postfix-expression '->' templateₒₚₜ id-expression
+postfix-expression '->' ₒₚₜ {template} id-expression
 ```
 
 the operator function is selected by overload resolution
 [[over.match.oper]], and the expression is interpreted as
 
 ``` bnf
-'(' postfix-expression . operator '->' '('')' ')' '->' templateₒₚₜ id-expression
+'(' postfix-expression . operator '->' '('')' ')' '->' ₒₚₜ {template} id-expression
 ```
 
 ### Increment and decrement <a id="over.inc">[[over.inc]]</a>

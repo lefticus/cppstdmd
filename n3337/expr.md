@@ -252,7 +252,7 @@ member and a prvalue otherwise.
 
 ``` bnf
 qualified-id:
-    nested-name-specifier 'template'uₒₚₜnqualified-id
+    nested-name-specifier 'template'ₒₚₜ unqualified-id
     '::' identifier
     '::' operator-function-id
     '::' literal-operator-id
@@ -261,11 +261,11 @@ qualified-id:
 
 ``` bnf
 nested-name-specifier:
-    '::'tₒₚₜype-name '::'
-    '::'nₒₚₜamespace-name '::'
+    '::'ₒₚₜ type-name '::'
+    '::'ₒₚₜ namespace-name '::'
     decltype-specifier '::'
     nested-name-specifier identifier '::'
-    nested-name-specifier 'template'sₒₚₜimple-template-id '::'
+    nested-name-specifier 'template'ₒₚₜ simple-template-id '::'
 ```
 
 A *nested-name-specifier* that denotes a class, optionally followed by
@@ -345,12 +345,12 @@ void abssort(float *x, unsigned N) {
 
 ``` bnf
 lambda-expression:
-    lambda-introducer lambda-declaratorcₒₚₜompound-statement
+    lambda-introducer lambda-declaratorₒₚₜ compound-statement
 ```
 
 ``` bnf
 lambda-introducer:
-    '[' lambda-capture\terminal ₒₚₜ{]}
+    '[' lambda-captureₒₚₜ ']'
 ```
 
 ``` bnf
@@ -368,8 +368,8 @@ capture-default:
 
 ``` bnf
 capture-list:
-    capture '...\opt'
-    capture-list ',' capture '...\opt'
+    capture '...ₒₚₜ '
+    capture-list ',' capture '...ₒₚₜ '
 ```
 
 ``` bnf
@@ -381,8 +381,8 @@ capture:
 
 ``` bnf
 lambda-declarator:
-    '(' parameter-declaration-clause ')' 'mutable'\opt
-    \hspace*{  inc}exception-specification\opt attribute-specifier-seq\opt trailing-return-type\opt
+    '(' parameter-declaration-clause ')' 'mutable'ₒₚₜ 
+    \hspace*{ inc}exception-specificationₒₚₜ attribute-specifier-seqₒₚₜ trailing-return-typeₒₚₜ
 ```
 
 The evaluation of a *lambda-expression* results in a prvalue temporary (
@@ -419,7 +419,7 @@ not include a *trailing-return-type*, it is as if the
 *trailing-return-type* denotes the following type:
 
 - if the *compound-statement* is of the form\begin{ncbnf}
-  \terminal{\\attribute-specifier-seq\terminal ₒₚₜ{return} expression \terminal{;} \terminal{\\}
+  \terminal{\\attribute-specifier-seqₒₚₜ \terminal{return} expression \terminal{;} \terminal{\\}
   \end{ncbnf} the type of the returned expression after lvalue-to-rvalue
   conversion ([[conv.lval]]), array-to-pointer conversion (
   [[conv.array]]), and function-to-pointer conversion ([[conv.func]]);
@@ -704,13 +704,13 @@ postfix-expression:
     primary-expression
     postfix-expression '[' expression ']'
     postfix-expression '[' braced-init-list ']'
-    postfix-expression '(' expression-list\terminal ₒₚₜ{)}
-    simple-type-specifier '(' expression-list\terminal ₒₚₜ{)}
-    typename-specifier '(' expression-list\terminal ₒₚₜ{)}
+    postfix-expression '(' expression-listₒₚₜ ')'
+    simple-type-specifier '(' expression-listₒₚₜ ')'
+    typename-specifier '(' expression-listₒₚₜ ')'
     simple-type-specifier braced-init-list
     typename-specifier braced-init-list
-    postfix-expression '. template'iₒₚₜd-expression
-    postfix-expression '-> template'iₒₚₜd-expression
+    postfix-expression '. template'ₒₚₜ id-expression
+    postfix-expression '-> template'ₒₚₜ id-expression
     postfix-expression '.' pseudo-destructor-name
     postfix-expression '->' pseudo-destructor-name
     postfix-expression '++'
@@ -730,9 +730,9 @@ expression-list:
 
 ``` bnf
 pseudo-destructor-name:
-    nested-name-specifiertₒₚₜype-name ':: ~' type-name
+    nested-name-specifierₒₚₜ type-name ':: ~' type-name
     nested-name-specifier 'template' simple-template-id ':: ~' type-name
-    nested-name-specifier\terminal ₒₚₜ{~} type-name
+    nested-name-specifierₒₚₜ '~' type-name
     '~' decltype-specifier
 ```
 
@@ -949,7 +949,7 @@ the object type and of the type designated by the
 *type-name*s in a *pseudo-destructor-name* of the form
 
 ``` bnf
-nested-name-specifiertₒₚₜype-name ':: ~' type-name
+nested-name-specifierₒₚₜ type-name ':: ~' type-name
 ```
 
 shall designate the same scalar type.
@@ -1010,7 +1010,7 @@ rules applies.
     of parameter-type-list returning `T`”.
   - Otherwise, if `E1.E2` refers to a non-static member function and the
     type of `E2` is “function of parameter-type-list *cv*
-    *ref-qualifier\opt* returning `T`”, then `E1.E2` is a prvalue. The
+    *ref-qualifierₒₚₜ * returning `T`”, then `E1.E2` is a prvalue. The
     expression designates a non-static member function. The expression
     can be used only as the left-hand operand of a member function
     call ([[class.mfct]]). Any redundant set of parentheses surrounding
@@ -1559,7 +1559,7 @@ unary-expression:
 
 ``` bnf
 unary-operator: one of
-    '*  &  +  -  !  ~'
+    '* & + - ! ~'
 ```
 
 ### Unary operators <a id="expr.unary.op">[[expr.unary.op]]</a>
@@ -1728,8 +1728,8 @@ cv-qualified type.
 
 ``` bnf
 new-expression:
-    '::'\opt 'new' new-placement\opt new-type-id new-initializer\opt 
-    '::'\opt 'new' new-placement\opt '(' type-id ')' new-initializer\opt
+    '::'ₒₚₜ 'new' new-placementₒₚₜ new-type-id new-initializerₒₚₜ 
+    '::'ₒₚₜ 'new' new-placementₒₚₜ '(' type-id ')' new-initializerₒₚₜ
 ```
 
 ``` bnf
@@ -1739,25 +1739,24 @@ new-placement:
 
 ``` bnf
 new-type-id:
-    type-specifier-seq new-declarator\opt
+    type-specifier-seq new-declaratorₒₚₜ
 ```
 
 ``` bnf
 new-declarator:
-    ptr-operator new-declarator
- ₒₚₜ
+    ptr-operator new-declaratorₒₚₜ 
     noptr-new-declarator
 ```
 
 ``` bnf
 noptr-new-declarator:
-    '[' expression ']' attribute-specifier-seq\opt
-    noptr-new-declarator '[' constant-expression ']' attribute-specifier-seq\opt
+    '[' expression ']' attribute-specifier-seqₒₚₜ 
+    noptr-new-declarator '[' constant-expression ']' attribute-specifier-seqₒₚₜ
 ```
 
 ``` bnf
 new-initializer:
-    '(' expression-list\terminal ₒₚₜ{)}
+    '(' expression-listₒₚₜ ')'
     braced-init-list
 ```
 
@@ -2020,8 +2019,8 @@ The *delete-expression* operator destroys a most derived object (
 
 ``` bnf
 delete-expression:
-    '::'\terminal ₒₚₜ{delete} cast-expression
-    '::'\terminal ₒₚₜ{delete [ ]} cast-expression
+    '::'ₒₚₜ 'delete' cast-expression
+    '::'ₒₚₜ 'delete [ ]' cast-expression
 ```
 
 The first alternative is for non-array objects, and the second is for
@@ -2577,7 +2576,7 @@ or unscoped enumeration operands.
 ``` bnf
 exclusive-or-expression:
     and-expression
-    exclusive-or-expression '\^{}' and-expression
+    exclusive-or-expression '\^' and-expression
 ```
 
 The usual arithmetic conversions are performed; the result is the
@@ -2772,7 +2771,7 @@ assignment-expression:
 
 ``` bnf
 assignment-operator: one of
-    '=  *=  /=  %=   +=  -=  \shr=  \shl=  &=  \^{}=  |='
+    '= *= /= %= += -= \shr= \shl= &= \^= |='
 ```
 
 In simple assignment (`=`), the value of the expression replaces that of

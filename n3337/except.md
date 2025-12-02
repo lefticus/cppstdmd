@@ -14,12 +14,12 @@ try-block:
 
 ``` bnf
 function-try-block:
-    'try' ctor-initializercₒₚₜompound-statement handler-seq
+    'try' ctor-initializerₒₚₜ compound-statement handler-seq
 ```
 
 ``` bnf
 handler-seq:
-    handler handler-seq\opt
+    handler handler-seqₒₚₜ
 ```
 
 ``` bnf
@@ -29,15 +29,14 @@ handler:
 
 ``` bnf
 exception-declaration:
-    attribute-specifier-seqtₒₚₜype-specifier-seq declarator
-    attribute-specifier-seqtₒₚₜype-specifier-seq abstract-declarator
- ₒₚₜ
+    attribute-specifier-seqₒₚₜ type-specifier-seq declarator
+    attribute-specifier-seqₒₚₜ type-specifier-seq abstract-declaratorₒₚₜ 
     '...'
 ```
 
 ``` bnf
 throw-expression:
-    'throw'  assignment-expression\opt
+    'throw' assignment-expressionₒₚₜ
 ```
 
 The optional *attribute-specifier-seq* in an *exception-declaration*
@@ -424,13 +423,13 @@ exception-specification:
 
 ``` bnf
 dynamic-exception-specification:
-    'throw (' type-id-list\terminal ₒₚₜ{)}
+    'throw (' type-id-listₒₚₜ ')'
 ```
 
 ``` bnf
 type-id-list:
-    type-id '...'\opt
-    type-id-list ',' type-id '...'\opt
+    type-id '...'ₒₚₜ 
+    type-id-list ',' type-id '...'ₒₚₜ
 ```
 
 ``` bnf

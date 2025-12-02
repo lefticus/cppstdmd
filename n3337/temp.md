@@ -85,15 +85,12 @@ template-parameter:
 
 ``` bnf
 type-parameter:
-  'class' '...'iₒₚₜdentifier
- ₒₚₜ
-  'class' identifier\terminal ₒₚₜ{=} type-id
-  'typename' '...'iₒₚₜdentifier
- ₒₚₜ
-  'typename' identifier\terminal ₒₚₜ{=} type-id
-  'template <' template-parameter-list '> class' '...'iₒₚₜdentifier
- ₒₚₜ
-  'template <' template-parameter-list '> class' identifier\terminal ₒₚₜ{=} id-expression
+  'class' '...'ₒₚₜ identifierₒₚₜ 
+  'class' identifierₒₚₜ '=' type-id
+  'typename' '...'ₒₚₜ identifierₒₚₜ 
+  'typename' identifierₒₚₜ '=' type-id
+  'template <' template-parameter-list '> class' '...'ₒₚₜ identifierₒₚₜ 
+  'template <' template-parameter-list '> class' identifierₒₚₜ '=' id-expression
 ```
 
 The `>` token following the of a may be the product of replacing a
@@ -313,14 +310,14 @@ A template specialization ([[temp.spec]]) can be referred to by a
 
 ``` bnf
 simple-template-id:
-  template-name '<' template-argument-list\terminal ₒₚₜ{>}
+  template-name '<' template-argument-listₒₚₜ '>'
 ```
 
 ``` bnf
 template-id:
   simple-template-id
-  operator-function-id '<' template-argument-list\terminal ₒₚₜ{>}
-  literal-operator-id '<' template-argument-list\terminal ₒₚₜ{>}
+  operator-function-id '<' template-argument-listₒₚₜ '>'
+  literal-operator-id '<' template-argument-listₒₚₜ '>'
 ```
 
 ``` bnf
@@ -330,8 +327,8 @@ template-name:
 
 ``` bnf
 template-argument-list:
-  template-argument '...'\opt
-  template-argument-list ',' template-argument '...'\opt
+  template-argument '...'ₒₚₜ 
+  template-argument-list ',' template-argument '...'ₒₚₜ
 ```
 
 ``` bnf
@@ -2056,7 +2053,7 @@ program is ill-formed.
 ``` bnf
 typename-specifier:
   'typename' nested-name-specifier identifier
-  'typename' nested-name-specifier 'template\opt' simple-template-id
+  'typename' nested-name-specifier 'templateₒₚₜ ' simple-template-id
 ```
 
 If a specialization of a template is instantiated for a set of
@@ -3202,7 +3199,7 @@ The syntax for explicit instantiation is:
 
 ``` bnf
 explicit-instantiation:
-  'extern\opt' 'template' declaration
+  'externₒₚₜ ' 'template' declaration
 ```
 
 There are two forms of explicit instantiation: an explicit instantiation

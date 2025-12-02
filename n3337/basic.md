@@ -1169,7 +1169,7 @@ scope designated by the *nested-name-specifier*. Similarly, in a
 *qualified-id* of the form:
 
 ``` bnf
-nested-name-specifiercₒₚₜlass-name '::' '~' class-name
+nested-name-specifierₒₚₜ class-name '::' '~' class-name
 ```
 
 the second *class-name* is looked up in the same scope as the first.
@@ -1486,7 +1486,7 @@ unless the *elaborated-type-specifier* appears in a declaration with the
 following form:
 
 ``` bnf
-class-key attribute-specifier-seqiₒₚₜdentifier ';'
+class-key attribute-specifier-seqₒₚₜ identifier ';'
 ```
 
 the *identifier* is looked up according to  [[basic.lookup.unqual]] but
@@ -1499,7 +1499,7 @@ lookup does not find a previously declared *type-name*, or if the
 *elaborated-type-specifier* appears in a declaration with the form:
 
 ``` bnf
-class-key attribute-specifier-seqiₒₚₜdentifier ';'
+class-key attribute-specifier-seqₒₚₜ identifier ';'
 ```
 
 the *elaborated-type-specifier* is a declaration that introduces the
@@ -1635,7 +1635,7 @@ declarations.
 
 ``` bnf
 translation-unit:
-    declaration-seq\opt
+    declaration-seqₒₚₜ
 ```
 
 A name is said to have *linkage* when it might denote the same object,

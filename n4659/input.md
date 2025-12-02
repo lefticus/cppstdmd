@@ -6202,7 +6202,7 @@ directory.
 a directory containing a directory entry for the file under discussion.
 
 A sequence of elements that identify the location of a file within a
-filesystem. The elements are the *root-name*ₒₚₜ, *root-directory*ₒₚₜ,
+filesystem. The elements are the *root-name*ₒₚₜ , *root-directory*ₒₚₜ ,
 and an optional sequence of filenames. The maximum number of elements in
 the sequence is operating system dependent.
 
@@ -6710,7 +6710,7 @@ pathname:
 ``` bnf
 root-name:
     operating system dependent sequences of characters
-    implementation-defined{} sequences of characters
+    implementation-defined sequences of characters
 ```
 
 ``` bnf
@@ -6732,8 +6732,8 @@ filename:
 
 ``` bnf
 directory-separator:
-    preferred-separator directory-separator\opt
-    fallback-separator directory-separator\opt
+    preferred-separator directory-separatorₒₚₜ 
+    fallback-separator directory-separatorₒₚₜ
 ```
 
 ``` bnf

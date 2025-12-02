@@ -5,13 +5,13 @@ Except as indicated, statements are executed in sequence.
 ``` bnf
 statement:
     labeled-statement
-    attribute-specifier-seqeₒₚₜxpression-statement
-    attribute-specifier-seqcₒₚₜompound-statement
-    attribute-specifier-seqsₒₚₜelection-statement
-    attribute-specifier-seqiₒₚₜteration-statement
-    attribute-specifier-seqjₒₚₜump-statement
+    attribute-specifier-seqₒₚₜ expression-statement
+    attribute-specifier-seqₒₚₜ compound-statement
+    attribute-specifier-seqₒₚₜ selection-statement
+    attribute-specifier-seqₒₚₜ iteration-statement
+    attribute-specifier-seqₒₚₜ jump-statement
     declaration-statement
-    attribute-specifier-seqtₒₚₜry-block
+    attribute-specifier-seqₒₚₜ try-block
 
 init-statement:
     expression-statement
@@ -19,7 +19,7 @@ init-statement:
 
 condition:
     expression
-    attribute-specifier-seqdₒₚₜecl-specifier-seq declarator brace-or-equal-initializer
+    attribute-specifier-seqₒₚₜ decl-specifier-seq declarator brace-or-equal-initializer
 ```
 
 The optional *attribute-specifier-seq* appertains to the respective
@@ -79,7 +79,7 @@ A statement can be labeled.
 
 ``` bnf
 labeled-statement:
-    attribute-specifier-seqiₒₚₜdentifier ':' statement
+    attribute-specifier-seqₒₚₜ identifier ':' statement
     attribute-specifier-seqₒₚₜ 'case' constant-expression ':' statement
     attribute-specifier-seqₒₚₜ 'default :' statement
 ```
@@ -146,9 +146,9 @@ Selection statements choose one of several flows of control.
 
 ``` bnf
 selection-statement:
-    'if constexpr(ₒₚₜ' init-statementcₒₚₜondition ')' statement
-    'if constexpr(ₒₚₜ' init-statementcₒₚₜondition ')' statement 'else' statement
-    'switch (' init-statementcₒₚₜondition ')' statement
+    'if constexprₒₚₜ (' init-statementₒₚₜ condition ')' statement
+    'if constexprₒₚₜ (' init-statementₒₚₜ condition ')' statement 'else' statement
+    'switch (' init-statementₒₚₜ condition ')' statement
 ```
 
 See  [[dcl.meaning]] for the optional *attribute-specifier-seq* in a
@@ -241,7 +241,7 @@ int f() {
 An `if` statement of the form
 
 ``` bnf
-'if constexpr(ₒₚₜ' init-statement condition ')' statement
+'if constexprₒₚₜ (' init-statement condition ')' statement
 ```
 
 is equivalent to
@@ -249,7 +249,7 @@ is equivalent to
 and an `if` statement of the form
 
 ``` bnf
-'if constexpr(ₒₚₜ' init-statement condition ')' statement 'else' statement
+'if constexprₒₚₜ (' init-statement condition ')' statement 'else' statement
 ```
 
 is equivalent to
@@ -333,8 +333,8 @@ iteration-statement:
 
 ``` bnf
 for-range-declaration:
-    attribute-specifier-seqdₒₚₜecl-specifier-seq declarator
-    attribute-specifier-seqdₒₚₜecl-specifier-seq ref-qualifierₒₚₜ '[' identifier-list ']'
+    attribute-specifier-seqₒₚₜ decl-specifier-seq declarator
+    attribute-specifier-seqₒₚₜ decl-specifier-seq ref-qualifierₒₚₜ '[' identifier-list ']'
 ```
 
 ``` bnf

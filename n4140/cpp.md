@@ -13,7 +13,7 @@ of a function-like macro.
 
 ``` bnf
 preprocessing-file:
-    group\opt
+    groupₒₚₜ
 ```
 
 ``` bnf
@@ -32,7 +32,7 @@ group-part:
 
 ``` bnf
 if-section:
-    if-group elif-groupseₒₚₜlse-groupeₒₚₜndif-line
+    if-group elif-groupsₒₚₜ else-groupₒₚₜ endif-line
 ```
 
 ``` bnf
@@ -64,7 +64,7 @@ identifier-list:
 
 ``` bnf
 replacement-list:
-    pp-tokens\opt
+    pp-tokensₒₚₜ
 ```
 
 ``` bnf
@@ -333,7 +333,7 @@ below.
 A preprocessing directive of the form
 
 ``` bnf
-'# define' identifier lparen identifier-list\terminal ₒₚₜ{)} replacement-list new-line
+'# define' identifier lparen identifier-listₒₚₜ ')' replacement-list new-line
 '# define' identifier lparen '...' ')' replacement-list new-line
 '# define' identifier lparen identifier-list ', ...' ')' replacement-list new-line
 ```
@@ -678,7 +678,7 @@ the behavior is undefined.
 A preprocessing directive of the form
 
 ``` bnf
-'# line' digit-sequence '"' s-char-sequence\terminal ₒₚₜ{"} new-line
+'# line' digit-sequence '"' s-char-sequenceₒₚₜ '"' new-line
 ```
 
 sets the presumed line number similarly and changes the presumed name of
@@ -703,7 +703,7 @@ processed as appropriate.
 A preprocessing directive of the form
 
 ``` bnf
-'# error' pp-tokensnₒₚₜew-line
+'# error' pp-tokensₒₚₜ new-line
 ```
 
 causes the implementation to produce a diagnostic message that includes
@@ -715,7 +715,7 @@ ill-formed.
 A preprocessing directive of the form
 
 ``` bnf
-'# pragma' pp-tokensnₒₚₜew-line
+'# pragma' pp-tokensₒₚₜ new-line
 ```
 
 causes the implementation to behave in an *implementation-defined*

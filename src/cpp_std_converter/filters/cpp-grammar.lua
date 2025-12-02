@@ -195,6 +195,14 @@ local function clean_grammar(grammar)
     end
   end)
 
+  -- Strip empty braces {} (used in LaTeX for spacing/grouping, e.g., \opt{})
+  -- After \opt is expanded to "ₒₚₜ ", the trailing {} becomes orphaned
+  grammar = grammar:gsub("{}", "")
+
+  -- Normalize multiple spaces to single space WITHIN lines (preserves leading indentation)
+  -- Only collapse spaces that are NOT at the start of a line
+  grammar = grammar:gsub("([^\n ]) +", "%1 ")
+
   -- Clean up extra whitespace
   grammar = trim(grammar)
 

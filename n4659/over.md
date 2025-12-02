@@ -522,7 +522,7 @@ In addition, for each non-explicit conversion function declared in `T`
 of the form
 
 ``` bnf
-'operator' conversion-type-id '( )' cv-qualifier ref-qualifiernₒₚₜoexcept-specifieraₒₚₜttribute-specifier-seqₒₚₜ ';'
+'operator' conversion-type-id '( )' cv-qualifier ref-qualifierₒₚₜ noexcept-specifierₒₚₜ attribute-specifier-seqₒₚₜ ';'
 ```
 
 where *cv-qualifier* is the same cv-qualification as, or a greater
@@ -2169,7 +2169,7 @@ shall be a non-static member function taking no parameters. It
 implements the class member access syntax that uses `->`.
 
 ``` bnf
-postfix-expression '->' 'template\opt' id-expression\\
+postfix-expression '->' 'templateₒₚₜ ' id-expression\\
 postfix-expression '->' pseudo-destructor-name
 ```
 

@@ -4,17 +4,17 @@
 
 ``` bnf
 module-declaration:
-    export-keywordₒₚₜ module-keyword module-name module-partitionₒₚₜ attribute-specifier-seqₒₚₜ ';'
+    ₒₚₜ {export-keyword} module-keyword module-name ₒₚₜ {module-partition} ₒₚₜ {attribute-specifier-seq} ';'
 ```
 
 ``` bnf
 module-name:
-    module-name-qualifierₒₚₜ identifier
+    ₒₚₜ {module-name-qualifier} identifier
 ```
 
 ``` bnf
 module-partition:
-    ':' module-name-qualifierₒₚₜ identifier
+    ':' ₒₚₜ {module-name-qualifier} identifier
 ```
 
 ``` bnf
@@ -183,7 +183,7 @@ int &c = n;                     // OK
 ``` bnf
 export-declaration:
     export name-declaration
-    export '{' declaration-seqₒₚₜ '}'
+    export '{' ₒₚₜ {declaration-seq} '}'
     export-keyword module-import-declaration
 ```
 
@@ -405,9 +405,9 @@ export namespace N {
 
 ``` bnf
 module-import-declaration:
-    import-keyword module-name attribute-specifier-seqₒₚₜ ';'
-    import-keyword module-partition attribute-specifier-seqₒₚₜ ';'
-    import-keyword header-name attribute-specifier-seqₒₚₜ ';'
+    import-keyword module-name ₒₚₜ {attribute-specifier-seq} ';'
+    import-keyword module-partition ₒₚₜ {attribute-specifier-seq} ';'
+    import-keyword header-name ₒₚₜ {attribute-specifier-seq} ';'
 ```
 
 A *module-import-declaration* shall inhabit the global namespace scope.
@@ -559,7 +559,7 @@ import M1;              // error: cyclic interface dependency M3 → M1 → M2 �
 
 ``` bnf
 global-module-fragment:
-    module-keyword ';' declaration-seqₒₚₜ
+    module-keyword ';' ₒₚₜ {declaration-seq}
 ```
 
 [*Note 1*: Prior to phase 4 of translation, only preprocessing
@@ -720,7 +720,7 @@ int c = use_h<int>();           // OK
 
 ``` bnf
 private-module-fragment:
-    module-keyword ':' private ';' declaration-seqₒₚₜ
+    module-keyword ':' private ';' ₒₚₜ {declaration-seq}
 ```
 
 A *private-module-fragment* shall appear only in a primary module

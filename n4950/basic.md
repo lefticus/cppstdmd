@@ -240,8 +240,8 @@ follows:
 - If E is a subscripting operation [[expr.sub]] with an array operand,
   the set contains the potential results of that operand.
 - If E is a class member access expression [[expr.ref]] of the form E₁
-  `.` `template`ₒₚₜ E₂ naming a non-static data member, the set contains
-  the potential results of E₁.
+  `.` ₒₚₜ `template` E₂ naming a non-static data member, the set
+  contains the potential results of E₁.
 - If E is a class member access expression naming a static data member,
   the set contains the *id-expression* designating the data member.
 - If E is a pointer-to-member expression [[expr.mptr.oper]] of the form
@@ -1000,9 +1000,9 @@ A *parameter-declaration-clause* P introduces a
 
 - If P is associated with a *declarator* and is preceded by a
   (possibly-parenthesized) *noptr-declarator* of the form
-  *declarator-id* *attribute-specifier-seq*ₒₚₜ, its scope extends to the
-  end of the nearest enclosing *init-declarator*, *member-declarator*,
-  *declarator* of a *parameter-declaration* or a
+  *declarator-id* ₒₚₜ *attribute-specifier-seq*, its scope extends to
+  the end of the nearest enclosing *init-declarator*,
+  *member-declarator*, *declarator* of a *parameter-declaration* or a
   *nodeclspec-function-declaration*, or *function-definition*, but does
   not include the locus of the associated *declarator*. \[*Note 2*: In
   this case, P declares the parameters of a function (or a function or
@@ -2161,8 +2161,8 @@ declarations.
 
 ``` bnf
 translation-unit:
-    declaration-seqₒₚₜ
-    global-module-fragmentₒₚₜ module-declaration declaration-seqₒₚₜ private-module-fragmentₒₚₜ
+    ₒₚₜ {declaration-seq}
+    ₒₚₜ {global-module-fragment} module-declaration ₒₚₜ {declaration-seq} ₒₚₜ {private-module-fragment}
 ```
 
 A name is said to have *linkage* when it can denote the same object,

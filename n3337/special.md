@@ -468,12 +468,12 @@ conversion-function-id:
 
 ``` bnf
 conversion-type-id:
-    type-specifier-seq conversion-declarator\opt
+    type-specifier-seq conversion-declaratorₒₚₜ
 ```
 
 ``` bnf
 conversion-declarator:
-    ptr-operator conversion-declarator\opt
+    ptr-operator conversion-declaratorₒₚₜ
 ```
 
 specifies a conversion from `X` to the type specified by the
@@ -959,13 +959,13 @@ ctor-initializer:
 
 ``` bnf
 mem-initializer-list:
-    mem-initializer '...'\opt
-    mem-initializer ',' mem-initializer-list '...'\opt
+    mem-initializer '...'ₒₚₜ 
+    mem-initializer ',' mem-initializer-list '...'ₒₚₜ
 ```
 
 ``` bnf
 mem-initializer:
-    mem-initializer-id '(' expression-list\terminal ₒₚₜ{)}
+    mem-initializer-id '(' expression-listₒₚₜ ')'
     mem-initializer-id braced-init-list
 ```
 

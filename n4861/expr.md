@@ -1079,7 +1079,7 @@ void f() {
 
 ``` bnf
 qualified-id:
-    nested-name-specifier templateₒₚₜ unqualified-id
+    nested-name-specifier ₒₚₜ {template} unqualified-id
 ```
 
 ``` bnf
@@ -1089,7 +1089,7 @@ nested-name-specifier:
     namespace-name '::'
     decltype-specifier '::'
     nested-name-specifier identifier '::'
-    nested-name-specifier templateₒₚₜ simple-template-id '::'
+    nested-name-specifier ₒₚₜ {template} simple-template-id '::'
 ```
 
 The type denoted by a *decltype-specifier* in a *nested-name-specifier*
@@ -1173,19 +1173,19 @@ void f() {
 
 ``` bnf
 lambda-expression:
-    lambda-introducer lambda-declaratorₒₚₜ compound-statement
-    lambda-introducer '<' template-parameter-list '>' requires-clauseₒₚₜ lambda-declaratorₒₚₜ compound-statement
+    lambda-introducer ₒₚₜ {lambda-declarator} compound-statement
+    lambda-introducer '<' template-parameter-list '>' ₒₚₜ {requires-clause} ₒₚₜ {lambda-declarator} compound-statement
 ```
 
 ``` bnf
 lambda-introducer:
-    '[' lambda-captureₒₚₜ ']'
+    '[' ₒₚₜ {lambda-capture} ']'
 ```
 
 ``` bnf
 lambda-declarator:
-    '(' parameter-declaration-clause ')' decl-specifier-seqₒₚₜ
-       noexcept-specifierₒₚₜ attribute-specifier-seqₒₚₜ trailing-return-typeₒₚₜ requires-clauseₒₚₜ
+    '(' parameter-declaration-clause ')' ₒₚₜ {decl-specifier-seq}
+       ₒₚₜ {noexcept-specifier} ₒₚₜ {attribute-specifier-seq} ₒₚₜ {trailing-return-type} ₒₚₜ {requires-clause}
 ```
 
 A *lambda-expression* provides a concise way to create a simple function
@@ -1597,16 +1597,16 @@ capture:
 
 ``` bnf
 simple-capture:
-    identifier '...'ₒₚₜ
-    '&' identifier '...'ₒₚₜ
+    identifier ₒₚₜ {'...'}
+    '&' identifier ₒₚₜ {'...'}
     this
     '*' 'this'
 ```
 
 ``` bnf
 init-capture:
-    '...'ₒₚₜ identifier initializer
-    '&' '...'ₒₚₜ identifier initializer
+    ₒₚₜ {'...'} identifier initializer
+    '&' ₒₚₜ {'...'} identifier initializer
 ```
 
 The body of a *lambda-expression* may refer to variables with automatic
@@ -1617,7 +1617,7 @@ If a *lambda-capture* includes a *capture-default* that is `&`, no
 identifier in a *simple-capture* of that *lambda-capture* shall be
 preceded by `&`. If a *lambda-capture* includes a *capture-default* that
 is `=`, each *simple-capture* of that *lambda-capture* shall be of the
-form “`&` *identifier* `...`ₒₚₜ”, “`this`”, or “`* this`”.
+form “`&` *identifier* ₒₚₜ `...`”, “`this`”, or “`* this`”.
 
 [*Note 1*: The form `[&,this]` is redundant but accepted for
 compatibility with ISO C++14. — *end note*]
@@ -2030,7 +2030,7 @@ fold-expression:
 fold-operator: one of
     '+ ' '- ' '* ' '/ ' '% ' '^ ' '& ' '| ' '<< ' '>> '
     '+=' '-=' '*=' '/=' '%=' '^=' '&=' '|=' '<<=' '>>=' '='
-    '==' '!=' '< ' '> ' '<=' '>=' '&&' '||' ',  ' '.* ' '->*'
+    '==' '!=' '< ' '> ' '<=' '>=' '&&' '||' ', ' '.* ' '->*'
 ```
 
 An expression of the form `(...` *op* `e)` where *op* is a
@@ -2072,12 +2072,12 @@ on template arguments that can be checked by name lookup
 
 ``` bnf
 requires-expression:
-    requires requirement-parameter-listₒₚₜ requirement-body
+    requires ₒₚₜ {requirement-parameter-list} requirement-body
 ```
 
 ``` bnf
 requirement-parameter-list:
-    '(' parameter-declaration-clauseₒₚₜ ')'
+    '(' ₒₚₜ {parameter-declaration-clause} ')'
 ```
 
 ``` bnf
@@ -2221,7 +2221,7 @@ as a *simple-requirement*.
 
 ``` bnf
 type-requirement:
-    typename nested-name-specifierₒₚₜ type-name ';'
+    typename ₒₚₜ {nested-name-specifier} type-name ';'
 ```
 
 A *type-requirement* asserts the validity of a type.
@@ -2251,7 +2251,7 @@ require that type to be complete [[basic.types]].
 
 ``` bnf
 compound-requirement:
-    '{' expression '}' noexceptₒₚₜ return-type-requirementₒₚₜ ';'
+    '{' expression '}' ₒₚₜ {noexcept} ₒₚₜ {return-type-requirement} ';'
 ```
 
 ``` bnf
@@ -2378,13 +2378,13 @@ Postfix expressions group left-to-right.
 postfix-expression:
     primary-expression
     postfix-expression '[' expr-or-braced-init-list ']'
-    postfix-expression '(' expression-listₒₚₜ ')'
-    simple-type-specifier '(' expression-listₒₚₜ ')'
-    typename-specifier '(' expression-listₒₚₜ ')'
+    postfix-expression '(' ₒₚₜ {expression-list} ')'
+    simple-type-specifier '(' ₒₚₜ {expression-list} ')'
+    typename-specifier '(' ₒₚₜ {expression-list} ')'
     simple-type-specifier braced-init-list
     typename-specifier braced-init-list
-    postfix-expression '.' 'template'ₒₚₜ id-expression
-    postfix-expression '->' 'template'ₒₚₜ id-expression
+    postfix-expression ₒₚₜ {'.' 'template'} id-expression
+    postfix-expression ₒₚₜ {'->' 'template'} id-expression
     postfix-expression '++'
     postfix-expression '-{-}'
     dynamic_cast '<' type-id '>' '(' expression ')'
@@ -3353,7 +3353,7 @@ unary-expression:
 
 ``` bnf
 unary-operator: one of
-    '*  &  +  -  !  ~'
+    '* & + - ! ~'
 ```
 
 #### Unary operators <a id="expr.unary.op">[[expr.unary.op]]</a>
@@ -3708,8 +3708,8 @@ type. — *end note*]
 
 ``` bnf
 new-expression:
-    '::'ₒₚₜ new new-placementₒₚₜ new-type-id new-initializerₒₚₜ 
-    '::'ₒₚₜ new new-placementₒₚₜ '(' type-id ')' new-initializerₒₚₜ
+    ₒₚₜ {'::'} new ₒₚₜ {new-placement} new-type-id ₒₚₜ {new-initializer} 
+    ₒₚₜ {'::'} new ₒₚₜ {new-placement} '(' type-id ')' ₒₚₜ {new-initializer}
 ```
 
 ``` bnf
@@ -3719,24 +3719,24 @@ new-placement:
 
 ``` bnf
 new-type-id:
-    type-specifier-seq new-declaratorₒₚₜ
+    type-specifier-seq ₒₚₜ {new-declarator}
 ```
 
 ``` bnf
 new-declarator:
-    ptr-operator new-declaratorₒₚₜ 
+    ptr-operator ₒₚₜ {new-declarator} 
     noptr-new-declarator
 ```
 
 ``` bnf
 noptr-new-declarator:
-    '[' expressionₒₚₜ ']' attribute-specifier-seqₒₚₜ
-    noptr-new-declarator '[' constant-expression ']' attribute-specifier-seqₒₚₜ
+    '[' ₒₚₜ {expression} ']' ₒₚₜ {attribute-specifier-seq}
+    noptr-new-declarator '[' constant-expression ']' ₒₚₜ {attribute-specifier-seq}
 ```
 
 ``` bnf
 new-initializer:
-    '(' expression-listₒₚₜ ')'
+    '(' ₒₚₜ {expression-list} ')'
     braced-init-list
 ```
 
@@ -4148,8 +4148,8 @@ The *delete-expression* operator destroys a most derived object
 
 ``` bnf
 delete-expression:
-    '::'ₒₚₜ delete cast-expression
-    '::'ₒₚₜ delete '[' ']' cast-expression
+    ₒₚₜ {'::'} delete cast-expression
+    ₒₚₜ {'::'} delete '[' ']' cast-expression
 ```
 
 The first alternative is a *single-object delete expression*, and the
@@ -5086,7 +5086,7 @@ int main() {
 
 ``` bnf
 throw-expression:
-    throw  assignment-expressionₒₚₜ
+    throw ₒₚₜ {assignment-expression}
 ```
 
 A *throw-expression* is of type `void`.
@@ -5148,7 +5148,7 @@ assignment-expression:
 
 ``` bnf
 assignment-operator: one of
-    '=  *=  /=  %=   +=  -=  >>=  <<=  &=  ^=  |='
+    '= *= /= %= += -= >>= <<= &= ^= |='
 ```
 
 In simple assignment (`=`), the object referred to by the left operand

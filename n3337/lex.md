@@ -488,9 +488,9 @@ literal:
 
 ``` bnf
 integer-literal:
-    decimal-literal integer-suffix\opt
-    octal-literal integer-suffix\opt
-    hexadecimal-literal integer-suffix\opt
+    decimal-literal integer-suffixₒₚₜ 
+    octal-literal integer-suffixₒₚₜ 
+    hexadecimal-literal integer-suffixₒₚₜ
 ```
 
 ``` bnf
@@ -514,42 +514,42 @@ hexadecimal-literal:
 
 ``` bnf
 nonzero-digit: one of
-    '1  2  3  4  5  6  7  8  9'
+    '1 2 3 4 5 6 7 8 9'
 ```
 
 ``` bnf
 octal-digit: one of
-    '0  1  2  3  4  5  6  7'
+    '0 1 2 3 4 5 6 7'
 ```
 
 ``` bnf
 hexadecimal-digit: one of
-    '0  1  2  3  4  5  6  7  8  9'
-    'a  b  c  d  e  f'
-    'A  B  C  D  E  F'
+    '0 1 2 3 4 5 6 7 8 9'
+    'a b c d e f'
+    'A B C D E F'
 ```
 
 ``` bnf
 integer-suffix:
-    unsigned-suffix long-suffix\opt 
-    unsigned-suffix long-long-suffix\opt 
-    long-suffix unsigned-suffix\opt 
-    long-long-suffix unsigned-suffix\opt
+    unsigned-suffix long-suffixₒₚₜ 
+    unsigned-suffix long-long-suffixₒₚₜ 
+    long-suffix unsigned-suffixₒₚₜ 
+    long-long-suffix unsigned-suffixₒₚₜ
 ```
 
 ``` bnf
 unsigned-suffix: one of
-    'u  U'
+    'u U'
 ```
 
 ``` bnf
 long-suffix: one of
-    'l  L'
+    'l L'
 ```
 
 ``` bnf
 long-long-suffix: one of
-    'll  LL'
+    'll LL'
 ```
 
 An *integer literal* is a sequence of digits that has no period or
@@ -738,25 +738,25 @@ so long as the same results are obtained.
 
 ``` bnf
 floating-literal:
-    fractional-constant exponent-part\opt floating-suffix\opt
-    digit-sequence exponent-part floating-suffix\opt
+    fractional-constant exponent-partₒₚₜ floating-suffixₒₚₜ 
+    digit-sequence exponent-part floating-suffixₒₚₜ
 ```
 
 ``` bnf
 fractional-constant:
-    digit-sequence\terminal ₒₚₜ{.} digit-sequence
+    digit-sequenceₒₚₜ '.' digit-sequence
     digit-sequence '.'
 ```
 
 ``` bnf
 exponent-part:
-    'e' signdₒₚₜigit-sequence
-    'E' signdₒₚₜigit-sequence
+    'e' signₒₚₜ digit-sequence
+    'E' signₒₚₜ digit-sequence
 ```
 
 ``` bnf
 sign: one of
-    '+  -'
+    '+ -'
 ```
 
 ``` bnf
@@ -767,7 +767,7 @@ digit-sequence:
 
 ``` bnf
 floating-suffix: one of
-    'f  l  F  L'
+    'f l F L'
 ```
 
 A floating literal consists of an integer part, a decimal point, a
@@ -792,8 +792,8 @@ type, the program is ill-formed.
 
 ``` bnf
 string-literal:
-    encoding-prefix\terminal ₒₚₜ{"} s-char-sequence\terminal ₒₚₜ{"}
-    encoding-prefix\terminal ₒₚₜ{R} raw-string
+    encoding-prefixₒₚₜ '"' s-char-sequenceₒₚₜ '"'
+    encoding-prefixₒₚₜ 'R' raw-string
 ```
 
 ``` bnf
@@ -812,7 +812,7 @@ s-char-sequence:
 
 ``` bnf
 raw-string:
-    '"' d-char-sequence\terminal ₒₚₜ{(} r-char-sequence\terminal ₒₚₜ{)} d-char-sequence\terminal ₒₚₜ{"}
+    '"' d-char-sequenceₒₚₜ '(' r-char-sequenceₒₚₜ ')' d-char-sequenceₒₚₜ '"'
 ```
 
 ``` bnf
@@ -1014,7 +1014,7 @@ user-defined-integer-literal:
 
 ``` bnf
 user-defined-floating-literal:
-    fractional-constant exponent-partuₒₚₜd-suffix
+    fractional-constant exponent-partₒₚₜ ud-suffix
     digit-sequence exponent-part ud-suffix
 ```
 

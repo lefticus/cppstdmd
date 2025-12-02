@@ -129,11 +129,9 @@ template-parameter:
 
 ``` bnf
 type-parameter:
-  type-parameter-key '...'iₒₚₜdentifier
- ₒₚₜ
+  type-parameter-key '...'ₒₚₜ identifierₒₚₜ 
   type-parameter-key identifierₒₚₜ '=' type-id
-  'template <' template-parameter-list '>' type-parameter-key '...'iₒₚₜdentifier
- ₒₚₜ
+  'template <' template-parameter-list '>' type-parameter-key '...'ₒₚₜ identifierₒₚₜ 
   'template <' template-parameter-list '>' type-parameter-key identifierₒₚₜ '=' id-expression
 ```
 
@@ -431,8 +429,8 @@ template-name:
 
 ``` bnf
 template-argument-list:
-  template-argument '...'\opt
-  template-argument-list ',' template-argument '...'\opt
+  template-argument '...'ₒₚₜ 
+  template-argument-list ',' template-argument '...'ₒₚₜ
 ```
 
 ``` bnf
@@ -2563,7 +2561,7 @@ class template, the program is ill-formed.
 ``` bnf
 typename-specifier:
   'typename' nested-name-specifier identifier
-  'typename' nested-name-specifier 'template\opt' simple-template-id
+  'typename' nested-name-specifier 'templateₒₚₜ ' simple-template-id
 ```
 
 If a specialization of a template is instantiated for a set of
@@ -4018,7 +4016,7 @@ The syntax for explicit instantiation is:
 
 ``` bnf
 explicit-instantiation:
-  'extern\opt' 'template' declaration
+  'externₒₚₜ ' 'template' declaration
 ```
 
 There are two forms of explicit instantiation: an explicit instantiation

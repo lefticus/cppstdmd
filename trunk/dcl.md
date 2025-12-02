@@ -7,7 +7,7 @@ Declarations have the form
 
 ``` bnf
 declaration-seq:
-    declaration declaration-seqₒₚₜ
+    declaration ₒₚₜ {declaration-seq}
 ```
 
 ``` bnf
@@ -54,17 +54,17 @@ block-declaration:
 
 ``` bnf
 nodeclspec-function-declaration:
-    attribute-specifier-seqₒₚₜ declarator ';'
+    ₒₚₜ {attribute-specifier-seq} declarator ';'
 ```
 
 ``` bnf
 alias-declaration:
-    using identifier attribute-specifier-seqₒₚₜ '=' defining-type-id ';'
+    using identifier ₒₚₜ {attribute-specifier-seq} '=' defining-type-id ';'
 ```
 
 ``` bnf
 sb-identifier:
-    '...'ₒₚₜ identifier attribute-specifier-seqₒₚₜ
+    ₒₚₜ {'...'} identifier ₒₚₜ {attribute-specifier-seq}
 ```
 
 ``` bnf
@@ -75,12 +75,12 @@ sb-identifier-list:
 
 ``` bnf
 structured-binding-declaration:
-    attribute-specifier-seqₒₚₜ decl-specifier-seq ref-qualifierₒₚₜ '[' sb-identifier-list ']'
+    ₒₚₜ {attribute-specifier-seq} decl-specifier-seq ₒₚₜ {ref-qualifier} '[' sb-identifier-list ']'
 ```
 
 ``` bnf
 simple-declaration:
-    decl-specifier-seq init-declarator-listₒₚₜ ';'
+    decl-specifier-seq ₒₚₜ {init-declarator-list} ';'
     attribute-specifier-seq decl-specifier-seq init-declarator-list ';'
     structured-binding-declaration initializer ';'
 ```
@@ -133,7 +133,7 @@ If a *name-declaration* matches the syntactic requirements of
 A *simple-declaration* or *nodeclspec-function-declaration* of the form
 
 ``` bnf
-attribute-specifier-seqₒₚₜ decl-specifier-seqₒₚₜ init-declarator-listₒₚₜ ';'
+ₒₚₜ {attribute-specifier-seq} ₒₚₜ {decl-specifier-seq} ₒₚₜ {init-declarator-list} ';'
 ```
 
 is divided into three parts. Attributes are described in  [[dcl.attr]].
@@ -378,7 +378,7 @@ decl-specifier:
 
 ``` bnf
 decl-specifier-seq:
-    decl-specifier attribute-specifier-seqₒₚₜ
+    decl-specifier ₒₚₜ {attribute-specifier-seq}
     decl-specifier decl-specifier-seq
 ```
 
@@ -1020,7 +1020,7 @@ type-specifier:
 
 ``` bnf
 type-specifier-seq:
-    type-specifier attribute-specifier-seqₒₚₜ
+    type-specifier ₒₚₜ {attribute-specifier-seq}
     type-specifier type-specifier-seq
 ```
 
@@ -1033,7 +1033,7 @@ defining-type-specifier:
 
 ``` bnf
 defining-type-specifier-seq:
-  defining-type-specifier attribute-specifier-seqₒₚₜ
+  defining-type-specifier ₒₚₜ {attribute-specifier-seq}
   defining-type-specifier defining-type-specifier-seq
 ```
 
@@ -1166,11 +1166,11 @@ The simple type specifiers are
 
 ``` bnf
 simple-type-specifier:
-    nested-name-specifierₒₚₜ type-name
+    ₒₚₜ {nested-name-specifier} type-name
     nested-name-specifier template simple-template-id
     computed-type-specifier
     placeholder-type-specifier
-    nested-name-specifierₒₚₜ template-name
+    ₒₚₜ {nested-name-specifier} template-name
     char
     char8_t
     char16_t
@@ -1211,9 +1211,9 @@ A *placeholder-type-specifier* is a placeholder for a type to be deduced
 [[dcl.spec.auto]]. A *type-specifier* is a placeholder for a deduced
 class type [[dcl.type.class.deduct]] if either
 
-- it is of the form `typename`ₒₚₜ *nested-name-specifier*ₒₚₜ
+- it is of the form ₒₚₜ `typename` ₒₚₜ *nested-name-specifier*
   *template-name* or
-- it is of the form `typename`ₒₚₜ *splice-specifier* and the
+- it is of the form ₒₚₜ `typename` *splice-specifier* and the
   *splice-specifier* designates a class template or alias template.
 
 The *nested-name-specifier* or *splice-specifier*, if any, shall be
@@ -1222,7 +1222,7 @@ designate a deducible template. A *deducible template* is either a class
 template or is an alias template whose *defining-type-id* is of the form
 
 ``` bnf
-typenameₒₚₜ nested-name-specifierₒₚₜ templateₒₚₜ simple-template-id
+ₒₚₜ {typename} ₒₚₜ {nested-name-specifier} ₒₚₜ {template} simple-template-id
 ```
 
 where the *nested-name-specifier* (if any) is non-dependent and the
@@ -1315,10 +1315,10 @@ element of the pack. — *end note*]
 
 ``` bnf
 elaborated-type-specifier:
-    class-key attribute-specifier-seqₒₚₜ nested-name-specifierₒₚₜ identifier
+    class-key ₒₚₜ {attribute-specifier-seq} ₒₚₜ {nested-name-specifier} identifier
     class-key simple-template-id
-    class-key nested-name-specifier templateₒₚₜ simple-template-id
-    enum nested-name-specifierₒₚₜ identifier
+    class-key nested-name-specifier ₒₚₜ {template} simple-template-id
+    enum ₒₚₜ {nested-name-specifier} identifier
 ```
 
 The component names of an *elaborated-type-specifier* are its
@@ -1332,8 +1332,8 @@ specialization [[temp.expl.spec]], a partial specialization
 it has one of the following forms:
 
 ``` bnf
-class-key attribute-specifier-seqₒₚₜ identifier ';'
-class-key attribute-specifier-seqₒₚₜ simple-template-id ';'
+class-key ₒₚₜ {attribute-specifier-seq} identifier ';'
+class-key ₒₚₜ {attribute-specifier-seq} simple-template-id ';'
 ```
 
 In the first case, the *elaborated-type-specifier* declares the
@@ -1354,9 +1354,9 @@ A *friend-type-specifier* that is an *elaborated-type-specifier* shall
 have one of the following forms:
 
 ``` bnf
-class-key nested-name-specifierₒₚₜ identifier
+class-key ₒₚₜ {nested-name-specifier} identifier
 class-key simple-template-id
-class-key nested-name-specifier templateₒₚₜ simple-template-id
+class-key nested-name-specifier ₒₚₜ {template} simple-template-id
 ```
 
 Any unqualified lookup for the *identifier* (in the first case) does not
@@ -1532,8 +1532,8 @@ void r() {
 
 ``` bnf
 placeholder-type-specifier:
-  type-constraintₒₚₜ auto
-  type-constraintₒₚₜ decltype '(' auto ')'
+  ₒₚₜ {type-constraint} auto
+  ₒₚₜ {type-constraint} decltype '(' auto ')'
 ```
 
 A *placeholder-type-specifier* designates a placeholder type that will
@@ -1545,8 +1545,8 @@ The type of a *parameter-declaration* of a
 - *lambda-expression* [[expr.prim.lambda]], or
 - *template-parameter* [[temp.param]]
 
-can be declared using a *placeholder-type-specifier* of the form
-*type-constraint*ₒₚₜ `auto`. The placeholder type shall appear as one of
+can be declared using a *placeholder-type-specifier* of the form ₒₚₜ
+*type-constraint* `auto`. The placeholder type shall appear as one of
 the *decl-specifier*s in the *decl-specifier-seq* or as one of the
 *type-specifier*s in a *trailing-return-type* that specifies the type
 that replaces such a *decl-specifier* (see below); the placeholder type
@@ -1788,8 +1788,8 @@ A type `T` containing a placeholder type, and a corresponding
     [[expr.comma]] is not an *assignment-expression*. — *end note*]
   - Otherwise, E is the operand of the `return` statement.
 
-  If E has type `void`, `T` shall be either *type-constraint*ₒₚₜ
-  `decltype(auto)` or cv *type-constraint*ₒₚₜ `auto`.
+  If E has type `void`, `T` shall be either ₒₚₜ *type-constraint*
+  `decltype(auto)` or cv ₒₚₜ *type-constraint* `auto`.
 - For a variable declared with a type that contains a placeholder type,
   `T` is the declared type of the variable.
   - If the initializer of the variable is a *brace-or-equal-initializer*
@@ -1814,12 +1814,12 @@ A type `T` containing a placeholder type, and a corresponding
 
 `T` shall not be an array type.
 
-If the *placeholder-type-specifier* is of the form *type-constraint*ₒₚₜ
+If the *placeholder-type-specifier* is of the form ₒₚₜ *type-constraint*
 `auto`, the deduced type T' replacing `T` is determined using the rules
 for template argument deduction. If the initialization is
 copy-list-initialization, a declaration of `std::initializer_list` shall
 precede [[basic.lookup.general]] the *placeholder-type-specifier*.
-Obtain `P` from `T` by replacing the occurrence of *type-constraint*ₒₚₜ
+Obtain `P` from `T` by replacing the occurrence of ₒₚₜ *type-constraint*
 `auto` either with a new invented type template parameter `U` or, if the
 initialization is copy-list-initialization, with
 `std::initializer_list<U>`. Deduce a value for `U` using the rules of
@@ -1855,7 +1855,7 @@ template <class U> void f(const U& u);
 
 — *end example*]
 
-If the *placeholder-type-specifier* is of the form *type-constraint*ₒₚₜ
+If the *placeholder-type-specifier* is of the form ₒₚₜ *type-constraint*
 `decltype(auto)`, `T` shall be the placeholder alone. The type deduced
 for `T` is determined as described in  [[dcl.type.decltype]], as though
 E had been the operand of the `decltype`.
@@ -1943,8 +1943,8 @@ container e{5, 6};                      // error: int is not an iterator
 
 ``` bnf
 splice-type-specifier:
-   typenameₒₚₜ splice-specifier
-   typenameₒₚₜ splice-specialization-specifier
+   ₒₚₜ {typename} splice-specifier
+   ₒₚₜ {typename} splice-specialization-specifier
 ```
 
 A *splice-specifier* or *splice-specialization-specifier* immediately
@@ -1972,12 +1972,12 @@ using alias = [:^^S::type:];    // OK, type-only context
 
 — *end example*]
 
-For a *splice-type-specifier* of the form `typename`ₒₚₜ
+For a *splice-type-specifier* of the form ₒₚₜ `typename`
 *splice-specifier*, the *splice-specifier* shall designate a type, a
 class template, or an alias template. The *splice-type-specifier*
 designates the same entity as the *splice-specifier*.
 
-For a *splice-type-specifier* of the form `typename`ₒₚₜ
+For a *splice-type-specifier* of the form ₒₚₜ `typename`
 *splice-specialization-specifier*, the *splice-specifier* of the
 *splice-specialization-specifier* shall designate a template `T` that is
 either a class template or an alias template. The
@@ -2003,7 +2003,7 @@ init-declarator-list:
 ``` bnf
 init-declarator:
     declarator initializer
-    declarator requires-clauseₒₚₜ function-contract-specifier-seqₒₚₜ
+    declarator ₒₚₜ {requires-clause} ₒₚₜ {function-contract-specifier-seq}
 ```
 
 In all contexts, a *declarator* is interpreted as given below. Where an
@@ -2116,16 +2116,16 @@ ptr-declarator:
 
 ``` bnf
 noptr-declarator:
-    declarator-id attribute-specifier-seqₒₚₜ
+    declarator-id ₒₚₜ {attribute-specifier-seq}
     noptr-declarator parameters-and-qualifiers
-    noptr-declarator '[' constant-expressionₒₚₜ ']' attribute-specifier-seqₒₚₜ
+    noptr-declarator '[' ₒₚₜ {constant-expression} ']' ₒₚₜ {attribute-specifier-seq}
     '(' ptr-declarator ')'
 ```
 
 ``` bnf
 parameters-and-qualifiers:
-    '(' parameter-declaration-clause ')' cv-qualifier-seqₒₚₜ
-       ref-qualifierₒₚₜ noexcept-specifierₒₚₜ attribute-specifier-seqₒₚₜ
+    '(' parameter-declaration-clause ')' ₒₚₜ {cv-qualifier-seq}
+       ₒₚₜ {ref-qualifier} ₒₚₜ {noexcept-specifier} ₒₚₜ {attribute-specifier-seq}
 ```
 
 ``` bnf
@@ -2135,15 +2135,15 @@ trailing-return-type:
 
 ``` bnf
 ptr-operator:
-    '*' attribute-specifier-seqₒₚₜ cv-qualifier-seqₒₚₜ
-    '&' attribute-specifier-seqₒₚₜ
-    '&&' attribute-specifier-seqₒₚₜ
-    nested-name-specifier '*' attribute-specifier-seqₒₚₜ cv-qualifier-seqₒₚₜ
+    '*' ₒₚₜ {attribute-specifier-seq} ₒₚₜ {cv-qualifier-seq}
+    '&' ₒₚₜ {attribute-specifier-seq}
+    '&&' ₒₚₜ {attribute-specifier-seq}
+    nested-name-specifier '*' ₒₚₜ {attribute-specifier-seq} ₒₚₜ {cv-qualifier-seq}
 ```
 
 ``` bnf
 cv-qualifier-seq:
-    cv-qualifier cv-qualifier-seqₒₚₜ
+    cv-qualifier ₒₚₜ {cv-qualifier-seq}
 ```
 
 ``` bnf
@@ -2160,7 +2160,7 @@ ref-qualifier:
 
 ``` bnf
 declarator-id:
-    '...'ₒₚₜ id-expression
+    ₒₚₜ {'...'} id-expression
 ```
 
 ### Type names <a id="dcl.name">[[dcl.name]]</a>
@@ -2173,31 +2173,31 @@ that omits the name of the entity.
 
 ``` bnf
 type-id:
-    type-specifier-seq abstract-declaratorₒₚₜ
+    type-specifier-seq ₒₚₜ {abstract-declarator}
 ```
 
 ``` bnf
 defining-type-id:
-    defining-type-specifier-seq abstract-declaratorₒₚₜ
+    defining-type-specifier-seq ₒₚₜ {abstract-declarator}
 ```
 
 ``` bnf
 abstract-declarator:
     ptr-abstract-declarator
-    noptr-abstract-declaratorₒₚₜ parameters-and-qualifiers trailing-return-type
+    ₒₚₜ {noptr-abstract-declarator} parameters-and-qualifiers trailing-return-type
     abstract-pack-declarator
 ```
 
 ``` bnf
 ptr-abstract-declarator:
     noptr-abstract-declarator
-    ptr-operator ptr-abstract-declaratorₒₚₜ
+    ptr-operator ₒₚₜ {ptr-abstract-declarator}
 ```
 
 ``` bnf
 noptr-abstract-declarator:
-    noptr-abstract-declaratorₒₚₜ parameters-and-qualifiers
-    noptr-abstract-declaratorₒₚₜ '[' constant-expressionₒₚₜ ']' attribute-specifier-seqₒₚₜ
+    ₒₚₜ {noptr-abstract-declarator} parameters-and-qualifiers
+    ₒₚₜ {noptr-abstract-declarator} '[' ₒₚₜ {constant-expression} ']' ₒₚₜ {attribute-specifier-seq}
     '(' ptr-abstract-declarator ')'
 ```
 
@@ -2484,7 +2484,7 @@ Thus, (for each *declarator*) a declaration has the form
 T D
 ```
 
-where `T` is of the form *attribute-specifier-seq*ₒₚₜ
+where `T` is of the form ₒₚₜ *attribute-specifier-seq*
 *decl-specifier-seq* and `D` is a declarator. Following is a recursive
 procedure for determining the type specified for the contained
 *declarator-id* by such a declaration.
@@ -2510,7 +2510,7 @@ the type specifiers `int` `unsigned` determine the type “`unsigned int`”
 
 — *end example*]
 
-In a declaration *attribute-specifier-seq*ₒₚₜ `T` `D` where `D` is an
+In a declaration ₒₚₜ *attribute-specifier-seq* `T` `D` where `D` is an
 unadorned *declarator-id*, the type of the declared entity is “`T`”.
 
 In a declaration `T` `D` where `D` has the form
@@ -2534,7 +2534,7 @@ they can alter the binding of complex declarators.
 In a declaration `T` `D` where `D` has the form
 
 ``` bnf
-'*' attribute-specifier-seqₒₚₜ cv-qualifier-seqₒₚₜ 'D1'
+'*' ₒₚₜ {attribute-specifier-seq} ₒₚₜ {cv-qualifier-seq} 'D1'
 ```
 
 and the type of the contained *declarator-id* in the declaration `T`
@@ -2607,8 +2607,8 @@ taken, a pointer can never point to a bit-field. — *end note*]
 In a declaration `T` `D` where `D` has either of the forms
 
 ``` bnf
-'&' attribute-specifier-seqₒₚₜ 'D1'
-'&&' attribute-specifier-seqₒₚₜ 'D1'
+'&' ₒₚₜ {attribute-specifier-seq} 'D1'
+'&&' ₒₚₜ {attribute-specifier-seq} 'D1'
 ```
 
 and the type of the contained *declarator-id* in the declaration `T`
@@ -2778,7 +2778,7 @@ The component names of a *ptr-operator* are those of its
 In a declaration `T` `D` where `D` has the form
 
 ``` bnf
-nested-name-specifier '*' attribute-specifier-seqₒₚₜ cv-qualifier-seqₒₚₜ 'D1'
+nested-name-specifier '*' ₒₚₜ {attribute-specifier-seq} ₒₚₜ {cv-qualifier-seq} 'D1'
 ```
 
 and the *nested-name-specifier* designates a class, and the type of the
@@ -2836,7 +2836,7 @@ syntax, and never by the pointer declarator syntax. There is no
 In a declaration `T` `D` where `D` has the form
 
 ``` bnf
-'D1' '[' constant-expressionₒₚₜ ']' attribute-specifier-seqₒₚₜ
+'D1' '[' ₒₚₜ {constant-expression} ']' ₒₚₜ {attribute-specifier-seq}
 ```
 
 and the type of the contained *declarator-id* in the declaration `T`
@@ -2850,7 +2850,7 @@ than zero.
 In a declaration `T` `D` where `D` has the form
 
 ``` bnf
-'D1 [ ]' attribute-specifier-seqₒₚₜ
+'D1 [ ]' ₒₚₜ {attribute-specifier-seq}
 ```
 
 and the type of the contained *declarator-id* in the declaration `T`
@@ -2992,8 +2992,8 @@ described in  [[conv.array]]. — *end note*]
 In a declaration `T` `D` where `T` may be empty and `D` has the form
 
 ``` bnf
-'D1' '(' parameter-declaration-clause ')' cv-qualifier-seqₒₚₜ
-   ref-qualifierₒₚₜ noexcept-specifierₒₚₜ attribute-specifier-seqₒₚₜ trailing-return-typeₒₚₜ
+'D1' '(' parameter-declaration-clause ')' ₒₚₜ {cv-qualifier-seq}
+   ₒₚₜ {ref-qualifier} ₒₚₜ {noexcept-specifier} ₒₚₜ {attribute-specifier-seq} ₒₚₜ {trailing-return-type}
 ```
 
 a *derived-declarator-type-list* is determined as follows:
@@ -3015,8 +3015,8 @@ follows:
 - Otherwise, `U` is `T`.
 
 The type of the *declarator-id* in `D` is
-“*derived-declarator-type-list* `noexcept`ₒₚₜ function of
-parameter-type-list *cv-qualifier-seq*ₒₚₜ *ref-qualifier*ₒₚₜ returning
+“*derived-declarator-type-list* ₒₚₜ `noexcept` function of
+parameter-type-list ₒₚₜ *cv-qualifier-seq* ₒₚₜ *ref-qualifier* returning
 `U`”, where
 
 - the parameter-type-list is derived from the
@@ -3031,7 +3031,7 @@ The optional *attribute-specifier-seq* appertains to the function type.
 ``` bnf
 parameter-declaration-clause:
     '...'
-    parameter-declaration-listₒₚₜ
+    ₒₚₜ {parameter-declaration-list}
     parameter-declaration-list ',' '...'
     parameter-declaration-list '...'
 ```
@@ -3044,10 +3044,10 @@ parameter-declaration-list:
 
 ``` bnf
 parameter-declaration:
-    attribute-specifier-seqₒₚₜ thisₒₚₜ decl-specifier-seq declarator
-    attribute-specifier-seqₒₚₜ decl-specifier-seq declarator '=' initializer-clause
-    attribute-specifier-seqₒₚₜ thisₒₚₜ decl-specifier-seq abstract-declaratorₒₚₜ
-    attribute-specifier-seqₒₚₜ decl-specifier-seq abstract-declaratorₒₚₜ '=' initializer-clause
+    ₒₚₜ {attribute-specifier-seq} ₒₚₜ {this} decl-specifier-seq declarator
+    ₒₚₜ {attribute-specifier-seq} decl-specifier-seq declarator '=' initializer-clause
+    ₒₚₜ {attribute-specifier-seq} ₒₚₜ {this} decl-specifier-seq ₒₚₜ {abstract-declarator}
+    ₒₚₜ {attribute-specifier-seq} decl-specifier-seq ₒₚₜ {abstract-declarator} '=' initializer-clause
 ```
 
 The optional *attribute-specifier-seq* in a *parameter-declaration*
@@ -3758,7 +3758,7 @@ void m() {
 
 ``` bnf
 function-contract-specifier-seq:
-    function-contract-specifier function-contract-specifier-seqₒₚₜ
+    function-contract-specifier ₒₚₜ {function-contract-specifier-seq}
 ```
 
 ``` bnf
@@ -3769,12 +3769,12 @@ function-contract-specifier:
 
 ``` bnf
 precondition-specifier:
-  'pre' attribute-specifier-seqₒₚₜ '(' conditional-expression ')'
+  'pre' ₒₚₜ {attribute-specifier-seq} '(' conditional-expression ')'
 ```
 
 ``` bnf
 postcondition-specifier:
-  'post' attribute-specifier-seqₒₚₜ '(' result-name-introducerₒₚₜ conditional-expression ')'
+  'post' ₒₚₜ {attribute-specifier-seq} '(' ₒₚₜ {result-name-introducer} conditional-expression ')'
 ```
 
 A *function contract assertion* is a contract assertion
@@ -3929,7 +3929,7 @@ void g()
 
 ``` bnf
 attributed-identifier:
-  identifier attribute-specifier-seqₒₚₜ
+  identifier ₒₚₜ {attribute-specifier-seq}
 ```
 
 ``` bnf
@@ -4041,15 +4041,15 @@ initializer-clause:
 
 ``` bnf
 braced-init-list:
-    '{' initializer-list ','ₒₚₜ '}'
-    '{' designated-initializer-list ','ₒₚₜ '}'
+    '{' initializer-list ₒₚₜ {','} '}'
+    '{' designated-initializer-list ₒₚₜ {','} '}'
     '{' '}'
 ```
 
 ``` bnf
 initializer-list:
-    initializer-clause '...'ₒₚₜ
-    initializer-list ',' initializer-clause '...'ₒₚₜ
+    initializer-clause ₒₚₜ {'...'}
+    initializer-list ',' initializer-clause ₒₚₜ {'...'}
 ```
 
 ``` bnf
@@ -5529,15 +5529,15 @@ Function definitions have the form
 
 ``` bnf
 function-definition:
-    attribute-specifier-seqₒₚₜ decl-specifier-seqₒₚₜ declarator virt-specifier-seqₒₚₜ
-       function-contract-specifier-seqₒₚₜ function-body
-    attribute-specifier-seqₒₚₜ decl-specifier-seqₒₚₜ declarator requires-clause
-       function-contract-specifier-seqₒₚₜ function-body
+    ₒₚₜ {attribute-specifier-seq} ₒₚₜ {decl-specifier-seq} declarator ₒₚₜ {virt-specifier-seq}
+       ₒₚₜ {function-contract-specifier-seq} function-body
+    ₒₚₜ {attribute-specifier-seq} ₒₚₜ {decl-specifier-seq} declarator requires-clause
+       ₒₚₜ {function-contract-specifier-seq} function-body
 ```
 
 ``` bnf
 function-body:
-    ctor-initializerₒₚₜ compound-statement
+    ₒₚₜ {ctor-initializer} compound-statement
     function-try-block
     '=' default ';'
     deleted-function-body
@@ -5900,7 +5900,7 @@ were removed and its *function-body* were replaced by the following
 ``` bnf
 '{'
    *promise-type* promise *promise-constructor-arguments* ';'
-% FIXME:    promise'.get_return_object()' ';'
+% FIXME: promise'.get_return_object()' ';'
 % ... except that it's not a discarded-value expression
    'try' '{'
      'co_await' 'promise.initial_suspend()' ';'
@@ -6139,7 +6139,7 @@ variable with a unique name *`e`* is introduced. If the
 and no *ref-qualifier* is present, *`e`* is defined by
 
 ``` bnf
-attribute-specifier-seqₒₚₜ *S* cv{} 'A' e ';'
+ₒₚₜ {attribute-specifier-seq} *S* cv 'A' e ';'
 ```
 
 and each element is copy-initialized or direct-initialized from the
@@ -6147,7 +6147,7 @@ corresponding element of the *assignment-expression* as specified by the
 form of the *initializer*. Otherwise, *`e`* is defined as-if by
 
 ``` bnf
-attribute-specifier-seqₒₚₜ decl-specifier-seq ref-qualifierₒₚₜ e initializer ';'
+ₒₚₜ {attribute-specifier-seq} decl-specifier-seq ₒₚₜ {ref-qualifier} e initializer ';'
 ```
 
 where the declaration is never interpreted as a function declaration and
@@ -6300,23 +6300,23 @@ enum-name:
 
 ``` bnf
 enum-specifier:
-    enum-head '{' enumerator-listₒₚₜ '}'
+    enum-head '{' ₒₚₜ {enumerator-list} '}'
     enum-head '{' enumerator-list ',' '}'
 ```
 
 ``` bnf
 enum-head:
-    enum-key attribute-specifier-seqₒₚₜ enum-head-nameₒₚₜ enum-baseₒₚₜ
+    enum-key ₒₚₜ {attribute-specifier-seq} ₒₚₜ {enum-head-name} ₒₚₜ {enum-base}
 ```
 
 ``` bnf
 enum-head-name:
-    nested-name-specifierₒₚₜ identifier
+    ₒₚₜ {nested-name-specifier} identifier
 ```
 
 ``` bnf
 opaque-enum-declaration:
-    enum-key attribute-specifier-seqₒₚₜ enum-head-name enum-baseₒₚₜ ';'
+    enum-key ₒₚₜ {attribute-specifier-seq} enum-head-name ₒₚₜ {enum-base} ';'
 ```
 
 ``` bnf
@@ -6345,15 +6345,15 @@ enumerator-definition:
 
 ``` bnf
 enumerator:
-    identifier attribute-specifier-seqₒₚₜ
+    identifier ₒₚₜ {attribute-specifier-seq}
 ```
 
 The optional *attribute-specifier-seq* in the *enum-head* and the
 *opaque-enum-declaration* appertains to the enumeration; the attributes
 in that *attribute-specifier-seq* are thereafter considered attributes
-of the enumeration whenever it is named. A `:` following “`enum`
-*nested-name-specifier*ₒₚₜ *identifier*” within the *decl-specifier-seq*
-of a *member-declaration* is parsed as part of an *enum-base*.
+of the enumeration whenever it is named. A `:` following “`enum` ₒₚₜ
+*nested-name-specifier* *identifier*” within the *decl-specifier-seq* of
+a *member-declaration* is parsed as part of an *enum-base*.
 
 [*Note 1*:
 
@@ -6573,8 +6573,8 @@ using-enum-declaration:
 
 ``` bnf
 using-enum-declarator:
-    nested-name-specifierₒₚₜ identifier
-    nested-name-specifierₒₚₜ simple-template-id
+    ₒₚₜ {nested-name-specifier} identifier
+    ₒₚₜ {nested-name-specifier} simple-template-id
     splice-type-specifier
 ```
 
@@ -6703,28 +6703,28 @@ namespace-definition:
 
 ``` bnf
 named-namespace-definition:
-        inlineₒₚₜ namespace attribute-specifier-seqₒₚₜ identifier '{' namespace-body '}'
+        ₒₚₜ {inline} namespace ₒₚₜ {attribute-specifier-seq} identifier '{' namespace-body '}'
 ```
 
 ``` bnf
 unnamed-namespace-definition:
-        inlineₒₚₜ namespace attribute-specifier-seqₒₚₜ '{' namespace-body '}'
+        ₒₚₜ {inline} namespace ₒₚₜ {attribute-specifier-seq} '{' namespace-body '}'
 ```
 
 ``` bnf
 nested-namespace-definition:
-        namespace enclosing-namespace-specifier '::' inlineₒₚₜ identifier '{' namespace-body '}'
+        namespace enclosing-namespace-specifier '::' ₒₚₜ {inline} identifier '{' namespace-body '}'
 ```
 
 ``` bnf
 enclosing-namespace-specifier:
         identifier
-        enclosing-namespace-specifier '::' inlineₒₚₜ identifier
+        enclosing-namespace-specifier '::' ₒₚₜ {inline} identifier
 ```
 
 ``` bnf
 namespace-body:
-        declaration-seqₒₚₜ
+        ₒₚₜ {declaration-seq}
 ```
 
 Every *namespace-definition* shall inhabit a namespace scope
@@ -6793,7 +6793,7 @@ A *nested-namespace-definition* with an *enclosing-namespace-specifier*
 `E`, *identifier* `I` and *namespace-body* `B` is equivalent to
 
 ``` cpp
-namespace E { inlineₒₚₜ namespace I { B } }
+namespace E { ₒₚₜ {inline} namespace I { B } }
 ```
 
 where the optional `inline` is present if and only if the *identifier*
@@ -6826,7 +6826,7 @@ namespace A {
 An *unnamed-namespace-definition* behaves as if it were replaced by
 
 ``` bnf
-inlineₒₚₜ namespace unique '{' '/* empty body */' '}'
+ₒₚₜ {inline} namespace unique '{' '/* empty body */' '}'
 using namespace unique ';'
 namespace unique '{' namespace-body '}'
 ```
@@ -6880,7 +6880,7 @@ namespace-alias-definition:
 
 ``` bnf
 qualified-namespace-specifier:
-    nested-name-specifierₒₚₜ namespace-name
+    ₒₚₜ {nested-name-specifier} namespace-name
 ```
 
 The *splice-specifier* (if any) shall designate a namespace that is not
@@ -6901,8 +6901,8 @@ designated by the *splice-specifier*.
 
 ``` bnf
 using-directive:
-    attribute-specifier-seqₒₚₜ using namespace nested-name-specifierₒₚₜ namespace-name ';'
-    attribute-specifier-seqₒₚₜ using namespace splice-specifier ';'
+    ₒₚₜ {attribute-specifier-seq} using namespace ₒₚₜ {nested-name-specifier} namespace-name ';'
+    ₒₚₜ {attribute-specifier-seq} using namespace splice-specifier ';'
 ```
 
 The *splice-specifier* (if any) shall designate a namespace that is not
@@ -7101,13 +7101,13 @@ using-declaration:
 
 ``` bnf
 using-declarator-list:
-    using-declarator '...'ₒₚₜ
-    using-declarator-list ',' using-declarator '...'ₒₚₜ
+    using-declarator ₒₚₜ {'...'}
+    using-declarator-list ',' using-declarator ₒₚₜ {'...'}
 ```
 
 ``` bnf
 using-declarator:
-    typenameₒₚₜ nested-name-specifier unqualified-id
+    ₒₚₜ {typename} nested-name-specifier unqualified-id
 ```
 
 The component names of a *using-declarator* are those of its
@@ -7510,7 +7510,7 @@ An `asm` declaration has the form
 
 ``` bnf
 asm-declaration:
-    attribute-specifier-seqₒₚₜ asm '(' balanced-token-seq ')' ';'
+    ₒₚₜ {attribute-specifier-seq} asm '(' balanced-token-seq ')' ';'
 ```
 
 The `asm` declaration is conditionally-supported; any restrictions on
@@ -7543,7 +7543,7 @@ achieved using a *linkage-specification*:
 
 ``` bnf
 linkage-specification:
-    extern unevaluated-string '{' declaration-seqₒₚₜ '}'
+    extern unevaluated-string '{' ₒₚₜ {declaration-seq} '}'
     extern unevaluated-string name-declaration
 ```
 
@@ -7734,20 +7734,20 @@ blocks, or translation units.
 
 ``` bnf
 attribute-specifier-seq:
-  attribute-specifier attribute-specifier-seqₒₚₜ
+  attribute-specifier ₒₚₜ {attribute-specifier-seq}
 ```
 
 ``` bnf
 attribute-specifier:
-  '[' '[' attribute-using-prefixₒₚₜ attribute-list ']' ']'
+  '[' '[' ₒₚₜ {attribute-using-prefix} attribute-list ']' ']'
   '[' '[' annotation-list ']' ']'
   alignment-specifier
 ```
 
 ``` bnf
 alignment-specifier:
-  alignas '(' type-id '...'ₒₚₜ ')'
-  alignas '(' constant-expression '...'ₒₚₜ ')'
+  alignas '(' type-id ₒₚₜ {'...'} ')'
+  alignas '(' constant-expression ₒₚₜ {'...'} ')'
 ```
 
 ``` bnf
@@ -7757,21 +7757,21 @@ attribute-using-prefix:
 
 ``` bnf
 attribute-list:
-  attributeₒₚₜ
-  attribute-list ',' attributeₒₚₜ
+  ₒₚₜ {attribute}
+  attribute-list ',' ₒₚₜ {attribute}
   attribute '...'
   attribute-list ',' attribute '...'
 ```
 
 ``` bnf
 annotation-list:
-  annotation '...'ₒₚₜ
-  annotation-list ',' annotation '...'ₒₚₜ
+  annotation ₒₚₜ {'...'}
+  annotation-list ',' annotation ₒₚₜ {'...'}
 ```
 
 ``` bnf
 attribute:
-    attribute-token attribute-argument-clauseₒₚₜ
+    attribute-token ₒₚₜ {attribute-argument-clause}
 ```
 
 ``` bnf
@@ -7797,20 +7797,20 @@ attribute-namespace:
 
 ``` bnf
 attribute-argument-clause:
-    '(' balanced-token-seqₒₚₜ ')'
+    '(' ₒₚₜ {balanced-token-seq} ')'
 ```
 
 ``` bnf
 balanced-token-seq:
-    balanced-token balanced-token-seqₒₚₜ
+    balanced-token ₒₚₜ {balanced-token-seq}
 ```
 
 ``` bnf
 balanced-token:
-    '(' balanced-token-seqₒₚₜ ')'
-    '[' balanced-token-seqₒₚₜ ']'
-    '{' balanced-token-seqₒₚₜ '}'
-    '[:' balanced-token-seqₒₚₜ ':]'
+    '(' ₒₚₜ {balanced-token-seq} ')'
+    '[' ₒₚₜ {balanced-token-seq} ']'
+    '{' ₒₚₜ {balanced-token-seq} '}'
+    '[:' ₒₚₜ {balanced-token-seq} ':]'
     any *token* other than '(', ')', '[', ']', '{', '}', '[:', or ':]'
 ```
 

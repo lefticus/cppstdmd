@@ -15,18 +15,18 @@ are used to make *class-name*s. An object of a class consists of a
 
 ``` bnf
 class-specifier:
-    class-head '{' member-specification\terminal ₒₚₜ{\}}
+    class-head '{' member-specificationₒₚₜ '}'
 ```
 
 ``` bnf
 class-head:
-    class-key attribute-specifier-seq\opt class-head-name class-virt-specifier\opt base-clause\opt
-    class-key attribute-specifier-seq\opt base-clause\opt
+    class-key attribute-specifier-seqₒₚₜ class-head-name class-virt-specifierₒₚₜ base-clauseₒₚₜ 
+    class-key attribute-specifier-seqₒₚₜ base-clauseₒₚₜ
 ```
 
 ``` bnf
 class-head-name:
-    nested-name-specifiercₒₚₜlass-name
+    nested-name-specifierₒₚₜ class-name
 ```
 
 ``` bnf
@@ -288,14 +288,14 @@ cv-qualified version thereof, is also a *class-name*. If a
 
 ``` bnf
 member-specification:
-    member-declaration member-specification\opt
-    access-specifier ':' member-specification\opt
+    member-declaration member-specificationₒₚₜ 
+    access-specifier ':' member-specificationₒₚₜ
 ```
 
 ``` bnf
 member-declaration:
-    attribute-specifier-seqdₒₚₜecl-specifier-seqmₒₚₜember-declarator-list\terminal ₒₚₜ{;}
-    function-definition ';\opt'
+    attribute-specifier-seqₒₚₜ decl-specifier-seqₒₚₜ member-declarator-listₒₚₜ ';'
+    function-definition ';ₒₚₜ '
     using-declaration
     static_assert-declaration
     template-declaration
@@ -310,11 +310,9 @@ member-declarator-list:
 
 ``` bnf
 member-declarator:
-    declarator virt-specifier-seqpₒₚₜure-specifier
- ₒₚₜ
-    declarator brace-or-equal-initializer
- ₒₚₜ
-    identifieraₒₚₜttribute-specifier-seq\terminal ₒₚₜ{:} constant-expression
+    declarator virt-specifier-seqₒₚₜ pure-specifierₒₚₜ 
+    declarator brace-or-equal-initializerₒₚₜ 
+    identifierₒₚₜ attribute-specifier-seqₒₚₜ ':' constant-expression
 ```
 
 ``` bnf
@@ -1158,20 +1156,20 @@ base-clause:
 
 ``` bnf
 base-specifier-list:
-    base-specifier '...'\opt
-    base-specifier-list ',' base-specifier '...'\opt
+    base-specifier '...'ₒₚₜ 
+    base-specifier-list ',' base-specifier '...'ₒₚₜ
 ```
 
 ``` bnf
 base-specifier:
-    attribute-specifier-seqbₒₚₜase-type-specifier
-    attribute-specifier-seq\terminal ₒₚₜ{virtual} access-specifierbₒₚₜase-type-specifier
-    attribute-specifier-seqaₒₚₜccess-specifier 'virtual'bₒₚₜase-type-specifier
+    attribute-specifier-seqₒₚₜ base-type-specifier
+    attribute-specifier-seqₒₚₜ 'virtual' access-specifierₒₚₜ base-type-specifier
+    attribute-specifier-seqₒₚₜ access-specifier 'virtual'ₒₚₜ base-type-specifier
 ```
 
 ``` bnf
 class-or-decltype:
-    nested-name-specifiercₒₚₜlass-name
+    nested-name-specifierₒₚₜ class-name
     decltype-specifier
 ```
 

@@ -2239,7 +2239,7 @@ format:
 
 ``` bnf
 intval:
-    signₒₚₜ units
+    ₒₚₜ {sign} units
 ```
 
 ``` bnf
@@ -2256,25 +2256,25 @@ units:
 
 ``` bnf
 digits:
-    digit digitsₒₚₜ
+    digit ₒₚₜ {digits}
 ```
 
 and floating-point values have:
 
 ``` bnf
 floatval:
-    signₒₚₜ units fractionalₒₚₜ exponentₒₚₜ
-    signₒₚₜ decimal-point digits exponentₒₚₜ
+    ₒₚₜ {sign} units ₒₚₜ {fractional} ₒₚₜ {exponent}
+    ₒₚₜ {sign} decimal-point digits ₒₚₜ {exponent}
 ```
 
 ``` bnf
 fractional:
-    decimal-point digitsₒₚₜ
+    decimal-point ₒₚₜ {digits}
 ```
 
 ``` bnf
 exponent:
-    e signₒₚₜ digits
+    e ₒₚₜ {sign} digits
 ```
 
 ``` bnf
@@ -3230,13 +3230,13 @@ The format of the numeric monetary value is a decimal number:
 
 ``` bnf
 value:
-    units fractionalₒₚₜ
+    units ₒₚₜ {fractional}
     decimal-point digits
 ```
 
 ``` bnf
 fractional:
-    decimal-point digitsₒₚₜ
+    decimal-point ₒₚₜ {digits}
 ```
 
 if `frac_digits()` returns a positive value, or
@@ -3257,7 +3257,7 @@ units:
 
 ``` bnf
 digits:
-    adigit digitsₒₚₜ
+    adigit ₒₚₜ {digits}
 ```
 
 In the syntax specification, the symbol is any of the values
@@ -4323,7 +4323,7 @@ syntax of replacement fields is as follows:
 
 ``` bnf
 replacement-field
-    '{' arg-idₒₚₜ format-specifierₒₚₜ '}'
+    '{' ₒₚₜ {arg-id} ₒₚₜ {format-specifier} '}'
 ```
 
 ``` bnf
@@ -4435,12 +4435,12 @@ The syntax of format specifications is as follows:
 
 ``` bnf
 std-format-spec
-    fill-and-alignₒₚₜ signₒₚₜ '#'ₒₚₜ '0'ₒₚₜ widthₒₚₜ precisionₒₚₜ 'L'ₒₚₜ typeₒₚₜ
+    ₒₚₜ {fill-and-align} ₒₚₜ {sign} ₒₚₜ {'#'} ₒₚₜ {'0'} ₒₚₜ {width} ₒₚₜ {precision} ₒₚₜ {'L'} ₒₚₜ {type}
 ```
 
 ``` bnf
 fill-and-align
-    fillₒₚₜ align
+    ₒₚₜ {fill} align
 ```
 
 ``` bnf
@@ -4461,13 +4461,13 @@ sign one of
 ``` bnf
 width
     positive-integer
-    '{' arg-idₒₚₜ '}'
+    '{' ₒₚₜ {arg-id} '}'
 ```
 
 ``` bnf
 precision
     '.' nonnegative-integer
-    '.' '{' arg-idₒₚₜ '}'
+    '.' '{' ₒₚₜ {arg-id} '}'
 ```
 
 ``` bnf
@@ -4608,9 +4608,9 @@ string s4 = format("{:06}", inf);       // value of s4 is "\ \ \ inf" (0 has no 
 The *width* option specifies the minimum field width. If the *width*
 option is absent, the minimum field width is `0`.
 
-If `{ arg-idₒₚₜ }` is used in a *width* or *precision* option, the value
-of the corresponding formatting argument is used as the value of the
-option. The option is valid only if the corresponding formatting
+If `{ ₒₚₜ {arg-id} }` is used in a *width* or *precision* option, the
+value of the corresponding formatting argument is used as the value of
+the option. The option is valid only if the corresponding formatting
 argument is of standard signed or unsigned integer type. If its value is
 negative, an exception of type `format_error` is thrown.
 
@@ -5663,12 +5663,12 @@ syntax of format specifications is as follows:
 
 ``` bnf
 range-format-spec
-    range-fill-and-alignₒₚₜ widthₒₚₜ 'n'ₒₚₜ range-typeₒₚₜ range-underlying-specₒₚₜ
+    ₒₚₜ {range-fill-and-align} ₒₚₜ {width} ₒₚₜ {'n'} ₒₚₜ {range-type} ₒₚₜ {range-underlying-spec}
 ```
 
 ``` bnf
 range-fill-and-align
-    range-fillₒₚₜ align
+    ₒₚₜ {range-fill} align
 ```
 
 ``` bnf
@@ -6286,12 +6286,12 @@ syntax:
 
 ``` bnf
 tuple-format-spec
-    tuple-fill-and-alignₒₚₜ widthₒₚₜ tuple-typeₒₚₜ
+    ₒₚₜ {tuple-fill-and-align} ₒₚₜ {width} ₒₚₜ {tuple-type}
 ```
 
 ``` bnf
 tuple-fill-and-align
-    tuple-fillₒₚₜ align
+    ₒₚₜ {tuple-fill} align
 ```
 
 ``` bnf

@@ -85,16 +85,17 @@ string-literal:\br
 
 
 def test_ncbnf_with_opt():
-    r"""Test \opt{} in grammar"""
+    r"""Test \opt in grammar (suffix macro, no argument)"""
     latex = r"""
 \begin{ncbnf}
 string:\br
-    \opt{encoding} \terminal{"} text \terminal{"}
+    encoding\opt \terminal{"} text \terminal{"}
 \end{ncbnf}
 """
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
-    assert "encodingₒₚₜ" in output  # \opt{} should become contentₒₚₜ
+    # \opt suffix becomes ₒₚₜ subscript with trailing space
+    assert "encodingₒₚₜ " in output or "encodingₒₚₜ" in output
 
 
 def test_ncsimplebnf():
@@ -166,15 +167,15 @@ def test_bnfindent():
 \begin{ncbnf}
 \nontermdef{function-ptr}\br
     \terminal{void} \terminal{(} \terminal{*} identifier \terminal{)}\br
-    \bnfindent\opt{parameter-list}
+    \bnfindent parameter-list\opt
 \end{ncbnf}
 """
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
     assert "function-ptr:" in output
     assert "'void'" in output
-    # \bnfindent should be converted to spaces, \opt{} to Unicode subscript
-    assert "  parameter-listₒₚₜ" in output or "parameter-listₒₚₜ" in output
+    # \bnfindent converts to spaces, \opt is suffix for ₒₚₜ subscript (with trailing space)
+    assert "parameter-listₒₚₜ" in output
 
 
 def test_grammarterm():
@@ -288,20 +289,21 @@ def test_caret():
 
 def test_complex_bnf():
     """Test complex BNF with multiple commands"""
+    # \opt is a suffix macro (no argument) that appends ₒₚₜ subscript with trailing space
     latex = r"""
 \begin{ncbnf}
 \nontermdef{member-declarator}\br
-    \grammarterm{declarator} \opt{\grammarterm{brace-or-equal-initializer}}\br
-    \bnfindent\opt{\grammarterm{attribute-specifier-seq}}\br
-    \grammarterm{identifier} \opt{\grammarterm{attribute-specifier-seq}} \terminal{:} \grammarterm{constant-expression}\br
-    \bnfindent\opt{\grammarterm{brace-or-equal-initializer}}
+    \grammarterm{declarator} \grammarterm{brace-or-equal-initializer}\opt\br
+    \bnfindent \grammarterm{attribute-specifier-seq}\opt\br
+    \grammarterm{identifier} \grammarterm{attribute-specifier-seq}\opt \terminal{:} \grammarterm{constant-expression}\br
+    \bnfindent \grammarterm{brace-or-equal-initializer}\opt
 \end{ncbnf}
 """
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
     assert "member-declarator:" in output
     assert "declarator" in output
-    assert "brace-or-equal-initializerₒₚₜ" in output  # \opt{} uses Unicode subscript
+    assert "brace-or-equal-initializerₒₚₜ" in output  # \opt suffix becomes ₒₚₜ with space
     assert "':'" in output
 
 

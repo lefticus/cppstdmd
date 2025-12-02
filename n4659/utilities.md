@@ -10992,7 +10992,7 @@ template<class F> function(F) -> function<see below>;
 *Remarks:* This deduction guide participates in overload resolution only
 if `&F::operator()` is well-formed when treated as an unevaluated
 operand. In that case, if `decltype(&F::operator())` is of the form
-`R(G::*)(A...)` cv `&ₒₚₜ noexcept` for a class type `G`, then the
+`R(G::*)(A...)` cv `&ₒₚₜ  noexceptₒₚₜ ` for a class type `G`, then the
 deduced type is `function<R(A...)>`.
 
 [*Example 1*:

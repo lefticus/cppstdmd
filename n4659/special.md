@@ -59,7 +59,7 @@ Constructors do not have names. In a declaration of a constructor, the
 *declarator* is a function declarator ([[dcl.fct]]) of the form
 
 ``` bnf
-ptr-declarator '(' parameter-declaration-clause ')' noexcept-specifier\opt attribute-specifier-seq\opt
+ptr-declarator '(' parameter-declaration-clause ')' noexcept-specifierₒₚₜ attribute-specifier-seqₒₚₜ
 ```
 
 where the *ptr-declarator* consists solely of an *id-expression*, an
@@ -603,12 +603,12 @@ conversion-function-id:
 
 ``` bnf
 conversion-type-id:
-    type-specifier-seq conversion-declarator\opt
+    type-specifier-seq conversion-declaratorₒₚₜ
 ```
 
 ``` bnf
 conversion-declarator:
-    ptr-operator conversion-declarator\opt
+    ptr-operator conversion-declaratorₒₚₜ
 ```
 
 specifies a conversion from `X` to the type specified by the
@@ -731,7 +731,7 @@ In a declaration of a destructor, the *declarator* is a function
 declarator ([[dcl.fct]]) of the form
 
 ``` bnf
-ptr-declarator '(' parameter-declaration-clause ')' noexcept-specifier\opt attribute-specifier-seq\opt
+ptr-declarator '(' parameter-declaration-clause ')' noexcept-specifierₒₚₜ attribute-specifier-seqₒₚₜ
 ```
 
 where the *ptr-declarator* consists solely of an *id-expression*, an
@@ -1196,8 +1196,8 @@ ctor-initializer:
 
 ``` bnf
 mem-initializer-list:
-    mem-initializer '...'\opt
-    mem-initializer-list ',' mem-initializer '...'\opt
+    mem-initializer '...'ₒₚₜ 
+    mem-initializer-list ',' mem-initializer '...'ₒₚₜ
 ```
 
 ``` bnf

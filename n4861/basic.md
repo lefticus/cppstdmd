@@ -212,8 +212,8 @@ follows:
 - If E is a subscripting operation [[expr.sub]] with an array operand,
   the set contains the potential results of that operand.
 - If E is a class member access expression [[expr.ref]] of the form E₁
-  `.` `template`ₒₚₜ E₂ naming a non-static data member, the set contains
-  the potential results of E₁.
+  `.` ₒₚₜ `template` E₂ naming a non-static data member, the set
+  contains the potential results of E₁.
 - If E is a class member access expression naming a static data member,
   the set contains the *id-expression* designating the data member.
 - If E is a pointer-to-member expression [[expr.mptr.oper]] of the form
@@ -1726,7 +1726,7 @@ enumeration type shall represent an *enumerator* of that enumeration.
 In a *qualified-id* of the form:
 
 ``` bnf
-nested-name-specifierₒₚₜ type-name '::' '~' type-name
+ₒₚₜ {nested-name-specifier} type-name '::' '~' type-name
 ```
 
 the second *type-name* is looked up in the same scope as the first.
@@ -2076,7 +2076,7 @@ unless the *elaborated-type-specifier* appears in a declaration with the
 following form:
 
 ``` bnf
-class-key attribute-specifier-seqₒₚₜ identifier ';'
+class-key ₒₚₜ {attribute-specifier-seq} identifier ';'
 ```
 
 the *identifier* is looked up according to  [[basic.lookup.unqual]] but
@@ -2089,7 +2089,7 @@ lookup does not find a previously declared *type-name*, or if the
 *elaborated-type-specifier* appears in a declaration with the form:
 
 ``` bnf
-class-key attribute-specifier-seqₒₚₜ identifier ';'
+class-key ₒₚₜ {attribute-specifier-seq} identifier ';'
 ```
 
 the *elaborated-type-specifier* is a declaration that introduces the
@@ -2242,8 +2242,8 @@ declarations.
 
 ``` bnf
 translation-unit:
-    declaration-seqₒₚₜ
-    global-module-fragmentₒₚₜ module-declaration declaration-seqₒₚₜ private-module-fragmentₒₚₜ
+    ₒₚₜ {declaration-seq}
+    ₒₚₜ {global-module-fragment} module-declaration ₒₚₜ {declaration-seq} ₒₚₜ {private-module-fragment}
 ```
 
 A name is said to have *linkage* when it might denote the same object,

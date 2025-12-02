@@ -7392,8 +7392,8 @@ and to perform conversions between encodings when
 necessary. — *end note*]
 
 A *path* is a sequence of elements that identify the location of a file
-within a filesystem. The elements are the *root-name*ₒₚₜ,
-*root-directory*ₒₚₜ, and an optional sequence of *filename*s
+within a filesystem. The elements are the ₒₚₜ *root-name*, ₒₚₜ
+*root-directory*, and an optional sequence of *filename*s
 [[fs.path.generic]]. The maximum number of elements in the sequence is
 operating system dependent [[fs.conform.os]].
 
@@ -7589,13 +7589,13 @@ Windows-based operating systems, `value_type` is `wchar_t` and
 
 ``` bnf
 pathname:
-    root-nameₒₚₜ root-directoryₒₚₜ relative-path
+    ₒₚₜ {root-name} ₒₚₜ {root-directory} relative-path
 ```
 
 ``` bnf
 root-name:
     operating system dependent sequences of characters
-    implementation-defined{} sequences of characters
+    implementation-defined sequences of characters
 ```
 
 ``` bnf
@@ -7617,8 +7617,8 @@ filename:
 
 ``` bnf
 directory-separator:
-    preferred-separator directory-separatorₒₚₜ
-    fallback-separator directory-separatorₒₚₜ
+    preferred-separator ₒₚₜ {directory-separator}
+    fallback-separator ₒₚₜ {directory-separator}
 ```
 
 ``` bnf
