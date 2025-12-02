@@ -442,7 +442,7 @@ init-capture:
 ``` bnf
 lambda-declarator:
     '(' parameter-declaration-clause ')' 'mutable'ₒₚₜ 
-    \hspace*{ inc}exception-specificationₒₚₜ attribute-specifier-seqₒₚₜ trailing-return-typeₒₚₜ
+      exception-specificationₒₚₜ attribute-specifier-seqₒₚₜ trailing-return-typeₒₚₜ
 ```
 
 The evaluation of a *lambda-expression* results in a prvalue temporary (

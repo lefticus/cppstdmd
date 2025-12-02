@@ -469,7 +469,7 @@ lambda-introducer:
 ``` bnf
 lambda-declarator:
     '(' parameter-declaration-clause ')' decl-specifier-seqₒₚₜ 
-    \hspace*{ inc}noexcept-specifierₒₚₜ attribute-specifier-seqₒₚₜ trailing-return-typeₒₚₜ
+      noexcept-specifierₒₚₜ attribute-specifier-seqₒₚₜ trailing-return-typeₒₚₜ
 ```
 
 Lambda expressions provide a concise way to create simple function

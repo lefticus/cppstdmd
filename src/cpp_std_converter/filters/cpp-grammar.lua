@@ -214,6 +214,13 @@ local function clean_grammar(grammar)
   grammar = grammar:gsub("\\exposidnc{([^}]*)}", "%1")
   grammar = grammar:gsub("\\exposconceptnc{([^}]*)}", "%1")
 
+  -- \uniquens renders as "unique " (anonymous namespace identifier, with trailing space)
+  grammar = grammar:gsub("\\uniquens", "unique ")
+
+  -- \hspace*{...} is horizontal spacing - convert to indentation or remove
+  -- Pattern matches \hspace*{ inc} or similar spacing commands
+  grammar = grammar:gsub("\\hspace%*?{[^}]*}", "  ")
+
   -- Process cross-reference macros that may appear in BNF blocks
   -- \tref{label} -> [[label]] (table reference)
   -- \iref{label} -> [[label]] (indexed reference)

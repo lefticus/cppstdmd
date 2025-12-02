@@ -449,7 +449,7 @@ capture:
 ``` bnf
 lambda-declarator:
     '(' parameter-declaration-clause ')' 'mutable'ₒₚₜ 
-    \hspace*{ inc}exception-specificationₒₚₜ attribute-specifier-seqₒₚₜ trailing-return-typeₒₚₜ
+      exception-specificationₒₚₜ attribute-specifier-seqₒₚₜ trailing-return-typeₒₚₜ
 ```
 
 ``` bnf
@@ -975,7 +975,7 @@ enum-specifier:
 enum-head:
     enum-key attribute-specifier-seqₒₚₜ identifierₒₚₜ enum-baseₒₚₜ 
     enum-key attribute-specifier-seqₒₚₜ nested-name-specifier identifier
-\hspace*{ inc}enum-baseₒₚₜ
+  enum-baseₒₚₜ
 ```
 
 ``` bnf
@@ -1056,9 +1056,9 @@ namespace-body:
 ```
 
 ``` bnf
-'inline'ₒₚₜ 'namespace' \uniquens '{ /* empty body */ }'
-'using namespace' \uniquens ';'
-'namespace' \uniquens '{' namespace-body '}'
+'inline'ₒₚₜ 'namespace' unique '{ /* empty body */ }'
+'using namespace' unique ';'
+'namespace' unique '{' namespace-body '}'
 ```
 
 ``` bnf
@@ -1197,7 +1197,7 @@ noptr-declarator:
 ``` bnf
 parameters-and-qualifiers:
     '(' parameter-declaration-clause ')' attribute-specifier-seqₒₚₜ cv-qualifier-seqₒₚₜ 
-\hspace*{ inc}ref-qualifierₒₚₜ exception-specificationₒₚₜ
+  ref-qualifierₒₚₜ exception-specificationₒₚₜ
 ```
 
 ``` bnf
@@ -1297,12 +1297,12 @@ nested-name-specifier '*' attribute-specifier-seqₒₚₜ cv-qualifier-seqₒ�
 
 ``` bnf
 'D1 (' parameter-declaration-clause ')' cv-qualifier-seqₒₚₜ 
-\hspace*{ inc}ref-qualifierₒₚₜ exception-specificationₒₚₜ attribute-specifier-seqₒₚₜ
+  ref-qualifierₒₚₜ exception-specificationₒₚₜ attribute-specifier-seqₒₚₜ
 ```
 
 ``` bnf
 'D1 (' parameter-declaration-clause ')' cv-qualifier-seqₒₚₜ 
-\hspace*{ inc}ref-qualifierₒₚₜ exception-specificationₒₚₜ attribute-specifier-seqₒₚₜ trailing-return-type
+  ref-qualifierₒₚₜ exception-specificationₒₚₜ attribute-specifier-seqₒₚₜ trailing-return-type
 ```
 
 ``` bnf
@@ -1341,7 +1341,7 @@ function-body:
 ``` bnf
 'D1 (' parameter-declaration-clause ')' cv-qualifier-seqₒₚₜ 
    
-    \hspace*{ inc}ref-qualifierₒₚₜ exception-specificationₒₚₜ attribute-specifier-seqₒₚₜ trailing-return-typeₒₚₜ
+      ref-qualifierₒₚₜ exception-specificationₒₚₜ attribute-specifier-seqₒₚₜ trailing-return-typeₒₚₜ
 ```
 
 ``` bnf

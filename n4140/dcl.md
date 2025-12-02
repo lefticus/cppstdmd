@@ -1346,7 +1346,7 @@ enum-specifier:
 enum-head:
     enum-key attribute-specifier-seqₒₚₜ identifierₒₚₜ enum-baseₒₚₜ 
     enum-key attribute-specifier-seqₒₚₜ nested-name-specifier identifier
-\hspace*{ inc}enum-baseₒₚₜ
+  enum-baseₒₚₜ
 ```
 
 ``` bnf
@@ -1726,33 +1726,33 @@ namespaces.
 An *unnamed-namespace-definition* behaves as if it were replaced by
 
 ``` bnf
-'inline'ₒₚₜ 'namespace' \uniquens '{ /* empty body */ }'
-'using namespace' \uniquens ';'
-'namespace' \uniquens '{' namespace-body '}'
+'inline'ₒₚₜ 'namespace' unique '{ /* empty body */ }'
+'using namespace' unique ';'
+'namespace' unique '{' namespace-body '}'
 ```
 
 where `inline` appears if and only if it appears in the
-*unnamed-namespace-definition*, all occurrences of in a translation unit
-are replaced by the same identifier, and this identifier differs from
-all other identifiers in the entire program.[^5]
+*unnamed-namespace-definition*, all occurrences of *unique* in a
+translation unit are replaced by the same identifier, and this
+identifier differs from all other identifiers in the entire program.[^5]
 
 ``` cpp
-namespace { int i; }            // \uniquens ::i
-void f() { i++; }               // \uniquens ::i++
+namespace { int i; }            // unique ::i
+void f() { i++; }               // unique ::i++
 
 namespace A {
   namespace {
-    int i;                      // A:: \uniquens ::i
-    int j;                      // A:: \uniquens ::j
+    int i;                      // A:: unique ::i
+    int j;                      // A:: unique ::j
   }
-  void g() { i++; }             // A:: \uniquens ::i++
+  void g() { i++; }             // A:: unique ::i++
 }
 
 using namespace A;
 void h() {
-  i++;                          // error: \uniquens ::i or A:: \uniquens ::i
-  A::i++;                       // A:: \uniquens ::i
-  j++;                          // A:: \uniquens ::j
+  i++;                          // error: unique ::i or A:: unique ::i
+  A::i++;                       // A:: unique ::i
+  j++;                          // A:: unique ::j
 }
 ```
 
@@ -3028,7 +3028,7 @@ noptr-declarator:
 ``` bnf
 parameters-and-qualifiers:
     '(' parameter-declaration-clause ')' cv-qualifier-seqₒₚₜ 
-\hspace*{ inc}ref-qualifierₒₚₜ exception-specificationₒₚₜ attribute-specifier-seqₒₚₜ
+  ref-qualifierₒₚₜ exception-specificationₒₚₜ attribute-specifier-seqₒₚₜ
 ```
 
 ``` bnf
@@ -3701,7 +3701,7 @@ In a declaration `T` `D` where `D` has the form
 
 ``` bnf
 'D1 (' parameter-declaration-clause ')' cv-qualifier-seqₒₚₜ 
-\hspace*{ inc}ref-qualifierₒₚₜ exception-specificationₒₚₜ attribute-specifier-seqₒₚₜ
+  ref-qualifierₒₚₜ exception-specificationₒₚₜ attribute-specifier-seqₒₚₜ
 ```
 
 and the type of the contained *declarator-id* in the declaration `T`
@@ -3713,7 +3713,7 @@ In a declaration `T` `D` where `D` has the form
 
 ``` bnf
 'D1 (' parameter-declaration-clause ')' cv-qualifier-seqₒₚₜ 
-\hspace*{ inc}ref-qualifierₒₚₜ exception-specificationₒₚₜ attribute-specifier-seqₒₚₜ trailing-return-type
+  ref-qualifierₒₚₜ exception-specificationₒₚₜ attribute-specifier-seqₒₚₜ trailing-return-type
 ```
 
 and the type of the contained *declarator-id* in the declaration `T`
@@ -4215,7 +4215,7 @@ The *declarator* in a *function-definition* shall have the form
 ``` bnf
 'D1 (' parameter-declaration-clause ')' cv-qualifier-seqₒₚₜ 
    
-    \hspace*{ inc}ref-qualifierₒₚₜ exception-specificationₒₚₜ attribute-specifier-seqₒₚₜ trailing-return-typeₒₚₜ
+      ref-qualifierₒₚₜ exception-specificationₒₚₜ attribute-specifier-seqₒₚₜ trailing-return-typeₒₚₜ
 ```
 
 as described in  [[dcl.fct]]. A function shall be defined only in

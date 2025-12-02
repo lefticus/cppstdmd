@@ -526,7 +526,7 @@ lambda-introducer:
 ``` bnf
 lambda-declarator:
     '(' parameter-declaration-clause ')' decl-specifier-seqₒₚₜ 
-    \hspace*{ inc}noexcept-specifierₒₚₜ attribute-specifier-seqₒₚₜ trailing-return-typeₒₚₜ
+      noexcept-specifierₒₚₜ attribute-specifier-seqₒₚₜ trailing-return-typeₒₚₜ
 ```
 
 ``` bnf
@@ -1196,9 +1196,9 @@ namespace-body:
 ```
 
 ``` bnf
-'inline'ₒₚₜ 'namespace' '\uniquens' '{ /* empty body */ }'
-'using namespace' '\uniquens' ';'
-'namespace' '\uniquens' '{' namespace-body '}'
+'inline'ₒₚₜ 'namespace' 'unique ' '{ /* empty body */ }'
+'using namespace' 'unique ' ';'
+'namespace' 'unique ' '{' namespace-body '}'
 ```
 
 ``` bnf
@@ -1352,7 +1352,7 @@ noptr-declarator:
 ``` bnf
 parameters-and-qualifiers:
     '(' parameter-declaration-clause ')' cv-qualifier-seqₒₚₜ 
-\hspace*{ inc}ref-qualifierₒₚₜ noexcept-specifierₒₚₜ attribute-specifier-seqₒₚₜ
+  ref-qualifierₒₚₜ noexcept-specifierₒₚₜ attribute-specifier-seqₒₚₜ
 ```
 
 ``` bnf
@@ -1456,12 +1456,12 @@ nested-name-specifier '*' attribute-specifier-seqₒₚₜ cv-qualifier-seqₒ�
 
 ``` bnf
 'D1 (' parameter-declaration-clause ')' cv-qualifier-seqₒₚₜ 
-\hspace*{ inc}ref-qualifierₒₚₜ noexcept-specifierₒₚₜ attribute-specifier-seqₒₚₜ
+  ref-qualifierₒₚₜ noexcept-specifierₒₚₜ attribute-specifier-seqₒₚₜ
 ```
 
 ``` bnf
 'D1 (' parameter-declaration-clause ')' cv-qualifier-seqₒₚₜ 
-\hspace*{ inc}ref-qualifierₒₚₜ noexcept-specifierₒₚₜ attribute-specifier-seqₒₚₜ trailing-return-type
+  ref-qualifierₒₚₜ noexcept-specifierₒₚₜ attribute-specifier-seqₒₚₜ trailing-return-type
 ```
 
 ``` bnf
