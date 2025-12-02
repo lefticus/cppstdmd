@@ -407,6 +407,9 @@ function RawInline(elem)
     code = code:gsub("\\([~!@#$%%^&*])", "%1")
     -- Clean up ~{} from LaTeX \~{} (tilde with spacing braces)
     code = code:gsub("~{}", "~")
+    -- Clean up <<{} and >>{} from \shl{} and \shr{} expansion (only in tcode, not in templates)
+    code = code:gsub("<<{}", "<<")
+    code = code:gsub(">>{}", ">>")
     -- Expand nested macros in code content
     -- Strip \texttt{} from \keyword{} preprocessing
     code = code:gsub("\\texttt{([^}]*)}", "%1")
