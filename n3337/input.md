@@ -1250,17 +1250,17 @@ Table  [[tab:iostreams.copyfmt.effects]].
 
 **Table: `basic_ios::copyfmt()` effects** <a id="tab:iostreams.copyfmt.effects">[tab:iostreams.copyfmt.effects]</a>
 
-| Element                      |
-| ---------------------------- |
-| 1.2in} `rdbuf()` & unchanged |
-| `tie()`                      | `rhs.tie()` |
-| `rdstate()`                  | unchanged |
-| `exceptions()`               | `rhs.exceptions()` |
-| `flags()`                    | `rhs.flags()` |
-| `width()`                    | `rhs.width()` |
-| `precision()`                | `rhs.precision()` |
-| `fill()`                     | `rhs.fill()` |
-| `getloc()`                   | `rhs.getloc()` |
+| Element        | Value              |
+| -------------- | ------------------ |
+| `rdbuf()`      | unchanged          |
+| `tie()`        | `rhs.tie()`        |
+| `rdstate()`    | unchanged          |
+| `exceptions()` | `rhs.exceptions()` |
+| `flags()`      | `rhs.flags()`      |
+| `width()`      | `rhs.width()`      |
+| `precision()`  | `rhs.precision()`  |
+| `fill()`       | `rhs.fill()`       |
+| `getloc()`     | `rhs.getloc()`     |
 
 
 *Returns:* `*this`.

@@ -49,7 +49,6 @@ package.path = package.path .. ";" .. script_dir .. "?.lua"
 local common = require("cpp-common")
 local trim = common.trim
 local extract_braced = common.extract_braced
-local expand_balanced_command = common.expand_balanced_command
 local extract_multi_arg_macro = common.extract_multi_arg_macro
 local split_refs_text = common.split_refs_text
 local expand_text_macros = common.expand_text_macros
@@ -60,19 +59,112 @@ if not references then
   references = {}
 end
 
--- Environment length constants (for caption offset calculations)
-local ENV_BEGIN_LEN = {
-  floattable = 18,      -- \begin{floattable}
-  libsumtab = 17,       -- \begin{libsumtab}
-  lib2dtab2 = 17,       -- \begin{lib2dtab2}
-  libtab2 = 15,         -- \begin{libtab2}
-  libefftab = 17,       -- \begin{libefftab}
-  longlibefftab = 21,   -- \begin{longlibefftab}
-  longliberrtab = 21,   -- \begin{longliberrtab}
-  LongTable = 17,       -- \begin{LongTable}
-  concepttable = 20,    -- \begin{concepttable}
-  simpletypetable = 23, -- \begin{simpletypetable}
-  oldconcepttable = 23, -- \begin{oldconcepttable}
+-- Table type configuration registry (data-driven dispatch)
+-- Key: environment name
+-- Values:
+--   num_args: Number of braced arguments after \begin{envname}
+--   headers: Fixed headers array, OR "parse" to extract from content, OR indices into args
+--   header_parser: Optional custom header parser function name (string)
+--   data_section: "extract" (use extract_data_section) or "full" (use entire content)
+--   caption_builder: Optional function to build caption from args
+--   row_parser: Optional special row parser name (string)
+--   label_arg: Which arg contains the label (default: 2)
+local TABLE_CONFIGS = {
+  -- Simple 2-arg tables with fixed headers
+  libsumtab = {
+    num_args = 2,
+    headers = {"Subclause", "", "Header"},
+    data_section = "full",
+  },
+  libefftab = {
+    num_args = 2,
+    headers = {"Element", "Effect(s) if set"},
+    data_section = "full",
+  },
+  longlibefftab = {
+    num_args = 2,
+    headers = {"Element", "Effect(s) if set"},
+    data_section = "full",
+  },
+  longliberrtab = {
+    num_args = 2,
+    headers = {"Value", "Error condition"},
+    data_section = "full",
+  },
+  libefftabmean = {
+    num_args = 2,
+    headers = {"Element", "Meaning"},
+    data_section = "full",
+  },
+  libefftabvalue = {
+    num_args = 2,
+    headers = {"Element", "Value"},
+    data_section = "full",
+  },
+  longlibefftabvalue = {
+    num_args = 2,
+    headers = {"Element", "Value"},
+    data_section = "full",
+  },
+
+  -- 3-arg tables with parsed headers
+  floattable = {
+    num_args = 3,
+    headers = "parse",
+    header_parser = "parse_floattable_headers",
+    data_section = "extract",
+  },
+  LongTable = {
+    num_args = 3,
+    headers = "parse_longtable",
+    data_section = "extract",
+  },
+  concepttable = {
+    num_args = 3,
+    headers = "parse",
+    data_section = "extract",
+  },
+  simpletypetable = {
+    num_args = 3,
+    headers = "parse",
+    data_section = "extract",
+  },
+
+  -- 4-arg tables with headers from args
+  lib2dtab2 = {
+    num_args = 4,
+    headers = {"", 3, 4},  -- "" = empty, 3/4 = arg indices
+    row_parser = "lib2dtab2",
+    data_section = "full",
+  },
+  LibEffTab = {
+    num_args = 4,
+    headers = {"Element", 3},  -- "Element" fixed, arg 3 for second header
+    data_section = "full",
+  },
+  longLibEffTab = {
+    num_args = 4,
+    headers = {"Element", 3},
+    data_section = "full",
+  },
+
+  -- 5-arg tables
+  libtab2 = {
+    num_args = 5,
+    headers = {4, 5},  -- Headers from args 4 and 5
+    data_section = "full",
+  },
+
+  -- Special: oldconcepttable has custom caption builder
+  oldconcepttable = {
+    num_args = 4,
+    caption_builder = function(args)
+      return "Cpp17" .. args[1] .. " requirements" .. args[2]
+    end,
+    headers = "parse",
+    data_section = "extract",
+    label_arg = 3,  -- Label is 3rd arg for oldconcepttable
+  },
 }
 
 -- Helper function to expand common macros in table cells
@@ -592,87 +684,125 @@ local function build_markdown_table(caption, headers, rows, label)
   return table.concat(md_lines, "\n") .. "\n\n"
 end
 
--- Generic handler for "libeff family" table types
--- These table types share a common structure: {caption}{label}[optional args]
--- with implicit or partially implicit headers (first column is always "Element")
---
--- Parameters:
---   text: Raw LaTeX text containing the table environment
---   env_name: Name of the environment (e.g., "libefftabmean", "LibEffTab")
---   header_config: Array of header strings. Use nil to extract from arguments.
---                  Examples: {"Element", "Meaning"} - both fixed
---                           {"Element", nil} - second extracted from arg 3
---   skip_args: Number of additional arguments to skip after headers (e.g., width specs)
---
--- Returns: pandoc.RawBlock with markdown table, or nil if parsing fails
-local function handle_libeff_family_table(text, env_name, header_config, skip_args)
-  skip_args = skip_args or 0  -- default to 0 if not provided
+-- Special row parser for lib2dtab2 (handles \rowhdr{})
+local function parse_lib2dtab2_rows(table_content)
+  local rows = {}
+  local normalized = normalize_table_rows(table_content)
+
+  for row_content in normalized:gmatch("([^@]+)@@ROWEND@@") do
+    row_content = row_content:gsub("%s+", " "):match("^%s*(.-)%s*$")
+    if row_content and #row_content > 0 then
+      local rowhdr_start = row_content:find("\\rowhdr{", 1, true)
+      if rowhdr_start == 1 then
+        local row_header, row_end_pos = extract_braced(row_content, rowhdr_start + 7)
+        if row_header then
+          row_header = expand_table_macros(row_header)
+          local rest = row_content:sub(row_end_pos + 1):match("^%s*&?%s*(.*)$") or ""
+          local cells = parse_row(rest)
+          local row = {row_header}
+          for _, cell in ipairs(cells) do
+            table.insert(row, cell)
+          end
+          table.insert(rows, row)
+        end
+      end
+    end
+  end
+  return rows
+end
+
+-- Header parser registry (maps parser names to functions)
+-- parse_floattable_headers is defined earlier in the file (line ~492)
+local HEADER_PARSERS = {
+  parse_floattable_headers = parse_floattable_headers,
+}
+
+-- Generic table handler using configuration from TABLE_CONFIGS
+-- @param text: Raw LaTeX containing the table
+-- @param env_name: Environment name (key in TABLE_CONFIGS)
+-- @return: pandoc.RawBlock with markdown, or nil
+local function handle_table_generic(text, env_name)
+  local config = TABLE_CONFIGS[env_name]
+  if not config then return nil end
 
   local begin_tag = "\\begin{" .. env_name .. "}"
   local end_tag = "\\end{" .. env_name .. "}"
 
   local env_start = text:find(begin_tag, 1, true)
-  if not env_start then
-    return nil
-  end
+  if not env_start then return nil end
 
-  -- Extract caption (first braced argument)
-  local caption_start = env_start + #begin_tag
-  local caption, pos1 = extract_braced(text, caption_start)
+  -- Extract arguments using shared utility (KEY DRY IMPROVEMENT)
+  local args, content_start = extract_multi_arg_macro(text, env_start, #begin_tag, config.num_args)
+  if not args then return nil end
 
-  -- Extract label (second braced argument)
-  local label, pos2 = extract_braced(text, pos1)
-
-  if not caption or not label then
-    return nil
-  end
-
-  -- Extract additional arguments if needed (for headers with nil placeholders)
-  local extracted_headers = {}
-  local current_pos = pos2
-  for _, hdr in ipairs(header_config) do
-    if hdr == nil then
-      -- Extract this header from next argument
-      local extracted, next_pos = extract_braced(text, current_pos)
-      if not extracted then
-        return nil
-      end
-      table.insert(extracted_headers, expand_table_macros(extracted))
-      current_pos = next_pos
-    else
-      -- Use fixed header
-      table.insert(extracted_headers, hdr)
-    end
-  end
-
-  -- Skip additional arguments (e.g., width specifications)
-  for i = 1, skip_args do
-    local _, next_pos = extract_braced(text, current_pos)
-    if not next_pos then
-      return nil
-    end
-    current_pos = next_pos
-  end
-
-  -- Find the end of environment
-  local env_end = text:find(end_tag, current_pos, true)
-  if not env_end then
-    return nil
-  end
+  -- Find environment end
+  local env_end = text:find(end_tag, content_start, true)
+  if not env_end then return nil end
 
   -- Extract table content
-  local table_content = text:sub(current_pos + 1, env_end - 1)
+  local table_content = text:sub(content_start, env_end - 1)
 
-  -- Parse caption (may contain macros)
+  -- Build caption
+  local caption
+  if config.caption_builder then
+    caption = config.caption_builder(args)
+  else
+    caption = args[1]  -- Default: first arg is caption
+  end
   caption = expand_table_macros(caption)
 
-  -- Extract data rows (handle multi-line rows)
-  local normalized = normalize_table_rows(table_content)
-  local rows = parse_table_rows(normalized)
+  -- Get label (usually arg 2, but can be overridden)
+  local label_idx = config.label_arg or 2
+  local label = args[label_idx]
 
-  -- Generate markdown table using shared helper
-  local markdown = build_markdown_table(caption, extracted_headers, rows, label)
-  return pandoc.RawBlock('markdown', markdown)
+  -- Build headers
+  local headers = {}
+  if type(config.headers) == "table" then
+    -- Array of fixed strings or arg indices
+    for _, h in ipairs(config.headers) do
+      if type(h) == "number" then
+        table.insert(headers, expand_table_macros(args[h]))
+      else
+        table.insert(headers, h)
+      end
+    end
+  elseif config.headers == "parse" then
+    -- Use standard header extraction
+    if config.header_parser and HEADER_PARSERS[config.header_parser] then
+      headers = HEADER_PARSERS[config.header_parser](table_content)
+    else
+      headers = extract_table_headers(table_content)
+    end
+  elseif config.headers == "parse_longtable" then
+    -- Special LongTable header parsing
+    local first_head = table_content:match("\\topline(.-)\\endfirsthead")
+    if first_head then
+      local h1, h2 = first_head:match("\\lhdr{([^}]*)}%s*&%s*\\rhdr{([^}]*)}")
+      if h1 and h2 then
+        headers = {expand_table_macros(h1), expand_table_macros(h2)}
+      end
+    end
+  end
+
+  -- Extract data section
+  local data_section
+  if config.data_section == "extract" then
+    data_section = extract_data_section(table_content)
+  else
+    data_section = table_content
+  end
+
+  -- Parse rows
+  local rows
+  if config.row_parser == "lib2dtab2" then
+    rows = parse_lib2dtab2_rows(data_section)
+  else
+    local normalized = normalize_table_rows(data_section)
+    rows = parse_table_rows(normalized)
+  end
+
+  -- Build markdown
+  return pandoc.RawBlock('markdown', build_markdown_table(caption, headers, rows, label))
 end
 
 -- Main filter function for raw blocks
@@ -683,489 +813,13 @@ function RawBlock(elem)
 
   local text = elem.text
 
-  -- Handle floattable environment
-  local float_start = text:find("\\begin{floattable}", 1, true)
-  if float_start then
-    -- Extract caption (first braced argument)
-    local caption_start = float_start + ENV_BEGIN_LEN.floattable
-    local caption, pos = extract_braced(text, caption_start)
-
-    -- Extract label (second braced argument)
-    local label, end_pos = extract_braced(text, pos)
-
-    if caption and label then
-      -- Find the end of floattable
-      local float_end = text:find("\\end{floattable}", end_pos, true)
-      if float_end then
-        local table_content = text:sub(end_pos + 1, float_end - 1)
-
-        -- Parse caption (may contain macros)
-        caption = expand_table_macros(caption)
-
-        -- Extract header row (using dedicated helper function)
-        local headers = parse_floattable_headers(table_content)
-
-        -- Extract data rows (handle multi-line rows)
-        local data_section = extract_data_section(table_content)
-        local normalized = normalize_table_rows(data_section)
-        local rows = parse_table_rows(normalized)
-
-        -- Generate markdown table using shared helper (DRY)
-        local markdown = build_markdown_table(caption, headers, rows, label)
-        return pandoc.RawBlock('markdown', markdown)
-      end
+  -- Try generic handler first for all configured table types
+  for env_name, _ in pairs(TABLE_CONFIGS) do
+    if text:find("\\begin{" .. env_name .. "}", 1, true) then
+      local result = handle_table_generic(text, env_name)
+      if result then return result end
     end
   end
-
-  -- Handle libsumtab environment (library summary tables)
-  local libsum_start = text:find("\\begin{libsumtab}", 1, true)
-  if libsum_start then
-    -- Extract caption (first braced argument)
-    local caption_start = libsum_start + ENV_BEGIN_LEN.libsumtab
-    local caption, pos = extract_braced(text, caption_start)
-
-    -- Extract label (second braced argument)
-    local label, end_pos = extract_braced(text, pos)
-
-    if caption and label then
-      -- Find the end of libsumtab
-      local libsum_end = text:find("\\end{libsumtab}", end_pos, true)
-      if libsum_end then
-        local table_content = text:sub(end_pos + 1, libsum_end - 1)
-
-        -- Parse caption (may contain macros)
-        caption = expand_table_macros(caption)
-
-        -- libsumtab has implicit headers: Subclause | (Description) | Header
-        local headers = {"Subclause", "", "Header"}
-
-        -- Extract data rows (handle multi-line rows)
-        -- Note: libsumtab doesn't use extract_data_section() - it processes the whole content
-        local normalized = normalize_table_rows(table_content)
-        local rows = parse_table_rows(normalized)
-
-        -- Generate markdown table using shared helper
-        local markdown = build_markdown_table(caption, headers, rows, label)
-        return pandoc.RawBlock('markdown', markdown)
-      end
-    end
-  end
-
-  -- Handle lib2dtab2 environment (2D comparison tables with row headers)
-  local lib2dtab2_start = text:find("\\begin{lib2dtab2}", 1, true)
-  if lib2dtab2_start then
-    -- Extract caption (first braced argument)
-    local caption_start = lib2dtab2_start + ENV_BEGIN_LEN.lib2dtab2
-    local caption, pos1 = extract_braced(text, caption_start)
-
-    -- Extract label (second braced argument)
-    local label, pos2 = extract_braced(text, pos1)
-
-    -- Extract column 1 header (third braced argument)
-    local col1_header, pos3 = extract_braced(text, pos2)
-
-    -- Extract column 2 header (fourth braced argument)
-    local col2_header, end_pos = extract_braced(text, pos3)
-
-    if caption and label and col1_header and col2_header then
-      -- Find the end of lib2dtab2
-      local lib2dtab2_end = text:find("\\end{lib2dtab2}", end_pos, true)
-      if lib2dtab2_end then
-        local table_content = text:sub(end_pos + 1, lib2dtab2_end - 1)
-
-        -- Parse caption and headers (may contain macros)
-        caption = expand_table_macros(caption)
-        col1_header = expand_table_macros(col1_header)
-        col2_header = expand_table_macros(col2_header)
-
-        -- Headers: row header column + 2 data columns
-        local headers = {"", col1_header, col2_header}
-
-        -- Parse rows - lib2dtab2 uses \rowhdr{} for row headers and \rowsep for separators
-        local rows = {}
-
-        -- Normalize line breaks (converts \\ to @@ROWEND@@ and removes \rowsep)
-        local normalized = normalize_table_rows(table_content)
-
-        -- Parse each row (split on @@ROWEND@@ markers)
-        for row_content in normalized:gmatch("([^@]+)@@ROWEND@@") do
-          -- Normalize whitespace (replace newlines with spaces)
-          row_content = row_content:gsub("%s+", " ")
-          local trimmed = row_content:match("^%s*(.-)%s*$")
-
-          if trimmed and #trimmed > 0 then
-            -- Check if this row starts with \rowhdr{}
-            local rowhdr_start = trimmed:find("\\rowhdr{", 1, true)
-            if rowhdr_start == 1 then
-              -- Use extract_braced to handle nested braces correctly
-              -- +7 for "\rowhdr"
-              local row_header, row_end_pos = extract_braced(trimmed, rowhdr_start + 7)
-              if row_header then
-                row_header = expand_table_macros(row_header)
-
-                -- Extract the remaining cells (after \rowhdr{...})
-                -- Skip leading whitespace and the first & separator
-                local rest = trimmed:sub(row_end_pos + 1)
-                rest = rest:match("^%s*&?%s*(.*)$") or rest
-
-                -- Parse the remaining cells using parse_row helper (handles & separators)
-                local cells = parse_row(rest)
-
-                -- Build row: row header + cells
-                local row = {row_header}
-                for _, cell in ipairs(cells) do
-                  table.insert(row, cell)
-                end
-
-                table.insert(rows, row)
-              end
-            end
-          end
-        end
-
-        -- Generate markdown table using shared helper
-        local markdown = build_markdown_table(caption, headers, rows, label)
-        return pandoc.RawBlock('markdown', markdown)
-      end
-    end
-  end
-
-  -- Handle libtab2 environment (simple 2-column tables)
-  local libtab2_start = text:find("\\begin{libtab2}", 1, true)
-  if libtab2_start then
-    -- Extract caption (first braced argument)
-    local caption_start = libtab2_start + ENV_BEGIN_LEN.libtab2
-    local caption, pos1 = extract_braced(text, caption_start)
-
-    -- Extract label (second braced argument)
-    local label, pos2 = extract_braced(text, pos1)
-
-    -- Extract column spec (third braced argument) - we don't use this, just skip it
-    local colspec, pos3 = extract_braced(text, pos2)
-
-    -- Extract header 1 (fourth braced argument)
-    local header1, pos4 = extract_braced(text, pos3)
-
-    -- Extract header 2 (fifth braced argument)
-    local header2, end_pos = extract_braced(text, pos4)
-
-    if caption and label and header1 and header2 then
-      -- Find the end of libtab2
-      local libtab2_end = text:find("\\end{libtab2}", end_pos, true)
-      if libtab2_end then
-        local table_content = text:sub(end_pos + 1, libtab2_end - 1)
-
-        -- Parse caption and headers (may contain macros)
-        caption = expand_table_macros(caption)
-        header1 = expand_table_macros(header1)
-        header2 = expand_table_macros(header2)
-
-        -- Headers
-        local headers = {header1, header2}
-
-        -- Extract data rows (simple 2-column format)
-        local normalized = normalize_table_rows(table_content)
-        local rows = parse_table_rows(normalized)
-
-        -- Generate markdown table using shared helper
-        local markdown = build_markdown_table(caption, headers, rows, label)
-        return pandoc.RawBlock('markdown', markdown)
-      end
-    end
-  end
-
-  -- Handle libefftab environment (enum/bitmask effects tables)
-  local libefftab_start = text:find("\\begin{libefftab}", 1, true)
-  if libefftab_start then
-    -- Extract caption (first braced argument)
-    local caption_start = libefftab_start + ENV_BEGIN_LEN.libefftab
-    local caption, pos1 = extract_braced(text, caption_start)
-
-    -- Extract label (second braced argument)
-    local label, end_pos = extract_braced(text, pos1)
-
-    if caption and label then
-      -- Find the end of libefftab
-      local libefftab_end = text:find("\\end{libefftab}", end_pos, true)
-      if libefftab_end then
-        local table_content = text:sub(end_pos + 1, libefftab_end - 1)
-
-        -- Parse caption (may contain macros)
-        caption = expand_table_macros(caption)
-
-        -- Implicit headers for effects tables
-        local headers = {"Element", "Effect(s) if set"}
-
-        -- Extract data rows (handle multi-line rows)
-        local normalized = normalize_table_rows(table_content)
-        local rows = parse_table_rows(normalized)
-
-        -- Generate markdown table using shared helper
-        local markdown = build_markdown_table(caption, headers, rows, label)
-        return pandoc.RawBlock('markdown', markdown)
-      end
-    end
-  end
-
-  -- Handle longlibefftab environment (long enum/bitmask effects tables)
-  local longlibefftab_start = text:find("\\begin{longlibefftab}", 1, true)
-  if longlibefftab_start then
-    -- Extract caption (first braced argument)
-    local caption_start = longlibefftab_start + ENV_BEGIN_LEN.longlibefftab
-    local caption, pos1 = extract_braced(text, caption_start)
-
-    -- Extract label (second braced argument)
-    local label, end_pos = extract_braced(text, pos1)
-
-    if caption and label then
-      -- Find the end of longlibefftab
-      local longlibefftab_end = text:find("\\end{longlibefftab}", end_pos, true)
-      if longlibefftab_end then
-        local table_content = text:sub(end_pos + 1, longlibefftab_end - 1)
-
-        -- Parse caption (may contain macros)
-        caption = expand_table_macros(caption)
-
-        -- Implicit headers for effects tables
-        local headers = {"Element", "Effect(s) if set"}
-
-        -- Extract data rows (handle multi-line rows)
-        local normalized = normalize_table_rows(table_content)
-        local rows = parse_table_rows(normalized)
-
-        -- Generate markdown table using shared helper
-        local markdown = build_markdown_table(caption, headers, rows, label)
-        return pandoc.RawBlock('markdown', markdown)
-      end
-    end
-  end
-
-  -- Handle longliberrtab environment (error value tables)
-  local longliberrtab_start = text:find("\\begin{longliberrtab}", 1, true)
-  if longliberrtab_start then
-    -- Extract caption (first braced argument)
-    local caption_start = longliberrtab_start + ENV_BEGIN_LEN.longliberrtab
-    local caption, pos1 = extract_braced(text, caption_start)
-
-    -- Extract label (second braced argument)
-    local label, end_pos = extract_braced(text, pos1)
-
-    if caption and label then
-      -- Find the end of longliberrtab
-      local longliberrtab_end = text:find("\\end{longliberrtab}", end_pos, true)
-      if longliberrtab_end then
-        local table_content = text:sub(end_pos + 1, longliberrtab_end - 1)
-
-        -- Parse caption (may contain macros)
-        caption = expand_table_macros(caption)
-
-        -- Implicit headers for error tables
-        local headers = {"Value", "Error condition"}
-
-        -- Extract data rows (handle multi-line rows)
-        local normalized = normalize_table_rows(table_content)
-        local rows = parse_table_rows(normalized)
-
-        -- Generate markdown table using shared helper
-        local markdown = build_markdown_table(caption, headers, rows, label)
-        return pandoc.RawBlock('markdown', markdown)
-      end
-    end
-  end
-
-  -- Handle libefftabmean environment (enum/bitmask "meaning" tables)
-  -- Arguments: {caption}{label}
-  -- Uses generic handler with fixed headers
-  local result = handle_libeff_family_table(text, "libefftabmean", {"Element", "Meaning"})
-  if result then return result end
-
-  -- Handle libefftabvalue environment (enum/bitmask "value" tables)
-  -- Arguments: {caption}{label}
-  -- Uses generic handler with fixed headers
-  result = handle_libeff_family_table(text, "libefftabvalue", {"Element", "Value"})
-  if result then return result end
-
-  -- Handle LibEffTab environment (generic effects table with custom second header)
-  -- Arguments: {caption}{label}{header2}{width2}
-  -- Headers: Element (fixed) + header2 (extracted from arg 3)
-  -- Skip: width2 (arg 4)
-  result = handle_libeff_family_table(text, "LibEffTab", {"Element", nil}, 1)
-  if result then return result end
-
-  -- Handle longlibefftabvalue environment (long enum/bitmask "value" tables)
-  -- Arguments: {caption}{label}
-  -- Uses generic handler with fixed headers
-  result = handle_libeff_family_table(text, "longlibefftabvalue", {"Element", "Value"})
-  if result then return result end
-
-  -- Handle longLibEffTab environment (long generic effects table with custom second header)
-  -- Arguments: {caption}{label}{header2}{width2}
-  -- Headers: Element (fixed) + header2 (extracted from arg 3)
-  -- Skip: width2 (arg 4)
-  result = handle_libeff_family_table(text, "longLibEffTab", {"Element", nil}, 1)
-  if result then return result end
-
-  -- Handle LongTable environment
-  local long_start = text:find("\\begin{LongTable}", 1, true)
-  if long_start then
-    -- Extract caption (first braced argument)
-    local caption_start = long_start + ENV_BEGIN_LEN.LongTable
-    local caption, pos1 = extract_braced(text, caption_start)
-
-    -- Extract label (second braced argument)
-    local label, pos2 = extract_braced(text, pos1)
-
-    -- Extract colspec (third braced argument)
-    local colspec, end_pos = extract_braced(text, pos2)
-
-    if caption and label and colspec then
-      -- Find the end of LongTable
-      local long_end = text:find("\\end{LongTable}", end_pos, true)
-      if long_end then
-        local table_content = text:sub(end_pos + 1, long_end - 1)
-
-        -- Parse caption (may contain macros)
-        caption = expand_table_macros(caption)
-
-        -- Extract header from first head section (between \topline and \endfirsthead)
-        local first_head = table_content:match("\\topline(.-)\\endfirsthead")
-        local headers = {}
-        if first_head then
-          local h1, h2 = first_head:match("\\lhdr{([^}]*)}%s*&%s*\\rhdr{([^}]*)}")
-          if h1 and h2 then
-            headers = {expand_table_macros(h1), expand_table_macros(h2)}
-          end
-        end
-
-        -- Extract data rows (after \endhead) - handle multi-line rows
-        local data_section = extract_data_section(table_content)
-        local normalized = normalize_table_rows(data_section)
-        local rows = parse_table_rows(normalized)
-
-        -- Generate markdown table using shared helper (DRY)
-        local markdown = build_markdown_table(caption, headers, rows, label)
-        return pandoc.RawBlock('markdown', markdown)
-      end
-    end
-  end
-
-  -- Handle concepttable environment (C++20 concept requirements tables)
-  local concept_start = text:find("\\begin{concepttable}", 1, true)
-  if concept_start then
-    -- Extract caption (first braced argument)
-    local caption_start = concept_start + ENV_BEGIN_LEN.concepttable
-    local caption, pos1 = extract_braced(text, caption_start)
-
-    -- Extract label (second braced argument)
-    local label, pos2 = extract_braced(text, pos1)
-
-    -- Extract colspec (third braced argument)
-    local colspec, end_pos = extract_braced(text, pos2)
-
-    if caption and label and colspec then
-      -- Find the end of concepttable
-      local concept_end = text:find("\\end{concepttable}", end_pos, true)
-      if concept_end then
-        local table_content = text:sub(end_pos + 1, concept_end - 1)
-
-        -- Parse caption (may contain macros)
-        caption = expand_table_macros(caption)
-
-        -- Extract header row using shared helper
-        local headers = extract_table_headers(table_content)
-
-        -- Extract data rows (after \capsep)
-        local data_section = extract_data_section(table_content)
-        local normalized = normalize_table_rows(data_section)
-        local rows = parse_table_rows(normalized)
-
-        -- Generate markdown table
-        local markdown = build_markdown_table(caption, headers, rows, label)
-        return pandoc.RawBlock('markdown', markdown)
-      end
-    end
-  end
-
-  -- Handle simpletypetable environment
-  local simple_start = text:find("\\begin{simpletypetable}", 1, true)
-  if simple_start then
-    -- Extract caption (first braced argument)
-    local caption_start = simple_start + ENV_BEGIN_LEN.simpletypetable
-    local caption, pos1 = extract_braced(text, caption_start)
-
-    -- Extract label (second braced argument)
-    local label, pos2 = extract_braced(text, pos1)
-
-    -- Extract colspec (third braced argument)
-    local colspec, end_pos = extract_braced(text, pos2)
-
-    if caption and label and colspec then
-      -- Find the end of simpletypetable
-      local simple_end = text:find("\\end{simpletypetable}", end_pos, true)
-      if simple_end then
-        local table_content = text:sub(end_pos + 1, simple_end - 1)
-
-        -- Parse caption (may contain macros)
-        caption = expand_table_macros(caption)
-
-        -- Extract header row using shared helper
-        local headers = extract_table_headers(table_content)
-
-        -- Extract data rows (after \capsep)
-        local data_section = extract_data_section(table_content)
-        local normalized = normalize_table_rows(data_section)
-        local rows = parse_table_rows(normalized)
-
-        -- Generate markdown table
-        local markdown = build_markdown_table(caption, headers, rows, label)
-        return pandoc.RawBlock('markdown', markdown)
-      end
-    end
-  end
-
-  -- Handle oldconcepttable environment (Cpp17* requirements tables)
-  local oldconcept_start = text:find("\\begin{oldconcepttable}", 1, true)
-  if oldconcept_start then
-    -- Extract name (first braced argument) - e.g., "EqualityComparable"
-    local name_start = oldconcept_start + ENV_BEGIN_LEN.oldconcepttable
-    local name, pos1 = extract_braced(text, name_start)
-
-    -- Extract extra (second braced argument) - e.g., "" or " (in addition to ...)"
-    local extra, pos2 = extract_braced(text, pos1)
-
-    -- Extract label (third braced argument) - e.g., "cpp17.equalitycomparable"
-    local label, pos3 = extract_braced(text, pos2)
-
-    -- Extract colspec (fourth braced argument) - e.g., "x{1in}x{1in}p{3in}"
-    local colspec, end_pos = extract_braced(text, pos3)
-
-    if name and extra and label and colspec then
-      -- Find the end of oldconcepttable
-      local oldconcept_end = text:find("\\end{oldconcepttable}", end_pos, true)
-      if oldconcept_end then
-        local table_content = text:sub(end_pos + 1, oldconcept_end - 1)
-
-        -- Generate caption: "Cpp17{NAME} requirements{EXTRA}"
-        local caption = "Cpp17" .. name .. " requirements" .. extra
-
-        -- Parse caption to expand any macros in EXTRA (like \oldconcept{...})
-        caption = expand_table_macros(caption)
-
-        -- Extract header row using shared helper
-        local headers = extract_table_headers(table_content)
-
-        -- Extract data rows (after \capsep)
-        local data_section = extract_data_section(table_content)
-        local normalized = normalize_table_rows(data_section)
-        local rows = parse_table_rows(normalized)
-
-        -- Generate markdown table using shared helper (DRY)
-        local markdown = build_markdown_table(caption, headers, rows, label)
-        return pandoc.RawBlock('markdown', markdown)
-      end
-    end
-  end
-
   return elem
 end
 

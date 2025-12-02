@@ -1296,17 +1296,17 @@ reference counted, or to have other special action taken. — *end note*]
 
 **Table: `basic_ios::copyfmt()` effects** <a id="basic.ios.copyfmt">[basic.ios.copyfmt]</a>
 
-| Element                      |
-| ---------------------------- |
-| 1.2in} `rdbuf()` & unchanged |
-| `tie()`                      | `rhs.tie()` |
-| `rdstate()`                  | unchanged |
-| `exceptions()`               | `rhs.exceptions()` |
-| `flags()`                    | `rhs.flags()` |
-| `width()`                    | `rhs.width()` |
-| `precision()`                | `rhs.precision()` |
-| `fill()`                     | `rhs.fill()` |
-| `getloc()`                   | `rhs.getloc()` |
+| Element        | Value              |
+| -------------- | ------------------ |
+| `rdbuf()`      | unchanged          |
+| `tie()`        | `rhs.tie()`        |
+| `rdstate()`    | unchanged          |
+| `exceptions()` | `rhs.exceptions()` |
+| `flags()`      | `rhs.flags()`      |
+| `width()`      | `rhs.width()`      |
+| `precision()`  | `rhs.precision()`  |
+| `fill()`       | `rhs.fill()`       |
+| `getloc()`     | `rhs.getloc()`     |
 
 
 *Returns:* `*this`.
