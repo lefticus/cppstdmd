@@ -8457,8 +8457,8 @@ and to perform conversions between encodings when
 necessary. — *end note*]
 
 A *path* is a sequence of elements that identify the location of a file
-within a filesystem. The elements are the \grammarterm{root-nameₒₚₜ ,
-\grammarterm{root-directoryₒₚₜ , and an optional sequence of *filename*s
+within a filesystem. The elements are the *root-name*ₒₚₜ ,
+*root-directory*ₒₚₜ , and an optional sequence of *filename*s
 [[fs.path.generic]]. The maximum number of elements in the sequence is
 operating system dependent [[fs.conform.os]].
 

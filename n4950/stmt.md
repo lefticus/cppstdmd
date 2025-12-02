@@ -779,9 +779,9 @@ where *`final-suspend`* is the exposition-only label defined in
 - If the operand is a *braced-init-list* or an expression of non-`void`
   type, *S* is *p*`.return_value(`*expr-or-braced-init-list*`)`. The
   expression *S* shall be a prvalue of type `void`.
-- Otherwise, *S* is the *compound-statement*
-  `{` \grammarterm{expressionₒₚₜ  `;` *p*`.return_void()``; }`. The
-  expression *p*`.return_void()` shall be a prvalue of type `void`.
+- Otherwise, *S* is the *compound-statement* `{` *expression*ₒₚₜ  `;`
+  *p*`.return_void()``; }`. The expression *p*`.return_void()` shall be
+  a prvalue of type `void`.
 
 If *p*`.return_void()` is a valid expression, flowing off the end of a
 coroutine’s *function-body* is equivalent to a `co_return` with no

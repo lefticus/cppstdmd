@@ -212,7 +212,7 @@ follows:
 - If E is a subscripting operation [[expr.sub]] with an array operand,
   the set contains the potential results of that operand.
 - If E is a class member access expression [[expr.ref]] of the form E₁
-  `.` \tcode{templateₒₚₜ  E₂ naming a non-static data member, the set
+  `.` `template`ₒₚₜ  E₂ naming a non-static data member, the set
   contains the potential results of E₁.
 - If E is a class member access expression naming a static data member,
   the set contains the *id-expression* designating the data member.
@@ -742,9 +742,8 @@ struct X {
 The point of declaration of a class first declared in an
 *elaborated-type-specifier* is as follows:
 
-- for a declaration of the formattribute-specifier-seqₒₚₜ  the
-  *identifier* is declared to be a *class-name* in the scope that
-  contains the declaration, otherwise
+- for a declaration of the form the *identifier* is declared to be a
+  *class-name* in the scope that contains the declaration, otherwise
 - for an *elaborated-type-specifier* of the form if the
   *elaborated-type-specifier* is used in the *decl-specifier-seq* or
   *parameter-declaration-clause* of a function defined in namespace

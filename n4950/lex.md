@@ -356,7 +356,7 @@ given character:
   reverted; this reversion shall apply before any *d-char*, *r-char*, or
   delimiting parenthesis is identified. The raw string literal is
   defined as the shortest sequence of characters that matches the
-  raw-string patternencoding-prefixₒₚₜ 
+  raw-string pattern
 - Otherwise, if the next three characters are `<::` and the subsequent
   character is neither `:` nor `>`, the `<` is treated as a
   preprocessing token by itself and not as the first character of the

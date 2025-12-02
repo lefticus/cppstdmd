@@ -1222,7 +1222,7 @@ the *nested-name-specifier* is not declarative, the entity shall not be
 a template.
 
 A *qualified-id* shall not be of the form *nested-name-specifier*
-\texttt{templateₒₚₜ  `~` *decltype-specifier* nor of the form
+`template`ₒₚₜ  `~` *decltype-specifier* nor of the form
 *decltype-specifier* `::` `~` *type-name*.
 
 The result of a *qualified-id* Q is the entity it denotes
@@ -1789,7 +1789,7 @@ If a *lambda-capture* includes a *capture-default* that is `&`, no
 identifier in a *simple-capture* of that *lambda-capture* shall be
 preceded by `&`. If a *lambda-capture* includes a *capture-default* that
 is `=`, each *simple-capture* of that *lambda-capture* shall be of the
-form “`&` *identifier* \tcode{...ₒₚₜ ”, “`this`”, or “`* this`”.
+form “`&` *identifier* `...`ₒₚₜ ”, “`this`”, or “`* this`”.
 
 [*Note 1*: The form `[&,this]` is redundant but accepted for
 compatibility with ISO C++14. — *end note*]

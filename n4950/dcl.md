@@ -1086,9 +1086,9 @@ The component names of a *simple-type-specifier* are those of its
 the first name in it.
 
 A *placeholder-type-specifier* is a placeholder for a type to be deduced
-[[dcl.spec.auto]]. A *type-specifier* of the form \texttt{typenameₒₚₜ 
-\grammarterm{nested-name-specifierₒₚₜ  *template-name* is a placeholder
-for a deduced class type [[dcl.type.class.deduct]]. The
+[[dcl.spec.auto]]. A *type-specifier* of the form `typename`ₒₚₜ 
+*nested-name-specifier*ₒₚₜ  *template-name* is a placeholder for a
+deduced class type [[dcl.type.class.deduct]]. The
 *nested-name-specifier*, if any, shall be non-dependent and the
 *template-name* shall name a deducible template. A *deducible template*
 is either a class template or is an alias template whose
@@ -1380,9 +1380,8 @@ placeholder-type-specifier:
 A *placeholder-type-specifier* designates a placeholder type that will
 be replaced later by deduction from an initializer.
 
-A *placeholder-type-specifier* of the form
-\grammarterm{type-constraintₒₚₜ  `auto` can be used as a
-*decl-specifier* of the *decl-specifier-seq* of a
+A *placeholder-type-specifier* of the form *type-constraint*ₒₚₜ  `auto`
+can be used as a *decl-specifier* of the *decl-specifier-seq* of a
 *parameter-declaration* of a function declaration or *lambda-expression*
 and, if it is not the `auto` *type-specifier* introducing a
 *trailing-return-type* (see below), is a *generic parameter type
@@ -1603,9 +1602,8 @@ A type `T` containing a placeholder type, and a corresponding
     [[expr.comma]] is not an *assignment-expression*. — *end note*]
   - Otherwise, E is the operand of the `return` statement.
 
-  If E has type `void`, `T` shall be either
-  \grammarterm{type-constraintₒₚₜ  `decltype(auto)` or
-  cv \grammarterm{type-constraintₒₚₜ  `auto`.
+  If E has type `void`, `T` shall be either *type-constraint*ₒₚₜ 
+  `decltype(auto)` or cv *type-constraint*ₒₚₜ  `auto`.
 - For a variable declared with a type that contains a placeholder type,
   `T` is the declared type of the variable.
   - If the initializer of the variable is a *brace-or-equal-initializer*
@@ -1630,20 +1628,20 @@ A type `T` containing a placeholder type, and a corresponding
 
 `T` shall not be an array type.
 
-If the *placeholder-type-specifier* is of the form
-\grammarterm{type-constraintₒₚₜ  `auto`, the deduced type T' replacing
-`T` is determined using the rules for template argument deduction. If
-the initialization is copy-list-initialization, a declaration of
-`std::initializer_list` shall precede [[basic.lookup.general]] the
-*placeholder-type-specifier*. Obtain `P` from `T` by replacing the
-occurrences of \grammarterm{type-constraintₒₚₜ  `auto` either with a new
-invented type template parameter `U` or, if the initialization is
-copy-list-initialization, with `std::initializer_list<U>`. Deduce a
-value for `U` using the rules of template argument deduction from a
-function call [[temp.deduct.call]], where `P` is a function template
-parameter type and the corresponding argument is E. If the deduction
-fails, the declaration is ill-formed. Otherwise, T' is obtained by
-substituting the deduced `U` into `P`.
+If the *placeholder-type-specifier* is of the form *type-constraint*ₒₚₜ 
+`auto`, the deduced type T' replacing `T` is determined using the rules
+for template argument deduction. If the initialization is
+copy-list-initialization, a declaration of `std::initializer_list` shall
+precede [[basic.lookup.general]] the *placeholder-type-specifier*.
+Obtain `P` from `T` by replacing the occurrences of
+*type-constraint*ₒₚₜ  `auto` either with a new invented type template
+parameter `U` or, if the initialization is copy-list-initialization,
+with `std::initializer_list<U>`. Deduce a value for `U` using the rules
+of template argument deduction from a function call
+[[temp.deduct.call]], where `P` is a function template parameter type
+and the corresponding argument is E. If the deduction fails, the
+declaration is ill-formed. Otherwise, T' is obtained by substituting the
+deduced `U` into `P`.
 
 [*Example 8*:
 
@@ -1672,11 +1670,10 @@ template <class U> void f(const U& u);
 
 — *end example*]
 
-If the *placeholder-type-specifier* is of the form
-\grammarterm{type-constraintₒₚₜ  `decltype(auto)`, `T` shall be the
-placeholder alone. The type deduced for `T` is determined as described
-in  [[dcl.type.decltype]], as though E had been the operand of the
-`decltype`.
+If the *placeholder-type-specifier* is of the form *type-constraint*ₒₚₜ 
+`decltype(auto)`, `T` shall be the placeholder alone. The type deduced
+for `T` is determined as described in  [[dcl.type.decltype]], as though
+E had been the operand of the `decltype`.
 
 [*Example 10*:
 
@@ -2237,7 +2234,7 @@ Thus, (for each *declarator*) a declaration has the form
 T D
 ```
 
-where `T` is of the form \grammarterm{attribute-specifier-seqₒₚₜ 
+where `T` is of the form *attribute-specifier-seq*ₒₚₜ 
 *decl-specifier-seq* and `D` is a declarator. Following is a recursive
 procedure for determining the type specified for the contained
 *declarator-id* by such a declaration.
@@ -2263,8 +2260,8 @@ the type specifiers `int` `unsigned` determine the type “`unsigned int`”
 
 — *end example*]
 
-In a declaration \grammarterm{attribute-specifier-seqₒₚₜ  `T` `D` where
-`D` is an unadorned name, the type of the declared entity is “`T`”.
+In a declaration *attribute-specifier-seq*ₒₚₜ  `T` `D` where `D` is an
+unadorned name, the type of the declared entity is “`T`”.
 
 In a declaration `T` `D` where `D` has the form
 
@@ -2719,10 +2716,9 @@ In a declaration `T` `D` where `D` has the form
 
 and the type of the contained *declarator-id* in the declaration `T`
 `D1` is “*derived-declarator-type-list* `T`”, the type of the
-*declarator-id* in `D` is “*derived-declarator-type-list*
-\texttt{noexceptₒₚₜ  function of parameter-type-list
-\grammarterm{cv-qualifier-seqₒₚₜ  \grammarterm{ref-qualifierₒₚₜ 
-returning `T`”, where
+*declarator-id* in `D` is “*derived-declarator-type-list* `noexcept`ₒₚₜ 
+function of parameter-type-list *cv-qualifier-seq*ₒₚₜ 
+*ref-qualifier*ₒₚₜ  returning `T`”, where
 
 - the parameter-type-list is derived from the
   *parameter-declaration-clause* as described below and
@@ -2741,9 +2737,9 @@ In a declaration `T` `D` where `D` has the form
 and the type of the contained *declarator-id* in the declaration `T`
 `D1` is “*derived-declarator-type-list* `T`”, `T` shall be the single
 *type-specifier* `auto`. The type of the *declarator-id* in `D` is
-“*derived-declarator-type-list* \texttt{noexceptₒₚₜ  function of
-parameter-type-list \grammarterm{cv-qualifier-seqₒₚₜ 
-\grammarterm{ref-qualifierₒₚₜ  returning `U`”, where
+“*derived-declarator-type-list* `noexcept`ₒₚₜ  function of
+parameter-type-list *cv-qualifier-seq*ₒₚₜ  *ref-qualifier*ₒₚₜ  returning
+`U`”, where
 
 - the parameter-type-list is derived from the
   *parameter-declaration-clause* as described below,
@@ -5598,7 +5594,7 @@ The optional *attribute-specifier-seq* in the *enum-head* and the
 *opaque-enum-declaration* appertains to the enumeration; the attributes
 in that *attribute-specifier-seq* are thereafter considered attributes
 of the enumeration whenever it is named. A `:` following “`enum`
-\grammarterm{nested-name-specifierₒₚₜ  *identifier*” within the
+*nested-name-specifier*ₒₚₜ  *identifier*” within the
 *decl-specifier-seq* of a *member-declaration* is parsed as part of an
 *enum-base*.
 

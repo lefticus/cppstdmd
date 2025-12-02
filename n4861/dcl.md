@@ -1150,9 +1150,9 @@ type-name:
 ```
 
 A *placeholder-type-specifier* is a placeholder for a type to be deduced
-[[dcl.spec.auto]]. A *type-specifier* of the form \tcode{typenameₒₚₜ 
-\grammarterm{nested-name-specifierₒₚₜ  *template-name* is a placeholder
-for a deduced class type [[dcl.type.class.deduct]]. The
+[[dcl.spec.auto]]. A *type-specifier* of the form `typename`ₒₚₜ 
+*nested-name-specifier*ₒₚₜ  *template-name* is a placeholder for a
+deduced class type [[dcl.type.class.deduct]]. The
 *nested-name-specifier*, if any, shall be non-dependent and the
 *template-name* shall name a deducible template. A *deducible template*
 is either a class template or is an alias template whose
@@ -1419,9 +1419,8 @@ placeholder-type-specifier:
 A *placeholder-type-specifier* designates a placeholder type that will
 be replaced later by deduction from an initializer.
 
-A *placeholder-type-specifier* of the form
-\grammarterm{type-constraintₒₚₜ  `auto` can be used as a
-*decl-specifier* of the *decl-specifier-seq* of a
+A *placeholder-type-specifier* of the form *type-constraint*ₒₚₜ  `auto`
+can be used as a *decl-specifier* of the *decl-specifier-seq* of a
 *parameter-declaration* of a function declaration or *lambda-expression*
 and, if it is not the `auto` *type-specifier* introducing a
 *trailing-return-type* (see below), is a *generic parameter type
@@ -1653,18 +1652,17 @@ initializer E, are determined as follows:
   parameter and E is the corresponding template argument.
 
 In the case of a `return` statement with no operand or with an operand
-of type `void`, `T` shall be either \grammarterm{type-constraintₒₚₜ 
-`decltype(auto)` or cv \grammarterm{type-constraintₒₚₜ  `auto`.
+of type `void`, `T` shall be either *type-constraint*ₒₚₜ 
+`decltype(auto)` or cv *type-constraint*ₒₚₜ  `auto`.
 
 If the deduction is for a `return` statement and E is a
 *braced-init-list* [[dcl.init.list]], the program is ill-formed.
 
-If the *placeholder-type-specifier* is of the form
-\grammarterm{type-constraintₒₚₜ  `auto`, the deduced type T' replacing
-`T` is determined using the rules for template argument deduction.
-Obtain `P` from `T` by replacing the occurrences of
-\grammarterm{type-constraintₒₚₜ  `auto` either with a new invented type
-template parameter `U` or, if the initialization is
+If the *placeholder-type-specifier* is of the form *type-constraint*ₒₚₜ 
+`auto`, the deduced type T' replacing `T` is determined using the rules
+for template argument deduction. Obtain `P` from `T` by replacing the
+occurrences of *type-constraint*ₒₚₜ  `auto` either with a new invented
+type template parameter `U` or, if the initialization is
 copy-list-initialization, with `std::initializer_list<U>`. Deduce a
 value for `U` using the rules of template argument deduction from a
 function call [[temp.deduct.call]], where `P` is a function template
@@ -1699,11 +1697,10 @@ template <class U> void f(const U& u);
 
 — *end example*]
 
-If the *placeholder-type-specifier* is of the form
-\grammarterm{type-constraintₒₚₜ  `decltype(auto)`, `T` shall be the
-placeholder alone. The type deduced for `T` is determined as described
-in  [[dcl.type.simple]], as though E had been the operand of the
-`decltype`.
+If the *placeholder-type-specifier* is of the form *type-constraint*ₒₚₜ 
+`decltype(auto)`, `T` shall be the placeholder alone. The type deduced
+for `T` is determined as described in  [[dcl.type.simple]], as though E
+had been the operand of the `decltype`.
 
 [*Example 10*:
 
@@ -2160,7 +2157,7 @@ Thus, a declaration of a particular identifier has the form
 T D
 ```
 
-where `T` is of the form \grammarterm{attribute-specifier-seqₒₚₜ 
+where `T` is of the form *attribute-specifier-seq*ₒₚₜ 
 *decl-specifier-seq* and `D` is a declarator. Following is a recursive
 procedure for determining the type specified for the contained
 *declarator-id* by such a declaration.
@@ -2186,8 +2183,8 @@ the type specifiers `int` `unsigned` determine the type “`unsigned int`”
 
 — *end example*]
 
-In a declaration \grammarterm{attribute-specifier-seqₒₚₜ  `T` `D` where
-`D` is an unadorned identifier the type of this identifier is “`T`”.
+In a declaration *attribute-specifier-seq*ₒₚₜ  `T` `D` where `D` is an
+unadorned identifier the type of this identifier is “`T`”.
 
 In a declaration `T` `D` where `D` has the form
 
@@ -2639,10 +2636,9 @@ In a declaration `T` `D` where `D` has the form
 
 and the type of the contained *declarator-id* in the declaration `T`
 `D1` is “*derived-declarator-type-list* `T`”, the type of the
-*declarator-id* in `D` is “*derived-declarator-type-list*
-\tcode{noexceptₒₚₜ  function of parameter-type-list
-\grammarterm{cv-qualifier-seqₒₚₜ  \grammarterm{ref-qualifierₒₚₜ 
-returning `T`”, where
+*declarator-id* in `D` is “*derived-declarator-type-list* `noexcept`ₒₚₜ 
+function of parameter-type-list *cv-qualifier-seq*ₒₚₜ 
+*ref-qualifier*ₒₚₜ  returning `T`”, where
 
 - the parameter-type-list is derived from the
   *parameter-declaration-clause* as described below and
@@ -2661,9 +2657,9 @@ In a declaration `T` `D` where `D` has the form
 and the type of the contained *declarator-id* in the declaration `T`
 `D1` is “*derived-declarator-type-list* `T`”, `T` shall be the single
 *type-specifier* `auto`. The type of the *declarator-id* in `D` is
-“*derived-declarator-type-list* \tcode{noexceptₒₚₜ  function of
-parameter-type-list \grammarterm{cv-qualifier-seqₒₚₜ 
-\grammarterm{ref-qualifierₒₚₜ  returning `U`”, where
+“*derived-declarator-type-list* `noexcept`ₒₚₜ  function of
+parameter-type-list *cv-qualifier-seq*ₒₚₜ  *ref-qualifier*ₒₚₜ  returning
+`U`”, where
 
 - the parameter-type-list is derived from the
   *parameter-declaration-clause* as described below,
@@ -5425,7 +5421,7 @@ The optional *attribute-specifier-seq* in the *enum-head* and the
 *opaque-enum-declaration* appertains to the enumeration; the attributes
 in that *attribute-specifier-seq* are thereafter considered attributes
 of the enumeration whenever it is named. A `:` following “`enum`
-\grammarterm{nested-name-specifierₒₚₜ  *identifier*” within the
+*nested-name-specifier*ₒₚₜ  *identifier*” within the
 *decl-specifier-seq* of a *member-declaration* is parsed as part of an
 *enum-base*.
 
@@ -5955,7 +5951,7 @@ A declaration in a namespace `N` (excluding declarations in nested
 scopes) whose *declarator-id* is an *unqualified-id* [[dcl.meaning]],
 whose *class-head-name* [[class.pre]] or *enum-head-name* [[dcl.enum]]
 is an *identifier*, or whose *elaborated-type-specifier* is of the form
-*class-key* \grammarterm{attribute-specifier-seqₒₚₜ  *identifier*
+*class-key* *attribute-specifier-seq*ₒₚₜ  *identifier*
 [[dcl.type.elab]], or that is an *opaque-enum-declaration*, declares (or
 redeclares) its *unqualified-id* or *identifier* as a member of `N`.
 

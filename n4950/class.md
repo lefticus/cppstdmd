@@ -1962,9 +1962,9 @@ specifies a conversion from `X` to the type specified by the
 *decl-specifier* in the *decl-specifier-seq* of a conversion function
 (if any) shall not be a *defining-type-specifier*.
 
-The type of the conversion function is “\tcode{noexceptₒₚₜ  function
-taking no parameter \grammarterm{cv-qualifier-seqₒₚₜ 
-\grammarterm{ref-qualifierₒₚₜ  returning *conversion-type-id*”.
+The type of the conversion function is “`noexcept`ₒₚₜ  function taking
+no parameter *cv-qualifier-seq*ₒₚₜ  *ref-qualifier*ₒₚₜ  returning
+*conversion-type-id*”.
 
 A conversion function is never used to convert a (possibly cv-qualified)
 object to the (possibly cv-qualified) same object type (or a reference

@@ -92,8 +92,8 @@ integral position within the length of the stream
 [*Note 2*: Every arbitrary-positional stream is also a repositional
 stream. — *end note*]
 
-[[strings]] any object which, when treated sequentially, can represent
-text  
+\defncontext{Clauses~ [[strings]], [[localization]], [[input.output]], and~ [[re]]}
+any object which, when treated sequentially, can represent text  
 
 [*Note 3*: The term does not mean only `char`, `char16_t`, `char32_t`,
 and `wchar_t` objects, but any value that can be represented by a type

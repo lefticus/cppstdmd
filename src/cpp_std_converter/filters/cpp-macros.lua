@@ -102,50 +102,56 @@ local PATTERN = {
 -- ============================================================================
 -- Simple Inline Macro Configurations (Table-Driven)
 -- ============================================================================
--- Handler types:
---   "code"        → pandoc.Code(match)
---   "code_angle"  → pandoc.Code("<" .. match .. ">")
---   "code_prefix" → pandoc.Code(prefix .. match)
---   "code_wrap"   → pandoc.Code(prefix .. match .. suffix)
---   "emph"        → pandoc.Emph({pandoc.Str(match)})
---   "emph_code"   → pandoc.Emph({pandoc.Code(match)})
---   "emph_prefix" → pandoc.Emph({pandoc.Str(prefix .. match)})
---   "str_suffix"  → pandoc.Str(match .. suffix)
---   "refs"        → split_refs_inline(match)  -- defined later, uses forward reference
+-- Uses brace-balanced extraction via extract_braced_content() for proper
+-- handling of nested braces like \macro{foo{bar}}.
 --
--- Format: {pattern, handler_type, prefix, suffix}
+-- Handler types:
+--   "code"        → pandoc.Code(content)
+--   "code_angle"  → pandoc.Code("<" .. content .. ">")
+--   "code_prefix" → pandoc.Code(prefix .. content)
+--   "code_wrap"   → pandoc.Code(prefix .. content .. suffix)
+--   "emph"        → pandoc.Emph({pandoc.Str(content)})
+--   "emph_code"   → pandoc.Emph({pandoc.Code(content)})
+--   "emph_prefix" → pandoc.Emph({pandoc.Str(prefix .. content)})
+--   "str_suffix"  → pandoc.Str(content .. suffix)
+--   "refs"        → split_refs_inline(content)
+--
+-- Format: {name, macro_len, handler_type, prefix, suffix, num_args}
+-- num_args defaults to 1; use 2 for macros like \libheaderrefx{x}{y} where we extract first arg
 local SIMPLE_INLINE_MACROS = {
   -- Code macros (render as inline code)
-  {"\\ctype{([^}]*)}", "code", nil, nil},
-  {"\\libheader{([^}]*)}", "code_angle", nil, nil},
-  {"\\libheaderdef{([^}]*)}", "code_angle", nil, nil},
-  {"\\libheaderref{([^}]*)}", "code_angle", nil, nil},
-  {"\\libheaderrefx{([^}]*)}{[^}]*}", "code_angle", nil, nil},  -- Extract first arg only
-  {"\\libconcept{([^}]*)}", "code", nil, nil},
-  {"\\libglobal{([^}]*)}", "code", nil, nil},
-  {"\\exposconcept{([^}]*)}", "code", nil, nil},
-  {"\\ucode{([^}]*)}", "code_prefix", "U+", nil},
-  {"\\xname{([^}]*)}", "code_prefix", "__", nil},
-  {"\\mname{([^}]*)}", "code_wrap", "__", "__"},
+  {"texttt", 7, "code", nil, nil},  -- LaTeX monospace font → code
+  {"ctype", 6, "code", nil, nil},
+  {"libheader", 10, "code_angle", nil, nil},
+  {"libheaderdef", 13, "code_angle", nil, nil},
+  {"libheaderref", 13, "code_angle", nil, nil},
+  {"libheaderrefx", 14, "code_angle", nil, nil, 2},  -- 2 args, extract first only
+  {"libconcept", 11, "code", nil, nil},
+  {"libglobal", 10, "code", nil, nil},
+  {"exposconcept", 13, "code", nil, nil},
+  {"ucode", 6, "code_prefix", "U+", nil},
+  {"xname", 6, "code_prefix", "__", nil},
+  {"mname", 6, "code_wrap", "__", "__"},
 
   -- Emph with Code macros (italic code for exposition-only identifiers)
-  {"\\exposid{([^}]*)}", "emph_code", nil, nil},
-  {"\\exposidnc{([^}]*)}", "emph_code", nil, nil},
-  {"\\exposconceptnc{([^}]*)}", "emph_code", nil, nil},
+  {"exposid", 8, "emph_code", nil, nil},
+  {"exposidnc", 10, "emph_code", nil, nil},
+  {"exposconceptnc", 15, "emph_code", nil, nil},
 
   -- Emph with Str macros (italic text)
-  {"\\placeholder{([^}]*)}", "emph", nil, nil},
-  {"\\placeholdernc{([^}]*)}", "emph", nil, nil},
-  {"\\defnxname{([^}]*)}", "emph_prefix", "__", nil},
-  {"\\defnlibxname{([^}]*)}", "emph_prefix", "__", nil},
+  {"textit", 7, "emph", nil, nil},  -- LaTeX italic font → emph
+  {"placeholder", 12, "emph", nil, nil},
+  {"placeholdernc", 14, "emph", nil, nil},
+  {"defnxname", 10, "emph_prefix", "__", nil},
+  {"defnlibxname", 13, "emph_prefix", "__", nil},
 
   -- Simple Str macros
-  {"\\opt{([^}]*)}", "str_suffix", nil, "ₒₚₜ "},
+  {"opt", 4, "str_suffix", nil, "ₒₚₜ "},
 
   -- Reference macros (all use same handler)
-  {"\\ref{([^}]*)}", "refs", nil, nil},
-  {"\\iref{([^}]*)}", "refs", nil, nil},
-  {"\\tref{([^}]*)}", "refs", nil, nil},
+  {"ref", 4, "refs", nil, nil},
+  {"iref", 5, "refs", nil, nil},
+  {"tref", 5, "refs", nil, nil},
 }
 
 -- WHY: Delegates to try_unicode_conversion for consistent math conversion across filters
@@ -248,32 +254,85 @@ local function split_refs_inline(refs_str)
   return parts
 end
 
+-- Helper function to process content that might contain nested macros
+-- Used by \opt{} handler to process \texttt{x}, \grammarterm{x}, etc.
+-- Returns a Pandoc inline element or nil if content is plain text
+local function process_nested_macro(content)
+  -- Check common macros that might appear inside \opt{}
+  -- \texttt{x} → Code(x)
+  if content:match("^\\texttt{") then
+    local inner = content:match("^\\texttt{(.*)}$")
+    if inner then return pandoc.Code(inner) end
+  end
+  -- \keyword{x} → Code(x)  (may come through when simplified_macros.tex doesn't catch it)
+  if content:match("^\\keyword{") then
+    local inner = content:match("^\\keyword{(.*)}$")
+    if inner then return pandoc.Code(inner) end
+  end
+  -- \grammarterm{x} → Emph(x)
+  if content:match("^\\grammarterm{") then
+    local inner = content:match("^\\grammarterm{(.*)}$")
+    if inner then return pandoc.Emph({pandoc.Str(inner)}) end
+  end
+  -- \tcode{x} → Code(x)
+  if content:match("^\\tcode{") then
+    local inner = content:match("^\\tcode{(.*)}$")
+    if inner then return pandoc.Code(inner) end
+  end
+  return nil  -- Plain text, no nested macro
+end
+
 -- Dispatch simple inline macros using table-driven configuration
+-- Uses brace-balanced extraction for proper nested brace handling
 -- Returns nil if no match, allowing fallthrough to complex handlers
 local function dispatch_simple_inline(text)
   for _, config in ipairs(SIMPLE_INLINE_MACROS) do
-    local pattern, handler_type, prefix, suffix = config[1], config[2], config[3], config[4]
+    local name, macro_len, handler_type, prefix, suffix, num_args =
+      config[1], config[2], config[3], config[4], config[5], config[6] or 1
 
-    local match = text:match(pattern)
-    if match then
-      if handler_type == "code" then
-        return pandoc.Code(match)
-      elseif handler_type == "code_angle" then
-        return pandoc.Code("<" .. match .. ">")
-      elseif handler_type == "code_prefix" then
-        return pandoc.Code(prefix .. match)
-      elseif handler_type == "code_wrap" then
-        return pandoc.Code(prefix .. match .. suffix)
-      elseif handler_type == "emph" then
-        return pandoc.Emph({pandoc.Str(match)})
-      elseif handler_type == "emph_code" then
-        return pandoc.Emph({pandoc.Code(match)})
-      elseif handler_type == "emph_prefix" then
-        return pandoc.Emph({pandoc.Str(prefix .. match)})
-      elseif handler_type == "str_suffix" then
-        return pandoc.Str(match .. suffix)
-      elseif handler_type == "refs" then
-        return split_refs_inline(match)
+    -- Check if text starts with \name{
+    local macro_pattern = "\\" .. name .. "{"
+    if text:find(macro_pattern, 1, true) == 1 then
+      -- Use brace-balanced extraction
+      local content, end_pos
+      if num_args == 2 then
+        -- Multi-arg macro: extract first arg only (e.g., \libheaderrefx{x}{y})
+        local args
+        args, end_pos = extract_multi_arg_macro(text, 1, macro_len, 2)
+        if args then content = args[1] end
+      else
+        content, end_pos = extract_braced_content(text, 1, macro_len)
+      end
+
+      if content then
+        -- Verify we consumed the whole text (exact match)
+        if end_pos and end_pos - 1 == #text then
+          if handler_type == "code" then
+            return pandoc.Code(content)
+          elseif handler_type == "code_angle" then
+            return pandoc.Code("<" .. content .. ">")
+          elseif handler_type == "code_prefix" then
+            return pandoc.Code(prefix .. content)
+          elseif handler_type == "code_wrap" then
+            return pandoc.Code(prefix .. content .. suffix)
+          elseif handler_type == "emph" then
+            return pandoc.Emph({pandoc.Str(content)})
+          elseif handler_type == "emph_code" then
+            return pandoc.Emph({pandoc.Code(content)})
+          elseif handler_type == "emph_prefix" then
+            return pandoc.Emph({pandoc.Str(prefix .. content)})
+          elseif handler_type == "str_suffix" then
+            -- Check if content contains a nested macro (e.g., \opt{\texttt{x}})
+            local nested = process_nested_macro(content)
+            if nested then
+              -- Return list: [processed_element, suffix_str]
+              return {nested, pandoc.Str(suffix)}
+            end
+            return pandoc.Str(content .. suffix)
+          elseif handler_type == "refs" then
+            return split_refs_inline(content)
+          end
+        end
       end
     end
   end
