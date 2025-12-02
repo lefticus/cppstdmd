@@ -1547,7 +1547,7 @@ postfix-expression '[' braced-init-list ']'
 ```
 
 ``` bnf
-postfix-expression '->' 'template'ₒₚₜ id-expression\\
+postfix-expression '->' 'template'ₒₚₜ id-expression
 postfix-expression '->' pseudo-destructor-name
 ```
 

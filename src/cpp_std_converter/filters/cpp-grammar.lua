@@ -63,6 +63,9 @@ local function clean_grammar(grammar)
   grammar = grammar:gsub("\\br\n", "\n")
   -- Handle remaining \br without following newline
   grammar = grammar:gsub("\\br", "\n")
+  -- Replace \\ (LaTeX line break) with newlines - used in some BNF blocks
+  grammar = grammar:gsub("\\\\\n", "\n")
+  grammar = grammar:gsub("\\\\", "\n")
 
   -- Replace \bnfindent with indentation (2 spaces)
   grammar = grammar:gsub("\\bnfindent", "  ")
