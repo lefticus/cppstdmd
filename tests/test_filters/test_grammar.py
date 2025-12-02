@@ -114,6 +114,22 @@ member-declaration:\br
     assert "\\opt" not in output
 
 
+def test_ncbnf_with_opt_backslash_space():
+    r"""Test \opt followed by backslash-space (LaTeX forced space: \ )"""
+    latex = r"""
+\begin{ncbnf}
+noptr-abstract-pack-declarator:\br
+    noptr-abstract-pack-declarator \terminal{[} constant-expression\opt\ \terminal{]}
+\end{ncbnf}
+"""
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    # constant-expression\opt\ should become constant-expressionₒₚₜ \
+    assert "constant-expressionₒₚₜ" in output
+    # \opt should not appear raw
+    assert "\\opt" not in output
+
+
 def test_ncsimplebnf():
     """Test ncsimplebnf environment"""
     latex = r"""

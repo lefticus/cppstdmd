@@ -3119,7 +3119,7 @@ abstract-pack-declarator:
 ``` bnf
 noptr-abstract-pack-declarator:
     noptr-abstract-pack-declarator parameters-and-qualifiers
-    noptr-abstract-pack-declarator '[' constant-expression\opt\ ']' attribute-specifier-seqₒₚₜ 
+    noptr-abstract-pack-declarator '[' constant-expressionₒₚₜ ']' attribute-specifier-seqₒₚₜ 
     '...'
 ```
 
