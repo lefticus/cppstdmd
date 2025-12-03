@@ -2353,8 +2353,8 @@ After the last character (if any) is extracted, `is.width(0)` is called
 and the `sentry` object is destroyed.
 
 If the function extracts no characters, it calls
-`is.setstate(ios_base::failbit)`, which may throw
-`ios_base::failure`[[iostate.flags]].
+`is.setstate(ios_base::failbit)`, which may throw `ios_base::failure`
+[[iostate.flags]].
 
 *Returns:* `is`.
 
@@ -2394,14 +2394,14 @@ occurs:
 - `traits::eq(c, delim)` for the next available input character *c* (in
   which case, *c* is extracted but not appended) [[iostate.flags]]
 - `str.max_size()` characters are stored (in which case, the function
-  calls `is.setstate(ios_base::failbit))`[[iostate.flags]]
+  calls `is.setstate(ios_base::failbit))` [[iostate.flags]]
 
 The conditions are tested in the order shown. In any case, after the
 last character is extracted, the `sentry` object is destroyed.
 
 If the function extracts no characters, it calls
-`is.setstate(ios_base::failbit)` which may throw
-`ios_base::failure`[[iostate.flags]].
+`is.setstate(ios_base::failbit)` which may throw `ios_base::failure`
+[[iostate.flags]].
 
 *Returns:* `is`.
 
@@ -2906,7 +2906,7 @@ using const_iterator = implementation-defined  // type of basic_string_view::con
 
 A type that meets the requirements of a constant
 *Cpp17RandomAccessIterator*[[random.access.iterators]], models
-`contiguous_iterator`[[iterator.concept.contiguous]], and meets the
+`contiguous_iterator` [[iterator.concept.contiguous]], and meets the
 constexpr iterator requirements [[iterator.requirements.general]], whose
 `value_type` is the template parameter `charT`.
 

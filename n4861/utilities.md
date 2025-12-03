@@ -1525,7 +1525,7 @@ template<class F, class Tuple>
 template<class F, class Tuple, size_t... I>
 constexpr decltype(auto) apply-impl(F&& f, Tuple&& t, index_sequence<I...>) {
                                                                         // exposition only
-  return INVOKE(std::forward<F>(f), std::get<I>(std::forward<Tuple>(t))...);  // see REF:func.require
+  return INVOKE(std::forward<F>(f), std::get<I>(std::forward<Tuple>(t))...);  // see [func.require]
 }
 ```
 
@@ -3693,13 +3693,13 @@ Let n be `sizeof...(Variants)`. Let `m` be a pack of n values of type
 0 ≤ i < n. For each valid pack `m`, let e(`m`) denote the expression:
 
 ``` cpp
-INVOKE(std::forward<Visitor>(vis), get<m>(std::forward<Variants>(vars))...) // see REF:func.require
+INVOKE(std::forward<Visitor>(vis), get<m>(std::forward<Variants>(vars))...) // see [func.require]
 ```
 
 for the first form and
 
 ``` cpp
-INVOKE<R>(std::forward<Visitor>(vis), get<m>(std::forward<Variants>(vars))...) // see REF:func.require
+INVOKE<R>(std::forward<Visitor>(vis), get<m>(std::forward<Variants>(vars))...) // see [func.require]
 ```
 
 for the second form.
@@ -4727,8 +4727,8 @@ the following occurs:
   `is.widen(’1’)` (in which case the input character is not extracted).
 
 If `N > 0` and no characters are stored in `str`, calls
-`is.setstate(ios_base::failbit)` (which may throw
-`ios_base::failure`[[iostate.flags]]).
+`is.setstate(ios_base::failbit)` (which may throw `ios_base::failure`
+[[iostate.flags]]).
 
 *Returns:* `is`.
 
@@ -5321,7 +5321,7 @@ location as the argument `p`.
 
 [*Note 1*: This function should be the inverse of `pointer_to`. If
 defined, it customizes the behavior of the non-member function
-`to_address`[[pointer.conversion]]. — *end note*]
+`to_address` [[pointer.conversion]]. — *end note*]
 
 ### Pointer conversion <a id="pointer.conversion">[[pointer.conversion]]</a>
 
@@ -5464,8 +5464,8 @@ template<size_t N, class T>
 *Mandates:* `N` is a power of two.
 
 *Preconditions:* `ptr` points to an object `X` of a type
-similar [[conv.qual]] to `T`, where `X` has alignment
-`N`[[basic.align]].
+similar [[conv.qual]] to `T`, where `X` has alignment `N`
+[[basic.align]].
 
 *Returns:* `ptr`.
 
@@ -5936,7 +5936,7 @@ call shall happen before the next allocation (if any) in this order.
 *Returns:* A pointer to the initial element of an array of `n` `T`.
 
 *Remarks:* The storage for the array is obtained by calling
-`::operator new`[[new.delete]], but it is unspecified when or how often
+`::operator new` [[new.delete]], but it is unspecified when or how often
 this function is called. This function starts the lifetime of the array
 object, but not that of any of the array elements.
 
@@ -5954,8 +5954,8 @@ allocate which returned `p`.
 
 *Effects:* Deallocates the storage referenced by `p` .
 
-*Remarks:* Uses `::operator delete`[[new.delete]], but it is unspecified
-when this function is called.
+*Remarks:* Uses `::operator delete` [[new.delete]], but it is
+unspecified when this function is called.
 
 #### Operators <a id="allocator.globals">[[allocator.globals]]</a>
 
@@ -5995,7 +5995,7 @@ void* realloc(void* ptr, size_t size);
 standard library.
 
 *Remarks:* These functions do not attempt to allocate storage by calling
-`::operator new()`[[new.delete]].
+`::operator new()` [[new.delete]].
 
 Storage allocated directly with these functions is implicitly declared
 reachable (see  [[basic.stc.dynamic.safety]]) on allocation, ceases to
@@ -8732,8 +8732,8 @@ void* do_allocate(size_t bytes, size_t alignment) override;
 *Returns:* A pointer to allocated
 storage [[basic.stc.dynamic.allocation]] with a size of at least
 `bytes`. The size and alignment of the allocated memory shall meet the
-requirements for a class derived from
-`memory_resource`[[mem.res.class]].
+requirements for a class derived from `memory_resource`
+[[mem.res.class]].
 
 *Effects:* If the pool selected for a block of size `bytes` is unable to
 satisfy the memory request from its own internal data structures, it
@@ -8876,8 +8876,8 @@ void* do_allocate(size_t bytes, size_t alignment) override;
 *Returns:* A pointer to allocated
 storage [[basic.stc.dynamic.allocation]] with a size of at least
 `bytes`. The size and alignment of the allocated memory shall meet the
-requirements for a class derived from
-`memory_resource`[[mem.res.class]].
+requirements for a class derived from `memory_resource`
+[[mem.res.class]].
 
 *Effects:* If the unused space in `current_buffer` can fit a block with
 the specified `bytes` and `alignment`, then allocate the return block
@@ -10469,7 +10469,7 @@ In the text that follows:
 
 - `g` is a value of the result of a `not_fn` invocation,
 - `FD` is the type `decay_t<F>`,
-- `fd` is the target object of `g`[[func.def]] of type `FD`,
+- `fd` is the target object of `g` [[func.def]] of type `FD`,
   direct-non-list-initialized with `std::forward<F>(f)`,
 - `call_args` is an argument pack used in a function call
   expression [[expr.call]] of `g`.
@@ -10495,10 +10495,10 @@ In the text that follows:
 
 - `g` is a value of the result of a `bind_front` invocation,
 - `FD` is the type `decay_t<F>`,
-- `fd` is the target object of `g`[[func.def]] of type `FD`,
+- `fd` is the target object of `g` [[func.def]] of type `FD`,
   direct-non-list-initialized with `std::forward<F>(f)`,
 - `BoundArgs` is a pack that denotes `decay_t<Args>...`,
-- `bound_args` is a pack of bound argument entities of `g`[[func.def]]
+- `bound_args` is a pack of bound argument entities of `g` [[func.def]]
   of types `BoundArgs...`, direct-non-list-initialized with
   `std::forward<Args>(args)...`, respectively, and
 - `call_args` is an argument pack used in a function call
@@ -10523,7 +10523,7 @@ For each `Tᵢ` in `BoundArgs`, if `Tᵢ` is an object type, `Tᵢ` meets the
 `invoke(fd, bound_args..., call_args...)`.
 
 *Throws:* Any exception thrown by the initialization of the state
-entities of `g`[[func.def]].
+entities of `g` [[func.def]].
 
 ### Function object binders <a id="func.bind">[[func.bind]]</a>
 
@@ -10605,7 +10605,7 @@ and *Cpp17Destructible* requirements. *INVOKE*(fd, w₁, w₂, …,
 $w_N$) [[func.require]] is a valid expression for some values `w₁`,
 `w₂`, …, `w_N`, where N has the value `sizeof...(bound_args)`.
 
-*Returns:* An argument forwarding call wrapper `g`[[func.require]]. A
+*Returns:* An argument forwarding call wrapper `g` [[func.require]]. A
 program that attempts to invoke a volatile-qualified `g` is ill-formed.
 When `g` is not volatile-qualified, invocation of
 `g(``u₁``, ``u₂``, `…`, ``u_M``)` is

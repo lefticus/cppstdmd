@@ -4520,7 +4520,7 @@ template<class InputIterator, class Size, class Function>
 ```
 
 *Mandates:* The type `Size` is convertible to an integral
-type [[conv.integral,class.conv]].
+type [[conv.integral]], [[class.conv]].
 
 *Preconditions:* `n >= 0` is `true`. `Function` meets the
 *Cpp17MoveConstructible* requirements.
@@ -4546,7 +4546,7 @@ template<class ExecutionPolicy, class ForwardIterator, class Size, class Functio
 ```
 
 *Mandates:* The type `Size` is convertible to an integral
-type [[conv.integral,class.conv]].
+type [[conv.integral]], [[class.conv]].
 
 *Preconditions:* `n >= 0` is `true`. `Function` meets the
 *Cpp17CopyConstructible* requirements.
@@ -5248,7 +5248,7 @@ Otherwise return `true` if E holds for every iterator `i` in the range
   and `last1 - first1 != last2 - first2` for the overloads in namespace
   `std`;
 - the types of `first1`, `last1`, `first2`, and `last2` pairwise model
-  `sized_sentinel_for`[[iterator.concept.sizedsentinel]] and
+  `sized_sentinel_for` [[iterator.concept.sizedsentinel]] and
   `last1 - first1 != last2 - first2` for the first and third overloads
   in namespace `ranges`, or
 - `R1` and `R2` each model `sized_range` and
@@ -5454,7 +5454,7 @@ template<class ExecutionPolicy, class ForwardIterator, class Size,
 ```
 
 *Mandates:* The type `Size` is convertible to an integral
-type [[conv.integral,class.conv]].
+type [[conv.integral]], [[class.conv]].
 
 Let E be `pred(*(i + n), value) != false` for the overloads with a
 parameter `pred`, and `*(i + n) == value` otherwise.
@@ -5875,7 +5875,7 @@ Let `result_last` be `result + `M for the overloads with no parameter
 Let N be min(`result_last - result`, M).
 
 *Mandates:* The type `Size` is convertible to an integral
-type [[conv.integral,class.conv]].
+type [[conv.integral]], [[class.conv]].
 
 *Effects:* For each non-negative integer i < N, performs
 `*(result + `i`) = *(first + `i`)`.
@@ -6595,7 +6595,7 @@ the `fill` algorithms.
 *Mandates:* The expression `value` is
 writable [[iterator.requirements.general]] to the output iterator. The
 type `Size` is convertible to an integral
-type [[conv.integral,class.conv]].
+type [[conv.integral]], [[class.conv]].
 
 *Effects:* Assigns `value` through all the iterators in the range
 \[`first`, `first + `N).
@@ -6647,7 +6647,7 @@ Let N be max(0, `n`) for the `generate_n` algorithms, and `last - first`
 for the `generate` algorithms.
 
 *Mandates:* `Size` is convertible to an integral
-type [[conv.integral,class.conv]].
+type [[conv.integral]], [[class.conv]].
 
 *Effects:* Assigns the result of successive evaluations of `gen()`
 through each iterator in the range \[`first`, `first + `N).
@@ -7021,7 +7021,7 @@ Let:
   - The comparison function is an equivalence relation.
   - For the overloads with no `ExecutionPolicy`, let `T` be the value
     type of `InputIterator`. If `InputIterator` models
-    `forward_iterator`[[iterator.concept.forward]], then there are no
+    `forward_iterator` [[iterator.concept.forward]], then there are no
     additional requirements for `T`. Otherwise, if `OutputIterator`
     meets the *Cpp17ForwardIterator* requirements and its value type is
     the same as `T`, then `T` meets the *Cpp17CopyAssignable*
@@ -7342,7 +7342,7 @@ overload in namespace `std`:
   requirements [[output.iterators]].
 - `SampleIterator` meets the *Cpp17RandomAccessIterator*
   requirements [[random.access.iterators]] unless `PopulationIterator`
-  models `forward_iterator`[[iterator.concept.forward]].
+  models `forward_iterator` [[iterator.concept.forward]].
 - `remove_reference_t<UniformRandomBitGenerator>` meets the requirements
   of a uniform random bit generator type [[rand.req.urng]].
 
@@ -11266,8 +11266,8 @@ A type `I` models `nothrow-input-iterator` only if no exceptions are
 thrown from increment, copy construction, move construction, copy
 assignment, move assignment, or indirection through valid iterators.
 
-[*Note 1*: This concept allows some
-`input_iterator`[[iterator.concept.input]] operations to throw
+[*Note 1*: This concept allows some `input_iterator`
+[[iterator.concept.input]] operations to throw
 exceptions. — *end note*]
 
 ``` cpp
@@ -11279,8 +11279,8 @@ Types `S` and `I` model `nothrow-sentinel-for` only if no exceptions are
 thrown from copy construction, move construction, copy assignment, move
 assignment, or comparisons between valid values of type `I` and `S`.
 
-[*Note 2*: This concept allows some
-`sentinel_for`[[iterator.concept.sentinel]] operations to throw
+[*Note 2*: This concept allows some `sentinel_for`
+[[iterator.concept.sentinel]] operations to throw
 exceptions. — *end note*]
 
 ``` cpp
@@ -11294,9 +11294,9 @@ Types `S` and `I` model `nothrow-sized-sentinel-for` only if no
 exceptions are thrown from the `-` operator for valid values of type `I`
 and `S`.
 
-[*Note 3*: This concept allows some
-`sized_sentinel_for`[[iterator.concept.sizedsentinel]] operations to
-throw exceptions. — *end note*]
+[*Note 3*: This concept allows some `sized_sentinel_for`
+[[iterator.concept.sizedsentinel]] operations to throw
+exceptions. — *end note*]
 
 ``` cpp
 template<class R>
@@ -11318,8 +11318,8 @@ concept nothrow-forward-iterator = // exposition only
   nothrow-sentinel-for<I, I>;
 ```
 
-[*Note 4*: This concept allows some
-`forward_iterator`[[iterator.concept.forward]] operations to throw
+[*Note 4*: This concept allows some `forward_iterator`
+[[iterator.concept.forward]] operations to throw
 exceptions. — *end note*]
 
 ``` cpp
@@ -11339,8 +11339,8 @@ concept nothrow-bidirectional-iterator = // exposition only
 A type `I` models `nothrow-bidirectional-iterator` only if no exceptions
 are thrown from decrementing valid iterators.
 
-[*Note 5*: This concept allows some
-`bidirectional_iterator`[[iterator.concept.bidir]] operations to throw
+[*Note 5*: This concept allows some `bidirectional_iterator`
+[[iterator.concept.bidir]] operations to throw
 exceptions. — *end note*]
 
 ``` cpp
@@ -11363,9 +11363,9 @@ are thrown from comparisons of valid iterators, or the `-`, `+`, `-=`,
 `+=`, `[]` operators on valid values of type `I` and
 `iter_difference_t<I>`.
 
-[*Note 6*: This concept allows some
-`random_access_iterator`[[iterator.concept.random.access]] operations to
-throw exceptions. — *end note*]
+[*Note 6*: This concept allows some `random_access_iterator`
+[[iterator.concept.random.access]] operations to throw
+exceptions. — *end note*]
 
 ``` cpp
 template<class R>
@@ -11969,7 +11969,8 @@ void qsort(void* base, size_t nmemb, size_t size, compare-pred* compar);
 *Effects:* These functions have the semantics specified in the C
 standard library.
 
-*Throws:* Any exception thrown by `compar`[[res.on.exception.handling]].
+*Throws:* Any exception thrown by `compar`
+[[res.on.exception.handling]].
 
 See also: ISO C 7.24.6
 
@@ -12051,9 +12052,10 @@ See also: ISO C 7.24.6
 [basic.life]: basic.md#basic.life
 [bidirectional.iterators]: iterators.md#bidirectional.iterators
 [binary.search]: #binary.search
+[class.conv]: class.md#class.conv
 [concept.booleantestable]: concepts.md#concept.booleantestable
 [containers]: containers.md#containers
-[conv.integral,class.conv]: #conv.integral,class.conv
+[conv.integral]: expr.md#conv.integral
 [cpp17.copyassignable]: #cpp17.copyassignable
 [cpp17.copyconstructible]: #cpp17.copyconstructible
 [cpp17.lessthancomparable]: #cpp17.lessthancomparable

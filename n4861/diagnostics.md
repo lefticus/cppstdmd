@@ -662,7 +662,7 @@ strong_ordering operator<=>(const error_category& rhs) const noexcept;
 
 *Returns:* `compare_three_way()(this, &rhs)`.
 
-[*Note 1*: `compare_three_way`[[comparisons.three.way]] provides a
+[*Note 1*: `compare_three_way` [[comparisons.three.way]] provides a
 total ordering for pointers. — *end note*]
 
 #### Program-defined classes derived from `error_category` <a id="syserr.errcat.derived">[[syserr.errcat.derived]]</a>

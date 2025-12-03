@@ -128,10 +128,24 @@ local function convert_ref_placeholders(inlines)
           -- Find end marker
           local end_marker = text:find("@@", start_marker + 6, true)
           if end_marker then
-            -- Extract label
-            local label = text:sub(start_marker + 6, end_marker - 1)
-            -- Insert as RawInline markdown reference with space for readability
-            table.insert(parts, pandoc.RawInline('markdown', prefix .. '[[' .. label .. ']]'))
+            -- Extract label(s) - may be comma-separated
+            local labels = text:sub(start_marker + 6, end_marker - 1)
+            -- Split comma-separated labels into multiple wikilinks
+            if labels:find(",") then
+              local first = true
+              for label in labels:gmatch("([^,]+)") do
+                label = label:match("^%s*(.-)%s*$")  -- trim whitespace
+                if first then
+                  table.insert(parts, pandoc.RawInline('markdown', prefix .. '[[' .. label .. ']]'))
+                  first = false
+                else
+                  table.insert(parts, pandoc.RawInline('markdown', ', [[' .. label .. ']]'))
+                end
+              end
+            else
+              -- Single label
+              table.insert(parts, pandoc.RawInline('markdown', prefix .. '[[' .. labels .. ']]'))
+            end
             pos = end_marker + 2
           else
             -- No end marker, just add the rest

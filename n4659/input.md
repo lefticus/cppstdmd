@@ -7261,7 +7261,7 @@ path& replace_extension(const path& replacement = path());
 
 *Effects:*
 
-- Any existing `extension()(`[[fs.path.decompose]]`)` is removed from
+- Any existing `extension()(` [[fs.path.decompose]]`)` is removed from
   the pathname in the generic format, then
 - If `replacement` is not empty and does not begin with a dot character,
   a dot character is appended to the pathname in the generic format,
@@ -10617,8 +10617,8 @@ ISO C 7.8.
     definitions from the base class.
 
 [^16]: That is, for each class derived from an instance of
-    `basic_streambuf` in this Clause (@@REF:stringbuf@@,
-    @@REF:filebuf@@), a specification of how consuming a character
+    `basic_streambuf` in this Clause ([[stringbuf]],
+    [[filebuf]]), a specification of how consuming a character
     effects the associated output sequence is given. There is no
     requirement on a program-defined class.
 
@@ -10636,10 +10636,10 @@ ISO C 7.8.
 [^20]: This is done without causing an `ios::failure` to be thrown.
 
 [^21]: See, for example, the function signature
-    `ws(basic_istream&)` (@@REF:istream.manip@@).
+    `ws(basic_istream&)` ([[istream.manip]]).
 
 [^22]: See, for example, the function signature
-    `dec(ios_base&)` (@@REF:basefield.manip@@).
+    `dec(ios_base&)` ([[basefield.manip]]).
 
 [^23]: This is done without causing an `ios::failure` to be thrown.
 
@@ -10674,10 +10674,10 @@ ISO C 7.8.
 [^33]: without causing an `ios::failure` to be thrown.
 
 [^34]: See, for example, the function signature
-    `endl(basic_ostream&)` (@@REF:ostream.manip@@).
+    `endl(basic_ostream&)` ([[ostream.manip]]).
 
 [^35]: See, for example, the function signature
-    `dec(ios_base&)` (@@REF:basefield.manip@@).
+    `dec(ios_base&)` ([[basefield.manip]]).
 
 [^36]: without causing an `ios::failure` to be thrown.
 
@@ -10698,7 +10698,7 @@ ISO C 7.8.
 
 [^40]: The macro `SEEK_END` is defined, and the function signatures
     `fopen(const char*, const char*)` and `fseek(FILE*, long, int)` are
-    declared, in `<cstdio>` (@@REF:cstdio.syn@@).
+    declared, in `<cstdio>` ([[cstdio.syn]]).
 
 [^41]: POSIX® is a registered trademark of The IEEE. Windows® is a
     registered trademark of Microsoft Corporation. This information is

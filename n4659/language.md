@@ -1818,7 +1818,7 @@ See  [[basic.life]]. — *end note*]
 struct X { const int n; };
 X *p = new X{3};
 const int a = p->n;
-new (p) X{5};                       // p does not point to new object (REF:basic.life) because X::n is const
+new (p) X{5};                       // p does not point to new object ([basic.life]) because X::n is const
 const int b = p->n;                 // undefined behavior
 const int c = std::launder(p)->n;   // OK
 ```
@@ -2829,7 +2829,7 @@ ISO C 7.14.
 [^30]: A function is called for every time it is registered.
 
 [^31]: Objects with automatic storage duration are all destroyed in a
-    program whose `main` function (@@REF:basic.start.main@@) contains no
+    program whose `main` function ([[basic.start.main]]) contains no
     automatic objects and executes the call to `exit()`. Control can be
     transferred directly to such a `main` function by throwing an
     exception that is caught in `main`.

@@ -2872,7 +2872,7 @@ template<class Duration>
 *Constraints:* `SourceClock::to_sys(t)` is well-formed.
 
 *Mandates:* `SourceClock::to_sys(t)` returns a `sys_time<Duration2>` for
-some type `Duration2`[[time.point.general]].
+some type `Duration2` [[time.point.general]].
 
 *Returns:* `SourceClock::to_sys(t)`.
 
@@ -2894,8 +2894,8 @@ template<class Duration>
 *Constraints:* `DestClock::from_sys(t)` is well-formed.
 
 *Mandates:* `DestClock::from_sys(t)` returns a
-`time_point<DestClock, Duration2>` for some type
-`Duration2`[[time.point.general]].
+`time_point<DestClock, Duration2>` for some type `Duration2`
+[[time.point.general]].
 
 *Returns:* `DestClock::from_sys(t)`.
 
@@ -2919,7 +2919,7 @@ template<class Duration>
 *Constraints:* `SourceClock::to_utc(t)` is well-formed.
 
 *Mandates:* `SourceClock::to_utc(t)` returns a `utc_time<Duration2>` for
-some type `Duration2`[[time.point.general]].
+some type `Duration2` [[time.point.general]].
 
 *Returns:* `SourceClock::to_utc(t)`.
 
@@ -2941,8 +2941,8 @@ template<class Duration>
 *Constraints:* `DestClock::from_utc(t)` is well-formed.
 
 *Mandates:* `DestClock::from_utc(t)` returns a
-`time_point<DestClock, Duration2>` for some type
-`Duration2`[[time.point.general]].
+`time_point<DestClock, Duration2>` for some type `Duration2`
+[[time.point.general]].
 
 *Returns:* `DestClock::from_utc(t)`.
 
@@ -4444,8 +4444,8 @@ constexpr year_month& operator+=(const months& dm) noexcept;
 
 *Constraints:* If the argument supplied by the caller for the `months`
 parameter is convertible to `years`, its implicit conversion sequence to
-`years` is worse than its implicit conversion sequence to
-`months`[[over.ics.rank]].
+`years` is worse than its implicit conversion sequence to `months`
+[[over.ics.rank]].
 
 *Effects:* `*this = *this + dm`.
 
@@ -4457,8 +4457,8 @@ constexpr year_month& operator-=(const months& dm) noexcept;
 
 *Constraints:* If the argument supplied by the caller for the `months`
 parameter is convertible to `years`, its implicit conversion sequence to
-`years` is worse than its implicit conversion sequence to
-`months`[[over.ics.rank]].
+`years` is worse than its implicit conversion sequence to `months`
+[[over.ics.rank]].
 
 *Effects:* `*this = *this - dm`.
 
@@ -4511,8 +4511,8 @@ constexpr year_month operator+(const year_month& ym, const months& dm) noexcept;
 
 *Constraints:* If the argument supplied by the caller for the `months`
 parameter is convertible to `years`, its implicit conversion sequence to
-`years` is worse than its implicit conversion sequence to
-`months`[[over.ics.rank]].
+`years` is worse than its implicit conversion sequence to `months`
+[[over.ics.rank]].
 
 *Returns:* A `year_month` value `z` such that `z.ok() && z - ym == dm`
 is `true`.
@@ -4525,8 +4525,8 @@ constexpr year_month operator+(const months& dm, const year_month& ym) noexcept;
 
 *Constraints:* If the argument supplied by the caller for the `months`
 parameter is convertible to `years`, its implicit conversion sequence to
-`years` is worse than its implicit conversion sequence to
-`months`[[over.ics.rank]].
+`years` is worse than its implicit conversion sequence to `months`
+[[over.ics.rank]].
 
 *Returns:* `ym + dm`.
 
@@ -4536,8 +4536,8 @@ constexpr year_month operator-(const year_month& ym, const months& dm) noexcept;
 
 *Constraints:* If the argument supplied by the caller for the `months`
 parameter is convertible to `years`, its implicit conversion sequence to
-`years` is worse than its implicit conversion sequence to
-`months`[[over.ics.rank]].
+`years` is worse than its implicit conversion sequence to `months`
+[[over.ics.rank]].
 
 *Returns:* `ym + -dm`.
 
@@ -4696,8 +4696,8 @@ constexpr year_month_day& operator+=(const months& m) noexcept;
 
 *Constraints:* If the argument supplied by the caller for the `months`
 parameter is convertible to `years`, its implicit conversion sequence to
-`years` is worse than its implicit conversion sequence to
-`months`[[over.ics.rank]].
+`years` is worse than its implicit conversion sequence to `months`
+[[over.ics.rank]].
 
 *Effects:* `*this = *this + m`.
 
@@ -4709,8 +4709,8 @@ constexpr year_month_day& operator-=(const months& m) noexcept;
 
 *Constraints:* If the argument supplied by the caller for the `months`
 parameter is convertible to `years`, its implicit conversion sequence to
-`years` is worse than its implicit conversion sequence to
-`months`[[over.ics.rank]].
+`years` is worse than its implicit conversion sequence to `months`
+[[over.ics.rank]].
 
 *Effects:* `*this = *this - m`.
 
@@ -4816,8 +4816,8 @@ constexpr year_month_day operator+(const year_month_day& ymd, const months& dm) 
 
 *Constraints:* If the argument supplied by the caller for the `months`
 parameter is convertible to `years`, its implicit conversion sequence to
-`years` is worse than its implicit conversion sequence to
-`months`[[over.ics.rank]].
+`years` is worse than its implicit conversion sequence to `months`
+[[over.ics.rank]].
 
 *Returns:* `(ymd.year() / ymd.month() + dm) / ymd.day()`.
 
@@ -4830,8 +4830,8 @@ constexpr year_month_day operator+(const months& dm, const year_month_day& ymd) 
 
 *Constraints:* If the argument supplied by the caller for the `months`
 parameter is convertible to `years`, its implicit conversion sequence to
-`years` is worse than its implicit conversion sequence to
-`months`[[over.ics.rank]].
+`years` is worse than its implicit conversion sequence to `months`
+[[over.ics.rank]].
 
 *Returns:* `ymd + dm`.
 
@@ -4841,8 +4841,8 @@ constexpr year_month_day operator-(const year_month_day& ymd, const months& dm) 
 
 *Constraints:* If the argument supplied by the caller for the `months`
 parameter is convertible to `years`, its implicit conversion sequence to
-`years` is worse than its implicit conversion sequence to
-`months`[[over.ics.rank]].
+`years` is worse than its implicit conversion sequence to `months`
+[[over.ics.rank]].
 
 *Returns:* `ymd + (-dm)`.
 
@@ -4964,8 +4964,8 @@ constexpr year_month_day_last& operator+=(const months& m) noexcept;
 
 *Constraints:* If the argument supplied by the caller for the `months`
 parameter is convertible to `years`, its implicit conversion sequence to
-`years` is worse than its implicit conversion sequence to
-`months`[[over.ics.rank]].
+`years` is worse than its implicit conversion sequence to `months`
+[[over.ics.rank]].
 
 *Effects:* `*this = *this + m`.
 
@@ -4977,8 +4977,8 @@ constexpr year_month_day_last& operator-=(const months& m) noexcept;
 
 *Constraints:* If the argument supplied by the caller for the `months`
 parameter is convertible to `years`, its implicit conversion sequence to
-`years` is worse than its implicit conversion sequence to
-`months`[[over.ics.rank]].
+`years` is worse than its implicit conversion sequence to `months`
+[[over.ics.rank]].
 
 *Effects:* `*this = *this - m`.
 
@@ -5074,8 +5074,8 @@ constexpr year_month_day_last
 
 *Constraints:* If the argument supplied by the caller for the `months`
 parameter is convertible to `years`, its implicit conversion sequence to
-`years` is worse than its implicit conversion sequence to
-`months`[[over.ics.rank]].
+`years` is worse than its implicit conversion sequence to `months`
+[[over.ics.rank]].
 
 *Returns:* `(ymdl.year() / ymdl.month() + dm) / last`.
 
@@ -5086,8 +5086,8 @@ constexpr year_month_day_last
 
 *Constraints:* If the argument supplied by the caller for the `months`
 parameter is convertible to `years`, its implicit conversion sequence to
-`years` is worse than its implicit conversion sequence to
-`months`[[over.ics.rank]].
+`years` is worse than its implicit conversion sequence to `months`
+[[over.ics.rank]].
 
 *Returns:* `ymdl + dm`.
 
@@ -5098,8 +5098,8 @@ constexpr year_month_day_last
 
 *Constraints:* If the argument supplied by the caller for the `months`
 parameter is convertible to `years`, its implicit conversion sequence to
-`years` is worse than its implicit conversion sequence to
-`months`[[over.ics.rank]].
+`years` is worse than its implicit conversion sequence to `months`
+[[over.ics.rank]].
 
 *Returns:* `ymdl + (-dm)`.
 
@@ -5222,8 +5222,8 @@ constexpr year_month_weekday& operator+=(const months& m) noexcept;
 
 *Constraints:* If the argument supplied by the caller for the `months`
 parameter is convertible to `years`, its implicit conversion sequence to
-`years` is worse than its implicit conversion sequence to
-`months`[[over.ics.rank]].
+`years` is worse than its implicit conversion sequence to `months`
+[[over.ics.rank]].
 
 *Effects:* `*this = *this + m`.
 
@@ -5235,8 +5235,8 @@ constexpr year_month_weekday& operator-=(const months& m) noexcept;
 
 *Constraints:* If the argument supplied by the caller for the `months`
 parameter is convertible to `years`, its implicit conversion sequence to
-`years` is worse than its implicit conversion sequence to
-`months`[[over.ics.rank]].
+`years` is worse than its implicit conversion sequence to `months`
+[[over.ics.rank]].
 
 *Effects:* `*this = *this - m`.
 
@@ -5330,8 +5330,8 @@ constexpr year_month_weekday operator+(const year_month_weekday& ymwd, const mon
 
 *Constraints:* If the argument supplied by the caller for the `months`
 parameter is convertible to `years`, its implicit conversion sequence to
-`years` is worse than its implicit conversion sequence to
-`months`[[over.ics.rank]].
+`years` is worse than its implicit conversion sequence to `months`
+[[over.ics.rank]].
 
 *Returns:* `(ymwd.year() / ymwd.month() + dm) / ymwd.weekday_indexed()`.
 
@@ -5341,8 +5341,8 @@ constexpr year_month_weekday operator+(const months& dm, const year_month_weekda
 
 *Constraints:* If the argument supplied by the caller for the `months`
 parameter is convertible to `years`, its implicit conversion sequence to
-`years` is worse than its implicit conversion sequence to
-`months`[[over.ics.rank]].
+`years` is worse than its implicit conversion sequence to `months`
+[[over.ics.rank]].
 
 *Returns:* `ymwd + dm`.
 
@@ -5352,8 +5352,8 @@ constexpr year_month_weekday operator-(const year_month_weekday& ymwd, const mon
 
 *Constraints:* If the argument supplied by the caller for the `months`
 parameter is convertible to `years`, its implicit conversion sequence to
-`years` is worse than its implicit conversion sequence to
-`months`[[over.ics.rank]].
+`years` is worse than its implicit conversion sequence to `months`
+[[over.ics.rank]].
 
 *Returns:* `ymwd + (-dm)`.
 
@@ -5452,8 +5452,8 @@ constexpr year_month_weekday_last& operator+=(const months& m) noexcept;
 
 *Constraints:* If the argument supplied by the caller for the `months`
 parameter is convertible to `years`, its implicit conversion sequence to
-`years` is worse than its implicit conversion sequence to
-`months`[[over.ics.rank]].
+`years` is worse than its implicit conversion sequence to `months`
+[[over.ics.rank]].
 
 *Effects:* `*this = *this + m`.
 
@@ -5465,8 +5465,8 @@ constexpr year_month_weekday_last& operator-=(const months& m) noexcept;
 
 *Constraints:* If the argument supplied by the caller for the `months`
 parameter is convertible to `years`, its implicit conversion sequence to
-`years` is worse than its implicit conversion sequence to
-`months`[[over.ics.rank]].
+`years` is worse than its implicit conversion sequence to `months`
+[[over.ics.rank]].
 
 *Effects:* `*this = *this - m`.
 
@@ -5552,8 +5552,8 @@ constexpr year_month_weekday_last
 
 *Constraints:* If the argument supplied by the caller for the `months`
 parameter is convertible to `years`, its implicit conversion sequence to
-`years` is worse than its implicit conversion sequence to
-`months`[[over.ics.rank]].
+`years` is worse than its implicit conversion sequence to `months`
+[[over.ics.rank]].
 
 *Returns:* `(ymwdl.year() / ymwdl.month() + dm) / ymwdl.weekday_last()`.
 
@@ -5564,8 +5564,8 @@ constexpr year_month_weekday_last
 
 *Constraints:* If the argument supplied by the caller for the `months`
 parameter is convertible to `years`, its implicit conversion sequence to
-`years` is worse than its implicit conversion sequence to
-`months`[[over.ics.rank]].
+`years` is worse than its implicit conversion sequence to `months`
+[[over.ics.rank]].
 
 *Returns:* `ymwdl + dm`.
 
@@ -5576,8 +5576,8 @@ constexpr year_month_weekday_last
 
 *Constraints:* If the argument supplied by the caller for the `months`
 parameter is convertible to `years`, its implicit conversion sequence to
-`years` is worse than its implicit conversion sequence to
-`months`[[over.ics.rank]].
+`years` is worse than its implicit conversion sequence to `months`
+[[over.ics.rank]].
 
 *Returns:* `ymwdl + (-dm)`.
 

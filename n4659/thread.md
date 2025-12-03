@@ -3817,7 +3817,7 @@ template <class F, class... Args>
 
 ``` cpp
 INVOKE(DECAY_COPY(std::forward<F>(f)),
-       DECAY_COPY(std::forward<Args>(args))...)     // see REF:func.require, REF:thread.thread.constr
+       DECAY_COPY(std::forward<Args>(args))...)     // see [func.require] [thread.thread.constr]
 ```
 
 shall be a valid expression.

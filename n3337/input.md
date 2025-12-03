@@ -6031,10 +6031,10 @@ Library header `<inttypes.h>`, with the following changes:
 [^18]: This is done without causing an `ios::failure` to be thrown.
 
 [^19]: See, for example, the function signature
-    `ws(basic_istream&)` (@@REF:istream.manip@@).
+    `ws(basic_istream&)` ([[istream.manip]]).
 
 [^20]: See, for example, the function signature
-    `dec(ios_base&)` (@@REF:basefield.manip@@).
+    `dec(ios_base&)` ([[basefield.manip]]).
 
 [^21]: This is done without causing an `ios::failure` to be thrown.
 
@@ -6069,10 +6069,10 @@ Library header `<inttypes.h>`, with the following changes:
 [^31]: without causing an `ios::failure` to be thrown.
 
 [^32]: See, for example, the function signature
-    `endl(basic_ostream&)` (@@REF:ostream.manip@@).
+    `endl(basic_ostream&)` ([[ostream.manip]]).
 
 [^33]: See, for example, the function signature
-    `dec(ios_base&)` (@@REF:basefield.manip@@).
+    `dec(ios_base&)` ([[basefield.manip]]).
 
 [^34]: without causing an `ios::failure` to be thrown.
 
@@ -6093,7 +6093,7 @@ Library header `<inttypes.h>`, with the following changes:
 
 [^38]: The macro `SEEK_END` is defined, and the function signatures
     `fopen(const char*, const char*)` and `fseek(FILE*, long, int)` are
-    declared, in `<cstdio>` (@@REF:c.files@@).
+    declared, in `<cstdio>` ([[c.files]]).
 
 [^39]: The function signature `fclose(FILE*)` is declared in `<cstdio>`
-    (@@REF:c.files@@).
+    ([[c.files]]).

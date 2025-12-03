@@ -682,8 +682,8 @@ If `T` is an object type, then let `v` be an lvalue of type (possibly
 `const`) `T` or an rvalue of type `const T`. `T` models
 `copy_constructible` only if
 
-- After the definition `T u = v;`, `u` is equal to
-  `v`[[concepts.equality]] and `v` is not modified.
+- After the definition `T u = v;`, `u` is equal to `v`
+  [[concepts.equality]] and `v` is not modified.
 - `T(v)` is equal to `v` and does not modify `v`.
 
 ## Comparison concepts <a id="concepts.compare">[[concepts.compare]]</a>
@@ -816,8 +816,8 @@ template<class T>
 ```
 
 Let `a` and `b` be objects of type `T`. `T` models `equality_comparable`
-only if `bool(a == b)` is `true` when `a` is equal to
-`b`[[concepts.equality]], and `false` otherwise.
+only if `bool(a == b)` is `true` when `a` is equal to `b`
+[[concepts.equality]], and `false` otherwise.
 
 [*Note 1*: The requirement that the expression `a == b` is
 equality-preserving implies that `==` is transitive and

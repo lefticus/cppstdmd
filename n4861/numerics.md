@@ -539,7 +539,7 @@ template<class T, class charT, class traits>
 part [[istream.formatted]].
 
 If bad input is encountered, calls `is.setstate(ios_base::failbit)`
-(which may throw `ios_base::failure`[[iostate.flags]]).
+(which may throw `ios_base::failure` [[iostate.flags]]).
 
 *Returns:* `is`.
 
@@ -4333,7 +4333,7 @@ obtained from `operator new`, and other techniques to generate efficient
 `valarray`s. — *end note*]
 
 The reference returned by the subscript operator for an array shall be
-valid until the member function `resize(size_t, T)`[[valarray.members]]
+valid until the member function `resize(size_t, T)` [[valarray.members]]
 is called for that array or until the lifetime of that array ends,
 whichever happens first.
 

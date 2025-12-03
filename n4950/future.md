@@ -1059,8 +1059,8 @@ template<size_t Len, size_t Align = default-alignment>
 ```
 
 The value of *default-alignment* is the most stringent alignment
-requirement for any object type whose size is no greater than
-`Len`[[basic.types]].
+requirement for any object type whose size is no greater than `Len`
+[[basic.types]].
 
 *Mandates:* `Len` is not zero. `Align` is equal to `alignof(T)` for some
 type `T` or to *default-alignment*.

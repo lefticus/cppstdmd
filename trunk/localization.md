@@ -557,7 +557,7 @@ argument [[algorithms]] applied to strings.
 [*Example 1*:
 
 A vector of strings `v` can be collated according to collation rules in
-locale `loc` simply by [[alg.sort,vector]]:
+locale `loc` simply by [[alg.sort]], [[vector]]:
 
 ``` cpp
 std::sort(v.begin(), v.end(), loc);
@@ -3302,7 +3302,7 @@ See also: ISO C 7.11
 
 <!-- Link reference definitions -->
 [alg.lex.comparison]: algorithms.md#alg.lex.comparison
-[alg.sort,vector]: #alg.sort,vector
+[alg.sort]: algorithms.md#alg.sort
 [algorithms]: algorithms.md#algorithms
 [basic.start.static]: basic.md#basic.start.static
 [bitmask.types]: library.md#bitmask.types
@@ -3419,6 +3419,7 @@ See also: ISO C 7.11
 [setlocale.data.races]: #setlocale.data.races
 [tab:locale.category.facets]: #tab:locale.category.facets
 [tab:locale.spec]: #tab:locale.spec
+[vector]: containers.md#vector
 
 [^1]: In this subclause, the type name `tm` is an incomplete type that
     is defined in `<ctime>`.

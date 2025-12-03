@@ -1235,8 +1235,8 @@ library.
 
 *Remarks:* The program is terminated without executing destructors for
 objects of automatic, thread, or static storage duration and without
-calling functions passed to `atexit()`[[basic.start.term]]. The function
-`_Exit` is signal-safe [[support.signal]].
+calling functions passed to `atexit()` [[basic.start.term]]. The
+function `_Exit` is signal-safe [[support.signal]].
 
 ``` cpp
 [[noreturn]] void abort() noexcept;
@@ -1247,8 +1247,8 @@ library.
 
 *Remarks:* The program is terminated without executing destructors for
 objects of automatic, thread, or static storage duration and without
-calling functions passed to `atexit()`[[basic.start.term]]. The function
-`abort` is signal-safe [[support.signal]].
+calling functions passed to `atexit()` [[basic.start.term]]. The
+function `abort` is signal-safe [[support.signal]].
 
 ``` cpp
 int atexit(c-atexit-handler* f) noexcept;
@@ -1457,8 +1457,8 @@ functions.
   the C standard library functions `malloc` or `aligned_alloc` is
   unspecified.
 - Returns a pointer to the allocated storage if the attempt is
-  successful. Otherwise, if the current `new_handler`[[get.new.handler]]
-  is a null pointer value, throws `bad_alloc`.
+  successful. Otherwise, if the current `new_handler`
+  [[get.new.handler]] is a null pointer value, throws `bad_alloc`.
 - Otherwise, the function calls the current `new_handler`
   function [[new.handler]]. If the called function returns, the loop
   repeats.
@@ -1862,7 +1862,7 @@ using new_handler = void (*)();
 ```
 
 The type of a *handler function* to be called by `operator new()` or
-`operator new[]()`[[new.delete]] when they cannot satisfy a request for
+`operator new[]()` [[new.delete]] when they cannot satisfy a request for
 additional storage.
 
 *Required behavior:* A `new_handler` shall perform one of the following:
@@ -1932,7 +1932,7 @@ See  [[basic.life]]. — *end note*]
 struct X { int n; };
 const X *p = new const X{3};
 const int a = p->n;
-new (const_cast<X*>(p)) const X{5}; // p does not point to new objectREF:basic.life because its type is const
+new (const_cast<X*>(p)) const X{5}; // p does not point to new object [basic.life] because its type is const
 const int b = p->n;                 // undefined behavior
 const int c = std::launder(p)->n;   // OK
 ```
@@ -2187,7 +2187,7 @@ static consteval source_location current() noexcept;
 - When invoked by a function call whose *postfix-expression* is a
   (possibly parenthesized) *id-expression* naming `current`, returns a
   `source_location` with an implementation-defined value. The value
-  should be affected by `#line`[[cpp.line]] in the same manner as for
+  should be affected by `#line` [[cpp.line]] in the same manner as for
   \_\_LINE\_\_ and \_\_FILE\_\_. The values of the exposition-only data
   members of the returned `source_location` object are indicated in
   [[support.srcloc.current]].
@@ -2446,7 +2446,7 @@ int uncaught_exceptions() noexcept;
 *Returns:* The number of uncaught exceptions [[except.uncaught]].
 
 *Remarks:* When `uncaught_exceptions() > 0`, throwing an exception can
-result in a call of the function `std::terminate`[[except.terminate]].
+result in a call of the function `std::terminate` [[except.terminate]].
 
 ### Exception propagation <a id="propagation">[[propagation]]</a>
 
@@ -3599,7 +3599,7 @@ struct noop_coroutine_promise {};
 ```
 
 The class `noop_coroutine_promise` defines the promise type for the
-coroutine referred to by `noop_coroutine_handle`[[coroutine.syn]].
+coroutine referred to by `noop_coroutine_handle` [[coroutine.syn]].
 
 #### Class `coroutine_handle<noop_coroutine_promise>` <a id="coroutine.handle.noop">[[coroutine.handle.noop]]</a>
 
@@ -4086,7 +4086,7 @@ See also: ISO C 7.14
 [^30]: A function is called for every time it is registered.
 
 [^31]: Objects with automatic storage duration are all destroyed in a
-    program whose `main` function@@REF:basic.start.main@@ contains no
+    program whose `main` function [[basic.start.main]] contains no
     objects with automatic storage duration and executes the call to
     `exit()`. Control can be transferred directly to such a `main`
     function by throwing an exception that is caught in `main`.

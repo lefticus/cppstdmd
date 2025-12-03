@@ -1073,7 +1073,7 @@ and have type `const bool`.
 
 [*Example 1*:
 
-Each specialization `S` of class template `subrange`[[range.subrange]]
+Each specialization `S` of class template `subrange` [[range.subrange]]
 models `borrowed_range` because
 
 - `enable_borrowed_range<S>` is specialized to have the value `true`,
@@ -14070,8 +14070,8 @@ coroutine.
 *Throws:* Any exception thrown by the initialization of the stored
 object.
 
-*Remarks:* A *yield-expression* that calls this function has type
-`void`[[expr.yield]].
+*Remarks:* A *yield-expression* that calls this function has type `void`
+[[expr.yield]].
 
 ``` cpp
 template<class R2, class V2, class Alloc2, class Unused>
@@ -14097,7 +14097,7 @@ if `bool(`*`except_`*`)` is `true`. If `bool(`*`except_`*`)` is `false`,
 the `await_resume` member has no effects.
 
 *Remarks:* A *yield-expression* that calls one of these functions has
-type `void`[[expr.yield]].
+type `void` [[expr.yield]].
 
 ``` cpp
 template<ranges::input_range R, class Alloc>
@@ -14119,7 +14119,7 @@ return yield_value(ranges::elements_of(nested(
 ```
 
 [*Note 1*: A *yield-expression* that calls this function has type
-`void`[[expr.yield]]. — *end note*]
+`void` [[expr.yield]]. — *end note*]
 
 ``` cpp
 void unhandled_exception();

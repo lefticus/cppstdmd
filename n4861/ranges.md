@@ -764,7 +764,7 @@ and have type `const bool`.
 
 [*Example 1*:
 
-Each specialization `S` of class template `subrange`[[range.subrange]]
+Each specialization `S` of class template `subrange` [[range.subrange]]
 models `borrowed_range` because
 
 - `enable_borrowed_range<S>` is specialized to have the value `true`,

@@ -3589,7 +3589,7 @@ Otherwise return `true` if E holds for every iterator `i` in the range
 - meet the *Cpp17RandomAccessIterator*
   requirements [[random.access.iterators]] for the overloads in
   namespace `std`;
-- pairwise model `sized_sentinel_for`[[iterator.concept.sizedsentinel]]
+- pairwise model `sized_sentinel_for` [[iterator.concept.sizedsentinel]]
   for the overloads in namespace `ranges`,
 
 and `last1 - first1 != last2 - first2`, then no applications of the
@@ -8230,8 +8230,8 @@ A type `I` models *`no-throw-input-iterator`* only if no exceptions are
 thrown from increment, copy construction, move construction, copy
 assignment, move assignment, or indirection through valid iterators.
 
-[*Note 1*: This concept allows some
-`input_iterator`[[iterator.concept.input]] operations to throw
+[*Note 1*: This concept allows some `input_iterator`
+[[iterator.concept.input]] operations to throw
 exceptions. — *end note*]
 
 ``` cpp
@@ -8243,8 +8243,8 @@ Types `S` and `I` model *`no-throw-sentinel`* only if no exceptions are
 thrown from copy construction, move construction, copy assignment, move
 assignment, or comparisons between valid values of type `I` and `S`.
 
-[*Note 2*: This concept allows some
-`sentinel_for`[[iterator.concept.sentinel]] operations to throw
+[*Note 2*: This concept allows some `sentinel_for`
+[[iterator.concept.sentinel]] operations to throw
 exceptions. — *end note*]
 
 ``` cpp
@@ -8267,8 +8267,8 @@ concept no-throw-forward-iterator = // exposition only
   no-throw-sentinel<I, I>;
 ```
 
-[*Note 3*: This concept allows some
-`forward_iterator`[[iterator.concept.forward]] operations to throw
+[*Note 3*: This concept allows some `forward_iterator`
+[[iterator.concept.forward]] operations to throw
 exceptions. — *end note*]
 
 ``` cpp
@@ -8764,7 +8764,8 @@ standard library.
 *Preconditions:* The objects in the array pointed to by `base` are of
 trivial type.
 
-*Throws:* Any exception thrown by `compar`[[res.on.exception.handling]].
+*Throws:* Any exception thrown by `compar`
+[[res.on.exception.handling]].
 
 ISO C 7.22.5.
 

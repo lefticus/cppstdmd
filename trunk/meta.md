@@ -3489,7 +3489,7 @@ static_assert(members_of(^^NS, access_context::current()).size() == 2);
 import M;
 
 static_assert(                                                  // NS::l does not precede
-  members_of(^^NS, access_context::current()).size() == 1);     // the constant-expressionREF:basic.lookup
+  members_of(^^NS, access_context::current()).size() == 1);     // the constant-expression [basic.lookup]
 
 class B {};
 
@@ -4001,7 +4001,7 @@ template<class T>
 
 *Throws:* `meta::exception` unless `expr` is suitable for use as a
 constant template argument for a constant template parameter of type
-`T&`[[temp.arg.nontype]].
+`T&` [[temp.arg.nontype]].
 
 ``` cpp
 template<class T>
@@ -4014,7 +4014,7 @@ template<class T>
 
 *Throws:* `meta::exception` unless `fn` is suitable for use as a
 constant template argument for a constant template parameter of type
-`T&`[[temp.arg.nontype]].
+`T&` [[temp.arg.nontype]].
 
 ### Reflection class definition generation <a id="meta.reflection.define.aggregate">[[meta.reflection.define.aggregate]]</a>
 
@@ -4115,9 +4115,9 @@ other functions in `std::meta` (e.g., `type_of`,
     interpreted with the ordinary literal encoding;
 
   \[*Note 1*: The name corresponds to the spelling of an
-  identifier token after phase 6 of translation@@REF:lex.phases@@.
+  identifier token after phase 6 of translation [[lex.phases]].
   Lexical constructs like
-  *universal-character-name*s@@REF:lex.universal.char@@ are not
+  *universal-character-name*s [[lex.universal.char]] are not
   processed and will cause evaluation to fail. For example,
   `R"(\u03B1)"` is an invalid identifier and is not interpreted as
   `"`α`"`. — *end note*]

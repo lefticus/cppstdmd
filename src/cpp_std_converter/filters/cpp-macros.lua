@@ -1111,8 +1111,20 @@ function RawBlock(elem)
       -- Parse and add description content
       if rest and #rest > 0 then
         rest = expand_macros(rest)
-        -- Convert @@REF:label@@ placeholders to [[label]] (from itemdescr processing)
-        rest = rest:gsub("@@REF:([^@]+)@@", "[[%1]]")
+        -- Convert @@REF:label@@ placeholders to [[label]], splitting comma-separated refs
+        rest = rest:gsub("@@REF:([^@]+)@@", function(refs)
+          if refs:find(",") then
+            -- Split comma-separated refs: @@REF:a,b@@ -> [[a]], [[b]]
+            local parts = {}
+            for label in refs:gmatch("([^,]+)") do
+              label = label:match("^%s*(.-)%s*$")  -- trim whitespace
+              table.insert(parts, "[[" .. label .. "]]")
+            end
+            return table.concat(parts, ", ")
+          else
+            return "[[" .. refs .. "]]"
+          end
+        end)
         -- Use +raw_tex to ensure nested custom environments (like tables) are passed as RawBlocks
         local success, parsed = pcall(pandoc.read, rest, "latex+raw_tex")
         if not success then
@@ -1248,7 +1260,116 @@ function Code(elem)
   return elem
 end
 
+-- Helper function to split comma-separated labels into separate refs
+-- e.g., "label1,label2" with double_bracket=true -> "[[label1]], [[label2]]"
+local function split_comma_refs(labels, double_bracket)
+  local open, close = double_bracket and "[[" or "[", double_bracket and "]]" or "]"
+  local parts = {}
+  for label in labels:gmatch("([^,]+)") do
+    table.insert(parts, open .. label:match("^%s*(.-)%s*$") .. close)
+  end
+  return table.concat(parts, ", ")
+end
+
+-- Convert ref pattern to bracketed form, handling commas
+local function convert_ref(refs, double_bracket)
+  if refs:find(",") then
+    return split_comma_refs(refs, double_bracket)
+  end
+  return (double_bracket and "[[" or "[") .. refs .. (double_bracket and "]]" or "]")
+end
+
+-- Clean up REF: patterns in text (non-code contexts)
+local function cleanup_ref_in_text(text)
+  -- Split existing comma-containing wikilinks: [[a,b]] -> [[a]], [[b]]
+  text = text:gsub("%[%[([^%]]+,[^%]]+)%]%]", function(refs) return split_comma_refs(refs, true) end)
+  -- Add space after backtick before wikilinks: `code`[[ref]] -> `code` [[ref]]
+  text = text:gsub("`%[%[", "` [[")
+  -- Convert @@REF:label@@ with optional preceding char that needs space
+  text = text:gsub("([%w`])@@REF:([^@]+)@@", function(before, refs) return before .. " " .. convert_ref(refs, true) end)
+  text = text:gsub("@@REF:([^@]+)@@", function(refs) return convert_ref(refs, true) end)
+  return text
+end
+
+-- Clean up REF: patterns in code blocks (single brackets)
+local function cleanup_ref_in_code(text)
+  text = text:gsub("// REF:([%w%.%-_,]+)", function(refs) return "// " .. convert_ref(refs, false) end)
+  text = text:gsub("// see REF:([%w%.%-_,]+)", function(refs) return "// see " .. convert_ref(refs, false) end)
+  text = text:gsub("(%w)REF:([%w%.%-_,]+)", function(before, refs) return before .. " " .. convert_ref(refs, false) end)
+  text = text:gsub("REF:([%w%.%-_,]+)", function(refs) return convert_ref(refs, false) end)
+  return text
+end
+
+-- Add space before wikilink if preceded by Code element
+local function maybe_add_space(result)
+  if #result > 0 and result[#result].t == "Code" then
+    result:insert(pandoc.Space())
+  end
+end
+
+-- Split Link with comma-separated target into multiple links
+local function split_comma_link(target, result)
+  maybe_add_space(result)
+  local first = true
+  for label in target:gmatch("([^,]+)") do
+    label = label:match("^%s*(.-)%s*$")
+    if not first then result:insert(pandoc.Str(", ")) end
+    first = false
+    result:insert(pandoc.Link({pandoc.Str(label)}, label))
+  end
+end
+
+-- Forward declarations for mutual recursion
+local cleanup_ref_inlines
+local cleanup_block
+
+-- Clean up REF: patterns in inline elements
+cleanup_ref_inlines = function(inlines)
+  local result = pandoc.List()
+  for _, inline in ipairs(inlines) do
+    if inline.t == "Str" then
+      local text = cleanup_ref_in_text(inline.text)
+      result:insert(text ~= inline.text and pandoc.Str(text) or inline)
+    elseif inline.t == "Span" or inline.t == "Emph" or inline.t == "Strong" then
+      inline.content = cleanup_ref_inlines(inline.content)
+      result:insert(inline)
+    elseif inline.t == "Link" then
+      inline.content = cleanup_ref_inlines(inline.content)
+      if inline.target and inline.target:find(",") then
+        split_comma_link(inline.target, result)
+      else
+        maybe_add_space(result)
+        result:insert(inline)
+      end
+    elseif inline.t == "Note" then
+      inline.content = common.walk_blocks(inline.content, cleanup_block)
+      result:insert(inline)
+    elseif inline.t == "RawInline" and inline.format == "markdown" then
+      local text = inline.text
+      if text:match("^%[%[") then maybe_add_space(result) end
+      local new_text = text:gsub("%[%[([^%]]+,[^%]]+)%]%]", function(refs) return split_comma_refs(refs, true) end)
+      result:insert(new_text ~= text and pandoc.RawInline('markdown', new_text) or inline)
+    else
+      result:insert(inline)
+    end
+  end
+  return result
+end
+
+-- Block processor for walk_blocks - handles CodeBlock, Para, Plain
+cleanup_block = function(block)
+  if block.t == "CodeBlock" then
+    block.text = cleanup_ref_in_code(block.text)
+  elseif block.t == "Para" or block.t == "Plain" then
+    block.content = cleanup_ref_inlines(block.content)
+  end
+  return nil  -- keep block (possibly modified)
+end
+
 function Pandoc(doc)
+  -- Clean up any remaining REF: patterns that escaped earlier processing
+  doc.blocks = common.walk_blocks(doc.blocks, cleanup_block)
+
   -- Merge section_labels from cpp-sections.lua with our references
   -- This ensures all section labels get link definitions, preventing duplicates
   if doc.meta['section_labels'] then

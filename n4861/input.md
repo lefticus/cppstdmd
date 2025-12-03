@@ -298,8 +298,8 @@ The object `cin` controls input from a stream buffer associated with the
 object `stdin`, declared in `<cstdio>`.
 
 After the object `cin` is initialized, `cin.tie()` returns `&cout`. Its
-state is otherwise the same as required for
-`basic_ios<char>::init`[[basic.ios.cons]].
+state is otherwise the same as required for `basic_ios<char>::init`
+[[basic.ios.cons]].
 
 ``` cpp
 ostream cout;
@@ -317,7 +317,7 @@ object `stderr`, declared in `<cstdio>`.
 
 After the object `cerr` is initialized, `cerr.flags() & unitbuf` is
 nonzero and `cerr.tie()` returns `&cout`. Its state is otherwise the
-same as required for `basic_ios<char>::init`[[basic.ios.cons]].
+same as required for `basic_ios<char>::init` [[basic.ios.cons]].
 
 ``` cpp
 ostream clog;
@@ -337,7 +337,7 @@ the object `stdin`, declared in `<cstdio>`.
 
 After the object `wcin` is initialized, `wcin.tie()` returns `&wcout`.
 Its state is otherwise the same as required for
-`basic_ios<wchar_t>::init`[[basic.ios.cons]].
+`basic_ios<wchar_t>::init` [[basic.ios.cons]].
 
 ``` cpp
 wostream wcout;
@@ -355,7 +355,7 @@ the object `stderr`, declared in `<cstdio>`.
 
 After the object `wcerr` is initialized, `wcerr.flags() & unitbuf` is
 nonzero and `wcerr.tie()` returns `&wcout`. Its state is otherwise the
-same as required for `basic_ios<wchar_t>::init`[[basic.ios.cons]].
+same as required for `basic_ios<wchar_t>::init` [[basic.ios.cons]].
 
 ``` cpp
 wostream wclog;
@@ -845,10 +845,10 @@ streamsize width(streamsize wide);
 locale imbue(const locale& loc);
 ```
 
-*Effects:* Calls each registered callback pair
-`(fn, idx)`[[ios.base.callback]] as `(*fn)(imbue_event, *this, idx)` at
-such a time that a call to `ios_base::getloc()` from within `fn` returns
-the new locale value `loc`.
+*Effects:* Calls each registered callback pair `(fn, idx)`
+[[ios.base.callback]] as `(*fn)(imbue_event, *this, idx)` at such a time
+that a call to `ios_base::getloc()` from within `fn` returns the new
+locale value `loc`.
 
 *Ensures:* `loc == getloc()`.
 
@@ -987,11 +987,11 @@ void register_callback(event_callback fn, int idx);
 *Preconditions:* The function `fn` does not throw exceptions.
 
 *Effects:* Registers the pair `(fn, idx)` such that during calls to
-`imbue()`[[ios.base.locales]], `copyfmt()`, or
-`~ios_base()`[[ios.base.cons]], the function `fn` is called with
-argument `idx`. Functions registered are called when an event occurs, in
-opposite order of registration. Functions registered while a callback
-function is active are not called until the next event.
+`imbue()` [[ios.base.locales]], `copyfmt()`, or `~ios_base()`
+[[ios.base.cons]], the function `fn` is called with argument `idx`.
+Functions registered are called when an event occurs, in opposite order
+of registration. Functions registered while a callback function is
+active are not called until the next event.
 
 *Remarks:* Identical pairs are not merged. A function registered twice
 will be called twice.
@@ -1011,10 +1011,10 @@ destroyed, whichever comes first; otherwise the behavior is undefined.
 ~ios_base();
 ```
 
-*Effects:* Calls each registered callback pair
-`(fn, idx)`[[ios.base.callback]] as `(*fn)(erase_event, *this, idx)` at
-such time that any `ios_base` member function called from within `fn`
-has well-defined results.
+*Effects:* Calls each registered callback pair `(fn, idx)`
+[[ios.base.callback]] as `(*fn)(erase_event, *this, idx)` at such time
+that any `ios_base` member function called from within `fn` has
+well-defined results.
 
 ### Class template `fpos` <a id="fpos">[[fpos]]</a>
 
@@ -1232,8 +1232,8 @@ basic_streambuf<charT, traits>* rdbuf(basic_streambuf<charT, traits>* sb);
 locale imbue(const locale& loc);
 ```
 
-*Effects:* Calls `ios_base::imbue(loc)`[[ios.base.locales]] and if
-`rdbuf() != 0` then `rdbuf()->pubimbue(loc)`[[streambuf.locales]].
+*Effects:* Calls `ios_base::imbue(loc)` [[ios.base.locales]] and if
+`rdbuf() != 0` then `rdbuf()->pubimbue(loc)` [[streambuf.locales]].
 
 *Returns:* The prior value of `ios_base::imbue()`.
 
@@ -1372,16 +1372,16 @@ void clear(iostate state = goodbit);
 
 *Effects:* If
 `((state | (rdbuf() ? goodbit : badbit)) & exceptions()) == 0`, returns.
-Otherwise, the function throws an object of class
-`ios_base::failure`[[ios.failure]], constructed with
-*implementation-defined* argument values.
+Otherwise, the function throws an object of class `ios_base::failure`
+[[ios.failure]], constructed with *implementation-defined* argument
+values.
 
 ``` cpp
 void setstate(iostate state);
 ```
 
 *Effects:* Calls `clear(rdstate() | state)` (which may throw
-`ios_base::failure`[[ios.failure]]).
+`ios_base::failure` [[ios.failure]]).
 
 ``` cpp
 bool good() const;
@@ -1935,7 +1935,7 @@ streamsize in_avail();
 ```
 
 *Returns:* If a read position is available, returns `egptr() - gptr()`.
-Otherwise returns `showmanyc()`[[streambuf.virt.get]].
+Otherwise returns `showmanyc()` [[streambuf.virt.get]].
 
 ``` cpp
 int_type snextc();
@@ -2566,7 +2566,7 @@ explicit basic_istream(basic_streambuf<charT, traits>* sb);
 ```
 
 *Effects:* Initializes the base class subobject with
-`basic_ios::init(sb)`[[basic.ios.cons]].
+`basic_ios::init(sb)` [[basic.ios.cons]].
 
 *Ensures:* `gcount() == 0`.
 
@@ -2661,7 +2661,7 @@ if (ctype.is(ctype.space, c) != 0)
 If, after any preparation is completed, `is.good()` is `true`,
 `ok_ != false` otherwise, `ok_ == false`. During preparation, the
 constructor may call `setstate(failbit)` (which may throw
-`ios_base::failure`[[iostate.flags]]).[^19]
+`ios_base::failure` [[iostate.flags]]).[^19]
 
 ``` cpp
 ~sentry();
@@ -2706,10 +2706,11 @@ operator>>(void*& val);
 ```
 
 As in the case of the inserters, these extractors depend on the locale’s
-`num_get<>`[[locale.num.get]] object to perform parsing the input stream
-data. These extractors behave as formatted input functions (as described
-in  [[istream.formatted.reqmts]]). After a sentry object is constructed,
-the conversion occurs as if performed by the following code fragment:
+`num_get<>` [[locale.num.get]] object to perform parsing the input
+stream data. These extractors behave as formatted input functions (as
+described in  [[istream.formatted.reqmts]]). After a sentry object is
+constructed, the conversion occurs as if performed by the following code
+fragment:
 
 ``` cpp
 using numget = num_get<charT, istreambuf_iterator<charT, traits>>;
@@ -2835,7 +2836,7 @@ which may be the first position if no characters were extracted.
 `operator>>` then calls `width(0)`.
 
 If the function extracted no characters, it calls `setstate(failbit)`,
-which may throw `ios_base::failure`[[iostate.flags]].
+which may throw `ios_base::failure` [[iostate.flags]].
 
 *Returns:* `in`.
 
@@ -2861,11 +2862,11 @@ basic_istream<charT, traits>& operator>>(basic_streambuf<charT, traits>* sb);
 
 *Effects:* Behaves as an unformatted input
 function [[istream.unformatted]]. If `sb` is null, calls
-`setstate(failbit)`, which may throw
-`ios_base::failure`[[iostate.flags]]. After a sentry object is
-constructed, extracts characters from `*this` and inserts them in the
-output sequence controlled by `sb`. Characters are extracted and
-inserted until any of the following occurs:
+`setstate(failbit)`, which may throw `ios_base::failure`
+[[iostate.flags]]. After a sentry object is constructed, extracts
+characters from `*this` and inserts them in the output sequence
+controlled by `sb`. Characters are extracted and inserted until any of
+the following occurs:
 
 - end-of-file occurs on the input sequence;
 - inserting in the output sequence fails (in which case the character to
@@ -2873,10 +2874,10 @@ inserted until any of the following occurs:
 - an exception occurs (in which case the exception is caught).
 
 If the function inserts no characters, it calls `setstate(failbit)`,
-which may throw `ios_base::failure`[[iostate.flags]]. If it inserted no
+which may throw `ios_base::failure` [[iostate.flags]]. If it inserted no
 characters because it caught an exception thrown while extracting
-characters from `*this` and `failbit` is set in
-`exceptions()`[[iostate.flags]], then the caught exception is rethrown.
+characters from `*this` and `failbit` is set in `exceptions()`
+[[iostate.flags]], then the caught exception is rethrown.
 
 *Returns:* `*this`.
 
@@ -2918,7 +2919,7 @@ int_type get();
 *Effects:* Behaves as an unformatted input function (as described
 above). After constructing a sentry object, extracts a character `c`, if
 one is available. Otherwise, the function calls `setstate(failbit)`,
-which may throw `ios_base::failure`[[iostate.flags]].
+which may throw `ios_base::failure` [[iostate.flags]].
 
 *Returns:* `c` if available, otherwise `traits::eof()`.
 
@@ -2929,8 +2930,8 @@ basic_istream<charT, traits>& get(char_type& c);
 *Effects:* Behaves as an unformatted input function (as described
 above). After constructing a sentry object, extracts a character, if one
 is available, and assigns it to `c`.[^24] Otherwise, the function calls
-`setstate(failbit)` (which may throw
-`ios_base::failure`[[iostate.flags]]).
+`setstate(failbit)` (which may throw `ios_base::failure`
+[[iostate.flags]]).
 
 *Returns:* `*this`.
 
@@ -2951,7 +2952,7 @@ the following occurs:
   which case `c` is not extracted).
 
 If the function stores no characters, it calls `setstate(failbit)`
-(which may throw `ios_base::failure`[[iostate.flags]]). In any case, if
+(which may throw `ios_base::failure` [[iostate.flags]]). In any case, if
 `n` is greater than zero it then stores a null character into the next
 successive location of the array.
 
@@ -2983,7 +2984,7 @@ extracted and inserted until any of the following occurs:
   rethrown).
 
 If the function inserts no characters, it calls `setstate(failbit)`,
-which may throw `ios_base::failure`[[iostate.flags]].
+which may throw `ios_base::failure` [[iostate.flags]].
 
 *Returns:* `*this`.
 
@@ -3016,7 +3017,7 @@ the following occurs:
 These conditions are tested in the order shown.[^28]
 
 If the function extracts no characters, it calls `setstate(failbit)`
-(which may throw `ios_base::failure`[[iostate.flags]]).[^29]
+(which may throw `ios_base::failure` [[iostate.flags]]).[^29]
 
 In any case, if `n` is greater than zero, it then stores a null
 character (using `charT()`) into the next successive location of the
@@ -3068,11 +3069,11 @@ above). After constructing a sentry object, extracts characters and
 discards them. Characters are extracted until any of the following
 occurs:
 
-- `n != numeric_limits<streamsize>::max()`[[numeric.limits]] and `n`
+- `n != numeric_limits<streamsize>::max()` [[numeric.limits]] and `n`
   characters have been extracted so far
 - end-of-file occurs on the input sequence (in which case the function
-  calls `setstate(eofbit)`, which may throw
-  `ios_base::failure`[[iostate.flags]]);
+  calls `setstate(eofbit)`, which may throw `ios_base::failure`
+  [[iostate.flags]]);
 - `traits::eq_int_type(traits::to_int_type(c), delim)` for the next
   available input character `c` (in which case `c` is extracted).
 
@@ -3106,7 +3107,7 @@ extracted and stored until either of the following occurs:
 - `n` characters are stored;
 - end-of-file occurs on the input sequence (in which case the function
   calls `setstate(failbit | eofbit)`, which may throw
-  `ios_base::failure`[[iostate.flags]]).
+  `ios_base::failure` [[iostate.flags]]).
 
 *Returns:* `*this`.
 
@@ -3120,7 +3121,7 @@ above). After constructing a sentry object, if `!good()` calls
 extracts characters and stores them into successive locations of an
 array whose first element is designated by `s`. If
 `rdbuf()->in_avail() == -1`, calls `setstate(eofbit)` (which may throw
-`ios_base::failure`[[iostate.flags]]), and extracts no characters;
+`ios_base::failure` [[iostate.flags]]), and extracts no characters;
 
 - If `rdbuf()->in_avail() == 0`, extracts no characters
 - If `rdbuf()->in_avail() > 0`, extracts `min(rdbuf()->in_avail(), n))`.
@@ -3137,7 +3138,7 @@ constructing a sentry object, if `!good()` calls `setstate(failbit)`
 which may throw an exception, and return. If `rdbuf()` is not null,
 calls `rdbuf()->sputbackc(c)`. If `rdbuf()` is null, or if `sputbackc`
 returns `traits::eof()`, calls `setstate(badbit)` (which may throw
-`ios_base::failure`[[iostate.flags]]).
+`ios_base::failure` [[iostate.flags]]).
 
 [*Note 1*: This function extracts no characters, so the value returned
 by the next call to `gcount()` is 0. — *end note*]
@@ -3154,7 +3155,7 @@ constructing a sentry object, if `!good()` calls `setstate(failbit)`
 which may throw an exception, and return. If `rdbuf()` is not null,
 calls `rdbuf()->sungetc()`. If `rdbuf()` is null, or if `sungetc`
 returns `traits::eof()`, calls `setstate(badbit)` (which may throw
-`ios_base::failure`[[iostate.flags]]).
+`ios_base::failure` [[iostate.flags]]).
 
 [*Note 2*: This function extracts no characters, so the value returned
 by the next call to `gcount()` is 0. — *end note*]
@@ -3171,7 +3172,7 @@ and does not affect the value returned by subsequent calls to
 `gcount()`. After constructing a sentry object, if `rdbuf()` is a null
 pointer, returns `-1`. Otherwise, calls `rdbuf()->pubsync()` and, if
 that function returns `-1` calls `setstate(badbit)` (which may throw
-`ios_base::failure`[[iostate.flags]], and returns `-1`. Otherwise,
+`ios_base::failure` [[iostate.flags]], and returns `-1`. Otherwise,
 returns zero.
 
 ``` cpp
@@ -3234,7 +3235,7 @@ subsequent calls to `is.gcount()`. After constructing a sentry object
 extracts characters as long as the next available character `c` is
 whitespace or until there are no more characters in the sequence.
 Whitespace characters are distinguished with the same criterion as used
-by `sentry::sentry`[[istream.sentry]]. If `ws` stops extracting
+by `sentry::sentry` [[istream.sentry]]. If `ws` stops extracting
 characters because there are no more available it sets `eofbit`, but not
 `failbit`.
 
@@ -3303,8 +3304,8 @@ explicit basic_iostream(basic_streambuf<charT, traits>* sb);
 ```
 
 *Effects:* Initializes the base class subobjects with
-`basic_istream<charT, traits>(sb)`[[istream]] and
-`basic_ostream<charT, traits>(sb)`[[ostream]].
+`basic_istream<charT, traits>(sb)` [[istream]] and
+`basic_ostream<charT, traits>(sb)` [[ostream]].
 
 *Ensures:* `rdbuf() == sb` and `gcount() == 0`.
 
@@ -3507,7 +3508,7 @@ explicit basic_ostream(basic_streambuf<charT, traits>* sb);
 ```
 
 *Effects:* Initializes the base class subobject with
-`basic_ios<charT, traits>::init(sb)`[[basic.ios.cons]].
+`basic_ios<charT, traits>::init(sb)` [[basic.ios.cons]].
 
 *Ensures:* `rdbuf() == sb`.
 
@@ -3572,7 +3573,7 @@ If `os.tie()` is not a null pointer, calls `os.tie()->flush()`.[^31]
 If, after any preparation is completed, `os.good()` is `true`,
 `ok_ == true` otherwise, `ok_ == false`. During preparation, the
 constructor may call `setstate(failbit)` (which may throw
-`ios_base::failure`[[iostate.flags]]).[^32]
+`ios_base::failure` [[iostate.flags]]).[^32]
 
 ``` cpp
 ~sentry();
@@ -3792,7 +3793,7 @@ read from `sb` and inserted until any of the following occurs:
 - an exception occurs while getting a character from `sb`.
 
 If the function inserts no characters, it calls `setstate(failbit)`
-(which may throw `ios_base::failure`[[iostate.flags]]). If an exception
+(which may throw `ios_base::failure` [[iostate.flags]]). If an exception
 was thrown while extracting a character, the function sets `failbit` in
 the error state, and if `failbit` is set in `exceptions()` the caught
 exception is rethrown.
@@ -3857,7 +3858,7 @@ template<class traits>
 *Effects:* Behaves like a formatted inserter (as described
 in  [[ostream.formatted.reqmts]]) of `out`. Creates a character sequence
 `seq` of `n` characters starting at `s`, each widened using
-`out.widen()`[[basic.ios.members]], where `n` is the number that would
+`out.widen()` [[basic.ios.members]], where `n` is the number that would
 be computed as if by:
 
 - `traits::length(s)` for the overload where the first argument is of
@@ -3897,8 +3898,8 @@ basic_ostream<charT, traits>& put(char_type c);
 above). After constructing a sentry object, inserts the character `c`,
 if possible.[^37]
 
-Otherwise, calls `setstate(badbit)` (which may throw
-`ios_base::failure`[[iostate.flags]]).
+Otherwise, calls `setstate(badbit)` (which may throw `ios_base::failure`
+[[iostate.flags]]).
 
 *Returns:* `*this`.
 
@@ -3914,8 +3915,8 @@ occurs:
 
 - `n` characters are inserted;
 - inserting in the output sequence fails (in which case the function
-  calls `setstate(badbit)`, which may throw
-  `ios_base::failure`[[iostate.flags]]).
+  calls `setstate(badbit)`, which may throw `ios_base::failure`
+  [[iostate.flags]]).
 
 *Returns:* `*this`.
 
@@ -3927,9 +3928,9 @@ basic_ostream& flush();
 above). If `rdbuf()` is not a null pointer, constructs a sentry object.
 If this object returns `true` when converted to a value of type `bool`
 the function calls `rdbuf()->pubsync()`. If that function returns -1
-calls `setstate(badbit)` (which may throw
-`ios_base::failure`[[iostate.flags]]). Otherwise, if the sentry object
-returns `false`, does nothing.
+calls `setstate(badbit)` (which may throw `ios_base::failure`
+[[iostate.flags]]). Otherwise, if the sentry object returns `false`,
+does nothing.
 
 *Returns:* `*this`.
 
@@ -4350,8 +4351,9 @@ template<class charT, class traits, class Allocator>
   `char_type` and `traits_type` the same as `charT` and `traits`,
   respectively, then the expression `in >> quoted(s, delim, escape)`
   behaves as if it extracts the following characters from `in` using
-  `operator>>(basic_istream<charT, traits>&, charT&)`[[istream.extractors]]
-  which may throw `ios_base::failure`[[ios.failure]]:
+  `operator>>(basic_istream<charT, traits>&, charT&)`
+  [[istream.extractors]] which may throw `ios_base::failure`
+  [[ios.failure]]:
   - If the first character extracted is equal to `delim`, as determined
     by `traits_type::eq`, then:
     - Turn off the `skipws` flag.
@@ -4523,8 +4525,8 @@ initialization is presented here as:
 explicit basic_stringbuf(ios_base::openmode which);
 ```
 
-*Effects:* Initializes the base class with
-`basic_streambuf()`[[streambuf.cons]], and `mode` with `which`. It is
+*Effects:* Initializes the base class with `basic_streambuf()`
+[[streambuf.cons]], and `mode` with `which`. It is
 *implementation-defined* whether the sequence pointers (`eback()`,
 `gptr()`, `egptr()`, `pbase()`, `pptr()`, `epptr()`) are initialized to
 null pointers.
@@ -4537,17 +4539,17 @@ explicit basic_stringbuf(
   ios_base::openmode which = ios_base::in | ios_base::out);
 ```
 
-*Effects:* Initializes the base class with
-`basic_streambuf()`[[streambuf.cons]], `mode` with `which`, and `buf`
-with `s`, then calls `init_buf_ptrs()`.
+*Effects:* Initializes the base class with `basic_streambuf()`
+[[streambuf.cons]], `mode` with `which`, and `buf` with `s`, then calls
+`init_buf_ptrs()`.
 
 ``` cpp
 basic_stringbuf(ios_base::openmode which, const Allocator &a);
 ```
 
-*Effects:* Initializes the base class with
-`basic_streambuf()`[[streambuf.cons]], `mode` with `which`, and `buf`
-with `a`, then calls `init_buf_ptrs()`.
+*Effects:* Initializes the base class with `basic_streambuf()`
+[[streambuf.cons]], `mode` with `which`, and `buf` with `a`, then calls
+`init_buf_ptrs()`.
 
 *Ensures:* `str().empty()` is `true`.
 
@@ -4557,9 +4559,9 @@ explicit basic_stringbuf(
   ios_base::openmode which = ios_base::in | ios_base::out);
 ```
 
-*Effects:* Initializes the base class with
-`basic_streambuf()`[[streambuf.cons]], `mode` with `which`, and `buf`
-with `std::move(s)`, then calls `init_buf_ptrs()`.
+*Effects:* Initializes the base class with `basic_streambuf()`
+[[streambuf.cons]], `mode` with `which`, and `buf` with `std::move(s)`,
+then calls `init_buf_ptrs()`.
 
 ``` cpp
 template<class SAlloc>
@@ -4568,9 +4570,9 @@ template<class SAlloc>
     ios_base::openmode which, const Allocator &a);
 ```
 
-*Effects:* Initializes the base class with
-`basic_streambuf()`[[streambuf.cons]], `mode` with `which`, and `buf`
-with `{s,a}`, then calls `init_buf_ptrs()`.
+*Effects:* Initializes the base class with `basic_streambuf()`
+[[streambuf.cons]], `mode` with `which`, and `buf` with `{s,a}`, then
+calls `init_buf_ptrs()`.
 
 ``` cpp
 template<class SAlloc>
@@ -4581,9 +4583,9 @@ template<class SAlloc>
 
 *Constraints:* `is_same_v<SAlloc,Allocator>` is `false`.
 
-*Effects:* Initializes the base class with
-`basic_streambuf()`[[streambuf.cons]], `mode` with `which`, and `buf`
-with `s`, then calls `init_buf_ptrs()`.
+*Effects:* Initializes the base class with `basic_streambuf()`
+[[streambuf.cons]], `mode` with `which`, and `buf` with `s`, then calls
+`init_buf_ptrs()`.
 
 ``` cpp
 basic_stringbuf(basic_stringbuf&& rhs);
@@ -4993,8 +4995,9 @@ explicit basic_istringstream(ios_base::openmode which);
 ```
 
 *Effects:* Initializes the base class with
-`basic_istream<charT, traits>(addressof(sb))`[[istream]] and `sb` with
-`basic_stringbuf<charT, traits, Allocator>(which | ios_base::in)`[[stringbuf.cons]].
+`basic_istream<charT, traits>(addressof(sb))` [[istream]] and `sb` with
+`basic_stringbuf<charT, traits, Allocator>(which | ios_base::in)`
+[[stringbuf.cons]].
 
 ``` cpp
 explicit basic_istringstream(
@@ -5003,7 +5006,7 @@ explicit basic_istringstream(
 ```
 
 *Effects:* Initializes the base class with
-`basic_istream<charT, traits>(addressof(sb))`[[istream]] and `sb` with
+`basic_istream<charT, traits>(addressof(sb))` [[istream]] and `sb` with
 `basic_stringbuf<charT, traits, Allocator>(s, which | ios_base::in)`([[stringbuf.cons]]).
 
 ``` cpp
@@ -5011,8 +5014,9 @@ basic_istringstream(ios_base::openmode which, const Allocator& a);
 ```
 
 *Effects:* Initializes the base class with
-`basic_istream<charT, traits>(addressof(sb))`[[istream]] and `sb` with
-`basic_stringbuf<charT, traits, Allocator>(which | ios_base::in, a)`[[stringbuf.cons]].
+`basic_istream<charT, traits>(addressof(sb))` [[istream]] and `sb` with
+`basic_stringbuf<charT, traits, Allocator>(which | ios_base::in, a)`
+[[stringbuf.cons]].
 
 ``` cpp
 explicit basic_istringstream(
@@ -5021,8 +5025,9 @@ explicit basic_istringstream(
 ```
 
 *Effects:* Initializes the base class with
-`basic_istream<charT, traits>(addressof(sb))`[[istream]] and `sb` with
-`basic_stringbuf<charT, traits, Allocator>(std::move(s), which | ios_base::in)`[[stringbuf.cons]].
+`basic_istream<charT, traits>(addressof(sb))` [[istream]] and `sb` with
+`basic_stringbuf<charT, traits, Allocator>(std::move(s), which | ios_base::in)`
+[[stringbuf.cons]].
 
 ``` cpp
 template<class SAlloc>
@@ -5032,7 +5037,7 @@ template<class SAlloc>
 ```
 
 *Effects:* Initializes the base class with
-`basic_istream<charT, traits>(addressof(sb))`[[istream]] and `sb` with
+`basic_istream<charT, traits>(addressof(sb))` [[istream]] and `sb` with
 `basic_stringbuf<charT, traits, Allocator>(s, which | ios_base::in, a)`([[stringbuf.cons]]).
 
 ``` cpp
@@ -5043,8 +5048,9 @@ template<class SAlloc>
 ```
 
 *Effects:* Initializes the base class with
-`basic_istream<charT, traits>(addressof(sb))`[[istream]] and `sb` with
-`basic_stringbuf<charT, traits, Allocator>(s, which | ios_base::in)`[[stringbuf.cons]].
+`basic_istream<charT, traits>(addressof(sb))` [[istream]] and `sb` with
+`basic_stringbuf<charT, traits, Allocator>(s, which | ios_base::in)`
+[[stringbuf.cons]].
 
 ``` cpp
 basic_istringstream(basic_istringstream&& rhs);
@@ -5213,8 +5219,9 @@ explicit basic_ostringstream(ios_base::openmode which);
 ```
 
 *Effects:* Initializes the base class with
-`basic_ostream<charT, traits>(addressof(sb))`[[ostream]] and `sb` with
-`basic_stringbuf<charT, traits, Allocator>(which | ios_base::out)`[[stringbuf.cons]].
+`basic_ostream<charT, traits>(addressof(sb))` [[ostream]] and `sb` with
+`basic_stringbuf<charT, traits, Allocator>(which | ios_base::out)`
+[[stringbuf.cons]].
 
 ``` cpp
 explicit basic_ostringstream(
@@ -5223,7 +5230,7 @@ explicit basic_ostringstream(
 ```
 
 *Effects:* Initializes the base class with
-`basic_ostream<charT, traits>(addressof(sb))`[[ostream]] and `sb` with
+`basic_ostream<charT, traits>(addressof(sb))` [[ostream]] and `sb` with
 `basic_stringbuf<charT, traits, Allocator>(s, which | ios_base::out)`([[stringbuf.cons]]).
 
 ``` cpp
@@ -5231,7 +5238,7 @@ basic_ostringstream(ios_base::openmode which, const Allocator& a);
 ```
 
 *Effects:* Initializes the base class with
-`basic_ostream<charT, traits>(addressof(sb))`[[ostream]] and `sb` with
+`basic_ostream<charT, traits>(addressof(sb))` [[ostream]] and `sb` with
 `basic_stringbuf<charT, traits, Allocator>(which | ios_base::out, a)`([[stringbuf.cons]]).
 
 ``` cpp
@@ -5241,8 +5248,9 @@ explicit basic_ostringstream(
 ```
 
 *Effects:* Initializes the base class with
-`basic_ostream<charT, traits>(addressof(sb))`[[ostream]] and `sb` with
-`basic_stringbuf<charT, traits, Allocator>(std::move(s), which | ios_base::out)`[[stringbuf.cons]].
+`basic_ostream<charT, traits>(addressof(sb))` [[ostream]] and `sb` with
+`basic_stringbuf<charT, traits, Allocator>(std::move(s), which | ios_base::out)`
+[[stringbuf.cons]].
 
 ``` cpp
 template<class SAlloc>
@@ -5252,7 +5260,7 @@ template<class SAlloc>
 ```
 
 *Effects:* Initializes the base class with
-`basic_ostream<charT, traits>(addressof(sb))`[[ostream]] and `sb` with
+`basic_ostream<charT, traits>(addressof(sb))` [[ostream]] and `sb` with
 `basic_stringbuf<charT, traits, Allocator>(s, which | ios_base::out, a)`([[stringbuf.cons]]).
 
 ``` cpp
@@ -5265,7 +5273,7 @@ template<class SAlloc>
 *Constraints:* `is_same_v<SAlloc,Allocator>` is `false`.
 
 *Effects:* Initializes the base class with
-`basic_ostream<charT, traits>(addressof(sb))`[[ostream]] and `sb` with
+`basic_ostream<charT, traits>(addressof(sb))` [[ostream]] and `sb` with
 `basic_stringbuf<charT, traits, Allocator>(s, which | ios_base::out)`([[stringbuf.cons]]).
 
 ``` cpp
@@ -5437,8 +5445,8 @@ explicit basic_stringstream(ios_base::openmode which);
 ```
 
 *Effects:* Initializes the base class with
-`basic_iostream<charT, traits>(addressof(sb))`[[iostream.cons]] and `sb`
-with `basic_stringbuf<charT, traits, Allocator>(which)`.
+`basic_iostream<charT, traits>(addressof(sb))` [[iostream.cons]] and
+`sb` with `basic_stringbuf<charT, traits, Allocator>(which)`.
 
 ``` cpp
 explicit basic_stringstream(
@@ -5447,17 +5455,17 @@ explicit basic_stringstream(
 ```
 
 *Effects:* Initializes the base class with
-`basic_iostream<charT, traits>(addressof(sb))`[[iostream.cons]] and `sb`
-with `basic_stringbuf<charT, traits, Allocator>(s, which)`.
+`basic_iostream<charT, traits>(addressof(sb))` [[iostream.cons]] and
+`sb` with `basic_stringbuf<charT, traits, Allocator>(s, which)`.
 
 ``` cpp
 basic_stringstream(ios_base::openmode which, const Allocator& a);
 ```
 
 *Effects:* Initializes the base class with
-`basic_iostream<charT, traits>(addressof(sb))`[[iostream.cons]] and `sb`
-with
-`basic_stringbuf<charT, traits, Allocator>(which, a)`[[stringbuf.cons]].
+`basic_iostream<charT, traits>(addressof(sb))` [[iostream.cons]] and
+`sb` with `basic_stringbuf<charT, traits, Allocator>(which, a)`
+[[stringbuf.cons]].
 
 ``` cpp
 explicit basic_stringstream(
@@ -5466,9 +5474,10 @@ explicit basic_stringstream(
 ```
 
 *Effects:* Initializes the base class with
-`basic_iostream<charT, traits>(addressof(sb))`[[iostream.cons]] and `sb`
-with
-`basic_stringbuf<charT, traits, Allocator>(std::move(s), which)`[[stringbuf.cons]].
+`basic_iostream<charT, traits>(addressof(sb))` [[iostream.cons]] and
+`sb` with
+`basic_stringbuf<charT, traits, Allocator>(std::move(s), which)`
+[[stringbuf.cons]].
 
 ``` cpp
 template<class SAlloc>
@@ -5478,9 +5487,9 @@ template<class SAlloc>
 ```
 
 *Effects:* Initializes the base class with
-`basic_iostream<charT, traits>(addressof(sb))`[[iostream.cons]] and `sb`
-with
-`basic_stringbuf<charT, traits, Allocator>(s, which, a)`[[stringbuf.cons]].
+`basic_iostream<charT, traits>(addressof(sb))` [[iostream.cons]] and
+`sb` with `basic_stringbuf<charT, traits, Allocator>(s, which, a)`
+[[stringbuf.cons]].
 
 ``` cpp
 template<class SAlloc>
@@ -5492,9 +5501,9 @@ template<class SAlloc>
 *Constraints:* `is_same_v<SAlloc,Allocator>` is `false`.
 
 *Effects:* Initializes the base class with
-`basic_iostream<charT, traits>(addressof(sb))`[[iostream.cons]] and `sb`
-with
-`basic_stringbuf<charT, traits, Allocator>(s, which)`[[stringbuf.cons]].
+`basic_iostream<charT, traits>(addressof(sb))` [[iostream.cons]] and
+`sb` with `basic_stringbuf<charT, traits, Allocator>(s, which)`
+[[stringbuf.cons]].
 
 ``` cpp
 basic_stringstream(basic_stringstream&& rhs);
@@ -5721,7 +5730,7 @@ basic_filebuf();
 ```
 
 *Effects:* Initializes the base class with
-`basic_streambuf<charT, traits>()`[[streambuf.cons]].
+`basic_streambuf<charT, traits>()` [[streambuf.cons]].
 
 *Ensures:* `is_open() == false`.
 
@@ -5881,8 +5890,8 @@ after closing the file.
 streamsize showmanyc() override;
 ```
 
-*Effects:* Behaves the same as
-`basic_streambuf::showmanyc()`[[streambuf.virtuals]].
+*Effects:* Behaves the same as `basic_streambuf::showmanyc()`
+[[streambuf.virtuals]].
 
 *Remarks:* An implementation might well provide an overriding definition
 for this function signature if it can determine that more characters can
@@ -6149,8 +6158,8 @@ basic_ifstream();
 ```
 
 *Effects:* Initializes the base class with
-`basic_istream<charT, traits>(addressof(sb))`[[istream.cons]] and `sb`
-with `basic_filebuf<charT, traits>()`[[filebuf.cons]].
+`basic_istream<charT, traits>(addressof(sb))` [[istream.cons]] and `sb`
+with `basic_filebuf<charT, traits>()` [[filebuf.cons]].
 
 ``` cpp
 explicit basic_ifstream(const char* s,
@@ -6160,8 +6169,8 @@ explicit basic_ifstream(const filesystem::path::value_type* s,
 ```
 
 *Effects:* Initializes the base class with
-`basic_istream<charT, traits>(addressof(sb))`[[istream.cons]] and `sb`
-with `basic_filebuf<charT, traits>()`[[filebuf.cons]], then calls
+`basic_istream<charT, traits>(addressof(sb))` [[istream.cons]] and `sb`
+with `basic_filebuf<charT, traits>()` [[filebuf.cons]], then calls
 `rdbuf()->open(s, mode | ios_base::in)`. If that function returns a null
 pointer, calls `setstate(failbit)`.
 
@@ -6305,8 +6314,8 @@ basic_ofstream();
 ```
 
 *Effects:* Initializes the base class with
-`basic_ostream<charT, traits>(addressof(sb))`[[ostream.cons]] and `sb`
-with `basic_filebuf<charT, traits>()`[[filebuf.cons]].
+`basic_ostream<charT, traits>(addressof(sb))` [[ostream.cons]] and `sb`
+with `basic_filebuf<charT, traits>()` [[filebuf.cons]].
 
 ``` cpp
 explicit basic_ofstream(const char* s,
@@ -6316,8 +6325,8 @@ explicit basic_ofstream(const filesystem::path::value_type* s,
 ```
 
 *Effects:* Initializes the base class with
-`basic_ostream<charT, traits>(addressof(sb))`[[ostream.cons]] and `sb`
-with `basic_filebuf<charT, traits>()`[[filebuf.cons]], then calls
+`basic_ostream<charT, traits>(addressof(sb))` [[ostream.cons]] and `sb`
+with `basic_filebuf<charT, traits>()` [[filebuf.cons]], then calls
 `rdbuf()->open(s, mode | ios_base::out)`. If that function returns a
 null pointer, calls `setstate(failbit)`.
 
@@ -6472,8 +6481,8 @@ basic_fstream();
 ```
 
 *Effects:* Initializes the base class with
-`basic_iostream<charT, traits>(addressof(sb))`[[iostream.cons]] and `sb`
-with `basic_filebuf<charT, traits>()`.
+`basic_iostream<charT, traits>(addressof(sb))` [[iostream.cons]] and
+`sb` with `basic_filebuf<charT, traits>()`.
 
 ``` cpp
 explicit basic_fstream(
@@ -6485,8 +6494,8 @@ explicit basic_fstream(
 ```
 
 *Effects:* Initializes the base class with
-`basic_iostream<charT, traits>(addressof(sb))`[[iostream.cons]] and `sb`
-with `basic_filebuf<charT, traits>()`. Then calls
+`basic_iostream<charT, traits>(addressof(sb))` [[iostream.cons]] and
+`sb` with `basic_filebuf<charT, traits>()`. Then calls
 `rdbuf()->open(s, mode)`. If that function returns a null pointer, calls
 `setstate(failbit)`.
 
@@ -6708,7 +6717,7 @@ basic_syncbuf& operator=(basic_syncbuf&& rhs) noexcept;
 
 *Effects:* Calls `emit()` then move assigns from `rhs`. After the move
 assignment `*this` has the observable state it would have had if it had
-been move constructed from `rhs`[[syncstream.syncbuf.cons]].
+been move constructed from `rhs` [[syncstream.syncbuf.cons]].
 
 *Returns:* `*this`.
 
@@ -7875,10 +7884,9 @@ path(string_type&& source, format fmt = auto_format);
 ```
 
 *Effects:* Constructs an object of class `path` for which the pathname
-in the detected-format of `source` has the original value of
-`source`[[fs.path.fmt.cvt]], converting format if
-required [[fs.path.fmt.cvt]]. `source` is left in a valid but
-unspecified state.
+in the detected-format of `source` has the original value of `source`
+[[fs.path.fmt.cvt]], converting format if required [[fs.path.fmt.cvt]].
+`source` is left in a valid but unspecified state.
 
 ``` cpp
 template<class Source>
@@ -7887,11 +7895,11 @@ template<class InputIterator>
   path(InputIterator first, InputIterator last, format fmt = auto_format);
 ```
 
-*Effects:* Let `s` be the effective range of `source`[[fs.path.req]] or
+*Effects:* Let `s` be the effective range of `source` [[fs.path.req]] or
 the range \[`first`, `last`), with the encoding converted if
-required [[fs.path.cvt]]. Finds the detected-format of
-`s`[[fs.path.fmt.cvt]] and constructs an object of class `path` for
-which the pathname in that format is `s`.
+required [[fs.path.cvt]]. Finds the detected-format of `s`
+[[fs.path.fmt.cvt]] and constructs an object of class `path` for which
+the pathname in that format is `s`.
 
 ``` cpp
 template<class Source>
@@ -7912,7 +7920,7 @@ template<class InputIterator>
   `codecvt<wchar_t, char, mbstate_t>` facet of `loc`, and then a second
   conversion to the current ordinary encoding.
 
-Finds the detected-format of `s`[[fs.path.fmt.cvt]] and constructs an
+Finds the detected-format of `s` [[fs.path.fmt.cvt]] and constructs an
 object of class `path` for which the pathname in that format is `s`.
 
 [*Example 1*:
@@ -7991,10 +7999,10 @@ template<class InputIterator>
   path& assign(InputIterator first, InputIterator last);
 ```
 
-*Effects:* Let `s` be the effective range of `source`[[fs.path.req]] or
+*Effects:* Let `s` be the effective range of `source` [[fs.path.req]] or
 the range \[`first`, `last`), with the encoding converted if
-required [[fs.path.cvt]]. Finds the detected-format of
-`s`[[fs.path.fmt.cvt]] and sets the pathname in that format to `s`.
+required [[fs.path.cvt]]. Finds the detected-format of `s`
+[[fs.path.fmt.cvt]] and sets the pathname in that format to `s`.
 
 *Returns:* `*this`.
 
@@ -8195,7 +8203,7 @@ path& replace_extension(const path& replacement = path());
 
 *Effects:*
 
-- Any existing `extension()`[[fs.path.decompose]] is removed from the
+- Any existing `extension()` [[fs.path.decompose]] is removed from the
   pathname in the generic format, then
 - If `replacement` is not empty and does not begin with a dot character,
   a dot character is appended to the pathname in the generic format,
@@ -9182,11 +9190,11 @@ unspecified.
 
 *Throws:* As specified in  [[fs.err.report]].
 
-[*Note 1*: Implementations of
-`directory_iterator`[[fs.class.directory.iterator]] are prohibited from
-directly or indirectly calling the `refresh` function since it must
-access the external file system, and the objective of caching is to
-avoid unnecessary file system accesses. — *end note*]
+[*Note 1*: Implementations of `directory_iterator`
+[[fs.class.directory.iterator]] are prohibited from directly or
+indirectly calling the `refresh` function since it must access the
+external file system, and the objective of caching is to avoid
+unnecessary file system accesses. — *end note*]
 
 #### Observers <a id="fs.dir.entry.obs">[[fs.dir.entry.obs]]</a>
 
@@ -9814,7 +9822,7 @@ unless an error occurs. — *end note*]
 
 [*Note 2*: To resolve symlinks, or perform other sanitization which
 might require queries to secondary storage, such as hard disks, consider
-`canonical`[[fs.op.canonical]]. — *end note*]
+`canonical` [[fs.op.canonical]]. — *end note*]
 
 [*Note 3*: Implementations are strongly encouraged to not query
 secondary storage, and not consider `!exists(p)` an
@@ -11423,8 +11431,8 @@ See also: ISO C 7.8
     definitions from the base class.
 
 [^16]: That is, for each class derived from an instance of
-    `basic_streambuf` in this Clause (@@REF:stringbuf@@,
-    @@REF:filebuf@@), a specification of how consuming a character
+    `basic_streambuf` in this Clause ([[stringbuf]],
+    [[filebuf]]), a specification of how consuming a character
     effects the associated output sequence is given. There is no
     requirement on a program-defined class.
 
@@ -11442,10 +11450,10 @@ See also: ISO C 7.8
 [^20]: This is done without causing an `ios_base::failure` to be thrown.
 
 [^21]: See, for example, the function signature
-    `ws(basic_istream&)`@@REF:istream.manip@@.
+    `ws(basic_istream&)`[[istream.manip]].
 
 [^22]: See, for example, the function signature
-    `dec(ios_base&)`@@REF:basefield.manip@@.
+    `dec(ios_base&)`[[basefield.manip]].
 
 [^23]: This is done without causing an `ios_base::failure` to be thrown.
 
@@ -11480,10 +11488,10 @@ See also: ISO C 7.8
 [^33]: without causing an `ios_base::failure` to be thrown.
 
 [^34]: See, for example, the function signature
-    `endl(basic_ostream&)`@@REF:ostream.manip@@.
+    `endl(basic_ostream&)`[[ostream.manip]].
 
 [^35]: See, for example, the function signature
-    `dec(ios_base&)`@@REF:basefield.manip@@.
+    `dec(ios_base&)`[[basefield.manip]].
 
 [^36]: without causing an `ios_base::failure` to be thrown.
 

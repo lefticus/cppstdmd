@@ -10586,7 +10586,7 @@ template<class... Args>
 *Effects:* Equivalent to:
 
 ``` cpp
-return !INVOKE(fd, std::forward<Args>(args)...);              // see REF:func.require
+return !INVOKE(fd, std::forward<Args>(args)...);              // see [func.require]
 ```
 
 ``` cpp
@@ -10601,7 +10601,7 @@ template<class... Args>
 *Effects:* Equivalent to:
 
 ``` cpp
-return !INVOKE(std::move(fd), std::forward<Args>(args)...);   // see REF:func.require
+return !INVOKE(std::move(fd), std::forward<Args>(args)...);   // see [func.require]
 ```
 
 ### Function object binders <a id="func.bind">[[func.bind]]</a>

@@ -452,8 +452,8 @@ template<class To, class From> decltype(static_cast<To>(declval<From>())) conver
 
 declares a function template `convert` which only participates in
 overload resolution if the type `From` can be explicitly converted to
-type `To`. For another example see class template
-`common_type`[[meta.trans.other]].
+type `To`. For another example see class template `common_type`
+[[meta.trans.other]].
 
 — *end example*]
 
@@ -902,7 +902,7 @@ template<pair-like P> constexpr pair& operator=(P&& p);
 
 *Constraints:*
 
-- `different-from<P, pair>`[[range.utility.helpers]] is `true`,
+- `different-from<P, pair>` [[range.utility.helpers]] is `true`,
 - `remove_cvref_t<P>` is not a specialization of `ranges::subrange`,
 - `is_assignable_v<T1&, decltype(get<0>(std::forward<P>(p)))>` is
   `true`, and
@@ -920,7 +920,7 @@ template<pair-like P> constexpr const pair& operator=(P&& p) const;
 
 *Constraints:*
 
-- `different-from<P, pair>`[[range.utility.helpers]] is `true`,
+- `different-from<P, pair>` [[range.utility.helpers]] is `true`,
 - `remove_cvref_t<P>` is not a specialization of `ranges::subrange`,
 - `is_assignable_v<const T1&, decltype(get<0>(std::forward<P>(p)))>` is
   `true`, and
@@ -1584,7 +1584,7 @@ Let `I` be the pack `0, 1, `…`, (sizeof...(Types) - 1)`.
 
 *Constraints:*
 
-- `different-from<UTuple, tuple>`[[range.utility.helpers]] is `true`,
+- `different-from<UTuple, tuple>` [[range.utility.helpers]] is `true`,
 - `remove_cvref_t<UTuple>` is not a specialization of
   `ranges::subrange`,
 - `sizeof...(Types)` equals `tuple_size_v<remove_cvref_t<UTuple>>`,
@@ -1851,7 +1851,7 @@ template<tuple-like UTuple>
 
 *Constraints:*
 
-- `different-from<UTuple, tuple>`[[range.utility.helpers]] is `true`,
+- `different-from<UTuple, tuple>` [[range.utility.helpers]] is `true`,
 - `remove_cvref_t<UTuple>` is not a specialization of
   `ranges::subrange`,
 - `sizeof...(Types)` equals `tuple_size_v<remove_cvref_t<UTuple>>`, and
@@ -1870,7 +1870,7 @@ template<tuple-like UTuple>
 
 *Constraints:*
 
-- `different-from<UTuple, tuple>`[[range.utility.helpers]] is `true`,
+- `different-from<UTuple, tuple>` [[range.utility.helpers]] is `true`,
 - `remove_cvref_t<UTuple>` is not a specialization of
   `ranges::subrange`,
 - `sizeof...(Types)` equals `tuple_size_v<remove_cvref_t<UTuple>>`, and
@@ -2009,7 +2009,7 @@ namespace std {
   template<class F, tuple-like Tuple, size_t... I>
   constexpr decltype(auto) apply-impl(F&& f, Tuple&& t, index_sequence<I...>) {
                                                                         // exposition only
-    return INVOKE(std::forward<F>(f), get<I>(std::forward<Tuple>(t))...);     // see REF:func.require
+    return INVOKE(std::forward<F>(f), get<I>(std::forward<Tuple>(t))...);     // see [func.require]
   }
 }
 ```
@@ -3001,7 +3001,7 @@ using iterator       = implementation-defined;
 using const_iterator = implementation-defined;
 ```
 
-These types model `contiguous_iterator`[[iterator.concept.contiguous]],
+These types model `contiguous_iterator` [[iterator.concept.contiguous]],
 meet the *Cpp17RandomAccessIterator*
 requirements [[random.access.iterators]], and meet the requirements for
 constexpr iterators [[iterator.requirements.general]], with value type
@@ -3529,7 +3529,7 @@ constexpr void swap(optional& rhs) noexcept;
 using iterator = implementation-defined;
 ```
 
-This type models `contiguous_iterator`[[iterator.concept.contiguous]],
+This type models `contiguous_iterator` [[iterator.concept.contiguous]],
 meets the *Cpp17RandomAccessIterator*
 requirements [[random.access.iterators]], and meets the requirements for
 constexpr iterators [[iterator.requirements.general]], with value type
@@ -4946,13 +4946,13 @@ Let m be a pack of n values of type `size_t`. Such a pack is valid if
 For each valid pack m, let e(m) denote the expression:
 
 ``` cpp
-INVOKE(std::forward<Visitor>(vis), GET<m>(std::forward<V>(vars))...)  // see REF:func.require
+INVOKE(std::forward<Visitor>(vis), GET<m>(std::forward<V>(vars))...)  // see [func.require]
 ```
 
 for the first form and
 
 ``` cpp
-INVOKE<R>(std::forward<Visitor>(vis), GET<m>(std::forward<V>(vars))...)  // see REF:func.require
+INVOKE<R>(std::forward<Visitor>(vis), GET<m>(std::forward<V>(vars))...)  // see [func.require]
 ```
 
 for the second form.
@@ -4978,7 +4978,8 @@ template<class Self, class Visitor>
 ```
 
 Let `V` be
-*`OVERRIDE_REF`*`(Self&&, `*`COPY_CONST`*`(remove_reference_t<Self>, variant))`[[forward]].
+*`OVERRIDE_REF`*`(Self&&, `*`COPY_CONST`*`(remove_reference_t<Self>, variant))`
+[[forward]].
 
 *Constraints:* The call to `visit` does not use an explicit
 *template-argument-list* that begins with a type *template-argument*.
@@ -4992,7 +4993,8 @@ template<class R, class Self, class Visitor>
 ```
 
 Let `V` be
-*`OVERRIDE_REF`*`(Self&&, `*`COPY_CONST`*`(remove_reference_t<Self>, variant))`[[forward]].
+*`OVERRIDE_REF`*`(Self&&, `*`COPY_CONST`*`(remove_reference_t<Self>, variant))`
+[[forward]].
 
 *Effects:* Equivalent to:
 `return std::visit<R>(std::forward<Visitor>(vis), (V)self);`
@@ -6671,8 +6673,8 @@ Let `G` be `remove_cv_t<invoke_result_t<F, decltype(error())>>`.
 
 *Constraints:* `is_constructible_v<T, decltype((`*`val`*`))>` is `true`.
 
-*Mandates:* `G` is a valid template argument for
-`unexpected`[[expected.un.general]] and the declaration
+*Mandates:* `G` is a valid template argument for `unexpected`
+[[expected.un.general]] and the declaration
 
 ``` cpp
 G g(invoke(std::forward<F>(f), error()));
@@ -6696,8 +6698,8 @@ Let `G` be
 *Constraints:* `is_constructible_v<T, decltype(std::move(`*`val`*`))>`
 is `true`.
 
-*Mandates:* `G` is a valid template argument for
-`unexpected`[[expected.un.general]] and the declaration
+*Mandates:* `G` is a valid template argument for `unexpected`
+[[expected.un.general]] and the declaration
 
 ``` cpp
 G g(invoke(std::forward<F>(f), std::move(error())));
@@ -7324,8 +7326,8 @@ template<class F> constexpr auto transform_error(F&& f) const &;
 
 Let `G` be `remove_cv_t<invoke_result_t<F, decltype(error())>>`.
 
-*Mandates:* `G` is a valid template argument for
-`unexpected`[[expected.un.general]] and the declaration
+*Mandates:* `G` is a valid template argument for `unexpected`
+[[expected.un.general]] and the declaration
 
 ``` cpp
 G g(invoke(std::forward<F>(f), error()));
@@ -7346,8 +7348,8 @@ template<class F> constexpr auto transform_error(F&& f) const &&;
 Let `G` be
 `remove_cv_t<invoke_result_t<F, decltype(std::move(error()))>>`.
 
-*Mandates:* `G` is a valid template argument for
-`unexpected`[[expected.un.general]] and the declaration
+*Mandates:* `G` is a valid template argument for `unexpected`
+[[expected.un.general]] and the declaration
 
 ``` cpp
 G g(invoke(std::forward<F>(f), std::move(error())));
@@ -9371,7 +9373,7 @@ In the text that follows:
 
 - `g` is a value of the result of a `not_fn` invocation,
 - `FD` is the type `decay_t<F>`,
-- `fd` is the target object of `g`[[func.def]] of type `FD`,
+- `fd` is the target object of `g` [[func.def]] of type `FD`,
   direct-non-list-initialized with `std::forward<F>(f)`,
 - `call_args` is an argument pack used in a function call
   expression [[expr.call]] of `g`.
@@ -9419,10 +9421,10 @@ Within this subclause:
 - `g` is a value of the result of a `bind_front` or `bind_back`
   invocation,
 - `FD` is the type `decay_t<F>`,
-- `fd` is the target object of `g`[[func.def]] of type `FD`,
+- `fd` is the target object of `g` [[func.def]] of type `FD`,
   direct-non-list-initialized with `std::forward<F>(f)`,
 - `BoundArgs` is a pack that denotes `decay_t<Args>...`,
-- `bound_args` is a pack of bound argument entities of `g`[[func.def]]
+- `bound_args` is a pack of bound argument entities of `g` [[func.def]]
   of types `BoundArgs...`, direct-non-list-initialized with
   `std::forward<Args>(args)...`, respectively, and
 - `call_args` is an argument pack used in a function call
@@ -9452,7 +9454,7 @@ wrapper [[term.perfect.forwarding.call.wrapper]] `g` with call pattern:
   invocation.
 
 *Throws:* Any exception thrown by the initialization of the state
-entities of `g`[[func.def]].
+entities of `g` [[func.def]].
 
 ``` cpp
 template<auto f, class... Args>
@@ -9467,7 +9469,7 @@ Within this subclause:
 - `g` is a value of the result of a `bind_front` or `bind_back`
   invocation,
 - `BoundArgs` is a pack that denotes `decay_t<Args>...`,
-- `bound_args` is a pack of bound argument entities of `g`[[func.def]]
+- `bound_args` is a pack of bound argument entities of `g` [[func.def]]
   of types `BoundArgs...`, direct-non-list-initialized with
   `std::forward<Args>(args)...`, respectively, and
 - `call_args` is an argument pack used in a function call
@@ -9574,7 +9576,7 @@ and *Cpp17Destructible* requirements. *INVOKE*(fd, w₁, w₂, …,
 $w_N$) [[func.require]] is a valid expression for some values `w₁`,
 `w₂`, …, `w_N`, where N has the value `sizeof...(bound_args)`.
 
-*Returns:* An argument forwarding call wrapper `g`[[func.require]]. A
+*Returns:* An argument forwarding call wrapper `g` [[func.require]]. A
 program that attempts to invoke a volatile-qualified `g` is ill-formed.
 When `g` is not volatile-qualified, invocation of
 `g(``u₁``, ``u₂``, `…`, ``u_M``)` is

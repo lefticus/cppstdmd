@@ -804,7 +804,7 @@ argument [[algorithms]] applied to strings.
 [*Example 1*:
 
 A vector of strings `v` can be collated according to collation rules in
-locale `loc` simply by [[alg.sort,vector]]:
+locale `loc` simply by [[alg.sort]], [[vector]]:
 
 ``` cpp
 std::sort(v.begin(), v.end(), loc);
@@ -1555,7 +1555,7 @@ the input sequence \[`from`, `from``next`), `to_next` is set equal to
 `to`, the value of `state` is unchanged, and there are no changes to the
 values in \[`to`, `to_end`).
 
-A `codecvt` facet that is used by `basic_filebuf`[[file.streams]] shall
+A `codecvt` facet that is used by `basic_filebuf` [[file.streams]] shall
 have the property that if
 
 ``` cpp
@@ -2003,8 +2003,8 @@ locale loc = str.getloc();
 The details of this operation occur in several stages:
 
 - Stage 1: Determine a printf conversion specifier `spec` and determine
-  the characters that would be printed by `printf`[[c.files]] given this
-  conversion specifier for
+  the characters that would be printed by `printf` [[c.files]] given
+  this conversion specifier for
   ``` cpp
   printf(spec, val)
   ```
@@ -8263,8 +8263,8 @@ template<class BidirectionalIterator, class Allocator, class charT, class traits
                    regex_constants::match_flag_type flags = regex_constants::match_default);
 ```
 
-*Preconditions:* `BidirectionalIterator` models
-`bidirectional_iterator`[[iterator.concept.bidir]].
+*Preconditions:* `BidirectionalIterator` models `bidirectional_iterator`
+[[iterator.concept.bidir]].
 
 *Effects:* Determines whether there is a match between the regular
 expression `e`, and all of the character sequence \[`first`, `last`).
@@ -8372,8 +8372,8 @@ template<class BidirectionalIterator, class Allocator, class charT, class traits
                     regex_constants::match_flag_type flags = regex_constants::match_default);
 ```
 
-*Preconditions:* `BidirectionalIterator` models
-`bidirectional_iterator`[[iterator.concept.bidir]].
+*Preconditions:* `BidirectionalIterator` models `bidirectional_iterator`
+[[iterator.concept.bidir]].
 
 *Effects:* Determines whether there is some sub-sequence within
 \[`first`, `last`) that matches the regular expression `e`. The
@@ -9418,7 +9418,7 @@ See also: ISO C 7.30.2, 7.31.6.4, 7.31.6.5
 
 <!-- Link reference definitions -->
 [alg.lex.comparison]: algorithms.md#alg.lex.comparison
-[alg.sort,vector]: #alg.sort,vector
+[alg.sort]: algorithms.md#alg.sort
 [algorithms]: algorithms.md#algorithms
 [algorithms.requirements]: algorithms.md#algorithms.requirements
 [basic.fundamental]: basic.md#basic.fundamental
@@ -9688,6 +9688,7 @@ See also: ISO C 7.30.2, 7.31.6.4, 7.31.6.5
 [text.summary]: #text.summary
 [time.format]: time.md#time.format
 [unord.hash]: utilities.md#unord.hash
+[vector]: containers.md#vector
 
 [^1]: In this subclause, the type name `tm` is an incomplete type that
     is defined in `<ctime>`.

@@ -13222,7 +13222,7 @@ constexpr pointer data() const noexcept;
 using iterator = implementation-defined  // type of span::iterator;
 ```
 
-The type models `contiguous_iterator`[[iterator.concept.contiguous]],
+The type models `contiguous_iterator` [[iterator.concept.contiguous]],
 meets the *Cpp17RandomAccessIterator*
 requirements [[random.access.iterators]], and meets the requirements for
 constexpr iterators [[iterator.requirements.general]], whose value type
@@ -13744,7 +13744,7 @@ m.is_strided()
 
 *Returns:* `true` only if for every rank index r of `m.extents()` there
 exists an integer sᵣ such that, for all `i` where (`i`+dᵣ) is a
-multidimensional index in `m.extents()`[[mdspan.overview]],
+multidimensional index in `m.extents()` [[mdspan.overview]],
 `m((i + `dᵣ`)...) - m(i...)` equals sᵣ.
 
 [*Note 3*: This implies that for a strided layout
@@ -13912,7 +13912,7 @@ constexpr mapping(const extents_type& e) noexcept;
 ```
 
 *Preconditions:* The size of the multidimensional index space `e` is
-representable as a value of type `index_type`[[basic.fundamental]].
+representable as a value of type `index_type` [[basic.fundamental]].
 
 *Effects:* Direct-non-list-initializes *extents\_* with `e`.
 
@@ -13926,7 +13926,7 @@ template<class OtherExtents>
 `true`.
 
 *Preconditions:* `other.required_span_size()` is representable as a
-value of type `index_type`[[basic.fundamental]].
+value of type `index_type` [[basic.fundamental]].
 
 *Effects:* Direct-non-list-initializes *extents\_* with
 `other.extents()`.
@@ -13943,7 +13943,7 @@ template<class OtherExents>
 - `is_constructible_v<extents_type, OtherExtents>` is `true`.
 
 *Preconditions:* `other.required_span_size()` is representable as a
-value of type `index_type`[[basic.fundamental]].
+value of type `index_type` [[basic.fundamental]].
 
 *Effects:* Direct-non-list-initializes *extents\_* with
 `other.extents()`.
@@ -13963,7 +13963,7 @@ template<class OtherExtents>
   [0, `extents_type::rank()`), `other.stride(`r`)` equals
   `other.extents().`*`fwd-prod-of-extents`*`(`r`)`, and
 - `other.required_span_size()` is representable as a value of type
-  `index_type`[[basic.fundamental]].
+  `index_type` [[basic.fundamental]].
 
 *Effects:* Direct-non-list-initializes *extents\_* with
 `other.extents()`.
@@ -14099,7 +14099,7 @@ constexpr mapping(const extents_type& e) noexcept;
 ```
 
 *Preconditions:* The size of the multidimensional index space `e` is
-representable as a value of type `index_type`[[basic.fundamental]].
+representable as a value of type `index_type` [[basic.fundamental]].
 
 *Effects:* Direct-non-list-initializes *extents\_* with `e`.
 
@@ -14113,7 +14113,7 @@ template<class OtherExtents>
 `true`.
 
 *Preconditions:* `other.required_span_size()` is representable as a
-value of type `index_type`[[basic.fundamental]].
+value of type `index_type` [[basic.fundamental]].
 
 *Effects:* Direct-non-list-initializes *extents\_* with
 `other.extents()`.
@@ -14130,7 +14130,7 @@ template<class OtherExtents>
 - `is_constructible_v<extents_type, OtherExtents>` is `true`.
 
 *Preconditions:* `other.required_span_size()` is representable as a
-value of type `index_type`[[basic.fundamental]].
+value of type `index_type` [[basic.fundamental]].
 
 *Effects:* Direct-non-list-initializes *extents\_* with
 `other.extents()`.
@@ -14150,7 +14150,7 @@ template<class OtherExtents>
   [0, `extents_type::rank()`), `other.stride(`r`)` equals
   `other.extents().`*`rev-prod-of-extents`*`(`r`)`.
 - `other.required_span_size()` is representable as a value of type
-  `index_type`[[basic.fundamental]].
+  `index_type` [[basic.fundamental]].
 
 *Effects:* Direct-non-list-initializes *extents\_* with
 `other.extents()`.
@@ -14340,7 +14340,7 @@ constexpr mapping() noexcept;
 
 *Preconditions:*
 `layout_right::mapping<extents_type>().required_span_size()` is
-representable as a value of type `index_type`[[basic.fundamental]].
+representable as a value of type `index_type` [[basic.fundamental]].
 
 *Effects:* Direct-non-list-initializes *extents\_* with
 `extents_type()`, and for all d in the range \[`0`, *`rank_`*),
@@ -14364,7 +14364,7 @@ template<class OtherIndexType>
 
 - `s[`i`] > 0` is `true` for all i in the range [0, rank_).
 - *`REQUIRED-SPAN-SIZE`*`(e, s)` is representable as a value of type
-  `index_type`[[basic.fundamental]].
+  `index_type` [[basic.fundamental]].
 - If *rank\_* is greater than 0, then there exists a permutation P of
   the integers in the range [0, rank_), such that
   `s[`pᵢ`] >= s[`pᵢ₋₁`] * e.extent(p`ᵢ₋₁`)` is `true` for all i in the
@@ -14398,7 +14398,7 @@ template<class StridedLayoutMapping>
 - `other.stride(`r`) > 0` is `true` for every rank index r of
   `extents()`,
 - `other.required_span_size()` is representable as a value of type
-  `index_type`[[basic.fundamental]], and
+  `index_type` [[basic.fundamental]], and
 - *`OFFSET`*`(other) == 0` is `true`.
 
 *Effects:* Direct-non-list-initializes *extents\_* with
@@ -15017,8 +15017,8 @@ constexpr size_type size() const noexcept;
 ```
 
 *Preconditions:* The size of the multidimensional index space
-`extents()` is representable as a value of type
-`size_type`[[basic.fundamental]].
+`extents()` is representable as a value of type `size_type`
+[[basic.fundamental]].
 
 *Returns:* `extents().`*`fwd-prod-of-extents`*`(rank())`.
 

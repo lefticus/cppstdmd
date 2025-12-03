@@ -1377,4 +1377,4 @@ context.
     decision.
 
 [^2]: The function signature `strlen(const char*)` is declared in
-    `<cstring>` (@@REF:c.strings@@).
+    `<cstring>` ([[c.strings]]).

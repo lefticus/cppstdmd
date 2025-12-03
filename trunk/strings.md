@@ -636,7 +636,7 @@ using const_iterator = implementation-defined  // type of basic_string_view::con
 
 A type that meets the requirements of a constant
 *Cpp17RandomAccessIterator*[[random.access.iterators]], models
-`contiguous_iterator`[[iterator.concept.contiguous]], and meets the
+`contiguous_iterator` [[iterator.concept.contiguous]], and meets the
 constexpr iterator requirements [[iterator.requirements.general]], whose
 `value_type` is the template parameter `charT`.
 

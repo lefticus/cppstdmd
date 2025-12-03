@@ -7291,7 +7291,7 @@ constexpr pointer data() const noexcept;
 using iterator = implementation-defined  // type of span::iterator;
 ```
 
-The type models `contiguous_iterator`[[iterator.concept.contiguous]],
+The type models `contiguous_iterator` [[iterator.concept.contiguous]],
 meets the *Cpp17RandomAccessIterator*
 requirements [[random.access.iterators]], and meets the requirements for
 constexpr iterators [[iterator.requirements.general]]. All requirements

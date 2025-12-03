@@ -5481,7 +5481,7 @@ ISO C 7.5, 7.10.2, 7.10.6.
     useful building block for designing such classes.
 
 [^9]: For convenience, such objects are referred to as “arrays”
-    throughout the remainder of @@REF:numarray@@.
+    throughout the remainder of [[numarray]].
 
 [^10]: This default constructor is essential, since arrays of `valarray`
     may be useful. After initialization, the length of an empty array

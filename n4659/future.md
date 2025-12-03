@@ -1908,11 +1908,11 @@ initializes `cvtstate` to `state`.
 [util.smartptr.shared]: utilities.md#util.smartptr.shared
 
 [^1]: The function signature `strlen(const char*)` is declared in
-    `<cstring>` (@@REF:cstring.syn@@). The macro `INT_MAX` is defined in
-    `<climits>` (@@REF:climits.syn@@).
+    `<cstring>` ([[cstring.syn]]). The macro `INT_MAX` is defined in
+    `<climits>` ([[climits.syn]]).
 
 [^2]: An implementation should consider `alsize` in making this
     decision.
 
 [^3]: The function signature `strlen(const char*)` is declared in
-    `<cstring>` (@@REF:cstring.syn@@).
+    `<cstring>` ([[cstring.syn]]).

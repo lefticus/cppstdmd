@@ -2339,13 +2339,13 @@ template<range R>
 *Effects:* If `R` models `sized_range`, equivalent to:
 
 ``` cpp
-return static_cast<range_difference_t<R>>(ranges::size(r));     // REF:range.prim.size
+return static_cast<range_difference_t<R>>(ranges::size(r));     // [range.prim.size]
 ```
 
 Otherwise, equivalent to:
 
 ``` cpp
-return ranges::distance(ranges::begin(r), ranges::end(r));      // REF:range.access
+return ranges::distance(ranges::begin(r), ranges::end(r));      // [range.access]
 ```
 
 #### `ranges::next` <a id="range.iter.op.next">[[range.iter.op.next]]</a>

@@ -1294,7 +1294,7 @@ template<class F, class... Args> explicit thread(F&& f, Args&&... args);
 *Effects:* The new thread of execution executes
 
 ``` cpp
-invoke(auto(std::forward<F>(f)),                // for invoke, see REF:func.invoke
+invoke(auto(std::forward<F>(f)),                // for invoke, see [func.invoke]
        auto(std::forward<Args>(args))...)
 ```
 
@@ -1336,7 +1336,7 @@ thread(thread&& x) noexcept;
 ~thread();
 ```
 
-*Effects:* If `joinable()`, invokes `terminate`[[except.terminate]].
+*Effects:* If `joinable()`, invokes `terminate` [[except.terminate]].
 Otherwise, has no effects.
 
 [*Note 1*: Either implicitly detaching or joining a `joinable()` thread
@@ -1352,7 +1352,7 @@ joinable. — *end note*]
 thread& operator=(thread&& x) noexcept;
 ```
 
-*Effects:* If `joinable()`, invokes `terminate`[[except.terminate]].
+*Effects:* If `joinable()`, invokes `terminate` [[except.terminate]].
 Otherwise, assigns the state of `x` to `*this` and sets `x` to a default
 constructed state.
 
@@ -1530,7 +1530,7 @@ template<class F, class... Args> explicit jthread(F&& f, Args&&... args);
 *Effects:* Initializes `ssource`. The new thread of execution executes
 
 ``` cpp
-invoke(auto(std::forward<F>(f)), get_stop_token(),  // for invoke, see REF:func.invoke
+invoke(auto(std::forward<F>(f)), get_stop_token(),  // for invoke, see [func.invoke]
        auto(std::forward<Args>(args))...)
 ```
 
@@ -8906,12 +8906,12 @@ as follows (if more than one of these conditions applies, the
 implementation may choose any of the corresponding policies):
 
 - If `launch::async` is set in `policy`, calls
-  `invoke(auto(std::forward<F>(f)), auto(std::forward<Args>(args))...)`[[func.invoke,thread.thread.constr]]
-  as if in a new thread of execution represented by a `thread` object
-  with the values produced by `auto` being materialized [[conv.rval]] in
-  the thread that called `async`. Any return value is stored as the
-  result in the shared state. Any exception propagated from the
-  execution of
+  `invoke(auto(std::forward<F>(f)), auto(std::forward<Args>(args))...)`
+  [[func.invoke]], [[thread.thread.constr]] as if in a new thread of
+  execution represented by a `thread` object with the values produced by
+  `auto` being materialized [[conv.rval]] in the thread that called
+  `async`. Any return value is stored as the result in the shared state.
+  Any exception propagated from the execution of
   `invoke(auto(std::forward<F>(f)), auto(std::forward<Args>(args))...)`
   is stored as the exceptional result in the shared state. The `thread`
   object is stored in the shared state and affects the behavior of any
@@ -9862,7 +9862,7 @@ void swap(hazard_pointer& a, hazard_pointer& b) noexcept;
 [expr.pre]: expr.md#expr.pre
 [expr.rel]: expr.md#expr.rel
 [format.string.std]: text.md#format.string.std
-[func.invoke,thread.thread.constr]: #func.invoke,thread.thread.constr
+[func.invoke]: utilities.md#func.invoke
 [func.require]: utilities.md#func.require
 [function.objects]: utilities.md#function.objects
 [future.syn]: #future.syn

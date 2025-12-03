@@ -1288,7 +1288,7 @@ the input sequence \[`from`, `from``next`). `to_next` is set equal to
 `to`, the value of `state` is unchanged, and there are no changes to the
 values in \[`to`, `to_end`).
 
-A `codecvt` facet that is used by `basic_filebuf`[[file.streams]] shall
+A `codecvt` facet that is used by `basic_filebuf` [[file.streams]] shall
 have the property that if
 
 ``` cpp
@@ -1831,8 +1831,8 @@ locale loc = str.getloc();
 The details of this operation occur in several stages:
 
 - Stage 1: Determine a printf conversion specifier `spec` and determine
-  the characters that would be printed by `printf`[[c.files]] given this
-  conversion specifier for
+  the characters that would be printed by `printf` [[c.files]] given
+  this conversion specifier for
   ``` cpp
   printf(spec, val)
   ```

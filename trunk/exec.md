@@ -1243,7 +1243,7 @@ template<class Sndr, class Env>
   ```
 
   \[*Note 1*: The `continues_on` algorithm works in tandem with
-  `schedule_from`@@REF:exec.schedule.from@@ to give scheduler authors a
+  `schedule_from`[[exec.schedule.from]] to give scheduler authors a
   way to customize both how to transition onto (`continues_on`) and off
   of (`schedule_from`) a given execution context. Thus, `continues_on`
   ignores the domain of the predecessor and uses the domain of the
@@ -2195,7 +2195,7 @@ to the following:
 - Otherwise,
   ``` cpp
   completion_signatures<
-    SET-VALUE-SIG(await-result-type<NewSndr, env-promise<Env>...>),   // REF:exec.snd.concepts
+    SET-VALUE-SIG(await-result-type<NewSndr, env-promise<Env>...>),   // [exec.snd.concepts]
     set_error_t(exception_ptr),
     set_stopped_t()>
   ```
@@ -2831,7 +2831,7 @@ template<class Sndr, class... Env>
 ``` cpp
 get_completion_signatures<schedule_result_t<data-type<Sndr>>, FWD-ENV-T(Env)...>();
 auto cs = get_completion_signatures<child-type<Sndr>, FWD-ENV-T(Env)...>();
-decay-copyable-result-datums(cs);   // see REF:exec.snd.expos
+decay-copyable-result-datums(cs);   // see [exec.snd.expos]
 ```
 
 Objects of the local class *`state-type`* can be used to initialize a
@@ -3656,7 +3656,7 @@ auto fn = []<class Child>() {
   auto cs = get_completion_signatures<Child, when-all-env<Env>...>();
   if constexpr (cs.count-of(set_value) >= 2)
     throw unspecified-exception();
-  decay-copyable-result-datums(cs); // see REF:exec.snd.expos
+  decay-copyable-result-datums(cs); // see [exec.snd.expos]
 };
 (fn.template operator()<child-type<Sndr, Is>>(), ...);
 ```
@@ -4689,7 +4689,7 @@ void set_error(Error&& err) && noexcept;
 *Effects:* Equivalent to:
 
 ``` cpp
-state->error = AS-EXCEPT-PTR(std::forward<Error>(err));    // see REF:exec.general
+state->error = AS-EXCEPT-PTR(std::forward<Error>(err));    // see [exec.general]
 state->loop.finish();
 ```
 
@@ -5322,7 +5322,7 @@ starting.
 ```
 
 *Effects:* If the `run_loop` instance’s count is not 0 or if its state
-is running, invokes `terminate`[[except.terminate]]. Otherwise, has no
+is running, invokes `terminate` [[except.terminate]]. Otherwise, has no
 effects.
 
 #### Member functions <a id="exec.run.loop.members">[[exec.run.loop.members]]</a>
@@ -6206,7 +6206,7 @@ void uncaught_exception();
 ```
 
 *Effects:* If the signature `set_error_t(exception_ptr)` is not an
-element of `error_types`, calls `terminate()`[[except.terminate]].
+element of `error_types`, calls `terminate()` [[except.terminate]].
 Otherwise, stores `current_exception()` into *errors*.
 
 ``` cpp
@@ -6496,8 +6496,8 @@ simple_counting_scope() noexcept;
 ```
 
 *Effects:* If *state* is not one of *joined*, *unused*, or
-*unused-and-closed*, invokes `terminate`[[except.terminate]]. Otherwise,
-has no effects.
+*unused-and-closed*, invokes `terminate` [[except.terminate]].
+Otherwise, has no effects.
 
 ##### Members <a id="exec.simple.counting.mem">[[exec.simple.counting.mem]]</a>
 
@@ -6777,7 +6777,7 @@ parallel_scheduler get_parallel_scheduler();
 
 *Effects:* Let `eb` be the result of
 `system_context_replaceability::query_parallel_scheduler_backend()`. If
-`eb == nullptr` is `true`, calls `terminate`[[except.terminate]].
+`eb == nullptr` is `true`, calls `terminate` [[except.terminate]].
 Otherwise, returns a `parallel_scheduler` object associated with `eb`.
 
 ## Namespace `system_context_replaceability` <a id="exec.sysctxrepl">[[exec.sysctxrepl]]</a>

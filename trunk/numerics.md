@@ -485,7 +485,7 @@ template<class T, class charT, class traits>
 part [[istream.formatted]].
 
 If bad input is encountered, calls `is.setstate(ios_base::failbit)`
-(which may throw `ios_base::failure`[[iostate.flags]]).
+(which may throw `ios_base::failure` [[iostate.flags]]).
 
 *Returns:* `is`.
 
@@ -1190,7 +1190,7 @@ same as that of `is`, and whose type’s template specialization arguments
 state as determined by reading its textual representation from `is`. If
 bad input is encountered, ensures that `v`’s state is unchanged by the
 operation and calls `is.setstate(ios_base::failbit)` (which may throw
-`ios_base::failure`[[iostate.flags]]). If a textual representation
+`ios_base::failure` [[iostate.flags]]). If a textual representation
 written via `os << x` was subsequently read via `is >> v`, then `x == v`
 provided that there have been no intervening invocations of `x` or of
 `v`.
@@ -1378,7 +1378,7 @@ those of `is`.
 *Effects:* Restores from `is` the parameters and additional internal
 data of the lvalue `d`. If bad input is encountered, ensures that `d` is
 unchanged by the operation and calls `is.setstate(ios_base::failbit)`
-(which may throw `ios_base::failure`[[iostate.flags]]).
+(which may throw `ios_base::failure` [[iostate.flags]]).
 
 *Ensures:* The `is.`*`fmtflags`* are unchanged.
 
@@ -4689,7 +4689,7 @@ obtained from `operator new`, and other techniques to generate efficient
 `valarray`s. — *end note*]
 
 The reference returned by the subscript operator for an array shall be
-valid until the member function `resize(size_t, T)`[[valarray.members]]
+valid until the member function `resize(size_t, T)` [[valarray.members]]
 is called for that array or until the lifetime of that array ends,
 whichever happens first.
 
@@ -7797,7 +7797,7 @@ constexpr mapping(const extents_type& e) noexcept;
 *Preconditions:*
 
 - Let N be equal to `e.extent(0)`. Then, N × (N+1) is representable as a
-  value of type `index_type`[[basic.fundamental]].
+  value of type `index_type` [[basic.fundamental]].
 - `e.extent(0)` equals `e.extent(1)`.
 
 *Effects:* Direct-non-list-initializes *extents\_* with `e`.
@@ -7812,7 +7812,7 @@ template<class OtherExtents>
 `true`.
 
 *Preconditions:* Let N be `other.extents().extent(0)`. Then, N × (N+1)
-is representable as a value of type `index_type`[[basic.fundamental]].
+is representable as a value of type `index_type` [[basic.fundamental]].
 
 *Effects:* Direct-non-list-initializes *extents\_* with
 `other.extents()`.
@@ -9479,7 +9479,7 @@ template<class ExecutionPolicy,
 
 These functions perform an overwriting symmetric matrix-vector product,
 taking into account the `Triangle` parameter that applies to the
-symmetric matrix `A`[[linalg.general]].
+symmetric matrix `A` [[linalg.general]].
 
 *Effects:* Computes y = A x.
 
@@ -9494,7 +9494,7 @@ template<class ExecutionPolicy,
 
 These functions perform an updating symmetric matrix-vector product,
 taking into account the `Triangle` parameter that applies to the
-symmetric matrix `A`[[linalg.general]].
+symmetric matrix `A` [[linalg.general]].
 
 *Effects:* Computes z = y + A x.
 
@@ -9539,7 +9539,7 @@ template<class ExecutionPolicy,
 
 These functions perform an overwriting Hermitian matrix-vector product,
 taking into account the `Triangle` parameter that applies to the
-Hermitian matrix `A`[[linalg.general]].
+Hermitian matrix `A` [[linalg.general]].
 
 *Effects:* Computes y = A x.
 
@@ -9554,7 +9554,7 @@ template<class ExecutionPolicy,
 
 These functions perform an updating Hermitian matrix-vector product,
 taking into account the `Triangle` parameter that applies to the
-Hermitian matrix `A`[[linalg.general]].
+Hermitian matrix `A` [[linalg.general]].
 
 *Effects:* Computes z = y + A x.
 
@@ -9602,7 +9602,7 @@ template<class ExecutionPolicy,
 
 These functions perform an overwriting triangular matrix-vector product,
 taking into account the `Triangle` and `DiagonalStorage` parameters that
-apply to the triangular matrix `A`[[linalg.general]].
+apply to the triangular matrix `A` [[linalg.general]].
 
 *Effects:* Computes y = A x.
 
@@ -9619,7 +9619,7 @@ template<class ExecutionPolicy,
 
 These functions perform an in-place triangular matrix-vector product,
 taking into account the `Triangle` and `DiagonalStorage` parameters that
-apply to the triangular matrix `A`[[linalg.general]].
+apply to the triangular matrix `A` [[linalg.general]].
 
 [*Note 1*: Performing this operation in place hinders parallelization.
 However, other `ExecutionPolicy` specific optimizations, such as
@@ -9644,7 +9644,7 @@ template<class ExecutionPolicy, in-matrix InMat, class Triangle, class DiagonalS
 
 These functions perform an updating triangular matrix-vector product,
 taking into account the `Triangle` and `DiagonalStorage` parameters that
-apply to the triangular matrix `A`[[linalg.general]].
+apply to the triangular matrix `A` [[linalg.general]].
 
 *Effects:* Computes z = y + A x.
 
@@ -9692,7 +9692,7 @@ template<in-matrix InMat, class Triangle, class DiagonalStorage,
 
 These functions perform a triangular solve, taking into account the
 `Triangle` and `DiagonalStorage` parameters that apply to the triangular
-matrix `A`[[linalg.general]].
+matrix `A` [[linalg.general]].
 
 *Effects:* Computes a vector x' such that b = A x', and assigns each
 element of x' to the corresponding element of x. If no such x' exists,
@@ -9740,7 +9740,7 @@ template<class ExecutionPolicy, in-matrix InMat, class Triangle, class DiagonalS
 
 These functions perform an in-place triangular solve, taking into
 account the `Triangle` and `DiagonalStorage` parameters that apply to
-the triangular matrix `A`[[linalg.general]].
+the triangular matrix `A` [[linalg.general]].
 
 [*Note 1*: Performing triangular solve in place hinders
 parallelization. However, other `ExecutionPolicy` specific
@@ -9864,7 +9864,7 @@ template<class ExecutionPolicy,
 
 These functions perform a symmetric rank-1 update of the symmetric
 matrix `A`, taking into account the `Triangle` parameter that applies to
-`A`[[linalg.general]].
+`A` [[linalg.general]].
 
 *Effects:* Computes a matrix A' such that $A' = A + \alpha x x^T$, where
 the scalar α is `alpha`, and assigns each element of A' to the
@@ -9880,7 +9880,7 @@ template<class ExecutionPolicy,
 
 These functions perform a symmetric rank-1 update of the symmetric
 matrix `A`, taking into account the `Triangle` parameter that applies to
-`A`[[linalg.general]].
+`A` [[linalg.general]].
 
 *Effects:* Computes a matrix A' such that $A' = A + x x^T$ and assigns
 each element of A' to the corresponding element of A.
@@ -9896,7 +9896,7 @@ template<class ExecutionPolicy,
 
 These functions perform a Hermitian rank-1 update of the Hermitian
 matrix `A`, taking into account the `Triangle` parameter that applies to
-`A`[[linalg.general]].
+`A` [[linalg.general]].
 
 *Effects:* Computes A' such that $A' = A + \alpha x x^H$, where the
 scalar α is `alpha`, and assigns each element of A' to the corresponding
@@ -9912,7 +9912,7 @@ template<class ExecutionPolicy,
 
 These functions perform a Hermitian rank-1 update of the Hermitian
 matrix `A`, taking into account the `Triangle` parameter that applies to
-`A`[[linalg.general]].
+`A` [[linalg.general]].
 
 *Effects:* Computes a matrix A' such that $A' = A + x x^H$ and assigns
 each element of A' to the corresponding element of A.
@@ -9954,7 +9954,7 @@ template<class ExecutionPolicy, in-vector InVec1, in-vector InVec2,
 
 These functions perform a symmetric rank-2 update of the symmetric
 matrix `A`, taking into account the `Triangle` parameter that applies to
-`A`[[linalg.general]].
+`A` [[linalg.general]].
 
 *Effects:* Computes A' such that $A' = A + x y^T + y x^T$ and assigns
 each element of A' to the corresponding element of A.
@@ -9971,7 +9971,7 @@ template<class ExecutionPolicy, in-vector InVec1, in-vector InVec2,
 
 These functions perform a Hermitian rank-2 update of the Hermitian
 matrix `A`, taking into account the `Triangle` parameter that applies to
-`A`[[linalg.general]].
+`A` [[linalg.general]].
 
 *Effects:* Computes A' such that $A' = A + x y^H + y x^H$ and assigns
 each element of A' to the corresponding element of A.
@@ -10067,7 +10067,7 @@ template<class ExecutionPolicy, in-matrix InMat1, class Triangle, class Diagonal
 These functions perform a matrix-matrix multiply, taking into account
 the `Triangle` and `DiagonalStorage` (if applicable) parameters that
 apply to the symmetric, Hermitian, or triangular (respectively) matrix
-`A`[[linalg.general]].
+`A` [[linalg.general]].
 
 *Mandates:*
 
@@ -10108,7 +10108,7 @@ template<in-matrix InMat1, in-matrix InMat2, class Triangle, out-matrix OutMat>
 These functions perform a matrix-matrix multiply, taking into account
 the `Triangle` and `DiagonalStorage` (if applicable) parameters that
 apply to the symmetric, Hermitian, or triangular (respectively) matrix
-`B`[[linalg.general]].
+`B` [[linalg.general]].
 
 *Mandates:*
 
@@ -10155,7 +10155,7 @@ template<class ExecutionPolicy,
 These functions perform a potentially overwriting matrix-matrix
 multiply-add, taking into account the `Triangle` and `DiagonalStorage`
 (if applicable) parameters that apply to the symmetric, Hermitian, or
-triangular (respectively) matrix `A`[[linalg.general]].
+triangular (respectively) matrix `A` [[linalg.general]].
 
 *Mandates:*
 
@@ -10204,7 +10204,7 @@ template<class ExecutionPolicy,
 These functions perform a potentially overwriting matrix-matrix
 multiply-add, taking into account the `Triangle` and `DiagonalStorage`
 (if applicable) parameters that apply to the symmetric, Hermitian, or
-triangular (respectively) matrix `B`[[linalg.general]].
+triangular (respectively) matrix `B` [[linalg.general]].
 
 *Mandates:*
 
@@ -10431,7 +10431,7 @@ template<class ExecutionPolicy,
 
 These functions perform multiple matrix solves, taking into account the
 `Triangle` and `DiagonalStorage` parameters that apply to the triangular
-matrix `A`[[linalg.general]].
+matrix `A` [[linalg.general]].
 
 *Mandates:*
 
@@ -10501,7 +10501,7 @@ template<class ExecutionPolicy,
 
 These functions perform multiple matrix solves, taking into account the
 `Triangle` and `DiagonalStorage` parameters that apply to the triangular
-matrix `A`[[linalg.general]].
+matrix `A` [[linalg.general]].
 
 *Mandates:*
 
@@ -10575,7 +10575,7 @@ template<class ExecutionPolicy, in-matrix InMat, class Triangle, class DiagonalS
 
 These functions perform multiple in-place matrix solves, taking into
 account the `Triangle` and `DiagonalStorage` parameters that apply to
-the triangular matrix `A`[[linalg.general]].
+the triangular matrix `A` [[linalg.general]].
 
 [*Note 1*: This algorithm makes it possible to compute factorizations
 like Cholesky and LU in place. Performing triangular solve in place
@@ -10643,7 +10643,7 @@ template<class ExecutionPolicy, in-matrix InMat, class Triangle, class DiagonalS
 
 These functions perform multiple in-place matrix solves, taking into
 account the `Triangle` and `DiagonalStorage` parameters that apply to
-the triangular matrix `A`[[linalg.general]].
+the triangular matrix `A` [[linalg.general]].
 
 [*Note 2*: This algorithm makes it possible to compute factorizations
 like Cholesky and LU in place. Performing triangular solve in place
@@ -11629,7 +11629,7 @@ template<class T, class U = typename T::value_type> struct alignment { see below
 
 If `value` is present, the type `alignment<T, U>` is a `BinaryTypeTrait`
 with a base characteristic of `integral_constant<size_t, N>` for some
-unspecified `N`[[simd.ctor,simd.loadstore]].
+unspecified `N` [[simd.ctor]], [[simd.loadstore]].
 
 [*Note 1*: `value` identifies the alignment restrictions on pointers
 used for (converting) loads and stores for the given type `T` on arrays
@@ -13225,7 +13225,7 @@ functions. If in an invocation of a scalar overload of *`math-func`* for
 index `i` in *`math-func-vec`* a domain, pole, or range error would
 occur, the value of `ret[i]` is unspecified.
 
-*Remarks:* It is unspecified whether `errno`[[errno]] is accessed.
+*Remarks:* It is unspecified whether `errno` [[errno]] is accessed.
 
 ``` cpp
 template<math-floating-point V> constexpr deduced-vec-t<V> acos(const V& x);
@@ -13326,7 +13326,7 @@ arguments of the above functions. If in an invocation of a scalar
 overload of *`math-func`* for index `i` in *`math-func-vec`* a domain,
 pole, or range error would occur, the value of `ret[i]` is unspecified.
 
-*Remarks:* It is unspecified whether `errno`[[errno]] is accessed.
+*Remarks:* It is unspecified whether `errno` [[errno]] is accessed.
 
 ``` cpp
 template<math-floating-point V>
@@ -13384,7 +13384,7 @@ invocation of a scalar overload of `remquo` for index `i` in
 
 *Returns:* `ret.first`.
 
-*Remarks:* It is unspecified whether `errno`[[errno]] is accessed.
+*Remarks:* It is unspecified whether `errno` [[errno]] is accessed.
 
 ``` cpp
 template<class T, class Abi>
@@ -13565,7 +13565,7 @@ function from `<complex>`. If in an invocation of *`cmplx-func`* for
 index i a domain, pole, or range error would occur, the value of
 `ret[`i`]` is unspecified.
 
-*Remarks:* It is unspecified whether `errno`[[errno]] is accessed.
+*Remarks:* It is unspecified whether `errno` [[errno]] is accessed.
 
 ``` cpp
 template<simd-floating-point V>
@@ -13581,7 +13581,7 @@ corresponding function from `<complex>`. If in an invocation of
 *`cmplx-func`* for index i a domain, pole, or range error would occur,
 the value of `ret[`i`]` is unspecified.
 
-*Remarks:* It is unspecified whether `errno`[[errno]] is accessed.
+*Remarks:* It is unspecified whether `errno` [[errno]] is accessed.
 
 ### Class template `basic_mask` <a id="simd.mask.class">[[simd.mask.class]]</a>
 
@@ -14276,7 +14276,6 @@ also: ISO C 7.20.
 [simd.cond]: #simd.cond
 [simd.creation]: #simd.creation
 [simd.ctor]: #simd.ctor
-[simd.ctor,simd.loadstore]: #simd.ctor,simd.loadstore
 [simd.expos]: #simd.expos
 [simd.expos.abi]: #simd.expos.abi
 [simd.expos.defn]: #simd.expos.defn

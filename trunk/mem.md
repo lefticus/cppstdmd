@@ -842,7 +842,7 @@ location as the argument `p`.
 
 [*Note 1*: This function is intended to be the inverse of `pointer_to`.
 If defined, it customizes the behavior of the non-member function
-`to_address`[[pointer.conversion]]. — *end note*]
+`to_address` [[pointer.conversion]]. — *end note*]
 
 ### Pointer conversion <a id="pointer.conversion">[[pointer.conversion]]</a>
 
@@ -895,7 +895,7 @@ template<size_t N, class T>
 *Mandates:* `N` is a power of two.
 
 *Preconditions:* `ptr` points to an object X of a type
-similar [[conv.qual]] to `T`, where X has alignment `N`[[basic.align]].
+similar [[conv.qual]] to `T`, where X has alignment `N` [[basic.align]].
 
 *Returns:* `ptr`.
 
@@ -949,10 +949,10 @@ denoted region consisting of an object *a* of type `T` whose address is
 representation of *a* is the contents of the storage prior to the call
 to `start_lifetime_as`. The value of each created object *o* of
 trivially copyable type [[term.trivially.copyable.type]] `U` is
-determined in the same manner as for a call to
-`bit_cast<U>(E)`[[bit.cast]], where `E` is an lvalue of type `U`
-denoting *o*, except that the storage is not accessed. The value of any
-other created object is unspecified.
+determined in the same manner as for a call to `bit_cast<U>(E)`
+[[bit.cast]], where `E` is an lvalue of type `U` denoting *o*, except
+that the storage is not accessed. The value of any other created object
+is unspecified.
 
 [*Note 1*: The unspecified value can be indeterminate. — *end note*]
 
@@ -982,7 +982,7 @@ where `U` is the type “array of `n` `T`”. Otherwise, there are no
 effects.
 
 *Returns:* A pointer to the first element of the created array, if any;
-otherwise, a pointer that compares equal to `p`[[expr.eq]].
+otherwise, a pointer that compares equal to `p` [[expr.eq]].
 
 ``` cpp
 template<class T>
@@ -996,8 +996,8 @@ template<class T>
 
 - \[`first`, `last`) is a valid range.
 - \[`result`, `result + (last - first)`) denotes a region of storage
-  that is a subset of the region reachable through
-  `result`[[basic.compound]] and suitably aligned for the type `T`.
+  that is a subset of the region reachable through `result`
+  [[basic.compound]] and suitably aligned for the type `T`.
 - No element in the range \[`first`, `last`) is a
   potentially-overlapping subobject.
 
@@ -1037,8 +1037,8 @@ template<class T>
 
 - \[`first`, `last`) is a valid range.
 - \[`result`, `result + (last - first)`) denotes a region of storage
-  that is a subset of the region reachable through
-  `result`[[basic.compound]] and suitably aligned for the type `T`.
+  that is a subset of the region reachable through `result`
+  [[basic.compound]] and suitably aligned for the type `T`.
 - No element in the range \[`first`, `last`) is a
   potentially-overlapping subobject.
 
@@ -1615,7 +1615,7 @@ constexpr T* allocate(size_t n);
 storage cannot be obtained.
 
 *Remarks:* The storage for the array is obtained by calling
-`::operator new`[[new.delete]], but it is unspecified when or how often
+`::operator new` [[new.delete]], but it is unspecified when or how often
 this function is called. This function starts the lifetime of the array
 object, but not that of any of the array elements.
 
@@ -1653,8 +1653,8 @@ constexpr void deallocate(T* p, size_t n);
 
 *Effects:* Deallocates the storage referenced by `p`.
 
-*Remarks:* Uses `::operator delete`[[new.delete]], but it is unspecified
-when this function is called.
+*Remarks:* Uses `::operator delete` [[new.delete]], but it is
+unspecified when this function is called.
 
 #### Operators <a id="allocator.globals">[[allocator.globals]]</a>
 
@@ -1693,7 +1693,7 @@ void* malloc(size_t size);
 standard library.
 
 *Remarks:* These functions do not attempt to allocate storage by calling
-`::operator new()`[[new.delete]].
+`::operator new()` [[new.delete]].
 
 These functions implicitly create objects [[intro.object]] in the
 returned region of storage and return a pointer to a suitable created
@@ -1711,7 +1711,7 @@ erroneous and the effects are implementation-defined. Otherwise, this
 function has the semantics specified in the C standard library.
 
 *Remarks:* This function does not attempt to allocate storage by calling
-`::operator new()`[[new.delete]]. When a non-null pointer is returned,
+`::operator new()` [[new.delete]]. When a non-null pointer is returned,
 this function implicitly creates objects [[intro.object]] in the
 returned region of storage and returns a pointer to a suitable created
 object. The objects are created before the storage is copied.
@@ -4052,7 +4052,7 @@ avoid any other exceptions. — *end note*]
 constexpr ~out_ptr_t();
 ```
 
-Let `SP` be *`POINTER_OF_OR`*`(Smart, Pointer)`[[memory.general]].
+Let `SP` be *`POINTER_OF_OR`*`(Smart, Pointer)` [[memory.general]].
 
 *Effects:* Equivalent to:
 
@@ -4216,7 +4216,7 @@ the constructor and safely fail with an exception. — *end note*]
 constexpr ~inout_ptr_t();
 ```
 
-Let `SP` be *`POINTER_OF_OR`*`(Smart, Pointer)`[[memory.general]].
+Let `SP` be *`POINTER_OF_OR`*`(Smart, Pointer)` [[memory.general]].
 
 Let *release-statement* be `s.release();` if an implementation does not
 call `s.release()` in the constructor. Otherwise, it is empty.
@@ -5899,8 +5899,8 @@ memory will be allocated using `upstream_resource()->allocate()`.
 *Returns:* A pointer to allocated
 storage [[basic.stc.dynamic.allocation]] with a size of at least
 `bytes`. The size and alignment of the allocated memory shall meet the
-requirements for a class derived from
-`memory_resource`[[mem.res.class]].
+requirements for a class derived from `memory_resource`
+[[mem.res.class]].
 
 *Throws:* Nothing unless `upstream_resource()->allocate()` throws.
 
@@ -6035,8 +6035,8 @@ newly-allocated `current_buffer`.
 *Returns:* A pointer to allocated
 storage [[basic.stc.dynamic.allocation]] with a size of at least
 `bytes`. The size and alignment of the allocated memory shall meet the
-requirements for a class derived from
-`memory_resource`[[mem.res.class]].
+requirements for a class derived from `memory_resource`
+[[mem.res.class]].
 
 *Throws:* Nothing unless `upstream_rsrc->allocate()` throws.
 
