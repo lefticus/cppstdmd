@@ -3101,7 +3101,7 @@ int ary[a];         // error: ambiguous conversion
 [dcl.type]: dcl.md#dcl.type
 [dcl.type.cv]: dcl.md#dcl.type.cv
 [dcl.type.simple]: dcl.md#dcl.type.simple
-[depr]: #depr
+[depr]: future.md#depr
 [except]: except.md#except
 [except.handle]: except.md#except.handle
 [except.spec]: except.md#except.spec
@@ -3147,7 +3147,7 @@ int ary[a];         // error: ambiguous conversion
 [expr.unary.op]: #expr.unary.op
 [expr.xor]: #expr.xor
 [function.objects]: utilities.md#function.objects
-[implimits]: #implimits
+[implimits]: limits.md#implimits
 [intro.execution]: intro.md#intro.execution
 [intro.memory]: intro.md#intro.memory
 [intro.object]: intro.md#intro.object

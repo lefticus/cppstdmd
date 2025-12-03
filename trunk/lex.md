@@ -1693,7 +1693,7 @@ int main() {
 [temp.inst]: temp.md#temp.inst
 [temp.names]: temp.md#temp.names
 [temp.point]: temp.md#temp.point
-[uaxid]: #uaxid
+[uaxid]: uax31.md#uaxid
 
 [^1]: Implementations behave as if these separate phases occur, although
     in practice different phases can be folded together.

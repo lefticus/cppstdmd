@@ -1038,8 +1038,8 @@ All rights in these originals are reserved.
 [dcl.ptr]: dcl.md#dcl.ptr
 [dcl.ref]: dcl.md#dcl.ref
 [definitions]: library.md#definitions
-[depr]: #depr
-[diff]: #diff
+[depr]: future.md#depr
+[diff]: compatibility.md#diff
 [diff.library]: compatibility.md#diff.library
 [expr]: expr.md#expr
 [expr.comma]: expr.md#expr.comma
@@ -1047,8 +1047,8 @@ All rights in these originals are reserved.
 [expr.log.and]: expr.md#expr.log.and
 [expr.log.or]: expr.md#expr.log.or
 [expr.new]: expr.md#expr.new
-[gram]: #gram
-[implimits]: #implimits
+[gram]: grammar.md#gram
+[implimits]: limits.md#implimits
 [intro]: #intro
 [intro.ack]: #intro.ack
 [intro.compliance]: #intro.compliance

@@ -12901,7 +12901,7 @@ Otherwise, `endian::native` is not equal to either `endian::big` or
 [invalid.argument]: diagnostics.md#invalid.argument
 [istream.formatted]: input.md#istream.formatted
 [iterator.concept.output]: iterators.md#iterator.concept.output
-[lex.string.literal]: #lex.string.literal
+[lex.string.literal]: lex.md#lex.string.literal
 [logical.operations]: #logical.operations
 [logical.operations.and]: #logical.operations.and
 [logical.operations.general]: #logical.operations.general

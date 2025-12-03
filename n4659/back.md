@@ -1,3 +1,3 @@
 <!-- Link reference definitions -->
-[tab:charname.allowed]: #tab:charname.allowed
-[tab:charname.disallowed]: #tab:charname.disallowed
+[tab:charname.allowed]: lex.md#tab:charname.allowed
+[tab:charname.disallowed]: lex.md#tab:charname.disallowed

@@ -165,6 +165,30 @@ class LabelIndexer:
                 label = match.group(1)
                 labels.add(label)
 
+            # Find all \normannex{} and \infannex{} macros (annex labels)
+            # Matches: \normannex{implimits}{Title} or \infannex{gram}{Title}
+            for match in re.finditer(r"\\(?:norm|inf)annex\{([^}]+)\}", content):
+                label = match.group(1)
+                labels.add(label)
+
+            # Find table environment labels
+            # Pattern: \begin{env}{Title}{label} or \begin{env}[opt]{Title}{label}
+            # Arguments may be split across lines (whitespace allowed between args)
+            # Covers: floattable, libsumtab, libreqtab*, libefftab*, libtab*, lib2dtab*
+            table_envs = (
+                r"floattable(?:base)?x?"
+                r"|lib(?:sumtab(?:base)?|reqtab[0-9a-z]*|efftab[a-z]*|tab[0-9a-z]*|2dtab[0-9a-z]*)"
+            )
+            table_pattern = (
+                rf"\\begin\{{({table_envs})\}}"  # \begin{env}
+                rf"(?:\[[^\]]*\])?"  # optional [options]
+                rf"\s*\{{[^}}]+\}}"  # {Title} with optional whitespace before
+                rf"\s*\{{([^}}]+)\}}"  # {label} with optional whitespace - capture group 2
+            )
+            for match in re.finditer(table_pattern, content, re.DOTALL):
+                label = match.group(2)  # Second capture group is the label
+                labels.add(label)
+
         except (OSError, UnicodeDecodeError, re.error) as e:
             # Log error but continue
             import sys

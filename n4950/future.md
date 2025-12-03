@@ -2095,9 +2095,9 @@ atomic<int> v = ATOMIC_VAR_INIT(5);
 [fs.path.req]: input.md#fs.path.req
 [fs.path.type.cvt]: input.md#fs.path.type.cvt
 [locale.category]: localization.md#locale.category
-[locale.category.facets]: #locale.category.facets
+[locale.category.facets]: localization.md#locale.category.facets
 [locale.codecvt]: localization.md#locale.codecvt
-[locale.spec]: #locale.spec
+[locale.spec]: localization.md#locale.spec
 [mem.poly.allocator.mem]: mem.md#mem.poly.allocator.mem
 [meta.rqmts]: meta.md#meta.rqmts
 [move.iter.elem]: iterators.md#move.iter.elem

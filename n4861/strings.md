@@ -3817,7 +3817,7 @@ introduce a data race [[res.on.data.races]] with other calls to
 [char.traits.typedefs]: #char.traits.typedefs
 [container.requirements]: containers.md#container.requirements
 [container.requirements.general]: containers.md#container.requirements.general
-[container.seq.req]: #container.seq.req
+[container.seq.req]: containers.md#container.seq.req
 [cpp17.copyassignable]: #cpp17.copyassignable
 [cpp17.copyconstructible]: #cpp17.copyconstructible
 [cpp17.defaultconstructible]: #cpp17.defaultconstructible

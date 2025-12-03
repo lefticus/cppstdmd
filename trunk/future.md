@@ -897,9 +897,9 @@ template<class T> constexpr T kill_dependency(T y) noexcept;
 [fs.path.req]: input.md#fs.path.req
 [fs.path.type.cvt]: input.md#fs.path.type.cvt
 [locale.category]: text.md#locale.category
-[locale.category.facets]: #locale.category.facets
+[locale.category.facets]: text.md#locale.category.facets
 [locale.codecvt]: text.md#locale.codecvt
-[locale.spec]: #locale.spec
+[locale.spec]: text.md#locale.spec
 [meta.rqmts]: meta.md#meta.rqmts
 [move.iter.elem]: iterators.md#move.iter.elem
 [numeric.limits.general]: support.md#numeric.limits.general

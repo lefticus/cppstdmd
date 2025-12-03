@@ -7680,7 +7680,7 @@ in some translation unit [[temp.pre]].
 [expr.type.conv]: expr.md#expr.type.conv
 [expr.typeid]: expr.md#expr.typeid
 [expr.unary.op]: expr.md#expr.unary.op
-[implimits]: #implimits
+[implimits]: limits.md#implimits
 [intro.defs]: intro.md#intro.defs
 [intro.object]: basic.md#intro.object
 [lex.string]: lex.md#lex.string

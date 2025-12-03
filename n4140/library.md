@@ -1704,7 +1704,7 @@ objects shall be placed in a valid but unspecified state.
 [dcl.link]: dcl.md#dcl.link
 [definitions]: #definitions
 [defns.additional]: #defns.additional
-[depr]: #depr
+[depr]: future.md#depr
 [depr.c.headers]: future.md#depr.c.headers
 [derivation]: #derivation
 [derived.classes]: #derived.classes
@@ -1805,7 +1805,7 @@ objects shall be placed in a valid but unspecified state.
 [tab:cpp.headers.freestanding]: #tab:cpp.headers.freestanding
 [tab:cpp.library.headers]: #tab:cpp.library.headers
 [tab:desc.var.def]: #tab:desc.var.def
-[tab:identifiers.special]: #tab:identifiers.special
+[tab:identifiers.special]: lex.md#tab:identifiers.special
 [tab:library.categories]: #tab:library.categories
 [tab:utilities.allocator.requirements]: #tab:utilities.allocator.requirements
 [temp.deduct.call]: temp.md#temp.deduct.call

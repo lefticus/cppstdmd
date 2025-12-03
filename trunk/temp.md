@@ -8366,7 +8366,7 @@ in some translation unit [[temp.pre]].
 [expr.typeid]: expr.md#expr.typeid
 [expr.unary.noexcept]: expr.md#expr.unary.noexcept
 [expr.unary.op]: expr.md#expr.unary.op
-[implimits]: #implimits
+[implimits]: limits.md#implimits
 [intro.defs]: intro.md#intro.defs
 [intro.execution]: basic.md#intro.execution
 [intro.object]: basic.md#intro.object

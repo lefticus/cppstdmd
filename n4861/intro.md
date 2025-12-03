@@ -500,9 +500,9 @@ All rights in these originals are reserved.
 [dcl.ref]: dcl.md#dcl.ref
 [definitions]: library.md#definitions
 [defns.well.formed]: #defns.well.formed
-[depr]: #depr
+[depr]: future.md#depr
 [depr.locale.stdcvt]: future.md#depr.locale.stdcvt
-[diff]: #diff
+[diff]: compatibility.md#diff
 [diff.library]: compatibility.md#diff.library
 [expr.ass]: expr.md#expr.ass
 [expr.call]: expr.md#expr.call
@@ -510,8 +510,8 @@ All rights in these originals are reserved.
 [expr.post.incr]: expr.md#expr.post.incr
 [expr.pre.incr]: expr.md#expr.pre.incr
 [expr.throw]: expr.md#expr.throw
-[gram]: #gram
-[implimits]: #implimits
+[gram]: grammar.md#gram
+[implimits]: limits.md#implimits
 [intro]: #intro
 [intro.abstract]: #intro.abstract
 [intro.ack]: #intro.ack

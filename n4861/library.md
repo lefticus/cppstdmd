@@ -2149,7 +2149,7 @@ objects shall be placed in a valid but unspecified state.
 [dcl.link]: dcl.md#dcl.link
 [dcl.pre]: dcl.md#dcl.pre
 [definitions]: #definitions
-[depr]: #depr
+[depr]: future.md#depr
 [depr.c.headers]: future.md#depr.c.headers
 [derivation]: #derivation
 [derived.classes]: #derived.classes

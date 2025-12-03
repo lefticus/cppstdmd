@@ -4263,7 +4263,7 @@ int ary[a];         // error: ambiguous conversion
 [expr.unary.op]: #expr.unary.op
 [expr.xor]: #expr.xor
 [function.objects]: utilities.md#function.objects
-[implimits]: #implimits
+[implimits]: limits.md#implimits
 [intro]: intro.md#intro
 [intro.execution]: intro.md#intro.execution
 [intro.memory]: intro.md#intro.memory

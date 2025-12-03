@@ -9528,7 +9528,7 @@ See also: ISO C 7.30.2, 7.31.6.4, 7.31.6.5
 [iterator.requirements]: iterators.md#iterator.requirements
 [iterator.requirements.general]: iterators.md#iterator.requirements.general
 [lex.charset]: lex.md#lex.charset
-[lex.string.literal]: #lex.string.literal
+[lex.string.literal]: lex.md#lex.string.literal
 [library.c]: library.md#library.c
 [locale]: #locale
 [locale.categories]: #locale.categories

@@ -1359,7 +1359,7 @@ International Standard. [[c.malloc]] describes the changes.
 [tab:diff.standard.structs]: #tab:diff.standard.structs
 [tab:diff.standard.types]: #tab:diff.standard.types
 [tab:diff.standard.values]: #tab:diff.standard.values
-[tab:keywords]: #tab:keywords
+[tab:keywords]: lex.md#tab:keywords
 [temp]: temp.md#temp
 [temp.arg]: temp.md#temp.arg
 [temp.dep.candidate]: temp.md#temp.dep.candidate

@@ -6615,7 +6615,7 @@ constant variable template is ill-formed.
 [gslice.array.comp.assign]: #gslice.array.comp.assign
 [gslice.array.fill]: #gslice.array.fill
 [gslice.cons]: #gslice.cons
-[implimits]: #implimits
+[implimits]: limits.md#implimits
 [indirect.array.assign]: #indirect.array.assign
 [indirect.array.comp.assign]: #indirect.array.comp.assign
 [indirect.array.fill]: #indirect.array.fill

@@ -1834,7 +1834,7 @@ objects shall be placed in a valid but unspecified state.
 [dcl.inline]: dcl.md#dcl.inline
 [dcl.link]: dcl.md#dcl.link
 [definitions]: #definitions
-[depr]: #depr
+[depr]: future.md#depr
 [depr.c.headers]: future.md#depr.c.headers
 [depr.cstdalign.syn]: future.md#depr.cstdalign.syn
 [depr.cstdbool.syn]: future.md#depr.cstdbool.syn
@@ -1943,7 +1943,7 @@ objects shall be placed in a valid but unspecified state.
 [tab:destructible]: #tab:destructible
 [tab:equalitycomparable]: #tab:equalitycomparable
 [tab:hash]: #tab:hash
-[tab:identifiers.special]: #tab:identifiers.special
+[tab:identifiers.special]: lex.md#tab:identifiers.special
 [tab:library.categories]: #tab:library.categories
 [tab:moveassignable]: #tab:moveassignable
 [tab:nullablepointer]: #tab:nullablepointer

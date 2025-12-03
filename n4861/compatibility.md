@@ -1987,7 +1987,7 @@ describes the changes.
 [dcl.fct.def.coroutine]: dcl.md#dcl.fct.def.coroutine
 [dcl.type]: dcl.md#dcl.type
 [dcl.typedef]: dcl.md#dcl.typedef
-[depr]: #depr
+[depr]: future.md#depr
 [depr.c.headers]: future.md#depr.c.headers
 [diagnostics]: diagnostics.md#diagnostics
 [diff]: #diff

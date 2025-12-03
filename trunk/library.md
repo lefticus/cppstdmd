@@ -2611,7 +2611,7 @@ unspecified state.
 [defns.const.subexpr]: intro.md#defns.const.subexpr
 [defns.nonconst.libcall]: intro.md#defns.nonconst.libcall
 [defns.valid]: intro.md#defns.valid
-[depr]: #depr
+[depr]: future.md#depr
 [derivation]: #derivation
 [derived.classes]: #derived.classes
 [description]: #description

@@ -7436,7 +7436,7 @@ A function or variable is *needed for constant evaluation* if it is:
 [expr.xor]: #expr.xor
 [expr.yield]: #expr.yield
 [function.objects]: utilities.md#function.objects
-[implimits]: #implimits
+[implimits]: limits.md#implimits
 [intro]: intro.md#intro
 [intro.execution]: basic.md#intro.execution
 [intro.memory]: basic.md#intro.memory

@@ -2050,9 +2050,9 @@ shall be static.
 [fs.path.type.cvt]: input.md#fs.path.type.cvt
 [lex.key]: lex.md#lex.key
 [locale.category]: localization.md#locale.category
-[locale.category.facets]: #locale.category.facets
+[locale.category.facets]: localization.md#locale.category.facets
 [locale.codecvt]: localization.md#locale.codecvt
-[locale.spec]: #locale.spec
+[locale.spec]: localization.md#locale.spec
 [meta.rqmts]: utilities.md#meta.rqmts
 [move.iter.elem]: iterators.md#move.iter.elem
 [namespace.udecl]: dcl.md#namespace.udecl

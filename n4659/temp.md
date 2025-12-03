@@ -6373,7 +6373,7 @@ equivalent *parameter-declaration-clause*s.
 [expr.ref]: expr.md#expr.ref
 [expr.sizeof]: expr.md#expr.sizeof
 [expr.typeid]: expr.md#expr.typeid
-[implimits]: #implimits
+[implimits]: limits.md#implimits
 [intro.defs]: intro.md#intro.defs
 [intro.object]: intro.md#intro.object
 [lex.string]: lex.md#lex.string

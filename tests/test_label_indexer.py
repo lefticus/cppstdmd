@@ -537,3 +537,183 @@ Some more text.
     assert "term.odr.use" in labels
     assert "term.incomplete.type" in labels
     assert len(labels) == 7
+
+
+def test_annex_label_extraction(temp_source_dir):
+    """Test extraction of labels from \\normannex{} and \\infannex{} macros"""
+    (temp_source_dir / "annexes.tex").write_text(
+        r"""
+\rSec0[intro]{Introduction}
+
+% Informative annex
+\infannex{gram}{Grammar summary}
+Some grammar content here.
+
+% Normative annex
+\normannex{depr}{Compatibility features}
+Some deprecated features.
+
+% Another informative annex
+\infannex{implimits}{Implementation quantities}
+Implementation limits.
+    """
+    )
+
+    indexer = LabelIndexer(temp_source_dir)
+    labels = indexer._extract_labels_from_file(temp_source_dir / "annexes.tex")
+
+    # Should extract \rSec label
+    assert "intro" in labels
+
+    # Should extract \infannex labels
+    assert "gram" in labels
+    assert "implimits" in labels
+
+    # Should extract \normannex label
+    assert "depr" in labels
+
+
+def test_table_label_extraction_floattable(temp_source_dir):
+    """Test extraction of labels from \\begin{floattable}{Title}{label}"""
+    (temp_source_dir / "tables.tex").write_text(
+        r"""
+\rSec0[intro]{Introduction}
+
+\begin{floattable}{Minimum width}{basic.fundamental.width}
+\topline
+Content here
+\end{floattable}
+
+\begin{floattable}{Container types with compatible nodes}{container.node.compat}
+\topline
+More content
+\end{floattable}
+    """
+    )
+
+    indexer = LabelIndexer(temp_source_dir)
+    labels = indexer._extract_labels_from_file(temp_source_dir / "tables.tex")
+
+    assert "intro" in labels
+    assert "basic.fundamental.width" in labels
+    assert "container.node.compat" in labels
+
+
+def test_table_label_extraction_libsumtab(temp_source_dir):
+    """Test extraction of labels from \\begin{libsumtab}[opt]{Title}{label}"""
+    (temp_source_dir / "libsumtabs.tex").write_text(
+        r"""
+\rSec0[strings]{Strings library}
+
+\begin{libsumtab}{Strings library summary}{strings.summary}
+\ref{char.traits}     & Character traits  \\
+\end{libsumtab}
+
+\begin{libsumtab}[x{2.1in}]{Algorithms library summary}{algorithms.summary}
+\ref{algorithms}     & Algorithms  \\
+\end{libsumtab}
+    """
+    )
+
+    indexer = LabelIndexer(temp_source_dir)
+    labels = indexer._extract_labels_from_file(temp_source_dir / "libsumtabs.tex")
+
+    assert "strings" in labels
+    assert "strings.summary" in labels
+    assert "algorithms.summary" in labels
+
+
+def test_table_label_extraction_libreqtab(temp_source_dir):
+    """Test extraction of labels from various libreqtab* environments"""
+    (temp_source_dir / "reqtabs.tex").write_text(
+        r"""
+\rSec0[traits]{Traits}
+
+\begin{libreqtab4d}
+{Character traits requirements}
+{char.traits.req}
+\\ \topline
+Content
+\end{libreqtab4d}
+
+\begin{libreqtab3e}{Primary type category predicates}{meta.unary.cat}
+Content
+\end{libreqtab3e}
+
+\begin{libreqtab2a}{Type property queries}{meta.unary.prop.query}
+Content
+\end{libreqtab2a}
+    """
+    )
+
+    indexer = LabelIndexer(temp_source_dir)
+    labels = indexer._extract_labels_from_file(temp_source_dir / "reqtabs.tex")
+
+    assert "traits" in labels
+    assert "char.traits.req" in labels
+    assert "meta.unary.cat" in labels
+    assert "meta.unary.prop.query" in labels
+
+
+def test_table_label_extraction_other_lib_tables(temp_source_dir):
+    """Test extraction of labels from libefftab and lib2dtab environments"""
+    (temp_source_dir / "othertabs.tex").write_text(
+        r"""
+\rSec0[effects]{Effects}
+
+\begin{libefftab}{Some effects table}{effects.table}
+Content
+\end{libefftab}
+
+\begin{lib2dtab2}{Some 2D table}{2d.table}
+Content
+\end{lib2dtab2}
+
+\begin{libtab2}{Simple lib table}{simple.table}
+Content
+\end{libtab2}
+    """
+    )
+
+    indexer = LabelIndexer(temp_source_dir)
+    labels = indexer._extract_labels_from_file(temp_source_dir / "othertabs.tex")
+
+    assert "effects" in labels
+    assert "effects.table" in labels
+    assert "2d.table" in labels
+    assert "simple.table" in labels
+
+
+def test_all_label_sources_combined(temp_source_dir):
+    """Test file with labels from all sources: \\rSec, \\label{}, \\definition{}, annexes, tables"""
+    (temp_source_dir / "all_sources.tex").write_text(
+        r"""
+\rSec0[basic]{Basic concepts}
+
+\label{term.odr.use}%
+
+\definition{access}{defns.access}
+
+\infannex{gram}{Grammar summary}
+
+\begin{floattable}{Minimum width}{basic.width}
+Content
+\end{floattable}
+
+\begin{libsumtab}{Summary}{lib.summary}
+Content
+\end{libsumtab}
+    """
+    )
+
+    indexer = LabelIndexer(temp_source_dir)
+    labels = indexer._extract_labels_from_file(temp_source_dir / "all_sources.tex")
+
+    # All five types of labels
+    assert "basic" in labels  # \rSec
+    assert "term.odr.use" in labels  # \label{}
+    assert "defns.access" in labels  # \definition{}{}
+    assert "gram" in labels  # \infannex{}
+    assert "basic.width" in labels  # \begin{floattable}
+    assert "lib.summary" in labels  # \begin{libsumtab}
+    assert len(labels) == 6

@@ -204,7 +204,7 @@ the same as in the 2003 standard, except:
 [char.traits.specializations.wchar.t]: strings.md#char.traits.specializations.wchar.t
 [char.traits.typedefs]: strings.md#char.traits.typedefs
 [character.seq]: library.md#character.seq
-[charname]: #charname
+[charname]: charname.md#charname
 [charname.allowed]: charname.md#charname.allowed
 [charname.disallowed]: charname.md#charname.disallowed
 [class]: class.md#class
@@ -419,7 +419,7 @@ the same as in the 2003 standard, except:
 [defns.valid]: library.md#defns.valid
 [defns.well.formed]: intro.md#defns.well.formed
 [denorm.style]: language.md#denorm.style
-[depr]: #depr
+[depr]: future.md#depr
 [depr.adaptors]: future.md#depr.adaptors
 [depr.auto.ptr]: future.md#depr.auto.ptr
 [depr.base]: future.md#depr.base
@@ -463,7 +463,7 @@ the same as in the 2003 standard, except:
 [description]: library.md#description
 [diagnostics]: diagnostics.md#diagnostics
 [diagnostics.general]: diagnostics.md#diagnostics.general
-[diff]: #diff
+[diff]: compatibility.md#diff
 [diff.basic]: compatibility.md#diff.basic
 [diff.char16]: compatibility.md#diff.char16
 [diff.class]: compatibility.md#diff.class
@@ -647,7 +647,7 @@ the same as in the 2003 standard, except:
 [get.unexpected]: future.md#get.unexpected
 [global.functions]: library.md#global.functions
 [global.names]: library.md#global.names
-[gram]: #gram
+[gram]: grammar.md#gram
 [gram.basic]: grammar.md#gram.basic
 [gram.class]: class.md#gram.class
 [gram.cpp]: cpp.md#gram.cpp
@@ -674,7 +674,7 @@ the same as in the 2003 standard, except:
 [ifstream.assign]: input.md#ifstream.assign
 [ifstream.cons]: input.md#ifstream.cons
 [ifstream.members]: input.md#ifstream.members
-[implimits]: #implimits
+[implimits]: limits.md#implimits
 [includes]: algorithms.md#includes
 [indirect.array.assign]: numerics.md#indirect.array.assign
 [indirect.array.comp.assign]: numerics.md#indirect.array.comp.assign

@@ -7134,7 +7134,7 @@ See also [[sf.cmath.cyl_neumann]].
 [gslice.array.comp.assign]: #gslice.array.comp.assign
 [gslice.array.fill]: #gslice.array.fill
 [gslice.cons]: #gslice.cons
-[implimits]: #implimits
+[implimits]: limits.md#implimits
 [inclusive.scan]: #inclusive.scan
 [indirect.array.assign]: #indirect.array.assign
 [indirect.array.comp.assign]: #indirect.array.comp.assign
@@ -7248,7 +7248,7 @@ See also [[sf.cmath.cyl_neumann]].
 [tab:copyassignable]: #tab:copyassignable
 [tab:copyconstructible]: #tab:copyconstructible
 [tab:equalitycomparable]: #tab:equalitycomparable
-[tab:iterator.input.requirements]: #tab:iterator.input.requirements
+[tab:iterator.input.requirements]: iterators.md#tab:iterator.input.requirements
 [tab:moveassignable]: #tab:moveassignable
 [tab:moveconstructible]: #tab:moveconstructible
 [tab:numerics.lib.summary]: #tab:numerics.lib.summary

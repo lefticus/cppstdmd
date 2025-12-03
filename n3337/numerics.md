@@ -5414,9 +5414,9 @@ ISO C 7.5, 7.10.2, 7.10.6.
 [tab:RandomEngine]: #tab:RandomEngine
 [tab:SeedSequence]: #tab:SeedSequence
 [tab:UniformRandomNumberGenerator]: #tab:UniformRandomNumberGenerator
-[tab:iterator.input.requirements]: #tab:iterator.input.requirements
-[tab:iterator.output.requirements]: #tab:iterator.output.requirements
-[tab:iterator.random.access.requirements]: #tab:iterator.random.access.requirements
+[tab:iterator.input.requirements]: iterators.md#tab:iterator.input.requirements
+[tab:iterator.output.requirements]: iterators.md#tab:iterator.output.requirements
+[tab:iterator.random.access.requirements]: iterators.md#tab:iterator.random.access.requirements
 [tab:numerics.hdr.cmath]: #tab:numerics.hdr.cmath
 [tab:numerics.hdr.cstdlib]: #tab:numerics.hdr.cstdlib
 [tab:numerics.lib.summary]: #tab:numerics.lib.summary

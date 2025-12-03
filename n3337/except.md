@@ -768,7 +768,7 @@ caught again.
 [conv]: conv.md#conv
 [conv.ptr]: conv.md#conv.ptr
 [dcl.init]: dcl.md#dcl.init
-[depr]: #depr
+[depr]: future.md#depr
 [except]: #except
 [except.ctor]: #except.ctor
 [except.handle]: #except.handle

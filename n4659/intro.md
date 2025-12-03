@@ -1381,8 +1381,8 @@ All rights in these originals are reserved.
 [definitions]: library.md#definitions
 [defns.block]: #defns.block
 [defns.well.formed]: #defns.well.formed
-[depr]: #depr
-[diff]: #diff
+[depr]: future.md#depr
+[diff]: compatibility.md#diff
 [diff.library]: compatibility.md#diff.library
 [expr]: expr.md#expr
 [expr.call]: expr.md#expr.call
@@ -1394,8 +1394,8 @@ All rights in these originals are reserved.
 [expr.new]: expr.md#expr.new
 [expr.prim.lambda]: expr.md#expr.prim.lambda
 [expr.throw]: expr.md#expr.throw
-[gram]: #gram
-[implimits]: #implimits
+[gram]: grammar.md#gram
+[implimits]: limits.md#implimits
 [intro]: #intro
 [intro.ack]: #intro.ack
 [intro.compliance]: #intro.compliance

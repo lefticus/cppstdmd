@@ -7945,7 +7945,7 @@ explicitly generated, is present in some translation unit.
 [expr.sizeof]: expr.md#expr.sizeof
 [expr.typeid]: expr.md#expr.typeid
 [expr.unary.op]: expr.md#expr.unary.op
-[implimits]: #implimits
+[implimits]: limits.md#implimits
 [intro.defs]: intro.md#intro.defs
 [intro.object]: basic.md#intro.object
 [lex.string]: lex.md#lex.string

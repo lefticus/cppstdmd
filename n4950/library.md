@@ -2458,7 +2458,7 @@ unspecified state.
 [dcl.pre]: dcl.md#dcl.pre
 [dcl.typedef]: dcl.md#dcl.typedef
 [defns.nonconst.libcall]: intro.md#defns.nonconst.libcall
-[depr]: #depr
+[depr]: future.md#depr
 [derivation]: #derivation
 [derived.classes]: #derived.classes
 [description]: #description

@@ -1557,7 +1557,7 @@ describes the changes.
 [dcl.stc]: dcl.md#dcl.stc
 [dcl.type]: dcl.md#dcl.type
 [dcl.typedef]: dcl.md#dcl.typedef
-[depr]: #depr
+[depr]: future.md#depr
 [depr.c.headers]: future.md#depr.c.headers
 [depr.ccomplex.syn]: future.md#depr.ccomplex.syn
 [depr.cstdalign.syn]: future.md#depr.cstdalign.syn
@@ -1683,7 +1683,7 @@ describes the changes.
 [support.types]: language.md#support.types
 [support.types.layout]: language.md#support.types.layout
 [swappable.requirements]: library.md#swappable.requirements
-[tab:keywords]: #tab:keywords
+[tab:keywords]: lex.md#tab:keywords
 [temp]: temp.md#temp
 [temp.arg]: temp.md#temp.arg
 [temp.deduct.type]: temp.md#temp.deduct.type
