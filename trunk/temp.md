@@ -7271,16 +7271,15 @@ that allow a difference:
   conversion [[conv.fctptr]] and/or qualification conversion
   [[conv.qual]].
 - If `P` is a class and `P` has the form *simple-template-id* or
-  \texttt{typenameₒₚₜ  *splice-specialization-specifier*, then the
-  transformed `A` can be a derived class `D` of the deduced `A`.
-  Likewise, if `P` is a pointer to a class of the form
-  *simple-template-id* or \texttt{typenameₒₚₜ 
-  *splice-specialization-specifier*, the transformed `A` can be a
-  pointer to a derived class `D` of the class pointed to by the deduced
-  `A`. However, if there is a class `C` that is a (direct or indirect)
-  base class of `D` and derived (directly or indirectly) from a class
-  `B` and that would be a valid deduced `A`, the deduced `A` cannot be
-  `B` or pointer to `B`, respectively.
+  `typename`ₒₚₜ  *splice-specialization-specifier*, then the transformed
+  `A` can be a derived class `D` of the deduced `A`. Likewise, if `P` is
+  a pointer to a class of the form *simple-template-id* or
+  `typename`ₒₚₜ  *splice-specialization-specifier*, the transformed `A`
+  can be a pointer to a derived class `D` of the class pointed to by the
+  deduced `A`. However, if there is a class `C` that is a (direct or
+  indirect) base class of `D` and derived (directly or indirectly) from
+  a class `B` and that would be a valid deduced `A`, the deduced `A`
+  cannot be `B` or pointer to `B`, respectively.
   \[*Example 5*:
   ``` cpp
   template <typename... T> struct X;

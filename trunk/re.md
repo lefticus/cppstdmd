@@ -14,7 +14,7 @@ allow a character sequence to be operated upon by a regular expression,
 and two iterator types for enumerating regular expression matches, as
 summarized in [[re.summary]].
 
-**Table: Regular expressions library summary**
+**Table: Regular expressions library summary** <a id="re.summary">[re.summary]</a>
 
 | Subclause       |                             | Header    |
 | --------------- | --------------------------- | --------- |
@@ -494,7 +494,7 @@ most one of the grammar elements `ECMAScript`, `basic`, `extended`,
 `awk`, `grep`, `egrep`, set. If no grammar element is set, the default
 grammar is `ECMAScript`.
 
-**Table: `syntax_option_type` effects**
+**Table: `syntax_option_type` effects** <a id="re.synopt">[re.synopt]</a>
 
 | Element        | Effect(s) if set                                                                                                                                                                                                                                                                                                             |
 | -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -542,7 +542,7 @@ specified for the regular expression object, modified according to the
 effects listed in [[re.matchflag]] for any bitmask elements set.
 
 **Table: `regex_constants::match_flag_type` effects when obtaining a match against a
-     character container sequence {[}`first`, `last`{)}.**
+     character container sequence {[}`first`, `last`{)}.** <a id="re.matchflag">[re.matchflag]</a>
 
 | Element                                                       | Effect(s) if set                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
 | ------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -585,7 +585,7 @@ The type `error_type` is an *implementation-defined* enumerated type
 [[enumerated.types]]. Values of type `error_type` represent the error
 conditions described in [[re.err]]:
 
-**Table: `error_type` values in the C locale**
+**Table: `error_type` values in the C locale** <a id="re.err">[re.err]</a>
 
 | Value                | Error condition                                                                                                    |
 | -------------------- | ------------------------------------------------------------------------------------------------------------------ |
@@ -850,7 +850,7 @@ locale_type getloc() const;
 in effect at the time of construction of `*this`, otherwise a copy of
 the last argument passed to `imbue`.
 
-**Table: Character class names and corresponding `ctype` masks**
+**Table: Character class names and corresponding `ctype` masks** <a id="re.traits.classnames">[re.traits.classnames]</a>
 
 | Narrow character name | Wide character name | Corresponding `ctype_base::mask` value |
 | --------------------- | ------------------- | -------------------------------------- |
@@ -1223,6 +1223,9 @@ template<class charT, class traits>
 
 ### General <a id="re.submatch.general">[[re.submatch.general]]</a>
 
+Class template `sub_match` denotes the sequence of characters matched by
+a particular marked sub-expression.
+
 ``` cpp
 namespace std {
   template<class BidirectionalIterator>
@@ -1417,6 +1420,11 @@ template<class charT, class ST, class BiIter>
 
 ### General <a id="re.results.general">[[re.results.general]]</a>
 
+Class template `match_results` denotes a collection of character
+sequences representing the result of a regular expression match. Storage
+for the collection is allocated and freed as necessary by the member
+functions of class template `match_results`.
+
 The class template `match_results` meets the requirements of an
 allocator-aware container and of a sequence container
 [[container.requirements.general]], [[sequence.reqmts]] except that only
@@ -1576,7 +1584,7 @@ match_results& operator=(match_results&& m);
 
 *Ensures:* As specified in [[re.results.const]].
 
-**Table: `match_results` copy/move operation postconditions**
+**Table: `match_results` copy/move operation postconditions** <a id="re.results.const">[re.results.const]</a>
 
 | Element       | Value                                                        |
 | ------------- | ------------------------------------------------------------ |
@@ -1833,6 +1841,11 @@ returns `true` only if:
 
 ### Exceptions <a id="re.except">[[re.except]]</a>
 
+The algorithms described in subclause  [[re.alg]] may throw an exception
+of type `regex_error`. If such an exception `e` is thrown, `e.code()`
+shall return either `regex_constants::error_complexity` or
+`regex_constants::error_stack`.
+
 ### `regex_match` <a id="re.alg.match">[[re.alg.match]]</a>
 
 ``` cpp
@@ -1871,7 +1884,7 @@ regex_match ("GetValues", m, re);       // returns false
 `m.size()` returns `0` and `m.empty()` returns `true`. Otherwise the
 effects on parameter `m` are given in [[re.alg.match]].
 
-**Table: Effects of `regex_match` algorithm**
+**Table: Effects of `regex_match` algorithm** <a id="re.alg.match">[re.alg.match]</a>
 
 | Element              | Value                                                                                                                                                                               |
 | -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -1966,7 +1979,7 @@ exists, `false` otherwise.
 `m.size()` returns `0` and `m.empty()` returns `true`. Otherwise the
 effects on parameter `m` are given in [[re.alg.search]].
 
-**Table: Effects of `regex_search` algorithm**
+**Table: Effects of `regex_search` algorithm** <a id="re.alg.search">[re.alg.search]</a>
 
 | Element              | Value                                                                                                                                                                               |
 | -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -2155,6 +2168,27 @@ regex_replace(back_inserter(result), s, s + char_traits<charT>::length(s), e, fm
 ### Class template `regex_iterator` <a id="re.regiter">[[re.regiter]]</a>
 
 #### General <a id="re.regiter.general">[[re.regiter.general]]</a>
+
+The class template `regex_iterator` is an iterator adaptor. It
+represents a new view of an existing iterator sequence, by enumerating
+all the occurrences of a regular expression within that sequence. A
+`regex_iterator` uses `regex_search` to find successive regular
+expression matches within the sequence from which it was constructed.
+After the iterator is constructed, and every time `operator++` is used,
+the iterator finds and stores a value of
+`match_results<BidirectionalIterator>`. If the end of the sequence is
+reached (`regex_search` returns `false`), the iterator becomes equal to
+the end-of-sequence iterator value. The default constructor constructs
+an end-of-sequence iterator object, which is the only legitimate
+iterator to be used for the end condition. The result of `operator*` on
+an end-of-sequence iterator is not defined. For any other iterator value
+a const `match_results<BidirectionalIterator>&` is returned. The result
+of `operator->` on an end-of-sequence iterator is not defined. For any
+other iterator value a `const match_results<BidirectionalIterator>*` is
+returned. It is impossible to store things into `regex_iterator`s. Two
+end-of-sequence iterators are always equal. An end-of-sequence iterator
+is not equal to a non-end-of-sequence iterator. Two non-end-of-sequence
+iterators are equal when they are constructed from the same arguments.
 
 ``` cpp
 namespace std {

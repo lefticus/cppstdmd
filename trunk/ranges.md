@@ -3344,7 +3344,7 @@ exactly like `optional<T>` with the following differences:
 ### Non-propagating cache <a id="range.nonprop.cache">[[range.nonprop.cache]]</a>
 
 Some types in [[range.adaptors]] are specified in terms of an
-exposition-only class template *`non-propagating-{`*.
+exposition-only class template *`non-propagating-{}cache`*.
 `non-propagating-cache<T>` behaves exactly like `optional<T>` with the
 following differences:
 

@@ -1447,7 +1447,7 @@ follows:
   not be a template.
 
 A *qualified-id* shall not be of the form *nested-name-specifier*
-\texttt{templateₒₚₜ  `~` *computed-type-specifier* nor of the form
+`template`ₒₚₜ  `~` *computed-type-specifier* nor of the form
 *computed-type-specifier* `::` `~` *type-name*.
 
 The result of a *qualified-id* Q is the entity it denotes
@@ -2116,7 +2116,7 @@ If a *lambda-capture* includes a *capture-default* that is `&`, no
 identifier in a *simple-capture* of that *lambda-capture* shall be
 preceded by `&`. If a *lambda-capture* includes a *capture-default* that
 is `=`, each *simple-capture* of that *lambda-capture* shall be of the
-form “`&` *identifier* \tcode{...ₒₚₜ ”, “`this`”, or “`* this`”.
+form “`&` *identifier* `...`ₒₚₜ ”, “`this`”, or “`* this`”.
 
 [*Note 1*: The form `[&,this]` is redundant but accepted for
 compatibility with C++14. — *end note*]
@@ -2372,8 +2372,8 @@ An entity is *captured by copy* if
 - it is implicitly captured, the *capture-default* is `=`, and the
   captured entity is not `*this`, or
 - it is explicitly captured with a capture that is not of the form
-  `this`, `&` *identifier* \tcode{...ₒₚₜ , or `&` \tcode{...ₒₚₜ 
-  *identifier* *initializer*.
+  `this`, `&` *identifier* `...`ₒₚₜ , or `&` `...`ₒₚₜ  *identifier*
+  *initializer*.
 
 For each entity captured by copy, an unnamed non-static data member is
 declared in the closure type. The declaration order of these members is

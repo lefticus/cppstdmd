@@ -12,7 +12,7 @@ The following subclauses describe components for locales themselves, the
 standard facets, and facilities from the ISO C library, as summarized in
 [[localization.summary]].
 
-**Table: Localization library summary**
+**Table: Localization library summary** <a id="localization.summary">[localization.summary]</a>
 
 | Subclause             |                              | Header      |
 | --------------------- | ---------------------------- | ----------- |
@@ -258,7 +258,7 @@ values. Such a `category` value identifies a set of locale categories.
 Each locale category, in turn, identifies a set of locale facets,
 including at least those shown in [[locale.category.facets]].
 
-**Table: Locale category facets**
+**Table: Locale category facets** <a id="locale.category.facets">[locale.category.facets]</a>
 
 | Category | Includes facets                                       |
 | -------- | ----------------------------------------------------- |
@@ -290,7 +290,7 @@ An implementation is required to provide those specializations for facet
 templates identified as members of a category, and for those shown in
 [[locale.spec]].
 
-**Table: Required specializations**
+**Table: Required specializations** <a id="locale.spec">[locale.spec]</a>
 
 | Category | Includes facets                                           |
 | -------- | --------------------------------------------------------- |
@@ -1345,7 +1345,7 @@ shall also return `ok`.[^8]
 *Returns:* An enumeration value, as summarized in
 [[locale.codecvt.inout]].
 
-**Table: `do_in/do_out` result values**
+**Table: `do_in/do_out` result values** <a id="locale.codecvt.inout">[locale.codecvt.inout]</a>
 
 | Value     | Meaning                                                                                          |
 | --------- | ------------------------------------------------------------------------------------------------ |
@@ -1384,7 +1384,7 @@ stored.
 *Returns:* An enumeration value, as summarized in
 [[locale.codecvt.unshift]].
 
-**Table: `do_unshift` result values**
+**Table: `do_unshift` result values** <a id="locale.codecvt.unshift">[locale.codecvt.unshift]</a>
 
 | Value     | Meaning                                                                                                              |
 | --------- | -------------------------------------------------------------------------------------------------------------------- |
@@ -1800,7 +1800,7 @@ For conversion from an integral type other than a character type, the
 function determines the integral conversion specifier as indicated in
 [[facet.num.put.int]].
 
-**Table: Integer conversions**
+**Table: Integer conversions** <a id="facet.num.put.int">[facet.num.put.int]</a>
 
 | State |
 | ----- |
@@ -1815,7 +1815,7 @@ For conversion from a floating-point type, the function determines the
 floating-point conversion specifier as indicated in
 [[facet.num.put.fp]].
 
-**Table: Floating-point conversions**
+**Table: Floating-point conversions** <a id="facet.num.put.fp">[facet.num.put.fp]</a>
 
 | State |
 | ----- |
@@ -1832,7 +1832,7 @@ For conversions from an integral or floating-point type a length
 modifier is added to the conversion specifier as indicated in
 [[facet.num.put.length]].
 
-**Table: Length modifier**
+**Table: Length modifier** <a id="facet.num.put.length">[facet.num.put.length]</a>
 
 | Type |
 | ---- |
@@ -1847,7 +1847,7 @@ modifier is added to the conversion specifier as indicated in
 The conversion specifier has the following optional additional
 qualifiers prepended as indicated in [[facet.num.put.conv]].
 
-**Table: Numeric conversions**
+**Table: Numeric conversions** <a id="facet.num.put.conv">[facet.num.put.conv]</a>
 
 | Type(s) | State |
 | ------- | ----- |
@@ -1902,7 +1902,7 @@ The location of any padding[^12]
 
 is determined according to [[facet.num.put.fill]].
 
-**Table: Fill padding**
+**Table: Fill padding** <a id="facet.num.put.fill">[facet.num.put.fill]</a>
 
 | State                                                                          | Location           |
 | ------------------------------------------------------------------------------ | ------------------ |
@@ -2018,7 +2018,7 @@ and floating-point values have:
 
 ``` bnf
 floatval:
-    signₒₚₜ units fractionalₒₚₜ exponentₒₚₜ
+    signₒₚₜ units fractionalₒₚₜ exponentₒₚₜ 
     signₒₚₜ decimal-point digits exponentₒₚₜ
 ```
 
@@ -2461,7 +2461,7 @@ to produce one of the following formats, or until it encounters an
 error. The format depends on the value returned by `date_order()` as
 shown in [[locale.time.get.dogetdate]].
 
-**Table: `do_get_date` effects**
+**Table: `do_get_date` effects** <a id="locale.time.get.dogetdate">[locale.time.get.dogetdate]</a>
 
 | `date_order()` | Format     |
 | -------------- | ---------- |
@@ -2981,7 +2981,7 @@ The format of the numeric monetary value is a decimal number:
 
 ``` bnf
 value:
-    units fractionalₒₚₜ
+    units fractionalₒₚₜ 
     decimal-point digits
 ```
 
@@ -3282,7 +3282,9 @@ Calls to the function `setlocale` may introduce a data race
 [[res.on.data.races]] with other calls to `setlocale` or with calls to
 the functions listed in [[setlocale.data.races]].
 
-**Table: Potential `setlocale` data races**
+See also: ISO C 7.11
+
+**Table: Potential `setlocale` data races** <a id="setlocale.data.races">[setlocale.data.races]</a>
 
 |           |            |             |              |            |
 | --------- | ---------- | ----------- | ------------ | ---------- |

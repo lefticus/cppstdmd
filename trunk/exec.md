@@ -4288,7 +4288,15 @@ subexpressions `sndr` and `token`:
     - for types `Fn` and `Init` such that both `invocable<Fn>` and
       `constructible_from<Fn, Init>` are modeled,
       `stoken-t::callback_type<Fn>` models
-      `stoppable-callback-for<Fn, stoken-t, Init>`.*`stoken-t`*
+      `stoppable-callback-for<Fn, stoken-t, Init>`.\begin{tailnote}
+        For an object \texttt{fn} of type \texttt{Fn}
+        constructed from a value, \texttt{init}, of type \texttt{Init},
+        registering \texttt{fn} using
+        \texttt{\exposid{stoken-t}::callback_type\<Fn\>(stoken, init)}
+        results in an invocation of \texttt{fn} when
+        a callback registered with \texttt{token} or \texttt{rtoken} would be invoked.
+        \texttt{fn} is invoked at most once.
+        \end{tailnote}
 
 #### `execution::spawn_future` <a id="exec.spawn.future">[[exec.spawn.future]]</a>
 
@@ -4554,7 +4562,7 @@ The expression `spawn_future(sndr, token, env)` has the following
 effects:
 
 - Uses `alloc` to allocate and construct an object `s` of a type that is
-  a specialization of *`spawn-future-{`* from `alloc`,
+  a specialization of *`spawn-future-{}state`* from `alloc`,
   `token.wrap(sndr)`, `token`, and `senv`. If an exception is thrown
   then any constructed objects are destroyed and any allocated memory is
   deallocated.

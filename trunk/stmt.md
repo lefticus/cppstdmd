@@ -477,8 +477,8 @@ matching one of the following forms:
 - `while (` *expression* `) { }`
 - `do ; while (` *expression* `) ;`
 - `do { } while (` *expression* `) ;`
-- `for (` *init-statement* \grammarterm{expressionₒₚₜ  `; ) ;`
-- `for (` *init-statement* \grammarterm{expressionₒₚₜ  `; ) { }`
+- `for (` *init-statement* *expression*ₒₚₜ  `; ) ;`
+- `for (` *init-statement* *expression*ₒₚₜ  `; ) { }`
 
 The *controlling expression* of a trivially empty iteration statement is
 the *expression* of a `while`, `do`, or `for` statement (or `true`, if
@@ -1004,9 +1004,9 @@ where *`final-suspend`* is the exposition-only label defined in
 - If the operand is a *braced-init-list* or an expression of non-`void`
   type, *S* is *p*`.return_value(`*expr-or-braced-init-list*`)`. The
   expression *S* shall be a prvalue of type `void`.
-- Otherwise, *S* is the *compound-statement*
-  `{` \grammarterm{expressionₒₚₜ  `;` *p*`.return_void()``; }`. The
-  expression *p*`.return_void()` shall be a prvalue of type `void`.
+- Otherwise, *S* is the *compound-statement* `{` *expression*ₒₚₜ  `;`
+  *p*`.return_void()``; }`. The expression *p*`.return_void()` shall be
+  a prvalue of type `void`.
 
 If a search for the name `return_void` in the scope of the promise type
 finds any declarations, flowing off the end of a coroutine’s
