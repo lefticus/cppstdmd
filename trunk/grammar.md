@@ -2114,7 +2114,7 @@ operator-function-id:
 %% Ed. note: character protrusion would misalign various operators.
 
 operator: one of
-    'new delete new[] delete[] co_await (\rlap{ )} [\rlap{ ]} -> ->*'
+    'new delete new[] delete[] co_await ( ) [ ] -> ->*'
     '~ ! + - * / % ^ &'
     '| = += -= *= /= %= ^= &='
     '|= == != < > <= >= <=> &&'

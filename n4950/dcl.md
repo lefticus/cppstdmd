@@ -4933,7 +4933,7 @@ int max(int a, int b, int c) {
 ```
 
 Here `int` is the *decl-specifier-seq*; `max(int` `a,` `int` `b,` `int`
-`c)` is the *declarator*; `{ \commentellip{} }` is the *function-body*.
+`c)` is the *declarator*; `{ /* ... */ }` is the *function-body*.
 
 — *end example*]
 

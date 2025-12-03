@@ -178,6 +178,10 @@
 \renewcommand{\UAX}[1]{UAX \##1}
 %% \opt - NOT defined here because it would break BNF blocks
 %% Handled in cpp-grammar.lua (BNF) and cpp-macros.lua (text)
+\renewcommand{\commentellip}[1]{/* ... */}
+\renewcommand{\rlap}[1]{#1}
+%% \quad and \qquad - handled in cpp-common.lua (convert_latex_spacing)
+%% \seebelow - already defined above in Category D
 
 %%--------------------------------------------------
 %% Category K: Math Operators

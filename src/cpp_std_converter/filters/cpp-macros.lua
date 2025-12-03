@@ -876,6 +876,10 @@ function CodeBlock(elem)
   text = text:gsub("}%%\n", "")
   text = text:gsub("}%%", "")
 
+  -- Strip orphaned {} after "see below" from \seebelow{} macro expansion
+  -- simplified_macros.tex converts \seebelow to \textit{see below}, leaving orphaned {}
+  text = text:gsub("see below{}", "see below")
+
   elem.text = text
   return elem
 end

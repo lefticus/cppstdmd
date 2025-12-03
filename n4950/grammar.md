@@ -1919,7 +1919,7 @@ operator-function-id:
 ``` bnf
 %% Ed. note: character protrusion would misalign various operators.
 operator: one of
-    'new delete new[] delete[] co_await (\rlap{ )} [\rlap{ ]} -> ->*'
+    'new delete new[] delete[] co_await ( ) [ ] -> ->*'
     '~ ! + - * / % ^ &'
     '| = += -= *= /= %= ^= &='
     '|= == != < > <= >= <=> &&'

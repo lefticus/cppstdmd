@@ -635,6 +635,8 @@ end
 --   has_at_delimiters: Whether to handle @...@ delimited versions (used in code blocks)
 local function expand_library_spec_macros(text, has_at_delimiters)
   if has_at_delimiters then
+    -- Handle @\seebelow{}@ first (n4140+), then @\seebelow@ alone (n3337)
+    text = text:gsub("@\\seebelow{}@", "see below")
     text = text:gsub("@\\seebelow@", "see below")
     text = text:gsub("@\\unspec@", "unspecified")
     text = text:gsub("@\\unspecnc@", "unspecified")
@@ -654,7 +656,11 @@ local function expand_library_spec_macros(text, has_at_delimiters)
 
   -- Non-delimited versions (for prose text)
   -- Process specific patterns BEFORE general ones to avoid prefix matching
+  -- Handle \seebelow{} first (n4140+), then \seebelow alone (n3337)
+  text = text:gsub("\\seebelow{}", "see below")
   text = text:gsub("\\seebelow", "see below")
+  -- After simplified_macros.tex expansion, "see below{}" may remain - strip orphaned braces
+  text = text:gsub("see below{}", "see below")
   text = text:gsub("\\unspec", "unspecified")
   text = text:gsub("\\unspecnc", "unspecified")
   -- Use pattern that requires \expos to NOT be followed by 'i'

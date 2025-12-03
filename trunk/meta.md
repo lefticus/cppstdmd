@@ -45,7 +45,7 @@ namespace std {
 
 ``` cpp
 template<class T, T N>
-  using make_integer_sequence = integer_sequence<T, see below{}>;
+  using make_integer_sequence = integer_sequence<T, see below>;
 ```
 
 *Mandates:* `N` ≥ 0.

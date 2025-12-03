@@ -92,7 +92,7 @@ namespace std {
     using index_sequence = integer_sequence<size_t, I...>;
 
   template<class T, T N>
-    using make_integer_sequence = integer_sequence<T, see below{}>;
+    using make_integer_sequence = integer_sequence<T, see below>;
   template<size_t N>
     using make_index_sequence = make_integer_sequence<size_t, N>;
 
@@ -652,7 +652,7 @@ namespace std {
 
 ``` cpp
 template<class T, T N>
-  using make_integer_sequence = integer_sequence<T, see below{}>;
+  using make_integer_sequence = integer_sequence<T, see below>;
 ```
 
 If `N` is negative the program is ill-formed. The alias template
