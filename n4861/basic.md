@@ -742,19 +742,28 @@ struct X {
 The point of declaration of a class first declared in an
 *elaborated-type-specifier* is as follows:
 
-- for a declaration of the form the *identifier* is declared to be a
-  *class-name* in the scope that contains the declaration, otherwise
-- for an *elaborated-type-specifier* of the form if the
-  *elaborated-type-specifier* is used in the *decl-specifier-seq* or
-  *parameter-declaration-clause* of a function defined in namespace
+- for a declaration of the form
+  ``` bnf
+  class-key attribute-specifier-seqₒₚₜ identifier ';'
+  ```
+
+  the *identifier* is declared to be a *class-name* in the scope that
+  contains the declaration, otherwise
+- for an *elaborated-type-specifier* of the form
+  ``` bnf
+  class-key identifier
+  ```
+
+  if the *elaborated-type-specifier* is used in the *decl-specifier-seq*
+  or *parameter-declaration-clause* of a function defined in namespace
   scope, the *identifier* is declared as a *class-name* in the namespace
   that contains the declaration; otherwise, except as a friend
   declaration, the *identifier* is declared in the smallest namespace or
-  block scope that contains the declaration. \[*Note 3*: These rules
-  also apply within templates. — *end note*] \[*Note 4*: Other forms of
-  *elaborated-type-specifier* do not declare a new name, and therefore
-  must refer to an existing *type-name*. See  [[basic.lookup.elab]] and 
-  [[dcl.type.elab]]. — *end note*]
+  block scope that contains the declaration.
+  \[*Note 3*: These rules also apply within templates. — *end note*]
+  \[*Note 4*: Other forms of *elaborated-type-specifier* do not declare
+  a new name, and therefore must refer to an existing *type-name*. See 
+  [[basic.lookup.elab]] and  [[dcl.type.elab]]. — *end note*]
 
 The point of declaration for an injected-class-name [[class.pre]] is
 immediately following the opening brace of the class definition.

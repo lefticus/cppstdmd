@@ -587,12 +587,17 @@ translation unit if:
   *concept-name* naming D, or
 - D declares a function or function template that is named by an
   expression [[basic.def.odr]] appearing in S, or
-- S contains an expression `E` of the form whose *postfix-expression*
-  denotes a dependent name, or for an operator expression whose operator
-  denotes a dependent name, and D is found by name lookup for the
-  corresponding name in an expression synthesized from `E` by replacing
-  each type-dependent argument or operand with a value of a placeholder
-  type with no associated namespaces or entities, or
+- S contains an expression `E` of the form
+  ``` bnf
+  postfix-expression '(' expression-listₒₚₜ ')'
+  ```
+
+  whose *postfix-expression* denotes a dependent name, or for an
+  operator expression whose operator denotes a dependent name, and D is
+  found by name lookup for the corresponding name in an expression
+  synthesized from `E` by replacing each type-dependent argument or
+  operand with a value of a placeholder type with no associated
+  namespaces or entities, or
 - S contains an expression that takes the address of an overloaded
   function [[over.over]] whose set of overloads contains D and for which
   the target type is dependent, or

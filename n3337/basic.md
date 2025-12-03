@@ -444,11 +444,20 @@ struct X {
 The point of declaration of a class first declared in an
 *elaborated-type-specifier* is as follows:
 
-- for a declaration of the form the *identifier* is declared to be a
-  *class-name* in the scope that contains the declaration, otherwise
-- for an *elaborated-type-specifier* of the form if the
-  *elaborated-type-specifier* is used in the *decl-specifier-seq* or
-  *parameter-declaration-clause* of a function defined in namespace
+- for a declaration of the form
+  ``` bnf
+  class-key attribute-specifier-seqₒₚₜ identifier ';'
+  ```
+
+  the *identifier* is declared to be a *class-name* in the scope that
+  contains the declaration, otherwise
+- for an *elaborated-type-specifier* of the form
+  ``` bnf
+  class-key identifier
+  ```
+
+  if the *elaborated-type-specifier* is used in the *decl-specifier-seq*
+  or *parameter-declaration-clause* of a function defined in namespace
   scope, the *identifier* is declared as a *class-name* in the namespace
   that contains the declaration; otherwise, except as a friend
   declaration, the *identifier* is declared in the smallest namespace or

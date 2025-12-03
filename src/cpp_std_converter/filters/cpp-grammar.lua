@@ -313,3 +313,55 @@ function RawBlock(elem)
   -- No match, return unchanged
   return elem
 end
+
+-- BNF environment class names that Pandoc may parse as Div elements
+local BNF_CLASSES = {
+  ncbnf = true,
+  ncsimplebnf = true,
+  ncrebnf = true,
+  bnf = true,
+  bnfbase = true,
+}
+
+-- Handle Div elements with BNF class names
+-- Pandoc 3+ parses \begin{ncbnf}...\end{ncbnf} as Div with class="ncbnf"
+-- instead of RawBlock with latex format
+function Div(elem)
+  -- Check if this Div has a BNF class
+  local bnf_class = nil
+  for _, class in ipairs(elem.classes) do
+    if BNF_CLASSES[class] then
+      bnf_class = class
+      break
+    end
+  end
+
+  if not bnf_class then
+    return elem
+  end
+
+  -- Extract text content from the Div's blocks
+  -- The Div typically contains Para elements with the BNF content
+  local content_parts = {}
+  for _, block in ipairs(elem.content) do
+    if block.t == "Para" or block.t == "Plain" then
+      -- Stringify the paragraph content
+      local text = pandoc.utils.stringify(block)
+      table.insert(content_parts, text)
+    elseif block.t == "RawBlock" and block.format == "latex" then
+      -- Some content may still be raw LaTeX
+      table.insert(content_parts, block.text)
+    end
+  end
+
+  local grammar = table.concat(content_parts, "\n")
+
+  -- Clean the grammar content using our helper function
+  grammar = clean_grammar(grammar)
+
+  if grammar and #grammar > 0 then
+    return pandoc.CodeBlock(grammar, {class = "bnf"})
+  end
+
+  return elem
+end

@@ -90,11 +90,13 @@ local function merge_item_blocks(item)
         table.insert(merged_content, inline)
       end
     elseif block.t == "RawBlock" and block.format == "latex" then
-      -- Check if this is a footnote or other block-level environment
-      -- These should not be merged into the list item content
+      -- Check if this is a block-level environment that should not be merged
+      -- These need to remain as separate blocks for later filter processing
       local raw_text = block.text or ""
-      if raw_text:match("^\\begin{footnote}") or raw_text:match("^\\begin{note}") then
-        -- Footnotes and notes should remain as separate blocks
+      if raw_text:match("^\\begin{footnote}") or raw_text:match("^\\begin{note}") or
+         raw_text:match("^\\begin{ncbnf}") or raw_text:match("^\\begin{ncsimplebnf}") or
+         raw_text:match("^\\begin{ncrebnf}") or raw_text:match("^\\begin{bnf}") then
+        -- Footnotes, notes, and BNF blocks should remain as separate blocks
         has_non_mergeable = true
         break
       end

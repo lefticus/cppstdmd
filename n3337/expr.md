@@ -418,9 +418,12 @@ as if the *lambda-declarator* were `()`. If a *lambda-expression* does
 not include a *trailing-return-type*, it is as if the
 *trailing-return-type* denotes the following type:
 
-- if the *compound-statement* is of the form\begin{ncbnf}
-  \terminal{\\attribute-specifier-seq\opt \terminal{return} expression \terminal{;} \terminal{\\}
-  \end{ncbnf} the type of the returned expression after lvalue-to-rvalue
+- if the *compound-statement* is of the form
+  ``` bnf
+  '{' attribute-specifier-seqₒₚₜ 'return' expression ';' '}'
+  ```
+
+  the type of the returned expression after lvalue-to-rvalue
   conversion ([[conv.lval]]), array-to-pointer conversion (
   [[conv.array]]), and function-to-pointer conversion ([[conv.func]]);
 - otherwise, `void`.
