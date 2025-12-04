@@ -1856,8 +1856,8 @@ template<class BidirectionalIterator, class Allocator, class charT, class traits
                    regex_constants::match_flag_type flags = regex_constants::match_default);
 ```
 
-*Preconditions:* `BidirectionalIterator` models
-`bidirectional_iterator`[[iterator.concept.bidir]].
+*Preconditions:* `BidirectionalIterator` models `bidirectional_iterator`
+[[iterator.concept.bidir]].
 
 *Effects:* Determines whether there is a match between the regular
 expression `e`, and all of the character sequence \[`first`, `last`).
@@ -1965,8 +1965,8 @@ template<class BidirectionalIterator, class Allocator, class charT, class traits
                     regex_constants::match_flag_type flags = regex_constants::match_default);
 ```
 
-*Preconditions:* `BidirectionalIterator` models
-`bidirectional_iterator`[[iterator.concept.bidir]].
+*Preconditions:* `BidirectionalIterator` models `bidirectional_iterator`
+[[iterator.concept.bidir]].
 
 *Effects:* Determines whether there is some sub-sequence within
 \[`first`, `last`) that matches the regular expression `e`. The

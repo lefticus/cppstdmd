@@ -566,41 +566,130 @@ local function extract_header_from_column(col)
   return col, 1
 end
 
+-- Check if a row contains actual column headers (not just group headers)
+-- Returns true if the row has \lhdr, \chdr, \rhdr, or \hdstyle
+-- Returns false if row only has \ohdrx (spanning group header)
+local function row_has_column_headers(row)
+  return row:find("\\lhdr", 1, true) or
+         row:find("\\chdr", 1, true) or
+         row:find("\\rhdr", 1, true) or
+         row:find("\\hdstyle", 1, true)
+end
+
+-- Parse multi-row headers (e.g., stacked headers with sub-labels)
+-- Merges text from multiple header rows vertically by column position
+-- Example:
+--   \lhdr{Name} & \chdr{Value} & \chdr{POSIX} & \rhdr{Definition} \\
+--               & \chdr{(octal)} & \chdr{macro} &                  \\ \capsep
+-- Produces: ["Name", "Value (octal)", "POSIX macro", "Definition"]
+--
+-- Note: Rows containing only \ohdrx (group headers) are skipped - these are
+-- spanning rows used for grouping, not column headers.
+local function parse_multirow_headers(header_block)
+  -- Split on \\ to get individual rows
+  -- Pattern matches content before each \\
+  local rows = {}
+  local pos = 1
+  while pos <= #header_block do
+    -- Find next \\ (which is \\\\ in Lua pattern)
+    local row_end = header_block:find("\\\\", pos, true)
+    if row_end then
+      local row = header_block:sub(pos, row_end - 1)
+      row = trim(row)
+      if row ~= "" then
+        table.insert(rows, row)
+      end
+      pos = row_end + 2  -- Skip past \\
+    else
+      -- No more \\, take the rest
+      local row = header_block:sub(pos)
+      row = trim(row)
+      if row ~= "" then
+        table.insert(rows, row)
+      end
+      break
+    end
+  end
+
+  if #rows == 0 then return {} end
+
+  -- Filter out rows that only contain \ohdrx (group headers, not column headers)
+  -- These are spanning rows like "\ohdrx{2}{Option group...}" used for grouping
+  local column_header_rows = {}
+  for _, row in ipairs(rows) do
+    if row_has_column_headers(row) then
+      table.insert(column_header_rows, row)
+    end
+  end
+
+  -- If after filtering we have no column header rows, fall back to using all rows
+  if #column_header_rows == 0 then
+    column_header_rows = rows
+  end
+
+  -- Parse each row into columns
+  local row_columns = {}
+  local max_cols = 0
+  for _, row in ipairs(column_header_rows) do
+    local cols = split_on_ampersand(row)
+    table.insert(row_columns, cols)
+    max_cols = math.max(max_cols, #cols)
+  end
+
+  -- Merge columns vertically
+  local headers = {}
+  for col_idx = 1, max_cols do
+    local merged = {}
+    for _, cols in ipairs(row_columns) do
+      local cell = cols[col_idx] or ""
+      local text, _ = extract_header_from_column(cell)
+      text = expand_table_macros(text)
+      text = trim(text)
+      if text ~= "" then
+        table.insert(merged, text)
+      end
+    end
+    table.insert(headers, table.concat(merged, " "))
+  end
+
+  return headers
+end
+
 -- Parse floattable headers from table content
 -- Splits header line on & and extracts content from each column
--- Handles: \lhdrx, \lhdr, \chdr, \rhdr, \hdstyle, and plain text
+-- Handles: \lhdrx, \lhdr, \chdr, \rhdr, \hdstyle, plain text, and multi-row headers
 local function parse_floattable_headers(table_content)
   local headers = {}
 
-  -- Find header line (ends with \\ before \capsep or \rowsep)
-  local header_line = table_content:match("(.-\\\\)%s*\\capsep")
-  if not header_line then
-    header_line = table_content:match("(.-\\\\)%s*\\rowsep")
+  -- Find the entire header block (everything before \capsep or \rowsep)
+  local header_block = table_content:match("(.-)\\capsep")
+  if not header_block then
+    header_block = table_content:match("(.-)\\rowsep")
   end
 
-  -- Verify the line actually contains header markers
-  -- If it doesn't contain any header macros, it's not a real header line
-  if header_line and not (
-      header_line:find("\\lhdr", 1, true) or
-      header_line:find("\\lhdrx", 1, true) or
-      header_line:find("\\chdr", 1, true) or
-      header_line:find("\\rhdr", 1, true) or
-      header_line:find("\\hdstyle", 1, true) or
-      header_line:find("\\multicolumn", 1, true)
+  -- Verify the block actually contains header markers
+  if header_block and not (
+      header_block:find("\\lhdr", 1, true) or
+      header_block:find("\\lhdrx", 1, true) or
+      header_block:find("\\chdr", 1, true) or
+      header_block:find("\\rhdr", 1, true) or
+      header_block:find("\\hdstyle", 1, true) or
+      header_block:find("\\multicolumn", 1, true)
   ) then
-    header_line = nil
+    header_block = nil
   end
 
-  if header_line then
-    -- Check for multi-row headers with \multicolumn first (special case)
-    if header_line:find("\\multicolumn{", 1, true) then
+  if header_block then
+    -- Check for \multicolumn FIRST (special case with spanning headers)
+    -- This must be checked before multi-row merge to avoid incorrect merging
+    if header_block:find("\\multicolumn{", 1, true) then
       -- Multi-row header: Row 1 has \multicolumn, Row 2 has actual column headers
       -- Example: "File open modes" table
       local remaining_first_row =
-        header_line:match("\\multicolumn{.-}{.-}{.-}%s*&%s*(.-)%s*\\\\")
+        header_block:match("\\multicolumn{.-}{.-}{.-}%s*&%s*(.-)%s*\\\\")
 
       -- Get the second row before \\ (actual column headers)
-      local second_row = header_line:match("\n([^\n]*)\\\\%s*$")
+      local second_row = header_block:match("\n([^\n]*)\\\\%s*$")
 
       if second_row and second_row ~= "" then
         -- Parse second row to get main column headers
@@ -615,8 +704,27 @@ local function parse_floattable_headers(table_content)
       end
     end
 
-    -- Standard case: split header line on & and process each column
-    local columns = split_on_ampersand(header_line)
+    -- Check for multi-row headers (multiple \\ without \multicolumn)
+    -- These are stacked headers with sub-labels that should be merged
+    local row_sep_count = 0
+    local pos = 1
+    while true do
+      local found = header_block:find("\\\\", pos, true)
+      if found then
+        row_sep_count = row_sep_count + 1
+        pos = found + 2
+      else
+        break
+      end
+    end
+
+    -- Multi-row headers (2+ row separators): use the merge function
+    if row_sep_count >= 2 then
+      return parse_multirow_headers(header_block)
+    end
+
+    -- Single-row headers: split on & and process each column
+    local columns = split_on_ampersand(header_block)
 
     for _, col in ipairs(columns) do
       local header_text, span_count = extract_header_from_column(col)

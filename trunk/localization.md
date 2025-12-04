@@ -1311,7 +1311,7 @@ the input sequence \[`from`, `from``next`). `to_next` is set equal to
 `to`, the value of `state` is unchanged, and there are no changes to the
 values in \[`to`, `to_end`).
 
-A `codecvt` facet that is used by `basic_filebuf`[[file.streams]] shall
+A `codecvt` facet that is used by `basic_filebuf` [[file.streams]] shall
 have the property that if
 
 ``` cpp
@@ -1759,8 +1759,8 @@ locale loc = str.getloc();
 The details of this operation occur in several stages:
 
 - Stage 1: Determine a printf conversion specifier `spec` and determine
-  the characters that would be printed by `printf`[[c.files]] given this
-  conversion specifier for
+  the characters that would be printed by `printf` [[c.files]] given
+  this conversion specifier for
   ``` cpp
   printf(spec, val)
   ```
@@ -1802,13 +1802,13 @@ function determines the integral conversion specifier as indicated in
 
 **Table: Integer conversions** <a id="facet.num.put.int">[facet.num.put.int]</a>
 
-| State |
-| ----- |
-| `basefield == ios_base::oct` | `%o` |
-| `(basefield == ios_base::hex) && !uppercase` | `%x` |
-| `(basefield == ios_base::hex)` | `%X` |
-| for a `signed` integral type | `%d` |
-| for an `unsigned` integral type | `%u` |
+| State                                        | `stdio` equivalent |
+| -------------------------------------------- | ------------------ |
+| `basefield == ios_base::oct`                 | `%o`               |
+| `(basefield == ios_base::hex) && !uppercase` | `%x`               |
+| `(basefield == ios_base::hex)`               | `%X`               |
+| for a `signed` integral type                 | `%d`               |
+| for an `unsigned` integral type              | `%u`               |
 
 
 For conversion from a floating-point type, the function determines the
@@ -1817,15 +1817,15 @@ floating-point conversion specifier as indicated in
 
 **Table: Floating-point conversions** <a id="facet.num.put.fp">[facet.num.put.fp]</a>
 
-| State |
-| ----- |
-| `floatfield == ios_base::fixed` | `%f` |
-| `floatfield == ios_base::scientific && !uppercase` | `%e` |
-| `floatfield == ios_base::scientific` | `%E` |
-| `floatfield == (ios_base::fixed | ios_base::scientific) && !uppercase` | `%a` |
-| `floatfield == (ios_base::fixed | ios_base::scientific)` | `%A` |
-| `!uppercase` | `%g` |
-| otherwise | `%G` |
+| State                                                                  | `stdio` equivalent |
+| ---------------------------------------------------------------------- | ------------------ |
+| `floatfield == ios_base::fixed`                                        | `%f`               |
+| `floatfield == ios_base::scientific && !uppercase`                     | `%e`               |
+| `floatfield == ios_base::scientific`                                   | `%E`               |
+| `floatfield == (ios_base::fixed | ios_base::scientific) && !uppercase` | `%a`               |
+| `floatfield == (ios_base::fixed | ios_base::scientific)`               | `%A`               |
+| `!uppercase`                                                           | `%g`               |
+| otherwise                                                              | `%G`               |
 
 
 For conversions from an integral or floating-point type a length
@@ -1834,14 +1834,14 @@ modifier is added to the conversion specifier as indicated in
 
 **Table: Length modifier** <a id="facet.num.put.length">[facet.num.put.length]</a>
 
-| Type |
-| ---- |
-| `long` | `l` |
-| `long long` | `ll` |
-| `unsigned long` | `l` |
-| `unsigned long long` | `ll` |
-| `long double` | `L` |
-| otherwise | none |
+| Type                 | Length modifier |
+| -------------------- | --------------- |
+| `long`               | `l`             |
+| `long long`          | `ll`            |
+| `unsigned long`      | `l`             |
+| `unsigned long long` | `ll`            |
+| `long double`        | `L`             |
+| otherwise            | none            |
 
 
 The conversion specifier has the following optional additional
@@ -1849,12 +1849,12 @@ qualifiers prepended as indicated in [[facet.num.put.conv]].
 
 **Table: Numeric conversions** <a id="facet.num.put.conv">[facet.num.put.conv]</a>
 
-| Type(s) | State |
-| ------- | ----- |
-| an integral type | `showpos` | `+` |
-|         | `showbase` | `#` |
-| a floating-point type | `showpos` | `+` |
-|         | `showpoint` | `#` |
+| Type(s)               | State       | `stdio` equivalent |
+| --------------------- | ----------- | ------------------ |
+| an integral type      | `showpos`   | `+`                |
+|                       | `showbase`  | `#`                |
+| a floating-point type | `showpos`   | `+`                |
+|                       | `showpoint` | `#`                |
 
 
 For conversion from a floating-point type, if

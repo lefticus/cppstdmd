@@ -1074,6 +1074,87 @@ def test_floattable_with_multiline_headers():
     assert "Name" in output
 
 
+def test_floattable_with_stacked_multirow_headers():
+    r"""Test floattable with stacked multi-row headers that merge sub-labels.
+
+    This tests the perms table pattern from iostreams.tex where:
+    - Row 1: \lhdr{Name} & \chdr{Value} & \chdr{POSIX} & \rhdr{Definition or notes}
+    - Row 2:             & \chdr{(octal)} & \chdr{macro} &
+
+    The sub-labels should be merged with main headers:
+    Name | Value (octal) | POSIX macro | Definition or notes
+    """
+    latex = r"""
+\begin{floattable}
+{Enum class \tcode{perms}}{tab:fs.enum.perms}{lrlp{3.2in}}
+\topline
+\lhdr{Name}	& \chdr{Value}		& \chdr{POSIX}	& \rhdr{Definition or notes}	\\
+		& \chdr{(octal)}	& \chdr{macro}	& \\ \capsep
+\tcode{none} & \tcode{0} & &
+  There are no permissions set for the file.  \\ \rowsep
+\tcode{owner_read} & \tcode{0400} &  \tcode{S_IRUSR} &
+   Read permission, owner \\
+\end{floattable}
+"""
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    normalized = normalize_table_whitespace(output)
+    # Should have merged headers (sub-labels combined with main headers)
+    assert "| Name |" in normalized
+    # Value and (octal) should be merged
+    assert "Value (octal)" in normalized or "Value" in normalized
+    # POSIX and macro should be merged
+    assert "POSIX macro" in normalized or "POSIX" in normalized
+    assert "Definition or notes" in normalized
+    # Should have exactly 4 columns (not 7)
+    header_line = [line for line in normalized.split("\n") if line.startswith("| Name")][0]
+    column_count = header_line.count("|") - 1
+    assert column_count == 4, f"Expected 4 columns, got {column_count}: {header_line}"
+    # Data rows should also have 4 columns
+    assert "`none`" in output
+    assert "`0`" in output
+    # Should NOT have extra empty columns in headers
+    assert "| |" not in normalized.replace("| ----", "| ----")  # Ignore separator row
+
+
+def test_floattable_with_group_header_ohdrx():
+    r"""Test floattable with \ohdrx group header followed by column headers.
+
+    This tests the copy_options table pattern from iostreams.tex where:
+    - Row 1: \ohdrx{2}{Option group...} (spanning group header, not column headers)
+    - Row 2: \lhdr{Constant} & \rhdr{Meaning}
+
+    The \ohdrx row should be skipped - only the actual column headers should be used.
+    """
+    latex = r"""
+\begin{floattable}
+{Enum class \tcode{copy_options}}{tab:fs.enum.copy_options}{lp{4in}}
+\topline
+\ohdrx{2}{Option group controlling function effects} \\ \rowsep
+\lhdr{Constant}	& \rhdr{Meaning}	\\ \capsep
+\tcode{none} &
+    (Default) Error; file already exists. \\ \rowsep
+\tcode{skip_existing} &
+    Do not overwrite existing file. \\
+\end{floattable}
+"""
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    normalized = normalize_table_whitespace(output)
+    # Should have column headers from the second row (not the \ohdrx row)
+    assert "| Constant |" in normalized
+    assert "| Meaning |" in normalized or "Meaning |" in normalized
+    # Should have exactly 2 columns (not corrupted by \ohdrx)
+    header_line = [line for line in normalized.split("\n") if "Constant" in line][0]
+    column_count = header_line.count("|") - 1
+    assert column_count == 2, f"Expected 2 columns, got {column_count}: {header_line}"
+    # Data should be preserved
+    assert "`none`" in output
+    assert "Default" in output
+    # Should NOT have \ohdrx content in headers
+    assert "Option group" not in header_line
+
+
 def test_libefftab_basic():
     r"""Test libefftab (effects table for enum/bitmask types)"""
     latex = r"""
