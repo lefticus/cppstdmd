@@ -376,6 +376,12 @@ class AdventureGame {
     renderMarkdown(markdown) {
         // Use marked.js if available, otherwise basic conversion
         if (typeof marked !== 'undefined') {
+            // Configure marked for GFM
+            marked.setOptions({
+                gfm: true,
+                breaks: false,
+                pedantic: false,
+            });
             return marked.parse(markdown);
         }
 
