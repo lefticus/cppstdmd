@@ -1618,11 +1618,11 @@ operator, and computation correspondence is:
 
 **Table: Atomic arithmetic computations** <a id="atomic.types.int.comp">[atomic.types.int.comp]</a>
 
-| Op  | Computation |
-| --- | ----------- |
-| `add` | `+`         | addition | `sub` | `-` | subtraction |
-| `or` | `|`         | bitwise inclusive or | `xor` | `^` | bitwise exclusive or |
-| `and` | `&`         | bitwise and |     |     |     |
+|       |     |                      |       |     |                      |
+| ----- | --- | -------------------- | ----- | --- | -------------------- |
+| `add` | `+` | addition             | `sub` | `-` | subtraction          |
+| `or`  | `|` | bitwise inclusive or | `xor` | `^` | bitwise exclusive or |
+| `and` | `&` | bitwise and          |       |     |                      |
 
 ``` cpp
 T fetch_key(T operand, memory_order order = memory_order::seq_cst) volatile noexcept;

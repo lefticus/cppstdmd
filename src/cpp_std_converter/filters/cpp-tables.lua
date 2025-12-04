@@ -486,139 +486,146 @@ local function pad_cell(cell, width)
   return cell
 end
 
+-- Split string on & respecting brace depth
+-- Used for parsing table header lines into columns
+local function split_on_ampersand(text)
+  local parts = {}
+  local current = ""
+  local depth = 0
+
+  for i = 1, #text do
+    local c = text:sub(i, i)
+    if c == "{" then
+      depth = depth + 1
+      current = current .. c
+    elseif c == "}" then
+      depth = depth - 1
+      current = current .. c
+    elseif c == "&" and depth == 0 then
+      table.insert(parts, current)
+      current = ""
+    else
+      current = current .. c
+    end
+  end
+
+  if current ~= "" then
+    table.insert(parts, current)
+  end
+
+  return parts
+end
+
+-- Extract header text from a column that may contain header macros
+-- Returns the header content, with macros stripped/expanded
+-- Uses extract_braced for proper nested brace handling (e.g., \chdr{\tcode{float16_t}})
+local function extract_header_from_column(col)
+  col = trim(col)
+  -- Strip trailing \\ if present
+  col = col:gsub("\\\\%s*$", "")
+  col = trim(col)
+
+  -- Check for \lhdrx{N}{text} - column-spanning header
+  -- This is special: returns the text AND the span count
+  local lhdrx_pos = col:find("\\lhdrx{", 1, true)
+  if lhdrx_pos then
+    -- Extract span count from first braced argument
+    -- \lhdrx is 6 chars, { is at position 7, so offset is +6
+    local span_str, pos_after_span = extract_braced(col, lhdrx_pos + 6)
+    if span_str then
+      local span_count = tonumber(span_str)
+      -- Extract header text from second braced argument
+      local header_text, _ = extract_braced(col, pos_after_span)
+      if header_text and span_count then
+        return header_text, span_count
+      end
+    end
+  end
+
+  -- Check for \lhdr{text}, \chdr{text}, \rhdr{text}, \hdstyle{text}
+  -- Using extract_braced for proper nested brace handling
+  -- len is position offset to the opening brace (without the '{' itself)
+  local header_macros = {
+    { pattern = "\\lhdr{", len = 5 },   -- \lhdr is 5 chars, { is at +6
+    { pattern = "\\chdr{", len = 5 },   -- \chdr is 5 chars, { is at +6
+    { pattern = "\\rhdr{", len = 5 },   -- \rhdr is 5 chars, { is at +6
+    { pattern = "\\hdstyle{", len = 8 }, -- \hdstyle is 8 chars, { is at +9
+  }
+
+  for _, macro in ipairs(header_macros) do
+    local macro_pos = col:find(macro.pattern, 1, true)
+    if macro_pos then
+      local header_text, _ = extract_braced(col, macro_pos + macro.len)
+      if header_text then
+        return header_text, 1
+      end
+    end
+  end
+
+  -- Fallback: use column content as-is (handles plain text headers)
+  return col, 1
+end
+
 -- Parse floattable headers from table content
--- Handles complex multi-line headers with \lhdrx, \lhdr, \chdr, \rhdr, \hdstyle macros
--- Also handles fallback patterns for old-style headers and \multicolumn spanning headers
+-- Splits header line on & and extracts content from each column
+-- Handles: \lhdrx, \lhdr, \chdr, \rhdr, \hdstyle, and plain text
 local function parse_floattable_headers(table_content)
   local headers = {}
 
-  -- Try to find header line (ends with \\ and followed by \capsep)
-  -- Must handle multiline headers where \lhdr{Name} & \rhdr{Meaning} spans lines
+  -- Find header line (ends with \\ before \capsep or \rowsep)
   local header_line = table_content:match("(.-\\\\)%s*\\capsep")
+  if not header_line then
+    header_line = table_content:match("(.-\\\\)%s*\\rowsep")
+  end
+
+  -- Verify the line actually contains header markers
+  -- If it doesn't contain any header macros, it's not a real header line
+  if header_line and not (
+      header_line:find("\\lhdr", 1, true) or
+      header_line:find("\\lhdrx", 1, true) or
+      header_line:find("\\chdr", 1, true) or
+      header_line:find("\\rhdr", 1, true) or
+      header_line:find("\\hdstyle", 1, true) or
+      header_line:find("\\multicolumn", 1, true)
+  ) then
+    header_line = nil
+  end
 
   if header_line then
-    -- Parse headers by scanning for \lhdrx, \lhdr, \chdr, \rhdr, \hdstyle macros
-    -- \lhdrx{N}{text} creates N columns with text in first
-    -- Other macros create single columns
+    -- Check for multi-row headers with \multicolumn first (special case)
+    if header_line:find("\\multicolumn{", 1, true) then
+      -- Multi-row header: Row 1 has \multicolumn, Row 2 has actual column headers
+      -- Example: "File open modes" table
+      local remaining_first_row =
+        header_line:match("\\multicolumn{.-}{.-}{.-}%s*&%s*(.-)%s*\\\\")
 
-    local header_pos = 1
-    while header_pos <= #header_line do
-      -- Check for \lhdrx{N}{text} - column-spanning header
-      local lhdrx_start = header_line:find("\\lhdrx{", header_pos, true)
-      if lhdrx_start and lhdrx_start == header_pos then
-        -- Extract span count - point to the '{' character
-        -- "\lhdrx" is 6 chars, so '{' is at lhdrx_start + 6
-        local span_count, pos1 = extract_braced(header_line, lhdrx_start + 6)
-        if span_count and pos1 then
-          -- Extract header text - pos1 points after first '}', look for next '{'
-          local header_text, pos2 = extract_braced(header_line, pos1)
-          if header_text then
-            header_text = expand_table_macros(header_text)
-            -- Add first column with text, remaining columns empty
-            table.insert(headers, header_text)
-            for i = 2, tonumber(span_count) or 1 do
-              table.insert(headers, "")
-            end
-            header_pos = pos2
-            goto continue
-          end
+      -- Get the second row before \\ (actual column headers)
+      local second_row = header_line:match("\n([^\n]*)\\\\%s*$")
+
+      if second_row and second_row ~= "" then
+        -- Parse second row to get main column headers
+        headers = parse_row(second_row)
+
+        -- If there's a remaining header from first row, append it
+        if remaining_first_row and remaining_first_row ~= "" then
+          local extra_header = expand_table_macros(remaining_first_row)
+          table.insert(headers, extra_header)
         end
-      end
-
-      -- Check for \lhdr{text}
-      local lhdr_start = header_line:find("\\lhdr{", header_pos, true)
-      if lhdr_start and lhdr_start == header_pos then
-        -- "\lhdr" is 5 chars, so '{' is at lhdr_start + 5
-        local lhdr_match, lhdr_end_pos = extract_braced(header_line, lhdr_start + 5)
-        if lhdr_match then
-          table.insert(headers, expand_table_macros(lhdr_match))
-          header_pos = lhdr_end_pos
-          goto continue
-        end
-      end
-
-      -- Check for \chdr{text}
-      local chdr_start = header_line:find("\\chdr{", header_pos, true)
-      if chdr_start and chdr_start == header_pos then
-        -- "\chdr" is 5 chars, so '{' is at chdr_start + 5
-        local chdr_match, chdr_end_pos = extract_braced(header_line, chdr_start + 5)
-        if chdr_match then
-          table.insert(headers, expand_table_macros(chdr_match))
-          header_pos = chdr_end_pos
-          goto continue
-        end
-      end
-
-      -- Check for \rhdr{text}
-      local rhdr_start = header_line:find("\\rhdr{", header_pos, true)
-      if rhdr_start and rhdr_start == header_pos then
-        -- "\rhdr" is 5 chars, so '{' is at rhdr_start + 5
-        local rhdr_match, rhdr_end_pos = extract_braced(header_line, rhdr_start + 5)
-        if rhdr_match then
-          table.insert(headers, expand_table_macros(rhdr_match))
-          header_pos = rhdr_end_pos
-          goto continue
-        end
-      end
-
-      -- Check for \hdstyle{text}
-      local hdstyle_start = header_line:find("\\hdstyle{", header_pos, true)
-      if hdstyle_start and hdstyle_start == header_pos then
-        -- "\hdstyle" is 8 chars, so '{' is at hdstyle_start + 8
-        local hdstyle_match, hdstyle_end_pos = extract_braced(header_line, hdstyle_start + 8)
-        if hdstyle_match then
-          table.insert(headers, expand_table_macros(hdstyle_match))
-          header_pos = hdstyle_end_pos
-          goto continue
-        end
-      end
-
-      -- Skip other characters (whitespace, &, etc.)
-      header_pos = header_pos + 1
-      ::continue::
-    end
-  end
-
-  -- Fallback: if no headers found, try old 2-column pattern
-  if #headers == 0 then
-    local h1, h2 = table_content:match("\\hdstyle{([^}]*)}%s*&%s*\\hdstyle{([^}]*)}")
-    if h1 and h2 then
-      headers = {expand_table_macros(h1), expand_table_macros(h2)}
-    else
-      h1, h2 = table_content:match(
-        "\\lhdr{([^}]*)}%s*&%s*\\rhdr{([^}]*)}")
-      if h1 and h2 then
-        headers = {expand_table_macros(h1),
-                   expand_table_macros(h2)}
+        return headers
       end
     end
-  end
 
-  -- Final fallback: handle multi-row headers with \multicolumn and
-  -- plain \tcode{} content. Example: "File open modes" table
-  -- Row 1: \multicolumn{6}{|c}{\tcode{ios_base} flag combination} &
-  --        \tcode{stdio} equivalent \\
-  -- Row 2: \tcode{binary} & \tcode{in} & \tcode{out} & \tcode{trunc} &
-  --        \tcode{app} & \tcode{noreplace} \\ \capsep
-  if #headers == 0 and header_line and
-     header_line:find("\\multicolumn{", 1, true) then
-    -- Extract the header from the row after \multicolumn
-    -- Get part after \multicolumn{...}{...}{...} from first row
-    -- (may have extra column header)
-    local remaining_first_row =
-      header_line:match("\\multicolumn{.-}{.-}{.-}%s*&%s*(.-)%s*\\\\")
+    -- Standard case: split header line on & and process each column
+    local columns = split_on_ampersand(header_line)
 
-    -- Get the second row before \\ \capsep (actual column headers)
-    local second_row = header_line:match("\n([^\n]*)\\\\%s*$")
+    for _, col in ipairs(columns) do
+      local header_text, span_count = extract_header_from_column(col)
+      header_text = expand_table_macros(header_text)
 
-    if second_row and second_row ~= "" then
-      -- Parse second row to get main column headers
-      headers = parse_row(second_row)
-
-      -- If there's a remaining header from first row, append it
-      if remaining_first_row and remaining_first_row ~= "" then
-        local extra_header = expand_table_macros(remaining_first_row)
-        table.insert(headers, extra_header)
+      -- Add header (and empty columns for spanning headers)
+      table.insert(headers, header_text)
+      for _ = 2, span_count do
+        table.insert(headers, "")
       end
     end
   end

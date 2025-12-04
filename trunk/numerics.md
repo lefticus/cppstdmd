@@ -6117,7 +6117,7 @@ namespace std {
 
   // [sf.cmath.ellint.3], incomplete elliptic integral of the third kind
   floating-point-type ellint_3(floating-point-type k, floating-point-type nu,
-                                 floating-point-type phi);
+                               floating-point-type phi);
   float               ellint_3f(float k, float nu, float phi);
   long double         ellint_3l(long double k, long double nu, long double phi);
 

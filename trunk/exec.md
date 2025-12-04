@@ -24,8 +24,8 @@ components for execution control primitives as summarized in
 
 **Table: Types of customization point objects in the execution control library** <a id="exec.pos">[exec.pos]</a>
 
-| Customization point | Purpose | Examples | object type |
-| ------------------- | ------- | -------- | ----------- |
+| Customization point | Purpose | object type |     |     |
+| ------------------- | ------- | ----------- | --- | --- |
 | core                | provide core execution functionality, and connection between core components | e.g., `connect`, `start` |
 | completion functions | called by senders to announce the completion of the work (success, error, or cancellation) | `set_value`, `set_error`, `set_stopped` |
 | senders             | allow the specialization of the provided sender algorithms | sender factories (e.g., `schedule`, `just`, `read_env`); sender adaptors (e.g., `continues_on`, `then`, `let_value`); sender consumers (e.g., `sync_wait`) |

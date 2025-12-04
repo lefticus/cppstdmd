@@ -4552,7 +4552,7 @@ yields correct values of `U` and `V`.
 
 **Table: Expressions used to perform ratio arithmetic** <a id="ratio.arithmetic">[ratio.arithmetic]</a>
 
-|                          |                       |                     |
+| Type                     | Value of `X`          | Value of `Y`        |
 | ------------------------ | --------------------- | ------------------- |
 | `ratio_add<R1, R2>`      | `R1::num * R2::den +` | `R1::den * R2::den` |
 |                          | `R2::num * R1::den`   |                     |

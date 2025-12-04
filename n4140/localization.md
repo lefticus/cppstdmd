@@ -1917,12 +1917,12 @@ ordered. That is, the first line whose condition is true applies.
 
 **Table: Integer conversions** <a id="tab:localization.integer.conversions.in">[tab:localization.integer.conversions.in]</a>
 
-| State |
-| ----- |
-| `basefield == oct` | `%o` |
-| `basefield == hex` | `%X` |
-| `basefield == 0` | `%i` `signed` integral type | `%d` |
-| `unsigned` integral type | `%u` |
+| State                    | `stdio` equivalent |
+| ------------------------ | ------------------ |
+| `basefield == oct`       | `%o`               |
+| `basefield == hex`       | `%X`               |
+| `basefield == 0`         | `%i` `signed` integral type | `%d` |
+| `unsigned` integral type | `%u`               |
 
 
 For conversions to a floating type the specifier is `%g`.
@@ -1934,16 +1934,16 @@ as indicated in Table [[tab:localization.length.modifier.in]].
 
 **Table: Length modifier** <a id="tab:localization.length.modifier.in">[tab:localization.length.modifier.in]</a>
 
-| Type |
-| ---- |
-| `short` | `h` |
-| `unsigned short` | `h` |
-| `long` | `l` |
-| `unsigned long` | `l` |
-| `long long` | `ll` |
-| `unsigned long long` | `ll` |
-| `double` | `l` |
-| `long double` | `L` |
+| Type                 | Length modifier |
+| -------------------- | --------------- |
+| `short`              | `h`             |
+| `unsigned short`     | `h`             |
+| `long`               | `l`             |
+| `unsigned long`      | `l`             |
+| `long long`          | `ll`            |
+| `unsigned long long` | `ll`            |
+| `double`             | `l`             |
+| `long double`        | `L`             |
 
 - **Stage 2:**
 
@@ -2203,13 +2203,13 @@ Table [[tab:localization.integer.conversions.out]].
 
 **Table: Integer conversions** <a id="tab:localization.integer.conversions.out">[tab:localization.integer.conversions.out]</a>
 
-| State |
-| ----- |
-| `basefield == ios_base::oct` | `%o` |
-| `(basefield == ios_base::hex) && !uppercase` | `%x` |
-| `(basefield == ios_base::hex)` | `%X` |
-| for a `signed` integral type | `%d` |
-| for an `unsigned` integral type | `%u` |
+| State                                        | `stdio` equivalent |
+| -------------------------------------------- | ------------------ |
+| `basefield == ios_base::oct`                 | `%o`               |
+| `(basefield == ios_base::hex) && !uppercase` | `%x`               |
+| `(basefield == ios_base::hex)`               | `%X`               |
+| for a `signed` integral type                 | `%d`               |
+| for an `unsigned` integral type              | `%u`               |
 
 
 For conversion from a floating-point type, the function determines the
@@ -2218,15 +2218,15 @@ Table [[tab:localization.fp.conversions.out]].
 
 **Table: Floating-point conversions** <a id="tab:localization.fp.conversions.out">[tab:localization.fp.conversions.out]</a>
 
-| State |
-| ----- |
-| `floatfield == ios_base::fixed` | `%f` |
-| `floatfield == ios_base::scientific && !uppercase` | `%e` |
-| `floatfield == ios_base::scientific` | `%E` |
-| `floatfield == (ios_base::fixed | ios_base::scientific) && !uppercase` | `%a` |
-| `floatfield == (ios_base::fixed | ios_base::scientific)` | `%A` |
-| `!uppercase` | `%g` |
-| otherwise | `%G` |
+| State                                                                  | `stdio` equivalent |
+| ---------------------------------------------------------------------- | ------------------ |
+| `floatfield == ios_base::fixed`                                        | `%f`               |
+| `floatfield == ios_base::scientific && !uppercase`                     | `%e`               |
+| `floatfield == ios_base::scientific`                                   | `%E`               |
+| `floatfield == (ios_base::fixed | ios_base::scientific) && !uppercase` | `%a`               |
+| `floatfield == (ios_base::fixed | ios_base::scientific)`               | `%A`               |
+| `!uppercase`                                                           | `%g`               |
+| otherwise                                                              | `%G`               |
 
 
 For conversions from an integral or floating-point type a length
@@ -2235,14 +2235,14 @@ Table [[tab:localization.length.modifier.out]].
 
 **Table: Length modifier** <a id="tab:localization.length.modifier.out">[tab:localization.length.modifier.out]</a>
 
-| Type |
-| ---- |
-| `long` | `l` |
-| `long long` | `ll` |
-| `unsigned long` | `l` |
-| `unsigned long long` | `ll` |
-| `long double` | `L` |
-| otherwise | none |
+| Type                 | Length modifier |
+| -------------------- | --------------- |
+| `long`               | `l`             |
+| `long long`          | `ll`            |
+| `unsigned long`      | `l`             |
+| `unsigned long long` | `ll`            |
+| `long double`        | `L`             |
+| otherwise            | none            |
 
 
 The conversion specifier has the following optional additional
@@ -2251,12 +2251,12 @@ Table [[tab:localization.numeric.conversions]].
 
 **Table: Numeric conversions** <a id="tab:localization.numeric.conversions">[tab:localization.numeric.conversions]</a>
 
-| Type(s) | State |
-| ------- | ----- |
-| an integral type | `flags & showpos` | `+` |
-|         | `flags & showbase` | `#` |
-| a floating-point type | `flags & showpos` | `+` |
-|         | `flags & showpoint` | `#` |
+| Type(s)               | State               | `stdio` equivalent |
+| --------------------- | ------------------- | ------------------ |
+| an integral type      | `flags & showpos`   | `+`                |
+|                       | `flags & showbase`  | `#`                |
+| a floating-point type | `flags & showpos`   | `+`                |
+|                       | `flags & showpoint` | `#`                |
 
 
 For conversion from a floating-point type, if

@@ -6345,8 +6345,8 @@ constexpr void swap(expected& rhs) noexcept(see below);
 
 **Table: `swap(expected&)` effects** <a id="expected.object.swap">[expected.object.swap]</a>
 
-| `this->has_value()` | `!this->has_value()` |
-| ------------------- | -------------------- |
+| \topline | `this->has_value()` | `!this->has_value()` |
+| -------- | ------------------- | -------------------- |
 
 
 For the case where `rhs.has_value()` is `false` and `this->has_value()`
@@ -7082,8 +7082,8 @@ constexpr void swap(expected& rhs) noexcept(see below);
 
 **Table: `swap(expected&)` effects** <a id="expected.void.swap">[expected.void.swap]</a>
 
-| `this->has_value()` | `!this->has_value()` |
-| ------------------- | -------------------- |
+| \topline | `this->has_value()` | `!this->has_value()` |
+| -------- | ------------------- | -------------------- |
 
 
 For the case where `rhs.has_value()` is `false` and `this->has_value()`

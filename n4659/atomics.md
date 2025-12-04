@@ -834,11 +834,11 @@ operator, and computation correspondence is:
 
 **Table: Atomic arithmetic computations** <a id="tab:atomic.arithmetic.computations">[tab:atomic.arithmetic.computations]</a>
 
-| Op  | Computation |
-| --- | ----------- |
-| `add` | `+`         | addition | `sub` | `-` | subtraction |
-| `or` | `|`         | bitwise inclusive or | `xor` | `^` | bitwise exclusive or |
-| `and` | `&`         | bitwise and |     |     |     |
+|       |     |                      |       |     |                      |
+| ----- | --- | -------------------- | ----- | --- | -------------------- |
+| `add` | `+` | addition             | `sub` | `-` | subtraction          |
+| `or`  | `|` | bitwise inclusive or | `xor` | `^` | bitwise exclusive or |
+| `and` | `&` | bitwise and          |       |     |                      |
 
 ``` cpp
 T fetch_key(T operand, memory_order order = memory_order_seq_cst) volatile noexcept;

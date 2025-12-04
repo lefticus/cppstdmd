@@ -999,14 +999,14 @@ character encoding [[lex.charset]] are determined by its
 
 **Table: Character literals** <a id="lex.ccon.literal">[lex.ccon.literal]</a>
 
-| Encoding | Kind | Type | Associated char- | Example | prefix | acter encoding |
-| -------- | ---- | ---- | ---------------- | ------- | ------ | -------------- |
-| none     | ordinary character literal | `char` | ordinary literal | `'v'`   |
-| `L`      | wide character literal | `wchar_t` | wide literal     | `L'w'`  |
-|          |      |      | encoding         |         |
+| Encoding | Kind | Type | Associated char- | prefix | \chdr | \chdr | acter encoding |     |
+| -------- | ---- | ---- | ---------------- | ------ | ----- | ----- | -------------- | --- |
+| none     | ordinary character literal | `char` | ordinary literal | `'v'`  |
+| `L`      | wide character literal | `wchar_t` | wide literal     | `L'w'` |
+|          |      |      | encoding         |        |
 | `u8`     | UTF-8 character literal | `char8_t` | UTF-8            | `u8'x'` |
-| `u`      | UTF-16 character literal | `char16_t` | UTF-16           | `u'y'`  |
-| `U`      | UTF-32 character literal | `char32_t` | UTF-32           | `U'z'`  |
+| `u`      | UTF-16 character literal | `char16_t` | UTF-16           | `u'y'` |
+| `U`      | UTF-32 character literal | `char32_t` | UTF-32           | `U'z'` |
 
 
 In translation phase 4, the value of a *character-literal* is determined
@@ -1238,8 +1238,8 @@ evaluation of the *string-literal* (see below).
 
 **Table: String literals** <a id="lex.string.literal">[lex.string.literal]</a>
 
-| Enco- | Kind | Type | Associated | Examples | ding | character | prefix | encoding |
-| ----- | ---- | ---- | ---------- | -------- | ---- | --------- | ------ | -------- |
+| Enco- | Kind | Type | Associated | ding | \chdr | \chdr | character | prefix | \chdr | \chdr | encoding | \rhdr |
+| ----- | ---- | ---- | ---------- | ---- | ----- | ----- | --------- | ------ | ----- | ----- | -------- | ----- |
 | none  | ordinary string literal | array of $n$ `const char` | ordinary literal encoding | `"ordinary string"` `R"(ordinary raw string)"` |
 | `L`   | wide string literal | array of $n$ `const wchar_t` | wide literal encoding | `L"wide string"` `LR"w(wide raw string)w"` |
 | `u8`  | UTF-8 string literal | array of $n$ `const char8_t` | UTF-8      | `u8"UTF-8 string"` `u8R"x(UTF-8 raw string)x"` |

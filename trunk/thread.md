@@ -3768,12 +3768,12 @@ correspondence among key, operator, and computation is specified in
 
 **Table: Atomic arithmetic computations** <a id="atomic.types.int.comp">[atomic.types.int.comp]</a>
 
-| Op  | Computation |
-| --- | ----------- |
-| `add` | `+`         | addition | `and` | `&` | bitwise and |
-| `sub` | `-`         | subtraction | `or` | `|` | bitwise inclusive or |
-| `max` |             | maximum | `xor` | `^` | bitwise exclusive or |
-| `min` |             | minimum |     |     |     |
+|       |     |             |       |     |                      |
+| ----- | --- | ----------- | ----- | --- | -------------------- |
+| `add` | `+` | addition    | `and` | `&` | bitwise and          |
+| `sub` | `-` | subtraction | `or`  | `|` | bitwise inclusive or |
+| `max` |     | maximum     | `xor` | `^` | bitwise exclusive or |
+| `min` |     | minimum     |       |     |                      |
 
 ``` cpp
 integral-type fetch_key(integral-type operand,
@@ -4224,10 +4224,10 @@ among key, operator, and computation is specified in
 
 **Table: Atomic pointer computations** <a id="atomic.types.pointer.comp">[atomic.types.pointer.comp]</a>
 
-| Op  | Computation |
-| --- | ----------- |
-| `add` | `+`         | addition | `sub` | `-` | subtraction |
-| `max` |             | maximum | `min` |     | minimum |
+|       |     |          |       |     |             |
+| ----- | --- | -------- | ----- | --- | ----------- |
+| `add` | `+` | addition | `sub` | `-` | subtraction |
+| `max` |     | maximum  | `min` |     | minimum     |
 
 ``` cpp
 T* fetch_key(\seeabovenc operand, memory_order order = memory_order::seq_cst) volatile noexcept;

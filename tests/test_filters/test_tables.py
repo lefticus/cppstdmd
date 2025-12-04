@@ -440,6 +440,68 @@ def test_floattable_with_hdstyle_headers():
     assert "\\capsep" not in output
 
 
+def test_floattable_with_mixed_header_styles():
+    r"""Test floattable with mixed header styles (macro + plain text)
+
+    This tests the case from locales.tex where one header uses \lhdr{} and the
+    other is plain text with \tcode{} macro. Example: facet.num.put.int table.
+    """
+    latex = r"""
+\begin{floattable}{Integer conversions}{facet.num.put.int}
+{lc}
+\topline
+\lhdr{State}  &  \tcode{stdio} equivalent  \\ \capsep
+\tcode{basefield == ios_base::oct} & \tcode{\%o} \\
+\tcode{basefield == ios_base::hex} & \tcode{\%x} \\
+\end{floattable}
+"""
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    normalized = normalize_table_whitespace(output)
+    # Should have BOTH headers - "State" from \lhdr and "`stdio` equivalent" from plain text
+    assert "| State" in normalized
+    assert "`stdio` equivalent |" in normalized
+    # Should have data rows
+    assert "`basefield == ios_base::oct`" in output
+    assert "`%o`" in output
+    # Should NOT have LaTeX commands
+    assert "\\lhdr" not in output
+    assert "\\capsep" not in output
+
+
+def test_floattable_with_nested_braces_in_headers():
+    r"""Test floattable with nested braces in headers like \chdr{\tcode{float16_t}}
+
+    This is from basic.extended.fp table where headers have macros inside header macros.
+    The lazy regex (.-) would incorrectly match to the first } inside \tcode{}.
+    """
+    latex = r"""
+\begin{floattable}{Extended floating-point properties}{basic.extended.fp}{lccc}
+\topline
+\lhdr{Parameter} & \chdr{\tcode{float16_t}} & \chdr{\tcode{float32_t}} &
+\rhdr{\tcode{bfloat16_t}} \\
+\capsep
+ISO/IEC/IEEE 60559 name & binary16 & binary32 & N/A \\
+\end{floattable}
+"""
+    output, code = run_pandoc_with_filter(latex)
+    assert code == 0
+    normalized = normalize_table_whitespace(output)
+    # Headers should be extracted with nested macros handled correctly
+    assert "| Parameter |" in normalized
+    # The \tcode macros should be converted to backticks
+    assert "`float16_t`" in normalized
+    assert "`float32_t`" in normalized
+    assert "`bfloat16_t`" in normalized
+    # Should NOT have broken extraction (missing closing braces)
+    assert "\\texttt{float16_t" not in output  # Missing closing }
+    assert "\\tcode{" not in output
+    # Should NOT have LaTeX commands
+    assert "\\chdr" not in output
+    assert "\\rhdr" not in output
+    assert "\\lhdr" not in output
+
+
 def test_floattable_trailing_blank_line():
     r"""Test that tables have trailing blank lines to separate from following content"""
     latex = r"""

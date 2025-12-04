@@ -9990,8 +9990,8 @@ meanings listed in [[fs.enum.perms]].
 
 **Table: Enum class `perms`** <a id="fs.enum.perms">[fs.enum.perms]</a>
 
-| Name | Value | POSIX | Definition or notes | (octal) | macro |
-| ---- | ----- | ----- | ------------------- | ------- | ----- |
+| Name | Value | POSIX | Definition or notes | (octal) | macro |     |
+| ---- | ----- | ----- | ------------------- | ------- | ----- | --- |
 | `none` | `0`   |       | There are no permissions set for the file. |
 | `owner_read` | `0400` | `S_IRUSR` | Read permission, owner |
 | `owner_write` | `0200` | `S_IWUSR` | Write permission, owner |
