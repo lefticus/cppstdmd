@@ -241,8 +241,9 @@ class AdventureGame {
 
     /**
      * Show current location
+     * @param {boolean} scrollToTop - Whether to scroll content panel to top (default true)
      */
-    async showLocation() {
+    async showLocation(scrollToTop = true) {
         const section = this.world.getSection(this.player.currentLocation);
         if (!section) {
             this.terminal.print('Error: Location not found.');
@@ -290,7 +291,7 @@ class AdventureGame {
         }
 
         // Load content into side panel
-        await this.loadContentPanel(section);
+        await this.loadContentPanel(section, scrollToTop);
     }
 
     /**
@@ -315,8 +316,10 @@ class AdventureGame {
 
     /**
      * Load content into the side panel
+     * @param {object} section - Section data
+     * @param {boolean} scrollToTop - Whether to scroll to top after loading (default true)
      */
-    async loadContentPanel(section) {
+    async loadContentPanel(section, scrollToTop = true) {
         if (!this.contentPanel) return;
 
         const titleEl = document.getElementById('content-title');
@@ -349,6 +352,11 @@ class AdventureGame {
 
             // Bind click handlers for wikilinks
             this.bindWikilinks();
+
+            // Scroll to top if requested
+            if (scrollToTop) {
+                this.contentPanel.scrollTop = 0;
+            }
         } catch (error) {
             this.contentPanel.innerHTML = `<p>Error loading content: ${error.message}</p>`;
         }
@@ -789,7 +797,8 @@ class AdventureGame {
             this.terminal.print('You have unlocked the Chrono Compass.');
         }
 
-        this.showLocation();
+        // Don't scroll to top on timeshift - preserve scroll position
+        this.showLocation(false);
     }
 
     cmdEra() {
