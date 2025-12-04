@@ -7,8 +7,8 @@ Generate game data for the C++ Standard Adventure Game.
 This script extracts sections from markdown files and generates JSON data files
 for the adventure game: world map, NPCs, items, quests, and puzzles.
 
-Uses the existing LabelIndexer for extracting label→chapter mappings from
-the LaTeX source, ensuring consistency with the main conversion pipeline.
+Uses the cpp_std_labels.lua file generated during markdown conversion to get
+the correct label→chapter mappings (stable names to markdown file stems).
 
 Usage:
     python3 generate_adventure_data.py [--output DIR] [--versions DIR...]
@@ -28,13 +28,6 @@ import yaml
 sys.path.insert(0, str(Path(__file__).parent / "src"))
 
 from cpp_std_converter.utils import iter_section_headings
-
-try:
-    from cpp_std_converter.label_indexer import LabelIndexer
-
-    HAS_LABEL_INDEXER = True
-except ImportError:
-    HAS_LABEL_INDEXER = False
 
 # Realm theming - maps stable name prefix to (display_name, description, theme)
 REALM_THEMES: dict[str, tuple[str, str, str]] = {
@@ -88,30 +81,32 @@ ERA_NAMES: dict[str, str] = {
 }
 
 
-def get_label_to_chapter_from_latex(cplusplus_draft_dir: Path) -> dict[str, str]:
+def load_label_to_chapter_from_lua(md_dir: Path) -> dict[str, str]:
     """
-    Use LabelIndexer to get the authoritative label→chapter mapping from LaTeX source.
+    Load the label→chapter mapping from cpp_std_labels.lua in the markdown directory.
+
+    This file is generated during markdown conversion and contains the correct
+    mapping of stable names to markdown file stems (not LaTeX filenames).
 
     Args:
-        cplusplus_draft_dir: Path to the cplusplus-draft repository
+        md_dir: Path to the markdown output directory (e.g., n4950/)
 
     Returns:
-        Dict mapping stable name → chapter name (e.g., "class.copy" → "class")
+        Dict mapping stable name → markdown file stem (e.g., "dcl.dcl" → "dcl")
     """
-    if not HAS_LABEL_INDEXER:
+    lua_file = md_dir / "cpp_std_labels.lua"
+    if not lua_file.exists():
         return {}
 
-    source_dir = cplusplus_draft_dir / "source"
-    if not source_dir.exists():
-        return {}
+    content = lua_file.read_text(encoding="utf-8")
 
-    try:
-        indexer = LabelIndexer(source_dir)
-        indexer.build_index(use_stable_names=True)
-        return indexer.label_to_file
-    except Exception as e:
-        print(f"Warning: Failed to use LabelIndexer: {e}")
-        return {}
+    # Parse the Lua table format: return { ["key"] = "value", ... }
+    result = {}
+    for match in re.finditer(r'\["([^"]+)"\]\s*=\s*"([^"]+)"', content):
+        label, chapter = match.groups()
+        result[label] = chapter
+
+    return result
 
 
 def extract_sections_from_markdown(
@@ -292,15 +287,12 @@ def detect_era_availability(stable_name: str, version_dirs: list[Path]) -> list[
 def generate_world_map(
     primary_version_dir: Path,
     all_version_dirs: list[Path],
-    cplusplus_draft_dir: Path | None = None,
 ) -> dict[str, Any]:
     """Generate the complete world map from markdown content."""
-    # Get authoritative label→chapter mapping from LaTeX source if available
-    label_to_chapter: dict[str, str] = {}
-    if cplusplus_draft_dir:
-        label_to_chapter = get_label_to_chapter_from_latex(cplusplus_draft_dir)
-        if label_to_chapter:
-            print(f"  Using LabelIndexer: {len(label_to_chapter)} labels mapped")
+    # Get label→chapter mapping from the generated Lua file
+    label_to_chapter = load_label_to_chapter_from_lua(primary_version_dir)
+    if label_to_chapter:
+        print(f"  Loaded {len(label_to_chapter)} label mappings from cpp_std_labels.lua")
 
     sections = extract_sections_from_markdown(primary_version_dir, label_to_chapter)
     sections = infer_hierarchy(sections)
@@ -509,19 +501,12 @@ def generate_adventure_data(
         print(f"Error: Primary version directory not found: {primary_dir}")
         sys.exit(1)
 
-    # Find cplusplus-draft directory for LabelIndexer
-    cplusplus_draft_dir = base_dir / "cplusplus-draft"
-    if not cplusplus_draft_dir.exists():
-        cplusplus_draft_dir = None
-
     print("Generating adventure game data...")
     print(f"  Primary version: {primary_version}")
     print(f"  Output directory: {game_data_dir}")
-    if cplusplus_draft_dir:
-        print(f"  LaTeX source: {cplusplus_draft_dir}")
 
     # Generate world map
-    world_map = generate_world_map(primary_dir, version_dirs, cplusplus_draft_dir)
+    world_map = generate_world_map(primary_dir, version_dirs)
     print(f"  Extracted {len(world_map['sections'])} sections from markdown")
 
     # Load hand-crafted YAML content
