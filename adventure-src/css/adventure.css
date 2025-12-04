@@ -477,6 +477,105 @@ body.resizing * {
     background: rgba(0, 200, 83, 0.15);
 }
 
+/* === Morphdom Animation for Timewarp === */
+
+/* Animation duration controlled by CSS custom property (set via JS) */
+:root {
+    --morph-duration: 1.2s;
+}
+
+/* Speed presets - applied by adding class to body */
+body.animation-slow { --morph-duration: 2s; }
+body.animation-normal { --morph-duration: 1.2s; }
+body.animation-fast { --morph-duration: 0.5s; }
+body.animation-off { --morph-duration: 0s; }
+
+/* Elements being added grow in with green highlight */
+.morph-added {
+    animation: morphFadeIn var(--morph-duration) ease-out forwards;
+    overflow: hidden;
+}
+
+/* Elements with content changes pulse with blue highlight */
+.morph-changed {
+    animation: morphPulse var(--morph-duration) ease-in-out;
+}
+
+@keyframes morphFadeOut {
+    0% {
+        background-color: rgba(255, 100, 100, 0.4);
+        opacity: 1;
+        max-height: 500px;
+        margin-top: initial;
+        margin-bottom: initial;
+        padding-top: initial;
+        padding-bottom: initial;
+    }
+    40% {
+        background-color: rgba(255, 100, 100, 0.3);
+        opacity: 0.3;
+        max-height: 500px;
+    }
+    100% {
+        background-color: transparent;
+        opacity: 0;
+        max-height: 0;
+        margin-top: 0;
+        margin-bottom: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+        overflow: hidden;
+    }
+}
+
+/* Ensure removing elements collapse smoothly */
+.morph-removing {
+    background-color: rgba(255, 100, 100, 0.4) !important;
+    animation: morphFadeOut var(--morph-duration) ease-in-out forwards;
+    overflow: hidden;
+}
+
+@keyframes morphFadeIn {
+    0% {
+        background-color: rgba(100, 255, 100, 0.5);
+        opacity: 0;
+        max-height: 0;
+        margin-top: 0;
+        margin-bottom: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+    30% {
+        opacity: 1;
+        max-height: 500px;
+    }
+    60% {
+        background-color: rgba(100, 255, 100, 0.3);
+        max-height: 500px;
+        margin-top: initial;
+        margin-bottom: initial;
+        padding-top: initial;
+        padding-bottom: initial;
+    }
+    100% {
+        background-color: transparent;
+        opacity: 1;
+        max-height: 500px;
+    }
+}
+
+@keyframes morphPulse {
+    0% {
+        background-color: rgba(79, 195, 247, 0.4);
+    }
+    50% {
+        background-color: rgba(79, 195, 247, 0.2);
+    }
+    100% {
+        background-color: transparent;
+    }
+}
+
 /* === Print styles === */
 @media print {
     .adventure-terminal-container,

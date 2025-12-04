@@ -479,6 +479,55 @@ def copy_source_files(source_dir: Path, output_dir: Path) -> None:
             shutil.copy2(css_file, css_dst / css_file.name)
 
 
+def copy_raw_diffs_for_timewarp(output_dir: Path) -> None:
+    """Copy raw diff files for adjacent version pairs to enable timewarp animations.
+
+    The adventure game uses these diffs to animate content changes during era transitions.
+    We only deploy adjacent version pairs (~98MB) to keep deployment size reasonable.
+    Non-adjacent jumps use dynamic diff computation via jsdiff.
+    """
+    print("  Copying raw diffs for timewarp animations...")
+
+    # Adjacent version pairs - these are the only ones we deploy
+    adjacent_pairs = [
+        ("n3337", "n4140"),  # C++11 → C++14  (~6MB)
+        ("n4140", "n4659"),  # C++14 → C++17  (~19MB)
+        ("n4659", "n4861"),  # C++17 → C++20  (~26MB)
+        ("n4861", "n4950"),  # C++20 → C++23  (~23MB)
+        ("n4950", "trunk"),  # C++23 → C++26  (~24MB)
+    ]
+
+    base_dir = Path(__file__).parent
+    diffs_src_base = base_dir / "diffs"
+
+    if not diffs_src_base.exists():
+        print("    ⚠ diffs/ directory not found - run generate_diffs.py first")
+        return
+
+    total_files = 0
+    for from_era, to_era in adjacent_pairs:
+        pair_name = f"{from_era}_to_{to_era}"
+        src_dir = diffs_src_base / pair_name / "by_stable_name"
+
+        if not src_dir.exists():
+            print(f"    ⚠ {pair_name}/by_stable_name not found - skipping")
+            continue
+
+        # Create destination directory
+        dest_dir = output_dir / "diffs" / pair_name / "by_stable_name"
+        dest_dir.mkdir(parents=True, exist_ok=True)
+
+        # Copy all .diff files
+        diff_files = list(src_dir.glob("*.diff"))
+        for diff_file in diff_files:
+            shutil.copy2(diff_file, dest_dir / diff_file.name)
+        total_files += len(diff_files)
+
+        print(f"    Copied {len(diff_files)} diffs for {pair_name}")
+
+    print(f"  Total: {total_files} raw diff files copied")
+
+
 def copy_version_markdown(version_dirs: list[Path], output_dir: Path) -> None:
     """Copy markdown files from version directories to output for deployment.
 
@@ -603,6 +652,9 @@ def generate_adventure_data(
     if existing_version_dirs:
         print("  Copying markdown files for deployment...")
         copy_version_markdown(existing_version_dirs, output_dir)
+
+    # Copy raw diff files for timewarp animations
+    copy_raw_diffs_for_timewarp(output_dir)
 
     print("\nAdventure game data generation complete!")
 

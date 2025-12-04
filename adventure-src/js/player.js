@@ -60,6 +60,11 @@ class Player {
             activeQuests: [],
             completedQuests: [],
             questProgress: {},
+
+            // Settings
+            settings: {
+                animationSpeed: 'normal', // 'slow', 'normal', 'fast', 'off'
+            },
         };
     }
 
@@ -409,6 +414,45 @@ class Player {
             this.state.completedQuests.push(questId);
             this.save();
         }
+    }
+
+    // --- Settings ---
+
+    /**
+     * Get a setting value
+     * @param {string} key
+     * @returns {*}
+     */
+    getSetting(key) {
+        return this.state.settings?.[key];
+    }
+
+    /**
+     * Set a setting value
+     * @param {string} key
+     * @param {*} value
+     */
+    setSetting(key, value) {
+        if (!this.state.settings) {
+            this.state.settings = {};
+        }
+        this.state.settings[key] = value;
+        this.save();
+    }
+
+    /**
+     * Get animation duration in ms based on speed setting
+     * @returns {number}
+     */
+    getAnimationDuration() {
+        const speed = this.getSetting('animationSpeed') || 'normal';
+        const durations = {
+            'slow': 2000,
+            'normal': 1200,
+            'fast': 500,
+            'off': 0,
+        };
+        return durations[speed] ?? 1200;
     }
 
     // --- Export ---

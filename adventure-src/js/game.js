@@ -11,6 +11,12 @@ class AdventureGame {
         this.world = new World();
         this.player = new Player();
 
+        // Diff animator for timewarp animations
+        this.diffAnimator = new DiffAnimator(contentPanel);
+
+        // Era order for keyboard navigation (chronological order)
+        this.eraOrder = ['n3337', 'n4140', 'n4659', 'n4861', 'n4950', 'trunk'];
+
         // NPCs and other data
         this.npcs = [];
         this.items = [];
@@ -55,6 +61,9 @@ class AdventureGame {
             // Load or create player save
             const hasSave = this.player.load();
 
+            // Apply animation speed setting from saved preferences
+            this.updateAnimationClass();
+
             // Validate player location exists
             if (!this.world.getSection(this.player.currentLocation)) {
                 this.player.state.currentLocation = 'intro';
@@ -80,6 +89,9 @@ class AdventureGame {
 
             // Update UI
             this.updateStatusBar();
+
+            // Bind keyboard shortcuts for era navigation
+            this.bindKeyboardShortcuts();
 
             this.terminal.focus();
         } catch (error) {
@@ -201,6 +213,10 @@ class AdventureGame {
             'cls': () => this.terminal.clear(),
             'save': () => this.cmdSave(),
             'reset': (args) => this.cmdReset(args),
+
+            // Settings
+            'speed': (args) => this.cmdSpeed(args),
+            'animation': (args) => this.cmdSpeed(args),
         };
     }
 
@@ -748,6 +764,52 @@ class AdventureGame {
         this.terminal.print(`Realm: ${this.world.getRealm(section.realm)?.name || section.realm}`);
     }
 
+    /**
+     * Bind keyboard shortcuts for era navigation
+     */
+    bindKeyboardShortcuts() {
+        document.addEventListener('keydown', (e) => {
+            // Only handle shortcuts when not typing in terminal input
+            if (document.activeElement === this.terminal.input) return;
+
+            if (e.key === '[') {
+                e.preventDefault();
+                this.warpBackward();
+            } else if (e.key === ']') {
+                e.preventDefault();
+                this.warpForward();
+            }
+        });
+    }
+
+    /**
+     * Warp to the previous era (keyboard shortcut: [)
+     */
+    warpBackward() {
+        const currentIndex = this.eraOrder.indexOf(this.player.currentEra);
+        if (currentIndex > 0) {
+            const targetEra = this.eraOrder[currentIndex - 1];
+            this.terminal.print(`> timeshift ${this.world.getEraName(targetEra)}`);
+            this.doTimeshift(targetEra);
+        } else {
+            this.terminal.print('You are already in the earliest era (C++11).');
+        }
+    }
+
+    /**
+     * Warp to the next era (keyboard shortcut: ])
+     */
+    warpForward() {
+        const currentIndex = this.eraOrder.indexOf(this.player.currentEra);
+        if (currentIndex < this.eraOrder.length - 1) {
+            const targetEra = this.eraOrder[currentIndex + 1];
+            this.terminal.print(`> timeshift ${this.world.getEraName(targetEra)}`);
+            this.doTimeshift(targetEra);
+        } else {
+            this.terminal.print('You are already in the latest era (C++26).');
+        }
+    }
+
     cmdTimeshift(args) {
         if (args.length === 0) {
             this.terminal.print('Timeshift to which era?');
@@ -773,7 +835,17 @@ class AdventureGame {
             return;
         }
 
-        if (eraTag === this.player.currentEra) {
+        this.doTimeshift(eraTag);
+    }
+
+    /**
+     * Perform the actual timeshift with animation
+     * @param {string} eraTag - Target era tag (e.g., 'n4950')
+     */
+    async doTimeshift(eraTag) {
+        const oldEra = this.player.currentEra;
+
+        if (eraTag === oldEra) {
             this.terminal.print(`You are already in ${this.world.getEraName(eraTag)}.`);
             return;
         }
@@ -783,22 +855,120 @@ class AdventureGame {
             const section = this.world.getSection(this.player.currentLocation);
             this.terminal.print(`${section?.displayName || this.player.currentLocation} doesn't exist in ${this.world.getEraName(eraTag)}.`);
             this.terminal.print('You would be displaced to a nearby location.');
-            // Could implement displacement logic here
             return;
         }
 
+        const section = this.world.getSection(this.player.currentLocation);
+
         this.terminal.print('');
         this.terminal.print('*The world ripples as you shift through time...*');
+
+        // Update player era
+        const isFirst = this.player.setEra(eraTag);
+
+        // Update content panel title
+        const titleEl = document.getElementById('content-title');
+        if (titleEl) {
+            titleEl.textContent = `${section.displayName} [[${section.stableName}]]`;
+        }
+
+        // Get the new rendered HTML for the target era
+        const newHtml = await this.getRenderedSectionHtml(section, eraTag);
+
+        // Animate the transition using morphdom
+        let hasChanges = false;
+        if (newHtml && this.diffAnimator) {
+            const duration = this.player.getAnimationDuration();
+            const result = await this.diffAnimator.animateTransition(newHtml, duration);
+            hasChanges = result.hasChanges;
+
+            // Apply syntax highlighting and wikilink bindings after morph
+            if (typeof Prism !== 'undefined') {
+                Prism.highlightAllUnder(this.contentPanel);
+            }
+            this.bindWikilinks();
+        } else {
+            // Fallback: just load the content normally
+            await this.loadContentPanel(section, false);
+        }
+
+        if (hasChanges) {
+            this.terminal.print('*Changes shimmer into view...*');
+        } else {
+            this.terminal.print('*This section appears unchanged across time.*');
+        }
+
         this.terminal.print('');
 
-        const isFirst = this.player.setEra(eraTag);
         if (isFirst) {
             this.terminal.print('(First time travel! +50 XP)');
             this.terminal.print('You have unlocked the Chrono Compass.');
         }
 
-        // Don't scroll to top on timeshift - preserve scroll position
-        this.showLocation(false);
+        // Update terminal with location info and status bar
+        this.printLocationHeader(section);
+        this.updateStatusBar();
+    }
+
+    /**
+     * Print location header to terminal (without loading content panel)
+     */
+    printLocationHeader(section) {
+        const eraName = this.world.getEraName(this.player.currentEra);
+        const realm = this.world.getRealm(section.realm);
+
+        this.terminal.print('');
+        this.terminal.printLocation(eraName, section.displayName, section.stableName);
+        this.terminal.printSeparator('═');
+
+        if (section.stableName === section.realm && realm) {
+            this.terminal.print(realm.description);
+            this.terminal.print('');
+        }
+
+        this.terminal.print(section.description);
+
+        const exits = this.world.getExitDescriptions(section.stableName, this.player.currentEra);
+        if (exits.length > 0) {
+            this.terminal.print('');
+            this.terminal.print(`Exits: ${exits.join(', ')}`);
+        }
+
+        const npcsHere = this.getNPCsAtLocation(section.stableName);
+        if (npcsHere.length > 0) {
+            this.terminal.print('');
+            const npcNames = npcsHere.map(n => n.name).join(', ');
+            this.terminal.print(`You see: ${npcNames}`);
+        }
+
+        const itemsHere = this.getItemsAtLocation(section.stableName);
+        if (itemsHere.length > 0) {
+            this.terminal.print('');
+            const itemNames = itemsHere.map(i => `${i.name} (${i.rarity})`).join(', ');
+            this.terminal.print(`Items: ${itemNames}`);
+        }
+    }
+
+    /**
+     * Get rendered HTML for a section in a specific era (without updating DOM)
+     */
+    async getRenderedSectionHtml(section, era) {
+        if (!section) return null;
+
+        const chapter = section.chapter;
+        const url = `/${era}/${chapter}.md`;
+
+        try {
+            const response = await fetch(url);
+            if (!response.ok) return null;
+
+            const markdown = await response.text();
+            const sectionContent = this.extractSectionContent(markdown, section.stableName);
+
+            return this.renderMarkdown(sectionContent || 'Section content not found.');
+        } catch (error) {
+            return null;
+        }
     }
 
     cmdEra() {
@@ -1023,6 +1193,7 @@ NAVIGATION
 TIME TRAVEL
   timeshift <era>    - Travel to era (cpp11/14/17/20/23/26)
   era                - Show current era and list available
+  [ / ]              - Warp to previous/next era (keyboard shortcuts)
 
 INTERACTION
   talk [npc]         - Talk to an NPC
@@ -1078,6 +1249,45 @@ SYSTEM
         setTimeout(() => {
             window.location.reload();
         }, 1000);
+    }
+
+    cmdSpeed(args) {
+        const validSpeeds = ['slow', 'normal', 'fast', 'off'];
+        const currentSpeed = this.player.getSetting('animationSpeed') || 'normal';
+
+        if (args.length === 0) {
+            this.terminal.print('');
+            this.terminal.print(`Current animation speed: ${currentSpeed}`);
+            this.terminal.print('');
+            this.terminal.print('Available speeds:');
+            this.terminal.print('  slow   - 2 seconds (detailed view of changes)');
+            this.terminal.print('  normal - 1.2 seconds (default)');
+            this.terminal.print('  fast   - 0.5 seconds (quick transitions)');
+            this.terminal.print('  off    - instant (no animation)');
+            this.terminal.print('');
+            this.terminal.print('Usage: speed <slow|normal|fast|off>');
+            return;
+        }
+
+        const speed = args[0].toLowerCase();
+        if (!validSpeeds.includes(speed)) {
+            this.terminal.print(`Unknown speed: ${speed}`);
+            this.terminal.print('Valid options: slow, normal, fast, off');
+            return;
+        }
+
+        this.player.setSetting('animationSpeed', speed);
+        this.updateAnimationClass();
+        this.terminal.print(`Animation speed set to: ${speed}`);
+    }
+
+    /**
+     * Update body class to match animation speed setting
+     */
+    updateAnimationClass() {
+        const speed = this.player.getSetting('animationSpeed') || 'normal';
+        document.body.classList.remove('animation-slow', 'animation-normal', 'animation-fast', 'animation-off');
+        document.body.classList.add(`animation-${speed}`);
     }
 }
 
