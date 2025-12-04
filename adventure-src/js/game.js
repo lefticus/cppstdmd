@@ -329,8 +329,13 @@ class AdventureGame {
             const markdown = await response.text();
             const sectionContent = this.extractSectionContent(markdown, section.stableName);
 
-            // Render markdown (simple version - could use marked.js)
+            // Render markdown
             this.contentPanel.innerHTML = this.renderMarkdown(sectionContent || 'Section content not found.');
+
+            // Apply syntax highlighting to code blocks
+            if (typeof Prism !== 'undefined') {
+                Prism.highlightAllUnder(this.contentPanel);
+            }
         } catch (error) {
             this.contentPanel.innerHTML = `<p>Error loading content: ${error.message}</p>`;
         }
