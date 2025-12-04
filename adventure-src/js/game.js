@@ -200,7 +200,7 @@ class AdventureGame {
             'clear': () => this.terminal.clear(),
             'cls': () => this.terminal.clear(),
             'save': () => this.cmdSave(),
-            'reset': () => this.cmdReset(),
+            'reset': (args) => this.cmdReset(args),
         };
     }
 
@@ -1017,6 +1017,7 @@ SYSTEM
   help (h, ?)        - Show this help
   clear              - Clear terminal
   save               - Force save game
+  reset              - Reset game to initial state (requires confirmation)
 `);
     }
 
@@ -1025,9 +1026,35 @@ SYSTEM
         this.terminal.print('Game saved.');
     }
 
-    cmdReset() {
-        this.terminal.print('Are you sure you want to reset? Type "reset confirm" to confirm.');
-        // This is a simplified version - could implement proper confirmation
+    cmdReset(args) {
+        if (args.length === 0 || args[0].toLowerCase() !== 'confirm') {
+            this.terminal.print('');
+            this.terminal.print('⚠ WARNING: This will completely reset your game!');
+            this.terminal.print('');
+            this.terminal.print('You will lose:');
+            this.terminal.print('  - All visited locations');
+            this.terminal.print('  - All collected items');
+            this.terminal.print('  - All experience and level progress');
+            this.terminal.print('  - NPC interaction history');
+            this.terminal.print('  - Quest progress');
+            this.terminal.print('');
+            this.terminal.print('Type "reset confirm" to confirm the reset.');
+            return;
+        }
+
+        // User confirmed - perform reset
+        this.terminal.print('');
+        this.terminal.print('Resetting game...');
+        this.terminal.print('*The world fades and reforms around you...*');
+
+        // Clear all game-related localStorage
+        this.player.reset();
+        localStorage.removeItem('adventure-terminal-width');
+
+        // Reload the page to get a completely fresh state
+        setTimeout(() => {
+            window.location.reload();
+        }, 1000);
     }
 }
 
@@ -1040,4 +1067,125 @@ document.addEventListener('DOMContentLoaded', () => {
         window.game = new AdventureGame(terminalEl, contentEl);
         window.game.init();
     }
+
+    // Initialize resizable divider
+    initResizableDivider();
 });
+
+/**
+ * Initialize the resizable divider between terminal and content panels
+ */
+function initResizableDivider() {
+    const divider = document.getElementById('resize-divider');
+    const terminalContainer = document.querySelector('.adventure-terminal-container');
+    const contentContainer = document.querySelector('.adventure-content-container');
+    const main = document.querySelector('.adventure-main');
+
+    if (!divider || !terminalContainer || !contentContainer || !main) {
+        return;
+    }
+
+    let isDragging = false;
+    let startX = 0;
+    let startTerminalWidth = 0;
+
+    // Load saved width from localStorage
+    const savedWidth = localStorage.getItem('adventure-terminal-width');
+    if (savedWidth) {
+        const width = parseFloat(savedWidth);
+        if (width > 0 && width < 100) {
+            terminalContainer.style.width = `${width}%`;
+            contentContainer.style.width = `${100 - width}%`;
+        }
+    } else {
+        // Default 50/50 split
+        terminalContainer.style.width = '50%';
+        contentContainer.style.width = '50%';
+    }
+
+    divider.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        startX = e.clientX;
+        startTerminalWidth = terminalContainer.getBoundingClientRect().width;
+
+        divider.classList.add('dragging');
+        document.body.classList.add('resizing');
+
+        e.preventDefault();
+    });
+
+    document.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+
+        const mainRect = main.getBoundingClientRect();
+        const deltaX = e.clientX - startX;
+        const newTerminalWidth = startTerminalWidth + deltaX;
+
+        // Calculate percentage (accounting for divider width)
+        const dividerWidth = divider.getBoundingClientRect().width;
+        const availableWidth = mainRect.width - dividerWidth;
+        let terminalPercent = (newTerminalWidth / availableWidth) * 100;
+
+        // Clamp between 20% and 80%
+        terminalPercent = Math.max(20, Math.min(80, terminalPercent));
+
+        terminalContainer.style.width = `${terminalPercent}%`;
+        contentContainer.style.width = `${100 - terminalPercent}%`;
+    });
+
+    document.addEventListener('mouseup', () => {
+        if (!isDragging) return;
+
+        isDragging = false;
+        divider.classList.remove('dragging');
+        document.body.classList.remove('resizing');
+
+        // Save the width to localStorage
+        const terminalPercent = (terminalContainer.getBoundingClientRect().width /
+            (main.getBoundingClientRect().width - divider.getBoundingClientRect().width)) * 100;
+        localStorage.setItem('adventure-terminal-width', terminalPercent.toString());
+    });
+
+    // Handle touch events for mobile
+    divider.addEventListener('touchstart', (e) => {
+        if (e.touches.length === 1) {
+            isDragging = true;
+            startX = e.touches[0].clientX;
+            startTerminalWidth = terminalContainer.getBoundingClientRect().width;
+
+            divider.classList.add('dragging');
+            document.body.classList.add('resizing');
+
+            e.preventDefault();
+        }
+    });
+
+    document.addEventListener('touchmove', (e) => {
+        if (!isDragging || e.touches.length !== 1) return;
+
+        const mainRect = main.getBoundingClientRect();
+        const deltaX = e.touches[0].clientX - startX;
+        const newTerminalWidth = startTerminalWidth + deltaX;
+
+        const dividerWidth = divider.getBoundingClientRect().width;
+        const availableWidth = mainRect.width - dividerWidth;
+        let terminalPercent = (newTerminalWidth / availableWidth) * 100;
+
+        terminalPercent = Math.max(20, Math.min(80, terminalPercent));
+
+        terminalContainer.style.width = `${terminalPercent}%`;
+        contentContainer.style.width = `${100 - terminalPercent}%`;
+    });
+
+    document.addEventListener('touchend', () => {
+        if (!isDragging) return;
+
+        isDragging = false;
+        divider.classList.remove('dragging');
+        document.body.classList.remove('resizing');
+
+        const terminalPercent = (terminalContainer.getBoundingClientRect().width /
+            (main.getBoundingClientRect().width - divider.getBoundingClientRect().width)) * 100;
+        localStorage.setItem('adventure-terminal-width', terminalPercent.toString());
+    });
+}

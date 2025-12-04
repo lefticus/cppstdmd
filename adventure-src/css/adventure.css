@@ -98,12 +98,54 @@ body.adventure-page {
 /* === Main Layout: Split Screen === */
 .adventure-main {
     flex: 1;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1px;
+    display: flex;
     background: var(--border-color);
     overflow: hidden;
     min-height: 0;
+}
+
+/* === Resizable Divider === */
+.resize-divider {
+    width: 6px;
+    background: var(--border-color);
+    cursor: col-resize;
+    flex-shrink: 0;
+    position: relative;
+    transition: background 0.2s;
+}
+
+.resize-divider:hover,
+.resize-divider.dragging {
+    background: var(--accent-blue);
+}
+
+.resize-divider::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 2px;
+    height: 30px;
+    background: var(--text-secondary);
+    border-radius: 1px;
+    opacity: 0.5;
+}
+
+.resize-divider:hover::after,
+.resize-divider.dragging::after {
+    background: var(--text-primary);
+    opacity: 1;
+}
+
+/* Prevent text selection during resize */
+body.resizing {
+    cursor: col-resize;
+    user-select: none;
+}
+
+body.resizing * {
+    cursor: col-resize !important;
 }
 
 /* === Terminal Container === */

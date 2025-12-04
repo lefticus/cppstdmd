@@ -479,6 +479,39 @@ def copy_source_files(source_dir: Path, output_dir: Path) -> None:
             shutil.copy2(css_file, css_dst / css_file.name)
 
 
+def copy_version_markdown(version_dirs: list[Path], output_dir: Path) -> None:
+    """Copy markdown files from version directories to output for deployment.
+
+    This replaces symlinks with actual file copies so the site is fully deployable.
+    Only copies .md and .lua files needed by the adventure game.
+    """
+    for version_dir in version_dirs:
+        if not version_dir.exists():
+            continue
+
+        version_name = version_dir.name
+        dst_dir = output_dir / version_name
+
+        # Remove existing symlink if present
+        if dst_dir.is_symlink():
+            dst_dir.unlink()
+
+        # Create directory
+        dst_dir.mkdir(parents=True, exist_ok=True)
+
+        # Copy markdown files
+        md_count = 0
+        for md_file in version_dir.glob("*.md"):
+            shutil.copy2(md_file, dst_dir / md_file.name)
+            md_count += 1
+
+        # Copy lua files (cpp_std_labels.lua)
+        for lua_file in version_dir.glob("*.lua"):
+            shutil.copy2(lua_file, dst_dir / lua_file.name)
+
+        print(f"  Copied {md_count} markdown files to {version_name}/")
+
+
 def generate_adventure_data(
     output_dir: Path,
     primary_version: str = "n4950",
@@ -564,6 +597,12 @@ def generate_adventure_data(
     if adventure_src_dir.exists():
         copy_source_files(adventure_src_dir, output_dir)
         print(f"  Copied source files from {adventure_src_dir}")
+
+    # Copy markdown files from version directories (replaces symlinks for deployment)
+    existing_version_dirs = [d for d in version_dirs if d.exists()]
+    if existing_version_dirs:
+        print("  Copying markdown files for deployment...")
+        copy_version_markdown(existing_version_dirs, output_dir)
 
     print("\nAdventure game data generation complete!")
 
