@@ -1,0 +1,425 @@
+/**
+ * adventure.css - Styles for the C++ Standard Adventure Game
+ */
+
+/* === Variables === */
+:root {
+    --bg-dark: #0d1b2a;
+    --bg-medium: #1b2838;
+    --bg-light: #1e3a5f;
+    --border-color: #0f3460;
+    --text-primary: #e0e0e0;
+    --text-secondary: #a0a0a0;
+    --accent-blue: #4fc3f7;
+    --accent-green: #00c853;
+    --accent-gold: #ffd54f;
+    --accent-purple: #ce93d8;
+    --font-mono: 'Source Code Pro', 'Consolas', 'Monaco', monospace;
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+/* === Base Layout === */
+* {
+    box-sizing: border-box;
+}
+
+body.adventure-page {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-dark);
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    overflow: hidden;
+}
+
+/* === Header === */
+.adventure-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.5rem 1rem;
+    background: var(--bg-medium);
+    border-bottom: 1px solid var(--border-color);
+    flex-shrink: 0;
+}
+
+.adventure-header .logo {
+    font-family: var(--font-mono);
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--accent-green);
+    text-decoration: none;
+    padding: 0.25rem 0.5rem;
+    border: 1px solid var(--accent-green);
+    border-radius: 4px;
+}
+
+.adventure-header .logo:hover {
+    background: rgba(0, 200, 83, 0.1);
+}
+
+.adventure-header h1 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 500;
+    flex: 1;
+    color: var(--text-primary);
+}
+
+.player-status {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.era-badge,
+.level-badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    font-family: var(--font-mono);
+}
+
+.era-badge {
+    background: var(--bg-light);
+    color: var(--accent-blue);
+    border: 1px solid var(--accent-blue);
+}
+
+.level-badge {
+    background: rgba(0, 200, 83, 0.1);
+    color: var(--accent-green);
+    border: 1px solid var(--accent-green);
+}
+
+/* === Main Layout: Split Screen === */
+.adventure-main {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border-color);
+    overflow: hidden;
+    min-height: 0;
+}
+
+/* === Terminal Container === */
+.adventure-terminal-container {
+    background: var(--bg-dark);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.adventure-terminal {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    line-height: 1.5;
+    padding: 1rem;
+    overflow: hidden;
+}
+
+/* Terminal Output */
+.terminal-output {
+    flex: 1;
+    overflow-y: auto;
+    padding-bottom: 0.5rem;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-color) transparent;
+}
+
+.terminal-output::-webkit-scrollbar {
+    width: 8px;
+}
+
+.terminal-output::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.terminal-output::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 4px;
+}
+
+.terminal-line {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    margin: 0;
+    padding: 0;
+}
+
+.terminal-line.command {
+    color: var(--accent-blue);
+}
+
+.terminal-line.separator {
+    color: var(--text-secondary);
+}
+
+/* Special terminal styling */
+.terminal-line .era-tag {
+    color: var(--accent-blue);
+    font-weight: 600;
+}
+
+.terminal-line .location-name {
+    color: var(--accent-gold);
+    font-weight: 600;
+}
+
+.terminal-line .stable-name {
+    color: var(--text-secondary);
+}
+
+/* Terminal Input */
+.terminal-input-line {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-top: 1px solid var(--border-color);
+    padding-top: 0.75rem;
+    margin-top: 0.5rem;
+    flex-shrink: 0;
+}
+
+.terminal-prompt {
+    color: var(--accent-green);
+    font-weight: 600;
+    user-select: none;
+}
+
+.terminal-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    font-family: var(--font-mono);
+    font-size: 14px;
+    outline: none;
+    caret-color: var(--accent-green);
+}
+
+.terminal-input::placeholder {
+    color: var(--text-secondary);
+    opacity: 0.5;
+}
+
+.terminal-input:disabled {
+    opacity: 0.5;
+}
+
+/* === Content Panel === */
+.adventure-content-container {
+    background: var(--bg-medium);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.content-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 1rem;
+    background: var(--bg-dark);
+    border-bottom: 1px solid var(--border-color);
+    flex-shrink: 0;
+}
+
+.content-header h2 {
+    margin: 0;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--accent-blue);
+    font-family: var(--font-mono);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.adventure-content {
+    flex: 1;
+    padding: 1.5rem;
+    overflow-y: auto;
+    line-height: 1.7;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-color) transparent;
+}
+
+.adventure-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.adventure-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.adventure-content::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 4px;
+}
+
+/* Content Typography */
+.adventure-content h1,
+.adventure-content h2,
+.adventure-content h3,
+.adventure-content h4 {
+    color: var(--accent-blue);
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.adventure-content h1:first-child,
+.adventure-content h2:first-child,
+.adventure-content h3:first-child {
+    margin-top: 0;
+}
+
+.adventure-content p {
+    margin: 0 0 1rem;
+}
+
+.adventure-content ul,
+.adventure-content ol {
+    margin: 0 0 1rem;
+    padding-left: 1.5rem;
+}
+
+.adventure-content li {
+    margin-bottom: 0.25rem;
+}
+
+.adventure-content a {
+    color: var(--accent-blue);
+    text-decoration: none;
+}
+
+.adventure-content a:hover {
+    text-decoration: underline;
+}
+
+/* Code in content */
+.adventure-content code {
+    background: var(--bg-dark);
+    padding: 0.15rem 0.4rem;
+    border-radius: 3px;
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+    color: var(--accent-gold);
+}
+
+.adventure-content pre {
+    background: var(--bg-dark);
+    padding: 1rem;
+    border-radius: 6px;
+    overflow-x: auto;
+    margin: 1rem 0;
+    border: 1px solid var(--border-color);
+}
+
+.adventure-content pre code {
+    background: transparent;
+    padding: 0;
+    color: var(--text-primary);
+}
+
+/* === Footer === */
+.adventure-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    background: var(--bg-medium);
+    border-top: 1px solid var(--border-color);
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    flex-shrink: 0;
+}
+
+.adventure-footer a {
+    color: var(--accent-blue);
+    text-decoration: none;
+}
+
+.adventure-footer a:hover {
+    text-decoration: underline;
+}
+
+/* === Responsive === */
+@media (max-width: 1024px) {
+    .adventure-main {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr;
+    }
+
+    .adventure-header h1 {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .adventure-header {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .adventure-header h1 {
+        order: 3;
+        width: 100%;
+        font-size: 0.9rem;
+    }
+
+    .player-status {
+        margin-left: auto;
+    }
+
+    .adventure-terminal {
+        font-size: 13px;
+        padding: 0.75rem;
+    }
+
+    .adventure-content {
+        padding: 1rem;
+    }
+
+    .adventure-footer {
+        flex-direction: column;
+        gap: 0.25rem;
+        text-align: center;
+    }
+}
+
+/* === Animations === */
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+}
+
+.terminal-input:focus + .cursor-blink {
+    animation: blink 1s infinite;
+}
+
+/* === Print styles === */
+@media print {
+    .adventure-terminal-container,
+    .adventure-footer {
+        display: none;
+    }
+
+    .adventure-main {
+        display: block;
+    }
+
+    .adventure-content-container {
+        height: auto;
+        overflow: visible;
+    }
+}

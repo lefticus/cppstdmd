@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C++ Standard Adventure - cppevo</title>
+    <meta name="description" content="Explore the C++ standard as an interactive text adventure game. Navigate between C++ eras, collect knowledge, and learn the language.">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="/css/adventure.css">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Markdown rendering -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <!-- Syntax highlighting for code blocks -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1/themes/prism-tomorrow.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1/prism.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-cpp.min.js"></script>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎮</text></svg>">
+</head>
+<body class="adventure-page">
+    <header class="adventure-header">
+        <a href="/" class="logo">cppevo</a>
+        <h1>C++ Standard Adventure</h1>
+        <div class="player-status">
+            <span class="era-badge" id="era-badge">C++23</span>
+            <span class="level-badge" id="level-badge">Level 1</span>
+        </div>
+    </header>
+
+    <main class="adventure-main">
+        <!-- Left: Terminal -->
+        <section class="adventure-terminal-container">
+            <div id="adventure-terminal" class="adventure-terminal"></div>
+        </section>
+
+        <!-- Right: Content Panel -->
+        <section class="adventure-content-container">
+            <div class="content-header">
+                <h2 id="content-title">Welcome</h2>
+            </div>
+            <div id="adventure-content" class="adventure-content">
+                <p>Welcome to the C++ Standard Adventure!</p>
+                <p>Use the terminal on the left to explore the C++ standard documentation
+                   as an interactive world.</p>
+                <h3>Quick Start</h3>
+                <ul>
+                    <li><code>look</code> - View your current location</li>
+                    <li><code>go north/south/east/west</code> - Navigate between sections</li>
+                    <li><code>enter &lt;area&gt;</code> - Enter a sub-section</li>
+                    <li><code>exit</code> - Return to parent section</li>
+                    <li><code>timeshift cpp20</code> - Travel to a different C++ era</li>
+                    <li><code>help</code> - See all commands</li>
+                </ul>
+                <h3>About</h3>
+                <p>This game transforms the C++ standard into an explorable world.
+                   Each section becomes a location you can visit. Travel through time
+                   to see how C++ has evolved from C++11 to C++26.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="adventure-footer">
+        <span>C++ Standard Adventure | <a href="/">Back to cppevo</a></span>
+        <span>
+            <a href="https://github.com/lefticus/cppstdmd" target="_blank">GitHub</a>
+        </span>
+    </footer>
+
+    <!-- Game scripts (load in order due to dependencies) -->
+    <script src="/js/adventure/terminal.js"></script>
+    <script src="/js/adventure/world.js"></script>
+    <script src="/js/adventure/player.js"></script>
+    <script src="/js/adventure/game.js"></script>
+</body>
+</html>
