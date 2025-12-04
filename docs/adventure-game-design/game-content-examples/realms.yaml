@@ -1,0 +1,167 @@
+# Realm Definitions
+# Theming and descriptions for each top-level chapter (realm) in the game world.
+#
+# The realm key matches the first part of stable names (e.g., "class" for [[class.mem]])
+
+realms:
+  intro:
+    name: The Grand Entrance
+    description: Where all journeys through the Standard begin
+    theme: welcoming
+    ambiance: |
+      Massive doors open to reveal the scope of C++.
+      Signs point to distant realms, each promising
+      different aspects of the language to explore.
+
+  lex:
+    name: Lexicon Tower
+    description: A tall library of lexical knowledge and tokens
+    theme: scholarly
+    ambiance: |
+      Endless shelves of token definitions spiral upward.
+      The soft rustle of parsing echoes through the halls.
+      Here, source code is first given meaning.
+
+  basic:
+    name: The Foundations
+    description: Ancient temple ruins inscribed with fundamental laws
+    theme: ancient
+    ambiance: |
+      Stone tablets line the walls, each bearing a core truth.
+      Object lifetimes, scope rules, the one-definition rule...
+      These foundations support everything built above.
+
+  expr:
+    name: Expression Fields
+    description: Open testing grounds for expressions and operators
+    theme: experimental
+    ambiance: |
+      Operators float in the air, combining and evaluating.
+      Values transform before your eyes as expressions resolve.
+      Precedence and associativity govern all.
+
+  stmt:
+    name: Statement Sanctum
+    description: Control flow chambers with branching paths
+    theme: labyrinthine
+    ambiance: |
+      Corridors branch and loop based on conditions.
+      if/else doors, while spiral staircases, switch elevators...
+      The flow of execution is made visible here.
+
+  dcl:
+    name: Declaration Domain
+    description: Bureaucratic halls of formal declarations
+    theme: governmental
+    ambiance: |
+      Forms and declarations fill endless filing cabinets.
+      Specifiers and qualifiers stamp each entry.
+      Nothing exists until properly declared.
+
+  class:
+    name: Class Citadel
+    description: Medieval castle with towers of inheritance
+    theme: medieval
+    ambiance: |
+      Banners bearing class hierarchies hang from battlements.
+      Constructors forge new objects in the depths.
+      Destructors ensure orderly dissolution.
+
+  temp:
+    name: Template Tundra
+    description: Frozen crystalline structures of abstract patterns
+    theme: arctic
+    ambiance: |
+      Ice formations take the shape of template parameters.
+      Each crystal reflects infinite instantiation possibilities.
+      Specializations glitter like snowflakes, each unique.
+
+  except:
+    name: Exception Caverns
+    description: Underground tunnels with try-catch bridges
+    theme: subterranean
+    ambiance: |
+      Exceptions fly through the darkness like bats.
+      try blocks span chasms, catch handlers wait below.
+      Stack unwinding echoes through the depths.
+
+  concepts:
+    name: Concept Cathedral
+    description: Grand cathedral of constraints and requirements
+    theme: gothic
+    ambiance: |
+      Stained glass windows depict constraint expressions.
+      Requires clauses are carved into every arch.
+      This magnificent structure was built in the C++20 era.
+
+  library:
+    name: The Standard Library
+    description: Grand entrance hall to the library realms
+    theme: grand
+    ambiance: |
+      Doors lead to countless specialized collections.
+      Containers, algorithms, utilities, I/O streams...
+      The accumulated wisdom of the standard library awaits.
+
+  containers:
+    name: Container Harbor
+    description: Docks with different container ships
+    theme: nautical
+    ambiance: |
+      Ships of varying sizes bob at the docks.
+      vector galleons, map frigates, array dinghies...
+      Each vessel holds data in its own unique way.
+
+  algorithms:
+    name: Algorithm Academy
+    description: Training grounds for algorithmic arts
+    theme: athletic
+    ambiance: |
+      Students practice sort forms and find techniques.
+      transform masters demonstrate their art.
+      The complexity of each algorithm is posted prominently.
+
+  iterators:
+    name: Iterator Isle
+    description: Bridge-connected islands of traversal
+    theme: archipelago
+    ambiance: |
+      Islands represent iterator categories.
+      Bridges connect them in a hierarchy.
+      Forward, bidirectional, random access - each has its island.
+
+  ranges:
+    name: Range Frontier
+    description: New frontier territory of composable views
+    theme: frontier
+    ambiance: |
+      A vast new territory opened in C++20.
+      Views compose like building blocks.
+      Lazy evaluation stretches to the horizon.
+
+  thread:
+    name: Thread Nexus
+    description: Multi-dimensional concurrent hub
+    theme: futuristic
+    ambiance: |
+      Multiple timelines run simultaneously.
+      Mutexes guard critical intersections.
+      Atomic operations flash at impossible speeds.
+
+  time:
+    name: Chrono Clocktower
+    description: Giant clockwork tower of time utilities
+    theme: clockwork
+    ambiance: |
+      Gears of duration and time_point interlock perfectly.
+      Clocks tick at various rates on different floors.
+      Time zones are mapped on grand displays.
+
+  mem:
+    name: Memory Depths
+    description: Deep caverns of memory management
+    theme: cavernous
+    ambiance: |
+      Stalactites of allocators hang from above.
+      Pools of memory glimmer in the darkness.
+      Smart pointers light the way through dangerous terrain.

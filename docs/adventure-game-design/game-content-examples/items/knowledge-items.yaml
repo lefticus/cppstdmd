@@ -1,0 +1,154 @@
+# yaml-language-server: $schema=../schemas/item.schema.json
+#
+# Knowledge Items
+# Scrolls and crystals that represent C++ knowledge.
+
+items:
+  # === Language Scrolls ===
+
+  - id: raii_scroll
+    name: RAII Scroll
+    category: language_scroll
+    rarity: uncommon
+    description: Fundamental wisdom about resource management.
+    lore: |
+      "In ancient times, resources were managed by hand,
+       leading to leaks and corruption. Then came RAII:
+       acquire in constructor, release in destructor.
+       The destructor always runs. Always.
+
+       Wrap every resource. Trust the stack.
+       Let scope be your guardian."
+
+    sourceSection: class.dtor
+
+    effects:
+      statBoost:
+        fundamentals: 2
+
+  - id: smart_pointer_scroll
+    name: Smart Pointer Scroll
+    category: language_scroll
+    rarity: uncommon
+    description: Knowledge of automatic memory management.
+    lore: |
+      "Three pointers guard the realm of memory:
+
+       unique_ptr - The Exclusive Guardian
+       One owner, one pointer, zero overhead.
+       When it dies, so does what it guards.
+
+       shared_ptr - The Collective Watch
+       Many may hold it, counted and tracked.
+       Only when the last releases does it fall.
+
+       weak_ptr - The Silent Observer
+       Watches but does not own. Breaks the cycles
+       that would trap shared_ptr in eternal life."
+
+    sourceSection: mem.res.smartptr
+
+    effects:
+      statBoost:
+        fundamentals: 1
+        library: 1
+
+  # === Pattern Crystals ===
+
+  - id: lambda_mastery_crystal
+    name: Lambda Mastery Crystal
+    category: pattern_crystal
+    rarity: rare
+    description: Crystallized understanding of lambda expressions.
+    lore: |
+      "From simple captures to generic templates,
+       the lambda evolved through the ages:
+
+       C++11: Birth - [captures](params){ body }
+       C++14: Generic - auto parameters
+       C++17: Constexpr - compile-time lambdas
+       C++20: Templates - explicit template params
+
+       A lambda is not just syntax sugar.
+       It is a function object, born of the compiler,
+       living in the scope that created it."
+
+    sourceQuest: lambda_evolution
+
+    effects:
+      statBoost:
+        modernCpp: 5
+
+  - id: crtp_crystal
+    name: CRTP Crystal
+    category: pattern_crystal
+    rarity: rare
+    description: The secret of the Curiously Recurring Template Pattern.
+    lore: |
+      "To know thyself at compile time:
+
+       template<typename Derived>
+       class Base {
+         void interface() {
+           static_cast<Derived*>(this)->impl();
+         }
+       };
+
+       class Concrete : public Base<Concrete> {
+         void impl() { /* ... */ }
+       };
+
+       The base knows its child. The child inherits
+       the base that knows it. A curious recursion
+       that enables static polymorphism."
+
+    sourceSection: temp.param
+
+    effects:
+      statBoost:
+        metaprogramming: 3
+
+  # === Temporal Fragments ===
+
+  - id: generic_lambda_shard
+    name: Generic Lambda Shard
+    category: temporal_fragment
+    rarity: uncommon
+    description: A fragment of C++14's generic lambda innovation.
+    lore: |
+      "Before C++14, every lambda was locked to specific types.
+       Then came auto parameters, and lambdas became generic:
+
+       auto print = [](auto x) { std::cout << x; };
+
+       One lambda, infinite types. The template power
+       of functor classes, with the brevity of lambdas."
+
+    sourceEra: n4140
+
+    effects:
+      statBoost:
+        modernCpp: 2
+
+  - id: lambda_template_shard
+    name: Lambda Template Shard
+    category: temporal_fragment
+    rarity: rare
+    description: A fragment of C++20's template lambda capability.
+    lore: |
+      "In C++20, lambdas gained explicit template syntax:
+
+       []<typename T>(std::vector<T>& v) {
+         // T is explicitly named, not just auto
+       };
+
+       The full power of templates, in lambda form.
+       Constraints, concepts, SFINAE - all available
+       in these compact function objects."
+
+    sourceEra: n4861
+
+    effects:
+      statBoost:
+        modernCpp: 2
+        metaprogramming: 1

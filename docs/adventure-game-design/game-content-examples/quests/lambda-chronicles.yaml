@@ -1,0 +1,82 @@
+# yaml-language-server: $schema=../schemas/quest.schema.json
+#
+# The Lambda Chronicles
+# A time-travel quest tracing the evolution of lambda expressions through C++ history.
+
+id: lambda_evolution
+title: The Lambda Chronicles
+description: |
+  Trace the evolution of lambda expressions through C++ history.
+  Travel through time to witness how this powerful feature grew
+  from simple inline functions to template-capable constructs.
+type: time_travel
+difficulty: medium
+minLevel: 10
+prerequisites:
+  - basic_exploration
+  - chrono_compass_unlock
+
+giver: template_sage
+giverLocation: expr.prim.lambda
+
+steps:
+  - instruction: Visit expr.prim.lambda in C++11 to witness lambda's birth
+    target:
+      section: expr.prim.lambda
+      era: n3337
+    onComplete:
+      dialogue: |
+        Behold! Lambdas were born in C++11.
+        Notice the capture syntax with square brackets: [&], [=], [x].
+        For the first time, we could write inline function objects
+        without the boilerplate of functor classes.
+      xp: 50
+
+  - instruction: See generic lambdas emerge in C++14
+    target:
+      section: expr.prim.lambda
+      era: n4140
+    onComplete:
+      dialogue: |
+        In C++14, lambdas gained the power of auto parameters!
+        Now a single lambda can work with multiple types:
+          auto add = [](auto a, auto b) { return a + b; };
+        No more writing separate lambdas for each type.
+      xp: 75
+      item: generic_lambda_shard
+
+  - instruction: Discover constexpr and capture improvements in C++17
+    target:
+      section: expr.prim.lambda
+      era: n4659
+    onComplete:
+      dialogue: |
+        C++17 made lambdas constexpr by default when possible!
+        Plus, we gained *this capture for copying the object:
+          [*this] { use_member(); }
+        Lambdas become even more versatile.
+      xp: 75
+
+  - instruction: Witness template lambdas in C++20
+    target:
+      section: expr.prim.lambda
+      era: n4861
+    onComplete:
+      dialogue: |
+        The circle is complete! C++20 lambdas can have explicit
+        template parameter lists:
+          []<typename T>(T x) { ... }
+        Lambdas now have the full power of templates.
+        They've grown from simple syntactic sugar to a
+        cornerstone of modern C++ programming.
+      xp: 100
+      item: lambda_template_shard
+
+rewards:
+  experience: 500
+  items:
+    - lambda_mastery_crystal
+  title: Lambda Historian
+  statBoost:
+    modernCpp: 5
+    metaprogramming: 2

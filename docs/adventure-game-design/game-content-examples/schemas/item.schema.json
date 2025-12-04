@@ -1,0 +1,99 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "item.schema.json",
+  "title": "Item Definition",
+  "description": "Schema for adventure game item definitions",
+  "type": "object",
+  "properties": {
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "category", "rarity", "description"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "description": "Unique identifier (snake_case)"
+          },
+          "name": {
+            "type": "string",
+            "description": "Display name"
+          },
+          "category": {
+            "type": "string",
+            "enum": [
+              "language_scroll",
+              "library_tome",
+              "pattern_crystal",
+              "temporal_fragment",
+              "puzzle_key",
+              "certificate"
+            ],
+            "description": "Item category"
+          },
+          "rarity": {
+            "type": "string",
+            "enum": ["common", "uncommon", "rare", "legendary"],
+            "description": "Item rarity"
+          },
+          "description": {
+            "type": "string",
+            "description": "Short description"
+          },
+          "lore": {
+            "type": "string",
+            "description": "Detailed text for examine command"
+          },
+          "sourceSection": {
+            "type": "string",
+            "description": "Stable name where item is found"
+          },
+          "sourceQuest": {
+            "type": "string",
+            "description": "Quest ID that rewards this item"
+          },
+          "sourceEra": {
+            "type": "string",
+            "enum": ["n3337", "n4140", "n4659", "n4861", "n4950", "trunk"],
+            "description": "Only available in specific era"
+          },
+          "effects": {
+            "type": "object",
+            "properties": {
+              "statBoost": {
+                "type": "object",
+                "properties": {
+                  "fundamentals": { "type": "integer" },
+                  "library": { "type": "integer" },
+                  "metaprogramming": { "type": "integer" },
+                  "modernCpp": { "type": "integer" }
+                }
+              },
+              "unlocks": {
+                "type": "array",
+                "items": { "type": "string" },
+                "description": "Sections unlocked"
+              },
+              "questProgress": {
+                "type": "array",
+                "items": { "type": "string" },
+                "description": "Quests advanced"
+              }
+            }
+          },
+          "usable": {
+            "type": "boolean",
+            "default": false,
+            "description": "Can be used"
+          },
+          "useEffect": {
+            "type": "string",
+            "description": "What happens on use"
+          }
+        }
+      }
+    }
+  },
+  "required": ["items"]
+}

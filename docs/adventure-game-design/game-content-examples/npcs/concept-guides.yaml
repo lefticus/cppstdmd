@@ -1,0 +1,110 @@
+# yaml-language-server: $schema=../schemas/npc.schema.json
+#
+# Concept Guide NPCs
+# These NPCs personify core C++ concepts and teach players about them.
+
+npcs:
+  - id: raii_guardian
+    name: RAII Guardian
+    type: concept_personification
+    appearance: An armored figure holding a smart pointer as a shield
+    locations:
+      - mem.res
+      - class.dtor
+      - class.ctor
+      - basic.life
+
+    dialogue:
+      greeting:
+        default: |
+          Welcome, traveler! I am the guardian of resources.
+          In these halls, we ensure nothing is ever leaked.
+        n3337: |
+          Welcome to C++11! At last, we have unique_ptr and shared_ptr
+          as standard tools. No more raw new/delete pairs!
+        n4950: |
+          Greetings! In modern times, we have pmr allocators,
+          std::expected for errors, and ever-smarter pointers.
+
+      topics:
+        raii: |
+          Resource Acquisition Is Initialization.
+          The fundamental principle: acquire resources in constructors,
+          release them in destructors. The destructor ALWAYS runs
+          when the object goes out of scope. Always.
+        smart_pointers: |
+          Our arsenal against leaks:
+          - unique_ptr: exclusive ownership, zero overhead
+          - shared_ptr: shared ownership with reference counting
+          - weak_ptr: breaks cycles, observes without owning
+        leaks: |
+          Memory leaks are the ancient enemy. But RAII is your shield!
+          Wrap every resource in a class. Let destructors clean up.
+          Never call delete manually if you can avoid it.
+        exceptions: |
+          When exceptions fly, stack unwinding saves us.
+          Each destructor runs as the stack unwinds.
+          RAII makes exception-safe code almost automatic.
+
+    quests:
+      - memory_guardian_quest
+
+    trades:
+      - smart_pointer_scroll
+      - raii_fundamentals_tome
+
+  - id: template_sage
+    name: Template Sage
+    type: concept_personification
+    appearance: |
+      A wizened figure whose robes shimmer with angle brackets.
+      Template parameters float around them like mystical symbols.
+    locations:
+      - temp
+      - temp.param
+      - temp.arg
+      - temp.spec
+
+    dialogue:
+      greeting:
+        default: |
+          Ah, a seeker of generic wisdom! I am the Template Sage.
+          Here we craft code that works for any type.
+        n3337: |
+          Welcome to C++11! Variadic templates have arrived.
+          Finally, we can write templates with any number of arguments!
+        n4861: |
+          C++20 brings concepts! At last, we can constrain templates
+          with clear, readable requirements. No more SFINAE puzzles!
+        n4950: |
+          In C++23, we refine our art further.
+          Deducing this, explicit object parameters...
+          The metaprogramming possibilities grow ever richer.
+
+      topics:
+        templates: |
+          Templates are blueprints for the compiler.
+          Write once, instantiate for any type.
+          The compiler generates the actual code at compile time.
+        sfinae: |
+          Substitution Failure Is Not An Error.
+          If a template substitution fails, the compiler silently
+          removes that overload from consideration.
+          It's how we did constraints before concepts.
+        concepts: |
+          Concepts are named requirements for template parameters.
+          Instead of cryptic SFINAE, write:
+            template<std::integral T>
+          Clear intent, better error messages!
+        metaprogramming: |
+          Compile-time computation through templates.
+          Type traits, constexpr functions, template recursion...
+          We can compute almost anything before runtime!
+
+    quests:
+      - template_basics_quest
+      - concepts_journey
+
+    trades:
+      - sfinae_scroll
+      - concepts_crystal

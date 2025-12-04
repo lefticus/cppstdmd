@@ -1,0 +1,140 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "quest.schema.json",
+  "title": "Quest Definition",
+  "description": "Schema for adventure game quest definitions",
+  "type": "object",
+  "required": ["id", "title", "description", "type", "steps", "rewards"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*$",
+      "description": "Unique identifier (snake_case)"
+    },
+    "title": {
+      "type": "string",
+      "description": "Display title"
+    },
+    "description": {
+      "type": "string",
+      "description": "Quest description"
+    },
+    "type": {
+      "type": "string",
+      "enum": ["exploration", "time_travel", "learning", "collection", "puzzle"],
+      "description": "Quest category"
+    },
+    "difficulty": {
+      "type": "string",
+      "enum": ["easy", "medium", "hard", "legendary"],
+      "default": "medium"
+    },
+    "minLevel": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 50,
+      "description": "Required player level"
+    },
+    "prerequisites": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Quest IDs that must be completed first"
+    },
+    "giver": {
+      "type": "string",
+      "description": "NPC ID who gives the quest"
+    },
+    "giverLocation": {
+      "type": "string",
+      "description": "Stable name where giver is found"
+    },
+    "steps": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["instruction", "target"],
+        "properties": {
+          "instruction": {
+            "type": "string",
+            "description": "Shown to player"
+          },
+          "target": {
+            "type": "object",
+            "properties": {
+              "section": {
+                "type": "string",
+                "description": "Stable name to visit"
+              },
+              "era": {
+                "type": "string",
+                "enum": ["n3337", "n4140", "n4659", "n4861", "n4950", "trunk"],
+                "description": "Required C++ era"
+              },
+              "read": {
+                "type": "boolean",
+                "description": "Must read content with look"
+              },
+              "puzzle": {
+                "type": "string",
+                "description": "Puzzle ID to solve"
+              },
+              "item": {
+                "type": "string",
+                "description": "Item ID to collect"
+              },
+              "npc": {
+                "type": "string",
+                "description": "NPC ID to talk to"
+              },
+              "topic": {
+                "type": "string",
+                "description": "Topic to ask NPC about"
+              }
+            }
+          },
+          "onComplete": {
+            "type": "object",
+            "properties": {
+              "dialogue": { "type": "string" },
+              "xp": { "type": "integer" },
+              "item": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "rewards": {
+      "type": "object",
+      "required": ["experience"],
+      "properties": {
+        "experience": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "items": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "title": {
+          "type": "string",
+          "description": "Player title unlocked"
+        },
+        "statBoost": {
+          "type": "object",
+          "properties": {
+            "fundamentals": { "type": "integer" },
+            "library": { "type": "integer" },
+            "metaprogramming": { "type": "integer" },
+            "modernCpp": { "type": "integer" }
+          }
+        },
+        "unlocks": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Hidden sections unlocked"
+        }
+      }
+    }
+  }
+}

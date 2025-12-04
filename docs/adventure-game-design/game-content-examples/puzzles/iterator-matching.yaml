@@ -1,0 +1,40 @@
+# yaml-language-server: $schema=../schemas/puzzle.schema.json
+#
+# Iterator Category Matching Puzzle
+# Test knowledge of the iterator category hierarchy.
+
+id: iterator_categories
+type: matching
+location: iterator.requirements
+difficulty: medium
+minLevel: 5
+
+question: |
+  The Standard Library defines a hierarchy of iterator categories.
+  Match each iterator category with its defining capability:
+
+pairs:
+  - [Input Iterator, Single-pass read (can only traverse once)]
+  - [Output Iterator, Single-pass write (can only write once)]
+  - [Forward Iterator, Multi-pass (can traverse multiple times)]
+  - [Bidirectional Iterator, Can move backwards (--it)]
+  - [Random Access Iterator, O(1) arbitrary access (it + n)]
+  - [Contiguous Iterator, Elements stored contiguously in memory]
+
+hints:
+  - |
+    Think about what operations each category adds.
+    Input/Output are the most limited - single pass only.
+  - |
+    The hierarchy builds up: Forward adds multi-pass,
+    Bidirectional adds reverse traversal,
+    Random Access adds arbitrary jumps.
+  - |
+    Read [[iterator.requirements]] for the complete
+    requirements of each category.
+
+rewards:
+  xp: 50
+  item: iterator_mastery_scroll
+  statBoost:
+    library: 2

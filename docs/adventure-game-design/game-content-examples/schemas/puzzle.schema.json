@@ -1,0 +1,132 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "puzzle.schema.json",
+  "title": "Puzzle Definition",
+  "description": "Schema for adventure game puzzle definitions",
+  "type": "object",
+  "required": ["id", "type", "location", "question", "rewards"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*$",
+      "description": "Unique identifier (snake_case)"
+    },
+    "type": {
+      "type": "string",
+      "enum": ["matching", "timeline", "quiz", "code_completion", "bug_hunt"],
+      "description": "Puzzle type"
+    },
+    "location": {
+      "type": "string",
+      "description": "Stable name where puzzle is found"
+    },
+    "difficulty": {
+      "type": "string",
+      "enum": ["easy", "medium", "hard"],
+      "default": "medium"
+    },
+    "minLevel": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 50,
+      "description": "Required player level"
+    },
+    "question": {
+      "type": "string",
+      "description": "Main question text"
+    },
+    "pairs": {
+      "type": "array",
+      "items": {
+        "type": "array",
+        "items": { "type": "string" },
+        "minItems": 2,
+        "maxItems": 2
+      },
+      "description": "For matching puzzles: [left, right] pairs"
+    },
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "era"],
+        "properties": {
+          "name": { "type": "string" },
+          "era": {
+            "type": "string",
+            "enum": ["n3337", "n4140", "n4659", "n4861", "n4950", "trunk"]
+          }
+        }
+      },
+      "description": "For timeline puzzles: items to order"
+    },
+    "questions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["q", "a"],
+        "properties": {
+          "q": { "type": "string" },
+          "a": { "type": "boolean" },
+          "explanation": { "type": "string" }
+        }
+      },
+      "description": "For quiz puzzles: true/false questions"
+    },
+    "code": {
+      "type": "string",
+      "description": "For code_completion/bug_hunt: code snippet"
+    },
+    "answer": {
+      "oneOf": [
+        { "type": "string" },
+        {
+          "type": "object",
+          "properties": {
+            "line": { "type": "integer" },
+            "issue": { "type": "string" },
+            "explanation": { "type": "string" }
+          }
+        }
+      ],
+      "description": "Expected answer"
+    },
+    "alternateAnswers": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Other accepted answers"
+    },
+    "hints": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Progressive hints"
+    },
+    "rewards": {
+      "type": "object",
+      "required": ["xp"],
+      "properties": {
+        "xp": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "item": {
+          "type": "string",
+          "description": "Item ID rewarded"
+        },
+        "badge": {
+          "type": "string",
+          "description": "Badge name"
+        },
+        "statBoost": {
+          "type": "object",
+          "properties": {
+            "fundamentals": { "type": "integer" },
+            "library": { "type": "integer" },
+            "metaprogramming": { "type": "integer" },
+            "modernCpp": { "type": "integer" }
+          }
+        }
+      }
+    }
+  }
+}

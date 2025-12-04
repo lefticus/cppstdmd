@@ -1,0 +1,86 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "npc.schema.json",
+  "title": "NPC Definition",
+  "description": "Schema for adventure game NPC definitions",
+  "type": "object",
+  "properties": {
+    "npcs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "type", "locations", "dialogue"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]*$",
+            "description": "Unique identifier (snake_case)"
+          },
+          "name": {
+            "type": "string",
+            "description": "Display name"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["compiler_spirit", "concept_personification", "historical_figure", "bug_creature"],
+            "description": "NPC category"
+          },
+          "appearance": {
+            "type": "string",
+            "description": "Visual description"
+          },
+          "locations": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Stable names where NPC appears (* for everywhere)"
+          },
+          "dialogue": {
+            "type": "object",
+            "required": ["greeting"],
+            "properties": {
+              "greeting": {
+                "oneOf": [
+                  { "type": "string" },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "default": { "type": "string" },
+                      "n3337": { "type": "string" },
+                      "n4140": { "type": "string" },
+                      "n4659": { "type": "string" },
+                      "n4861": { "type": "string" },
+                      "n4950": { "type": "string" },
+                      "trunk": { "type": "string" }
+                    },
+                    "required": ["default"]
+                  }
+                ],
+                "description": "Greeting when player talks to NPC"
+              },
+              "topics": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "description": "Responses to 'ask about X' commands"
+              }
+            }
+          },
+          "quests": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Quest IDs this NPC gives"
+          },
+          "trades": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Item IDs this NPC can give"
+          }
+        }
+      }
+    }
+  },
+  "required": ["npcs"]
+}

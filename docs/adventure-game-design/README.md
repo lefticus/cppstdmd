@@ -50,6 +50,12 @@ The adventure game transforms the C++ standard documentation into an explorable 
    - Dependencies
    - Success criteria
 
+5. **[Content Format Specification](05-content-format.md)**
+   - Human-editable YAML format for game content
+   - Schema definitions for NPCs, quests, items, puzzles
+   - Contributor guidelines
+   - See `game-content-examples/` for working examples
+
 ## Quick Start for Implementation
 
 1. Read all design docs in order
@@ -64,3 +70,18 @@ The adventure game transforms the C++ standard documentation into an explorable 
 - **Content Display**: Split screen - game terminal on left, rendered markdown on right
 - **Quest System**: Full RPG elements - character progression, inventory, unlockable areas, NPCs, puzzles
 - **Time Travel**: Core feature - players can travel between C++11/14/17/20/23/26
+
+## Expanding Game Content
+
+Game content (NPCs, quests, items, puzzles) is defined in human-editable YAML files. Contributors can expand the game without modifying code:
+
+```
+game-content/
+├── npcs/           # NPC definitions with dialogue
+├── quests/         # Quest objectives and rewards
+├── items/          # Collectible items with effects
+├── puzzles/        # Interactive challenges
+└── realms.yaml     # Realm themes and descriptions
+```
+
+See **[Content Format Specification](05-content-format.md)** for the complete format reference and `game-content-examples/` for working examples with JSON Schema validation.
