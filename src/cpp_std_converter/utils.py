@@ -1,13 +1,16 @@
 """Shared utility functions for the C++ standard converter.
 
 This module provides common utilities for subprocess execution, file operations,
-and temporary file management to reduce code duplication across the codebase.
+temporary file management, and markdown parsing to reduce code duplication across the codebase.
 """
 
 import contextlib
 import logging
+import re
 import subprocess
 import tempfile
+from collections.abc import Iterator
+from dataclasses import dataclass
 from pathlib import Path
 
 logger = logging.getLogger(__name__)
@@ -293,3 +296,60 @@ def expand_latex_inputs(content: str, base_dir: Path) -> str:
     # Replace \input{filename} with file content
     # Handle both \input{filename} and \input {filename}
     return re.sub(r"\\input\s*\{([^}]+)\}", expand_input, content)
+
+
+# =============================================================================
+# Markdown Section Heading Parsing
+# =============================================================================
+
+# Compiled regex pattern for markdown section headings with full details
+# Format: ## Title <a id="anchor">[[stable.name]]</a>
+# Also handles: ## Title <a id="anchor" data-annex="true">[[stable.name]]</a>
+# Note: .+? is non-greedy to correctly handle titles with < characters (like `<initializer_list>`)
+SECTION_HEADING_PATTERN = re.compile(
+    r'^(#{1,6})\s+(.+?)\s*<a id="([^"]+)"(?:\s+[^>]+)?>\[\[([^\]]+)\]\]</a>\s*$',
+    re.MULTILINE,
+)
+
+# Simpler pattern that only captures level and anchor (for section extraction in diffs)
+SECTION_HEADING_SIMPLE_PATTERN = re.compile(r'^(#{1,6})\s+.*<a id="([^"]+)">.*</a>\s*$')
+
+
+@dataclass
+class SectionHeading:
+    """Parsed markdown section heading."""
+
+    level: int  # 1-6 for H1-H6
+    title: str  # Heading title text
+    anchor: str  # HTML anchor id
+    stable_name: str  # C++ stable name (e.g., "class.copy.ctor")
+    match_start: int  # Start position in content
+    match_end: int  # End position in content
+
+
+def iter_section_headings(content: str) -> Iterator[SectionHeading]:
+    """
+    Iterate over all section headings in markdown content.
+
+    Extracts headings with format: ## Title <a id="anchor">[[stable.name]]</a>
+    Correctly handles titles containing < characters (like `<initializer_list>`).
+
+    Args:
+        content: Markdown content to parse
+
+    Yields:
+        SectionHeading objects for each heading found
+
+    Example:
+        for heading in iter_section_headings(markdown_content):
+            print(f"{heading.stable_name}: {heading.title}")
+    """
+    for match in SECTION_HEADING_PATTERN.finditer(content):
+        yield SectionHeading(
+            level=len(match.group(1)),
+            title=match.group(2).strip(),
+            anchor=match.group(3),
+            stable_name=match.group(4),
+            match_start=match.start(),
+            match_end=match.end(),
+        )

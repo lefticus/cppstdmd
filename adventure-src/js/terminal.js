@@ -18,6 +18,17 @@ class Terminal {
         this.bindEvents();
     }
 
+    /**
+     * Escape HTML special characters to prevent XSS and display issues
+     * @param {string} text - Text to escape
+     * @returns {string} Escaped text safe for innerHTML
+     */
+    escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+
     render() {
         this.container.innerHTML = `
             <div class="terminal-output" id="terminal-output"></div>
@@ -124,7 +135,9 @@ class Terminal {
      * @param {string} stableName - Stable name (e.g., "class.copy")
      */
     printLocation(era, location, stableName) {
-        this.printHTML(`<span class="era-tag">[${era}]</span> <span class="location-name">${location}</span> <span class="stable-name">[[${stableName}]]</span>`);
+        // Escape location to handle titles with < > characters (like `<initializer_list>`)
+        const safeLocation = this.escapeHtml(location);
+        this.printHTML(`<span class="era-tag">[${era}]</span> <span class="location-name">${safeLocation}</span> <span class="stable-name">[[${stableName}]]</span>`);
     }
 
     /**

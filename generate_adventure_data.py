@@ -27,8 +27,11 @@ import yaml
 # Add src to path so we can import from cpp_std_converter
 sys.path.insert(0, str(Path(__file__).parent / "src"))
 
+from cpp_std_converter.utils import iter_section_headings
+
 try:
     from cpp_std_converter.label_indexer import LabelIndexer
+
     HAS_LABEL_INDEXER = True
 except ImportError:
     HAS_LABEL_INDEXER = False
@@ -38,7 +41,11 @@ REALM_THEMES: dict[str, tuple[str, str, str]] = {
     "intro": ("The Grand Entrance", "Where all journeys through the Standard begin", "welcoming"),
     "lex": ("Lexicon Tower", "A tall library of lexical knowledge and tokens", "scholarly"),
     "basic": ("The Foundations", "Ancient temple ruins inscribed with fundamental laws", "ancient"),
-    "expr": ("Expression Fields", "Open testing grounds for expressions and operators", "experimental"),
+    "expr": (
+        "Expression Fields",
+        "Open testing grounds for expressions and operators",
+        "experimental",
+    ),
     "stmt": ("Statement Sanctum", "Control flow chambers with branching paths", "labyrinthine"),
     "dcl": ("Declaration Domain", "Bureaucratic halls of formal declarations", "governmental"),
     "class": ("Class Citadel", "Medieval castle with towers of inheritance", "medieval"),
@@ -110,29 +117,25 @@ def get_label_to_chapter_from_latex(cplusplus_draft_dir: Path) -> dict[str, str]
 def extract_sections_from_markdown(
     md_dir: Path, label_to_chapter: dict[str, str] | None = None
 ) -> dict[str, dict[str, Any]]:
-    """Extract all sections with metadata from markdown files."""
+    """Extract all sections with metadata from markdown files.
+
+    Uses the centralized iter_section_headings() from utils.py to correctly
+    handle titles containing < characters (like `<initializer_list>`).
+    """
     sections: dict[str, dict[str, Any]] = {}
 
     for md_file in sorted(md_dir.glob("*.md")):
         chapter = md_file.stem
         content = md_file.read_text(encoding="utf-8")
 
-        # Pattern: # Title <a id="stable.name">[[stable.name]]</a>
-        # Captures: heading level, title, anchor id, stable name
-        pattern = r"(#{1,6})\s+([^<\n]+)<a id=\"([^\"]+)\">\[\[([^\]]+)\]\]</a>"
+        # Use centralized heading parser from utils.py
+        headings = list(iter_section_headings(content))
 
-        matches = list(re.finditer(pattern, content))
-
-        for i, match in enumerate(matches):
-            heading_level = len(match.group(1))
-            title = match.group(2).strip()
-            anchor = match.group(3)
-            stable_name = match.group(4)
-
+        for i, heading in enumerate(headings):
             # Extract section content (up to next section)
-            section_start = match.end()
-            if i + 1 < len(matches):
-                section_end = matches[i + 1].start()
+            section_start = heading.match_end
+            if i + 1 < len(headings):
+                section_end = headings[i + 1].match_start
             else:
                 section_end = len(content)
 
@@ -143,14 +146,14 @@ def extract_sections_from_markdown(
 
             # Use LabelIndexer mapping if available, fallback to current file
             actual_chapter = chapter
-            if label_to_chapter and stable_name in label_to_chapter:
-                actual_chapter = label_to_chapter[stable_name]
+            if label_to_chapter and heading.stable_name in label_to_chapter:
+                actual_chapter = label_to_chapter[heading.stable_name]
 
-            sections[stable_name] = {
+            sections[heading.stable_name] = {
                 "chapter": actual_chapter,
-                "title": title,
-                "stableName": stable_name,
-                "headingLevel": heading_level,
+                "title": heading.title,
+                "stableName": heading.stable_name,
+                "headingLevel": heading.level,
                 "crossReferences": cross_refs,
                 "contentLength": len(section_content),
             }
@@ -174,11 +177,7 @@ def infer_hierarchy(sections: dict[str, dict[str, Any]]) -> dict[str, dict[str, 
             data["parent"] = None
 
         # Children are sections that have this as their parent
-        data["children"] = [
-            name
-            for name, d in sections.items()
-            if d.get("parent") == stable_name
-        ]
+        data["children"] = [name for name, d in sections.items() if d.get("parent") == stable_name]
 
     return sections
 
@@ -275,9 +274,7 @@ def generate_display_name(title: str, stable_name: str) -> str:
     return title
 
 
-def detect_era_availability(
-    stable_name: str, version_dirs: list[Path]
-) -> list[str]:
+def detect_era_availability(stable_name: str, version_dirs: list[Path]) -> list[str]:
     """Detect which C++ versions contain this section."""
     available = []
     for version_dir in version_dirs:
@@ -422,9 +419,7 @@ def load_yaml_content(game_content_dir: Path) -> dict[str, Any]:
     return content
 
 
-def merge_content(
-    world_map: dict[str, Any], yaml_content: dict[str, Any]
-) -> dict[str, Any]:
+def merge_content(world_map: dict[str, Any], yaml_content: dict[str, Any]) -> dict[str, Any]:
     """Merge hand-crafted YAML content into the world map."""
     # Override realm info from YAML
     for realm_key, realm_data in yaml_content.get("realms", {}).items():
@@ -540,7 +535,13 @@ def generate_adventure_data(
                 game_content_dir = candidate
                 break
 
-    yaml_content: dict[str, Any] = {"npcs": [], "quests": [], "items": [], "puzzles": [], "realms": {}}
+    yaml_content: dict[str, Any] = {
+        "npcs": [],
+        "quests": [],
+        "items": [],
+        "puzzles": [],
+        "realms": {},
+    }
     if game_content_dir and game_content_dir.exists():
         yaml_content = load_yaml_content(game_content_dir)
         print(f"  Loaded YAML content from: {game_content_dir}")
@@ -619,6 +620,7 @@ def main():
     except Exception as e:
         print(f"\nError: {e}")
         import traceback
+
         traceback.print_exc()
         sys.exit(1)
 
