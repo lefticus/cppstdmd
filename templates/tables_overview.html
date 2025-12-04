@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Browse all tables that changed between {{ from_name }} and {{ to_name }}">
+    <meta name="theme-color" content="#00a500">
+    <title>Tables: {{ from_name }} → {{ to_name }} - C++ Standard Evolution</title>
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://cppstdmd.com/versions/{{ slug }}-tables.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Tables: {{ from_name }} → {{ to_name }} - C++ Standard Evolution">
+    <meta property="og:description" content="Browse {{ tables | length }} tables that changed between {{ from_name }} and {{ to_name }}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://cppstdmd.com/versions/{{ slug }}-tables.html">
+    <meta property="og:site_name" content="C++ Standard Evolution Viewer">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Tables: {{ from_name }} → {{ to_name }} - C++ Standard Evolution">
+    <meta name="twitter:description" content="Browse {{ tables | length }} tables that changed between these versions">
+    <meta name="twitter:creator" content="@lefticus">
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/diff2html/bundles/css/diff2html.min.css"
+          integrity="sha384-iBvSlI3tNrrSIy7s6mvLg+5B2Z/QXbR4L0Pzg1nRf8zkXrz5JF316MLm2igMIpi2"
+          crossorigin="anonymous">
+    <!-- Font Awesome 7 Free -->
+    <link rel="stylesheet" href="../css/fontawesome.min.css">
+    <link rel="stylesheet" href="../css/solid.min.css">
+    <link rel="stylesheet" href="../css/brands.min.css">
+    <link rel="stylesheet" href="../css/custom.css">
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    {% include '_author_banner.html' %}
+
+    <header class="page-header">
+        <nav class="breadcrumb">
+            <a href="../index.html"><i class="fa-solid fa-house"></i> Home</a> &gt;
+            <a href="{{ slug }}.html">{{ from_name }} → {{ to_name }}</a> &gt;
+            <span class="current">Tables</span>
+        </nav>
+
+        <h1><i class="fa-solid fa-table"></i> Tables: {{ from_name }} → {{ to_name }}</h1>
+        <p class="subtitle">Browse {{ tables | length }} tables that changed between these versions</p>
+
+        <div class="version-timeline">
+            <span class="timeline-label">Jump to: </span>
+            {% for from_tag_iter, to_tag_iter, from_name_iter, to_name_iter, slug_iter in version_pairs %}
+            <a href="{{ slug_iter }}-tables.html"
+               class="{% if slug_iter == slug %}active{% endif %}">
+                {{ from_name_iter }}→{{ to_name_iter }}
+            </a>
+            {% if not loop.last %}|{% endif %}
+            {% endfor %}
+        </div>
+
+        <p style="margin-top: 1rem;">
+            <a href="{{ slug }}.html" class="btn btn-small">
+                <i class="fa-solid fa-arrow-left"></i> Back to Sections
+            </a>
+        </p>
+    </header>
+
+    <main class="overview-main" id="main-content">
+        <div class="controls">
+            <input type="text" id="search-input" placeholder="Search tables by label or caption..." autocomplete="off" aria-label="Search tables by label or caption" />
+            <div class="filter-buttons" role="group" aria-label="Filter tables by size">
+                <button class="filter-btn active" data-filter="all" aria-pressed="true">All ({{ tables | length }})</button>
+                <button class="filter-btn" data-filter="small" aria-pressed="false">Small Changes</button>
+                <button class="filter-btn" data-filter="medium" aria-pressed="false">Medium Changes</button>
+                <button class="filter-btn" data-filter="large" aria-pressed="false">Large Changes</button>
+            </div>
+        </div>
+
+        <div class="sections-list" id="sections-list">
+            {% for item in tables | sort(attribute='label') %}
+            <div class="section-item {% if item.size_kb < 5 %}small{% elif item.size_kb < 20 %}medium{% else %}large{% endif %}"
+                 data-name="{{ item.label }}"
+                 data-caption="{{ item.caption }}"
+                 data-size="{{ item.size_kb }}">
+                <div class="section-header">
+                    <h3>
+                        <a href="../diffs/{{ slug }}/tables/{{ item.file }}.html">
+                            <i class="fa-solid fa-table" style="opacity: 0.6;"></i>
+                            {{ item.label }}
+                        </a>
+                    </h3>
+                    <p class="table-caption" style="margin: 0.25rem 0 0 0; font-size: 0.9em; color: #666;">
+                        {{ item.caption }}
+                    </p>
+                    <div class="section-badges">
+                        <span class="badge size-badge {% if item.size_kb > 50 %}large{% endif %}">
+                            {{ item.size_kb }} KB
+                        </span>
+                        {% if item.line_count > 0 %}
+                        <span class="badge line-badge">
+                            {{ item.line_count }} lines
+                        </span>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="section-actions">
+                    <a href="../diffs/{{ slug }}/tables/{{ item.file }}.html" class="btn btn-small">
+                        View Diff
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div id="no-results" class="no-results" style="display: none;">
+            <p>No tables match your search.</p>
+        </div>
+    </main>
+
+    {% set back_link = slug + ".html" %}
+    {% include '_footer.html' %}
+
+    <script>
+        // Search functionality
+        const searchInput = document.getElementById('search-input');
+        const sectionsList = document.getElementById('sections-list');
+        const noResults = document.getElementById('no-results');
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        let currentFilter = 'all';
+
+        function filterTables() {
+            const searchTerm = searchInput.value.toLowerCase().trim();
+            const items = sectionsList.querySelectorAll('.section-item');
+            let visibleCount = 0;
+
+            items.forEach(item => {
+                const label = item.dataset.name.toLowerCase();
+                const caption = item.dataset.caption.toLowerCase();
+                const size = parseFloat(item.dataset.size);
+
+                // Search by label or caption
+                const matchesSearch = !searchTerm ||
+                    label.includes(searchTerm) ||
+                    caption.includes(searchTerm);
+
+                // Size filter (tables are typically smaller than sections)
+                const matchesFilter =
+                    currentFilter === 'all' ||
+                    (currentFilter === 'small' && size < 5) ||
+                    (currentFilter === 'medium' && size >= 5 && size < 20) ||
+                    (currentFilter === 'large' && size >= 20);
+
+                // Show/hide item
+                if (matchesSearch && matchesFilter) {
+                    item.style.display = 'flex';
+                    visibleCount++;
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+
+            // Show/hide no results message
+            if (visibleCount === 0) {
+                noResults.style.display = 'block';
+                sectionsList.style.display = 'none';
+            } else {
+                noResults.style.display = 'none';
+                sectionsList.style.display = 'grid';
+            }
+        }
+
+        // Event listeners
+        searchInput.addEventListener('input', filterTables);
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Update active state and aria-pressed
+                filterButtons.forEach(btn => {
+                    btn.classList.remove('active');
+                    btn.setAttribute('aria-pressed', 'false');
+                });
+                button.classList.add('active');
+                button.setAttribute('aria-pressed', 'true');
+
+                // Update filter and re-filter
+                currentFilter = button.dataset.filter;
+                filterTables();
+            });
+        });
+
+        // Initial state
+        filterTables();
+    </script>
+
+    <script src="../js/navigation.js"></script>
+</body>
+</html>

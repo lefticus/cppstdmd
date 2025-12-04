@@ -46,6 +46,12 @@
         <h1>{{ from_name }} → {{ to_name }}</h1>
         <p class="subtitle">Browse {{ stable_names | length }} sections that changed between these versions</p>
 
+        <p style="margin-top: 0.5rem;">
+            <a href="{{ slug }}-tables.html" class="btn btn-small">
+                <i class="fa-solid fa-table"></i> View Table Changes
+            </a>
+        </p>
+
         <div class="version-timeline">
             <span class="timeline-label">Jump to: </span>
             {% for from_tag_iter, to_tag_iter, from_name_iter, to_name_iter, slug_iter in version_pairs %}
@@ -131,7 +137,9 @@
                 .then(data => {
                     searchIndex = data;
                     indexLoaded = true;
-                    console.log(`✓ Loaded search index: ${searchIndex.length} sections`);
+                    const sectionCount = data.filter(e => e.type === 'section').length;
+                    const tableCount = data.filter(e => e.type === 'table').length;
+                    console.log(`✓ Loaded search index: ${sectionCount} sections, ${tableCount} tables`);
                 })
                 .catch(err => {
                     console.warn('Failed to load search index:', err);

@@ -192,6 +192,76 @@ def extract_stable_name(diff_file: Path) -> str | None:
     return None
 
 
+def extract_table_info(diff_file: Path) -> tuple[str | None, str | None]:
+    """Extract table label and caption from diff header.
+
+    Args:
+        diff_file: Path to the table diff file
+
+    Returns:
+        Tuple of (table_label, caption), or (None, None) if not found
+    """
+    label = None
+    caption = None
+    try:
+        with open(diff_file, encoding="utf-8") as f:
+            for line in f:
+                if line.startswith("# Table label:"):
+                    label = line.split(":", 1)[1].strip()
+                elif line.startswith("# Caption:"):
+                    caption = line.split(":", 1)[1].strip()
+                # Only check first few lines
+                if not line.startswith("#"):
+                    break
+    except Exception as e:
+        print(f"Warning: Could not read {diff_file}: {e}")
+    return label, caption
+
+
+def collect_tables(diff_dir: Path, limit: int | None = None) -> list[dict]:
+    """Collect tables from a by_table diff directory.
+
+    Args:
+        diff_dir: Path to by_table directory containing .diff files
+        limit: Maximum number of diffs to collect (for testing)
+
+    Returns:
+        List of dicts with table info (label, caption, size_kb, etc.)
+    """
+    tables = []
+
+    if not diff_dir.exists():
+        return tables
+
+    diff_files = sorted(diff_dir.glob("*.diff"))
+
+    for diff_file in diff_files:
+        label, caption = extract_table_info(diff_file)
+
+        if not label:
+            # Fallback: use filename
+            label = diff_file.stem
+
+        if not caption:
+            caption = label
+
+        tables.append(
+            {
+                "label": label,
+                "caption": caption,
+                "size_kb": get_file_size_kb(diff_file),
+                "line_count": count_diff_lines(diff_file),
+                "file": diff_file.stem,
+                "path": diff_file,
+            }
+        )
+
+        if limit and len(tables) >= limit:
+            break
+
+    return tables
+
+
 def get_dot_count(name: str) -> int:
     """Count hierarchy depth by counting dots only (not :: or _).
 
@@ -462,20 +532,43 @@ def extract_diff_keywords(diff_file: Path) -> list[str]:
     return sorted(keywords)[:150]
 
 
-def generate_search_index(stable_names: list[dict], output_dir: Path, slug: str):
-    """Generate JSON search index with keywords for each stable name.
+def generate_search_index(
+    stable_names: list[dict], output_dir: Path, slug: str, tables: list[dict] | None = None
+):
+    """Generate JSON search index with keywords for each stable name and table.
 
     Args:
         stable_names: List of dicts with 'name' and 'path' keys
         output_dir: Directory to write search index JSON
         slug: Version pair slug (e.g., 'cpp11-to-cpp14')
+        tables: Optional list of table dicts with 'label', 'caption', and 'path' keys
     """
     search_index = []
 
     print("  Generating search index...")
+
+    # Add sections
     for item in stable_names:
         keywords = extract_diff_keywords(item["path"])
-        search_index.append({"name": item["name"], "keywords": keywords})
+        search_index.append({"name": item["name"], "type": "section", "keywords": keywords})
+
+    # Add tables
+    if tables:
+        for item in tables:
+            keywords = extract_diff_keywords(item["path"])
+            # Add caption words as keywords
+            caption_words = re.findall(r"\b[A-Za-z_]\w*\b", item.get("caption", ""))
+            keywords.extend(caption_words)
+            # Deduplicate and limit
+            keywords = list(set(keywords))[:150]
+            search_index.append(
+                {
+                    "name": item["label"],
+                    "type": "table",
+                    "caption": item.get("caption", ""),
+                    "keywords": keywords,
+                }
+            )
 
     # Write JSON file
     index_file = output_dir / f"{slug}_search_index.json"
@@ -483,7 +576,11 @@ def generate_search_index(stable_names: list[dict], output_dir: Path, slug: str)
 
     # Report size
     size_kb = index_file.stat().st_size / 1024
-    print(f"  ✓ Generated search index: {len(search_index)} sections, {size_kb:.1f} KB")
+    table_count = len(tables) if tables else 0
+    print(
+        f"  ✓ Generated search index: {len(stable_names)} sections, {table_count} tables, "
+        f"{size_kb:.1f} KB"
+    )
 
 
 def generate_diff_html(diff_file: Path, output_file: Path, context: dict) -> bool:
@@ -1000,6 +1097,31 @@ def build_stable_name_availability(
     return availability
 
 
+def build_table_availability(
+    table_label: str, version_pairs: list[tuple], base_diffs_path: Path
+) -> dict[str, bool]:
+    """Check which version pairs have this table by scanning .diff files.
+
+    Similar to build_stable_name_availability but for tables.
+
+    Args:
+        table_label: The table label to check (e.g., "support.summary")
+        version_pairs: List of version pair tuples from VERSION_PAIRS
+        base_diffs_path: Base path to diffs directory (e.g., Path('diffs'))
+
+    Returns:
+        Dict mapping slug → exists (bool)
+    """
+    availability = {}
+    safe_name = sanitize_filename(table_label)
+
+    for from_tag, to_tag, _from_name, _to_name, slug in version_pairs:
+        diff_file = base_diffs_path / f"{from_tag}_to_{to_tag}" / "by_table" / f"{safe_name}.diff"
+        availability[slug] = diff_file.exists()
+
+    return availability
+
+
 def generate_single_diff(args: tuple) -> tuple[bool, str, str]:
     """Worker function to generate a single diff HTML (for parallel execution).
 
@@ -1114,8 +1236,7 @@ def generate_version_pair(config: VersionPairConfig) -> dict:
     overview_file.write_text(content, encoding="utf-8")
     print(f"  ✓ Generated overview: {overview_file}")
 
-    # Generate search index
-    generate_search_index(stable_names, version_dir, config.slug)
+    # Note: Search index generation moved to after table collection
 
     # Generate individual diff pages in parallel
     diff_output_dir = config.output_path / "diffs" / config.slug
@@ -1182,6 +1303,90 @@ def generate_version_pair(config: VersionPairConfig) -> dict:
 
     print(f"  ✓ Successfully generated {success_count}/{len(stable_names)} diffs")
 
+    # Process tables
+    table_diff_dir = Path(f"diffs/{config.from_tag}_to_{config.to_tag}/by_table")
+    tables = collect_tables(table_diff_dir, limit=config.limit)
+    table_count = len(tables)
+
+    if tables:
+        print(f"  Found {table_count} table diffs")
+
+        # Generate tables overview page
+        try:
+            tables_template = config.env.get_template("tables_overview.html")
+            tables_content = tables_template.render(
+                from_name=config.from_name,
+                to_name=config.to_name,
+                from_tag=config.from_tag,
+                to_tag=config.to_tag,
+                slug=config.slug,
+                tables=tables,
+                version_pairs=VERSION_PAIRS,
+                generated_date=datetime.now().strftime("%Y-%m-%d"),
+                cppstdmd_sha=sha_info["sha"],
+                cppstdmd_short_sha=sha_info["short_sha"],
+            )
+            tables_overview_file = version_dir / f"{config.slug}-tables.html"
+            tables_overview_file.write_text(tables_content, encoding="utf-8")
+            print(f"  ✓ Generated tables overview: {tables_overview_file}")
+        except Exception as e:
+            print(f"  ⚠️  Could not generate tables overview: {e}")
+
+        # Generate individual table diff pages
+        table_output_dir = config.output_path / "diffs" / config.slug / "tables"
+        ensure_dir(table_output_dir)
+
+        table_tasks = []
+        for item in tables:
+            table_availability = build_table_availability(
+                table_label=item["label"],
+                version_pairs=VERSION_PAIRS,
+                base_diffs_path=config.output_path.parent / "diffs",
+            )
+            context = {
+                "title": f"Table [{item['label']}] - {config.from_name} → {config.to_name}",
+                "stable_name": item["label"],  # Reuse stable_name field for compatibility
+                "table_caption": item["caption"],
+                "stable_name_file": item["file"],
+                "from_version": config.from_name,
+                "to_version": config.to_name,
+                "from_tag": config.from_tag,
+                "to_tag": config.to_tag,
+                "version_slug": config.slug,
+                "file_size_kb": item["size_kb"],
+                "line_count": item["line_count"],
+                "generated_date": datetime.now().strftime("%Y-%m-%d"),
+                "stable_name_availability": table_availability,
+                "is_table": True,
+                "cppstdmd_sha": sha_info["sha"],
+                "cppstdmd_short_sha": sha_info["short_sha"],
+            }
+            templates_dir = Path(config.env.loader.searchpath[0])
+            # Modify item to point to table diff file
+            table_item = item.copy()
+            table_item["name"] = item["label"]  # For compatibility with generate_single_diff
+            table_tasks.append((table_item, str(table_output_dir), context, str(templates_dir)))
+
+        # Execute table tasks in parallel
+        table_success = 0
+        with ProcessPoolExecutor(max_workers=config.max_workers) as executor:
+            future_to_label = {
+                executor.submit(generate_single_diff, task): task[0]["label"]
+                for task in table_tasks
+            }
+            for future in as_completed(future_to_label):
+                try:
+                    success, _name, _message = future.result()
+                    if success:
+                        table_success += 1
+                except Exception:
+                    pass
+
+        print(f"  ✓ Generated {table_success}/{table_count} table diff pages")
+
+    # Generate search index (includes both sections and tables)
+    generate_search_index(stable_names, version_dir, config.slug, tables=tables)
+
     # Calculate statistics
     total_size_kb = sum(item["size_kb"] for item in stable_names)
     total_lines = sum(item["line_count"] for item in stable_names)
@@ -1206,6 +1411,7 @@ def generate_version_pair(config: VersionPairConfig) -> dict:
         "total_lines": total_lines,
         "avg_size_kb": avg_size_kb,
         "sections": sections,
+        "table_count": table_count,
         "from_name": config.from_name,
         "to_name": config.to_name,
         "slug": config.slug,
@@ -1263,10 +1469,12 @@ def generate_statistics_page(output_path: Path, env: Environment, stats: dict):
     all_sections = []
     total_size_kb = 0
     total_lines = 0
+    total_tables = 0
 
     for pair_stats in stats.get("version_pairs", []):
         total_size_kb += pair_stats.get("total_size_kb", 0)
         total_lines += pair_stats.get("total_lines", 0)
+        total_tables += pair_stats.get("table_count", 0)
 
         # Collect all sections for top sections list
         for section in pair_stats.get("sections", []):
@@ -1295,6 +1503,7 @@ def generate_statistics_page(output_path: Path, env: Environment, stats: dict):
     content = template.render(
         version_pairs=stats.get("version_pairs", []),
         total_diffs=stats.get("total_diffs", 0),
+        total_tables=total_tables,
         total_size_mb=round(total_size_kb / 1024, 1),
         total_lines=total_lines,
         top_sections=top_sections,

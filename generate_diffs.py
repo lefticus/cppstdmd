@@ -171,6 +171,74 @@ def parse_stable_names(markdown_file: Path) -> dict[str, tuple[str, int, int]]:
     return sections
 
 
+def parse_tables(markdown_file: Path) -> dict[str, tuple[str, str, int, int]]:
+    """
+    Parse markdown file and extract table sections by label.
+
+    Table structure in markdown:
+    - Header: **Table: Caption** <a id="label">[label]</a>
+    - Blank line
+    - Table rows (lines starting with |)
+    - Blank line (end of table)
+
+    Returns:
+        Dict mapping table_label -> (caption, content, start_line, end_line)
+    """
+    if not markdown_file.exists():
+        return {}
+
+    tables = {}
+
+    with open(markdown_file, encoding="utf-8") as f:
+        lines = f.readlines()
+
+    # Pattern to match table headers with labels
+    # Format: **Table: Caption** <a id="label">[label]</a>
+    table_pattern = re.compile(r'^\*\*Table:\s*(.+?)\*\*\s*<a id="([^"]+)">')
+
+    current_table = None  # (label, caption, start_line, seen_table_content)
+
+    for line_num, line in enumerate(lines, 1):
+        match = table_pattern.match(line)
+
+        if match:
+            # Close previous table if any
+            if current_table:
+                label, caption, start, _ = current_table
+                content = "".join(lines[start - 1 : line_num - 1])
+                tables[label] = (caption, content, start, line_num - 1)
+
+            # Start new table
+            caption = match.group(1).strip()
+            label = match.group(2)
+            current_table = (label, caption, line_num, False)  # Not seen table content yet
+
+        elif current_table:
+            label, caption, start, seen_table_content = current_table
+            stripped = line.strip()
+
+            # Check if this is a table row (starts with |)
+            is_table_row = stripped.startswith("|") and "|" in stripped[1:]
+
+            if is_table_row:
+                # Mark that we've seen table content
+                if not seen_table_content:
+                    current_table = (label, caption, start, True)
+            elif stripped == "" and seen_table_content:
+                # Blank line after we've seen table content - table is complete
+                content = "".join(lines[start - 1 : line_num])
+                tables[label] = (caption, content, start, line_num)
+                current_table = None
+
+    # Close final table
+    if current_table:
+        label, caption, start, _ = current_table
+        content = "".join(lines[start - 1 :])
+        tables[label] = (caption, content, start, len(lines))
+
+    return tables
+
+
 def generate_chapter_diff(from_file: Path, to_file: Path, output_file: Path) -> bool:
     """
     Generate unified diff for a single chapter.
@@ -486,6 +554,226 @@ def generate_stable_name_readme(
         f.write("\n".join(lines))
 
 
+def generate_table_diff(
+    table_label: str,
+    caption: str,
+    from_content: str | None,
+    to_content: str | None,
+    output_file: Path,
+) -> bool:
+    """
+    Generate diff for a single table.
+
+    Returns True if diff was generated successfully.
+    """
+    try:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tmp_path = Path(tmpdir)
+
+            # Write content to temp files
+            from_file = tmp_path / "from.md"
+            to_file = tmp_path / "to.md"
+
+            if from_content:
+                from_file.write_text(from_content, encoding="utf-8")
+            else:
+                from_file.write_text("", encoding="utf-8")
+
+            if to_content:
+                to_file.write_text(to_content, encoding="utf-8")
+            else:
+                to_file.write_text("", encoding="utf-8")
+
+            # Use git diff with high-quality options
+            success, stdout, stderr = run_command_silent(
+                [
+                    "git",
+                    "diff",
+                    "--no-index",
+                    "--patience",
+                    "--unified=5",
+                    "--ignore-all-space",
+                    str(from_file),
+                    str(to_file),
+                ],
+                timeout=30,
+            )
+
+            # git diff returns 1 when files differ (expected), 0 when identical
+            if not success and stderr and "fatal" in stderr.lower():
+                return False
+
+            # Add header with table label and caption
+            with open(output_file, "w", encoding="utf-8") as f:
+                f.write(f"# Diff for table [{table_label}]\n")
+                f.write(f"# Table label: {table_label}\n")
+                f.write(f"# Caption: {caption}\n\n")
+                f.write(stdout)
+
+            return True
+
+    except Exception as e:
+        print(f"Error generating diff for table {table_label}: {e}", file=sys.stderr)
+        return False
+
+
+def generate_table_diffs(from_version: str, to_version: str, output_dir: Path) -> int:
+    """
+    Generate diffs for all tables across all chapters.
+
+    Returns the number of diffs successfully generated.
+    """
+    print("  Generating table diffs...")
+
+    # Collect all tables from both versions
+    # table_label -> (chapter, caption, content, start, end)
+    from_tables: dict[str, tuple[str, str, str, int, int]] = {}
+    to_tables: dict[str, tuple[str, str, str, int, int]] = {}
+
+    from_dir = Path(from_version)
+    to_dir = Path(to_version)
+
+    for chapter_file in sorted(from_dir.glob("*.md")):
+        chapter = chapter_file.stem
+        tables = parse_tables(chapter_file)
+        for label, (caption, content, start, end) in tables.items():
+            from_tables[label] = (chapter, caption, content, start, end)
+
+    for chapter_file in sorted(to_dir.glob("*.md")):
+        chapter = chapter_file.stem
+        tables = parse_tables(chapter_file)
+        for label, (caption, content, start, end) in tables.items():
+            to_tables[label] = (chapter, caption, content, start, end)
+
+    # Find all unique table labels
+    all_tables = set(from_tables.keys()) | set(to_tables.keys())
+    removed_tables = all_tables - to_tables.keys()
+    added_tables = all_tables - from_tables.keys()
+
+    print(f"    Found {len(all_tables)} unique tables")
+    print(f"    - {len(from_tables)} in {from_version}")
+    print(f"    - {len(to_tables)} in {to_version}")
+    print(f"    - {len(removed_tables)} removed")
+    print(f"    - {len(added_tables)} added")
+
+    # Create output directory
+    table_dir = output_dir / "by_table"
+    ensure_dir(table_dir)
+
+    # Generate diff for each table
+    success_count = 0
+    diff_sizes: dict[str, int] = {}
+
+    for label in sorted(all_tables):
+        from_data = from_tables.get(label)
+        to_data = to_tables.get(label)
+
+        from_content = from_data[2] if from_data else None
+        to_content = to_data[2] if to_data else None
+        caption = to_data[1] if to_data else (from_data[1] if from_data else label)
+
+        # Skip if both are empty or identical
+        if from_content == to_content:
+            continue
+
+        # Generate safe filename from label
+        safe_name = label.replace("/", "_").replace("\\", "_")
+        output_file = table_dir / f"{safe_name}.diff"
+
+        if generate_table_diff(label, caption, from_content, to_content, output_file):
+            success_count += 1
+            diff_sizes[label] = output_file.stat().st_size
+
+    # Generate README for table diffs
+    readme_path = table_dir / "README.md"
+    generate_table_readme(
+        from_version,
+        to_version,
+        readme_path,
+        from_tables,
+        to_tables,
+        added_tables,
+        removed_tables,
+        diff_sizes,
+    )
+
+    print(f"  Generated {success_count} table diffs")
+    return success_count
+
+
+def generate_table_readme(
+    from_version: str,
+    to_version: str,
+    readme_path: Path,
+    from_tables: dict,
+    to_tables: dict,
+    added_tables: set[str],
+    removed_tables: set[str],
+    diff_sizes: dict[str, int],
+) -> None:
+    """Generate README for table diffs directory."""
+    from_name = VERSIONS.get(from_version, from_version)
+    to_name = VERSIONS.get(to_version, to_version)
+
+    lines = []
+    lines.append(f"# Table Diffs: {from_name} → {to_name}\n")
+    lines.append(f"Comparison of individual tables between {from_version} and {to_version}.\n")
+    lines.append("## Overview\n")
+    lines.append("This directory contains focused diffs for each table in the C++ standard. ")
+    lines.append(
+        "Tables are tracked by their stable label (e.g., `support.summary`, `locale.category.facets`).\n"
+    )
+
+    # Statistics
+    lines.append("## Statistics\n")
+    lines.append(f"- **Total tables**: {len(from_tables | to_tables)}")
+    lines.append(f"- **In {from_version}**: {len(from_tables)}")
+    lines.append(f"- **In {to_version}**: {len(to_tables)}")
+    lines.append(f"- **Added in {to_version}**: {len(added_tables)}")
+    lines.append(f"- **Removed in {to_version}**: {len(removed_tables)}")
+    lines.append(f"- **Modified**: {len(diff_sizes)}\n")
+
+    # Top 20 largest changes
+    if diff_sizes:
+        lines.append("## Largest Changes\n")
+        lines.append("Top 20 tables by diff size:\n")
+        sorted_by_size = sorted(diff_sizes.items(), key=lambda x: x[1], reverse=True)[:20]
+        for i, (label, size) in enumerate(sorted_by_size, 1):
+            safe_name = label.replace("/", "_").replace("\\", "_")
+            size_kb = size / 1024
+            # Get caption
+            caption = to_tables.get(label, from_tables.get(label, (None, label)))[1]
+            lines.append(f"{i}. [`{label}`]({safe_name}.diff) - {caption} ({size_kb:.1f} KB)")
+        lines.append("")
+
+    # New tables
+    if added_tables:
+        lines.append(f"## New Tables in {to_name}\n")
+        lines.append(f"Tables that didn't exist in {from_name}:\n")
+        for label in sorted(added_tables)[:30]:
+            safe_name = label.replace("/", "_").replace("\\", "_")
+            chapter, caption = to_tables.get(label, (None, label))[:2]
+            lines.append(f"- [`{label}`]({safe_name}.diff) - {caption} (from {chapter}.md)")
+        if len(added_tables) > 30:
+            lines.append(f"\n*...and {len(added_tables) - 30} more*")
+        lines.append("")
+
+    # Removed tables
+    if removed_tables:
+        lines.append(f"## Removed Tables in {to_name}\n")
+        lines.append(f"Tables that existed in {from_name} but not in {to_name}:\n")
+        for label in sorted(removed_tables)[:30]:
+            safe_name = label.replace("/", "_").replace("\\", "_")
+            chapter, caption = from_tables.get(label, (None, label))[:2]
+            lines.append(f"- [`{label}`]({safe_name}.diff) - {caption} (was in {chapter}.md)")
+        if len(removed_tables) > 30:
+            lines.append(f"\n*...and {len(removed_tables) - 30} more*")
+        lines.append("")
+
+    with open(readme_path, "w", encoding="utf-8") as f:
+        f.write("\n".join(lines))
+
+
 def generate_summary(
     from_version: str,
     to_version: str,
@@ -575,7 +863,7 @@ def generate_summary(
     lines.append("")
 
     # Stable name diffs section
-    lines.append("## Stable Name Diffs (NEW!)\n")
+    lines.append("## Stable Name Diffs\n")
     lines.append(
         "**[Browse diffs by stable name](by_stable_name/)** - Focused diffs for individual sections\n"
     )
@@ -585,9 +873,16 @@ def generate_summary(
     lines.append("- Example: Track how `[array]` evolved from C++11 to C++23")
     lines.append("- Example: See all changes to `[class.copy]` or `[dcl.init]`")
     lines.append("- **Benefits**: Reduced noise, granular tracking, perfect for educational use\n")
+
+    # Table diffs section
+    lines.append("## Table Diffs\n")
+    lines.append("**[Browse diffs by table](by_table/)** - Track changes to individual tables\n")
     lines.append(
-        f"The `by_stable_name/` directory contains {len(common)} diffs organized by section.\n"
+        "Tables are tracked by their stable label (e.g., `support.summary`, `locale.category.facets`):"
     )
+    lines.append("- See how specification tables evolved between versions")
+    lines.append("- Track changes to type requirements, library summaries, and more")
+    lines.append("- **Benefits**: Tables often contain critical specification details\n")
 
     # Full standard comparison
     lines.append("## Full Standard Comparison\n")
@@ -664,6 +959,9 @@ def generate_diff_pair(
 
     # Generate stable name diffs
     generate_stable_name_diffs(from_version, to_version, output_base, max_dots=max_dots)
+
+    # Generate table diffs
+    generate_table_diffs(from_version, to_version, output_base)
 
     # Generate summary
     print("  Generating summary...")

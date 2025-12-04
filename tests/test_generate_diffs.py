@@ -263,6 +263,144 @@ class TestParseStableNames:
             temp_path.unlink()
 
 
+class TestParseTables:
+    """Test table parsing from markdown files."""
+
+    def test_parse_tables_empty_file(self):
+        """Test parsing an empty file."""
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".md", delete=False) as f:
+            temp_path = Path(f.name)
+
+        try:
+            result = generate_diffs.parse_tables(temp_path)
+            assert result == {}
+        finally:
+            temp_path.unlink()
+
+    def test_parse_tables_no_tables(self):
+        """Test parsing a file with no tables."""
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".md", delete=False) as f:
+            f.write("# Some Heading\n")
+            f.write("Some content\n")
+            f.write("## Another Heading\n")
+            f.write("More content\n")
+            temp_path = Path(f.name)
+
+        try:
+            result = generate_diffs.parse_tables(temp_path)
+            assert result == {}
+        finally:
+            temp_path.unlink()
+
+    def test_parse_tables_single_table(self):
+        """Test parsing a file with one table."""
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".md", delete=False) as f:
+            f.write('**Table: Test table caption** <a id="test.table">[test.table]</a>\n')
+            f.write("\n")
+            f.write("| Column A | Column B |\n")
+            f.write("| -------- | -------- |\n")
+            f.write("| Value 1  | Value 2  |\n")
+            f.write("| Value 3  | Value 4  |\n")
+            f.write("\n")
+            f.write("Some text after the table.\n")
+            temp_path = Path(f.name)
+
+        try:
+            result = generate_diffs.parse_tables(temp_path)
+            assert "test.table" in result
+            caption, content, start, end = result["test.table"]
+            assert caption == "Test table caption"
+            assert "Column A" in content
+            assert "Value 1" in content
+            assert "Value 4" in content
+            assert start == 1
+            assert end == 7  # Includes the trailing blank line
+        finally:
+            temp_path.unlink()
+
+    def test_parse_tables_multiple_tables(self):
+        """Test parsing a file with multiple tables."""
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".md", delete=False) as f:
+            f.write('**Table: First table** <a id="first.table">[first.table]</a>\n')
+            f.write("\n")
+            f.write("| A | B |\n")
+            f.write("| - | - |\n")
+            f.write("| 1 | 2 |\n")
+            f.write("\n")
+            f.write("Some text between tables.\n")
+            f.write("\n")
+            f.write('**Table: Second table** <a id="second.table">[second.table]</a>\n')
+            f.write("\n")
+            f.write("| X | Y | Z |\n")
+            f.write("| - | - | - |\n")
+            f.write("| a | b | c |\n")
+            f.write("\n")
+            temp_path = Path(f.name)
+
+        try:
+            result = generate_diffs.parse_tables(temp_path)
+            assert len(result) == 2
+            assert "first.table" in result
+            assert "second.table" in result
+
+            first_caption, first_content, _, _ = result["first.table"]
+            assert first_caption == "First table"
+            assert "| 1 | 2 |" in first_content
+
+            second_caption, second_content, _, _ = result["second.table"]
+            assert second_caption == "Second table"
+            assert "| a | b | c |" in second_content
+        finally:
+            temp_path.unlink()
+
+    def test_parse_tables_table_at_end_of_file(self):
+        """Test parsing when table is at the end of file without trailing newline."""
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".md", delete=False) as f:
+            f.write("Some intro text.\n")
+            f.write("\n")
+            f.write('**Table: Final table** <a id="final.table">[final.table]</a>\n')
+            f.write("\n")
+            f.write("| Col |\n")
+            f.write("| --- |\n")
+            f.write("| val |")  # No trailing newline
+            temp_path = Path(f.name)
+
+        try:
+            result = generate_diffs.parse_tables(temp_path)
+            assert "final.table" in result
+            caption, content, _, _ = result["final.table"]
+            assert caption == "Final table"
+            assert "| val |" in content
+        finally:
+            temp_path.unlink()
+
+    def test_parse_tables_nonexistent_file(self):
+        """Test parsing a file that doesn't exist."""
+        result = generate_diffs.parse_tables(Path("/nonexistent/file.md"))
+        assert result == {}
+
+    def test_parse_tables_blank_line_after_header_not_table_end(self):
+        """Test that blank line after table header doesn't close the table."""
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".md", delete=False) as f:
+            f.write('**Table: Test** <a id="test">[test]</a>\n')
+            f.write("\n")  # This blank line should NOT close the table
+            f.write("| Header |\n")
+            f.write("| ------ |\n")
+            f.write("| Data   |\n")
+            f.write("\n")  # This blank line SHOULD close the table
+            temp_path = Path(f.name)
+
+        try:
+            result = generate_diffs.parse_tables(temp_path)
+            assert "test" in result
+            caption, content, _, _ = result["test"]
+            # Content should include the actual table rows
+            assert "| Header |" in content
+            assert "| Data   |" in content
+        finally:
+            temp_path.unlink()
+
+
 class TestFindCommonChapters:
     """Test finding common chapters between versions."""
 

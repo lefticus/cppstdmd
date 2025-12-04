@@ -56,6 +56,10 @@
                     <div class="stat-label">Total Sections Analyzed</div>
                 </div>
                 <div class="stat-card">
+                    <div class="stat-value">{{ total_tables }}</div>
+                    <div class="stat-label">Total Tables Analyzed</div>
+                </div>
+                <div class="stat-card">
                     <div class="stat-value">{{ version_pairs | length }}</div>
                     <div class="stat-label">Version Transitions</div>
                 </div>
@@ -77,6 +81,7 @@
                     <tr>
                         <th>Transition</th>
                         <th>Sections</th>
+                        <th>Tables</th>
                         <th>Total Size</th>
                         <th>Changed Lines</th>
                         <th>Avg Size</th>
@@ -91,6 +96,13 @@
                             </a>
                         </td>
                         <td>{{ pair.count }}</td>
+                        <td>
+                            {% if pair.table_count > 0 %}
+                            <a href="versions/{{ pair.slug }}-tables.html">{{ pair.table_count }}</a>
+                            {% else %}
+                            0
+                            {% endif %}
+                        </td>
                         <td>{{ pair.total_size_kb }} KB</td>
                         <td>{{ pair.total_lines | format_number }}</td>
                         <td>{{ pair.avg_size_kb }} KB</td>
