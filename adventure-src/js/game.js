@@ -155,6 +155,10 @@ class AdventureGame {
             'exit': () => this.cmdExit(),
             'leave': () => this.cmdExit(),
             'warp': (args) => this.cmdWarp(args),
+            'goto': (args) => this.cmdGoto(args),
+            'g': (args) => this.cmdGoto(args),
+            'search': (args) => this.cmdSearch(args),
+            'find': (args) => this.cmdSearch(args),
             'map': () => this.cmdMap(),
             'where': () => this.cmdWhere(),
             'whereami': () => this.cmdWhere(),
@@ -507,6 +511,108 @@ class AdventureGame {
         }
     }
 
+    cmdGoto(args) {
+        if (args.length === 0) {
+            this.terminal.print('Goto where? Usage: goto <stable.name>');
+            this.terminal.print('Example: goto class.copy, goto expr.prim.lambda');
+            return;
+        }
+
+        const target = args.join('.');  // Allow "goto class copy" or "goto class.copy"
+        const section = this.world.getSection(target);
+
+        if (!section) {
+            // Try partial match
+            const allSections = Object.keys(this.world.sections);
+            const matches = allSections.filter(s =>
+                s.includes(target) ||
+                this.world.sections[s].displayName.toLowerCase().includes(target.toLowerCase())
+            );
+
+            if (matches.length === 0) {
+                this.terminal.print(`Section "${target}" not found.`);
+                this.terminal.print('Use "search <term>" to find sections.');
+                return;
+            }
+
+            if (matches.length === 1) {
+                // Single match - go there
+                const match = matches[0];
+                if (!this.world.isAvailableInEra(match, this.player.currentEra)) {
+                    this.terminal.print(`${match} doesn't exist in ${this.world.getEraName(this.player.currentEra)}.`);
+                    return;
+                }
+                this.terminal.print(`Going to ${match}...`);
+                this.player.moveTo(match);
+                this.showLocation();
+                return;
+            }
+
+            // Multiple matches - show list
+            this.terminal.print(`Multiple matches for "${target}":`);
+            matches.slice(0, 10).forEach(m => {
+                const s = this.world.getSection(m);
+                this.terminal.print(`  ${m} - ${s?.title || ''}`);
+            });
+            if (matches.length > 10) {
+                this.terminal.print(`  ... and ${matches.length - 10} more`);
+            }
+            return;
+        }
+
+        // Exact match
+        if (!this.world.isAvailableInEra(target, this.player.currentEra)) {
+            this.terminal.print(`${target} doesn't exist in ${this.world.getEraName(this.player.currentEra)}.`);
+            return;
+        }
+
+        this.player.moveTo(target);
+        this.showLocation();
+    }
+
+    cmdSearch(args) {
+        if (args.length === 0) {
+            this.terminal.print('Search for what? Usage: search <term>');
+            return;
+        }
+
+        const term = args.join(' ').toLowerCase();
+        const allSections = Object.keys(this.world.sections);
+
+        // Search in stable names and titles
+        const matches = allSections.filter(s => {
+            const section = this.world.sections[s];
+            return s.toLowerCase().includes(term) ||
+                   section.title?.toLowerCase().includes(term) ||
+                   section.displayName?.toLowerCase().includes(term);
+        });
+
+        // Filter by current era
+        const available = matches.filter(m =>
+            this.world.isAvailableInEra(m, this.player.currentEra)
+        );
+
+        if (available.length === 0) {
+            this.terminal.print(`No sections found matching "${term}" in ${this.world.getEraName(this.player.currentEra)}.`);
+            return;
+        }
+
+        this.terminal.print(`Found ${available.length} sections matching "${term}":`);
+        this.terminal.print('');
+
+        available.slice(0, 20).forEach(m => {
+            const s = this.world.getSection(m);
+            this.terminal.print(`  [[${m}]] - ${s?.title || s?.displayName || ''}`);
+        });
+
+        if (available.length > 20) {
+            this.terminal.print(`  ... and ${available.length - 20} more`);
+        }
+
+        this.terminal.print('');
+        this.terminal.print('Use "goto <stable.name>" to jump to a section.');
+    }
+
     cmdMap() {
         const currentSection = this.world.getSection(this.player.currentLocation);
         const realm = this.world.getRealm(currentSection?.realm);
@@ -831,6 +937,8 @@ NAVIGATION
   go <direction>     - Move north/south/east/west (or n/s/e/w)
   enter <area>       - Enter a sub-section
   exit               - Return to parent section
+  goto (g) <name>    - Jump to any [[stable.name]]
+  search <term>      - Find sections by name or title
   warp <location>    - Fast travel to visited location
   map                - Show current realm overview
   where              - Show location in hierarchy
