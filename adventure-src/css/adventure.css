@@ -407,6 +407,34 @@ body.adventure-page {
     animation: blink 1s infinite;
 }
 
+/* === Wikilinks (clickable cross-references) === */
+.wikilink {
+    color: var(--accent-blue);
+    text-decoration: none;
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+    cursor: pointer;
+    transition: color 0.2s, background 0.2s;
+    padding: 0.1em 0.2em;
+    border-radius: 3px;
+}
+
+.wikilink:hover {
+    color: var(--accent-gold);
+    background: rgba(79, 195, 247, 0.15);
+    text-decoration: underline;
+}
+
+/* Terminal wikilinks */
+.terminal-output .wikilink {
+    color: var(--accent-green);
+}
+
+.terminal-output .wikilink:hover {
+    color: var(--accent-gold);
+    background: rgba(0, 200, 83, 0.15);
+}
+
 /* === Print styles === */
 @media print {
     .adventure-terminal-container,

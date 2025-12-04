@@ -20,8 +20,18 @@ class AdventureGame {
         // Command registry
         this.commands = this.buildCommandRegistry();
 
-        // Bind terminal callback
+        // Bind terminal callbacks
         this.terminal.onCommand = (cmd) => this.handleCommand(cmd);
+        this.terminal.onWikilinkClick = (target) => this.handleWikilinkClick(target);
+    }
+
+    /**
+     * Handle wikilink click - navigate to target section
+     */
+    handleWikilinkClick(target) {
+        // Echo the command in terminal and execute goto
+        this.terminal.print(`> goto ${target}`);
+        this.cmdGoto([target]);
     }
 
     /**
@@ -336,6 +346,9 @@ class AdventureGame {
             if (typeof Prism !== 'undefined') {
                 Prism.highlightAllUnder(this.contentPanel);
             }
+
+            // Bind click handlers for wikilinks
+            this.bindWikilinks();
         } catch (error) {
             this.contentPanel.innerHTML = `<p>Error loading content: ${error.message}</p>`;
         }
@@ -379,6 +392,14 @@ class AdventureGame {
      * Simple markdown to HTML renderer
      */
     renderMarkdown(markdown) {
+        // Pre-process: Convert [[stable.name]] wikilinks to clickable links
+        // These become: <a href="#" class="wikilink" data-target="stable.name">[stable.name]</a>
+        const processedMarkdown = markdown.replace(
+            /\[\[([^\]]+)\]\]/g,
+            '<a href="#" class="wikilink" data-target="$1">[$1]</a>'
+        );
+
+        let html;
         // Use marked.js if available, otherwise basic conversion
         if (typeof marked !== 'undefined') {
             // Configure marked for GFM
@@ -387,21 +408,43 @@ class AdventureGame {
                 breaks: false,
                 pedantic: false,
             });
-            return marked.parse(markdown);
+            html = marked.parse(processedMarkdown);
+        } else {
+            // Basic fallback
+            html = processedMarkdown
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/^### (.+)$/gm, '<h3>$1</h3>')
+                .replace(/^## (.+)$/gm, '<h2>$1</h2>')
+                .replace(/^# (.+)$/gm, '<h1>$1</h1>')
+                .replace(/`([^`]+)`/g, '<code>$1</code>')
+                .replace(/\n\n/g, '</p><p>')
+                .replace(/^/, '<p>')
+                .replace(/$/, '</p>');
         }
 
-        // Basic fallback
-        return markdown
-            .replace(/&/g, '&amp;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;')
-            .replace(/^### (.+)$/gm, '<h3>$1</h3>')
-            .replace(/^## (.+)$/gm, '<h2>$1</h2>')
-            .replace(/^# (.+)$/gm, '<h1>$1</h1>')
-            .replace(/`([^`]+)`/g, '<code>$1</code>')
-            .replace(/\n\n/g, '</p><p>')
-            .replace(/^/, '<p>')
-            .replace(/$/, '</p>');
+        return html;
+    }
+
+    /**
+     * Bind click handlers for wikilinks in the content panel
+     */
+    bindWikilinks() {
+        if (!this.contentPanel) return;
+
+        const wikilinks = this.contentPanel.querySelectorAll('.wikilink');
+        wikilinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const target = link.dataset.target;
+                if (target) {
+                    // Execute goto command and echo it in terminal
+                    this.terminal.print(`> goto ${target}`);
+                    this.cmdGoto([target]);
+                }
+            });
+        });
     }
 
     // --- Command implementations ---

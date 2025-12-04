@@ -13,6 +13,7 @@ class Terminal {
         this.history = [];
         this.historyIndex = -1;
         this.onCommand = null;
+        this.onWikilinkClick = null;  // Callback for wikilink clicks
 
         this.render();
         this.bindEvents();
@@ -27,6 +28,37 @@ class Terminal {
         const div = document.createElement('div');
         div.textContent = text;
         return div.innerHTML;
+    }
+
+    /**
+     * Convert [[stable.name]] wikilinks to clickable HTML
+     * @param {string} text - Text potentially containing wikilinks
+     * @returns {string} HTML with wikilinks converted to anchor tags
+     */
+    processWikilinks(text) {
+        // First escape HTML, then convert wikilinks
+        const escaped = this.escapeHtml(text);
+        return escaped.replace(
+            /\[\[([^\]]+)\]\]/g,
+            '<a href="#" class="wikilink" data-target="$1">[$1]</a>'
+        );
+    }
+
+    /**
+     * Bind click handlers for wikilinks in a container element
+     * @param {HTMLElement} container - Container to search for wikilinks
+     */
+    bindWikilinksIn(container) {
+        const wikilinks = container.querySelectorAll('.wikilink');
+        wikilinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const target = link.dataset.target;
+                if (target && this.onWikilinkClick) {
+                    this.onWikilinkClick(target);
+                }
+            });
+        });
     }
 
     render() {
@@ -89,14 +121,23 @@ class Terminal {
 
     /**
      * Print a line to the terminal output
+     * Automatically converts [[stable.name]] to clickable links
      * @param {string} text - Text to print
      * @param {string} className - Optional CSS class for styling
      */
     print(text, className = '') {
         const line = document.createElement('div');
         line.className = `terminal-line ${className}`.trim();
-        line.textContent = text;
-        this.output.appendChild(line);
+
+        // Check if text contains wikilinks
+        if (text.includes('[[')) {
+            line.innerHTML = this.processWikilinks(text);
+            this.output.appendChild(line);
+            this.bindWikilinksIn(line);
+        } else {
+            line.textContent = text;
+            this.output.appendChild(line);
+        }
         this.scrollToBottom();
     }
 
@@ -137,7 +178,13 @@ class Terminal {
     printLocation(era, location, stableName) {
         // Escape location to handle titles with < > characters (like `<initializer_list>`)
         const safeLocation = this.escapeHtml(location);
-        this.printHTML(`<span class="era-tag">[${era}]</span> <span class="location-name">${safeLocation}</span> <span class="stable-name">[[${stableName}]]</span>`);
+        // Make the stable name a clickable wikilink
+        const line = document.createElement('div');
+        line.className = 'terminal-line';
+        line.innerHTML = `<span class="era-tag">[${era}]</span> <span class="location-name">${safeLocation}</span> <span class="stable-name"><a href="#" class="wikilink" data-target="${stableName}">[${stableName}]</a></span>`;
+        this.output.appendChild(line);
+        this.bindWikilinksIn(line);
+        this.scrollToBottom();
     }
 
     /**
