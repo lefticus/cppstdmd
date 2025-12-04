@@ -359,11 +359,14 @@ class AdventureGame {
      */
     extractSectionContent(markdown, stableName) {
         // Find the section by anchor
-        const anchorPattern = `<a id="${stableName.replace(/\./g, '\\.')}"`;
         const anchorIndex = markdown.indexOf(`<a id="${stableName}"`);
 
+        // If anchor not found, this might be a top-level/file section
+        // In that case, return the entire file content
         if (anchorIndex === -1) {
-            return null;
+            // Check if this is a file-level section (no dots, or the file starts with content for this section)
+            // Return the whole file for file-level sections
+            return markdown;
         }
 
         // Find the start of the heading line
@@ -392,11 +395,16 @@ class AdventureGame {
      * Simple markdown to HTML renderer
      */
     renderMarkdown(markdown) {
-        // Pre-process: Convert [[stable.name]] wikilinks to clickable links
-        // These become: <a href="#" class="wikilink" data-target="stable.name">[stable.name]</a>
+        // Pre-process: Convert [[stable.name]] wikilinks to placeholders
+        // We use a placeholder that marked.js won't interpret as a link
+        const wikilinks = [];
         const processedMarkdown = markdown.replace(
             /\[\[([^\]]+)\]\]/g,
-            '<a href="#" class="wikilink" data-target="$1">[$1]</a>'
+            (match, target) => {
+                const index = wikilinks.length;
+                wikilinks.push(target);
+                return `%%WIKILINK_${index}%%`;
+            }
         );
 
         let html;
@@ -423,6 +431,12 @@ class AdventureGame {
                 .replace(/^/, '<p>')
                 .replace(/$/, '</p>');
         }
+
+        // Post-process: Replace wikilink placeholders with actual HTML links
+        html = html.replace(/%%WIKILINK_(\d+)%%/g, (match, index) => {
+            const target = wikilinks[parseInt(index)];
+            return `<a href="#" class="wikilink" data-target="${target}">[${target}]</a>`;
+        });
 
         return html;
     }
