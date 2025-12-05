@@ -315,6 +315,7 @@ class Converter:
         verbose: bool = False,
         current_file_stem: str | None = None,
         label_index_file: Path | None = None,
+        source_dir: Path | None = None,
     ) -> str:
         """
         Convert a single LaTeX file to Markdown
@@ -326,6 +327,7 @@ class Converter:
             verbose: Print verbose output
             current_file_stem: Current file's stem for cross-ref detection
             label_index_file: Path to Lua label index file
+            source_dir: Source directory for config.tex lookup (if None, uses input_file.parent)
 
         Returns:
             Markdown content as string
@@ -367,8 +369,9 @@ class Converter:
                 cmd.append(f"--metadata=label_index_file:{label_index_file}")
 
             # Pass source directory for dynamic config loading
-            source_dir = input_file.parent
-            cmd.append(f"--metadata=source_dir:{source_dir}")
+            # Use explicit source_dir if provided (for temp files), else infer from input
+            effective_source_dir = source_dir if source_dir else input_file.parent
+            cmd.append(f"--metadata=source_dir:{effective_source_dir}")
 
             # Add filters in order
             for filter_path in self.filters:

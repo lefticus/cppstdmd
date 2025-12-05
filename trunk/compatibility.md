@@ -1994,7 +1994,7 @@ different result in this revision of C++.
 
 ###  [[library]]: library introduction <a id="diff.cpp03.library">[[diff.cpp03.library]]</a>
 
-**Affected:** [[library]] – [[thread]] **Change:** New reserved
+**Affected:** [[library]] – [[exec]] **Change:** New reserved
 identifiers. **Rationale:** Required by new features. **Effect on
 original feature:** Valid C++03 code that uses any identifiers added to
 the C++ standard library by later revisions of C++ may fail to compile
@@ -3161,6 +3161,7 @@ restricted in C++. Subclause [[c.malloc]] describes the changes.
 [diff.stat]: #diff.stat
 [diff.wchar.t]: #diff.wchar.t
 [except]: except.md#except
+[exec]: exec.md#exec
 [expr]: expr.md#expr
 [expr.eq]: expr.md#expr.eq
 [expr.new]: expr.md#expr.new

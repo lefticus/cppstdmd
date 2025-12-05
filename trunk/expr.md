@@ -6604,7 +6604,7 @@ the constraints of a core constant expression, but evaluation of E would
 evaluate
 
 - an operation that has undefined behavior as specified in [[library]]
-  through [[thread]] or
+  through [[exec]] or
 - an invocation of the `va_start` macro [[cstdarg.syn]].
 
 [*Example 7*:
@@ -7363,6 +7363,7 @@ A function or variable is *needed for constant evaluation* if it is:
 [except.spec]: except.md#except.spec
 [except.terminate]: except.md#except.terminate
 [except.throw]: except.md#except.throw
+[exec]: exec.md#exec
 [expr]: #expr
 [expr.add]: #expr.add
 [expr.alignof]: #expr.alignof
@@ -7515,7 +7516,6 @@ A function or variable is *needed for constant evaluation* if it is:
 [term.odr.use]: basic.md#term.odr.use
 [term.structural.type]: temp.md#term.structural.type
 [term.unevaluated.operand]: #term.unevaluated.operand
-[thread]: thread.md#thread
 [type.info]: support.md#type.info
 [typeinfo.syn]: support.md#typeinfo.syn
 

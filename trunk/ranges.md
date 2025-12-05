@@ -11536,8 +11536,8 @@ namespace std::ranges {
     constexpr auto size() requires sized_range<V>;
     constexpr auto size() const requires sized_range<const V>;
 
-    constexpr auto reserve_hintsize() requires approximately_sized_range<V>;
-    constexpr auto reserve_hintsize() const requires approximately_sized_range<const V>;
+    constexpr auto reserve_hint() requires approximately_sized_range<V>;
+    constexpr auto reserve_hint() const requires approximately_sized_range<const V>;
   };
 
   template<class R>

@@ -264,10 +264,10 @@ That description includes detailed syntactic specifications in a form
 described in  [[syntax]]. For convenience, Annex  [[gram]] repeats all
 such syntactic specifications.
 
-Clauses  [[support]] through  [[thread]] and Annex  [[depr]] (the
-*library clauses*) describe the C++standard library. That description
-includes detailed descriptions of the entities and macros that
-constitute the library, in a form described in Clause  [[library]].
+Clauses  [[language.support]] through  [[thread]] and Annex  [[depr]]
+(the *library clauses*) describe the C++standard library. That
+description includes detailed descriptions of the entities and macros
+that constitute the library, in a form described in Clause  [[library]].
 
 Annex  [[implimits]] recommends lower bounds on the capacity of
 conforming implementations.
@@ -1409,20 +1409,20 @@ All rights in these originals are reserved.
 [intro.refs]: #intro.refs
 [intro.scope]: #intro.scope
 [intro.structure]: #intro.structure
+[language.support]: language.md#language.support
 [lex]: lex.md#lex
 [lex.charset]: lex.md#lex.charset
 [lex.phases]: lex.md#lex.phases
 [library]: library.md#library
-[support]: #support
 [syntax]: #syntax
 [temp.arg]: temp.md#temp.arg
 [temp.deduct]: temp.md#temp.deduct
 [thread]: thread.md#thread
 [thread.thread.class]: thread.md#thread.thread.class
 
-[^1]: With the qualifications noted in Clauses  [[support]] through 
-    [[thread]] and in  [[diff.library]], the C standard library is a
-    subset of the C++standard library.
+[^1]: With the qualifications noted in Clauses  [[language.support]]
+    through  [[thread]] and in  [[diff.library]], the C standard library
+    is a subset of the C++standard library.
 
 [^2]: “Correct execution” can include undefined behavior, depending on
     the data being processed; see Clause  [[intro.defs]] and 

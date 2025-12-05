@@ -1409,3 +1409,11 @@ function Pandoc(doc)
 
   return doc
 end
+
+-- Return filter list to ensure Meta runs FIRST before element processing
+-- This is critical because FIRSTLIB/LASTLIB must be loaded from config.tex
+-- before \firstlibchapter macros are expanded in element handlers
+return {
+  { Meta = Meta },  -- First pass: load config from metadata
+  { Str = Str, RawInline = RawInline, RawBlock = RawBlock, Code = Code, CodeBlock = CodeBlock, Pandoc = Pandoc },  -- Second pass: process elements
+}

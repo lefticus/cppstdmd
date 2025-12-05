@@ -74,7 +74,7 @@ satisfied before continuing execution past the blocking operation
 library described in ISO/IEC 9899:2018 (C), Clause 7
 
 [*Note 1 to entry*: With the qualifications noted in [[support]]
-through [[thread]] and in [[diff.library]], the C standard library is a
+through [[exec]] and in [[diff.library]], the C standard library is a
 subset of the C++ standard library. — *end note*]
 
 #### 9 character <a id="defns.character">[defns.character]</a>
@@ -530,7 +530,7 @@ requirements on programs, parts of programs, or execution of programs.
 Such requirements have the following meaning:
 
 - If a program contains no violations of the rules in [[lex]] through
-  [[thread]] as well as those specified in [[depr]], a conforming
+  [[exec]] as well as those specified in [[depr]], a conforming
   implementation shall accept and correctly execute[^2] that program,
   except when the implementation’s limitations (see below) are exceeded.
 - If a program contains a violation of a rule for which no diagnostic is
@@ -704,7 +704,7 @@ language. That description includes detailed syntactic specifications in
 a form described in  [[syntax]]. For convenience, [[gram]] repeats all
 such syntactic specifications.
 
-[[support]] through [[thread]] and [[depr]] (the *library clauses*)
+[[support]] through [[exec]] and [[depr]] (the *library clauses*)
 describe the C++ standard library. That description includes detailed
 descriptions of the entities and macros that constitute the library, in
 a form described in [[library]].
@@ -769,6 +769,7 @@ the following rules:
 [depr]: future.md#depr
 [diff]: compatibility.md#diff
 [diff.library]: compatibility.md#diff.library
+[exec]: exec.md#exec
 [expr.assign]: expr.md#expr.assign
 [expr.call]: expr.md#expr.call
 [expr.const]: expr.md#expr.const
@@ -797,7 +798,6 @@ the following rules:
 [support]: support.md#support
 [syntax]: #syntax
 [temp.deduct]: temp.md#temp.deduct
-[thread]: thread.md#thread
 [using.headers]: library.md#using.headers
 [utility.undefined]: utilities.md#utility.undefined
 

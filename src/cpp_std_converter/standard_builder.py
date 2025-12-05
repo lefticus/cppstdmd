@@ -138,6 +138,7 @@ def _convert_chapter_worker(
             verbose=False,
             current_file_stem=stable_name,
             label_index_file=label_index_file,
+            source_dir=draft_dir,
         )
 
         # Cleanup temporary files
@@ -538,6 +539,7 @@ class StandardBuilder:
                     output_file=None,  # Return as string
                     standalone=False,  # Don't include standalone wrappers
                     verbose=False,
+                    source_dir=self.draft_dir,
                 )
 
                 # Extract link definitions and content separately
