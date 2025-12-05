@@ -14,6 +14,7 @@ class World {
         this.sections = {};
         this.realms = {};
         this.eras = {};
+        this.stableNameAliases = {};  // Maps stable names to their aliases
         this.loaded = false;
     }
 
@@ -31,6 +32,7 @@ class World {
             this.sections = this.worldMap.sections || {};
             this.realms = this.worldMap.realms || {};
             this.eras = this.worldMap.eras || {};
+            this.stableNameAliases = this.worldMap.stableNameAliases || {};
             this.loaded = true;
         } catch (error) {
             console.error('Failed to load world map:', error);
@@ -348,6 +350,77 @@ class World {
      */
     getAllEras() {
         return { ...this.eras };
+    }
+
+    /**
+     * Get aliases for a stable name
+     * @param {string} stableName - The section's stable name
+     * @returns {string[]} Array of alias names (may be empty)
+     */
+    getAliases(stableName) {
+        return this.stableNameAliases[stableName] || [];
+    }
+
+    /**
+     * Find an equivalent stable name that exists in the target era
+     * @param {string} stableName - The section's stable name
+     * @param {string} targetEra - The era to check
+     * @returns {string|null} An alias that exists in the era, or null
+     */
+    findAliasForEra(stableName, targetEra) {
+        // First check if the name itself exists in the era
+        if (this.isAvailableInEra(stableName, targetEra)) {
+            return stableName;
+        }
+
+        // Check aliases
+        const aliases = this.getAliases(stableName);
+        for (const alias of aliases) {
+            const aliasSection = this.getSection(alias);
+            if (aliasSection && aliasSection.availableIn.includes(targetEra)) {
+                return alias;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Timeshift to a different era, finding the equivalent section
+     * @param {string} currentSection - Current section stable name
+     * @param {string} targetEra - Era to shift to
+     * @returns {object} Result with success, target, aliased, and message
+     */
+    timeshift(currentSection, targetEra) {
+        // Check if direct navigation works
+        if (this.isAvailableInEra(currentSection, targetEra)) {
+            return {
+                success: true,
+                target: currentSection,
+                aliased: false,
+            };
+        }
+
+        // Try to find an alias that exists in the target era
+        const alias = this.findAliasForEra(currentSection, targetEra);
+        if (alias) {
+            const aliasSection = this.getSection(alias);
+            const currentSectionData = this.getSection(currentSection);
+            return {
+                success: true,
+                target: alias,
+                aliased: true,
+                message: `Section "${currentSectionData?.title || currentSection}" was renamed to "${aliasSection?.title || alias}" in ${this.getEraName(targetEra)}.`,
+            };
+        }
+
+        // No equivalent found
+        const eraName = this.getEraName(targetEra);
+        const section = this.getSection(currentSection);
+        return {
+            success: false,
+            message: `"${section?.displayName || currentSection}" doesn't exist in ${eraName} and has no known equivalent.`,
+        };
     }
 }
 

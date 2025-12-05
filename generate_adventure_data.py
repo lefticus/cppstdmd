@@ -149,6 +149,7 @@ def extract_sections_from_markdown(
                 "title": heading.title,
                 "stableName": heading.stable_name,
                 "headingLevel": heading.level,
+                "documentOrder": i,  # Position within chapter for ordering
                 "crossReferences": cross_refs,
                 "contentLength": len(section_content),
             }
@@ -156,61 +157,193 @@ def extract_sections_from_markdown(
     return sections
 
 
-def infer_hierarchy(sections: dict[str, dict[str, Any]]) -> dict[str, dict[str, Any]]:
-    """Infer parent-child relationships from stable names."""
-    for stable_name, data in sections.items():
-        parts = stable_name.split(".")
+def build_hierarchy_from_levels(sections: dict[str, dict[str, Any]]) -> dict[str, dict[str, Any]]:
+    """Build parent-child relationships using actual heading levels.
 
-        # Parent is the stable name with one fewer part
-        if len(parts) > 1:
-            potential_parent = ".".join(parts[:-1])
-            if potential_parent in sections:
-                data["parent"] = potential_parent
-            else:
-                data["parent"] = parts[0] if parts[0] in sections else None
-        else:
-            data["parent"] = None
+    This correctly handles cases where a child's stable name doesn't start with
+    the parent's prefix (e.g., basic.lval under expr.prop).
+    """
+    from collections import defaultdict
 
-        # Children are sections that have this as their parent
-        data["children"] = [name for name, d in sections.items() if d.get("parent") == stable_name]
+    # Group sections by chapter and sort by document order
+    by_chapter: dict[str, list[tuple[str, dict]]] = defaultdict(list)
+    for name, data in sections.items():
+        by_chapter[data["chapter"]].append((name, data))
+
+    for chapter, chapter_sections in by_chapter.items():
+        # Sort by document order within chapter
+        chapter_sections.sort(key=lambda x: x[1]["documentOrder"])
+
+        # Use a stack to track the hierarchy based on heading levels
+        # Stack contains (stable_name, level) tuples
+        stack: list[tuple[str, int]] = []
+
+        for name, data in chapter_sections:
+            level = data["headingLevel"]
+
+            # Pop stack until we find a parent (level < current level)
+            while stack and stack[-1][1] >= level:
+                stack.pop()
+
+            # Parent is top of stack (or None if empty)
+            parent = stack[-1][0] if stack else None
+            data["parent"] = parent
+
+            # Initialize children list
+            data["children"] = []
+
+            # Add ourselves to parent's children list
+            if parent and parent in sections:
+                sections[parent]["children"].append(name)
+
+            # Push ourselves onto the stack
+            stack.append((name, level))
 
     return sections
 
 
-def generate_connections(sections: dict[str, dict[str, Any]]) -> dict[str, dict[str, Any]]:
-    """Generate north/south/east/west connections between sections."""
-    # Group sections by chapter
-    by_chapter: dict[str, list[str]] = {}
-    for name, data in sections.items():
-        chapter = data["chapter"]
-        if chapter not in by_chapter:
-            by_chapter[chapter] = []
-        by_chapter[chapter].append(name)
+def infer_hierarchy(sections: dict[str, dict[str, Any]]) -> dict[str, dict[str, Any]]:
+    """Infer parent-child relationships - delegates to build_hierarchy_from_levels."""
+    return build_hierarchy_from_levels(sections)
 
-    # Within each chapter, sections connect sequentially (north/south)
+
+def generate_connections(
+    sections: dict[str, dict[str, Any]], chapter_order: list[str] | None = None
+) -> dict[str, dict[str, Any]]:
+    """Generate north/south/east/west connections between sections.
+
+    Navigation semantics:
+    - North/South: Previous/next sibling (same parent, same level)
+    - East/West: Previous/next chapter (based on std.tex order)
+    - Up (parent field): Go to parent section
+    - Down (children[0]): Go to first child
+
+    Args:
+        sections: Section data with parent/children already populated
+        chapter_order: List of chapter names in std.tex order (for E/W navigation)
+    """
+    # Build chapter → root section mapping for E/W navigation
+    chapter_roots: dict[str, str] = {}
     for name, data in sections.items():
-        chapter_sections = by_chapter[data["chapter"]]
+        if data.get("parent") is None:
+            # This is a root section (no parent within this chapter)
+            chapter = data["chapter"]
+            # First root section in document order becomes the chapter entry point
+            if chapter not in chapter_roots:
+                chapter_roots[chapter] = name
+
+    # Generate connections for each section
+    for name, data in sections.items():
+        parent = data.get("parent")
+        chapter = data["chapter"]
+
+        # Get siblings (sections with same parent)
+        if parent and parent in sections:
+            siblings = sections[parent].get("children", [])
+        else:
+            # Top-level: no siblings for N/S (only E/W for chapter navigation)
+            siblings = []
+
+        # Find position among siblings
         try:
-            idx = chapter_sections.index(name)
+            idx = siblings.index(name)
         except ValueError:
             idx = -1
 
+        # North/South: sibling navigation (null at chapter root level)
+        north = siblings[idx - 1] if idx > 0 else None
+        south = siblings[idx + 1] if 0 <= idx < len(siblings) - 1 else None
+
+        # East/West: chapter navigation
+        east = None
+        west = None
+        if chapter_order:
+            try:
+                chapter_idx = chapter_order.index(chapter)
+                # West = previous chapter's root section
+                if chapter_idx > 0:
+                    prev_chapter = chapter_order[chapter_idx - 1]
+                    west = chapter_roots.get(prev_chapter)
+                # East = next chapter's root section
+                if chapter_idx < len(chapter_order) - 1:
+                    next_chapter = chapter_order[chapter_idx + 1]
+                    east = chapter_roots.get(next_chapter)
+            except ValueError:
+                pass  # Chapter not in order list
+
         data["connections"] = {
-            "north": chapter_sections[idx - 1] if idx > 0 else None,
-            "south": chapter_sections[idx + 1] if idx < len(chapter_sections) - 1 else None,
-            "east": None,
-            "west": None,
+            "north": north,
+            "south": south,
+            "east": east,
+            "west": west,
         }
 
-        # Cross-references become east/west connections (first 2)
-        for ref in data.get("crossReferences", [])[:2]:
-            if ref in sections and ref != name:
-                if data["connections"]["east"] is None:
-                    data["connections"]["east"] = ref
-                elif data["connections"]["west"] is None:
-                    data["connections"]["west"] = ref
-
     return sections
+
+
+def get_chapter_order_from_std_tex(draft_dir: Path) -> list[str]:
+    """Extract chapter order from std.tex file.
+
+    Returns list of chapter stable names (markdown file stems) in document order.
+    """
+    std_tex = draft_dir / "std.tex"
+    if not std_tex.exists():
+        return []
+
+    content = std_tex.read_text(encoding="utf-8")
+
+    # Extract \include{filename} in order
+    includes = re.findall(r"\\include\{([^}]+)\}", content)
+
+    # Map LaTeX filenames to markdown chapter names
+    # Most map directly, but some have special handling
+    latex_to_md = {
+        "expressions": "expr",
+        "statements": "stmt",
+        "declarations": "dcl",
+        "classes": "class",
+        "overloading": "over",
+        "templates": "temp",
+        "exceptions": "except",
+        "preprocessor": "cpp",
+        "modules": "module",
+        "lib-intro": "library",
+        "concepts": "concepts",
+        "diagnostics": "diagnostics",
+        "memory": "mem",
+        "utilities": "utilities",
+        "strings": "strings",
+        "containers": "containers",
+        "iterators": "iterators",
+        "ranges": "ranges",
+        "algorithms": "algorithms",
+        "numerics": "numerics",
+        "locales": "locales",
+        "iostreams": "input",  # input.output -> input
+        "regex": "re",
+        "threads": "thread",
+        "grammar": "grammar",
+        "limits": "limits",
+        "compatibility": "compatibility",
+        "future": "future",
+        # These are their own names
+        "intro": "intro",
+        "lex": "lex",
+        "basic": "basic",
+        "support": "support",
+        "meta": "meta",
+        "time": "time",
+        "uax31": "uax31",
+        "front": "front",
+        "back": "back",
+    }
+
+    chapter_order = []
+    for inc in includes:
+        md_name = latex_to_md.get(inc, inc)
+        chapter_order.append(md_name)
+
+    return chapter_order
 
 
 def get_realm_info(stable_name: str) -> tuple[str, str, str]:
@@ -287,6 +420,7 @@ def detect_era_availability(stable_name: str, version_dirs: list[Path]) -> list[
 def generate_world_map(
     primary_version_dir: Path,
     all_version_dirs: list[Path],
+    draft_dir: Path | None = None,
 ) -> dict[str, Any]:
     """Generate the complete world map from markdown content."""
     # Get label→chapter mapping from the generated Lua file
@@ -296,12 +430,21 @@ def generate_world_map(
 
     sections = extract_sections_from_markdown(primary_version_dir, label_to_chapter)
     sections = infer_hierarchy(sections)
-    sections = generate_connections(sections)
+
+    # Get chapter order for E/W navigation
+    chapter_order = []
+    if draft_dir:
+        chapter_order = get_chapter_order_from_std_tex(draft_dir)
+        if chapter_order:
+            print(f"  Loaded chapter order from std.tex ({len(chapter_order)} chapters)")
+
+    sections = generate_connections(sections, chapter_order)
 
     world_map: dict[str, Any] = {
         "version": "1.0.0",
         "primaryEra": primary_version_dir.name,
         "eras": ERA_NAMES,
+        "stableNameAliases": {},  # Will be populated later from aliases data
         "realms": {},
         "sections": {},
     }
@@ -512,6 +655,26 @@ def copy_version_markdown(version_dirs: list[Path], output_dir: Path) -> None:
         print(f"  Copied {md_count} markdown files to {version_name}/")
 
 
+def load_or_generate_aliases(
+    game_data_dir: Path, base_dir: Path, versions: list[str]
+) -> dict[str, Any]:
+    """Load existing aliases or generate new ones.
+
+    Returns the aliases data structure with forward_aliases and bidirectional maps.
+    """
+    alias_file = game_data_dir / "stable-name-aliases.json"
+
+    # Import the generator function
+    from generate_stable_name_aliases import generate_aliases
+
+    # Generate aliases (will write to file)
+    return generate_aliases(
+        base_dir=base_dir,
+        output_file=alias_file,
+        versions=versions,
+    )
+
+
 def generate_adventure_data(
     output_dir: Path,
     primary_version: str = "n4950",
@@ -538,9 +701,22 @@ def generate_adventure_data(
     print(f"  Primary version: {primary_version}")
     print(f"  Output directory: {game_data_dir}")
 
+    # Generate stable name aliases
+    print("\n  Generating stable name aliases...")
+    aliases_data = load_or_generate_aliases(game_data_dir, base_dir, versions)
+
+    # Find draft directory for std.tex (chapter ordering)
+    draft_dir = base_dir / "cplusplus-draft" / "source"
+    if not draft_dir.exists():
+        draft_dir = None
+        print("  Warning: cplusplus-draft/source not found, chapter order unavailable")
+
     # Generate world map
-    world_map = generate_world_map(primary_dir, version_dirs)
+    world_map = generate_world_map(primary_dir, version_dirs, draft_dir)
     print(f"  Extracted {len(world_map['sections'])} sections from markdown")
+
+    # Add stable name aliases to world map for timeshift navigation
+    world_map["stableNameAliases"] = aliases_data.get("bidirectional", {})
 
     # Load hand-crafted YAML content
     if game_content_dir is None:
