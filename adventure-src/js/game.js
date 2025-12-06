@@ -11,6 +11,9 @@ class AdventureGame {
         this.world = new World();
         this.player = new Player();
 
+        // ISHML-based parser (initialized after world loads)
+        this.parser = new AdventureParser();
+
         // Diff animator for timewarp animations
         this.diffAnimator = new DiffAnimator(contentPanel);
 
@@ -23,7 +26,7 @@ class AdventureGame {
         this.quests = [];
         this.puzzles = [];
 
-        // Command registry
+        // Command registry (maps verb keys to handlers)
         this.commands = this.buildCommandRegistry();
 
         // Bind terminal callbacks
@@ -49,6 +52,9 @@ class AdventureGame {
         try {
             // Load world data
             await this.world.load();
+
+            // Initialize ISHML parser with world data
+            this.parser.init(this.world.worldData);
 
             // Load additional game data
             await Promise.all([
@@ -224,15 +230,31 @@ class AdventureGame {
      * Handle a command input
      */
     async handleCommand(input) {
-        const parts = input.trim().split(/\s+/);
-        const cmd = parts[0].toLowerCase();
-        const args = parts.slice(1);
+        // Use ISHML parser to interpret the command
+        const parsed = this.parser.parse(input);
 
-        if (this.commands[cmd]) {
-            await this.commands[cmd](args);
-        } else {
-            this.terminal.print(`Unknown command: ${cmd}`);
+        if (!parsed.verb) {
+            this.terminal.print(`I don't understand "${input}".`);
             this.terminal.print('Type "help" for a list of commands.');
+            return;
+        }
+
+        const verb = parsed.verb;
+        const args = parsed.args;
+
+        // Special handling for direction shortcuts when used as standalone commands
+        if (['north', 'south', 'east', 'west'].includes(verb) && args.length === 0) {
+            await this.cmdGo([verb]);
+        } else if (this.commands[verb]) {
+            await this.commands[verb](args);
+        } else {
+            // Fallback: maybe it's a section name for goto
+            if (this.world.getSection(input.trim())) {
+                await this.cmdGoto([input.trim()]);
+            } else {
+                this.terminal.print(`Unknown command: ${verb}`);
+                this.terminal.print('Type "help" for a list of commands.');
+            }
         }
 
         // Auto-save after each command
