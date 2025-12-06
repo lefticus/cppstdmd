@@ -19,6 +19,14 @@ class World {
     }
 
     /**
+     * Get the raw world data (for parser initialization)
+     * @returns {object} World map data with sections
+     */
+    get worldData() {
+        return this.worldMap;
+    }
+
+    /**
      * Load world map data from JSON file
      * @returns {Promise<void>}
      */
