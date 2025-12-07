@@ -61,7 +61,7 @@ exclude_files = {
     "trunk/",
     "full/",
     "diffs/",
-    "site/",
+    "build/",
     "venv/",
 }
 

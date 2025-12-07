@@ -29,7 +29,7 @@ This document breaks down the adventure game implementation into 10 phases, each
 
 - [ ] **1.1 Create template structure**
   - Create `templates/adventure.html` with split-screen layout
-  - Add basic CSS in `site/css/adventure.css`
+  - Add basic CSS in `build/site/css/adventure.css`
   - Add Font Awesome and base fonts
 
 - [ ] **1.2 Implement Terminal UI** (`terminal.js`)
@@ -67,7 +67,7 @@ This document breaks down the adventure game implementation into 10 phases, each
 ### Deliverables
 
 - `/adventure/index.html` - playable terminal
-- `site/data/game/world-map.json` - generated navigation data
+- `build/site/data/game/world-map.json` - generated navigation data
 - Basic navigation working
 
 ### Verification

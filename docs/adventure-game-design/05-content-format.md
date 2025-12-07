@@ -541,7 +541,7 @@ realms:
 
 ```
 game-content/*.yaml  ──┐
-                       ├──▶ generate_html_site.py ──▶ site/data/game/*.json
+                       ├──▶ generate_html_site.py ──▶ build/site/data/game/*.json
 Markdown sections    ──┘    (load, merge, validate)
 ```
 
@@ -551,7 +551,7 @@ Markdown sections    ──┘    (load, merge, validate)
 2. **Load YAML files** from `game-content/`
 3. **Merge content** - hand-crafted overrides auto-generated
 4. **Validate** against JSON schemas
-5. **Output JSON** to `site/data/game/`
+5. **Output JSON** to `build/site/data/game/`
 
 ### Merge Rules
 

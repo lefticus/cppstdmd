@@ -10,7 +10,7 @@ cppstdmd/
 │   ├── adventure.html              # Standalone adventure page template
 │   └── _adventure_widget.html      # Embeddable widget partial
 │
-├── site/
+├── build/site/
 │   ├── js/
 │   │   └── adventure/
 │   │       ├── game.js             # Main game engine & orchestration
@@ -54,8 +54,8 @@ cppstdmd/
 |------|---------|
 | `generate_html_site.py` | Add `generate_adventure_data()` and `generate_adventure_page()` |
 | `templates/index.html` | Add adventure section with link to `/adventure/` |
-| `site/js/navigation.js` | Add widget toggle button initialization |
-| `site/css/custom.css` | Add widget button and panel base styles |
+| `build/site/js/navigation.js` | Add widget toggle button initialization |
+| `build/site/css/custom.css` | Add widget button and panel base styles |
 
 ---
 
@@ -567,7 +567,7 @@ def generate_adventure_data(output_dir: Path, version_dirs: list[Path]):
 ### Core Module: game.js
 
 ```javascript
-// site/js/adventure/game.js
+// build/site/js/adventure/game.js
 
 /**
  * Main game engine - coordinates all modules
@@ -799,7 +799,7 @@ document.addEventListener('DOMContentLoaded', () => {
 ### Terminal Module: terminal.js
 
 ```javascript
-// site/js/adventure/terminal.js
+// build/site/js/adventure/terminal.js
 
 /**
  * Terminal UI component with command input and output
@@ -895,7 +895,7 @@ class Terminal {
 ### Markdown Loader: markdown-loader.js
 
 ```javascript
-// site/js/adventure/markdown-loader.js
+// build/site/js/adventure/markdown-loader.js
 
 /**
  * Loads and parses markdown content from section files
@@ -1024,7 +1024,7 @@ class MarkdownLoader {
 ### Player State (localStorage)
 
 ```javascript
-// site/js/adventure/save-system.js
+// build/site/js/adventure/save-system.js
 
 /**
  * Handles save/load to localStorage
@@ -1229,7 +1229,7 @@ class SaveSystem {
 ### Adventure CSS
 
 ```css
-/* site/css/adventure.css */
+/* build/site/css/adventure.css */
 
 /* Layout */
 .adventure-page {
@@ -1436,7 +1436,7 @@ class SaveSystem {
 ### Widget Toggle (added to navigation.js)
 
 ```javascript
-// Addition to site/js/navigation.js
+// Addition to build/site/js/navigation.js
 
 function initAdventureWidget() {
     // Check if adventure is enabled
@@ -1482,7 +1482,7 @@ function initAdventureWidget() {
 ### Widget Styles (added to custom.css)
 
 ```css
-/* Addition to site/css/custom.css */
+/* Addition to build/site/css/custom.css */
 
 /* Adventure widget toggle */
 #adventure-widget-toggle {

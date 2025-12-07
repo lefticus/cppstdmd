@@ -221,7 +221,7 @@ gh-pages branch:
 **Tasks**:
 1. **Run generator on all 5 adjacent pairs**:
    ```bash
-   ./generate_html_site.py --tier 1 --output site/
+   ./generate_html_site.py --tier 1 --output build/site/
    ```
 
 2. **Generate ~2,860 HTML pages**:
@@ -250,7 +250,7 @@ gh-pages branch:
    git checkout --orphan gh-pages
    git rm -rf .
    # Add generated site files
-   cp -r site/* .
+   cp -r build/site/* .
    git add .
    git commit -m "Initial deployment of C++ Standard Evolution Viewer"
    git push origin gh-pages
@@ -621,7 +621,7 @@ if __name__ == '__main__':
 **1. Generate site locally**:
 ```bash
 cd /home/jason/notes/cpp_standard_tools/converted/cppstdmd
-python3 generate_html_site.py --output site/
+python3 generate_html_site.py --output build/site/
 ```
 
 **2. Create gh-pages branch**:
@@ -633,8 +633,8 @@ git checkout --orphan gh-pages
 git rm -rf .
 
 # Copy generated site files
-cp -r site/* .
-cp site/.nojekyll .
+cp -r build/site/* .
+cp build/site/.nojekyll .
 
 # Add and commit
 git add .
@@ -705,13 +705,13 @@ jobs:
         run: pip install jinja2 beautifulsoup4
 
       - name: Generate site
-        run: python3 generate_html_site.py --output site/
+        run: python3 generate_html_site.py --output build/site/
 
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./site
+          publish_dir: ./build/site
           force_orphan: true
 ```
 

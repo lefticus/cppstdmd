@@ -72,17 +72,17 @@ python3 generate_html_site.py --test
 ```
 
 This will create:
-- `site/index.html` - Landing page
-- `site/versions/cpp11-to-cpp14.html` - Version overview
-- `site/diffs/cpp11-to-cpp14/*.html` - 10 diff pages
-- `site/css/custom.css` - Custom styles
-- `site/js/navigation.js` - JavaScript enhancements
-- `site/.nojekyll` - Disables Jekyll processing
+- `build/site/index.html` - Landing page
+- `build/site/versions/cpp11-to-cpp14.html` - Version overview
+- `build/site/diffs/cpp11-to-cpp14/*.html` - 10 diff pages
+- `build/site/css/custom.css` - Custom styles
+- `build/site/js/navigation.js` - JavaScript enhancements
+- `build/site/.nojekyll` - Disables Jekyll processing
 
 ### View Locally
 
 ```bash
-cd site
+cd build/site
 python3 -m http.server 8000
 ```
 
@@ -100,10 +100,10 @@ source venv/bin/activate
 export PATH="$HOME/.npm/node_modules/bin:$PATH"
 
 # Generate full site (uses all CPU cores by default)
-python3 generate_html_site.py --output site/
+python3 generate_html_site.py --output build/site/
 
 # Or specify number of workers for parallel processing
-python3 generate_html_site.py --output site/ --workers 8
+python3 generate_html_site.py --output build/site/ --workers 8
 ```
 
 **Estimated time**: 8-12 minutes with parallel processing (was 30-60 minutes before parallelization)
@@ -113,16 +113,16 @@ python3 generate_html_site.py --output site/ --workers 8
 
 ```bash
 # Generate with a limit per version pair (for testing)
-python3 generate_html_site.py --output site/ --limit 50
+python3 generate_html_site.py --output build/site/ --limit 50
 
 # Generate Tier 2 sections (2+ dots, more granular)
-python3 generate_html_site.py --output site/ --tier 2
+python3 generate_html_site.py --output build/site/ --tier 2
 
 # Control parallel processing workers (default: CPU count)
-python3 generate_html_site.py --output site/ --workers 4
+python3 generate_html_site.py --output build/site/ --workers 4
 
 # Disable parallelization (use 1 worker)
-python3 generate_html_site.py --output site/ --workers 1
+python3 generate_html_site.py --output build/site/ --workers 1
 
 # View help
 python3 generate_html_site.py --help
@@ -134,7 +134,7 @@ python3 generate_html_site.py --help
 
 ```bash
 # 1. Generate the site
-python3 generate_html_site.py --output site/
+python3 generate_html_site.py --output build/site/
 
 # 2. Go back to main branch
 git checkout main
@@ -145,8 +145,8 @@ git checkout --orphan gh-pages
 git rm -rf .
 
 # 4. Copy site files
-cp -r site/* .
-cp site/.nojekyll .
+cp -r build/site/* .
+cp build/site/.nojekyll .
 
 # 5. Commit and push
 git add .
@@ -198,13 +198,13 @@ jobs:
         run: pip install jinja2 beautifulsoup4 lxml
 
       - name: Generate site
-        run: python3 generate_html_site.py --output site/
+        run: python3 generate_html_site.py --output build/site/
 
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./site
+          publish_dir: ./build/site
           force_orphan: true
 ```
 
@@ -235,7 +235,7 @@ Your site will be available at: `https://[username].github.io/cppstdmd/`
 │   ├── n4140_to_n4659/
 │   │   └── by_stable_name/*.diff
 │   └── ...
-└── site/                           # Output: Generated HTML site
+└── build/site/                     # Output: Generated HTML site
     ├── index.html
     ├── .nojekyll
     ├── versions/
@@ -390,7 +390,7 @@ When you regenerate diffs (via `generate_diffs.py`):
 python3 generate_diffs.py --versions n4950 trunk --by-stable-name
 
 # 2. Regenerate site
-python3 generate_html_site.py --output site/
+python3 generate_html_site.py --output build/site/
 
 # 3. Redeploy to GitHub Pages
 # (follow deployment steps above)

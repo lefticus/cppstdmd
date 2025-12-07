@@ -223,6 +223,6 @@ luarocks install luacheck
 
 The following directories are excluded from linting:
 - Generated markdown: `n3337/`, `n4140/`, `n4659/`, `n4861/`, `n4950/`, `trunk/`
-- Build outputs: `diffs/`, `site/`, `full/`
+- Build outputs: `diffs/`, `build/`, `full/`
 - External repos: `cplusplus-draft/`
 - Virtual env: `venv/`

@@ -36,7 +36,7 @@ Usage:
     python3 generate_html_site.py [--output DIR] [--limit N] [--test]
 
 Options:
-    --output DIR    Output directory for generated site (default: site/)
+    --output DIR    Output directory for generated site (default: build/site/)
     --limit N       Limit number of diffs per version pair (for testing)
     --test          Test mode: only process first 10 diffs from one version pair
 """
@@ -1779,24 +1779,24 @@ Examples:
   python3 generate_html_site.py --test
 
   # Generate site with all levels (no filtering)
-  python3 generate_html_site.py --output site/
+  python3 generate_html_site.py --output build/site/
 
   # Generate site with only 0-1 dots (old Tier 1)
-  python3 generate_html_site.py --output site/ --max-dots 1
+  python3 generate_html_site.py --output build/site/ --max-dots 1
 
   # Generate site with up to 2 dots
-  python3 generate_html_site.py --output site/ --max-dots 2
+  python3 generate_html_site.py --output build/site/ --max-dots 2
 
   # Use more workers for faster generation
-  python3 generate_html_site.py --output site/ --workers 8
+  python3 generate_html_site.py --output build/site/ --workers 8
         """,
     )
 
     parser.add_argument(
         "--output",
         "-o",
-        default="site",
-        help="Output directory for generated site (default: site/)",
+        default="build/site",
+        help="Output directory for generated site (default: build/site/)",
     )
     parser.add_argument(
         "--max-dots",

@@ -791,8 +791,8 @@ def main():
     parser.add_argument(
         "--output",
         "-o",
-        default="site",
-        help="Output directory (default: site/)",
+        default="build/site",
+        help="Output directory (default: build/site/)",
     )
     parser.add_argument(
         "--primary",

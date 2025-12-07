@@ -184,8 +184,8 @@ def main():
         "-o",
         "--output",
         type=Path,
-        default=Path("site/data/game/stable-name-aliases.json"),
-        help="Output JSON file (default: site/data/game/stable-name-aliases.json)",
+        default=Path("build/site/data/game/stable-name-aliases.json"),
+        help="Output JSON file (default: build/site/data/game/stable-name-aliases.json)",
     )
     parser.add_argument(
         "--versions",

@@ -55,8 +55,7 @@ validation_results*.json
 /full/
 /diffs/*/
 !/diffs/README.md
-/site/
-/site_test/
+/build/
 *.tbz2
 
 # Downloaded dependencies

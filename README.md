@@ -84,7 +84,7 @@ All tools run directly from the repository root:
 ./generate_diffs.py --list
 
 # Generate HTML site from diffs
-./generate_html_site.py --output site/
+./generate_html_site.py --output build/site/
 ./generate_html_site.py --test
 ```
 
