@@ -848,6 +848,52 @@ def generate_adventure_data(
     print("\nAdventure game data generation complete!")
 
 
+def should_regenerate(output_dir: Path, input_dirs: list[Path], force: bool = False) -> bool:
+    """Check if output needs regeneration based on input mtimes.
+
+    Args:
+        output_dir: Directory containing output JSON files
+        input_dirs: List of directories containing input files (markdown, YAML)
+        force: If True, always regenerate
+
+    Returns:
+        True if regeneration is needed, False otherwise
+    """
+    if force:
+        return True
+
+    # Check if key output files exist
+    game_data_dir = output_dir / "data" / "game"
+    world_map_file = game_data_dir / "world-map.json"
+
+    if not world_map_file.exists():
+        return True
+
+    output_mtime = world_map_file.stat().st_mtime
+
+    # Check all input directories for newer files
+    for input_dir in input_dirs:
+        if not input_dir.exists():
+            continue
+
+        # Check markdown files
+        for md_file in input_dir.rglob("*.md"):
+            if md_file.stat().st_mtime > output_mtime:
+                return True
+
+        # Check YAML files (in game-content directory)
+        for yaml_file in input_dir.rglob("*.yaml"):
+            if yaml_file.stat().st_mtime > output_mtime:
+                return True
+
+        # Check Lua files (label mappings)
+        for lua_file in input_dir.rglob("*.lua"):
+            if lua_file.stat().st_mtime > output_mtime:
+                return True
+
+    return False
+
+
 def main():
     """CLI entry point."""
     parser = argparse.ArgumentParser(
@@ -870,12 +916,46 @@ def main():
         type=Path,
         help="Path to game-content YAML directory",
     )
+    parser.add_argument(
+        "--force",
+        action="store_true",
+        help="Force regeneration even if output is newer than input",
+    )
 
     args = parser.parse_args()
 
+    # Determine input directories for cache check
+    base_dir = Path(__file__).parent
+    versions = ["n3337", "n4140", "n4659", "n4861", "n4950", "trunk"]
+    version_dirs = [base_dir / v for v in versions if (base_dir / v).exists()]
+
+    input_dirs = version_dirs.copy()
+
+    # Add game content directories
+    game_content_candidates = [
+        args.game_content,
+        base_dir / "game-content",
+        base_dir / "docs" / "adventure-game-design" / "game-content-examples",
+    ]
+    for candidate in game_content_candidates:
+        if candidate and candidate.exists():
+            input_dirs.append(candidate)
+
+    # Check if regeneration is needed
+    output_path = Path(args.output)
+    if not should_regenerate(output_path, input_dirs, args.force):
+        world_map_file = output_path / "data" / "game" / "world-map.json"
+        mtime_str = world_map_file.stat().st_mtime
+        from datetime import datetime
+
+        mtime_date = datetime.fromtimestamp(mtime_str).strftime("%Y-%m-%d %H:%M")
+        print(f"Skipping adventure data generation (unchanged since {mtime_date})")
+        print("Use --force to regenerate")
+        return
+
     try:
         generate_adventure_data(
-            output_dir=Path(args.output),
+            output_dir=output_path,
             primary_version=args.primary,
             game_content_dir=args.game_content,
         )

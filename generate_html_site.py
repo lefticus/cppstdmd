@@ -85,6 +85,7 @@ class VersionPairConfig:
     max_dots: int | None = None
     limit: int | None = None
     max_workers: int | None = None
+    force: bool = False
 
 
 # Version pairs (adjacent only) - these are the focus of the viewer
@@ -128,6 +129,8 @@ FONT_AWESOME_ICONS = {
     "youtube": "fa-brands fa-youtube",
     "github": "fa-brands fa-github",
     "website": "fa-solid fa-globe",
+    "gamepad": "fa-solid fa-gamepad",
+    "video": "fa-solid fa-video",
 }
 
 
@@ -473,6 +476,27 @@ def get_cppstdmd_sha() -> dict[str, str]:
 
     except Exception:
         return {"sha": "", "short_sha": ""}
+
+
+def load_episode_correlations(output_path: Path) -> dict:
+    """Load episode correlations from the game data directory.
+
+    Args:
+        output_path: Path to the site output directory (e.g., build/site)
+
+    Returns:
+        Dictionary mapping stable names to lists of episode correlations
+        Each correlation has: episode, title, confidence, youtube_url
+        Returns empty dict if file not found or invalid JSON
+    """
+    correlations_file = output_path / "data" / "game" / "episode-correlations.json"
+    if not correlations_file.exists():
+        return {}
+
+    try:
+        return json.loads(correlations_file.read_text(encoding="utf-8"))
+    except (json.JSONDecodeError, Exception):
+        return {}
 
 
 def extract_diff_keywords(diff_file: Path) -> list[str]:
@@ -889,6 +913,45 @@ def inject_navigation(html_file: Path, context: dict, env: Environment) -> bool:
 
         header.append(md_links_div)
 
+        # Adventure game link
+        adventure_div = soup.new_tag("div", **{"class": "external-links"})
+        gamepad_icon = soup.new_tag("i")
+        gamepad_icon["class"] = FONT_AWESOME_ICONS["gamepad"].split()
+        adventure_div.append(gamepad_icon)
+        adventure_div.append(" ")
+        adventure_link = soup.new_tag(
+            "a",
+            href=f"../../adventure/?section={context['stable_name']}",
+        )
+        adventure_link.string = "Explore in Adventure Game"
+        adventure_div.append(adventure_link)
+        header.append(adventure_div)
+
+        # YouTube episode links (from correlations)
+        episode_correlations = context.get("episode_correlations", [])
+        if episode_correlations:
+            youtube_div = soup.new_tag("div", **{"class": "external-links youtube-links"})
+            video_icon = soup.new_tag("i")
+            video_icon["class"] = FONT_AWESOME_ICONS["video"].split()
+            youtube_div.append(video_icon)
+            youtube_div.append(" C++ Weekly: ")
+
+            # Show top 3 episodes (already sorted by confidence)
+            for i, ep in enumerate(episode_correlations[:3]):
+                if i > 0:
+                    youtube_div.append(" | ")
+                ep_link = soup.new_tag(
+                    "a",
+                    href=ep.get("youtube_url", "#"),
+                    target="_blank",
+                    rel="noopener noreferrer",
+                    title=ep.get("title", f"Episode {ep.get('episode', '?')}"),
+                )
+                ep_link.string = f"Ep {ep.get('episode', '?')}"
+                youtube_div.append(ep_link)
+
+            header.append(youtube_div)
+
         # Large file warning
         if size_kb > 100:
             warning_div = soup.new_tag("div", **{"class": "warning large-file-warning"})
@@ -1131,7 +1194,7 @@ def generate_single_diff(args: tuple) -> tuple[bool, str, str]:
         args: Tuple of (item, diff_output_dir, context, templates_dir) where:
             item: Dict with stable name info (name, file, path, size_kb, line_count)
             diff_output_dir: Path to output directory for diff HTML files
-            context: Dict with metadata for the diff
+            context: Dict with metadata for the diff (includes 'force' key for cache bypass)
             templates_dir: Path to templates directory for Jinja2
 
     Returns:
@@ -1141,8 +1204,17 @@ def generate_single_diff(args: tuple) -> tuple[bool, str, str]:
 
     stable_name = item["name"]
     output_file = Path(diff_output_dir) / f"{item['file']}.html"
+    input_diff = item["path"]
+    force = context.get("force", False)
 
     try:
+        # Skip if output HTML exists and is newer than input diff (unless forced)
+        if not force and output_file.exists() and input_diff.exists():
+            output_mtime = output_file.stat().st_mtime
+            input_mtime = input_diff.stat().st_mtime
+            if output_mtime > input_mtime:
+                return (True, stable_name, "skipped (unchanged)")
+
         # Create Jinja2 environment for this worker
         from jinja2 import Environment, FileSystemLoader
 
@@ -1211,6 +1283,9 @@ def generate_version_pair(config: VersionPairConfig) -> dict:
     # Get cppstdmd repository SHA (do this once for all pages)
     sha_info = get_cppstdmd_sha()
 
+    # Load episode correlations (do this once for all pages)
+    episode_correlations = load_episode_correlations(config.output_path)
+
     # Generate overview page
     template = config.env.get_template("version_overview.html")
     generated_date = datetime.now().strftime("%Y-%m-%d")
@@ -1267,6 +1342,8 @@ def generate_version_pair(config: VersionPairConfig) -> dict:
             "stable_name_availability": stable_name_availability,
             "cppstdmd_sha": sha_info["sha"],
             "cppstdmd_short_sha": sha_info["short_sha"],
+            "episode_correlations": episode_correlations.get(item["name"], []),
+            "force": config.force,
         }
         # Get templates directory from config.env.loader
         templates_dir = Path(config.env.loader.searchpath[0])
@@ -1360,6 +1437,7 @@ def generate_version_pair(config: VersionPairConfig) -> dict:
                 "is_table": True,
                 "cppstdmd_sha": sha_info["sha"],
                 "cppstdmd_short_sha": sha_info["short_sha"],
+                "force": config.force,
             }
             templates_dir = Path(config.env.loader.searchpath[0])
             # Modify item to point to table diff file
@@ -1674,6 +1752,7 @@ def generate_site(
     limit: int | None = None,
     test_mode: bool = False,
     max_workers: int | None = None,
+    force: bool = False,
 ):
     """Main generation logic.
 
@@ -1683,6 +1762,7 @@ def generate_site(
         limit: Maximum number of diffs per version pair (for testing)
         test_mode: If True, only process first version pair with limit=10
         max_workers: Number of parallel workers (defaults to CPU count)
+        force: Force regeneration of all HTML even if output is newer than input diff
     """
     # Check dependencies
     check_dependencies()
@@ -1740,6 +1820,7 @@ def generate_site(
             max_dots=max_dots,
             limit=test_limit,
             max_workers=max_workers,
+            force=force,
         )
 
         pair_stats = generate_version_pair(pair_config)
@@ -1822,6 +1903,11 @@ Examples:
         action="store_true",
         help="Test mode: only process first 10 diffs from one version pair",
     )
+    parser.add_argument(
+        "--force",
+        action="store_true",
+        help="Force regeneration of all HTML even if output is newer than input diff",
+    )
 
     args = parser.parse_args()
 
@@ -1832,6 +1918,7 @@ Examples:
             limit=args.limit,
             test_mode=args.test,
             max_workers=args.workers,
+            force=args.force,
         )
     except KeyboardInterrupt:
         print("\n\n⚠️  Generation interrupted by user")

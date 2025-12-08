@@ -239,12 +239,26 @@ def parse_tables(markdown_file: Path) -> dict[str, tuple[str, str, int, int]]:
     return tables
 
 
-def generate_chapter_diff(from_file: Path, to_file: Path, output_file: Path) -> bool:
+def generate_chapter_diff(from_file: Path, to_file: Path, output_file: Path, force: bool = False) -> bool:
     """
     Generate unified diff for a single chapter.
 
-    Returns True if diff was generated successfully.
+    Args:
+        from_file: Source file path
+        to_file: Target file path
+        output_file: Output diff file path
+        force: Force regeneration even if output is newer than input
+
+    Returns True if diff was generated (or skipped because unchanged).
     """
+    # Skip if output exists and is newer than both inputs (unless forced)
+    if not force and output_file.exists():
+        output_mtime = output_file.stat().st_mtime
+        from_mtime = from_file.stat().st_mtime if from_file.exists() else 0
+        to_mtime = to_file.stat().st_mtime if to_file.exists() else 0
+        if output_mtime > from_mtime and output_mtime > to_mtime:
+            return True  # Skip - output is current
+
     try:
         # Use git diff --no-index for better formatting
         success, stdout, stderr = run_command_silent(
@@ -277,7 +291,7 @@ def generate_chapter_diff(from_file: Path, to_file: Path, output_file: Path) -> 
         return False
 
 
-def generate_full_diff(from_version: str, to_version: str, output_file: Path) -> bool:
+def generate_full_diff(from_version: str, to_version: str, output_file: Path, force: bool = False) -> bool:
     """Generate diff for full standard files."""
     from_file = Path("full") / f"{from_version}.md"
     to_file = Path("full") / f"{to_version}.md"
@@ -289,7 +303,7 @@ def generate_full_diff(from_version: str, to_version: str, output_file: Path) ->
         print(f"Warning: Full file not found: {to_file}", file=sys.stderr)
         return False
 
-    return generate_chapter_diff(from_file, to_file, output_file)
+    return generate_chapter_diff(from_file, to_file, output_file, force=force)
 
 
 def generate_stable_name_diff(
@@ -352,7 +366,8 @@ def generate_stable_name_diff(
 
 
 def generate_stable_name_diffs(
-    from_version: str, to_version: str, output_dir: Path, max_dots: int | None = None
+    from_version: str, to_version: str, output_dir: Path, max_dots: int | None = None,
+    force: bool = False
 ) -> int:
     """
     Generate diffs for all stable names across all chapters.
@@ -362,9 +377,16 @@ def generate_stable_name_diffs(
         to_version: Ending version directory
         output_dir: Output directory for diffs
         max_dots: Maximum number of dots in stable names (None = all levels)
+        force: Force regeneration even if output is newer than input
 
     Returns the number of diffs successfully generated.
     """
+    # Get newest source file mtime for caching check
+    from_dir = Path(from_version)
+    to_dir = Path(to_version)
+    newest_source_mtime = 0
+    for md_file in list(from_dir.glob("*.md")) + list(to_dir.glob("*.md")):
+        newest_source_mtime = max(newest_source_mtime, md_file.stat().st_mtime)
     if max_dots is not None:
         print(f"  Generating stable name diffs (max {max_dots} dots)...")
     else:
@@ -426,6 +448,13 @@ def generate_stable_name_diffs(
         # Generate safe filename from stable name
         safe_name = stable_name.replace("/", "_").replace("\\", "_")
         output_file = stable_name_dir / f"{safe_name}.diff"
+
+        # Skip if output exists and is newer than source files (unless forced)
+        if not force and output_file.exists():
+            if output_file.stat().st_mtime > newest_source_mtime:
+                success_count += 1
+                diff_sizes[stable_name] = output_file.stat().st_size
+                continue
 
         if generate_stable_name_diff(stable_name, from_content, to_content, output_file):
             success_count += 1
@@ -617,9 +646,15 @@ def generate_table_diff(
         return False
 
 
-def generate_table_diffs(from_version: str, to_version: str, output_dir: Path) -> int:
+def generate_table_diffs(from_version: str, to_version: str, output_dir: Path, force: bool = False) -> int:
     """
     Generate diffs for all tables across all chapters.
+
+    Args:
+        from_version: Starting version directory
+        to_version: Ending version directory
+        output_dir: Output directory for diffs
+        force: Force regeneration even if output is newer than input
 
     Returns the number of diffs successfully generated.
     """
@@ -632,6 +667,11 @@ def generate_table_diffs(from_version: str, to_version: str, output_dir: Path) -
 
     from_dir = Path(from_version)
     to_dir = Path(to_version)
+
+    # Get newest source file mtime for caching check
+    newest_source_mtime = 0
+    for md_file in list(from_dir.glob("*.md")) + list(to_dir.glob("*.md")):
+        newest_source_mtime = max(newest_source_mtime, md_file.stat().st_mtime)
 
     for chapter_file in sorted(from_dir.glob("*.md")):
         chapter = chapter_file.stem
@@ -679,6 +719,13 @@ def generate_table_diffs(from_version: str, to_version: str, output_dir: Path) -
         # Generate safe filename from label
         safe_name = label.replace("/", "_").replace("\\", "_")
         output_file = table_dir / f"{safe_name}.diff"
+
+        # Skip if output exists and is newer than source files (unless forced)
+        if not force and output_file.exists():
+            if output_file.stat().st_mtime > newest_source_mtime:
+                success_count += 1
+                diff_sizes[label] = output_file.stat().st_size
+                continue
 
         if generate_table_diff(label, caption, from_content, to_content, output_file):
             success_count += 1
@@ -910,7 +957,8 @@ def generate_summary(
 
 
 def generate_diff_pair(
-    from_version: str, to_version: str, output_base: Path, max_dots: int | None = None
+    from_version: str, to_version: str, output_base: Path, max_dots: int | None = None,
+    force: bool = False
 ) -> None:
     """Generate all diffs for a version pair.
 
@@ -919,6 +967,7 @@ def generate_diff_pair(
         to_version: Ending version directory
         output_base: Output directory for diffs
         max_dots: Maximum number of dots in stable names (None = all levels)
+        force: Force regeneration even if output is newer than input
     """
     from_name = VERSIONS.get(from_version, from_version)
     to_name = VERSIONS.get(to_version, to_version)
@@ -944,7 +993,7 @@ def generate_diff_pair(
         to_file = Path(to_version) / f"{chapter}.md"
         output_file = output_base / f"{chapter}.diff"
 
-        if generate_chapter_diff(from_file, to_file, output_file):
+        if generate_chapter_diff(from_file, to_file, output_file, force=force):
             success_count += 1
 
     print(f"  Generated {success_count}/{len(common)} chapter diffs")
@@ -952,16 +1001,16 @@ def generate_diff_pair(
     # Generate full standard diff
     print("  Generating full standard diff...")
     full_diff_file = output_base / "full_standard.diff"
-    if generate_full_diff(from_version, to_version, full_diff_file):
+    if generate_full_diff(from_version, to_version, full_diff_file, force=force):
         print("  Generated full standard diff")
     else:
         print("  Warning: Could not generate full standard diff")
 
     # Generate stable name diffs
-    generate_stable_name_diffs(from_version, to_version, output_base, max_dots=max_dots)
+    generate_stable_name_diffs(from_version, to_version, output_base, max_dots=max_dots, force=force)
 
     # Generate table diffs
-    generate_table_diffs(from_version, to_version, output_base)
+    generate_table_diffs(from_version, to_version, output_base, force=force)
 
     # Generate summary
     print("  Generating summary...")
@@ -1002,6 +1051,11 @@ By default, generates all possible pairs (15 total):
         metavar="N",
         help="Maximum number of dots in stable names (default: no limit, all levels)",
     )
+    parser.add_argument(
+        "--force",
+        action="store_true",
+        help="Force regeneration of all diffs even if output is newer than input",
+    )
 
     args = parser.parse_args()
 
@@ -1026,7 +1080,7 @@ By default, generates all possible pairs (15 total):
     for from_v, to_v in pairs:
         output_dir = output_root / f"{from_v}_to_{to_v}"
         try:
-            generate_diff_pair(from_v, to_v, output_dir, max_dots=args.max_dots)
+            generate_diff_pair(from_v, to_v, output_dir, max_dots=args.max_dots, force=args.force)
         except Exception as e:
             print(f"Error generating diff pair {from_v} → {to_v}: {e}", file=sys.stderr)
             continue
