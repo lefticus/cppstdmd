@@ -29,12 +29,13 @@ This conftest provides session-scoped fixtures to prevent race conditions
 when running tests in parallel with pytest-xdist.
 
 Key design decisions:
-- draft_repo: session scope ensures only ONE git checkout for all integration tests
+- draft_repo: Uses git worktrees to avoid checkout conflicts
 - converter: session scope for efficiency (stateless, can be reused)
 
-Race condition fix: Previously, each test module had its own module-scoped
-draft_repo fixture, causing concurrent git checkouts on the same repository
-when running with -n auto. Session scope ensures sequential setup.
+Uses worktrees created by setup-and-build.sh to avoid:
+- Race conditions from concurrent git checkouts
+- Index lock conflicts
+- Mtime changes that break incremental builds
 """
 
 from pathlib import Path
@@ -48,17 +49,22 @@ from cpp_std_converter.repo_manager import DraftRepoManager
 @pytest.fixture(scope="session")
 def draft_repo():
     """
-    Session-scoped fixture to ensure draft repository exists and is on n4950.
+    Session-scoped fixture to get draft repository path for n4950.
 
-    Session scope prevents race conditions when running tests in parallel:
-    - Only ONE checkout happens for all integration tests
-    - All workers share the same repository state
-    - No concurrent git operations
+    Uses the n4950 worktree created by setup-and-build.sh to avoid
+    any git checkout operations during tests.
     """
-    # Look for cplusplus-draft in project directory first (from setup-and-build.sh)
     project_root = Path(__file__).parent.parent.parent
-    project_draft = project_root / "cplusplus-draft"
 
+    # First, try to use the worktree (preferred - no checkout needed)
+    worktree_path = project_root / "cplusplus-draft" / "worktrees" / "n4950"
+    if worktree_path.exists() and (worktree_path / "source").exists():
+        # Return a repo manager pointing at the worktree
+        repo_manager = DraftRepoManager(repo_dir=worktree_path)
+        return repo_manager
+
+    # Fall back to main repo with checkout (legacy behavior)
+    project_draft = project_root / "cplusplus-draft"
     if project_draft.exists() and (project_draft / ".git").exists():
         repo_manager = DraftRepoManager(repo_dir=project_draft)
     else:

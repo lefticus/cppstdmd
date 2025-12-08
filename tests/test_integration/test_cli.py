@@ -42,9 +42,23 @@ def cli_command():
 
 @pytest.fixture(scope="module")
 def draft_source_dir():
-    """Ensure draft repo exists and return path to source directory"""
+    """Get path to source directory for n4950.
+
+    Uses the n4950 worktree created by setup-and-build.sh to avoid
+    checkout conflicts during parallel test runs.
+    """
+    from pathlib import Path
+
     from cpp_std_converter.repo_manager import DraftRepoManager
 
+    project_root = Path(__file__).parent.parent.parent
+
+    # First, try to use the worktree (preferred - no checkout needed)
+    worktree_path = project_root / "cplusplus-draft" / "worktrees" / "n4950"
+    if worktree_path.exists() and (worktree_path / "source").exists():
+        return worktree_path / "source"
+
+    # Fall back to main repo with checkout (legacy behavior)
     repo_manager = DraftRepoManager()
 
     # Ensure repo exists

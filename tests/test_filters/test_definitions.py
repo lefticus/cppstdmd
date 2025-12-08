@@ -173,9 +173,23 @@ Third note (should be Note 1 again)
 
 @pytest.fixture(scope="module")
 def draft_repo_n4950():
-    """Fixture to ensure draft repository exists and is on n4950 (C++23)"""
+    """Fixture to get draft repository for n4950 (C++23).
+
+    Uses the n4950 worktree created by setup-and-build.sh to avoid
+    checkout conflicts during parallel test runs.
+    """
+    from pathlib import Path
+
     from cpp_std_converter.repo_manager import DraftRepoManager
 
+    project_root = Path(__file__).parent.parent.parent
+
+    # First, try to use the worktree (preferred - no checkout needed)
+    worktree_path = project_root / "cplusplus-draft" / "worktrees" / "n4950"
+    if worktree_path.exists() and (worktree_path / "source").exists():
+        return DraftRepoManager(repo_dir=worktree_path)
+
+    # Fall back to main repo with checkout (legacy behavior)
     repo_manager = DraftRepoManager()
 
     # Ensure repo exists
