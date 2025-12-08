@@ -431,7 +431,9 @@ if [ "$UPDATE_SOURCES" = true ]; then
     if [ -d "$main_worktree" ]; then
         info "Updating main worktree..."
         cd "$main_worktree"
-        if timeout 10 git pull 2>/dev/null; then
+        # Worktree is detached, so use fetch + reset instead of pull
+        if timeout 20 git fetch origin main 2>/dev/null && \
+           git reset --hard origin/main 2>/dev/null; then
             success "Main worktree updated"
         else
             warn "Could not update main worktree (offline or timeout)"
