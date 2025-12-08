@@ -26,26 +26,41 @@
 
 # Setup and build script for C++ Standard LaTeX to Markdown Converter
 # This script prepares the development environment and runs a full build
+#
+# Uses git worktrees to avoid checkout conflicts and preserve file mtimes.
 
 set -e  # Exit on error
 set -u  # Exit on undefined variable
 
 # Parse command line arguments
 UPDATE_SOURCES=false
+REBUILD_STANDARDS=false
+SKIP_TESTS=false
 while [[ $# -gt 0 ]]; do
     case $1 in
         --update-sources)
             UPDATE_SOURCES=true
             shift
             ;;
+        --rebuild-standards)
+            REBUILD_STANDARDS=true
+            shift
+            ;;
+        --skip-tests)
+            SKIP_TESTS=true
+            shift
+            ;;
         --help|-h)
-            echo "Usage: $0 [--update-sources]"
+            echo "Usage: $0 [--update-sources] [--rebuild-standards] [--skip-tests]"
             echo ""
             echo "Options:"
-            echo "  --update-sources  Fetch/pull latest cplusplus/draft repo (default: use existing)"
+            echo "  --update-sources    Fetch/pull latest cplusplus/draft repo (default: use existing)"
+            echo "  --rebuild-standards Force reconversion of all standard versions even if unchanged"
+            echo "  --skip-tests        Skip running pytest (useful for incremental builds)"
             echo ""
             echo "By default, if cplusplus-draft/ exists, it will be used as-is without updating."
             echo "Use --update-sources to fetch the latest changes from GitHub."
+            echo "Standard conversions are cached - only runs if output is missing."
             exit 0
             ;;
         *)
@@ -165,105 +180,208 @@ GRAPHVIZ_VERSION=$(dot -V 2>&1 | head -n1)
 success "Graphviz found: $GRAPHVIZ_VERSION"
 
 # ============================================================================
-# Step 4: Clone/update cplusplus/draft repository
+# Step 4: Clone/update cplusplus/draft repository and set up worktrees
 # ============================================================================
-info "Step 4: Setting up cplusplus/draft repository..."
+info "Step 4: Setting up cplusplus/draft repository with worktrees..."
 
 DRAFT_DIR="$SCRIPT_DIR/cplusplus-draft"
+WORKTREES_DIR="$DRAFT_DIR/worktrees"
 
+# Clone if needed
 if [ ! -d "$DRAFT_DIR" ]; then
     info "Cloning cplusplus/draft repository..."
     git clone https://github.com/cplusplus/draft.git "$DRAFT_DIR" || \
         abort "Failed to clone cplusplus/draft repository"
     success "Repository cloned"
-elif [ "$UPDATE_SOURCES" = true ]; then
-    info "Repository already exists, updating (--update-sources specified)..."
-    cd "$DRAFT_DIR"
-
-    # Check if repository is in a valid state
-    if ! git rev-parse --git-dir &>/dev/null; then
-        warn "Repository appears corrupted, but continuing with existing files"
-        cd "$SCRIPT_DIR"
-    else
-        # Try to fetch and update with timeout, but don't fail if offline
-        if timeout 10 git fetch --tags 2>/dev/null; then
-            # Only pull if we're on a branch (not detached HEAD)
-            if git symbolic-ref --short HEAD &>/dev/null; then
-                timeout 10 git pull 2>/dev/null || warn "Could not pull latest changes (offline or timeout)"
-                success "Repository updated"
-            else
-                info "Repository in detached HEAD state (likely using specific git ref)"
-                success "Repository ready (using existing checkout)"
-            fi
-        else
-            warn "Could not fetch from remote (offline, timeout, or network error), using local repository"
-            success "Repository ready (using existing checkout)"
-        fi
-
-        cd "$SCRIPT_DIR"
-    fi
-else
-    info "Repository already exists, using as-is (use --update-sources to fetch latest)"
 fi
 
-# Verify the source directory exists
+# Clean up any stale git lock files
+if [ -f "$DRAFT_DIR/.git/index.lock" ]; then
+    warn "Removing stale git lock file..."
+    rm -f "$DRAFT_DIR/.git/index.lock"
+fi
+
+# Update if requested
+if [ "$UPDATE_SOURCES" = true ]; then
+    info "Updating repository (--update-sources specified)..."
+    cd "$DRAFT_DIR"
+
+    if git rev-parse --git-dir &>/dev/null; then
+        if timeout 30 git fetch --tags --prune 2>/dev/null; then
+            success "Repository updated (fetched latest tags)"
+        else
+            warn "Could not fetch from remote (offline, timeout, or network error)"
+        fi
+    else
+        warn "Repository appears corrupted"
+    fi
+
+    cd "$SCRIPT_DIR"
+fi
+
+# Verify the source directory exists in main repo
 if [ ! -d "$DRAFT_DIR/source" ]; then
     abort "cplusplus/draft repository is missing 'source' directory"
 fi
 
-success "cplusplus/draft repository ready at $DRAFT_DIR"
+# Create worktrees directory
+mkdir -p "$WORKTREES_DIR"
+
+# Function to ensure a worktree exists for a given ref
+ensure_worktree() {
+    local ref="$1"
+    local worktree_path="$WORKTREES_DIR/$ref"
+
+    if [ -d "$worktree_path" ]; then
+        # Worktree exists, check if it's valid
+        if [ -d "$worktree_path/source" ]; then
+            return 0
+        else
+            # Invalid worktree, remove and recreate
+            warn "Worktree $ref appears invalid, recreating..."
+            cd "$DRAFT_DIR"
+            git worktree remove --force "$worktree_path" 2>/dev/null || rm -rf "$worktree_path"
+            cd "$SCRIPT_DIR"
+        fi
+    fi
+
+    # Create new worktree
+    info "Creating worktree for $ref..."
+    cd "$DRAFT_DIR"
+
+    # For tags, we need to use the full ref
+    if git rev-parse "refs/tags/$ref" &>/dev/null; then
+        git worktree add "$worktree_path" "refs/tags/$ref" 2>/dev/null || \
+            git worktree add "$worktree_path" "$ref" 2>/dev/null || \
+            abort "Failed to create worktree for $ref"
+    else
+        # For branches like 'main' - might be currently checked out
+        # Use --detach to create a detached worktree at the same commit
+        if ! git worktree add "$worktree_path" "$ref" 2>/dev/null; then
+            # Branch might be currently checked out, try detached
+            local commit
+            commit=$(git rev-parse "$ref" 2>/dev/null)
+            if [ -n "$commit" ]; then
+                git worktree add --detach "$worktree_path" "$commit" 2>/dev/null || \
+                    abort "Failed to create worktree for $ref"
+            else
+                abort "Failed to create worktree for $ref - ref not found"
+            fi
+        fi
+    fi
+
+    cd "$SCRIPT_DIR"
+    success "Created worktree for $ref"
+}
+
+# Set up worktrees for all versions we need
+VERSION_REFS=("n3337" "n4140" "n4659" "n4861" "n4950" "main")
+
+for ref in "${VERSION_REFS[@]}"; do
+    ensure_worktree "$ref"
+done
+
+success "All worktrees ready"
 
 # ============================================================================
-# Step 5: Run full test suite in parallel
+# Step 5: Run full test suite in parallel (optional)
 # ============================================================================
-info "Step 5: Running full test suite..."
+if [ "$SKIP_TESTS" = true ]; then
+    info "Step 5: Skipping tests (--skip-tests specified)"
+else
+    info "Step 5: Running full test suite..."
 
-pytest tests/ -v -n auto \
-    --ignore=tests/test_repo_manager.py \
-    --ignore=tests/test_integration/test_cli.py \
-    --ignore=tests/test_integration/test_standard_builder.py || abort "Tests failed! Please fix failing tests before proceeding."
+    pytest tests/ -v -n auto \
+        --ignore=tests/test_repo_manager.py \
+        --ignore=tests/test_integration/test_cli.py \
+        --ignore=tests/test_integration/test_standard_builder.py || abort "Tests failed! Please fix failing tests before proceeding."
 
-success "All tests passed"
+    success "All tests passed"
+fi
 
 # ============================================================================
-# Function: Convert a C++ standard version (separate + full builds in parallel)
+# Function: Compute hash of conversion scripts (for cache invalidation)
+# ============================================================================
+compute_scripts_hash() {
+    # Hash the main converter, all Lua filters, and key Python modules
+    local hash_input=""
+
+    # Main converter script
+    if [ -f "convert.py" ]; then
+        hash_input+=$(stat -c '%Y%s' convert.py 2>/dev/null || echo "0")
+    fi
+
+    # All Lua filters
+    for f in lua_filters/*.lua; do
+        if [ -f "$f" ]; then
+            hash_input+=$(stat -c '%Y%s' "$f" 2>/dev/null || echo "0")
+        fi
+    done
+
+    # Key Python modules
+    for f in cpp_std_converter/*.py; do
+        if [ -f "$f" ]; then
+            hash_input+=$(stat -c '%Y%s' "$f" 2>/dev/null || echo "0")
+        fi
+    done
+
+    # Return a short hash
+    echo "$hash_input" | sha256sum | cut -c1-16
+}
+
+# ============================================================================
+# Function: Convert a C++ standard version using its worktree
 # ============================================================================
 convert_standard_version() {
     local git_ref="$1"
     local version_name="$2"
     local output_dir="${3:-$git_ref}"  # Default to git_ref if not provided
+    local worktree_path="$WORKTREES_DIR/$git_ref"
+    local sentinel="venv/.converted_${output_dir}"
+    local scripts_hash
+    scripts_hash=$(compute_scripts_hash)
 
-    info "Converting $version_name standard ($git_ref) to Markdown..."
+    # Check if conversion can be skipped (unless --rebuild-standards specified)
+    if [ "$REBUILD_STANDARDS" = false ] && [ -f "$sentinel" ]; then
+        # Check if scripts have changed since last conversion
+        local saved_hash
+        saved_hash=$(cat "$sentinel" 2>/dev/null || echo "")
+        if [ "$saved_hash" != "$scripts_hash" ]; then
+            info "$version_name: Conversion scripts changed, rebuilding..."
+        elif [ -d "$output_dir" ]; then
+            local md_count
+            md_count=$(find "$output_dir" -maxdepth 1 -name "*.md" -type f 2>/dev/null | wc -l)
+            if [ "$md_count" -gt 10 ]; then
+                # Output exists, scripts unchanged, skip conversion
+                info "Skipping $version_name conversion (unchanged)"
+                return 0
+            fi
+        fi
+    fi
+
+    # Verify worktree exists
+    if [ ! -d "$worktree_path/source" ]; then
+        abort "Worktree for $git_ref not found at $worktree_path"
+    fi
+
+    info "Converting $version_name standard from worktree..."
 
     # Create directories if needed
     mkdir -p "$output_dir"
     mkdir -p full
 
-    # Checkout git ref ONCE before parallel builds to avoid race condition
-    info "Checking out $git_ref..."
-    cd "$DRAFT_DIR"
-    if ! git checkout "$git_ref" 2>/dev/null; then
-        # If local checkout fails, try fetching first
-        if timeout 10 git fetch --tags 2>/dev/null; then
-            git checkout "$git_ref" 2>/dev/null || warn "Could not checkout $git_ref"
-        else
-            warn "Could not checkout $git_ref (offline or fetch failed)"
-        fi
-    fi
-    cd "$SCRIPT_DIR"
-
-    # Launch separate build in background (skip git checkout with empty --git-ref)
+    # Launch separate build in background
     info "Building separate markdown files with cross-file linking..."
     ./convert.py --build-separate \
-        --draft-repo "$DRAFT_DIR" \
+        --draft-repo "$worktree_path" \
         --toc-depth 3 \
         -o "$output_dir/" &
     local separate_pid=$!
 
-    # Launch full build in background (skip git checkout with empty --git-ref)
+    # Launch full build in background
     info "Building full standard file..."
     ./convert.py --build-full \
-        --draft-repo "$DRAFT_DIR" \
+        --draft-repo "$worktree_path" \
         --toc-depth 3 \
         -o "full/$output_dir.md" &
     local full_pid=$!
@@ -272,6 +390,8 @@ convert_standard_version() {
     wait $separate_pid || abort "Failed to convert $output_dir separate chapters"
     wait $full_pid || abort "Failed to convert $output_dir full standard"
 
+    # Save scripts hash to sentinel file for cache invalidation
+    echo "$scripts_hash" > "$sentinel"
     success "$output_dir conversion complete (separate + full)"
 }
 
@@ -301,30 +421,23 @@ convert_standard_version "n4659" "C++17"
 convert_standard_version "n4861" "C++20"
 
 # ============================================================================
-# Step 11: Convert main branch (trunk)
+# Step 11: Convert main branch (trunk / C++26 working draft)
 # ============================================================================
 info "Step 11: Converting latest development version (main branch)..."
 
-# Only update the repository if --update-sources was specified
+# Update main worktree if --update-sources was specified
 if [ "$UPDATE_SOURCES" = true ]; then
-    cd "$DRAFT_DIR"
-    if git rev-parse --git-dir &>/dev/null; then
-        info "Updating cplusplus/draft repository (--update-sources specified)..."
-        if timeout 10 git fetch --tags 2>/dev/null; then
-            # Checkout main branch
-            git checkout main 2>/dev/null || warn "Could not checkout main branch"
-            # Try to pull latest changes
-            if git symbolic-ref --short HEAD &>/dev/null; then
-                timeout 10 git pull 2>/dev/null || warn "Could not pull latest changes (offline or timeout)"
-            fi
-            success "Repository updated to main branch"
+    main_worktree="$WORKTREES_DIR/main"
+    if [ -d "$main_worktree" ]; then
+        info "Updating main worktree..."
+        cd "$main_worktree"
+        if timeout 10 git pull 2>/dev/null; then
+            success "Main worktree updated"
         else
-            warn "Could not fetch from remote (offline, timeout, or network error)"
+            warn "Could not update main worktree (offline or timeout)"
         fi
-    else
-        warn "Repository appears corrupted, using existing state"
+        cd "$SCRIPT_DIR"
     fi
-    cd "$SCRIPT_DIR"
 fi
 
 # Convert main branch to trunk output directory
@@ -341,6 +454,7 @@ echo ""
 info "Summary:"
 echo "  - Virtual environment: venv/"
 echo "  - C++ draft repository: $DRAFT_DIR"
+echo "  - Worktrees: $WORKTREES_DIR/{n3337,n4140,n4659,n4861,n4950,main}"
 echo "  - Test results: All passing"
 echo ""
 info "Separate chapter files:"
