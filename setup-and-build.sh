@@ -30,6 +30,32 @@
 set -e  # Exit on error
 set -u  # Exit on undefined variable
 
+# Parse command line arguments
+UPDATE_SOURCES=false
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        --update-sources)
+            UPDATE_SOURCES=true
+            shift
+            ;;
+        --help|-h)
+            echo "Usage: $0 [--update-sources]"
+            echo ""
+            echo "Options:"
+            echo "  --update-sources  Fetch/pull latest cplusplus/draft repo (default: use existing)"
+            echo ""
+            echo "By default, if cplusplus-draft/ exists, it will be used as-is without updating."
+            echo "Use --update-sources to fetch the latest changes from GitHub."
+            exit 0
+            ;;
+        *)
+            echo "Unknown option: $1"
+            echo "Use --help for usage information"
+            exit 1
+            ;;
+    esac
+done
+
 # Get the directory where this script is located
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$SCRIPT_DIR"
@@ -150,8 +176,8 @@ if [ ! -d "$DRAFT_DIR" ]; then
     git clone https://github.com/cplusplus/draft.git "$DRAFT_DIR" || \
         abort "Failed to clone cplusplus/draft repository"
     success "Repository cloned"
-else
-    info "Repository already exists, attempting to update..."
+elif [ "$UPDATE_SOURCES" = true ]; then
+    info "Repository already exists, updating (--update-sources specified)..."
     cd "$DRAFT_DIR"
 
     # Check if repository is in a valid state
@@ -176,6 +202,8 @@ else
 
         cd "$SCRIPT_DIR"
     fi
+else
+    info "Repository already exists, using as-is (use --update-sources to fetch latest)"
 fi
 
 # Verify the source directory exists
@@ -273,29 +301,31 @@ convert_standard_version "n4659" "C++17"
 convert_standard_version "n4861" "C++20"
 
 # ============================================================================
-# Step 11: Update repo and convert main branch (trunk)
+# Step 11: Convert main branch (trunk)
 # ============================================================================
-info "Step 11: Updating repository and converting latest development version (main branch)..."
+info "Step 11: Converting latest development version (main branch)..."
 
-# Update the repository to get latest changes
-cd "$DRAFT_DIR"
-if git rev-parse --git-dir &>/dev/null; then
-    info "Updating cplusplus/draft repository..."
-    if timeout 10 git fetch --tags 2>/dev/null; then
-        # Checkout main branch
-        git checkout main 2>/dev/null || warn "Could not checkout main branch"
-        # Try to pull latest changes
-        if git symbolic-ref --short HEAD &>/dev/null; then
-            timeout 10 git pull 2>/dev/null || warn "Could not pull latest changes (offline or timeout)"
+# Only update the repository if --update-sources was specified
+if [ "$UPDATE_SOURCES" = true ]; then
+    cd "$DRAFT_DIR"
+    if git rev-parse --git-dir &>/dev/null; then
+        info "Updating cplusplus/draft repository (--update-sources specified)..."
+        if timeout 10 git fetch --tags 2>/dev/null; then
+            # Checkout main branch
+            git checkout main 2>/dev/null || warn "Could not checkout main branch"
+            # Try to pull latest changes
+            if git symbolic-ref --short HEAD &>/dev/null; then
+                timeout 10 git pull 2>/dev/null || warn "Could not pull latest changes (offline or timeout)"
+            fi
+            success "Repository updated to main branch"
+        else
+            warn "Could not fetch from remote (offline, timeout, or network error)"
         fi
-        success "Repository updated to main branch"
     else
-        warn "Could not fetch from remote (offline, timeout, or network error)"
+        warn "Repository appears corrupted, using existing state"
     fi
-else
-    warn "Repository appears corrupted, using existing state"
+    cd "$SCRIPT_DIR"
 fi
-cd "$SCRIPT_DIR"
 
 # Convert main branch to trunk output directory
 convert_standard_version "main" "C++26 (working draft)" "trunk"
