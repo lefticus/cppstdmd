@@ -152,3 +152,60 @@ items:
       statBoost:
         modernCpp: 2
         metaprogramming: 1
+
+  # === Undefined Realm Items ===
+
+  - id: aliasing_scroll
+    name: Scroll of Type Accessibility
+    category: language_scroll
+    rarity: uncommon
+    description: A scroll inscribed with the rules of strict aliasing.
+    lore: |
+      "The strict aliasing rule guards the realm of optimization.
+       Types may only access each other if they are compatible:
+
+       - The same type (with any cv-qualification)
+       - Signed and unsigned variants
+       - The blessed trio: char, unsigned char, std::byte
+
+       Through char and byte, all memory may be seen.
+       Through pointer cast, chaos lies between.
+
+       Violate these laws and the optimizer will punish you.
+       Your 'clever' cast becomes invisible. Your program, undefined."
+
+    sourceSection: basic.lval
+
+    effects:
+      statBoost:
+        fundamentals: 2
+
+  - id: undefined_mastery_crystal
+    name: Crystal of Defined Boundaries
+    category: pattern_crystal
+    rarity: rare
+    description: |
+      A crystal that pulses between solid and translucent states,
+      representing the boundary between defined and undefined behavior.
+    lore: |
+      "In the realm where no requirements exist,
+       this crystal marks the edge of the abyss.
+
+       Undefined behavior: 'no requirements'
+       The compiler may do anything. Anything.
+       Nasal demons. Time travel. Silent corruption.
+
+       Erroneous behavior: 'defined, but wrong'
+       The new middle ground of C++26.
+       You get a value. It's meaningless. But it exists.
+
+       From undefined to erroneous the crystal glows,
+       as the standard's wisdom grows.
+       The abyss recedes, one byte at a time."
+
+    sourceQuest: undefined_realm
+
+    effects:
+      statBoost:
+        fundamentals: 3
+        modernCpp: 2

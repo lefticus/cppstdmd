@@ -1,0 +1,41 @@
+# UB Definition Quiz
+# Tests fundamental understanding of undefined behavior
+
+id: ub_definition_quiz
+type: quiz
+location: defns.undefined
+difficulty: medium
+minLevel: 10
+
+question: |
+  Answer these questions about undefined behavior (True or False):
+
+  1. Undefined behavior means the program will always crash
+  2. The compiler may assume undefined behavior never occurs in correct programs
+  3. Reading an uninitialized variable is always undefined behavior in all C++ versions
+  4. The as-if rule still applies even when undefined behavior occurs
+
+answers: [F, T, F, F]
+
+explanation: |
+  1. FALSE - UB can manifest as anything: crashes, "working" code, silent corruption,
+     or behavior that varies between runs, compilers, or optimization levels.
+
+  2. TRUE - Compilers optimize assuming UB never happens. This is a fundamental
+     assumption that enables many optimizations. If UB could occur, the compiler
+     would have to be much more conservative.
+
+  3. FALSE - In C++26, reading an uninitialized `unsigned char` or `std::byte`
+     becomes erroneous behavior, not undefined. The Undefined Realm shrinks!
+
+  4. FALSE - The as-if rule requires preserving observable behavior. But when
+     undefined behavior occurs, there are "no requirements" - the as-if rule
+     is void. The implementation may do literally anything.
+
+hints:
+  - "Remember: undefined behavior means 'no requirements' - not 'will crash'"
+  - "Think about what the compiler is allowed to assume about correct programs"
+  - "Consider how C++26 changed the rules for uninitialized byte-like types"
+
+rewards:
+  xp: 50

@@ -1,0 +1,140 @@
+# The Undefined Realm Quest
+# A journey through undefined behavior, strict aliasing, and the evolution to erroneous behavior
+
+id: undefined_realm
+title: "The Undefined Realm"
+description: |
+  Deep beneath the C++ standard lies a realm where no requirements exist.
+  The As-If Oracle has summoned you to explore the boundaries of defined behavior,
+  understand the strict laws of aliasing, and witness the birth of erroneous behavior
+  in the modern era. But beware - one wrong step and your program's fate becomes... undefined.
+
+type: time_travel
+difficulty: hard
+minLevel: 15
+prerequisites:
+  - basic_exploration
+
+giver: asif_oracle
+giverLocation: intro.abstract
+
+steps:
+  # Step 1: Learn the definition
+  - instruction: |
+      Visit the definition of undefined behavior to understand its true meaning.
+      Talk to the As-If Oracle and ask about 'undefined'.
+    target:
+      section: defns.undefined
+      npc: asif_oracle
+      topic: undefined
+    onComplete:
+      dialogue: |
+        *The Oracle nods approvingly*
+        You have read the definition. "No requirements." Remember those words.
+        Now, let me test your understanding before you proceed.
+      xp: 50
+
+  # Step 2: Quiz on UB fundamentals
+  - instruction: |
+      Answer the Oracle's questions about undefined behavior.
+    target:
+      puzzle: ub_definition_quiz
+    onComplete:
+      dialogue: |
+        Excellent! You grasp the fundamentals. But theory is not practice.
+        Journey now to [[basic.lval]] and speak with the Aliasing Warden.
+        Learn the strict rules of type accessibility... and what happens
+        when they are violated.
+      xp: 75
+
+  # Step 3: Learn strict aliasing
+  - instruction: |
+      Travel to [basic.lval] and learn about strict aliasing from the Warden.
+      Ask about 'strict_aliasing' and 'type_punning'.
+    target:
+      section: basic.lval
+      npc: aliasing_warden
+      topic: strict_aliasing
+    onComplete:
+      dialogue: |
+        *The Warden's armor glows*
+        You understand the rules. But can you identify violations?
+      xp: 75
+
+  # Step 4: Strict aliasing quiz
+  - instruction: |
+      Prove your understanding of strict aliasing by solving the Warden's puzzle.
+    target:
+      puzzle: strict_aliasing_quiz
+    onComplete:
+      dialogue: |
+        *The Warden bows*
+        You have proven worthy. But there is more to learn.
+        In [[basic.indet]], the Indeterminate Spirit awaits.
+        First, visit them in the C++23 era (n4950) to see the old ways.
+      xp: 100
+      item: aliasing_scroll
+
+  # Step 5: Visit indeterminate values in C++23
+  - instruction: |
+      Timeshift to C++23 (n4950) and visit [basic.indet].
+      Speak with the Indeterminate Spirit about 'indeterminate' values.
+    target:
+      section: basic.indet
+      era: n4950
+      npc: indeterminate_spirit
+      topic: indeterminate
+    onComplete:
+      dialogue: |
+        *The Spirit flickers chaotically*
+        You see? In this era, I am pure undefined behavior.
+        But the future holds change. Timeshift to trunk and witness my evolution!
+      xp: 75
+
+  # Step 6: Witness erroneous behavior in C++26
+  - instruction: |
+      Timeshift to Trunk (C++26) and return to [basic.indet].
+      Ask the Spirit about 'erroneous_values' and 'why_change'.
+    target:
+      section: basic.indet
+      era: trunk
+      npc: indeterminate_spirit
+      topic: erroneous_values
+    onComplete:
+      dialogue: |
+        *The Spirit's form stabilizes*
+        You have witnessed the evolution! From undefined chaos to defined wrongness.
+        The Undefined Realm shrinks, one concept at a time.
+      xp: 100
+
+  # Step 7: Final mastery quiz
+  - instruction: |
+      Return to the As-If Oracle and complete the final examination.
+      Prove you understand the spectrum from defined to erroneous to undefined.
+    target:
+      section: intro.abstract
+      npc: asif_oracle
+      puzzle: undefined_mastery_quiz
+    onComplete:
+      dialogue: |
+        *The Oracle's form solidifies completely*
+
+        You have done it. You have journeyed through the Undefined Realm
+        and returned with understanding. The as-if rule, strict aliasing,
+        indeterminate values, erroneous behavior - you comprehend them all.
+
+        Few achieve this mastery. Take this crystal - it represents the
+        boundaries between defined and undefined. May it guide your code
+        to safety.
+      xp: 150
+
+rewards:
+  experience: 500
+  items:
+    - undefined_mastery_crystal
+  title: "Realm Walker"
+  statBoost:
+    fundamentals: 5
+    modernCpp: 3
+  unlocks:
+    - defns.erroneous

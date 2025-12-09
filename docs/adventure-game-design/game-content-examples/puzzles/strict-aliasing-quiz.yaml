@@ -1,0 +1,43 @@
+# Strict Aliasing Quiz
+# Tests understanding of type accessibility and aliasing rules
+
+id: strict_aliasing_quiz
+type: quiz
+location: basic.lval
+difficulty: hard
+minLevel: 15
+
+question: |
+  Which of these code snippets invoke undefined behavior? (T = UB, F = OK)
+
+  1. `int x = 5; float* p = reinterpret_cast<float*>(&x); float f = *p;`
+  2. `int x = 5; char* p = reinterpret_cast<char*>(&x); char c = *p;`
+  3. `int x = 5; unsigned int* p = reinterpret_cast<unsigned int*>(&x); unsigned int u = *p;`
+  4. `float f = 1.0f; int i; std::memcpy(&i, &f, sizeof(i));`
+
+answers: [T, F, F, F]
+
+explanation: |
+  1. **UB** - `float` and `int` are not type-accessible to each other.
+     The strict aliasing rule forbids this access. The compiler may assume
+     the `float*` and `int*` never alias, leading to surprising optimizations.
+
+  2. **OK** - `char` (and `unsigned char`, `std::byte`) can access any object's
+     representation. This is the "blessed trio" exception to strict aliasing.
+     You may examine any object's bytes through these types.
+
+  3. **OK** - Signed and unsigned variants of the same integer type are
+     type-accessible to each other. `int` and `unsigned int` may alias.
+
+  4. **OK** - `memcpy` is the universal solvent for type punning. It copies
+     bytes without aliasing issues. The destination gets a valid object
+     of its declared type with the source's bit pattern.
+
+hints:
+  - "Remember the blessed trio: `char`, `unsigned char`, `std::byte`"
+  - "Signed and unsigned versions of the same integer type are compatible"
+  - "`memcpy` is always safe for reinterpreting memory between types"
+
+rewards:
+  xp: 75
+  item: aliasing_scroll

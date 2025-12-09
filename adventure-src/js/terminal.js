@@ -174,17 +174,18 @@ class Terminal {
         }
 
         // Process wikilinks before markdown (use placeholder to preserve them)
+        // Use a format that won't be interpreted as markdown emphasis
         const wikilinks = [];
         const withPlaceholders = text.replace(/\[\[([^\]]+)\]\]/g, (match, target) => {
             wikilinks.push(target);
-            return `___WIKILINK_${wikilinks.length - 1}___`;
+            return `WIKILINK_PLACEHOLDER_${wikilinks.length - 1}_END`;
         });
 
         // Render markdown
         let html = marked.parse(withPlaceholders);
 
         // Restore wikilinks
-        html = html.replace(/___WIKILINK_(\d+)___/g, (match, index) => {
+        html = html.replace(/WIKILINK_PLACEHOLDER_(\d+)_END/g, (match, index) => {
             const target = wikilinks[parseInt(index)];
             return `<a href="#" class="wikilink" data-target="${target}">[${target}]</a>`;
         });

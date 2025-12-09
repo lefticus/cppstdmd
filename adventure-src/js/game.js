@@ -285,6 +285,9 @@ class AdventureGame {
             // Settings
             'speed': (args) => this.cmdSpeed(args),
             'animation': (args) => this.cmdSpeed(args),
+
+            // Debug (undocumented)
+            'iddqd': () => this.cmdGodMode(),
         };
     }
 
@@ -1205,7 +1208,8 @@ class AdventureGame {
         }
 
         this.terminal.print('');
-        this.terminal.print(`${targetNPC.name}: "${greeting}"`);
+        this.terminal.print(`${targetNPC.name}:`);
+        this.terminal.printMarkdown(greeting);
 
         // Show available topics
         const topics = Object.keys(dialogue.topics || {});
@@ -1219,12 +1223,22 @@ class AdventureGame {
     }
 
     cmdAsk(args) {
-        if (args.length < 2 || args[0].toLowerCase() !== 'about') {
+        // Parser may strip "about" as a filler word, so handle both cases
+        let topic;
+        if (args.length === 0) {
             this.terminal.print('Usage: ask about <topic>');
             return;
+        } else if (args[0].toLowerCase() === 'about') {
+            // "ask about <topic>" - skip "about"
+            if (args.length < 2) {
+                this.terminal.print('Usage: ask about <topic>');
+                return;
+            }
+            topic = args.slice(1).join(' ').toLowerCase();
+        } else {
+            // Parser already stripped "about", args is just the topic
+            topic = args.join(' ').toLowerCase();
         }
-
-        const topic = args.slice(1).join(' ').toLowerCase();
         const npcsHere = this.getNPCsAtLocation(this.player.currentLocation);
 
         for (const npc of npcsHere) {
@@ -1232,7 +1246,8 @@ class AdventureGame {
             for (const [topicKey, response] of Object.entries(topics)) {
                 if (topicKey.toLowerCase().includes(topic) || topic.includes(topicKey.toLowerCase())) {
                     this.terminal.print('');
-                    this.terminal.print(`${npc.name}: "${response}"`);
+                    this.terminal.print(`${npc.name}:`);
+                    this.terminal.printMarkdown(response);
                     return;
                 }
             }
@@ -1461,6 +1476,20 @@ SYSTEM
         this.player.setSetting('animationSpeed', speed);
         this.updateAnimationClass();
         this.terminal.print(`Animation speed set to: ${speed}`);
+    }
+
+    /**
+     * God mode - max level for testing (undocumented)
+     */
+    cmdGodMode() {
+        this.player.state.level = 99;
+        this.player.state.experience = 999999;
+        this.player.save();
+        this.terminal.print('');
+        this.terminal.print('*Reality bends to your will*');
+        this.terminal.print('Level set to 99. All restrictions lifted.');
+        this.terminal.print('');
+        this.updateStatusBar();
     }
 
     /**

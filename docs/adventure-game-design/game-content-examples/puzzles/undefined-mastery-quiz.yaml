@@ -1,0 +1,48 @@
+# Undefined Mastery Quiz
+# Final challenge testing comprehensive understanding of UB and erroneous behavior
+
+id: undefined_mastery_quiz
+type: quiz
+location: intro.abstract
+difficulty: hard
+minLevel: 15
+
+question: |
+  Final challenge - True or False:
+
+  1. Erroneous behavior was introduced in C++26
+  2. Reading an uninitialized `std::byte` in C++26 is undefined behavior
+  3. The strict aliasing rule allows accessing any object through a `void*`
+  4. If a program has undefined behavior, the implementation has no requirements
+  5. Erroneous behavior must always be diagnosed by the compiler
+
+answers: [T, F, F, T, F]
+
+explanation: |
+  1. **TRUE** - The definition `defns.erroneous` is new in C++26. It provides
+     a middle ground between defined behavior and undefined behavior.
+
+  2. **FALSE** - This is the key evolution! In C++26, reading an uninitialized
+     `unsigned char` or `std::byte` produces an erroneous value, not undefined
+     behavior. You get some value; it's wrong, but defined.
+
+  3. **FALSE** - `void*` has no special aliasing privileges. You cannot
+     dereference a `void*` at all; it must be cast to another pointer type
+     first, and that cast must respect strict aliasing rules.
+
+  4. **TRUE** - That's the literal definition from [[defns.undefined]]:
+     "behavior for which this document imposes no requirements."
+     No requirements means no guarantees of any kind.
+
+  5. **FALSE** - Implementations are "recommended" to diagnose erroneous
+     behavior, not required. The wording is permissive, enabling but not
+     mandating tools like sanitizers.
+
+hints:
+  - "Think about what changed between C++23 and C++26 for uninitialized values"
+  - "Review which types can alias any object - it's a short list"
+  - "Remember the difference between 'recommended' and 'required' in standards"
+
+rewards:
+  xp: 100
+  item: undefined_mastery_crystal

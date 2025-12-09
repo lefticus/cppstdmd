@@ -1,0 +1,323 @@
+# NPCs for The Undefined Realm Quest
+# Three concept personifications that guide the player through undefined behavior
+
+npcs:
+  # The As-If Oracle - Quest Giver
+  - id: asif_oracle
+    name: The As-If Oracle
+    type: concept_personification
+    appearance: |
+      A shimmering, translucent figure that seems to exist in multiple states simultaneously.
+      Sometimes visible, sometimes not - as if the implementation decided observation wasn't necessary.
+      Their robes are woven from abstract syntax, and their eyes reflect infinite possible program states.
+
+    locations:
+      - intro.abstract
+      - intro.compliance.general
+      - defns.undefined
+
+    dialogue:
+      greeting:
+        default: |
+          *The Oracle's form flickers*
+          Ah, a seeker of truth. You wish to understand... undefined behavior?
+          Many have asked. Few truly comprehend. The standard imposes **no requirements**.
+          That phrase is more powerful - and more dangerous - than you know.
+
+        n3337: |
+          In C++11, we defined the boundaries. Undefined behavior means freedom...
+          freedom for the implementation, and chaos for the unwary programmer.
+          The as-if rule governs all... until undefined behavior occurs.
+
+        n4140: |
+          C++14 refines our understanding, but the core truth remains.
+          Observable behavior is all that matters - everything else may change.
+
+        n4659: |
+          C++17 brings new features, new powers... and new ways to invoke
+          the undefined. Memory models grow complex. Beware the data race.
+
+        n4861: |
+          C++20 introduces concepts and coroutines. More abstraction,
+          more power, more ways for the undefined to manifest.
+
+        n4950: |
+          C++23 approaches. The committee debates the nature of uninitialized values.
+          Soon, erroneous behavior will provide a middle ground...
+
+        trunk: |
+          *The Oracle's form stabilizes slightly*
+          The modern era brings new concepts. Erroneous behavior - a middle ground
+          between the defined and the undefined. Would you learn of this evolution?
+
+      topics:
+        as_if: |
+          The as-if rule grants implementations great power. They need only preserve
+          **observable behavior**. Everything else? The compiler may transform, optimize,
+          or eliminate entirely.
+
+          But when undefined behavior occurs... even this contract is void.
+          There are **no requirements**. None. The implementation may do anything.
+
+          ```cpp
+          int x = 1;
+          if (x) return 0;  // Compiler may assume this always returns
+          infinite_loop();   // This may be removed entirely!
+          ```
+
+        undefined: |
+          "Behavior for which this document imposes no requirements."
+
+          Simple words. Terrifying implications. The compiler assumes your program
+          is correct. If it's not... anything can happen.
+
+          Nasal demons, time travel, formatting your hard drive.
+          The standard permits **all of it**.
+
+          The compiler uses this assumption to optimize. It reasons backwards:
+          "If this code is reached, undefined behavior hasn't occurred."
+          Your "safety check" after UB? Optimized away. You were never safe.
+
+        erroneous: |
+          *Available only in trunk era*
+          A new path emerges in C++26. Erroneous behavior is... defined, but wrong.
+
+          The implementation knows what happened. It may diagnose. It may not.
+          But at least the realm of the undefined shrinks slightly.
+
+          Consider reading an uninitialized `unsigned char`:
+          - Before C++26: **undefined behavior** - anything may happen
+          - In C++26: **erroneous behavior** - you get some value, but it's wrong
+
+          Progress! The abyss recedes, one byte at a time.
+
+        quest: |
+          To understand undefined behavior, you must journey through its manifestations.
+
+          Begin at the source - the definition itself at [[defns.undefined]].
+          Then witness strict aliasing violations in [[basic.lval]].
+          Finally, timeshift to the future and see how [[basic.indet]] handles
+          the once-undefined realm of uninitialized values.
+
+          Will you accept this journey into the Undefined Realm?
+
+    quests:
+      - undefined_realm
+
+    trades: []
+
+  # The Aliasing Warden
+  - id: aliasing_warden
+    name: The Aliasing Warden
+    type: concept_personification
+    appearance: |
+      A stern guardian clad in armor made of type declarations. Their shield bears
+      the inscription "Type-Accessible" and glows with a faint blue light when
+      approached by compatible types. Incompatible types cause the shield to
+      crackle with dangerous red energy.
+
+    locations:
+      - basic.lval
+      - expr.type
+      - conv.lval
+
+    dialogue:
+      greeting:
+        default: |
+          HALT! You approach the realm of type accessibility.
+          Here, the rules of aliasing are strict. One type may only access
+          the stored value of another if they are... compatible.
+
+          Otherwise?
+          *The Warden's eyes darken*
+          Undefined. Behavior.
+
+      topics:
+        strict_aliasing: |
+          The strict aliasing rule states: you may only access an object through
+          a glvalue of a type that is **type-accessible**. What types are compatible?
+
+          - The dynamic type itself
+          - A cv-qualified version of the dynamic type
+          - A signed or unsigned version of the dynamic type
+          - `char`, `unsigned char`, or `std::byte` (the great exceptions)
+
+          Violate these rules and the optimizer will **punish** you. It assumes
+          no aliasing between incompatible types. Your "clever" cast? Invisible.
+
+          ```cpp
+          int x = 42;
+          float* pf = reinterpret_cast<float*>(&x);
+          *pf = 3.14f;  // UB! int and float are not type-accessible
+          ```
+
+        type_punning: |
+          Many seek to reinterpret memory as different types.
+          Some use `union`. Some use `reinterpret_cast`.
+          Most invoke undefined behavior.
+
+          The safe paths are few:
+          - `std::bit_cast` in C++20 and beyond (the blessed conversion)
+          - `memcpy` (the universal solvent - always safe)
+          - The blessed trio: `char`, `unsigned char`, `std::byte`
+
+          ```cpp
+          // SAFE: Using memcpy
+          float f = 1.0f;
+          int i;
+          std::memcpy(&i, &f, sizeof(i));  // Well-defined!
+
+          // SAFE in C++20: Using bit_cast
+          int j = std::bit_cast<int>(f);   // Well-defined!
+          ```
+
+        examples: |
+          Let me show you the face of undefined behavior:
+
+          ```cpp
+          float f = 1.0f;
+          int* p = reinterpret_cast<int*>(&f);
+          int i = *p;  // UNDEFINED BEHAVIOR!
+          ```
+
+          The compiler may assume `p` never aliases `f`. Your read may return
+          garbage, the original value, or summon beings from beyond time itself.
+
+          The optimizer sees two unrelated variables. It may reorder operations,
+          cache values, or eliminate "dead" stores. Your program's meaning... lost.
+
+        why_strict: |
+          Why does the standard enforce strict aliasing? Performance.
+
+          Without these rules, the compiler cannot assume anything about memory.
+          Every pointer might alias every object. No optimization is safe.
+
+          With strict aliasing, the compiler can reason about your program.
+          It knows that modifying an `int` cannot affect a `float`.
+          This enables register allocation, vectorization, and more.
+
+          The cost? You must follow the rules. The reward? Fast code.
+
+    quests: []
+    trades: []
+
+  # The Indeterminate Spirit
+  - id: indeterminate_spirit
+    name: The Indeterminate Spirit
+    type: concept_personification
+    appearance: |
+      A ghostly figure that flickers between existence and non-existence.
+      Sometimes solid, sometimes transparent, sometimes showing completely
+      different values each time you look. An uninitialized entity whose
+      form changes with each observation.
+
+    locations:
+      - basic.indet
+      - basic.life
+      - dcl.init
+
+    dialogue:
+      greeting:
+        n3337: |
+          *The Spirit's form is chaotic, unpredictable*
+          I am... undefined. Uninitialized. Reading me invokes chaos.
+          In this era, there is no mercy. No middle ground.
+          Touch my values and your fate is **undefined**.
+
+        n4140: |
+          *The Spirit flickers wildly*
+          C++14 changes nothing for me. I remain undefined.
+          The compiler assumes you never read me. If you do... chaos.
+
+        n4659: |
+          *The Spirit's form wavers*
+          C++17. Still undefined. But whispers begin...
+          Some speak of a middle path. Erroneous, not undefined.
+          But not yet. Not yet.
+
+        n4861: |
+          *The Spirit shows brief moments of stability*
+          C++20 brings no relief. But the committee debates.
+          What should happen when you read the uninitialized?
+          Chaos? Or merely... error?
+
+        n4950: |
+          *The Spirit's form is slightly more stable*
+          I am... still undefined in many cases. But change comes.
+          The committee debates. Soon, I may become merely... erroneous.
+          A defined wrong, rather than an undefined abyss.
+
+        trunk: |
+          *The Spirit's form stabilizes noticeably*
+          Behold! I have evolved. In C++26, reading an uninitialized
+          `unsigned char` or `std::byte` no longer invokes the undefined.
+
+          I am now **erroneous** - still wrong, but... defined.
+          The implementation may warn you. Or it may not. But it cannot
+          pretend you don't exist. Progress!
+
+      topics:
+        indeterminate: |
+          An indeterminate value is one that has never been initialized.
+          In C++23 and before, evaluating such a value is **undefined behavior**.
+
+          ```cpp
+          int x;           // Uninitialized
+          int y = x;       // UNDEFINED BEHAVIOR!
+          if (x == 0) {}   // UNDEFINED BEHAVIOR!
+          ```
+
+          The compiler may assume it never happens. Your program may crash,
+          return random values, or appear to work... until it doesn't.
+
+          The optimizer reasons: "This can't happen, so I'll optimize as if it doesn't."
+          Your conditional? Removed. Your safety check? Gone.
+
+        erroneous_values: |
+          *Only meaningful in trunk era*
+          C++26 introduces erroneous values. When you read an uninitialized
+          `unsigned char` or `std::byte`, you get an erroneous value, not undefined behavior.
+
+          The behavior is **defined** - you get some value - but it's still **wrong**.
+          The implementation is encouraged to diagnose. Tools like sanitizers can help.
+
+          ```cpp
+          unsigned char c;    // Uninitialized
+          unsigned char d = c; // C++26: Erroneous behavior, not UB!
+                               // You get SOME value, implementation may warn
+          ```
+
+          This is the future: shrinking the undefined, one byte at a time.
+
+        why_change: |
+          *Only meaningful in trunk era*
+          Why did the committee add erroneous behavior?
+
+          Undefined behavior is a nuclear option. The compiler can do **anything**.
+          But sometimes we want to say "this is wrong, but we know what happens."
+
+          Erroneous behavior provides that middle ground:
+          - The behavior is **defined** (some value is produced)
+          - The behavior is **wrong** (the value is meaningless)
+          - The implementation **may** diagnose (enabling better tooling)
+
+          This enables sanitizers to catch bugs without breaking valid optimizations.
+          It enables clearer diagnostics. It enables safer defaults.
+
+          The Undefined Realm shrinks. The defined world grows.
+
+        lifetime: |
+          I am also found in [[basic.life]], where object lifetimes are defined.
+          Access an object outside its lifetime? Undefined behavior.
+          Use a pointer after the object is destroyed? Undefined behavior.
+
+          ```cpp
+          int* p = new int(42);
+          delete p;
+          int x = *p;  // UNDEFINED BEHAVIOR! Object's lifetime has ended.
+          ```
+
+          The living and the dead must not mix. Respect the boundaries.
+
+    quests: []
+    trades: []
