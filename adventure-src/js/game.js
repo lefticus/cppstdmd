@@ -438,12 +438,12 @@ class AdventureGame {
 
         // Realm info (for top-level sections)
         if (section.stableName === section.realm && realm) {
-            this.terminal.print(realm.description);
+            this.terminal.printMarkdown(realm.description);
             this.terminal.print('');
         }
 
         // Section description
-        this.terminal.print(section.description);
+        this.terminal.printMarkdown(section.description);
 
         // Exits
         const exits = this.world.getExitDescriptions(section.stableName, this.player.currentEra);
@@ -789,7 +789,10 @@ class AdventureGame {
             return;
         }
 
-        const target = args.join('.');  // Allow "goto class copy" or "goto class.copy"
+        // Allow "goto class copy" or "goto class.copy" or "goto [class.copy]"
+        let target = args.join('.');
+        // Strip brackets if present (e.g., "[class.copy]" -> "class.copy")
+        target = target.replace(/^\[+|\]+$/g, '');
         const section = this.world.getSection(target);
 
         if (!section) {
@@ -896,7 +899,7 @@ class AdventureGame {
         this.terminal.print('');
         this.terminal.print(`Map of ${realm.name}`);
         this.terminal.printSeparator();
-        this.terminal.print(realm.description);
+        this.terminal.printMarkdown(realm.description);
         this.terminal.print('');
 
         // Show top-level sections in this realm
@@ -1101,11 +1104,11 @@ class AdventureGame {
         this.terminal.printSeparator('═');
 
         if (section.stableName === section.realm && realm) {
-            this.terminal.print(realm.description);
+            this.terminal.printMarkdown(realm.description);
             this.terminal.print('');
         }
 
-        this.terminal.print(section.description);
+        this.terminal.printMarkdown(section.description);
 
         const exits = this.world.getExitDescriptions(section.stableName, this.player.currentEra);
         if (exits.length > 0) {
@@ -1282,10 +1285,10 @@ class AdventureGame {
                 this.terminal.print('');
                 this.terminal.print(`${item.name} (${item.rarity})`);
                 this.terminal.printSeparator();
-                this.terminal.print(item.description);
+                this.terminal.printMarkdown(item.description);
                 if (item.lore) {
                     this.terminal.print('');
-                    this.terminal.print(item.lore);
+                    this.terminal.printMarkdown(item.lore);
                 }
                 return;
             }
@@ -1298,7 +1301,7 @@ class AdventureGame {
                 this.terminal.print('');
                 this.terminal.print(`${item.name} (${item.rarity})`);
                 this.terminal.printSeparator();
-                this.terminal.print(item.description);
+                this.terminal.printMarkdown(item.description);
                 this.terminal.print('');
                 this.terminal.print('Use "take" to pick it up.');
                 return;

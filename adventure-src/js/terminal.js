@@ -163,6 +163,47 @@ class Terminal {
     }
 
     /**
+     * Print markdown content to the terminal
+     * Uses marked.js for rendering and Prism.js for syntax highlighting
+     * @param {string} text - Markdown text to render
+     */
+    printMarkdown(text) {
+        // Fallback to plain text if marked isn't available
+        if (typeof marked === 'undefined') {
+            return this.print(text);
+        }
+
+        // Process wikilinks before markdown (use placeholder to preserve them)
+        const wikilinks = [];
+        const withPlaceholders = text.replace(/\[\[([^\]]+)\]\]/g, (match, target) => {
+            wikilinks.push(target);
+            return `___WIKILINK_${wikilinks.length - 1}___`;
+        });
+
+        // Render markdown
+        let html = marked.parse(withPlaceholders);
+
+        // Restore wikilinks
+        html = html.replace(/___WIKILINK_(\d+)___/g, (match, index) => {
+            const target = wikilinks[parseInt(index)];
+            return `<a href="#" class="wikilink" data-target="${target}">[${target}]</a>`;
+        });
+
+        const line = document.createElement('div');
+        line.className = 'terminal-line terminal-markdown';
+        line.innerHTML = html;
+        this.output.appendChild(line);
+        this.bindWikilinksIn(line);
+
+        // Syntax highlighting for code blocks
+        if (typeof Prism !== 'undefined') {
+            Prism.highlightAllUnder(line);
+        }
+
+        this.scrollToBottom();
+    }
+
+    /**
      * Print a horizontal separator
      */
     printSeparator(char = '─', length = 50) {

@@ -219,6 +219,64 @@ body.resizing * {
     color: var(--text-secondary);
 }
 
+/* Terminal Markdown Styling */
+.terminal-markdown {
+    white-space: normal;
+}
+
+.terminal-markdown p {
+    margin: 0.3em 0;
+}
+
+.terminal-markdown p:first-child {
+    margin-top: 0;
+}
+
+.terminal-markdown p:last-child {
+    margin-bottom: 0;
+}
+
+.terminal-markdown code {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 0.1em 0.3em;
+    border-radius: 3px;
+    color: var(--accent-purple);
+}
+
+.terminal-markdown pre {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 0.5em;
+    border-radius: 4px;
+    overflow-x: auto;
+    margin: 0.5em 0;
+}
+
+.terminal-markdown pre code {
+    background: none;
+    padding: 0;
+    color: var(--text-primary);
+}
+
+.terminal-markdown ul,
+.terminal-markdown ol {
+    margin: 0.3em 0;
+    padding-left: 1.5em;
+}
+
+.terminal-markdown li {
+    margin: 0.2em 0;
+}
+
+.terminal-markdown strong {
+    color: var(--accent-gold);
+    font-weight: 600;
+}
+
+.terminal-markdown em {
+    color: var(--accent-blue);
+    font-style: italic;
+}
+
 /* Terminal Input */
 .terminal-input-line {
     display: flex;
