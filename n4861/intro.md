@@ -74,7 +74,7 @@ at the following addresses:
 Terms that are used only in a small portion of this document are defined
 where they are used and italicized where they are defined.
 
-#### 1 access <a id="defns.access">[defns.access]</a>
+#### 1 access <a id="defns.access">[[defns.access]]</a>
 
 ⟨execution-time action⟩ read [[conv.lval]] or modify ([[expr.ass]],
 [[expr.post.incr]], [[expr.pre.incr]]) the value of an object
@@ -85,37 +85,37 @@ constructor [[class.ctor]] or assignment operator [[class.copy.assign]];
 such invocations do not themselves constitute accesses, although they
 may involve accesses of scalar subobjects. — *end note*]
 
-#### 2 argument <a id="defns.argument">[defns.argument]</a>
+#### 2 argument <a id="defns.argument">[[defns.argument]]</a>
 
 ⟨function call expression⟩ expression in the comma-separated list
 bounded by the parentheses [[expr.call]]
 
-#### 3 argument <a id="defns.argument.macro">[defns.argument.macro]</a>
+#### 3 argument <a id="defns.argument.macro">[[defns.argument.macro]]</a>
 
 ⟨function-like macro⟩ sequence of preprocessing tokens in the
 comma-separated list bounded by the parentheses [[cpp.replace]]
 
-#### 4 argument <a id="defns.argument.throw">[defns.argument.throw]</a>
+#### 4 argument <a id="defns.argument.throw">[[defns.argument.throw]]</a>
 
 ⟨throw expression⟩ operand of `throw` [[expr.throw]]
 
-#### 5 argument <a id="defns.argument.templ">[defns.argument.templ]</a>
+#### 5 argument <a id="defns.argument.templ">[[defns.argument.templ]]</a>
 
 ⟨template instantiation⟩ *constant-expression*, *type-id*, or
 *id-expression* in the comma-separated list bounded by the angle
 brackets [[temp.arg]]
 
-#### 6 block <a id="defns.block">[defns.block]</a>
+#### 6 block <a id="defns.block">[[defns.block]]</a>
 
 ⟨execution⟩ wait for some condition (other than for the implementation
 to execute the execution steps of the thread of execution) to be
 satisfied before continuing execution past the blocking operation
 
-#### 7 block <a id="defns.block.stmt">[defns.block.stmt]</a>
+#### 7 block <a id="defns.block.stmt">[[defns.block.stmt]]</a>
 
 ⟨statement⟩ compound statement [[stmt.block]]
 
-#### 8 conditionally-supported <a id="defns.cond.supp">[defns.cond.supp]</a>
+#### 8 conditionally-supported <a id="defns.cond.supp">[[defns.cond.supp]]</a>
 
 program construct that an implementation is not required to support
 
@@ -123,12 +123,12 @@ program construct that an implementation is not required to support
 conditionally-supported constructs that it does not
 support. — *end note*]
 
-#### 9 diagnostic message <a id="defns.diagnostic">[defns.diagnostic]</a>
+#### 9 diagnostic message <a id="defns.diagnostic">[[defns.diagnostic]]</a>
 
 message belonging to an *implementation-defined* subset of the
 implementation’s output messages
 
-#### 10 dynamic type <a id="defns.dynamic.type">[defns.dynamic.type]</a>
+#### 10 dynamic type <a id="defns.dynamic.type">[[defns.dynamic.type]]</a>
 
 ⟨glvalue⟩ type of the most derived object [[intro.object]] to which the
 glvalue refers
@@ -138,29 +138,29 @@ glvalue refers
 from `B` [[class.derived]], the dynamic type of the expression `*p` is
 “`D`”. References [[dcl.ref]] are treated similarly. — *end example*]
 
-#### 11 dynamic type <a id="defns.dynamic.type.prvalue">[defns.dynamic.type.prvalue]</a>
+#### 11 dynamic type <a id="defns.dynamic.type.prvalue">[[defns.dynamic.type.prvalue]]</a>
 
 ⟨prvalue⟩ static type of the prvalue expression
 
-#### 12 ill-formed program <a id="defns.ill.formed">[defns.ill.formed]</a>
+#### 12 ill-formed program <a id="defns.ill.formed">[[defns.ill.formed]]</a>
 
 program that is not well-formed [[defns.well.formed]]
 
-#### 13 implementation-defined behavior <a id="defns.impl.defined">[defns.impl.defined]</a>
+#### 13 implementation-defined behavior <a id="defns.impl.defined">[[defns.impl.defined]]</a>
 
 behavior, for a well-formed program construct and correct data, that
 depends on the implementation and that each implementation documents
 
-#### 14 implementation limits <a id="defns.impl.limits">[defns.impl.limits]</a>
+#### 14 implementation limits <a id="defns.impl.limits">[[defns.impl.limits]]</a>
 
 restrictions imposed upon programs by the implementation
 
-#### 15 locale-specific behavior <a id="defns.locale.specific">[defns.locale.specific]</a>
+#### 15 locale-specific behavior <a id="defns.locale.specific">[[defns.locale.specific]]</a>
 
 behavior that depends on local conventions of nationality, culture, and
 language that each implementation documents
 
-#### 16 multibyte character <a id="defns.multibyte">[defns.multibyte]</a>
+#### 16 multibyte character <a id="defns.multibyte">[[defns.multibyte]]</a>
 
 sequence of one or more bytes representing a member of the extended
 character set of either the source or the execution environment
@@ -168,23 +168,23 @@ character set of either the source or the execution environment
 [*Note 1 to entry*: The extended character set is a superset of the
 basic character set [[lex.charset]]. — *end note*]
 
-#### 17 parameter <a id="defns.parameter">[defns.parameter]</a>
+#### 17 parameter <a id="defns.parameter">[[defns.parameter]]</a>
 
 ⟨function or catch clause⟩ object or reference declared as part of a
 function declaration or definition or in the catch clause of an
 exception handler that acquires a value on entry to the function or
 handler
 
-#### 18 parameter <a id="defns.parameter.macro">[defns.parameter.macro]</a>
+#### 18 parameter <a id="defns.parameter.macro">[[defns.parameter.macro]]</a>
 
 ⟨function-like macro⟩ identifier from the comma-separated list bounded
 by the parentheses immediately following the macro name
 
-#### 19 parameter <a id="defns.parameter.templ">[defns.parameter.templ]</a>
+#### 19 parameter <a id="defns.parameter.templ">[[defns.parameter.templ]]</a>
 
 ⟨template⟩ member of a *template-parameter-list*
 
-#### 20 signature <a id="defns.signature">[defns.signature]</a>
+#### 20 signature <a id="defns.signature">[[defns.signature]]</a>
 
 ⟨function⟩ name, parameter-type-list [[dcl.fct]], and enclosing
 namespace (if any)
@@ -192,50 +192,50 @@ namespace (if any)
 [*Note 1 to entry*: Signatures are used as a basis for name mangling
 and linking. — *end note*]
 
-#### 21 signature <a id="defns.signature.friend">[defns.signature.friend]</a>
+#### 21 signature <a id="defns.signature.friend">[[defns.signature.friend]]</a>
 
 ⟨non-template friend function with trailing *requires-clause*⟩ name,
 parameter-type-list [[dcl.fct]], enclosing class, and trailing
 *requires-clause* [[dcl.decl]]
 
-#### 22 signature <a id="defns.signature.templ">[defns.signature.templ]</a>
+#### 22 signature <a id="defns.signature.templ">[[defns.signature.templ]]</a>
 
 ⟨function template⟩ name, parameter-type-list [[dcl.fct]], enclosing
 namespace (if any), return type, *template-head*, and trailing
 *requires-clause* [[dcl.decl]] (if any)
 
-#### 23 signature <a id="defns.signature.templ.friend">[defns.signature.templ.friend]</a>
+#### 23 signature <a id="defns.signature.templ.friend">[[defns.signature.templ.friend]]</a>
 
 ⟨friend function template with constraint involving enclosing template parameters⟩
 name, parameter-type-list [[dcl.fct]], return type, enclosing class,
 *template-head*, and trailing *requires-clause* [[dcl.decl]] (if any)
 
-#### 24 signature <a id="defns.signature.spec">[defns.signature.spec]</a>
+#### 24 signature <a id="defns.signature.spec">[[defns.signature.spec]]</a>
 
 ⟨function template specialization⟩ signature of the template of which it
 is a specialization and its template arguments (whether explicitly
 specified or deduced)
 
-#### 25 signature <a id="defns.signature.member">[defns.signature.member]</a>
+#### 25 signature <a id="defns.signature.member">[[defns.signature.member]]</a>
 
 ⟨class member function⟩ name, parameter-type-list [[dcl.fct]], class of
 which the function is a member, cv-qualifiers (if any), *ref-qualifier*
 (if any), and trailing *requires-clause* [[dcl.decl]] (if any)
 
-#### 26 signature <a id="defns.signature.member.templ">[defns.signature.member.templ]</a>
+#### 26 signature <a id="defns.signature.member.templ">[[defns.signature.member.templ]]</a>
 
 ⟨class member function template⟩ name, parameter-type-list [[dcl.fct]],
 class of which the function is a member, cv-qualifiers (if any),
 *ref-qualifier* (if any), return type (if any), *template-head*, and
 trailing *requires-clause* [[dcl.decl]] (if any)
 
-#### 27 signature <a id="defns.signature.member.spec">[defns.signature.member.spec]</a>
+#### 27 signature <a id="defns.signature.member.spec">[[defns.signature.member.spec]]</a>
 
 ⟨class member function template specialization⟩ signature of the member
 function template of which it is a specialization and its template
 arguments (whether explicitly specified or deduced)
 
-#### 28 static type <a id="defns.static.type">[defns.static.type]</a>
+#### 28 static type <a id="defns.static.type">[[defns.static.type]]</a>
 
 type of an expression [[basic.types]] resulting from analysis of the
 program without considering execution semantics
@@ -244,12 +244,12 @@ program without considering execution semantics
 the form of the program in which the expression appears, and does not
 change while the program is executing. — *end note*]
 
-#### 29 unblock <a id="defns.unblock">[defns.unblock]</a>
+#### 29 unblock <a id="defns.unblock">[[defns.unblock]]</a>
 
 satisfy a condition that one or more blocked threads of execution are
 waiting for
 
-#### 30 undefined behavior <a id="defns.undefined">[defns.undefined]</a>
+#### 30 undefined behavior <a id="defns.undefined">[[defns.undefined]]</a>
 
 behavior for which this document imposes no requirements
 
@@ -266,7 +266,7 @@ they are required to be diagnosed. Evaluation of a constant expression
 never exhibits behavior explicitly specified as undefined in [[intro]]
 through [[cpp]] of this document [[expr.const]]. — *end note*]
 
-#### 31 unspecified behavior <a id="defns.unspecified">[defns.unspecified]</a>
+#### 31 unspecified behavior <a id="defns.unspecified">[[defns.unspecified]]</a>
 
 behavior, for a well-formed program construct and correct data, that
 depends on the implementation
@@ -275,7 +275,7 @@ depends on the implementation
 which behavior occurs. The range of possible behaviors is usually
 delineated by this document. — *end note*]
 
-#### 32 well-formed program <a id="defns.well.formed">[defns.well.formed]</a>
+#### 32 well-formed program <a id="defns.well.formed">[[defns.well.formed]]</a>
 
 C++ program constructed according to the syntax rules, diagnosable
 semantic rules, and the one-definition rule [[basic.def.odr]]

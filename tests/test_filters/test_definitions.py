@@ -64,7 +64,7 @@ read or modify the value of an object"""
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
     assert "#### 1 access" in output
-    assert '<a id="defns.access">[defns.access]</a>' in output
+    assert '<a id="defns.access">[[defns.access]]</a>' in output
     assert "read or modify the value of an object" in output
 
 
@@ -106,7 +106,7 @@ strict total ordering over all pointer values"""
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
     assert "#### 1 implementation-defined strict total order over pointers" in output
-    assert '<a id="defns.order.ptr">[defns.order.ptr]</a>' in output
+    assert '<a id="defns.order.ptr">[[defns.order.ptr]]</a>' in output
     assert "⟨library⟩" in output
     assert "strict total ordering" in output
 
@@ -120,7 +120,7 @@ stream that can seek to any integral position"""
     output, code = run_pandoc_with_filter(latex)
     assert code == 0
     assert "#### 1 arbitrary-positional stream" in output
-    assert '<a id="defns.arbitrary.stream">[defns.arbitrary.stream]</a>' in output
+    assert '<a id="defns.arbitrary.stream">[[defns.arbitrary.stream]]</a>' in output
     assert "⟨library⟩" in output
 
 

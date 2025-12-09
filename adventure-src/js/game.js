@@ -47,6 +47,9 @@ class AdventureGame {
         this.puzzles = [];
         this.episodeCorrelations = {};
 
+        // Quest state
+        this.pendingQuest = null;  // Quest currently being offered
+
         // Command registry (maps verb keys to handlers)
         this.commands = this.buildCommandRegistry();
 
@@ -285,6 +288,13 @@ class AdventureGame {
             // Settings
             'speed': (args) => this.cmdSpeed(args),
             'animation': (args) => this.cmdSpeed(args),
+
+            // Quests
+            'quests': () => this.cmdQuests(),
+            'quest': () => this.cmdQuests(),
+            'journal': () => this.cmdQuests(),
+            'accept': () => this.cmdAcceptQuest(),
+            'decline': () => this.cmdDeclineQuest(),
 
             // Debug (undocumented)
             'iddqd': () => this.cmdGodMode(),
@@ -822,6 +832,7 @@ class AdventureGame {
                 this.terminal.print(`Going to ${match}...`);
                 this.player.moveTo(match);
                 this.showLocation();
+                this.checkQuestProgress({ section: match });
                 return;
             }
 
@@ -845,6 +856,9 @@ class AdventureGame {
 
         this.player.moveTo(target);
         this.showLocation();
+
+        // Check quest progress
+        this.checkQuestProgress({ section: target });
     }
 
     cmdSearch(args) {
@@ -1093,6 +1107,9 @@ class AdventureGame {
         // Update terminal with location info and status bar
         this.printLocationHeader(section);
         this.updateStatusBar();
+
+        // Check quest progress for era change
+        this.checkQuestProgress({ era: eraTag, section: this.player.currentLocation });
     }
 
     /**
@@ -1220,6 +1237,17 @@ class AdventureGame {
 
         // Record interaction
         this.player.talkToNPC(targetNPC.id);
+
+        // Check if NPC has quests to offer
+        if (targetNPC.quests && targetNPC.quests.length > 0) {
+            for (const questId of targetNPC.quests) {
+                const quest = this.quests.find(q => q.id === questId);
+                if (quest && this.canOfferQuest(quest)) {
+                    this.offerQuest(quest, targetNPC);
+                    break;  // Only offer one quest at a time
+                }
+            }
+        }
     }
 
     cmdAsk(args) {
@@ -1248,6 +1276,9 @@ class AdventureGame {
                     this.terminal.print('');
                     this.terminal.print(`${npc.name}:`);
                     this.terminal.printMarkdown(response);
+
+                    // Check quest progress for asking about a topic
+                    this.checkQuestProgress({ npc: npc.id, topic: topicKey });
                     return;
                 }
             }
@@ -1396,6 +1427,11 @@ INTERACTION
   talk [npc]         - Talk to an NPC
   ask about <topic>  - Ask NPC about a topic
 
+QUESTS
+  quests             - View active and completed quests
+  accept             - Accept an offered quest
+  decline            - Decline an offered quest
+
 ITEMS
   inventory (i)      - View your items
   examine <item>     - Look at an item
@@ -1490,6 +1526,263 @@ SYSTEM
         this.terminal.print('Level set to 99. All restrictions lifted.');
         this.terminal.print('');
         this.updateStatusBar();
+    }
+
+    // --- Quest System ---
+
+    /**
+     * Check if a quest can be offered to the player
+     */
+    canOfferQuest(quest) {
+        // Already active or completed
+        if (this.player.state.activeQuests.includes(quest.id)) return false;
+        if (this.player.state.completedQuests.includes(quest.id)) return false;
+
+        // Check level requirement
+        if (quest.minLevel && this.player.level < quest.minLevel) return false;
+
+        // Check prerequisites
+        if (quest.prerequisites) {
+            for (const prereq of quest.prerequisites) {
+                if (!this.player.state.completedQuests.includes(prereq)) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Offer a quest to the player
+     */
+    offerQuest(quest, npc) {
+        this.pendingQuest = quest;
+
+        this.terminal.print('');
+        this.terminal.printSeparator('─');
+        this.terminal.print(`📜 Quest Available: ${quest.title}`);
+        this.terminal.print(`   Difficulty: ${quest.difficulty || 'unknown'}`);
+        if (quest.minLevel) {
+            this.terminal.print(`   Required Level: ${quest.minLevel}`);
+        }
+        this.terminal.print('');
+        this.terminal.printMarkdown(quest.description);
+        this.terminal.print('');
+        this.terminal.print('Type "accept" to begin this quest, or "decline" to refuse.');
+        this.terminal.printSeparator('─');
+    }
+
+    /**
+     * Accept the pending quest
+     */
+    cmdAcceptQuest() {
+        if (!this.pendingQuest) {
+            this.terminal.print('No quest has been offered.');
+            return;
+        }
+
+        const quest = this.pendingQuest;
+        this.player.startQuest(quest.id);
+        this.pendingQuest = null;
+
+        this.terminal.print('');
+        this.terminal.print(`Quest accepted: ${quest.title}`);
+        this.showCurrentObjective(quest);
+    }
+
+    /**
+     * Decline the pending quest
+     */
+    cmdDeclineQuest() {
+        if (!this.pendingQuest) {
+            this.terminal.print('No quest has been offered.');
+            return;
+        }
+
+        const questTitle = this.pendingQuest.title;
+        this.pendingQuest = null;
+        this.terminal.print(`Quest "${questTitle}" declined.`);
+    }
+
+    /**
+     * Show quest journal / active quests
+     */
+    cmdQuests() {
+        const active = this.player.state.activeQuests;
+        const completed = this.player.state.completedQuests;
+
+        this.terminal.print('');
+        this.terminal.print('═══ Quest Journal ═══');
+
+        if (active.length === 0 && completed.length === 0) {
+            this.terminal.print('');
+            this.terminal.print('You have no quests.');
+            this.terminal.print('Talk to NPCs to discover quests.');
+            return;
+        }
+
+        if (active.length > 0) {
+            this.terminal.print('');
+            this.terminal.print('Active Quests:');
+            for (const questId of active) {
+                const quest = this.quests.find(q => q.id === questId);
+                if (!quest) continue;
+
+                const progress = this.player.state.questProgress[questId];
+                const currentStep = progress?.currentStep || 0;
+                const totalSteps = quest.steps?.length || 0;
+
+                this.terminal.print('');
+                this.terminal.print(`  📜 ${quest.title} [${currentStep}/${totalSteps}]`);
+
+                // Show current objective
+                if (quest.steps && quest.steps[currentStep]) {
+                    const step = quest.steps[currentStep];
+                    this.terminal.printMarkdown(`     → ${step.instruction}`);
+                }
+            }
+        }
+
+        if (completed.length > 0) {
+            this.terminal.print('');
+            this.terminal.print(`Completed Quests: ${completed.length}`);
+            for (const questId of completed.slice(0, 5)) {
+                const quest = this.quests.find(q => q.id === questId);
+                if (quest) {
+                    this.terminal.print(`  ✓ ${quest.title}`);
+                }
+            }
+            if (completed.length > 5) {
+                this.terminal.print(`  ... and ${completed.length - 5} more`);
+            }
+        }
+    }
+
+    /**
+     * Show the current objective for a quest
+     */
+    showCurrentObjective(quest) {
+        const progress = this.player.state.questProgress[quest.id];
+        const currentStep = progress?.currentStep || 0;
+
+        if (quest.steps && quest.steps[currentStep]) {
+            const step = quest.steps[currentStep];
+            this.terminal.print('');
+            this.terminal.print('Current objective:');
+            this.terminal.printMarkdown(`  → ${step.instruction}`);
+        }
+    }
+
+    /**
+     * Check if any quest steps were completed by an action
+     * @param {object} action - The action performed (section, era, npc, topic)
+     */
+    checkQuestProgress(action) {
+        for (const questId of this.player.state.activeQuests) {
+            const quest = this.quests.find(q => q.id === questId);
+            const progress = this.player.state.questProgress[questId];
+            if (!quest || !progress || !quest.steps) continue;
+
+            const step = quest.steps[progress.currentStep];
+            if (!step?.target) continue;
+
+            if (this.stepCompleted(step.target, action)) {
+                this.advanceQuest(quest, progress);
+            }
+        }
+    }
+
+    /**
+     * Check if a step's target requirements are met
+     */
+    stepCompleted(target, action) {
+        // All specified target conditions must match
+        if (target.section && action.section !== target.section) return false;
+        if (target.era && action.era !== target.era) return false;
+        if (target.npc && action.npc !== target.npc) return false;
+        if (target.topic && !action.topic?.toLowerCase().includes(target.topic.toLowerCase())) return false;
+
+        // At least one condition must be present and matched
+        return target.section || target.era || target.npc || target.topic;
+    }
+
+    /**
+     * Advance a quest to the next step
+     */
+    advanceQuest(quest, progress) {
+        const completedStep = quest.steps[progress.currentStep];
+        progress.completed.push(progress.currentStep);
+        progress.currentStep++;
+
+        this.terminal.print('');
+        this.terminal.printSeparator('─');
+        this.terminal.print(`✓ Quest step completed!`);
+
+        // Show step completion rewards
+        if (completedStep.onComplete) {
+            if (completedStep.onComplete.dialogue) {
+                this.terminal.print('');
+                this.terminal.printMarkdown(completedStep.onComplete.dialogue);
+            }
+            if (completedStep.onComplete.xp) {
+                const result = this.player.gainXP(completedStep.onComplete.xp);
+                this.terminal.print(`  +${completedStep.onComplete.xp} XP`);
+                if (result.leveledUp) {
+                    this.terminal.print(`  Level up! You are now level ${result.newLevel}!`);
+                }
+            }
+            if (completedStep.onComplete.item) {
+                const item = this.items.find(i => i.id === completedStep.onComplete.item);
+                if (item) {
+                    this.player.addItem(item.id);
+                    this.terminal.print(`  Received: ${item.name}`);
+                }
+            }
+        }
+
+        // Check if quest is complete
+        if (progress.currentStep >= quest.steps.length) {
+            this.completeQuest(quest);
+        } else {
+            this.showCurrentObjective(quest);
+        }
+
+        this.terminal.printSeparator('─');
+        this.player.save();
+        this.updateStatusBar();
+    }
+
+    /**
+     * Complete a quest and grant final rewards
+     */
+    completeQuest(quest) {
+        this.player.completeQuest(quest.id);
+
+        this.terminal.print('');
+        this.terminal.print(`🎉 Quest Complete: ${quest.title}!`);
+
+        if (quest.rewards) {
+            if (quest.rewards.experience) {
+                const result = this.player.gainXP(quest.rewards.experience);
+                this.terminal.print(`  +${quest.rewards.experience} XP`);
+                if (result.leveledUp) {
+                    this.terminal.print(`  Level up! You are now level ${result.newLevel}!`);
+                }
+            }
+            if (quest.rewards.items) {
+                for (const itemId of quest.rewards.items) {
+                    const item = this.items.find(i => i.id === itemId);
+                    if (item) {
+                        this.player.addItem(itemId);
+                        this.terminal.print(`  Received: ${item.name}`);
+                    }
+                }
+            }
+            if (quest.rewards.title) {
+                this.terminal.print(`  Title earned: "${quest.rewards.title}"`);
+            }
+        }
     }
 
     /**

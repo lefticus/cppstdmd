@@ -91,9 +91,9 @@ class TestChapterConversion:
             ), "Missing context label for 'access' definition"
             assert "⟨library⟩" in content, "Missing library context labels"
 
-            # Verify definition anchors
+            # Verify definition anchors (use wikilink format [[...]] for consistency with other sections)
             assert (
-                '<a id="defns.access">[defns.access]</a>' in content
+                '<a id="defns.access">[[defns.access]]</a>' in content
             ), "Missing anchor for 'access' definition"
 
             # Verify no unconverted definition macros

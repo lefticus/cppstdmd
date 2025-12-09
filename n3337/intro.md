@@ -67,45 +67,45 @@ Terms that are used only in a small portion of this International
 Standard are defined where they are used and italicized where they are
 defined.
 
-#### 1 argument <a id="defns.argument">[defns.argument]</a>
+#### 1 argument <a id="defns.argument">[[defns.argument]]</a>
 
 actual argument  
 actual parameter  
 \<function call expression\> expression in the comma-separated list
 bounded by the parentheses
 
-#### 2 argument <a id="defns.argument.macro">[defns.argument.macro]</a>
+#### 2 argument <a id="defns.argument.macro">[[defns.argument.macro]]</a>
 
 actual argument  
 actual parameter  
 \<function-like macro\> sequence of preprocessing tokens in the
 comma-separated list bounded by the parentheses
 
-#### 3 argument <a id="defns.argument.throw">[defns.argument.throw]</a>
+#### 3 argument <a id="defns.argument.throw">[[defns.argument.throw]]</a>
 
 actual argument  
 actual parameter  
 \<throw expression\> the operand of `throw`
 
-#### 4 argument <a id="defns.argument.templ">[defns.argument.templ]</a>
+#### 4 argument <a id="defns.argument.templ">[[defns.argument.templ]]</a>
 
 actual argument  
 actual parameter  
 \<template instantiation\> expression, *type-id* or *template-name* in
 the comma-separated list bounded by the angle brackets
 
-#### 5 conditionally-supported <a id="defns.cond.supp">[defns.cond.supp]</a>
+#### 5 conditionally-supported <a id="defns.cond.supp">[[defns.cond.supp]]</a>
 
 program construct that an implementation is not required to support  
 Each implementation documents all conditionally-supported constructs
 that it does not support.
 
-#### 6 diagnostic message <a id="defns.diagnostic">[defns.diagnostic]</a>
+#### 6 diagnostic message <a id="defns.diagnostic">[[defns.diagnostic]]</a>
 
 message belonging to an *implementation-defined* subset of the
 implementation’s output messages
 
-#### 7 dynamic type <a id="defns.dynamic.type">[defns.dynamic.type]</a>
+#### 7 dynamic type <a id="defns.dynamic.type">[[defns.dynamic.type]]</a>
 
 \<glvalue\> type of the most derived object ([[intro.object]]) to which
 the glvalue denoted by a glvalue expression refers  
@@ -114,36 +114,36 @@ if a pointer ([[dcl.ptr]]) `p` whose static type is “pointer to class
 [[class.derived]]), the dynamic type of the expression `*p` is “`D`.”
 References ([[dcl.ref]]) are treated similarly.
 
-#### 8 dynamic type <a id="defns.dynamic.type.prvalue">[defns.dynamic.type.prvalue]</a>
+#### 8 dynamic type <a id="defns.dynamic.type.prvalue">[[defns.dynamic.type.prvalue]]</a>
 
 \<prvalue\> static type of the prvalue expression
 
-#### 9 ill-formed program <a id="defns.ill.formed">[defns.ill.formed]</a>
+#### 9 ill-formed program <a id="defns.ill.formed">[[defns.ill.formed]]</a>
 
 program that is not well formed
 
-#### 10 implementation-defined behavior <a id="defns.impl.defined">[defns.impl.defined]</a>
+#### 10 implementation-defined behavior <a id="defns.impl.defined">[[defns.impl.defined]]</a>
 
 behavior, for a well-formed program construct and correct data, that
 depends on the implementation and that each implementation documents
 
-#### 11 implementation limits <a id="defns.impl.limits">[defns.impl.limits]</a>
+#### 11 implementation limits <a id="defns.impl.limits">[[defns.impl.limits]]</a>
 
 restrictions imposed upon programs by the implementation
 
-#### 12 locale-specific behavior <a id="defns.locale.specific">[defns.locale.specific]</a>
+#### 12 locale-specific behavior <a id="defns.locale.specific">[[defns.locale.specific]]</a>
 
 behavior that depends on local conventions of nationality, culture, and
 language that each implementation documents
 
-#### 13 multibyte character <a id="defns.multibyte">[defns.multibyte]</a>
+#### 13 multibyte character <a id="defns.multibyte">[[defns.multibyte]]</a>
 
 sequence of one or more bytes representing a member of the extended
 character set of either the source or the execution environment  
 The extended character set is a superset of the basic character set (
 [[lex.charset]]).
 
-#### 14 parameter <a id="defns.parameter">[defns.parameter]</a>
+#### 14 parameter <a id="defns.parameter">[[defns.parameter]]</a>
 
 formal argument  
 formal parameter  
@@ -152,55 +152,55 @@ function declaration or definition or in the catch clause of an
 exception handler that acquires a value on entry to the function or
 handler
 
-#### 15 parameter <a id="defns.parameter.macro">[defns.parameter.macro]</a>
+#### 15 parameter <a id="defns.parameter.macro">[[defns.parameter.macro]]</a>
 
 formal argument  
 formal parameter  
 \<function-like macro\> identifier from the comma-separated list bounded
 by the parentheses immediately following the macro name
 
-#### 16 parameter <a id="defns.parameter.templ">[defns.parameter.templ]</a>
+#### 16 parameter <a id="defns.parameter.templ">[[defns.parameter.templ]]</a>
 
 formal argument  
 formal parameter  
 \<template\> *template-parameter*
 
-#### 17 signature <a id="defns.signature">[defns.signature]</a>
+#### 17 signature <a id="defns.signature">[[defns.signature]]</a>
 
 \<function\> name, parameter type list ([[dcl.fct]]), and enclosing
 namespace (if any)  
 Signatures are used as a basis for name mangling and linking.
 
-#### 18 signature <a id="defns.signature.templ">[defns.signature.templ]</a>
+#### 18 signature <a id="defns.signature.templ">[[defns.signature.templ]]</a>
 
 \<function template\> name, parameter type list ([[dcl.fct]]),
 enclosing namespace (if any), return type, and template parameter list
 
-#### 19 signature <a id="defns.signature.spec">[defns.signature.spec]</a>
+#### 19 signature <a id="defns.signature.spec">[[defns.signature.spec]]</a>
 
 \<function template specialization\> signature of the template of which
 it is a specialization and its template arguments (whether explicitly
 specified or deduced)
 
-#### 20 signature <a id="defns.signature.member">[defns.signature.member]</a>
+#### 20 signature <a id="defns.signature.member">[[defns.signature.member]]</a>
 
 \<class member function\> name, parameter type list ([[dcl.fct]]),
 class of which the function is a member, cv-qualifiers (if any), and
 *ref-qualifier* (if any)
 
-#### 21 signature <a id="defns.signature.member.templ">[defns.signature.member.templ]</a>
+#### 21 signature <a id="defns.signature.member.templ">[[defns.signature.member.templ]]</a>
 
 \<class member function template\> name, parameter type list (
 [[dcl.fct]]), class of which the function is a member, cv-qualifiers (if
 any), *ref-qualifier* (if any), return type, and template parameter list
 
-#### 22 signature <a id="defns.signature.member.spec">[defns.signature.member.spec]</a>
+#### 22 signature <a id="defns.signature.member.spec">[[defns.signature.member.spec]]</a>
 
 \<class member function template specialization\> signature of the
 member function template of which it is a specialization and its
 template arguments (whether explicitly specified or deduced)
 
-#### 23 static type <a id="defns.static.type">[defns.static.type]</a>
+#### 23 static type <a id="defns.static.type">[[defns.static.type]]</a>
 
 type of an expression ([[basic.types]]) resulting from analysis of the
 program without considering execution semantics  
@@ -208,7 +208,7 @@ The static type of an expression depends only on the form of the program
 in which the expression appears, and does not change while the program
 is executing.
 
-#### 24 undefined behavior <a id="defns.undefined">[defns.undefined]</a>
+#### 24 undefined behavior <a id="defns.undefined">[[defns.undefined]]</a>
 
 behavior for which this International Standard imposes no requirements  
 Undefined behavior may be expected when this International Standard
@@ -222,7 +222,7 @@ execution (with the issuance of a diagnostic message). Many erroneous
 program constructs do not engender undefined behavior; they are required
 to be diagnosed.
 
-#### 25 unspecified behavior <a id="defns.unspecified">[defns.unspecified]</a>
+#### 25 unspecified behavior <a id="defns.unspecified">[[defns.unspecified]]</a>
 
 behavior, for a well-formed program construct and correct data, that
 depends on the implementation  
@@ -230,7 +230,7 @@ The implementation is not required to document which behavior occurs.
 The range of possible behaviors is usually delineated by this
 International Standard.
 
-#### 26 well-formed program <a id="defns.well.formed">[defns.well.formed]</a>
+#### 26 well-formed program <a id="defns.well.formed">[[defns.well.formed]]</a>
 
 C++program constructed according to the syntax rules, diagnosable
 semantic rules, and the One Definition Rule ([[basic.def.odr]]).

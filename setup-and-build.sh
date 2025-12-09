@@ -311,15 +311,15 @@ compute_scripts_hash() {
         hash_input+=$(stat -c '%Y%s' convert.py 2>/dev/null || echo "0")
     fi
 
-    # All Lua filters
-    for f in lua_filters/*.lua; do
+    # All Lua filters (correct path: src/cpp_std_converter/filters/)
+    for f in src/cpp_std_converter/filters/*.lua; do
         if [ -f "$f" ]; then
             hash_input+=$(stat -c '%Y%s' "$f" 2>/dev/null || echo "0")
         fi
     done
 
-    # Key Python modules
-    for f in cpp_std_converter/*.py; do
+    # Key Python modules (correct path: src/cpp_std_converter/)
+    for f in src/cpp_std_converter/*.py; do
         if [ -f "$f" ]; then
             hash_input+=$(stat -c '%Y%s' "$f" 2>/dev/null || echo "0")
         fi

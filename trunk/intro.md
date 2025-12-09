@@ -25,7 +25,7 @@ the following addresses:
 - ISO Online browsing platform: available at <https://www.iso.org/obp>
 - IEC Electropedia: available at <https://www.electropedia.org/>
 
-#### 1 access <a id="defns.access">[defns.access]</a>
+#### 1 access <a id="defns.access">[[defns.access]]</a>
 
 ⟨execution-time action⟩ read or modify the value of an object
 
@@ -39,37 +39,37 @@ typically invoke a constructor [[class.ctor]] or assignment operator
 accesses, although they may involve accesses of scalar
 subobjects. — *end note*]
 
-#### 2 argument <a id="defns.argument">[defns.argument]</a>
+#### 2 argument <a id="defns.argument">[[defns.argument]]</a>
 
 ⟨function call expression⟩ expression or *braced-init-list* in the
 comma-separated list bounded by the parentheses
 
-#### 3 argument <a id="defns.argument.macro">[defns.argument.macro]</a>
+#### 3 argument <a id="defns.argument.macro">[[defns.argument.macro]]</a>
 
 ⟨function-like macro⟩ sequence of preprocessing tokens in the
 comma-separated list bounded by the parentheses
 
-#### 4 argument <a id="defns.argument.throw">[defns.argument.throw]</a>
+#### 4 argument <a id="defns.argument.throw">[[defns.argument.throw]]</a>
 
 ⟨throw expression⟩ operand of `throw`
 
-#### 5 argument <a id="defns.argument.templ">[defns.argument.templ]</a>
+#### 5 argument <a id="defns.argument.templ">[[defns.argument.templ]]</a>
 
 ⟨template instantiation⟩ *constant-expression*, *type-id*, or
 *id-expression* in the comma-separated list bounded by the angle
 brackets
 
-#### 6 block <a id="defns.block">[defns.block]</a>
+#### 6 block <a id="defns.block">[[defns.block]]</a>
 
 ⟨execution⟩ wait for some condition (other than for the implementation
 to execute the execution steps of the thread of execution) to be
 satisfied before continuing execution past the blocking operation
 
-#### 7 block <a id="defns.block.stmt">[defns.block.stmt]</a>
+#### 7 block <a id="defns.block.stmt">[[defns.block.stmt]]</a>
 
 ⟨statement⟩ compound statement
 
-#### 8 C standard library <a id="defns.c.lib">[defns.c.lib]</a>
+#### 8 C standard library <a id="defns.c.lib">[[defns.c.lib]]</a>
 
 library described in ISO/IEC 9899:2018 (C), Clause 7
 
@@ -77,7 +77,7 @@ library described in ISO/IEC 9899:2018 (C), Clause 7
 through [[exec]] and in [[diff.library]], the C standard library is a
 subset of the C++ standard library. — *end note*]
 
-#### 9 character <a id="defns.character">[defns.character]</a>
+#### 9 character <a id="defns.character">[[defns.character]]</a>
 
 ⟨library⟩ object which, when treated sequentially, can represent text
 
@@ -87,7 +87,7 @@ any value that can be represented by a type that provides the
 definitions specified in [[strings]], [[localization]],
 [[input.output]], or  [[re]]. — *end note*]
 
-#### 10 character container type <a id="defns.character.container">[defns.character.container]</a>
+#### 10 character container type <a id="defns.character.container">[[defns.character.container]]</a>
 
 ⟨library⟩ class or a type used to represent a
 \termref{defns.character}{character}
@@ -96,12 +96,12 @@ definitions specified in [[strings]], [[localization]],
 `char_traits` and the class templates which use that, such as the
 string, iostream, and regular expression class templates. — *end note*]
 
-#### 11 collating element <a id="defns.regex.collating.element">[defns.regex.collating.element]</a>
+#### 11 collating element <a id="defns.regex.collating.element">[[defns.regex.collating.element]]</a>
 
 sequence of one or more within the current locale that collate as if
 they were a single character
 
-#### 12 component <a id="defns.component">[defns.component]</a>
+#### 12 component <a id="defns.component">[[defns.component]]</a>
 
 ⟨library⟩ group of library entities directly related as members, , or
 return types
@@ -110,7 +110,7 @@ return types
 the non-member function templates that operate on strings are referred
 to as the string component. — *end note*]
 
-#### 13 conditionally-supported <a id="defns.cond.supp">[defns.cond.supp]</a>
+#### 13 conditionally-supported <a id="defns.cond.supp">[[defns.cond.supp]]</a>
 
 program construct that an implementation is not required to support
 
@@ -118,35 +118,35 @@ program construct that an implementation is not required to support
 conditionally-supported constructs that it does not
 support. — *end note*]
 
-#### 14 constant evaluation <a id="defns.const.eval">[defns.const.eval]</a>
+#### 14 constant evaluation <a id="defns.const.eval">[[defns.const.eval]]</a>
 
 evaluation that is performed as part of evaluating an expression as a
 core constant expression [[expr.const]]
 
-#### 15 constant subexpression <a id="defns.const.subexpr">[defns.const.subexpr]</a>
+#### 15 constant subexpression <a id="defns.const.subexpr">[[defns.const.subexpr]]</a>
 
 expression whose evaluation as subexpression of a
 *conditional-expression* `CE` would not prevent `CE` from being a core
 constant expression
 
-#### 16 deadlock <a id="defns.deadlock">[defns.deadlock]</a>
+#### 16 deadlock <a id="defns.deadlock">[[defns.deadlock]]</a>
 
 ⟨library⟩ situation wherein one or more threads are unable to continue
 execution because each is waiting for one or more of the others to
 satisfy some condition
 
-#### 17 default behavior <a id="defns.default.behavior.impl">[defns.default.behavior.impl]</a>
+#### 17 default behavior <a id="defns.default.behavior.impl">[[defns.default.behavior.impl]]</a>
 
 ⟨library implementation⟩ specific behavior provided by the
 implementation, within the scope of the
 \termref{defns.required.behavior}{required behavior}
 
-#### 18 diagnostic message <a id="defns.diagnostic">[defns.diagnostic]</a>
+#### 18 diagnostic message <a id="defns.diagnostic">[[defns.diagnostic]]</a>
 
 message belonging to an *implementation-defined* subset of the
 implementation’s output messages
 
-#### 19 dynamic type <a id="defns.dynamic.type">[defns.dynamic.type]</a>
+#### 19 dynamic type <a id="defns.dynamic.type">[[defns.dynamic.type]]</a>
 
 ⟨glvalue⟩ type of the most derived object to which the glvalue refers
 
@@ -156,12 +156,12 @@ most derived object is of class `D`, derived from `B` [[class.derived]],
 the dynamic type of the expression `*p` is “`D`”. References [[dcl.ref]]
 are treated similarly. — *end example*]
 
-#### 20 dynamic type <a id="defns.dynamic.type.prvalue">[defns.dynamic.type.prvalue]</a>
+#### 20 dynamic type <a id="defns.dynamic.type.prvalue">[[defns.dynamic.type.prvalue]]</a>
 
 ⟨prvalue⟩ \termref{defns.static.type}{static type} of the prvalue
 expression
 
-#### 21 erroneous behavior <a id="defns.erroneous">[defns.erroneous]</a>
+#### 21 erroneous behavior <a id="defns.erroneous">[[defns.erroneous]]</a>
 
 well-defined behavior that the implementation is recommended to diagnose
 
@@ -171,7 +171,7 @@ to diagnose it [[intro.compliance.general]]. Evaluation of a constant
 expression [[expr.const]] never exhibits behavior specified as erroneous
 in [[intro]] through [[\lastcorechapter]]. — *end note*]
 
-#### 22 expression-equivalent <a id="defns.expression.equivalent">[defns.expression.equivalent]</a>
+#### 22 expression-equivalent <a id="defns.expression.equivalent">[[defns.expression.equivalent]]</a>
 
 ⟨library⟩ expressions that all have the same effects, either are all
 potentially-throwing or are all not potentially-throwing, and either are
@@ -181,20 +181,20 @@ all or are all not constant subexpressions
 accepts integer arguments, the expressions `f(x + 2)`, `f(2 + x)`, and
 `f(1 + x + 1)` are expression-equivalent. — *end example*]
 
-#### 23 finite state machine <a id="defns.regex.finite.state.machine">[defns.regex.finite.state.machine]</a>
+#### 23 finite state machine <a id="defns.regex.finite.state.machine">[[defns.regex.finite.state.machine]]</a>
 
 ⟨regular expression⟩ unspecified data structure that is used to
 represent a
 \termref{defns.regex.regular.expression}{regular expression}, and which
 permits efficient matches against the regular expression to be obtained
 
-#### 24 format specifier <a id="defns.regex.format.specifier">[defns.regex.format.specifier]</a>
+#### 24 format specifier <a id="defns.regex.format.specifier">[[defns.regex.format.specifier]]</a>
 
 ⟨regular expression⟩ sequence of one or more that is expected to be
 replaced with some part of a
 \termref{defns.regex.regular.expression}{regular expression} match
 
-#### 25 handler function <a id="defns.handler">[defns.handler]</a>
+#### 25 handler function <a id="defns.handler">[[defns.handler]]</a>
 
 ⟨library⟩ non-reserved function whose definition may be provided by a
 C++ program
@@ -204,63 +204,63 @@ various points in its execution by supplying a pointer to the function
 when calling any of the library functions that install handler functions
 (see [[support]]). — *end note*]
 
-#### 26 ill-formed program <a id="defns.ill.formed">[defns.ill.formed]</a>
+#### 26 ill-formed program <a id="defns.ill.formed">[[defns.ill.formed]]</a>
 
 program that is not well-formed [[defns.well.formed]]
 
-#### 27 implementation-defined behavior <a id="defns.impl.defined">[defns.impl.defined]</a>
+#### 27 implementation-defined behavior <a id="defns.impl.defined">[[defns.impl.defined]]</a>
 
 behavior, for a \termref{defns.well.formed}{well-formed program}
 construct and correct data, that depends on the implementation and that
 each implementation documents
 
-#### 28 implementation-defined strict total order over pointers <a id="defns.order.ptr">[defns.order.ptr]</a>
+#### 28 implementation-defined strict total order over pointers <a id="defns.order.ptr">[[defns.order.ptr]]</a>
 
 ⟨library⟩ *implementation-defined* strict total ordering over all
 pointer values such that the ordering is consistent with the partial
 order imposed by the built-in operators `<`, `>`, `<=`, `>=`, and `<=>`
 
-#### 29 implementation limit <a id="defns.impl.limits">[defns.impl.limits]</a>
+#### 29 implementation limit <a id="defns.impl.limits">[[defns.impl.limits]]</a>
 
 restriction imposed upon programs by the implementation
 
-#### 30 locale-specific behavior <a id="defns.locale.specific">[defns.locale.specific]</a>
+#### 30 locale-specific behavior <a id="defns.locale.specific">[[defns.locale.specific]]</a>
 
 behavior that depends on local conventions of nationality, culture, and
 language that each implementation documents
 
-#### 31 matched <a id="defns.regex.matched">[defns.regex.matched]</a>
+#### 31 matched <a id="defns.regex.matched">[[defns.regex.matched]]</a>
 
 ⟨regular expression⟩ condition when a sequence of zero or more
 correspond to a sequence of characters defined by the pattern
 
-#### 32 modifier function <a id="defns.modifier">[defns.modifier]</a>
+#### 32 modifier function <a id="defns.modifier">[[defns.modifier]]</a>
 
 ⟨library⟩ class member function other than a constructor, assignment
 operator, or destructor that alters the state of an object of the class
 
-#### 33 move assignment <a id="defns.move.assign">[defns.move.assign]</a>
+#### 33 move assignment <a id="defns.move.assign">[[defns.move.assign]]</a>
 
 ⟨library⟩ assignment of an rvalue of some object type to a modifiable
 lvalue of the same type
 
-#### 34 move construction <a id="defns.move.constr">[defns.move.constr]</a>
+#### 34 move construction <a id="defns.move.constr">[[defns.move.constr]]</a>
 
 ⟨library⟩ direct-initialization of an object of some type with an rvalue
 of the same type
 
-#### 35 non-constant library call <a id="defns.nonconst.libcall">[defns.nonconst.libcall]</a>
+#### 35 non-constant library call <a id="defns.nonconst.libcall">[[defns.nonconst.libcall]]</a>
 
 invocation of a library function that, as part of evaluating any
 expression `E`, prevents `E` from being a core constant expression
 
-#### 36 NTCTS <a id="defns.ntcts">[defns.ntcts]</a>
+#### 36 NTCTS <a id="defns.ntcts">[[defns.ntcts]]</a>
 
 ⟨library⟩ sequence of values that have
 \termref{defns.character}{character} type that precede the terminating
 null character type value `charT()`
 
-#### 37 observer function <a id="defns.observer">[defns.observer]</a>
+#### 37 observer function <a id="defns.observer">[[defns.observer]]</a>
 
 ⟨library⟩ class member function that accesses the state of an object of
 the class but does not alter that state
@@ -268,35 +268,35 @@ the class but does not alter that state
 [*Note 1 to entry*: Observer functions are specified as `const` member
 functions. — *end note*]
 
-#### 38 parameter <a id="defns.parameter">[defns.parameter]</a>
+#### 38 parameter <a id="defns.parameter">[[defns.parameter]]</a>
 
 ⟨function or catch clause⟩ object or reference declared as part of a
 function declaration or definition or in the catch clause of an
 exception handler that acquires a value on entry to the function or
 handler
 
-#### 39 parameter <a id="defns.parameter.macro">[defns.parameter.macro]</a>
+#### 39 parameter <a id="defns.parameter.macro">[[defns.parameter.macro]]</a>
 
 ⟨function-like macro⟩ identifier from the comma-separated list bounded
 by the parentheses immediately following the macro name
 
-#### 40 parameter <a id="defns.parameter.templ">[defns.parameter.templ]</a>
+#### 40 parameter <a id="defns.parameter.templ">[[defns.parameter.templ]]</a>
 
 ⟨template⟩ member of a *template-parameter-list*
 
-#### 41 primary equivalence class <a id="defns.regex.primary.equivalence.class">[defns.regex.primary.equivalence.class]</a>
+#### 41 primary equivalence class <a id="defns.regex.primary.equivalence.class">[[defns.regex.primary.equivalence.class]]</a>
 
 ⟨regular expression⟩ set of one or more which share the same primary
 sort key: that is the sort key weighting that depends only upon
 character shape, and not accents, case, or locale-specific tailorings
 
-#### 42 program-defined specialization <a id="defns.prog.def.spec">[defns.prog.def.spec]</a>
+#### 42 program-defined specialization <a id="defns.prog.def.spec">[[defns.prog.def.spec]]</a>
 
 ⟨library⟩ explicit template specialization or partial specialization
 that is not part of the C++ standard library and not defined by the
 implementation
 
-#### 43 program-defined type <a id="defns.prog.def.type">[defns.prog.def.type]</a>
+#### 43 program-defined type <a id="defns.prog.def.type">[[defns.prog.def.type]]</a>
 
 ⟨library⟩ non-closure class type or enumeration type that is not part of
 the C++ standard library and not defined by the implementation, or a
@@ -308,7 +308,7 @@ instantiation of a
 extensions [[intro.compliance]] and internal types used by the
 library. — *end note*]
 
-#### 44 projection <a id="defns.projection">[defns.projection]</a>
+#### 44 projection <a id="defns.projection">[[defns.projection]]</a>
 
 ⟨library⟩ transformation that an algorithm applies before inspecting the
 values of elements
@@ -328,7 +328,7 @@ sorts the pairs in increasing order of their `first` members:
 
 — *end example*]
 
-#### 45 referenceable type <a id="defns.referenceable">[defns.referenceable]</a>
+#### 45 referenceable type <a id="defns.referenceable">[[defns.referenceable]]</a>
 
 type that is either an object type, a function type that does not have
 cv-qualifiers or a *ref-qualifier*, or a reference type
@@ -336,12 +336,12 @@ cv-qualifiers or a *ref-qualifier*, or a reference type
 [*Note 1 to entry*: The term describes a type to which a reference can
 be created, including reference types. — *end note*]
 
-#### 46 regular expression <a id="defns.regex.regular.expression">[defns.regex.regular.expression]</a>
+#### 46 regular expression <a id="defns.regex.regular.expression">[[defns.regex.regular.expression]]</a>
 
 pattern that selects specific strings from a set of
 \termref{defns.character}{character} strings
 
-#### 47 replacement function <a id="defns.replacement">[defns.replacement]</a>
+#### 47 replacement function <a id="defns.replacement">[[defns.replacement]]</a>
 
 ⟨library⟩ non-reserved function whose definition is provided by a C++
 program
@@ -351,7 +351,7 @@ effect for the duration of the program’s execution, as the result of
 creating the program [[lex.phases]] and resolving the definitions of all
 translation units [[basic.link]]. — *end note*]
 
-#### 48 required behavior <a id="defns.required.behavior">[defns.required.behavior]</a>
+#### 48 required behavior <a id="defns.required.behavior">[[defns.required.behavior]]</a>
 
 ⟨library⟩ description of
 \termref{defns.replacement}{replacement function} and
@@ -363,7 +363,7 @@ function definition in the program
 to meet the required behavior when it executes, the behavior is
 undefined.  — *end note*]
 
-#### 49 reserved function <a id="defns.reserved.function">[defns.reserved.function]</a>
+#### 49 reserved function <a id="defns.reserved.function">[[defns.reserved.function]]</a>
 
 ⟨library⟩ function, specified as part of the C++ standard library, that
 is defined by the implementation
@@ -371,52 +371,52 @@ is defined by the implementation
 [*Note 1 to entry*: If a C++ program provides a definition for any
 reserved function, the results are undefined.  — *end note*]
 
-#### 50 runtime-undefined behavior <a id="defns.undefined.runtime">[defns.undefined.runtime]</a>
+#### 50 runtime-undefined behavior <a id="defns.undefined.runtime">[[defns.undefined.runtime]]</a>
 
 behavior that is undefined except when it occurs during constant
 evaluation
 
 [*Note 1 to entry*: During constant evaluation, — *end note*]
 
-#### 51 signature <a id="defns.signature">[defns.signature]</a>
+#### 51 signature <a id="defns.signature">[[defns.signature]]</a>
 
 ⟨function⟩ name, parameter-type-list, and enclosing namespace
 
 [*Note 1 to entry*: Signatures are used as a basis for name mangling
 and linking. — *end note*]
 
-#### 52 signature <a id="defns.signature.friend">[defns.signature.friend]</a>
+#### 52 signature <a id="defns.signature.friend">[[defns.signature.friend]]</a>
 
 ⟨non-template friend function with trailing *requires-clause*⟩ name,
 parameter-type-list, enclosing class, and trailing *requires-clause*
 
-#### 53 signature <a id="defns.signature.templ">[defns.signature.templ]</a>
+#### 53 signature <a id="defns.signature.templ">[[defns.signature.templ]]</a>
 
 ⟨function template⟩ name, parameter-type-list, enclosing namespace,
 return type, \termref{defns.signature.template.head}{signature} of the
 *template-head*, and trailing *requires-clause* (if any)
 
-#### 54 signature <a id="defns.signature.templ.friend">[defns.signature.templ.friend]</a>
+#### 54 signature <a id="defns.signature.templ.friend">[[defns.signature.templ.friend]]</a>
 
 ⟨friend function template with constraint involving enclosing template parameters⟩
 name, parameter-type-list, return type, enclosing class,
 \termref{defns.signature.template.head}{signature} of the
 *template-head*, and trailing *requires-clause* (if any)
 
-#### 55 signature <a id="defns.signature.spec">[defns.signature.spec]</a>
+#### 55 signature <a id="defns.signature.spec">[[defns.signature.spec]]</a>
 
 ⟨function template specialization⟩
 \termref{defns.signature.templ}{signature} of the template of which it
 is a specialization and its template (whether explicitly specified or
 deduced)
 
-#### 56 signature <a id="defns.signature.member">[defns.signature.member]</a>
+#### 56 signature <a id="defns.signature.member">[[defns.signature.member]]</a>
 
 ⟨class member function⟩ name, parameter-type-list, class of which the
 function is a member, cv-qualifiers (if any), *ref-qualifier* (if any),
 and trailing *requires-clause* (if any)
 
-#### 57 signature <a id="defns.signature.member.templ">[defns.signature.member.templ]</a>
+#### 57 signature <a id="defns.signature.member.templ">[[defns.signature.member.templ]]</a>
 
 ⟨class member function template⟩ name, parameter-type-list, class of
 which the function is a member, cv-qualifiers (if any), *ref-qualifier*
@@ -424,20 +424,20 @@ which the function is a member, cv-qualifiers (if any), *ref-qualifier*
 \termref{defns.signature.template.head}{signature} of the
 *template-head*, and trailing *requires-clause* (if any)
 
-#### 58 signature <a id="defns.signature.member.spec">[defns.signature.member.spec]</a>
+#### 58 signature <a id="defns.signature.member.spec">[[defns.signature.member.spec]]</a>
 
 ⟨class member function template specialization⟩
 \termref{defns.signature.member.templ}{signature} of the member function
 template of which it is a specialization and its template arguments
 (whether explicitly specified or deduced)
 
-#### 59 signature <a id="defns.signature.template.head">[defns.signature.template.head]</a>
+#### 59 signature <a id="defns.signature.template.head">[[defns.signature.template.head]]</a>
 
 ⟨*template-head*⟩ template \termref{defns.parameter.templ}{parameter}
 list, excluding template parameter names and default , and
 *requires-clause* (if any)
 
-#### 60 stable algorithm <a id="defns.stable">[defns.stable]</a>
+#### 60 stable algorithm <a id="defns.stable">[[defns.stable]]</a>
 
 ⟨library⟩ algorithm that preserves, as appropriate to the particular
 algorithm, the order of elements
@@ -445,7 +445,7 @@ algorithm, the order of elements
 [*Note 1 to entry*: Requirements for stable algorithms are given in
 [[algorithm.stable]]. — *end note*]
 
-#### 61 static type <a id="defns.static.type">[defns.static.type]</a>
+#### 61 static type <a id="defns.static.type">[[defns.static.type]]</a>
 
 type of an expression resulting from analysis of the program without
 considering execution semantics
@@ -454,24 +454,24 @@ considering execution semantics
 the form of the program in which the expression appears, and does not
 change while the program is executing. — *end note*]
 
-#### 62 sub-expression <a id="defns.regex.subexpression">[defns.regex.subexpression]</a>
+#### 62 sub-expression <a id="defns.regex.subexpression">[[defns.regex.subexpression]]</a>
 
 ⟨regular expression⟩ subset of a
 \termref{defns.regex.regular.expression}{regular expression} that has
 been marked by parentheses
 
-#### 63 traits class <a id="defns.traits">[defns.traits]</a>
+#### 63 traits class <a id="defns.traits">[[defns.traits]]</a>
 
 ⟨library⟩ class that encapsulates a set of types and functions necessary
 for class templates and function templates to manipulate objects of
 types for which they are instantiated
 
-#### 64 unblock <a id="defns.unblock">[defns.unblock]</a>
+#### 64 unblock <a id="defns.unblock">[[defns.unblock]]</a>
 
 satisfy a condition that one or more \termref{defns.block}{blocked}
 threads of execution are waiting for
 
-#### 65 undefined behavior <a id="defns.undefined">[defns.undefined]</a>
+#### 65 undefined behavior <a id="defns.undefined">[[defns.undefined]]</a>
 
 behavior for which this document imposes no requirements
 
@@ -489,7 +489,7 @@ they are required to be diagnosed. Evaluation of a constant expression
 [[expr.const]] never exhibits behavior explicitly specified as undefined
 in [[intro]] through [[\lastcorechapter]]. — *end note*]
 
-#### 66 unspecified behavior <a id="defns.unspecified">[defns.unspecified]</a>
+#### 66 unspecified behavior <a id="defns.unspecified">[[defns.unspecified]]</a>
 
 behavior, for a \termref{defns.well.formed}{well-formed program}
 construct and correct data, that depends on the implementation
@@ -498,7 +498,7 @@ construct and correct data, that depends on the implementation
 which behavior occurs. The range of possible behaviors is usually
 delineated by this document. — *end note*]
 
-#### 67 valid but unspecified state <a id="defns.valid">[defns.valid]</a>
+#### 67 valid but unspecified state <a id="defns.valid">[[defns.valid]]</a>
 
 ⟨library⟩ value of an object that is not specified except that the
 object’s invariants are met and operations on the object behave as
@@ -509,7 +509,7 @@ but unspecified state, `x.empty()` can be called unconditionally, and
 `x.front()` can be called only if `x.empty()` returns
 `false`. — *end example*]
 
-#### 68 well-formed program <a id="defns.well.formed">[defns.well.formed]</a>
+#### 68 well-formed program <a id="defns.well.formed">[[defns.well.formed]]</a>
 
 C++ program constructed according to the syntax and semantic rules
 

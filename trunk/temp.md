@@ -1633,7 +1633,7 @@ invalid concept-id in the immediate context of the constraint
 `CI'` be the normal form [[temp.constr.normal]] of the concept-id after
 substitution of `C`.
 
-[*Note 1*: Normalization of `CI` might be ill-formed; no diagnostics is
+[*Note 1*: Normalization of `CI` might be ill-formed; no diagnostic is
 required. — *end note*]
 
 To form `CI''`, each appearance of `C`'s template parameters in the

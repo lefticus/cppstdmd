@@ -1874,19 +1874,25 @@ shall be supplied.
 
 - **`__FILE__`**
 
-The presumed name of the current source file (a character string
-literal).[^8]
+A character string literal representing the presumed name of the current
+source file.
+
+[*Note 3*: The presumed source file name can be changed by the `#line`
+directive [[cpp.line]]. — *end note*]
 
 - **`__LINE__`**
 
-The presumed line number (within the current source file) of the current
-source line (an integer literal).[^9]
+An integer literal representing the presumed line number of the current
+source line within the current source file.
+
+[*Note 4*: The presumed line number can be changed by the `#line`
+directive [[cpp.line]]. — *end note*]
 
 - **`__STDC_EMBED_NOT_FOUND__, __STDC_EMBED_FOUND__, and __STDC_EMBED_EMPTY__`**
 
 The integer literals `0`, `1`, and `2`, respectively.
 
-[*Note 3*: These represent values replaced from
+[*Note 5*: These represent values replaced from
 \*has-embed-expression\*s [[cpp.cond]]. — *end note*]
 
 - **`__STDC_HOSTED__`**
@@ -1901,7 +1907,7 @@ An integer literal of type `std::size_t` whose value is the alignment
 guaranteed by a call to `operator new(std::size_t)` or
 `operator new[](std::size_t)`.
 
-[*Note 4*: Larger alignments will be passed to
+[*Note 6*: Larger alignments will be passed to
 `operator new(std::size_t, std::align_val_t)`, etc.
 [[expr.new]]. — *end note*]
 
@@ -2191,8 +2197,3 @@ LISTING( ..\listing.dir )
 [^7]: Placemarker preprocessing tokens do not appear in the syntax
     because they are temporary entities that exist only within
     translation phase 4.
-
-[^8]: The presumed source file name can be changed by the `#line`
-    directive.
-
-[^9]: The presumed line number can be changed by the `#line` directive.

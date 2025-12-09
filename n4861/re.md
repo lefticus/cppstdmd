@@ -35,39 +35,39 @@ summarized in [[re.summary]].
 
 The following definitions shall apply to this Clause:
 
-#### 1 collating element <a id="defns.regex.collating.element">[defns.regex.collating.element]</a>
+#### 1 collating element <a id="defns.regex.collating.element">[[defns.regex.collating.element]]</a>
 
 a sequence of one or more characters within the current locale that
 collate as if they were a single character.
 
-#### 2 finite state machine <a id="defns.regex.finite.state.machine">[defns.regex.finite.state.machine]</a>
+#### 2 finite state machine <a id="defns.regex.finite.state.machine">[[defns.regex.finite.state.machine]]</a>
 
 an unspecified data structure that is used to represent a regular
 expression, and which permits efficient matches against the regular
 expression to be obtained.
 
-#### 3 format specifier <a id="defns.regex.format.specifier">[defns.regex.format.specifier]</a>
+#### 3 format specifier <a id="defns.regex.format.specifier">[[defns.regex.format.specifier]]</a>
 
 a sequence of one or more characters that is to be replaced with some
 part of a regular expression match.
 
-#### 4 matched <a id="defns.regex.matched">[defns.regex.matched]</a>
+#### 4 matched <a id="defns.regex.matched">[[defns.regex.matched]]</a>
 
 a sequence of zero or more characters is matched by a regular expression
 when the characters in the sequence correspond to a sequence of
 characters defined by the pattern.
 
-#### 5 primary equivalence class <a id="defns.regex.primary.equivalence.class">[defns.regex.primary.equivalence.class]</a>
+#### 5 primary equivalence class <a id="defns.regex.primary.equivalence.class">[[defns.regex.primary.equivalence.class]]</a>
 
 a set of one or more characters which share the same primary sort key:
 that is the sort key weighting that depends only upon character shape,
 and not accents, case, or locale specific tailorings.
 
-#### 6 regular expression <a id="defns.regex.regular.expression">[defns.regex.regular.expression]</a>
+#### 6 regular expression <a id="defns.regex.regular.expression">[[defns.regex.regular.expression]]</a>
 
 a pattern that selects specific strings from a set of character strings.
 
-#### 7 sub-expression <a id="defns.regex.subexpression">[defns.regex.subexpression]</a>
+#### 7 sub-expression <a id="defns.regex.subexpression">[[defns.regex.subexpression]]</a>
 
 a subset of a regular expression that has been marked by parenthesis.
 

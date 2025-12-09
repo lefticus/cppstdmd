@@ -110,7 +110,7 @@ qualifier) are the same unless otherwise stated.
 [*Note 1*:  [[intro.defs]] defines additional terms used elsewhere in
 this document. — *end note*]
 
-#### 1 arbitrary-positional stream <a id="defns.arbitrary.stream">[defns.arbitrary.stream]</a>
+#### 1 arbitrary-positional stream <a id="defns.arbitrary.stream">[[defns.arbitrary.stream]]</a>
 
 stream (described in [[input.output]]) that can seek to any integral
 position within the length of the stream
@@ -118,7 +118,7 @@ position within the length of the stream
 [*Note 1 to entry*: Every arbitrary-positional stream is also a
 repositional stream. — *end note*]
 
-#### 2 character <a id="defns.character">[defns.character]</a>
+#### 2 character <a id="defns.character">[[defns.character]]</a>
 
 ⟨[[strings]], [[localization]], [[input.output]], and~ [[re]]⟩
 object which, when treated sequentially, can represent text
@@ -128,7 +128,7 @@ object which, when treated sequentially, can represent text
 represented by a type that provides the definitions specified in these
 Clauses. — *end note*]
 
-#### 3 character container type <a id="defns.character.container">[defns.character.container]</a>
+#### 3 character container type <a id="defns.character.container">[[defns.character.container]]</a>
 
 class or a type used to represent a character
 
@@ -136,13 +136,13 @@ class or a type used to represent a character
 the string, iostream, and regular expression class
 templates. — *end note*]
 
-#### 4 comparison function <a id="defns.comparison">[defns.comparison]</a>
+#### 4 comparison function <a id="defns.comparison">[[defns.comparison]]</a>
 
 operator function [[over.oper]] for any of the equality [[expr.eq]],
 relational [[expr.rel]], or three-way comparison [[expr.spaceship]]
 operators
 
-#### 5 component <a id="defns.component">[defns.component]</a>
+#### 5 component <a id="defns.component">[[defns.component]]</a>
 
 group of library entities directly related as members, parameters, or
 return types
@@ -151,34 +151,34 @@ return types
 the non-member function templates that operate on strings are referred
 to as the *string component*. — *end note*]
 
-#### 6 constant subexpression <a id="defns.const.subexpr">[defns.const.subexpr]</a>
+#### 6 constant subexpression <a id="defns.const.subexpr">[[defns.const.subexpr]]</a>
 
 expression whose evaluation as subexpression of a
 *conditional-expression* `CE` [[expr.cond]] would not prevent `CE` from
 being a core constant expression [[expr.const]]
 
-#### 7 deadlock <a id="defns.deadlock">[defns.deadlock]</a>
+#### 7 deadlock <a id="defns.deadlock">[[defns.deadlock]]</a>
 
 situation wherein one or more threads are unable to continue execution
 because each is blocked waiting for one or more of the others to satisfy
 some condition
 
-#### 8 default behavior <a id="defns.default.behavior.impl">[defns.default.behavior.impl]</a>
+#### 8 default behavior <a id="defns.default.behavior.impl">[[defns.default.behavior.impl]]</a>
 
 ⟨implementation⟩ specific behavior provided by the implementation,
 within the scope of the required behavior
 
-#### 9 default behavior <a id="defns.default.behavior.func">[defns.default.behavior.func]</a>
+#### 9 default behavior <a id="defns.default.behavior.func">[[defns.default.behavior.func]]</a>
 
 ⟨specification⟩ description of replacement function and handler function
 semantics
 
-#### 10 direct-non-list-initialization <a id="defns.direct-non-list-init">[defns.direct-non-list-init]</a>
+#### 10 direct-non-list-initialization <a id="defns.direct-non-list-init">[[defns.direct-non-list-init]]</a>
 
 direct-initialization [[dcl.init]] that is not list-initialization
 [[dcl.init.list]]
 
-#### 11 expression-equivalent <a id="defns.expression-equivalent">[defns.expression-equivalent]</a>
+#### 11 expression-equivalent <a id="defns.expression-equivalent">[[defns.expression-equivalent]]</a>
 
 expressions that all have the same effects, either are all
 potentially-throwing [[except.spec]] or are all not
@@ -189,7 +189,7 @@ all not constant subexpressions
 accepts integer arguments, the expressions `f(x + 2)`, `f(2 + x)`, and
 `f(1 + x + 1)` are expression-equivalent. — *end example*]
 
-#### 12 handler function <a id="defns.handler">[defns.handler]</a>
+#### 12 handler function <a id="defns.handler">[[defns.handler]]</a>
 
 non-reserved function whose definition may be provided by a C++ program
 
@@ -198,13 +198,13 @@ various points in its execution by supplying a pointer to the function
 when calling any of the library functions that install handler functions
 [[support]]. — *end note*]
 
-#### 13 implementation-defined strict total order over pointers <a id="defns.order.ptr">[defns.order.ptr]</a>
+#### 13 implementation-defined strict total order over pointers <a id="defns.order.ptr">[[defns.order.ptr]]</a>
 
 *implementation-defined* strict total ordering over all pointer values
 such that the ordering is consistent with the partial order imposed by
 the builtin operators `<`, `>`, `<=`, `>=`, and `<=>`
 
-#### 14 iostream class templates <a id="defns.iostream.templates">[defns.iostream.templates]</a>
+#### 14 iostream class templates <a id="defns.iostream.templates">[[defns.iostream.templates]]</a>
 
 templates, defined in [[input.output]], that take two template arguments
 
@@ -214,28 +214,28 @@ argument `charT` is a character container class, and the argument
 functions of the character type represented by `charT` necessary to
 implement the iostream class templates. — *end note*]
 
-#### 15 modifier function <a id="defns.modifier">[defns.modifier]</a>
+#### 15 modifier function <a id="defns.modifier">[[defns.modifier]]</a>
 
 class member function [[class.mfct]] other than a constructor,
 assignment operator, or destructor that alters the state of an object of
 the class
 
-#### 16 move assignment <a id="defns.move.assign">[defns.move.assign]</a>
+#### 16 move assignment <a id="defns.move.assign">[[defns.move.assign]]</a>
 
 assignment of an rvalue of some object type to a modifiable lvalue of
 the same type
 
-#### 17 move construction <a id="defns.move.constr">[defns.move.constr]</a>
+#### 17 move construction <a id="defns.move.constr">[[defns.move.constr]]</a>
 
 direct-initialization of an object of some type with an rvalue of the
 same type
 
-#### 18 NTCTS <a id="defns.ntcts">[defns.ntcts]</a>
+#### 18 NTCTS <a id="defns.ntcts">[[defns.ntcts]]</a>
 
 sequence of values that have character type that precede the terminating
 null character type value `charT()`
 
-#### 19 observer function <a id="defns.observer">[defns.observer]</a>
+#### 19 observer function <a id="defns.observer">[[defns.observer]]</a>
 
 class member function [[class.mfct]] that accesses the state of an
 object of the class but does not alter that state
@@ -243,12 +243,12 @@ object of the class but does not alter that state
 [*Note 1 to entry*: Observer functions are specified as `const` member
 functions [[class.this]]. — *end note*]
 
-#### 20 program-defined specialization <a id="defns.prog.def.spec">[defns.prog.def.spec]</a>
+#### 20 program-defined specialization <a id="defns.prog.def.spec">[[defns.prog.def.spec]]</a>
 
 explicit template specialization or partial specialization that is not
 part of the C++ standard library and not defined by the implementation
 
-#### 21 program-defined type <a id="defns.prog.def.type">[defns.prog.def.type]</a>
+#### 21 program-defined type <a id="defns.prog.def.type">[[defns.prog.def.type]]</a>
 
 non-closure class type or enumeration type that is not part of the C++
 standard library and not defined by the implementation, or a closure
@@ -259,7 +259,7 @@ instantiation of a program-defined specialization
 extensions [[intro.compliance]] and internal types used by the
 library. — *end note*]
 
-#### 22 projection <a id="defns.projection">[defns.projection]</a>
+#### 22 projection <a id="defns.projection">[[defns.projection]]</a>
 
 ⟨function object argument⟩ transformation that an algorithm applies
 before inspecting the values of elements
@@ -279,7 +279,7 @@ sorts the pairs in increasing order of their `first` members:
 
 — *end example*]
 
-#### 23 referenceable type <a id="defns.referenceable">[defns.referenceable]</a>
+#### 23 referenceable type <a id="defns.referenceable">[[defns.referenceable]]</a>
 
 type that is either an object type, a function type that does not have
 cv-qualifiers or a *ref-qualifier*, or a reference type
@@ -287,7 +287,7 @@ cv-qualifiers or a *ref-qualifier*, or a reference type
 [*Note 1 to entry*: The term describes a type to which a reference can
 be created, including reference types. — *end note*]
 
-#### 24 replacement function <a id="defns.replacement">[defns.replacement]</a>
+#### 24 replacement function <a id="defns.replacement">[[defns.replacement]]</a>
 
 non-reserved function whose definition is provided by a C++ program
 
@@ -296,12 +296,12 @@ effect for the duration of the program’s execution, as the result of
 creating the program [[lex.phases]] and resolving the definitions of all
 translation units [[basic.link]]. — *end note*]
 
-#### 25 repositional stream <a id="defns.repositional.stream">[defns.repositional.stream]</a>
+#### 25 repositional stream <a id="defns.repositional.stream">[[defns.repositional.stream]]</a>
 
 stream (described in [[input.output]]) that can seek to a position that
 was previously encountered
 
-#### 26 required behavior <a id="defns.required.behavior">[defns.required.behavior]</a>
+#### 26 required behavior <a id="defns.required.behavior">[[defns.required.behavior]]</a>
 
 description of replacement function and handler function semantics
 applicable to both the behavior provided by the implementation and the
@@ -311,7 +311,7 @@ behavior of any such function definition in the program
 to meet the required behavior when it executes, the behavior is
 undefined.  — *end note*]
 
-#### 27 reserved function <a id="defns.reserved.function">[defns.reserved.function]</a>
+#### 27 reserved function <a id="defns.reserved.function">[[defns.reserved.function]]</a>
 
 function, specified as part of the C++ standard library, that is defined
 by the implementation
@@ -319,7 +319,7 @@ by the implementation
 [*Note 1 to entry*: If a C++ program provides a definition for any
 reserved function, the results are undefined.  — *end note*]
 
-#### 28 stable algorithm <a id="defns.stable">[defns.stable]</a>
+#### 28 stable algorithm <a id="defns.stable">[[defns.stable]]</a>
 
 algorithm that preserves, as appropriate to the particular algorithm,
 the order of elements
@@ -327,13 +327,13 @@ the order of elements
 [*Note 1 to entry*: Requirements for stable algorithms are given in
 [[algorithm.stable]]. — *end note*]
 
-#### 29 traits class <a id="defns.traits">[defns.traits]</a>
+#### 29 traits class <a id="defns.traits">[[defns.traits]]</a>
 
 class that encapsulates a set of types and functions necessary for class
 templates and function templates to manipulate objects of types for
 which they are instantiated
 
-#### 30 valid but unspecified state <a id="defns.valid">[defns.valid]</a>
+#### 30 valid but unspecified state <a id="defns.valid">[[defns.valid]]</a>
 
 value of an object that is not specified except that the object’s
 invariants are met and operations on the object behave as specified for

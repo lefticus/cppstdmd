@@ -4959,11 +4959,11 @@ template<forward_range R, class Proj = identity,
 template<execution-policy Ep, random_access_iterator I, sized_sentinel_for<I> S,
          class Proj = identity,
          indirect_binary_predicate<projected<I, Proj>,
-                                    projected<I, Proj>> Pred = ranges::equal_to>
+                                   projected<I, Proj>> Pred = ranges::equal_to>
   I ranges::adjacent_find(Ep&& exec, I first, S last, Pred pred = {}, Proj proj = {});
 template<execution-policy Ep, sized-random-access-range R, class Proj = identity,
          indirect_binary_predicate<projected<iterator_t<R>, Proj>,
-                                    projected<iterator_t<R>, Proj>> Pred = ranges::equal_to>
+                                   projected<iterator_t<R>, Proj>> Pred = ranges::equal_to>
   borrowed_iterator_t<R>
     ranges::adjacent_find(Ep&& exec, R&& r, Pred pred = {}, Proj proj = {});
 ```

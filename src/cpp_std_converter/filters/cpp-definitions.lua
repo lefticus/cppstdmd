@@ -222,7 +222,7 @@ function Blocks(blocks)
         local header = pandoc.Header(4, {
           pandoc.Str(heading_text),
           pandoc.Space(),
-          build_anchor_inline(def_label, {format = "bracket"})
+          build_anchor_inline(def_label)  -- Use default wikilink format [[label]]
         })
         table.insert(result, header)
 

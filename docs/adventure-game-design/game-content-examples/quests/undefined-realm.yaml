@@ -12,8 +12,8 @@ description: |
 type: time_travel
 difficulty: hard
 minLevel: 15
-prerequisites:
-  - basic_exploration
+# prerequisites:
+#   - basic_exploration  # Removed for testing - quest doesn't exist yet
 
 giver: asif_oracle
 giverLocation: intro.abstract
@@ -21,8 +21,7 @@ giverLocation: intro.abstract
 steps:
   # Step 1: Learn the definition
   - instruction: |
-      Visit the definition of undefined behavior to understand its true meaning.
-      Talk to the As-If Oracle and ask about 'undefined'.
+      Visit [[defns.undefined]] and ask the As-If Oracle about 'undefined'.
     target:
       section: defns.undefined
       npc: asif_oracle
@@ -49,8 +48,7 @@ steps:
 
   # Step 3: Learn strict aliasing
   - instruction: |
-      Travel to [basic.lval] and learn about strict aliasing from the Warden.
-      Ask about 'strict_aliasing' and 'type_punning'.
+      Travel to [[basic.lval]] and ask the Aliasing Warden about 'strict_aliasing'.
     target:
       section: basic.lval
       npc: aliasing_warden
@@ -77,8 +75,8 @@ steps:
 
   # Step 5: Visit indeterminate values in C++23
   - instruction: |
-      Timeshift to C++23 (n4950) and visit [basic.indet].
-      Speak with the Indeterminate Spirit about 'indeterminate' values.
+      Timeshift to C++23 and visit [[basic.indet]].
+      Ask the Indeterminate Spirit about 'indeterminate'.
     target:
       section: basic.indet
       era: n4950
@@ -93,8 +91,8 @@ steps:
 
   # Step 6: Witness erroneous behavior in C++26
   - instruction: |
-      Timeshift to Trunk (C++26) and return to [basic.indet].
-      Ask the Spirit about 'erroneous_values' and 'why_change'.
+      Timeshift to C++26 (trunk) and return to [[basic.indet]].
+      Ask the Spirit about 'erroneous_values'.
     target:
       section: basic.indet
       era: trunk
@@ -109,8 +107,7 @@ steps:
 
   # Step 7: Final mastery quiz
   - instruction: |
-      Return to the As-If Oracle and complete the final examination.
-      Prove you understand the spectrum from defined to erroneous to undefined.
+      Return to [[intro.abstract]] and complete the Oracle's final examination.
     target:
       section: intro.abstract
       npc: asif_oracle

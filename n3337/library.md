@@ -80,22 +80,22 @@ cases, any use of the `restrict` qualifier shall be omitted.
 
 ## Definitions <a id="definitions">[[definitions]]</a>
 
-#### 1 arbitrary-positional stream <a id="defns.arbitrary.stream">[defns.arbitrary.stream]</a>
+#### 1 arbitrary-positional stream <a id="defns.arbitrary.stream">[[defns.arbitrary.stream]]</a>
 
 a stream (described in Clause  [[input.output]]) that can seek to any
 integral position within the length of the stream  
 Every arbitrary-positional stream is also a repositional stream.
 
-#### 2 block <a id="defns.block">[defns.block]</a>
+#### 2 block <a id="defns.block">[[defns.block]]</a>
 
 place a thread in the blocked state
 
-#### 3 blocked thread <a id="defns.blocked">[defns.blocked]</a>
+#### 3 blocked thread <a id="defns.blocked">[[defns.blocked]]</a>
 
 a thread that is waiting for some condition (other than the availability
 of a processor) to be satisfied before it can continue execution[^1]
 
-#### 4 character <a id="defns.character">[defns.character]</a>
+#### 4 character <a id="defns.character">[[defns.character]]</a>
 
 \<Clauses  [[strings]], [[localization]], [[input.output]], and 
 [[re]]\> any object which, when treated sequentially, can represent
@@ -104,19 +104,19 @@ The term does not mean only `char`, `char16_t`, `char32_t`, and
 `wchar_t` objects, but any value that can be represented by a type that
 provides the definitions specified in these Clauses.
 
-#### 5 character container type <a id="defns.character.container">[defns.character.container]</a>
+#### 5 character container type <a id="defns.character.container">[[defns.character.container]]</a>
 
 a class or a type used to represent a *character*  
 It is used for one of the template parameters of the string, iostream,
 and regular expression class templates. A character container type is a
 POD ([[basic.types]]) type.
 
-#### 6 comparison function <a id="defns.comparison">[defns.comparison]</a>
+#### 6 comparison function <a id="defns.comparison">[[defns.comparison]]</a>
 
 an operator function ([[over.oper]]) for any of the equality (
 [[expr.eq]]) or relational ([[expr.rel]]) operators
 
-#### 7 component <a id="defns.component">[defns.component]</a>
+#### 7 component <a id="defns.component">[[defns.component]]</a>
 
 a group of library entities directly related as members, parameters, or
 return types  
@@ -124,22 +124,22 @@ For example, the class template `basic_string` and the non-member
 function templates that operate on strings are referred to as the
 *string component*.
 
-#### 8 deadlock <a id="defns.deadlock">[defns.deadlock]</a>
+#### 8 deadlock <a id="defns.deadlock">[[defns.deadlock]]</a>
 
 one or more threads are unable to continue execution because each is
 blocked waiting for one or more of the others to satisfy some condition
 
-#### 9 default behavior <a id="defns.default.behavior.impl">[defns.default.behavior.impl]</a>
+#### 9 default behavior <a id="defns.default.behavior.impl">[[defns.default.behavior.impl]]</a>
 
 \<implementation\> any specific behavior provided by the implementation,
 within the scope of the *required behavior*
 
-#### 10 default behavior <a id="defns.default.behavior.func">[defns.default.behavior.func]</a>
+#### 10 default behavior <a id="defns.default.behavior.func">[[defns.default.behavior.func]]</a>
 
 \<specification\> a description of *replacement function* and *handler
 function* semantics
 
-#### 11 handler function <a id="defns.handler">[defns.handler]</a>
+#### 11 handler function <a id="defns.handler">[[defns.handler]]</a>
 
 a *non-reserved function* whose definition may be provided by a
 C++program  
@@ -148,7 +148,7 @@ execution by supplying a pointer to the function when calling any of the
 library functions that install handler functions (Clause 
 [[language.support]]).
 
-#### 12 iostream class templates <a id="defns.iostream.templates">[defns.iostream.templates]</a>
+#### 12 iostream class templates <a id="defns.iostream.templates">[[defns.iostream.templates]]</a>
 
 templates, defined in Clause  [[input.output]], that take two template
 arguments  
@@ -158,42 +158,42 @@ defines additional characteristics and functions of the character type
 represented by `charT` necessary to implement the iostream class
 templates.
 
-#### 13 modifier function <a id="defns.modifier">[defns.modifier]</a>
+#### 13 modifier function <a id="defns.modifier">[[defns.modifier]]</a>
 
 a class member function ([[class.mfct]]) other than a constructor,
 assignment operator, or destructor that alters the state of an object of
 the class
 
-#### 14 move construction <a id="defns.move.constr">[defns.move.constr]</a>
+#### 14 move construction <a id="defns.move.constr">[[defns.move.constr]]</a>
 
 direct-initialization of an object of some type with an rvalue of the
 same type
 
-#### 15 move assignment <a id="defns.move.assign">[defns.move.assign]</a>
+#### 15 move assignment <a id="defns.move.assign">[[defns.move.assign]]</a>
 
 assignment of an rvalue of some object type to a modifiable lvalue of
 the same type
 
-#### 16 object state <a id="defns.obj.state">[defns.obj.state]</a>
+#### 16 object state <a id="defns.obj.state">[[defns.obj.state]]</a>
 
 the current value of all non-static class members of an object (
 [[class.mem]])  
 The state of an object can be obtained by using one or more *observer
 functions*.
 
-#### 17 NTCTS <a id="defns.ntcts">[defns.ntcts]</a>
+#### 17 NTCTS <a id="defns.ntcts">[[defns.ntcts]]</a>
 
 a sequence of values that have *character type* that precede the
 terminating null character type value `charT()`
 
-#### 18 observer function <a id="defns.observer">[defns.observer]</a>
+#### 18 observer function <a id="defns.observer">[[defns.observer]]</a>
 
 a class member function ([[class.mfct]]) that accesses the state of an
 object of the class but does not alter that state  
 Observer functions are specified as `const` member functions (
 [[class.this]]).
 
-#### 19 replacement function <a id="defns.replacement">[defns.replacement]</a>
+#### 19 replacement function <a id="defns.replacement">[[defns.replacement]]</a>
 
 a *non-reserved function* whose definition is provided by a C++program  
 Only one definition for such a function is in effect for the duration of
@@ -201,12 +201,12 @@ the program’s execution, as the result of creating the program (
 [[lex.phases]]) and resolving the definitions of all translation units (
 [[basic.link]]).
 
-#### 20 repositional stream <a id="defns.repositional.stream">[defns.repositional.stream]</a>
+#### 20 repositional stream <a id="defns.repositional.stream">[[defns.repositional.stream]]</a>
 
 a stream (described in Clause  [[input.output]]) that can seek to a
 position that was previously encountered
 
-#### 21 required behavior <a id="defns.required.behavior">[defns.required.behavior]</a>
+#### 21 required behavior <a id="defns.required.behavior">[[defns.required.behavior]]</a>
 
 a description of *replacement function* and *handler function* semantics
 applicable to both the behavior provided by the implementation and the
@@ -214,20 +214,20 @@ behavior of any such function definition in the program
 If such a function defined in a C++program fails to meet the required
 behavior when it executes, the behavior is undefined.
 
-#### 22 reserved function <a id="defns.reserved.function">[defns.reserved.function]</a>
+#### 22 reserved function <a id="defns.reserved.function">[[defns.reserved.function]]</a>
 
 a function, specified as part of the C++standard library, that must be
 defined by the implementation  
 If a C++program provides a definition for any reserved function, the
 results are undefined.
 
-#### 23 stable algorithm <a id="defns.stable">[defns.stable]</a>
+#### 23 stable algorithm <a id="defns.stable">[[defns.stable]]</a>
 
 an algorithm that preserves, as appropriate to the particular algorithm,
 the order of elements  
 Requirements for stable algorithms are given in  [[algorithm.stable]].
 
-#### 24 traits class <a id="defns.traits">[defns.traits]</a>
+#### 24 traits class <a id="defns.traits">[[defns.traits]]</a>
 
 a class that encapsulates a set of types and functions necessary for
 class templates and function templates to manipulate objects of types
@@ -236,11 +236,11 @@ Traits classes defined in Clauses  [[strings]], [[localization]] and 
 [[input.output]] are *character traits*, which provide the character
 handling support needed by the string and iostream classes.
 
-#### 25 unblock <a id="defns.unblock">[defns.unblock]</a>
+#### 25 unblock <a id="defns.unblock">[[defns.unblock]]</a>
 
 place a thread in the unblocked state
 
-#### 26 valid but unspecified state <a id="defns.valid">[defns.valid]</a>
+#### 26 valid but unspecified state <a id="defns.valid">[[defns.valid]]</a>
 
 an object state that is not specified except that the object’s
 invariants are met and operations on the object behave as specified for
