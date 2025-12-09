@@ -1324,7 +1324,7 @@ def generate_version_pair(config: VersionPairConfig) -> dict:
         stable_name_availability = build_stable_name_availability(
             stable_name=item["name"],
             version_pairs=VERSION_PAIRS,
-            base_diffs_path=config.output_path.parent / "diffs",
+            base_diffs_path=Path("diffs"),
         )
 
         context = {
@@ -1418,7 +1418,7 @@ def generate_version_pair(config: VersionPairConfig) -> dict:
             table_availability = build_table_availability(
                 table_label=item["label"],
                 version_pairs=VERSION_PAIRS,
-                base_diffs_path=config.output_path.parent / "diffs",
+                base_diffs_path=Path("diffs"),
             )
             context = {
                 "title": f"Table [{item['label']}] - {config.from_name} → {config.to_name}",
