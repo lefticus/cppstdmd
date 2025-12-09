@@ -41,6 +41,7 @@ class World {
             this.realms = this.worldMap.realms || {};
             this.eras = this.worldMap.eras || {};
             this.stableNameAliases = this.worldMap.stableNameAliases || {};
+            this.cppstdmdSha = this.worldMap.cppstdmdSha || '';
             this.loaded = true;
         } catch (error) {
             console.error('Failed to load world map:', error);

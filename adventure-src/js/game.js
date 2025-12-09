@@ -20,6 +20,26 @@ class AdventureGame {
         // Era order for keyboard navigation (chronological order)
         this.eraOrder = ['n3337', 'n4140', 'n4659', 'n4861', 'n4950', 'trunk'];
 
+        // Era to version slug mapping (maps current era to the "previous → current" diff slug)
+        this.eraToSlug = {
+            'n4140': 'cpp11-to-cpp14',  // C++14: link to C++11→C++14
+            'n4659': 'cpp14-to-cpp17',  // C++17: link to C++14→C++17
+            'n4861': 'cpp17-to-cpp20',  // C++20: link to C++17→C++20
+            'n4950': 'cpp20-to-cpp23',  // C++23: link to C++20→C++23
+            'trunk': 'cpp23-to-trunk',  // Trunk: link to C++23→Trunk
+            'n3337': 'cpp11-to-cpp14',  // C++11: link to C++11→C++14 (no prior, so use first)
+        };
+
+        // Era to external standard URL base mapping
+        this.eraToStandardUrl = {
+            'trunk': 'https://eel.is/c++draft/',           // Latest working draft
+            'n4950': 'https://timsong-cpp.github.io/cppwp/n4950/',  // C++23
+            'n4861': 'https://timsong-cpp.github.io/cppwp/n4861/',  // C++20
+            'n4659': 'https://timsong-cpp.github.io/cppwp/n4659/',  // C++17
+            'n4140': 'https://timsong-cpp.github.io/cppwp/n4140/',  // C++14
+            'n3337': 'https://timsong-cpp.github.io/cppwp/n3337/',  // C++11
+        };
+
         // NPCs and other data
         this.npcs = [];
         this.items = [];
@@ -299,6 +319,84 @@ class AdventureGame {
         }
         if (levelBadge) {
             levelBadge.textContent = `Level ${this.player.level}`;
+        }
+
+        // Also update the back link
+        this.updateBackLink();
+    }
+
+    /**
+     * Update the "Back to cppevo" link to point to the current section's diff page
+     */
+    updateBackLink() {
+        const backLink = document.getElementById('back-to-cppevo');
+        const era = this.player.currentEra;
+        const location = this.player.currentLocation;
+        const slug = this.eraToSlug[era];
+
+        if (backLink) {
+            if (slug && location) {
+                // Sanitize stable name for URL (same logic as Python sanitize_filename)
+                const safeName = location.replace(/[<>:"/\\|?*]/g, '_');
+                backLink.href = `/diffs/${slug}/${safeName}.html`;
+                backLink.textContent = `View in cppevo`;
+            } else {
+                backLink.href = '/';
+                backLink.textContent = 'Back to cppevo';
+            }
+        }
+
+        // Update the "View Standard" link to point to the external standard site
+        this.updateStandardLink();
+
+        // Update the "View Markdown" link to point to the GitHub repo
+        this.updateMarkdownLink();
+    }
+
+    /**
+     * Update the "View Standard" link to point to the external standard website
+     * (eel.is for trunk, timsong-cpp for archived versions)
+     */
+    updateStandardLink() {
+        const standardLink = document.getElementById('view-standard');
+        if (!standardLink) return;
+
+        const era = this.player.currentEra;
+        const location = this.player.currentLocation;
+        const baseUrl = this.eraToStandardUrl[era];
+
+        if (baseUrl && location) {
+            standardLink.href = `${baseUrl}${location}`;
+        } else if (baseUrl) {
+            standardLink.href = baseUrl;
+        } else {
+            standardLink.href = 'https://eel.is/c++draft/';
+        }
+    }
+
+    /**
+     * Update the "View Markdown" link to point to the GitHub repo at the correct SHA
+     */
+    updateMarkdownLink() {
+        const markdownLink = document.getElementById('view-markdown');
+        if (!markdownLink) return;
+
+        const era = this.player.currentEra;
+        const location = this.player.currentLocation;
+        const section = this.world.getSection(location);
+        const sha = this.world.cppstdmdSha || 'main';
+
+        // Map era tags to directory names (trunk is special)
+        const eraDir = era === 'trunk' ? 'trunk' : era;
+
+        if (section && section.chapter && location) {
+            // Link to specific file and anchor
+            markdownLink.href = `https://github.com/lefticus/cppstdmd/blob/${sha}/${eraDir}/${section.chapter}.md#${location}`;
+        } else if (era) {
+            // Just link to the version directory
+            markdownLink.href = `https://github.com/lefticus/cppstdmd/blob/${sha}/${eraDir}`;
+        } else {
+            markdownLink.href = 'https://github.com/lefticus/cppstdmd';
         }
     }
 

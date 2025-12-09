@@ -18,6 +18,7 @@ import argparse
 import json
 import re
 import shutil
+import subprocess
 import sys
 from pathlib import Path
 from typing import Any
@@ -28,6 +29,29 @@ import yaml
 sys.path.insert(0, str(Path(__file__).parent / "src"))
 
 from cpp_std_converter.utils import iter_section_headings
+
+
+def get_cppstdmd_sha() -> dict[str, str]:
+    """Get current SHA of the cppstdmd repository.
+
+    Returns:
+        Dict with 'sha' (full) and 'short_sha' (7 chars) keys.
+        Returns empty strings if git command fails.
+    """
+    try:
+        result = subprocess.run(
+            ["git", "rev-parse", "HEAD"],
+            capture_output=True,
+            text=True,
+            cwd=Path(__file__).parent,
+        )
+        if result.returncode == 0:
+            sha = result.stdout.strip()
+            return {"sha": sha, "short_sha": sha[:7]}
+    except Exception:
+        pass
+    return {"sha": "", "short_sha": ""}
+
 
 # Realm theming - maps stable name prefix to (display_name, description, theme)
 REALM_THEMES: dict[str, tuple[str, str, str]] = {
@@ -812,6 +836,11 @@ def generate_adventure_data(
     episode_correlations = load_episode_correlations(game_data_dir)
     world_map = add_episode_links_to_world_map(world_map, episode_correlations)
 
+    # Add cppstdmd repository SHA for GitHub links
+    sha_info = get_cppstdmd_sha()
+    world_map["cppstdmdSha"] = sha_info["sha"]
+    world_map["cppstdmdShortSha"] = sha_info["short_sha"]
+
     # Write output files
     with open(game_data_dir / "world-map.json", "w") as f:
         json.dump(world_map, f, indent=2)
@@ -891,6 +920,21 @@ def should_regenerate(output_dir: Path, input_dirs: list[Path], force: bool = Fa
             if lua_file.stat().st_mtime > output_mtime:
                 return True
 
+        # Check HTML files (adventure-src)
+        for html_file in input_dir.rglob("*.html"):
+            if html_file.stat().st_mtime > output_mtime:
+                return True
+
+        # Check JavaScript files (adventure-src)
+        for js_file in input_dir.rglob("*.js"):
+            if js_file.stat().st_mtime > output_mtime:
+                return True
+
+        # Check CSS files (adventure-src)
+        for css_file in input_dir.rglob("*.css"):
+            if css_file.stat().st_mtime > output_mtime:
+                return True
+
     return False
 
 
@@ -940,6 +984,11 @@ def main():
     for candidate in game_content_candidates:
         if candidate and candidate.exists():
             input_dirs.append(candidate)
+
+    # Add adventure-src directory (HTML, JS, CSS source files)
+    adventure_src_dir = base_dir / "adventure-src"
+    if adventure_src_dir.exists():
+        input_dirs.append(adventure_src_dir)
 
     # Check if regeneration is needed
     output_path = Path(args.output)
