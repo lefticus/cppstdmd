@@ -477,6 +477,23 @@ body.resizing * {
     background: rgba(0, 200, 83, 0.15);
 }
 
+/* Episode links (C++ Weekly) */
+.episode-link {
+    color: #ff6b6b;  /* Red for YouTube */
+    text-decoration: none;
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+    transition: color 0.2s, background 0.2s;
+    padding: 0.1em 0.2em;
+    border-radius: 3px;
+}
+
+.episode-link:hover {
+    color: #ff8787;
+    background: rgba(255, 107, 107, 0.15);
+    text-decoration: underline;
+}
+
 /* === Morphdom Animation for Timewarp === */
 
 /* Animation duration controlled by CSS custom property (set via JS) */

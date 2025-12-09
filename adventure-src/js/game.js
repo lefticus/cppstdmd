@@ -25,6 +25,7 @@ class AdventureGame {
         this.items = [];
         this.quests = [];
         this.puzzles = [];
+        this.episodeCorrelations = {};
 
         // Command registry (maps verb keys to handlers)
         this.commands = this.buildCommandRegistry();
@@ -62,6 +63,7 @@ class AdventureGame {
                 this.loadItems(),
                 this.loadQuests(),
                 this.loadPuzzles(),
+                this.loadEpisodeCorrelations(),
             ]);
 
             // Load or create player save
@@ -160,6 +162,29 @@ class AdventureGame {
         } catch (error) {
             console.warn('Failed to load puzzles:', error);
         }
+    }
+
+    /**
+     * Load episode correlations data (C++ Weekly episodes related to sections)
+     */
+    async loadEpisodeCorrelations() {
+        try {
+            const response = await fetch('/data/game/episode-correlations.json');
+            if (response.ok) {
+                this.episodeCorrelations = await response.json();
+            }
+        } catch (error) {
+            console.warn('Failed to load episode correlations:', error);
+        }
+    }
+
+    /**
+     * Get C++ Weekly episodes related to a section
+     * @param {string} stableName - The section's stable name
+     * @returns {Array} Array of episode objects with title, youtube_url, etc.
+     */
+    getEpisodesForSection(stableName) {
+        return this.episodeCorrelations[stableName] || [];
     }
 
     /**
@@ -326,6 +351,23 @@ class AdventureGame {
             this.terminal.print('');
             const itemNames = itemsHere.map(i => `${i.name} (${i.rarity})`).join(', ');
             this.terminal.print(`Items: ${itemNames}`);
+        }
+
+        // Related C++ Weekly episodes
+        const episodes = this.getEpisodesForSection(section.stableName);
+        if (episodes.length > 0) {
+            this.terminal.print('');
+            this.terminal.print('📺 Related C++ Weekly:');
+            // Show top 3 episodes (already sorted by confidence)
+            for (const ep of episodes.slice(0, 3)) {
+                const epNum = ep.episode || '?';
+                const title = ep.title || `Episode ${epNum}`;
+                const url = ep.youtube_url || '#';
+                // Create clickable link in the terminal
+                this.terminal.printHTML(
+                    `  • <a href="${url}" target="_blank" rel="noopener noreferrer" class="episode-link">Ep ${epNum}: ${title}</a>`
+                );
+            }
         }
 
         // Load content into side panel
