@@ -98,6 +98,11 @@ class AdventureGame {
                 this.player.save();
             }
 
+            // Handle URL parameters for deep linking (e.g., from diff pages)
+            const urlParams = new URLSearchParams(window.location.search);
+            const sectionParam = urlParams.get('section');
+            const eraParam = urlParams.get('era');
+
             this.terminal.clear();
             this.terminal.print('Welcome to the C++ Standard Adventure!');
             this.terminal.print('Explore the C++ standard as an interactive world.');
@@ -112,8 +117,20 @@ class AdventureGame {
 
             this.terminal.print('');
 
-            // Show current location
-            await this.showLocation();
+            // Execute deep link commands (if coming from a diff page)
+            // cmdTimeshift handles era validation and mapping (cpp11, c++11, n3337, etc.)
+            if (eraParam) {
+                this.terminal.print(`> timeshift ${eraParam}`);
+                this.cmdTimeshift([eraParam]);
+            }
+
+            if (sectionParam && this.world.getSection(sectionParam)) {
+                this.terminal.print(`> goto ${sectionParam}`);
+                this.cmdGoto([sectionParam]);
+            } else {
+                // Show current location if no deep link
+                await this.showLocation();
+            }
 
             // Update UI
             this.updateStatusBar();
@@ -502,7 +519,7 @@ class AdventureGame {
 
         const titleEl = document.getElementById('content-title');
         if (titleEl) {
-            titleEl.textContent = `${section.displayName} [[${section.stableName}]]`;
+            titleEl.textContent = `${section.displayName} [${section.stableName}]`;
         }
 
         // Fetch markdown content
@@ -1031,7 +1048,7 @@ class AdventureGame {
         // Update content panel title
         const titleEl = document.getElementById('content-title');
         if (titleEl) {
-            titleEl.textContent = `${section.displayName} [[${section.stableName}]]`;
+            titleEl.textContent = `${section.displayName} [${section.stableName}]`;
         }
 
         // Get the new rendered HTML for the target era

@@ -913,7 +913,7 @@ def inject_navigation(html_file: Path, context: dict, env: Environment) -> bool:
 
         header.append(md_links_div)
 
-        # Adventure game link
+        # Adventure game link (with era for timeshift)
         adventure_div = soup.new_tag("div", **{"class": "external-links"})
         gamepad_icon = soup.new_tag("i")
         gamepad_icon["class"] = FONT_AWESOME_ICONS["gamepad"].split()
@@ -921,7 +921,7 @@ def inject_navigation(html_file: Path, context: dict, env: Environment) -> bool:
         adventure_div.append(" ")
         adventure_link = soup.new_tag(
             "a",
-            href=f"../../adventure/?section={context['stable_name']}",
+            href=f"../../adventure/?section={context['stable_name']}&era={context['to_tag']}",
         )
         adventure_link.string = "Explore in Adventure Game"
         adventure_div.append(adventure_link)
