@@ -50,6 +50,10 @@ class AdventureGame {
         // Quest state
         this.pendingQuest = null;  // Quest currently being offered
 
+        // Puzzle state
+        this.activePuzzle = null;  // Puzzle currently being solved
+        this.puzzleHintsUsed = 0;  // Hints used on current puzzle
+
         // Command registry (maps verb keys to handlers)
         this.commands = this.buildCommandRegistry();
 
@@ -295,6 +299,12 @@ class AdventureGame {
             'journal': () => this.cmdQuests(),
             'accept': () => this.cmdAcceptQuest(),
             'decline': () => this.cmdDeclineQuest(),
+
+            // Puzzles
+            'solve': (args) => this.cmdSolve(args),
+            'puzzle': () => this.cmdPuzzle(),
+            'answer': (args) => this.cmdAnswer(args),
+            'hint': () => this.cmdHint(),
 
             // Debug (undocumented)
             'iddqd': () => this.cmdGodMode(),
@@ -1228,11 +1238,21 @@ class AdventureGame {
         this.terminal.print(`${targetNPC.name}:`);
         this.terminal.printMarkdown(greeting);
 
-        // Show available topics
-        const topics = Object.keys(dialogue.topics || {});
-        if (topics.length > 0) {
+        // Show available topics (filtered by era restrictions)
+        const allTopics = dialogue.topics || {};
+        const availableTopics = Object.entries(allTopics)
+            .filter(([key, data]) => {
+                // If topic has era restriction, check if current era matches
+                if (typeof data === 'object' && !Array.isArray(data) && data.requiresEra) {
+                    return data.requiresEra === this.player.currentEra;
+                }
+                return true;
+            })
+            .map(([key]) => key);
+
+        if (availableTopics.length > 0) {
             this.terminal.print('');
-            this.terminal.print(`Ask about: ${topics.join(', ')}`);
+            this.terminal.print(`Ask about: ${availableTopics.join(', ')}`);
         }
 
         // Record interaction
@@ -1271,14 +1291,36 @@ class AdventureGame {
 
         for (const npc of npcsHere) {
             const topics = npc.dialogue?.topics || {};
-            for (const [topicKey, response] of Object.entries(topics)) {
+            for (const [topicKey, topicData] of Object.entries(topics)) {
                 if (topicKey.toLowerCase().includes(topic) || topic.includes(topicKey.toLowerCase())) {
+                    // Handle era-specific topic responses (like greetings)
+                    let response;
+                    if (typeof topicData === 'object' && !Array.isArray(topicData)) {
+                        // Era-specific responses: { "trunk": "...", "n4950": "...", "default": "..." }
+                        // Also supports "requiresEra" to restrict topic availability
+                        if (topicData.requiresEra && topicData.requiresEra !== this.player.currentEra) {
+                            // Topic not available in this era
+                            continue;
+                        }
+                        response = topicData[this.player.currentEra] || topicData.default || topicData.response;
+                    } else {
+                        // Simple string response
+                        response = topicData;
+                    }
+
+                    if (!response) continue;
+
                     this.terminal.print('');
                     this.terminal.print(`${npc.name}:`);
                     this.terminal.printMarkdown(response);
 
                     // Check quest progress for asking about a topic
-                    this.checkQuestProgress({ npc: npc.id, topic: topicKey });
+                    this.checkQuestProgress({
+                        section: this.player.currentLocation,
+                        era: this.player.currentEra,
+                        npc: npc.id,
+                        topic: topicKey
+                    });
                     return;
                 }
             }
@@ -1659,6 +1701,239 @@ SYSTEM
         }
     }
 
+    // ═══════════════════════════════════════════════════════════════════════
+    // Puzzle Commands
+    // ═══════════════════════════════════════════════════════════════════════
+
+    /**
+     * Get the puzzle for the current quest step (if any)
+     */
+    getCurrentPuzzle() {
+        // Check if current quest step requires a puzzle
+        for (const questId of this.player.state.activeQuests) {
+            const quest = this.quests.find(q => q.id === questId);
+            const progress = this.player.state.questProgress[questId];
+            if (!quest || !progress || !quest.steps) continue;
+
+            const step = quest.steps[progress.currentStep];
+            if (step?.target?.puzzle) {
+                const puzzle = this.puzzles.find(p => p.id === step.target.puzzle);
+                if (puzzle) {
+                    return { puzzle, quest, step };
+                } else {
+                    // Puzzle referenced but doesn't exist - error!
+                    return { error: `Puzzle "${step.target.puzzle}" not found! This is a content error.`, puzzleId: step.target.puzzle };
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Show puzzle status or start puzzle
+     */
+    cmdPuzzle() {
+        if (this.activePuzzle) {
+            // Show current puzzle state
+            this.showPuzzle(this.activePuzzle);
+            return;
+        }
+
+        const puzzleInfo = this.getCurrentPuzzle();
+        if (!puzzleInfo) {
+            this.terminal.print('No puzzle is currently available.');
+            this.terminal.print('Complete quest steps to unlock puzzles.');
+            return;
+        }
+
+        if (puzzleInfo.error) {
+            this.terminal.print(`ERROR: ${puzzleInfo.error}`);
+            return;
+        }
+
+        // Start the puzzle
+        this.activePuzzle = puzzleInfo.puzzle;
+        this.puzzleHintsUsed = 0;
+        this.showPuzzle(puzzleInfo.puzzle);
+    }
+
+    /**
+     * Start solving a puzzle
+     */
+    cmdSolve(args) {
+        // If no args, show current puzzle or available puzzle
+        if (args.length === 0) {
+            this.cmdPuzzle();
+            return;
+        }
+
+        // Could support "solve puzzle" as alias
+        const puzzleName = args.join(' ').toLowerCase();
+        if (puzzleName === 'puzzle') {
+            this.cmdPuzzle();
+            return;
+        }
+
+        this.terminal.print(`Unknown puzzle: ${puzzleName}`);
+        this.terminal.print('Use "puzzle" to see available puzzles.');
+    }
+
+    /**
+     * Display a puzzle
+     */
+    showPuzzle(puzzle) {
+        this.terminal.print('');
+        this.terminal.print(`═══ ${puzzle.type === 'quiz' ? 'Quiz' : 'Puzzle'}: ${puzzle.id} ═══`);
+        this.terminal.print(`Difficulty: ${puzzle.difficulty}`);
+        this.terminal.print('');
+        this.terminal.printMarkdown(puzzle.question);
+        this.terminal.print('');
+
+        if (puzzle.type === 'quiz') {
+            this.terminal.print('Answer with T (True) or F (False) for each question.');
+            this.terminal.print('Format: answer TFTF or answer T F T F');
+        } else if (puzzle.type === 'matching') {
+            this.terminal.print('Match items from the left to the right.');
+            // Show shuffled options for matching
+            const rights = puzzle.pairs.map(p => p[1]);
+            this.terminal.print('');
+            puzzle.pairs.forEach((pair, i) => {
+                this.terminal.print(`  ${i + 1}. ${pair[0]}`);
+            });
+            this.terminal.print('');
+            this.terminal.print('Options (in random order):');
+            const shuffled = [...rights].sort(() => Math.random() - 0.5);
+            shuffled.forEach((opt, i) => {
+                this.terminal.print(`  ${String.fromCharCode(65 + i)}. ${opt}`);
+            });
+            this.terminal.print('');
+            this.terminal.print('Answer with letters matching each number: answer 1A 2B 3C...');
+        }
+
+        this.terminal.print('');
+        this.terminal.print('Commands: answer <your answer>, hint, puzzle (redisplay)');
+    }
+
+    /**
+     * Submit an answer to the current puzzle
+     */
+    cmdAnswer(args) {
+        if (!this.activePuzzle) {
+            this.terminal.print('No puzzle is currently active.');
+            this.terminal.print('Use "puzzle" or "solve" to start a puzzle.');
+            return;
+        }
+
+        if (args.length === 0) {
+            this.terminal.print('Usage: answer <your answer>');
+            return;
+        }
+
+        const puzzle = this.activePuzzle;
+        const answer = args.join(' ').toUpperCase().replace(/\s+/g, '');
+
+        if (puzzle.type === 'quiz') {
+            // Check quiz answers (T/F format)
+            const expected = puzzle.answers.join('').toUpperCase();
+            if (answer === expected) {
+                this.puzzleSolved(puzzle);
+            } else {
+                this.terminal.print('');
+                this.terminal.print('❌ Incorrect! Try again.');
+                const correct = answer.split('').filter((c, i) => c === expected[i]).length;
+                this.terminal.print(`You got ${correct}/${expected.length} correct.`);
+                this.terminal.print('Use "hint" for help, or "puzzle" to see the questions again.');
+            }
+        } else if (puzzle.type === 'matching') {
+            // For matching, we'd need more complex handling
+            this.terminal.print('Matching puzzle answers are not yet implemented.');
+        }
+    }
+
+    /**
+     * Request a hint for the current puzzle
+     */
+    cmdHint() {
+        if (!this.activePuzzle) {
+            this.terminal.print('No puzzle is currently active.');
+            return;
+        }
+
+        const puzzle = this.activePuzzle;
+        const hints = puzzle.hints || [];
+
+        if (hints.length === 0) {
+            this.terminal.print('No hints available for this puzzle.');
+            return;
+        }
+
+        if (this.puzzleHintsUsed >= hints.length) {
+            this.terminal.print('You\'ve used all available hints!');
+            return;
+        }
+
+        const hint = hints[this.puzzleHintsUsed];
+        this.puzzleHintsUsed++;
+
+        this.terminal.print('');
+        this.terminal.print(`═══ Hint ${this.puzzleHintsUsed}/${hints.length} ═══`);
+        this.terminal.printMarkdown(hint);
+    }
+
+    /**
+     * Handle puzzle completion
+     */
+    puzzleSolved(puzzle) {
+        this.terminal.print('');
+        this.terminal.print('✓ Correct! Puzzle solved!');
+        this.terminal.print('');
+
+        // Show explanation
+        if (puzzle.explanation) {
+            this.terminal.print('═══ Explanation ═══');
+            this.terminal.printMarkdown(puzzle.explanation);
+        }
+
+        // Grant rewards
+        if (puzzle.rewards) {
+            this.terminal.print('');
+            this.terminal.print('Rewards:');
+            if (puzzle.rewards.xp) {
+                const result = this.player.gainExperience(puzzle.rewards.xp);
+                this.terminal.print(`  +${puzzle.rewards.xp} XP`);
+                if (result.leveledUp) {
+                    this.terminal.print(`  Level up! You are now level ${result.newLevel}!`);
+                }
+            }
+            if (puzzle.rewards.item) {
+                const item = this.items.find(i => i.id === puzzle.rewards.item);
+                if (item) {
+                    this.player.addItem(item.id);
+                    this.terminal.print(`  Received: ${item.name}`);
+                }
+            }
+        }
+
+        // Track solved puzzle
+        if (!this.player.state.solvedPuzzles) {
+            this.player.state.solvedPuzzles = [];
+        }
+        if (!this.player.state.solvedPuzzles.includes(puzzle.id)) {
+            this.player.state.solvedPuzzles.push(puzzle.id);
+        }
+
+        // Clear active puzzle
+        this.activePuzzle = null;
+        this.puzzleHintsUsed = 0;
+
+        // Check quest progress for solving this puzzle
+        console.log('puzzleSolved: checking progress for puzzle.id =', puzzle.id);
+        this.checkQuestProgress({ puzzle: puzzle.id });
+
+        this.player.save();
+        this.updateStatusBar();
+    }
+
     /**
      * Show the current objective for a quest
      */
@@ -1687,7 +1962,10 @@ SYSTEM
             const step = quest.steps[progress.currentStep];
             if (!step?.target) continue;
 
-            if (this.stepCompleted(step.target, action)) {
+            console.log('checkQuestProgress: step.target =', JSON.stringify(step.target), 'action =', JSON.stringify(action));
+            const completed = this.stepCompleted(step.target, action);
+            console.log('checkQuestProgress: stepCompleted returned', completed);
+            if (completed) {
                 this.advanceQuest(quest, progress);
             }
         }
@@ -1702,9 +1980,10 @@ SYSTEM
         if (target.era && action.era !== target.era) return false;
         if (target.npc && action.npc !== target.npc) return false;
         if (target.topic && !action.topic?.toLowerCase().includes(target.topic.toLowerCase())) return false;
+        if (target.puzzle && action.puzzle !== target.puzzle) return false;
 
         // At least one condition must be present and matched
-        return target.section || target.era || target.npc || target.topic;
+        return target.section || target.era || target.npc || target.topic || target.puzzle;
     }
 
     /**
@@ -1726,7 +2005,7 @@ SYSTEM
                 this.terminal.printMarkdown(completedStep.onComplete.dialogue);
             }
             if (completedStep.onComplete.xp) {
-                const result = this.player.gainXP(completedStep.onComplete.xp);
+                const result = this.player.gainExperience(completedStep.onComplete.xp);
                 this.terminal.print(`  +${completedStep.onComplete.xp} XP`);
                 if (result.leveledUp) {
                     this.terminal.print(`  Level up! You are now level ${result.newLevel}!`);
@@ -1764,7 +2043,7 @@ SYSTEM
 
         if (quest.rewards) {
             if (quest.rewards.experience) {
-                const result = this.player.gainXP(quest.rewards.experience);
+                const result = this.player.gainExperience(quest.rewards.experience);
                 this.terminal.print(`  +${quest.rewards.experience} XP`);
                 if (result.leveledUp) {
                     this.terminal.print(`  Level up! You are now level ${result.newLevel}!`);

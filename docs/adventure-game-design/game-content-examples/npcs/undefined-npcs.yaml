@@ -273,38 +273,40 @@ npcs:
           The optimizer reasons: "This can't happen, so I'll optimize as if it doesn't."
           Your conditional? Removed. Your safety check? Gone.
 
-        erroneous_values: |
-          *Only meaningful in trunk era*
-          C++26 introduces erroneous values. When you read an uninitialized
-          `unsigned char` or `std::byte`, you get an erroneous value, not undefined behavior.
+        erroneous_values:
+          requiresEra: trunk
+          response: |
+            C++26 introduces erroneous values. When you read an uninitialized
+            `unsigned char` or `std::byte`, you get an erroneous value, not undefined behavior.
 
-          The behavior is **defined** - you get some value - but it's still **wrong**.
-          The implementation is encouraged to diagnose. Tools like sanitizers can help.
+            The behavior is **defined** - you get some value - but it's still **wrong**.
+            The implementation is encouraged to diagnose. Tools like sanitizers can help.
 
-          ```cpp
-          unsigned char c;    // Uninitialized
-          unsigned char d = c; // C++26: Erroneous behavior, not UB!
-                               // You get SOME value, implementation may warn
-          ```
+            ```cpp
+            unsigned char c;    // Uninitialized
+            unsigned char d = c; // C++26: Erroneous behavior, not UB!
+                                 // You get SOME value, implementation may warn
+            ```
 
-          This is the future: shrinking the undefined, one byte at a time.
+            This is the future: shrinking the undefined, one byte at a time.
 
-        why_change: |
-          *Only meaningful in trunk era*
-          Why did the committee add erroneous behavior?
+        why_change:
+          requiresEra: trunk
+          response: |
+            Why did the committee add erroneous behavior?
 
-          Undefined behavior is a nuclear option. The compiler can do **anything**.
-          But sometimes we want to say "this is wrong, but we know what happens."
+            Undefined behavior is a nuclear option. The compiler can do **anything**.
+            But sometimes we want to say "this is wrong, but we know what happens."
 
-          Erroneous behavior provides that middle ground:
-          - The behavior is **defined** (some value is produced)
-          - The behavior is **wrong** (the value is meaningless)
-          - The implementation **may** diagnose (enabling better tooling)
+            Erroneous behavior provides that middle ground:
+            - The behavior is **defined** (some value is produced)
+            - The behavior is **wrong** (the value is meaningless)
+            - The implementation **may** diagnose (enabling better tooling)
 
-          This enables sanitizers to catch bugs without breaking valid optimizations.
-          It enables clearer diagnostics. It enables safer defaults.
+            This enables sanitizers to catch bugs without breaking valid optimizations.
+            It enables clearer diagnostics. It enables safer defaults.
 
-          The Undefined Realm shrinks. The defined world grows.
+            The Undefined Realm shrinks. The defined world grows.
 
         lifetime: |
           I am also found in [[basic.life]], where object lifetimes are defined.

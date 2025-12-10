@@ -59,8 +59,12 @@ class AdventureParser {
             .as({ key: 'warp', type: 'verb', category: 'navigation' });
 
         this.lexicon
-            .register('look', 'l', 'examine', 'x', 'view')
+            .register('look', 'l', 'view')
             .as({ key: 'look', type: 'verb', category: 'observation' });
+
+        this.lexicon
+            .register('examine', 'x', 'inspect')
+            .as({ key: 'examine', type: 'verb', category: 'observation' });
 
         this.lexicon
             .register('search', 'find', 'locate')
