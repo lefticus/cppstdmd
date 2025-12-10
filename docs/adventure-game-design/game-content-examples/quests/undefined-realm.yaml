@@ -106,11 +106,11 @@ steps:
       xp: 100
 
   # Step 7: Final mastery quiz
+  # Note: puzzle targets should not include npc since puzzles are solved independently
   - instruction: |
       Return to [[intro.abstract]] and complete the Oracle's final examination.
     target:
       section: intro.abstract
-      npc: asif_oracle
       puzzle: undefined_mastery_quiz
     onComplete:
       dialogue: |

@@ -1,0 +1,221 @@
+# Beginner Quests - Standard Guardian Quest Line
+# Three quests to help new players learn the game mechanics
+
+quests:
+  # Quest 1: Tutorial - Basic Navigation
+  - id: welcome_to_the_standard
+    title: Welcome to the Standard
+    description: |
+      Learn the basics of navigating the C++ Standard.
+      The Standard Guardian will guide you through your first steps.
+    type: learning
+    difficulty: easy
+    minLevel: 1
+    giver: standard_guardian
+    giverLocation: intro
+
+    steps:
+      - instruction: |
+          Use 'look' to read about your current location.
+        target:
+          section: intro
+          read: true
+        onComplete:
+          dialogue: |
+            Excellent! The 'look' command reveals the content of each section.
+            This is how you'll learn about C++ - by reading the Standard itself!
+          xp: 25
+
+      - instruction: |
+          Visit the Scope section using 'goto intro.scope'.
+        target:
+          section: intro.scope
+        onComplete:
+          dialogue: |
+            Well done! You've learned to navigate. The Standard has thousands
+            of sections - but don't worry, you'll learn the important ones naturally.
+          xp: 25
+
+      - instruction: |
+          Find The Standard Guardian and ask about 'navigation' to learn more commands.
+        target:
+          npc: standard_guardian
+          topic: navigation
+        onComplete:
+          dialogue: |
+            You're a quick learner! You now know the basics.
+            When you're ready for more, accept my next quest to explore
+            The Foundations - where the core rules of C++ are inscribed.
+          xp: 50
+          item: travelers_compass
+
+    rewards:
+      experience: 100
+      statBoost:
+        fundamentals: 1
+
+  # Quest 2: Explore the Foundations
+  - id: explore_the_foundations
+    title: Explore the Foundations
+    description: |
+      Journey to The Foundations (basic realm) where the fundamental
+      rules of C++ are inscribed in ancient stone. Learn about
+      declarations, types, and the building blocks of every program.
+    type: exploration
+    difficulty: easy
+    minLevel: 2
+    giver: standard_guardian
+    giverLocation: intro
+    prerequisites:
+      - welcome_to_the_standard
+
+    steps:
+      - instruction: |
+          Travel to The Foundations. Use 'goto basic' to enter the realm.
+        target:
+          section: basic
+        onComplete:
+          dialogue: |
+            You've entered The Foundations - ancient ruins inscribed with
+            the fundamental laws of C++. Every program must obey these rules.
+          xp: 30
+
+      - instruction: |
+          Visit the declarations section at [[basic.def]].
+          This is where names are introduced to the compiler.
+        target:
+          section: basic.def
+        onComplete:
+          dialogue: |
+            Declarations and definitions - the foundation of all C++ code.
+            A declaration introduces a name; a definition provides its meaning.
+          xp: 40
+
+      - instruction: |
+          Explore object lifetimes at [[basic.life]].
+          Understanding when objects are created and destroyed is crucial.
+        target:
+          section: basic.life
+        onComplete:
+          dialogue: |
+            Object lifetime is one of C++'s most important concepts.
+            Constructors, destructors, RAII - it all starts here.
+          xp: 40
+
+      - instruction: |
+          Visit the types section at [[basic.types]].
+          C++ is a strongly-typed language - types are everything!
+        target:
+          section: basic.types
+        onComplete:
+          dialogue: |
+            Types define what operations are valid on your data.
+            Mastering types is key to mastering C++!
+
+            Now, let me test what you've learned. Use 'solve' to take a quick quiz.
+          xp: 50
+
+      - instruction: |
+          Complete the Foundations Quiz to prove your understanding.
+          Use 'solve' to start the quiz.
+        target:
+          section: basic.types
+          puzzle: foundations_quiz
+        onComplete:
+          dialogue: |
+            Well done! You've demonstrated understanding of C++ fundamentals.
+            Take this stone as proof of your knowledge.
+          xp: 25
+          item: foundations_stone
+
+    rewards:
+      experience: 200
+      items:
+        - foundations_stone
+      statBoost:
+        fundamentals: 3
+
+  # Quest 3: Meet the Guardians
+  - id: meet_the_guardians
+    title: Meet the Guardians
+    description: |
+      The Standard is watched over by many guardians, each an expert
+      in their domain. Seek them out and learn from their wisdom.
+    type: exploration
+    difficulty: easy
+    minLevel: 3
+    giver: standard_guardian
+    giverLocation: intro
+    prerequisites:
+      - explore_the_foundations
+
+    steps:
+      - instruction: |
+          Visit [[class.ctor]] and speak with the RAII Guardian.
+          Use 'talk to guardian' when you arrive.
+        target:
+          section: class.ctor
+          npc: raii_guardian
+        onComplete:
+          dialogue: |
+            The RAII Guardian protects these halls. RAII - Resource Acquisition
+            Is Initialization - is one of C++'s most powerful idioms.
+          xp: 40
+
+      - instruction: |
+          Ask the RAII Guardian about 'smart_pointers'.
+        target:
+          npc: raii_guardian
+          topic: smart_pointers
+        onComplete:
+          dialogue: |
+            Smart pointers are your allies against memory leaks!
+            unique_ptr, shared_ptr, weak_ptr - learn them well.
+
+            Now prove you understand! Use 'solve' to take a quick quiz.
+          xp: 50
+
+      - instruction: |
+          Complete the RAII Basics Quiz.
+          Use 'solve' to start the quiz.
+        target:
+          section: class.ctor
+          puzzle: raii_basics_quiz
+        onComplete:
+          dialogue: |
+            Excellent! You understand the basics of RAII and smart pointers.
+            Now seek out the Template Sage to learn another form of power.
+          xp: 30
+
+      - instruction: |
+          Travel to [[temp.arg]] and meet the Template Sage.
+        target:
+          section: temp.arg
+          npc: template_sage
+        onComplete:
+          dialogue: |
+            The Template Sage dwells in the frozen Template Tundra.
+            Templates are C++'s most powerful abstraction mechanism.
+          xp: 40
+
+      - instruction: |
+          Ask the Template Sage about 'templates'.
+        target:
+          npc: template_sage
+          topic: templates
+        onComplete:
+          dialogue: |
+            You've met two of the realm's guardians and learned their wisdom.
+            As you grow stronger, seek out more guardians - each has
+            unique knowledge to share.
+          xp: 70
+          item: guardian_token
+
+    rewards:
+      experience: 300
+      items:
+        - guardian_token
+      title: Apprentice Explorer
+      statBoost:
+        fundamentals: 2
+        metaprogramming: 1

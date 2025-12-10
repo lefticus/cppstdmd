@@ -330,6 +330,10 @@ class AdventureGame {
         // Special handling for direction shortcuts when used as standalone commands
         if (['north', 'south', 'east', 'west'].includes(verb) && args.length === 0) {
             await this.cmdGo([verb]);
+        } else if (verb === 'ask') {
+            // Pass raw input to cmdAsk so it can extract the topic correctly
+            // (ISHML may transform topic names like "navigation" to section keys)
+            await this.cmdAsk(args, input);
         } else if (this.commands[verb]) {
             await this.commands[verb](args);
         } else {
@@ -479,8 +483,24 @@ class AdventureGame {
         const npcsHere = this.getNPCsAtLocation(section.stableName);
         if (npcsHere.length > 0) {
             this.terminal.print('');
-            const npcNames = npcsHere.map(n => n.name).join(', ');
-            this.terminal.print(`You see: ${npcNames}`);
+            for (const npc of npcsHere) {
+                // Check if NPC has available quests
+                let hasQuest = false;
+                if (npc.quests && npc.quests.length > 0) {
+                    for (const questId of npc.quests) {
+                        const quest = this.quests.find(q => q.id === questId);
+                        if (quest && this.canOfferQuest(quest)) {
+                            hasQuest = true;
+                            break;
+                        }
+                    }
+                }
+                if (hasQuest) {
+                    this.terminal.print(`You see: ${npc.name} (has a quest for you!)`);
+                } else {
+                    this.terminal.print(`You see: ${npc.name}`);
+                }
+            }
         }
 
         // Items here
@@ -691,6 +711,11 @@ class AdventureGame {
 
     cmdLook() {
         this.showLocation();
+        // Check quest progress for reading the current location
+        this.checkQuestProgress({
+            section: this.player.currentLocation,
+            read: true
+        });
     }
 
     cmdGo(args) {
@@ -1149,8 +1174,24 @@ class AdventureGame {
         const npcsHere = this.getNPCsAtLocation(section.stableName);
         if (npcsHere.length > 0) {
             this.terminal.print('');
-            const npcNames = npcsHere.map(n => n.name).join(', ');
-            this.terminal.print(`You see: ${npcNames}`);
+            for (const npc of npcsHere) {
+                // Check if NPC has available quests
+                let hasQuest = false;
+                if (npc.quests && npc.quests.length > 0) {
+                    for (const questId of npc.quests) {
+                        const quest = this.quests.find(q => q.id === questId);
+                        if (quest && this.canOfferQuest(quest)) {
+                            hasQuest = true;
+                            break;
+                        }
+                    }
+                }
+                if (hasQuest) {
+                    this.terminal.print(`You see: ${npc.name} (has a quest for you!)`);
+                } else {
+                    this.terminal.print(`You see: ${npc.name}`);
+                }
+            }
         }
 
         const itemsHere = this.getItemsAtLocation(section.stableName);
@@ -1270,22 +1311,35 @@ class AdventureGame {
         }
     }
 
-    cmdAsk(args) {
-        // Parser may strip "about" as a filler word, so handle both cases
+    cmdAsk(args, rawInput) {
+        // For "ask about <topic>", we need the raw topic text, not the
+        // ISHML-transformed args (which may convert "navigation" to a section key)
         let topic;
-        if (args.length === 0) {
-            this.terminal.print('Usage: ask about <topic>');
-            return;
-        } else if (args[0].toLowerCase() === 'about') {
-            // "ask about <topic>" - skip "about"
-            if (args.length < 2) {
+
+        if (rawInput) {
+            // Extract topic from raw input: "ask about <topic>" or "ask <topic>"
+            const match = rawInput.toLowerCase().match(/^ask\s+(?:about\s+)?(.+)$/);
+            if (match) {
+                topic = match[1].trim();
+            }
+        }
+
+        // Fallback to args if raw input parsing failed
+        if (!topic) {
+            if (args.length === 0) {
                 this.terminal.print('Usage: ask about <topic>');
                 return;
+            } else if (args[0].toLowerCase() === 'about') {
+                // "ask about <topic>" - skip "about"
+                if (args.length < 2) {
+                    this.terminal.print('Usage: ask about <topic>');
+                    return;
+                }
+                topic = args.slice(1).join(' ').toLowerCase();
+            } else {
+                // Parser already stripped "about", args is just the topic
+                topic = args.join(' ').toLowerCase();
             }
-            topic = args.slice(1).join(' ').toLowerCase();
-        } else {
-            // Parser already stripped "about", args is just the topic
-            topic = args.join(' ').toLowerCase();
         }
         const npcsHere = this.getNPCsAtLocation(this.player.currentLocation);
 
@@ -1473,6 +1527,12 @@ QUESTS
   quests             - View active and completed quests
   accept             - Accept an offered quest
   decline            - Decline an offered quest
+
+PUZZLES (in quests)
+  solve              - Start solving a puzzle
+  puzzle             - Show current puzzle
+  answer <response>  - Submit your answer
+  hint               - Get a hint for the puzzle
 
 ITEMS
   inventory (i)      - View your items
@@ -1927,8 +1987,13 @@ SYSTEM
         this.puzzleHintsUsed = 0;
 
         // Check quest progress for solving this puzzle
+        // Include section and era context so quest steps with multiple conditions can match
         console.log('puzzleSolved: checking progress for puzzle.id =', puzzle.id);
-        this.checkQuestProgress({ puzzle: puzzle.id });
+        this.checkQuestProgress({
+            puzzle: puzzle.id,
+            section: this.player.currentLocation,
+            era: this.player.currentEra
+        });
 
         this.player.save();
         this.updateStatusBar();
@@ -1981,9 +2046,10 @@ SYSTEM
         if (target.npc && action.npc !== target.npc) return false;
         if (target.topic && !action.topic?.toLowerCase().includes(target.topic.toLowerCase())) return false;
         if (target.puzzle && action.puzzle !== target.puzzle) return false;
+        if (target.read && !action.read) return false;
 
         // At least one condition must be present and matched
-        return target.section || target.era || target.npc || target.topic || target.puzzle;
+        return target.section || target.era || target.npc || target.topic || target.puzzle || target.read;
     }
 
     /**
@@ -1994,9 +2060,15 @@ SYSTEM
         progress.completed.push(progress.currentStep);
         progress.currentStep++;
 
+        const isQuestComplete = progress.currentStep >= quest.steps.length;
+
         this.terminal.print('');
         this.terminal.printSeparator('─');
-        this.terminal.print(`✓ Quest step completed!`);
+        if (isQuestComplete) {
+            this.terminal.print(`✓ Quest complete!`);
+        } else {
+            this.terminal.print(`✓ Quest step completed!`);
+        }
 
         // Show step completion rewards
         if (completedStep.onComplete) {
@@ -2021,7 +2093,7 @@ SYSTEM
         }
 
         // Check if quest is complete
-        if (progress.currentStep >= quest.steps.length) {
+        if (isQuestComplete) {
             this.completeQuest(quest);
         } else {
             this.showCurrentObjective(quest);

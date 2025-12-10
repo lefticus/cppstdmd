@@ -1,0 +1,79 @@
+# The Standard Guardian - Intro Guide NPC
+# A welcoming figure who helps newcomers learn the game mechanics
+
+npcs:
+  - id: standard_guardian
+    name: The Standard Guardian
+    type: concept_personification
+    appearance: |
+      A wise figure in flowing robes marked with section numbers and
+      cross-references. They carry a glowing tome that seems to contain
+      the entire C++ Standard, pages turning on their own to relevant passages.
+    locations:
+      - intro
+      - intro.scope
+      - intro.refs
+      - intro.defs
+    dialogue:
+      greeting:
+        default: |
+          Welcome, traveler, to the C++ Standard!
+
+          I am the Standard Guardian, keeper of knowledge and guide to newcomers.
+          This vast realm contains everything from basic fundamentals to the
+          most advanced template metaprogramming.
+
+          If you're just beginning, I have some tasks that will help you
+          learn your way around. Type 'accept' to begin your journey!
+      topics:
+        help: |
+          Here are the basic commands:
+          - **go** north/south/east/west - Move between sections
+          - **look** - See the current section's content
+          - **map** - View your location in the realm
+          - **goto** section.name - Warp directly to a section
+          - **timeshift** era - Travel to different C++ versions
+          - **talk to** npc - Speak with characters you meet
+          - **ask about** topic - Learn more from NPCs
+          - **quest** - Check your quest progress
+          - **stats** - View your character stats
+        navigation: |
+          The Standard is organized into **realms**, each covering a major topic:
+
+          - **The Grand Entrance** (intro) - Where you are now
+          - **The Foundations** (basic) - Core language rules
+          - **Lexicon Tower** (lex) - Tokens and lexical elements
+          - **Expression Fields** (expr) - Operators and expressions
+          - **Class Citadel** (class) - Classes and objects
+          - **The Standard Library** (library) - Containers, algorithms, and more
+
+          Use 'goto realm.section' to travel, or explore naturally with 'go'.
+        realms: |
+          Each realm has its own theme and guardians:
+
+          - **intro** - The welcoming entrance hall
+          - **basic** - Ancient ruins of fundamental rules
+          - **lex** - A scholarly tower of tokens
+          - **expr** - Testing grounds for expressions
+          - **class** - A medieval citadel of OOP
+          - **temp** - Frozen tundra of templates
+          - **library** - The grand Standard Library halls
+
+          Start with 'basic' to learn the fundamentals!
+        timetravel: |
+          The Standard evolves! You can visit different eras:
+
+          - **n3337** - C++11 (where modern C++ began)
+          - **n4140** - C++14 (refinements)
+          - **n4659** - C++17 (major additions)
+          - **n4861** - C++20 (concepts, ranges, coroutines)
+          - **n4950** - C++23 (more refinements)
+          - **trunk** - C++26 (the bleeding edge!)
+
+          Use 'timeshift C++11' or 'timeshift n3337' to travel through time.
+          Some content and NPCs change between eras!
+    quests:
+      - welcome_to_the_standard
+      - explore_the_foundations
+      - meet_the_guardians
+    trades: []

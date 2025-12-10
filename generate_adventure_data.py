@@ -538,8 +538,12 @@ def load_yaml_content(game_content_dir: Path) -> dict[str, Any]:
         for yaml_file in quests_dir.rglob("*.yaml"):
             try:
                 data = yaml.safe_load(yaml_file.read_text())
-                if data and "id" in data:
-                    content["quests"].append(data)
+                if data:
+                    # Handle both formats: {id: ..., ...} and {quests: [...]}
+                    if "quests" in data:
+                        content["quests"].extend(data["quests"])
+                    elif "id" in data:
+                        content["quests"].append(data)
             except Exception as e:
                 print(f"Warning: Failed to load {yaml_file}: {e}")
 
@@ -560,8 +564,12 @@ def load_yaml_content(game_content_dir: Path) -> dict[str, Any]:
         for yaml_file in puzzles_dir.rglob("*.yaml"):
             try:
                 data = yaml.safe_load(yaml_file.read_text())
-                if data and "id" in data:
-                    content["puzzles"].append(data)
+                if data:
+                    # Handle both formats: {id: ..., ...} and {puzzles: [...]}
+                    if "puzzles" in data:
+                        content["puzzles"].extend(data["puzzles"])
+                    elif "id" in data:
+                        content["puzzles"].append(data)
             except Exception as e:
                 print(f"Warning: Failed to load {yaml_file}: {e}")
 

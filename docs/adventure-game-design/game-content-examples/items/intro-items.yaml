@@ -1,0 +1,49 @@
+# Intro Quest Reward Items
+# Items awarded for completing the Standard Guardian's beginner quests
+
+items:
+  - id: travelers_compass
+    name: Traveler's Compass
+    category: tool
+    rarity: common
+    description: |
+      A compass that always points toward unexplored sections of the Standard.
+    lore: |
+      "Every journey through the Standard begins with a single step.
+      This compass will guide you to places you haven't yet visited."
+    sourceQuest: welcome_to_the_standard
+    effects:
+      statBoost:
+        fundamentals: 1
+
+  - id: foundations_stone
+    name: Stone of Foundations
+    category: pattern_crystal
+    rarity: common
+    description: |
+      A weathered stone inscribed with fundamental C++ rules.
+    lore: |
+      "Chipped from the ancient ruins of The Foundations,
+      this stone carries the weight of C++'s most basic laws.
+      Hold it to remember: every complex program rests on simple truths."
+    sourceSection: basic.types
+    sourceQuest: explore_the_foundations
+    effects:
+      statBoost:
+        fundamentals: 2
+
+  - id: guardian_token
+    name: Guardian's Token
+    category: certificate
+    rarity: uncommon
+    description: |
+      A token bearing the seal of the Standard's guardians.
+    lore: |
+      "Awarded to those who seek knowledge from the guardians.
+      This token marks you as a student of the Standard,
+      recognized by its protectors."
+    sourceQuest: meet_the_guardians
+    effects:
+      statBoost:
+        fundamentals: 1
+        library: 1

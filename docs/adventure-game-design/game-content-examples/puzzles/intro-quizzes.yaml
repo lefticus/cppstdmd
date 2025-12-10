@@ -1,0 +1,71 @@
+# Intro Quest Quizzes
+# Simple quizzes for the beginner quest line
+
+puzzles:
+  # Quiz for Quest 2: Explore the Foundations
+  - id: foundations_quiz
+    type: quiz
+    location: basic.types
+    difficulty: easy
+    minLevel: 1
+
+    question: |
+      Quick check on C++ fundamentals (True or False):
+
+      1. A declaration introduces a name to the compiler
+      2. Every definition is also a declaration
+      3. An object's lifetime begins when its constructor completes
+
+    answers: [T, T, T]
+
+    explanation: |
+      1. TRUE - A declaration introduces a name and its type to the compiler,
+         allowing it to be used in later code.
+
+      2. TRUE - Every definition is also a declaration! But not every declaration
+         is a definition (e.g., `extern int x;` declares but doesn't define).
+
+      3. TRUE - An object's lifetime begins when its constructor completes
+         successfully. Before that, the object is being initialized but
+         doesn't yet have a lifetime.
+
+    hints:
+      - "Think about what 'extern' does - is it a declaration or definition?"
+      - "Consider when you can actually use an object safely"
+
+    rewards:
+      xp: 30
+
+  # Quiz for Quest 3: Meet the Guardians
+  - id: raii_basics_quiz
+    type: quiz
+    location: class.ctor
+    difficulty: easy
+    minLevel: 2
+
+    question: |
+      Test your understanding of RAII and smart pointers (True or False):
+
+      1. RAII stands for "Resource Acquisition Is Initialization"
+      2. A unique_ptr can be copied to share ownership
+      3. When a unique_ptr goes out of scope, it automatically deletes its resource
+
+    answers: [T, F, T]
+
+    explanation: |
+      1. TRUE - RAII means acquiring resources in constructors and releasing
+         them in destructors. The destructor always runs when scope ends!
+
+      2. FALSE - unique_ptr cannot be copied (it has deleted copy operations).
+         That's what makes it "unique"! Use std::move to transfer ownership,
+         or use shared_ptr if you need shared ownership.
+
+      3. TRUE - That's the whole point of unique_ptr! When it goes out of scope,
+         its destructor runs and deletes the managed resource. No manual delete needed.
+
+    hints:
+      - "The 'unique' in unique_ptr is a big hint about copying..."
+      - "RAII ties resource lifetime to object lifetime"
+
+    rewards:
+      xp: 40
