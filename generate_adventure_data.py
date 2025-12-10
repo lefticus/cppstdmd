@@ -29,6 +29,7 @@ import yaml
 sys.path.insert(0, str(Path(__file__).parent / "src"))
 
 from cpp_std_converter.utils import iter_section_headings
+from cpp_std_converter.library_indexer import LibraryIndexer
 
 
 def get_cppstdmd_sha() -> dict[str, str]:
@@ -870,6 +871,21 @@ def generate_adventure_data(
         json.dump(yaml_content["puzzles"], f, indent=2)
     print(f"  Generated puzzles.json ({len(yaml_content['puzzles'])} puzzles)")
 
+    # Generate library entity index from LaTeX source
+    # Try versioned worktree first (for primary version), fall back to main source
+    latex_source_dir = base_dir / "cplusplus-draft" / "worktrees" / primary_version / "source"
+    if not latex_source_dir.exists():
+        latex_source_dir = base_dir / "cplusplus-draft" / "source"
+
+    if latex_source_dir.exists():
+        indexer = LibraryIndexer()
+        library_index = indexer.build_index(latex_source_dir)
+        with open(game_data_dir / "library-index.json", "w") as f:
+            json.dump(library_index, f)
+        print(f"  Generated library-index.json ({len(library_index)} entities)")
+    else:
+        print("  Warning: LaTeX source not found, library index not generated")
+
     # Copy source files (HTML, JS, CSS) from adventure-src to output
     adventure_src_dir = base_dir / "adventure-src"
     if adventure_src_dir.exists():
@@ -943,6 +959,11 @@ def should_regenerate(output_dir: Path, input_dirs: list[Path], force: bool = Fa
             if css_file.stat().st_mtime > output_mtime:
                 return True
 
+        # Check LaTeX files (cplusplus-draft source for library index)
+        for tex_file in input_dir.rglob("*.tex"):
+            if tex_file.stat().st_mtime > output_mtime:
+                return True
+
     return False
 
 
@@ -997,6 +1018,13 @@ def main():
     adventure_src_dir = base_dir / "adventure-src"
     if adventure_src_dir.exists():
         input_dirs.append(adventure_src_dir)
+
+    # Add LaTeX source directory (for library index extraction)
+    latex_source_dir = base_dir / "cplusplus-draft" / "worktrees" / args.primary / "source"
+    if not latex_source_dir.exists():
+        latex_source_dir = base_dir / "cplusplus-draft" / "source"
+    if latex_source_dir.exists():
+        input_dirs.append(latex_source_dir)
 
     # Check if regeneration is needed
     output_path = Path(args.output)

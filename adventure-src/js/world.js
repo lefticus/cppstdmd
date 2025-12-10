@@ -15,6 +15,7 @@ class World {
         this.realms = {};
         this.eras = {};
         this.stableNameAliases = {};  // Maps stable names to their aliases
+        this.libraryIndex = {};       // Maps library entities to sections
         this.loaded = false;
     }
 
@@ -43,10 +44,58 @@ class World {
             this.stableNameAliases = this.worldMap.stableNameAliases || {};
             this.cppstdmdSha = this.worldMap.cppstdmdSha || '';
             this.loaded = true;
+
+            // Load library index (non-blocking)
+            this.loadLibraryIndex();
         } catch (error) {
             console.error('Failed to load world map:', error);
             throw error;
         }
+    }
+
+    /**
+     * Load library entity index for search functionality
+     * @returns {Promise<void>}
+     */
+    async loadLibraryIndex() {
+        try {
+            const response = await fetch('/data/game/library-index.json');
+            if (response.ok) {
+                this.libraryIndex = await response.json();
+            }
+        } catch (error) {
+            console.warn('Library index not available:', error.message);
+            // Not fatal - search will just not include library entities
+        }
+    }
+
+    /**
+     * Search for a library entity
+     * @param {string} term - Search term (e.g., "endl", "std::endl", "vector")
+     * @returns {string[]} Array of section stable names where the entity is defined
+     */
+    searchLibraryEntity(term) {
+        if (!this.libraryIndex || Object.keys(this.libraryIndex).length === 0) {
+            return [];
+        }
+
+        // Normalize: remove std:: prefix for lookup
+        const normalized = term.replace(/^std::/, '');
+
+        // Try exact match first (with and without std:: prefix)
+        if (this.libraryIndex[normalized]) {
+            return this.libraryIndex[normalized];
+        }
+        if (this.libraryIndex[term]) {
+            return this.libraryIndex[term];
+        }
+
+        // Try with angle brackets for headers (e.g., "iostream" -> "<iostream>")
+        if (this.libraryIndex[`<${normalized}>`]) {
+            return this.libraryIndex[`<${normalized}>`];
+        }
+
+        return [];
     }
 
     /**

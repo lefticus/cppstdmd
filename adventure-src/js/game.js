@@ -902,37 +902,67 @@ class AdventureGame {
             return;
         }
 
-        const term = args.join(' ').toLowerCase();
+        const term = args.join(' ');
+        const termLower = term.toLowerCase();
         const allSections = Object.keys(this.world.sections);
 
         // Search in stable names and titles
-        const matches = allSections.filter(s => {
+        const sectionMatches = allSections.filter(s => {
             const section = this.world.sections[s];
-            return s.toLowerCase().includes(term) ||
-                   section.title?.toLowerCase().includes(term) ||
-                   section.displayName?.toLowerCase().includes(term);
+            return s.toLowerCase().includes(termLower) ||
+                   section.title?.toLowerCase().includes(termLower) ||
+                   section.displayName?.toLowerCase().includes(termLower);
         });
 
         // Filter by current era
-        const available = matches.filter(m =>
+        const availableSections = sectionMatches.filter(m =>
             this.world.isAvailableInEra(m, this.player.currentEra)
         );
 
-        if (available.length === 0) {
-            this.terminal.print(`No sections found matching "${term}" in ${this.world.getEraName(this.player.currentEra)}.`);
-            return;
+        // Search library entities
+        const entitySections = this.world.searchLibraryEntity(term);
+        // Filter library results by current era
+        const availableEntitySections = entitySections.filter(m =>
+            this.world.isAvailableInEra(m, this.player.currentEra)
+        );
+
+        // Display section matches
+        if (availableSections.length > 0) {
+            this.terminal.print(`Found ${availableSections.length} sections matching "${term}":`);
+            this.terminal.print('');
+
+            availableSections.slice(0, 15).forEach(m => {
+                const s = this.world.getSection(m);
+                this.terminal.print(`  [[${m}]] - ${s?.title || s?.displayName || ''}`);
+            });
+
+            if (availableSections.length > 15) {
+                this.terminal.print(`  ... and ${availableSections.length - 15} more`);
+            }
         }
 
-        this.terminal.print(`Found ${available.length} sections matching "${term}":`);
-        this.terminal.print('');
+        // Display library entity matches
+        if (availableEntitySections.length > 0) {
+            if (availableSections.length > 0) {
+                this.terminal.print('');
+            }
+            this.terminal.print(`Library entity "${term}" found in:`);
+            this.terminal.print('');
 
-        available.slice(0, 20).forEach(m => {
-            const s = this.world.getSection(m);
-            this.terminal.print(`  [[${m}]] - ${s?.title || s?.displayName || ''}`);
-        });
+            availableEntitySections.slice(0, 15).forEach(m => {
+                const s = this.world.getSection(m);
+                this.terminal.print(`  [[${m}]] - ${s?.title || s?.displayName || ''}`);
+            });
 
-        if (available.length > 20) {
-            this.terminal.print(`  ... and ${available.length - 20} more`);
+            if (availableEntitySections.length > 15) {
+                this.terminal.print(`  ... and ${availableEntitySections.length - 15} more`);
+            }
+        }
+
+        // No results at all
+        if (availableSections.length === 0 && availableEntitySections.length === 0) {
+            this.terminal.print(`No results found for "${term}" in ${this.world.getEraName(this.player.currentEra)}.`);
+            return;
         }
 
         this.terminal.print('');
