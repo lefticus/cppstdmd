@@ -762,13 +762,10 @@ class AdventureGame {
                 this.terminal.print('There is nothing to enter here.');
             } else {
                 this.terminal.print('Enter what? Available:');
-                children.slice(0, 10).forEach(c => {
+                children.forEach(c => {
                     const childSection = this.world.getSection(c);
                     this.terminal.print(`  - ${childSection?.displayName || c}`);
                 });
-                if (children.length > 10) {
-                    this.terminal.print(`  ... and ${children.length - 10} more`);
-                }
             }
             return;
         }
@@ -873,13 +870,10 @@ class AdventureGame {
 
             // Multiple matches - show list
             this.terminal.print(`Multiple matches for "${target}":`);
-            matches.slice(0, 10).forEach(m => {
+            matches.forEach(m => {
                 const s = this.world.getSection(m);
                 this.terminal.print(`  ${m} - ${s?.title || ''}`);
             });
-            if (matches.length > 10) {
-                this.terminal.print(`  ... and ${matches.length - 10} more`);
-            }
             return;
         }
 
@@ -931,14 +925,10 @@ class AdventureGame {
             this.terminal.print(`Found ${availableSections.length} sections matching "${term}":`);
             this.terminal.print('');
 
-            availableSections.slice(0, 15).forEach(m => {
+            availableSections.forEach(m => {
                 const s = this.world.getSection(m);
                 this.terminal.print(`  [[${m}]] - ${s?.title || s?.displayName || ''}`);
             });
-
-            if (availableSections.length > 15) {
-                this.terminal.print(`  ... and ${availableSections.length - 15} more`);
-            }
         }
 
         // Display library entity matches
@@ -949,14 +939,10 @@ class AdventureGame {
             this.terminal.print(`Library entity "${term}" found in:`);
             this.terminal.print('');
 
-            availableEntitySections.slice(0, 15).forEach(m => {
+            availableEntitySections.forEach(m => {
                 const s = this.world.getSection(m);
                 this.terminal.print(`  [[${m}]] - ${s?.title || s?.displayName || ''}`);
             });
-
-            if (availableEntitySections.length > 15) {
-                this.terminal.print(`  ... and ${availableEntitySections.length - 15} more`);
-            }
         }
 
         // No results at all
@@ -986,8 +972,7 @@ class AdventureGame {
 
         // Show top-level sections in this realm
         const sections = realm.sections
-            .filter(s => this.world.isAvailableInEra(s, this.player.currentEra))
-            .slice(0, 15);
+            .filter(s => this.world.isAvailableInEra(s, this.player.currentEra));
 
         sections.forEach(s => {
             const section = this.world.getSection(s);
@@ -995,10 +980,6 @@ class AdventureGame {
             const current = s === this.player.currentLocation ? '→' : ' ';
             this.terminal.print(`${current}[${visited}] ${section?.displayName || s}`);
         });
-
-        if (realm.sections.length > 15) {
-            this.terminal.print(`... and ${realm.sections.length - 15} more areas`);
-        }
     }
 
     cmdWhere() {
@@ -1398,6 +1379,22 @@ class AdventureGame {
                     this.terminal.print(`${npc.name}:`);
                     this.terminal.printMarkdown(response);
 
+                    // Grant XP reward if topic has one (first time only)
+                    if (typeof topicData === 'object' && topicData.xpReward) {
+                        const isFirstTime = this.player.learnTopic(npc.id, topicKey);
+                        if (isFirstTime) {
+                            const result = this.player.gainExperience(topicData.xpReward);
+                            this.terminal.print('');
+                            this.terminal.print(`+${topicData.xpReward} XP`);
+                            if (result.leveledUp) {
+                                this.terminal.print(`Level up! You are now level ${result.newLevel}!`);
+                                if (result.newTitle) {
+                                    this.terminal.print(`New title: ${result.newTitle}`);
+                                }
+                            }
+                        }
+                    }
+
                     // Check quest progress for asking about a topic
                     this.checkQuestProgress({
                         section: this.player.currentLocation,
@@ -1779,14 +1776,11 @@ SYSTEM
         if (completed.length > 0) {
             this.terminal.print('');
             this.terminal.print(`Completed Quests: ${completed.length}`);
-            for (const questId of completed.slice(0, 5)) {
+            for (const questId of completed) {
                 const quest = this.quests.find(q => q.id === questId);
                 if (quest) {
                     this.terminal.print(`  ✓ ${quest.title}`);
                 }
-            }
-            if (completed.length > 5) {
-                this.terminal.print(`  ... and ${completed.length - 5} more`);
             }
         }
     }

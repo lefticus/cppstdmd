@@ -377,6 +377,38 @@ class Player {
         return this.state.npcsSpokenTo.includes(npcId);
     }
 
+    // --- Topics ---
+
+    /**
+     * Learn a topic from an NPC (for XP rewards)
+     * @param {string} npcId
+     * @param {string} topicKey
+     * @returns {boolean} True if this is the first time learning this topic
+     */
+    learnTopic(npcId, topicKey) {
+        const key = `${npcId}_${topicKey}`;
+        if (!this.state.topicsLearned) {
+            this.state.topicsLearned = [];
+        }
+        if (!this.state.topicsLearned.includes(key)) {
+            this.state.topicsLearned.push(key);
+            this.save();
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Check if player has learned a topic from an NPC
+     * @param {string} npcId
+     * @param {string} topicKey
+     * @returns {boolean}
+     */
+    hasLearnedTopic(npcId, topicKey) {
+        const key = `${npcId}_${topicKey}`;
+        return this.state.topicsLearned?.includes(key) ?? false;
+    }
+
     // --- Quests ---
 
     /**

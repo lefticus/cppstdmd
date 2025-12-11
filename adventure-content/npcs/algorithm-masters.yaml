@@ -1,0 +1,188 @@
+# yaml-language-server: $schema=../schemas/npc.schema.json
+#
+# Algorithm Masters
+# Sean Parent and Conor Hoekstra - algorithm experts in the algorithms section
+
+npcs:
+  - id: sean_parent
+    name: Sean
+    type: historical_figure
+    appearance: |
+      A distinguished figure in an Adobe polo, holding a whiteboard marker.
+      Behind him, a diagram shows how std::rotate can solve almost any
+      sequence manipulation problem. His catchphrase echoes: "No raw loops!"
+    locations:
+      - algorithms
+      - alg.modifying.operations
+      - alg.rotate
+
+    dialogue:
+      greeting:
+        default: |
+          *Sean looks up from his whiteboard*
+
+          Ah, another programmer seeking algorithmic enlightenment!
+          Have you heard about the power of `std::rotate`?
+
+          It's the Swiss Army knife of the standard library.
+          Most problems that seem to need raw loops can be solved
+          elegantly with the right algorithm - often rotate!
+
+      topics:
+        rotate:
+          default: |
+            *Sean's eyes light up*
+
+            `std::rotate` is perhaps the most underappreciated algorithm
+            in the entire standard library!
+
+            ```cpp
+            // Rotate elements so middle becomes first
+            std::rotate(first, middle, last);
+
+            // Slide a range to a new position? rotate.
+            // Insert at position? rotate.
+            // Gather elements? rotate.
+            ```
+
+            Watch my talk to see rotate solve problem after problem:
+
+            📺 [C++ Seasoning](https://www.youtube.com/watch?v=W2tWOdzgXHA)
+
+            And when you're done, go talk to my friend Conor over there.
+            He's built an entire series on algorithm intuition!
+          xpReward: 25
+
+        seasoning:
+          default: |
+            *Sean nods approvingly*
+
+            Ah yes, "C++ Seasoning" - my talk on writing better code
+            through proper use of algorithms.
+
+            The key insights:
+            1. **No raw loops** - there's almost always an algorithm
+            2. **Rotate is magic** - it solves so many problems elegantly
+            3. **Know your algorithms** - study them, internalize them
+
+            📺 [C++ Seasoning](https://www.youtube.com/watch?v=W2tWOdzgXHA)
+
+            After watching, talk to Conor about building algorithm intuition!
+          xpReward: 25
+
+        algorithms:
+          default: |
+            The standard algorithms aren't just convenient - they're
+            *correct by construction*. When you use `std::rotate` or
+            `std::partition`, you're using code that's been reviewed
+            by the best minds in C++ and optimized for decades.
+
+            Raw loops hide intent. Algorithms reveal it.
+
+            📺 Start here: [C++ Seasoning](https://www.youtube.com/watch?v=W2tWOdzgXHA)
+          xpReward: 15
+
+  - id: conor_hoekstra
+    name: Conor
+    type: historical_figure
+    appearance: |
+      An enthusiastic figure surrounded by algorithm diagrams and APL symbols.
+      He gestures animatedly while explaining how algorithms relate to each other.
+      A sign nearby reads: "Algorithm Intuition Bootcamp - Watch in Order!"
+    locations:
+      - algorithms
+      - algorithms.general
+      - alg.nonmodifying
+
+    dialogue:
+      greeting:
+        default: |
+          *Conor waves enthusiastically*
+
+          Welcome to Algorithm Academy! I'm Conor, and I'm on a mission
+          to help everyone develop algorithm intuition!
+
+          Have you watched Sean's C++ Seasoning talk yet?
+          That's step one! Then come back and I'll teach you
+          how to see the patterns that connect all the algorithms.
+
+      topics:
+        intuition:
+          default: |
+            *Conor pulls out a carefully ordered list*
+
+            Algorithm intuition isn't magic - it's a skill you can develop!
+            But you need to learn it in the right order:
+
+            **The Algorithm Intuition Learning Path:**
+
+            1. 📺 First, watch Sean's talk to see WHY algorithms matter:
+               [C++ Seasoning](https://www.youtube.com/watch?v=W2tWOdzgXHA)
+
+            2. 📺 Then, build your foundation with me:
+               [Algorithm Intuition (C++Now 2019)](https://youtu.be/48gV1SNm3WA)
+
+            3. 📺 Deepen your understanding:
+               [Better Algorithm Intuition (MeetingC++ 2019)](https://youtu.be/TSZzvo4htTQ)
+
+            4. 📺 Finally, master the relationships:
+               [The Twin Algorithms](https://www.youtube.com/live/NiferfBvN3s)
+
+            **Watch them in this order!** Each builds on the previous one.
+            This is the path to algorithm mastery!
+          xpReward: 50
+
+        videos:
+          default: |
+            *Conor emphasizes the importance of order*
+
+            I cannot stress this enough - watch these **in order**:
+
+            1. 📺 [C++ Seasoning (Sean Parent)](https://www.youtube.com/watch?v=W2tWOdzgXHA)
+               *The "why" of algorithms*
+
+            2. 📺 [Algorithm Intuition](https://youtu.be/48gV1SNm3WA)
+               *Building the foundation*
+
+            3. 📺 [Better Algorithm Intuition](https://youtu.be/TSZzvo4htTQ)
+               *Deepening understanding*
+
+            4. 📺 [The Twin Algorithms](https://www.youtube.com/live/NiferfBvN3s)
+               *Seeing the connections*
+
+            Each talk assumes you've seen the previous ones.
+            Skipping ahead will leave gaps in your understanding!
+          xpReward: 50
+
+        twins:
+          default: |
+            *Conor gets excited*
+
+            The Twin Algorithms talk reveals something beautiful:
+            algorithms come in pairs! Understanding these relationships
+            transforms how you think about problems.
+
+            But you need the foundation first! Make sure you've watched:
+
+            1. 📺 [C++ Seasoning](https://www.youtube.com/watch?v=W2tWOdzgXHA)
+            2. 📺 [Algorithm Intuition](https://youtu.be/48gV1SNm3WA)
+            3. 📺 [Better Algorithm Intuition](https://youtu.be/TSZzvo4htTQ)
+
+            THEN watch The Twin Algorithms:
+            4. 📺 [The Twin Algorithms](https://www.youtube.com/live/NiferfBvN3s)
+          xpReward: 25
+
+        algorithms:
+          default: |
+            The standard library algorithms are a treasure trove!
+            But most programmers only scratch the surface.
+
+            Want to truly master them? Here's the path:
+
+            1. 📺 [C++ Seasoning](https://www.youtube.com/watch?v=W2tWOdzgXHA) - Sean Parent
+            2. 📺 [Algorithm Intuition](https://youtu.be/48gV1SNm3WA) - Me!
+            3. 📺 [Better Algorithm Intuition](https://youtu.be/TSZzvo4htTQ) - Also me!
+            4. 📺 [The Twin Algorithms](https://www.youtube.com/live/NiferfBvN3s) - Still me!
+
+            Ask me about "intuition" for the full breakdown!
+          xpReward: 15

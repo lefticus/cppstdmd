@@ -62,9 +62,26 @@
               "topics": {
                 "type": "object",
                 "additionalProperties": {
-                  "type": "string"
+                  "oneOf": [
+                    { "type": "string" },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "default": { "type": "string" },
+                        "response": { "type": "string" },
+                        "n3337": { "type": "string" },
+                        "n4140": { "type": "string" },
+                        "n4659": { "type": "string" },
+                        "n4861": { "type": "string" },
+                        "n4950": { "type": "string" },
+                        "trunk": { "type": "string" },
+                        "xpReward": { "type": "integer", "minimum": 1 },
+                        "requiresEra": { "type": "string" }
+                      }
+                    }
+                  ]
                 },
-                "description": "Responses to 'ask about X' commands"
+                "description": "Responses to 'ask about X' commands (string or object with xpReward)"
               }
             }
           },
