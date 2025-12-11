@@ -448,6 +448,41 @@ class Player {
         }
     }
 
+    /**
+     * Reset a quest (remove from active/completed, clear progress)
+     * Used for testing quests
+     * @param {string} questId
+     * @returns {boolean} True if quest was reset
+     */
+    resetQuest(questId) {
+        let found = false;
+
+        // Remove from active quests
+        const activeIdx = this.state.activeQuests.indexOf(questId);
+        if (activeIdx !== -1) {
+            this.state.activeQuests.splice(activeIdx, 1);
+            found = true;
+        }
+
+        // Remove from completed quests
+        const completedIdx = this.state.completedQuests.indexOf(questId);
+        if (completedIdx !== -1) {
+            this.state.completedQuests.splice(completedIdx, 1);
+            found = true;
+        }
+
+        // Clear quest progress
+        if (this.state.questProgress[questId]) {
+            delete this.state.questProgress[questId];
+            found = true;
+        }
+
+        if (found) {
+            this.save();
+        }
+        return found;
+    }
+
     // --- Settings ---
 
     /**

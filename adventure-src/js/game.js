@@ -308,6 +308,7 @@ class AdventureGame {
 
             // Debug (undocumented)
             'iddqd': () => this.cmdGodMode(),
+            'resetquest': (args) => this.cmdResetQuest(args),
         };
     }
 
@@ -1655,6 +1656,45 @@ SYSTEM
         this.terminal.print('Level set to 99. All restrictions lifted.');
         this.terminal.print('');
         this.updateStatusBar();
+    }
+
+    /**
+     * Reset a quest for testing (debug command)
+     */
+    cmdResetQuest(args) {
+        if (!args || args.length === 0) {
+            this.terminal.print('Usage: resetquest <quest_id>');
+            this.terminal.print('');
+            if (this.quests.length === 0) {
+                this.terminal.print('No quests loaded.');
+                return;
+            }
+            this.terminal.print(`Available quests (${this.quests.length}):`);
+            for (const quest of this.quests) {
+                const status = this.player.state.completedQuests.includes(quest.id) ? '[completed]' :
+                               this.player.state.activeQuests.includes(quest.id) ? '[active]' : '[available]';
+                this.terminal.print(`  ${quest.id} ${status}`);
+            }
+            return;
+        }
+
+        const questId = args.join('_');  // Allow "resetquest endl truth" -> "endl_truth"
+        const quest = this.quests.find(q => q.id === questId);
+
+        if (!quest) {
+            this.terminal.print(`Unknown quest: ${questId}`);
+            return;
+        }
+
+        if (this.player.resetQuest(questId)) {
+            this.terminal.print('');
+            this.terminal.print(`*Time rewinds*`);
+            this.terminal.print(`Quest "${quest.title}" has been reset.`);
+            this.terminal.print('You can now accept it again from the quest giver.');
+            this.terminal.print('');
+        } else {
+            this.terminal.print(`Quest "${quest.title}" was not active or completed.`);
+        }
     }
 
     // --- Quest System ---

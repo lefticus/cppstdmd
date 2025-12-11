@@ -651,6 +651,35 @@ body.animation-off { --morph-duration: 0s; }
     }
 }
 
+/* === Compiler Explorer Links === */
+.ce-link-container {
+    margin-top: -0.5em;
+    margin-bottom: 1em;
+    text-align: right;
+}
+
+.ce-link {
+    font-size: 0.85em;
+    color: var(--accent-blue);
+    text-decoration: none;
+    padding: 2px 8px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background: var(--bg-dark);
+    font-family: var(--font-mono);
+}
+
+.ce-link:hover {
+    background: var(--bg-light);
+    border-color: var(--accent-blue);
+}
+
+/* Terminal markdown CE links */
+.terminal-markdown .ce-link-container {
+    margin-top: 0;
+    margin-bottom: 0.5em;
+}
+
 /* === Print styles === */
 @media print {
     .adventure-terminal-container,

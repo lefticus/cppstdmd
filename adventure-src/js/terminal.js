@@ -201,7 +201,69 @@ class Terminal {
             Prism.highlightAllUnder(line);
         }
 
+        // Add Compiler Explorer links to C++ code blocks
+        this.addCompilerExplorerLinks(line);
+
         this.scrollToBottom();
+    }
+
+    /**
+     * Encode string to base64 with proper UTF-8 handling
+     * @param {string} str - String to encode
+     * @returns {string} Base64 encoded string
+     */
+    b64UTFEncode(str) {
+        return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, function(match, v) {
+            return String.fromCharCode(parseInt(v, 16));
+        }));
+    }
+
+    /**
+     * Generate a Compiler Explorer link for code
+     * @param {string} code - C++ code to open in CE
+     * @returns {string} Compiler Explorer URL
+     */
+    generateCompilerExplorerLink(code) {
+        const clientState = {
+            sessions: [{
+                id: 1,
+                language: 'c++',
+                source: code,
+                compilers: [{
+                    id: 'clang_trunk',
+                    options: '-std=c++26'
+                }]
+            }]
+        };
+
+        const encoded = this.b64UTFEncode(JSON.stringify(clientState));
+        return `https://compiler-explorer.com/clientstate/${encoded}`;
+    }
+
+    /**
+     * Add "Try in Compiler Explorer" links to C++ code blocks
+     * @param {HTMLElement} container - Container to search for code blocks
+     */
+    addCompilerExplorerLinks(container) {
+        const codeBlocks = container.querySelectorAll('pre code.language-cpp, pre code.language-c\\+\\+');
+        codeBlocks.forEach(codeBlock => {
+            const code = codeBlock.textContent;
+            const pre = codeBlock.parentElement;
+
+            // Create link container
+            const linkDiv = document.createElement('div');
+            linkDiv.className = 'ce-link-container';
+
+            const link = document.createElement('a');
+            link.href = this.generateCompilerExplorerLink(code);
+            link.target = '_blank';
+            link.rel = 'noopener noreferrer';
+            link.className = 'ce-link';
+            link.textContent = '▶ Try in Compiler Explorer';
+
+            linkDiv.appendChild(link);
+            pre.parentElement.insertBefore(linkDiv, pre.nextSibling);
+        });
     }
 
     /**
