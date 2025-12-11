@@ -89,6 +89,17 @@ npcs:
           Runtime costs ye pay over and over, but compile-time costs
           ye pay only once. That be the pirate's wisdom, arr!
 
+        gear: |
+          *The pirate adjusts their eyepatch proudly*
+
+          Arr! Ye be admirin' me constexpr pirate gear, matey?
+          If ye want to fly the compile-time colors yerself,
+          check out the official swag!
+
+          🏴‍☠️ [Constexpr Pirate Gear](https://jason-turner-shop.fourthwall.com/)
+
+          Every purchase helps fund more compile-time adventures!
+
     quests:
       - constexpr_evolution
 
