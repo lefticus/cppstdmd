@@ -2052,7 +2052,6 @@ SYSTEM
 
         // Check quest progress for solving this puzzle
         // Include section and era context so quest steps with multiple conditions can match
-        console.log('puzzleSolved: checking progress for puzzle.id =', puzzle.id);
         this.checkQuestProgress({
             puzzle: puzzle.id,
             section: this.player.currentLocation,
@@ -2091,9 +2090,7 @@ SYSTEM
             const step = quest.steps[progress.currentStep];
             if (!step?.target) continue;
 
-            console.log('checkQuestProgress: step.target =', JSON.stringify(step.target), 'action =', JSON.stringify(action));
             const completed = this.stepCompleted(step.target, action);
-            console.log('checkQuestProgress: stepCompleted returned', completed);
             if (completed) {
                 this.advanceQuest(quest, progress);
             }

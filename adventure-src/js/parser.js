@@ -27,7 +27,6 @@ class AdventureParser {
         this.buildGrammar();
         this.parser = ishml.Parser({ lexicon: this.lexicon, grammar: this.grammar });
 
-        console.log(`[Parser] Initialized with ${this.sectionNames.size} section names`);
         return true;
     }
 
@@ -249,15 +248,6 @@ class AdventureParser {
 
         // Try ISHML parsing
         const result = this.parser.analyze(trimmed);
-
-        // Debug logging
-        console.log('[Parser] Input:', trimmed);
-        console.log('[Parser] ISHML result:', {
-            success: result.success,
-            interpretations: result.interpretations?.length || 0,
-            remainder: result.remainder,
-            gist: result.interpretations?.[0]?.gist
-        });
 
         // Check if we got any interpretations (even partial matches)
         if (result.interpretations && result.interpretations.length > 0) {
