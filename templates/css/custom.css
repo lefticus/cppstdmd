@@ -119,7 +119,7 @@ code {
 
 /* Landing Page */
 .landing-header {
-    background: #00a500;
+    background: #006400;
     color: white;
     text-align: center;
     padding: 3rem 2rem;
@@ -644,11 +644,11 @@ code {
 
 /* Author Banner (Top of Page) */
 .author-banner {
-    background: #00a500;
+    background: #006400;
     color: white;
     padding: 0.75rem 2rem;
     text-align: center;
-    border-bottom: 2px solid #008000;
+    border-bottom: 2px solid #004d00;
 }
 
 .author-banner-content {
@@ -690,7 +690,7 @@ code {
 }
 
 .author-footer {
-    background: #00a500;
+    background: #006400;
     color: white;
     padding: 2rem;
     margin-top: 3rem;
