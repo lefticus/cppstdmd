@@ -11,9 +11,7 @@ description: |
 
 type: time_travel
 difficulty: hard
-minLevel: 15
 prerequisites:
-  - explore_the_foundations
   - chrono_compass_unlock
 
 giver: asif_oracle

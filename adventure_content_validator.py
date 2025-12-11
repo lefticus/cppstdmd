@@ -53,14 +53,33 @@ class ContentValidator:
         qid = quest["id"]
 
         # Check giver NPC exists
-        if giver := quest.get("giver"):
+        giver = quest.get("giver")
+        if giver:
             if giver not in self.npcs:
                 self.errors.append(f"Quest '{qid}': giver NPC '{giver}' not found")
 
         # Check giver location exists
-        if loc := quest.get("giverLocation"):
+        loc = quest.get("giverLocation")
+        if loc:
             if loc not in self.sections:
                 self.errors.append(f"Quest '{qid}': giverLocation '{loc}' not found")
+
+        # Check giver NPC is actually at the giver location
+        if giver and loc and giver in self.npcs and loc in self.sections:
+            npc_locations = self.npcs[giver].get("locations", [])
+            if loc not in npc_locations:
+                self.errors.append(
+                    f"Quest '{qid}': giver NPC '{giver}' is not at giverLocation '{loc}' "
+                    f"(NPC locations: {', '.join(npc_locations) or 'none'})"
+                )
+
+        # Check giver NPC has this quest in their quest list
+        if giver and giver in self.npcs:
+            npc_quests = self.npcs[giver].get("quests", [])
+            if qid not in npc_quests:
+                self.errors.append(
+                    f"Quest '{qid}': giver NPC '{giver}' doesn't have this quest in their quests list"
+                )
 
         # Check prerequisites exist
         for prereq in quest.get("prerequisites", []):
