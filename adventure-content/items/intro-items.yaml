@@ -47,3 +47,31 @@ items:
       statBoost:
         fundamentals: 1
         library: 1
+
+  - id: chrono_compass
+    name: Chrono Compass
+    category: tool
+    rarity: rare
+    description: |
+      An ancient compass that can navigate through the eras of C++.
+      Its needle points not to north, but to moments in time.
+    lore: |
+      "Forged from fragments of every C++ standard,
+      this compass remembers the path of the language.
+
+      The earliest eras (C++98, C++03) are lost to the mists of time,
+      but from C++11 onward, the compass can guide you:
+
+      C++11 (n3337) - The rebirth. Move semantics, lambdas, auto.
+      C++14 (n4140) - Refinement. Generic lambdas, relaxed constexpr.
+      C++17 (n4659) - Expansion. if-init, structured bindings, fold.
+      C++20 (n4861) - Revolution. Concepts, coroutines, ranges.
+      C++23 (n4950) - Evolution. std::print, deducing this.
+      C++26 (trunk) - The horizon. Reflection awaits.
+
+      With this compass, you may walk the paths of history,
+      witnessing how C++ evolved from strength to strength."
+    sourceQuest: chrono_compass_unlock
+    effects:
+      statBoost:
+        modernCpp: 2

@@ -37,6 +37,15 @@ npcs:
           - unique_ptr: exclusive ownership, zero overhead
           - shared_ptr: shared ownership with reference counting
           - weak_ptr: breaks cycles, observes without owning
+
+          ```cpp
+          #include <memory>
+
+          int main() {
+            auto ptr = std::make_unique<int>(42);
+            *ptr = 100;  // use it like a raw pointer
+          } // ~unique_ptr() calls delete automatically
+          ```
         leaks: |
           Memory leaks are the ancient enemy. But RAII is your shield!
           Wrap every resource in a class. Let destructors clean up.
@@ -86,6 +95,20 @@ npcs:
           Templates are blueprints for the compiler.
           Write once, instantiate for any type.
           The compiler generates the actual code at compile time.
+
+          ```cpp
+          #include <print>
+
+          template<typename T>
+          T add(T a, T b) {
+            return a + b;
+          }
+
+          int main() {
+            std::print("{}\n", add(1, 2));      // int
+            std::print("{}\n", add(1.5, 2.5));  // double
+          }
+          ```
         sfinae: |
           Substitution Failure Is Not An Error.
           If a template substitution fails, the compiler silently

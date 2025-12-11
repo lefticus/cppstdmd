@@ -219,3 +219,83 @@ quests:
       statBoost:
         fundamentals: 2
         metaprogramming: 1
+
+  # Quest 4: Unlock Time Travel
+  - id: chrono_compass_unlock
+    title: The Chrono Compass
+    description: |
+      The Standard Guardian senses you are ready to learn about C++'s
+      evolution through time. Complete this quest to earn the Chrono Compass
+      and unlock time-travel quests that explore how features changed
+      across different C++ versions.
+    type: learning
+    difficulty: medium
+    minLevel: 5
+    giver: standard_guardian
+    giverLocation: intro
+    prerequisites:
+      - meet_the_guardians
+
+    steps:
+      - instruction: |
+          Ask the Standard Guardian about 'timetravel' to learn about C++ eras.
+        target:
+          npc: standard_guardian
+          topic: timetravel
+        onComplete:
+          dialogue: |
+            The C++ Standard is not static - it evolves! Every three years,
+            a new version is released. Each brings new features, fixes, and
+            sometimes changes how existing code behaves.
+
+            To truly understand C++, you must understand its history.
+          xp: 50
+
+      - instruction: |
+          Use 'timeshift n3337' to visit the C++11 era - where modern C++ began.
+        target:
+          section: intro
+          era: n3337
+        onComplete:
+          dialogue: |
+            Welcome to C++11! This is where the "modern C++" era began.
+            Move semantics, lambdas, auto, range-based for loops...
+            So many features we take for granted today were born here.
+          xp: 50
+
+      - instruction: |
+          Use 'timeshift trunk' to visit the bleeding edge - C++26 in development.
+        target:
+          section: intro
+          era: trunk
+        onComplete:
+          dialogue: |
+            You stand at the frontier! This is the working draft for C++26.
+            Reflection, contracts, and more are being shaped here.
+            The Standard is alive, always growing.
+          xp: 50
+
+      - instruction: |
+          Return to the present (n4950 - C++23) and speak with the Standard Guardian.
+        target:
+          section: intro
+          era: n4950
+          npc: standard_guardian
+        onComplete:
+          dialogue: |
+            You have walked through time itself! You've seen how C++
+            evolved from C++11's revolution to the bleeding edge.
+
+            Take this Chrono Compass. With it, you are ready to undertake
+            quests that explore how specific features changed across eras.
+            The Lambda Chronicles and the Undefined Realm await you!
+          xp: 100
+          item: chrono_compass
+
+    rewards:
+      experience: 300
+      items:
+        - chrono_compass
+      title: Time Walker
+      statBoost:
+        modernCpp: 2

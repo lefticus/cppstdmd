@@ -13,7 +13,7 @@ type: time_travel
 difficulty: medium
 minLevel: 10
 prerequisites:
-  - basic_exploration
+  - explore_the_foundations
   - chrono_compass_unlock
 
 giver: template_sage

@@ -76,4 +76,5 @@ npcs:
       - welcome_to_the_standard
       - explore_the_foundations
       - meet_the_guardians
+      - chrono_compass_unlock
     trades: []

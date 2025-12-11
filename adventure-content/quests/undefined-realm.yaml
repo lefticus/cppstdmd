@@ -12,8 +12,9 @@ description: |
 type: time_travel
 difficulty: hard
 minLevel: 15
-# prerequisites:
-#   - basic_exploration  # Removed for testing - quest doesn't exist yet
+prerequisites:
+  - explore_the_foundations
+  - chrono_compass_unlock
 
 giver: asif_oracle
 giverLocation: intro.abstract

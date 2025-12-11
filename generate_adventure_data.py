@@ -25,6 +25,8 @@ from typing import Any
 
 import yaml
 
+from adventure_content_validator import validate_content
+
 # Add src to path so we can import from cpp_std_converter
 sys.path.insert(0, str(Path(__file__).parent / "src"))
 
@@ -849,6 +851,29 @@ def generate_adventure_data(
     sha_info = get_cppstdmd_sha()
     world_map["cppstdmdSha"] = sha_info["sha"]
     world_map["cppstdmdShortSha"] = sha_info["short_sha"]
+
+    # Validate content before writing
+    # world_map sections already contain availableIn field for era validation
+    success, errors, warnings = validate_content(
+        quests=yaml_content["quests"],
+        npcs=yaml_content["npcs"],
+        items=yaml_content["items"],
+        puzzles=yaml_content["puzzles"],
+        world_map=world_map,
+    )
+
+    if warnings:
+        print("\n  Validation warnings:")
+        for warning in warnings:
+            print(f"    WARNING: {warning}")
+
+    if not success:
+        print("\n  Content validation FAILED:")
+        for error in errors:
+            print(f"    ERROR: {error}")
+        sys.exit(1)
+
+    print("  Content validation passed")
 
     # Write output files
     with open(game_data_dir / "world-map.json", "w") as f:
