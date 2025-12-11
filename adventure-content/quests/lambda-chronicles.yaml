@@ -11,9 +11,7 @@ description: |
   from simple inline functions to template-capable constructs.
 type: time_travel
 difficulty: medium
-minLevel: 10
 prerequisites:
-  - explore_the_foundations
   - chrono_compass_unlock
 
 giver: template_sage
@@ -27,9 +25,20 @@ steps:
     onComplete:
       dialogue: |
         Behold! Lambdas were born in C++11.
-        Notice the capture syntax with square brackets: [&], [=], [x].
+        Notice the capture syntax with square brackets:
+
+        ```cpp
+        auto by_ref = [&] { /* capture all by reference */ };
+        auto by_val = [=] { /* capture all by value */ };
+        auto specific = [x, &y] { /* x by value, y by reference */ };
+        ```
+
         For the first time, we could write inline function objects
         without the boilerplate of functor classes.
+
+        📺 Want to dive deeper? Check out:
+        - [Ep 152: Lambdas - The Key To Understanding C++](https://www.youtube.com/watch?v=CjExHyCVRYg)
+        - [Ep 32: Lambdas For Free](https://www.youtube.com/watch?v=_CbBfuQQQI8)
       xp: 50
 
   - instruction: See generic lambdas emerge in C++14
@@ -38,10 +47,33 @@ steps:
       era: n4140
     onComplete:
       dialogue: |
-        In C++14, lambdas gained the power of auto parameters!
-        Now a single lambda can work with multiple types:
-          auto add = [](auto a, auto b) { return a + b; };
-        No more writing separate lambdas for each type.
+        In C++14, lambdas gained two powerful features!
+
+        **Generic lambdas** with auto parameters:
+
+        ```cpp
+        auto add = [](auto a, auto b) { return a + b; };
+        add(1, 2);      // works with int
+        add(1.5, 2.5);  // works with double
+        ```
+
+        **Generalized capture expressions** let you create new variables:
+
+        ```cpp
+        auto ptr = std::make_unique<int>(42);
+        // Move ptr into the lambda with init capture
+        auto fn = [p = std::move(ptr)] { return *p; };
+        ```
+
+        You can even compute values in the capture:
+
+        ```cpp
+        int x = 10;
+        auto fn = [y = x * 2] { return y; };  // y is 20
+        ```
+
+        📺 For a complete walkthrough of lambda evolution, see the
+        [C++ Weekly Lambda Playlist](https://www.youtube.com/playlist?list=PLs3KjaCtOwSaJfzcaQ5RpcDIx9PTe2bBP)!
       xp: 75
       item: generic_lambda_shard
 
@@ -52,9 +84,21 @@ steps:
     onComplete:
       dialogue: |
         C++17 made lambdas constexpr by default when possible!
-        Plus, we gained *this capture for copying the object:
-          [*this] { use_member(); }
+        Plus, we gained `*this` capture for copying the object:
+
+        ```cpp
+        struct Widget {
+          int value = 42;
+          auto make_getter() {
+            // Captures a COPY of *this, safe even if Widget is destroyed
+            return [*this] { return value; };
+          }
+        };
+        ```
+
         Lambdas become even more versatile.
+
+        📺 See it in action: [Ep 41: C++17's constexpr Lambda Support](https://www.youtube.com/watch?v=kmza9U_niq4)
       xp: 75
 
   - instruction: Witness template lambdas in C++20
@@ -63,14 +107,135 @@ steps:
       era: n4861
     onComplete:
       dialogue: |
-        The circle is complete! C++20 lambdas can have explicit
-        template parameter lists:
-          []<typename T>(T x) { ... }
-        Lambdas now have the full power of templates.
-        They've grown from simple syntactic sugar to a
-        cornerstone of modern C++ programming.
+        C++20 lambdas can have explicit template parameter lists:
+
+        ```cpp
+        // Explicit template parameters on a lambda!
+        auto get_size = []<typename T>(std::vector<T> const& v) {
+          return v.size();
+        };
+
+        // Useful for constraining or naming the type
+        auto print_all = []<typename T>(T const& container) {
+          for (auto const& item : container) {
+            std::print("{}\n", item);
+          }
+        };
+        ```
+
+        Lambdas now have the full power of templates!
+
+        📺 Deep dive: [Ep 128: C++20's Template Syntax For Lambdas](https://www.youtube.com/watch?v=ixGiE4-1GA8)
       xp: 100
       item: lambda_template_shard
+
+  - instruction: Discover static lambdas, explicit this, and attributes in C++23
+    target:
+      section: expr.prim.lambda
+      era: n4950
+    onComplete:
+      dialogue: |
+        C++23 brings powerful new lambda features!
+
+        **Explicit `this` parameter** (deducing this) - lambdas can now
+        deduce their own type, enabling recursive lambdas without `std::function`:
+
+        ```cpp
+        // Recursive lambda using deducing this!
+        auto factorial = [](this auto self, int n) -> int {
+          return n <= 1 ? 1 : n * self(n - 1);
+        };
+        std::print("{}\n", factorial(5));  // 120
+        ```
+
+        **Static lambdas** - for captureless lambdas:
+
+        ```cpp
+        // static lambdas have no closure object overhead
+        auto add = [](int a, int b) static { return a + b; };
+        int (*fn)(int, int) = add;  // converts to function pointer
+        ```
+
+        **Attributes on lambdas** - apply attributes to the call operator:
+
+        ```cpp
+        auto deprecated_fn = []() [[deprecated("use new_fn")]] {
+          return 42;
+        };
+        ```
+
+        Lambdas continue to evolve!
+
+        📺 Learn more:
+        - [Ep 328: Recursive Lambdas in C++23](https://www.youtube.com/watch?v=hwD06FNXndI)
+        - [Ep 472: C++23's static lambdas](https://www.youtube.com/watch?v=M_AUMiSbAwQ)
+        - [Ep 386: C++23's Lambda Attributes](https://www.youtube.com/watch?v=YlmxNJnone0)
+      xp: 100
+
+  - instruction: See the future of lambdas in C++26
+    target:
+      section: expr.prim.lambda
+      era: trunk
+    onComplete:
+      dialogue: |
+        C++26 brings contracts to lambdas!
+
+        **Function contracts on lambdas** - preconditions and postconditions:
+
+        ```cpp
+        auto safe_sqrt = [](double x) pre(x >= 0) -> double {
+          return std::sqrt(x);
+        };
+
+        auto bounded = [](int x) pre(x > 0) post(r: r < 100) {
+          return x % 100;
+        };
+        ```
+
+        **Contract assertions** inside lambda bodies:
+
+        ```cpp
+        auto process = [](int* p) {
+          contract_assert(p != nullptr);
+          return *p * 2;
+        };
+        ```
+
+        **Structural closure types** - captureless lambdas can now be
+        used as non-type template parameters:
+
+        ```cpp
+        template<auto F>
+        void call_it() { F(); }
+
+        call_it<[]{ std::print("Hello!\n"); }>();  // OK in C++26!
+        ```
+
+        The journey continues. What will C++29 bring?
+
+        📺 Stay updated with the [C++ Weekly Lambda Playlist](https://www.youtube.com/playlist?list=PLs3KjaCtOwSaJfzcaQ5RpcDIx9PTe2bBP)
+        for future coverage of C++26 lambda features!
+      xp: 100
+
+  - instruction: Complete the Lambda Mastery quiz to prove your knowledge
+    target:
+      section: expr.prim.lambda
+      puzzle: lambda_mastery_quiz
+    onComplete:
+      dialogue: |
+        *The Template Sage beams with pride*
+
+        You have proven your mastery of lambda evolution!
+        From simple captures in C++11 to contracts in C++26,
+        you understand the full journey of this powerful feature.
+
+        Take this crystal - it represents the crystallized knowledge
+        of lambda expressions across all C++ eras.
+
+        📺 For the complete journey through lambda evolution, explore the
+        [C++ Weekly Lambda Playlist](https://www.youtube.com/playlist?list=PLs3KjaCtOwSaJfzcaQ5RpcDIx9PTe2bBP)
+        with 40+ episodes covering every aspect of lambdas!
+      xp: 100
 
 rewards:
   experience: 500

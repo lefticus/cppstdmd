@@ -1,0 +1,326 @@
+# yaml-language-server: $schema=../schemas/quest.schema.json
+#
+# The Constexpr Chronicles
+# A time-travel quest tracing the evolution of constexpr through C++ history.
+
+id: constexpr_evolution
+title: The Constexpr Chronicles
+description: |
+  Trace the evolution of constexpr through C++ history.
+  Travel through time to witness how compile-time computation grew
+  from restrictive single-return functions to powerful allocation-capable constructs.
+type: time_travel
+difficulty: hard
+prerequisites:
+  - chrono_compass_unlock
+
+giver: constexpr_pirate
+giverLocation: dcl.constexpr
+
+steps:
+  - instruction: Visit dcl.constexpr in C++11 to witness constexpr's restrictive birth
+    target:
+      section: dcl.constexpr
+      era: n3337
+    onComplete:
+      dialogue: |
+        Arr! Behold the humble beginnings of constexpr in C++11!
+        In these early waters, our powers be severely limited:
+
+        ```cpp
+        // C++11: Only a single return statement allowed!
+        constexpr int square(int x) { return x * x; }  // OK
+
+        // This be ILLEGAL in C++11, matey:
+        constexpr int power(int base, int exp) {
+          int result = 1;           // ERROR: variable declaration!
+          while (exp-- > 0)         // ERROR: loop!
+            result *= base;
+          return result;
+        }
+        ```
+
+        No loops! No variables! No if/else! Just one return statement.
+        But fear not - liberation awaits in C++14!
+
+        📺 [Ep 432: Why constexpr Matters](https://www.youtube.com/watch?v=QZxfyGmpanM)
+      xp: 50
+
+  - instruction: See the great liberation of constexpr in C++14
+    target:
+      section: dcl.constexpr
+      era: n4140
+    onComplete:
+      dialogue: |
+        Shiver me templates! C++14 brings the Great Liberation!
+        We can finally write REAL code in constexpr functions:
+
+        ```cpp
+        // C++14: Loops and variables now allowed!
+        constexpr int power(int base, int exp) {
+          int result = 1;
+          while (exp-- > 0)
+            result *= base;
+          return result;
+        }
+
+        constexpr int factorial(int n) {
+          int result = 1;
+          for (int i = 2; i <= n; ++i)
+            result *= i;
+          return result;
+        }
+
+        static_assert(power(2, 10) == 1024);
+        static_assert(factorial(5) == 120);
+        ```
+
+        Variables, loops, if/else - the compile-time seas be open!
+
+        📺 [Ep 314: Every Possible Way To Force Compile-Time](https://www.youtube.com/watch?v=UdwdJWQ5o78)
+
+        📺 For the full constexpr journey, see the
+        [C++ Weekly constexpr Playlist](https://www.youtube.com/playlist?list=PLs3KjaCtOwSaqPapPV4pc1SRjypnwrXYV)!
+      xp: 75
+      item: constexpr_liberation_shard
+
+  - instruction: Discover if constexpr and lambda call operators in C++17
+    target:
+      section: dcl.constexpr
+      era: n4659
+    onComplete:
+      dialogue: |
+        Arr! C++17 brings `if constexpr` - compile-time branching!
+        And lambda call operators be automatically constexpr when possible!
+
+        ```cpp
+        // if constexpr: compile-time conditional compilation!
+        template<typename T>
+        auto get_value(T t) {
+          if constexpr (std::is_pointer_v<T>)
+            return *t;  // Only compiled if T is a pointer
+          else
+            return t;   // Only compiled otherwise
+        }
+
+        // Lambda call operators are implicitly constexpr if they can be!
+        auto square = [](int x) { return x * x; };
+        static_assert(square(5) == 25);  // Works! operator() is constexpr
+        ```
+
+        The non-taken branch of `if constexpr` be not even instantiated!
+        No more SFINAE tricks for simple type dispatch, matey!
+
+        📺 [Ep 18: C++17's constexpr if](https://www.youtube.com/watch?v=qHgM5UdzPQU)
+        📺 [Ep 41: constexpr Lambda Support](https://www.youtube.com/watch?v=kmza9U_niq4)
+      xp: 75
+
+  - instruction: Witness consteval and dynamic allocation in C++20
+    target:
+      section: dcl.constexpr
+      era: n4861
+    onComplete:
+      dialogue: |
+        Blimey! C++20 be the golden age of compile-time computation!
+
+        **consteval** - guaranteed compile-time evaluation:
+
+        ```cpp
+        consteval int must_be_constexpr(int x) { return x * x; }
+
+        constexpr int a = must_be_constexpr(5);  // OK
+        // int b = must_be_constexpr(runtime);   // ERROR!
+        ```
+
+        **Dynamic allocation in constexpr!**
+
+        ```cpp
+        constexpr int sum_dynamic() {
+          int* arr = new int[3]{1, 2, 3};
+          int sum = arr[0] + arr[1] + arr[2];
+          delete[] arr;  // Must deallocate within evaluation!
+          return sum;
+        }
+        static_assert(sum_dynamic() == 6);
+        ```
+
+        **Virtual functions in constexpr contexts!**
+
+        ```cpp
+        struct Base { virtual constexpr int value() { return 1; } };
+        struct Derived : Base { constexpr int value() override { return 2; } };
+        ```
+
+        **std::vector and std::string at compile-time!**
+
+        ```cpp
+        constexpr int sum_vec() {
+          std::vector<int> v = {1, 2, 3, 4, 5};
+          int sum = 0;
+          for (int x : v) sum += x;
+          return sum;
+        }
+        static_assert(sum_vec() == 15);
+
+        constexpr auto make_greeting() {
+          std::string s = "Ahoy, ";
+          s += "matey!";
+          return s.size();
+        }
+        static_assert(make_greeting() == 12);
+        ```
+
+        **Constexpr algorithms!** Many `<algorithm>` functions be constexpr now:
+
+        ```cpp
+        constexpr int find_max() {
+          std::array<int, 5> arr = {3, 1, 4, 1, 5};
+          return *std::max_element(arr.begin(), arr.end());
+        }
+        static_assert(find_max() == 5);
+
+        constexpr bool is_sorted_arr() {
+          std::array<int, 4> arr = {1, 2, 3, 4};
+          return std::is_sorted(arr.begin(), arr.end());
+        }
+        static_assert(is_sorted_arr());
+        ```
+
+        📺 [Ep 188: C++20's constexpr new Support](https://www.youtube.com/watch?v=FRTmkDiW5MM)
+        📺 [Ep 159: constexpr virtual Members](https://www.youtube.com/watch?v=JXJg_XMJFW0)
+        📺 [Ep 269: constexpr std::vector and std::string](https://www.youtube.com/watch?v=cuFILbHp-RA)
+        📺 [Ep 187: C++20's constexpr Algorithms](https://www.youtube.com/watch?v=9YWzXSr2onY)
+      xp: 100
+      item: consteval_crystal
+
+  - instruction: Discover constexpr structured bindings in C++23
+    target:
+      section: dcl.constexpr
+      era: n4950
+    onComplete:
+      dialogue: |
+        Yo ho ho! C++23 brings constexpr structured bindings!
+
+        ```cpp
+        constexpr auto get_pair() { return std::pair{1, 2}; }
+        constexpr auto [x, y] = get_pair();  // Now valid!
+        static_assert(x == 1 && y == 2);
+        ```
+
+        **`static constexpr` variables inside constexpr functions!**
+
+        ```cpp
+        constexpr int get_lookup(int idx) {
+          static constexpr int table[] = {10, 20, 30, 40, 50};
+          return table[idx];
+        }
+        static_assert(get_lookup(2) == 30);  // Works in C++23!
+        ```
+
+        This be a treasure for lookup tables and compile-time caches, matey!
+
+        📺 [Ep 408: C++23's constexpr unique_ptr](https://www.youtube.com/watch?v=p8Q-bapMShs)
+      xp: 100
+
+  - instruction: See the frontier of constexpr in C++26
+    target:
+      section: dcl.constexpr
+      era: trunk
+    onComplete:
+      dialogue: |
+        Arr! We've reached the bleeding edge - C++26!
+
+        **Most standard containers now work at compile-time!**
+
+        ```cpp
+        #include <map>
+        #include <set>
+        #include <list>
+        #include <deque>
+
+        constexpr int count_unique() {
+          std::set<int> s = {3, 1, 4, 1, 5, 9, 2, 6};
+          return s.size();  // duplicates removed!
+        }
+        static_assert(count_unique() == 7);
+
+        constexpr int lookup() {
+          std::map<int, int> m = {{1, 10}, {2, 20}, {3, 30}};
+          return m[2];
+        }
+        static_assert(lookup() == 20);
+
+        constexpr int sum_list() {
+          std::list<int> lst = {1, 2, 3, 4, 5};
+          int sum = 0;
+          for (int x : lst) sum += x;
+          return sum;
+        }
+        static_assert(sum_list() == 15);
+        ```
+
+        C++20 gave us `std::vector` and `std::string`, but now the
+        node-based containers join the compile-time fleet!
+
+        **Exception handling at compile-time!**
+
+        ```cpp
+        constexpr int safe_divide(int a, int b) {
+          if (b == 0) throw std::runtime_error("divide by zero");
+          return a / b;
+        }
+
+        constexpr int try_divide() {
+          try {
+            return safe_divide(10, 0);
+          } catch (const std::runtime_error&) {
+            return -1;  // Handle the error at compile-time!
+          }
+        }
+        static_assert(try_divide() == -1);
+        ```
+
+        Other C++26 goodies:
+        - Explicit `constexpr` on structured bindings
+        - Virtual base class restriction removed from constexpr
+
+        *The pirate gazes at the horizon*
+
+        What treasures will C++29 bring? Only time will tell, matey!
+        But remember - every cycle ye save at compile-time
+        be a cycle saved forever!
+
+        📺 Stay updated with the
+        [C++ Weekly constexpr Playlist](https://www.youtube.com/playlist?list=PLs3KjaCtOwSaqPapPV4pc1SRjypnwrXYV)!
+      xp: 100
+
+  - instruction: Complete the Constexpr Mastery quiz to prove your knowledge
+    target:
+      section: dcl.constexpr
+      puzzle: constexpr_mastery_quiz
+    onComplete:
+      dialogue: |
+        *The Constexpr Pirate raises their cutlass in salute*
+
+        Arr! Ye've proven yerself a true compile-time buccaneer!
+        From the restrictive C++11 origins through the C++14 liberation,
+        the C++17 conditional compilation, and C++20's dynamic allocation -
+        ye understand the full journey of constexpr!
+
+        Take this crystal, matey - it represents the crystallized knowledge
+        of compile-time computation across all the seven standards!
+
+        Now go forth and plunder those runtime cycles! Arr!
+
+        📺 For continued learning, sail the
+        [C++ Weekly constexpr Playlist](https://www.youtube.com/playlist?list=PLs3KjaCtOwSaqPapPV4pc1SRjypnwrXYV)!
+      xp: 100
+
+rewards:
+  experience: 600
+  items:
+    - constexpr_mastery_crystal
+  title: Compile-Time Wizard
+  statBoost:
+    metaprogramming: 5
+    modernCpp: 3

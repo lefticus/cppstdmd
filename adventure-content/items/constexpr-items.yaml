@@ -1,0 +1,52 @@
+# yaml-language-server: $schema=../schemas/item.schema.json
+#
+# Constexpr Chronicles Items
+# Items related to the constexpr evolution quest
+
+items:
+  - id: constexpr_liberation_shard
+    name: Liberation Shard
+    category: temporal_fragment
+    rarity: uncommon
+    description: A fragment of the C++14 constexpr revolution
+    lore: |
+      When the C++14 standard was ratified, constexpr functions
+      were finally freed from their single-return prison.
+      Loops, variables, if/else - all became legal at compile-time.
+      This shard pulses with the energy of that liberation.
+    sourceEra: n4140
+    effects:
+      statBoost:
+        metaprogramming: 2
+
+  - id: consteval_crystal
+    name: Consteval Crystal
+    category: pattern_crystal
+    rarity: rare
+    description: Crystallized essence of guaranteed compile-time evaluation
+    lore: |
+      Unlike its constexpr cousin, this crystal DEMANDS compile-time evaluation.
+      There is no runtime fallback. The compiler must know the answer, or fail.
+      It glows with an intensity that cannot be deferred to runtime.
+    sourceEra: n4861
+    effects:
+      statBoost:
+        metaprogramming: 3
+        modernCpp: 2
+
+  - id: constexpr_mastery_crystal
+    name: Constexpr Mastery Crystal
+    category: pattern_crystal
+    rarity: rare
+    description: Complete understanding of compile-time computation across all eras
+    lore: |
+      From the restrictive C++11 origins through the C++14 liberation,
+      the C++17 conditional compilation, and C++20's dynamic allocation -
+      this crystal embodies the full journey of constexpr. Those who
+      possess it understand that every cycle saved at compile-time
+      is a cycle saved forever.
+    sourceQuest: constexpr_evolution
+    effects:
+      statBoost:
+        metaprogramming: 5
+        modernCpp: 3

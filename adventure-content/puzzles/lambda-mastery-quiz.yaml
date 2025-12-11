@@ -1,0 +1,45 @@
+# Lambda Chronicles Quiz
+# Final quiz testing knowledge of lambda evolution across C++ standards
+
+puzzles:
+  - id: lambda_mastery_quiz
+    type: quiz
+    location: expr.prim.lambda
+    difficulty: medium
+    minLevel: 3
+
+    question: |
+      Test your mastery of lambda evolution (True or False):
+
+      1. Generic lambdas with `auto` parameters were introduced in C++11
+      2. Init captures like `[x = std::move(ptr)]` became available in C++14
+      3. C++17 allows capturing `*this` by value
+      4. Template lambdas with explicit `<typename T>` syntax require C++20
+      5. Deducing this (`this auto self`) enables recursive lambdas without std::function
+
+    answers: [F, T, T, T, T]
+
+    explanation: |
+      1. FALSE - Generic lambdas with `auto` parameters were introduced in C++14,
+         not C++11. C++11 lambdas required explicit parameter types.
+
+      2. TRUE - Generalized capture expressions (init captures) came in C++14.
+         This allows `[p = std::move(ptr)]` and `[y = x * 2]`.
+
+      3. TRUE - C++17 added `[*this]` capture syntax, which captures a copy of
+         the object. This is safer than `[this]` when the lambda outlives the object.
+
+      4. TRUE - Template lambdas like `[]<typename T>(std::vector<T> const& v) {...}`
+         were added in C++20, giving lambdas the full power of templates.
+
+      5. TRUE - C++23's deducing this allows `[](this auto self, int n) {...}`,
+         enabling recursive lambdas without the overhead of std::function.
+
+    hints:
+      - "Think about which version added 'auto' to lambda parameters..."
+      - "C++14 was about making C++11 features more usable"
+      - "Each standard added more template-like capabilities to lambdas"
+
+    rewards:
+      xp: 100
+      item: lambda_mastery_crystal

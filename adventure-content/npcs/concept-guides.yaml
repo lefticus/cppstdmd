@@ -73,6 +73,7 @@ npcs:
       - temp.param
       - temp.arg
       - temp.spec
+      - expr.prim.lambda
 
     dialogue:
       greeting:
@@ -117,16 +118,41 @@ npcs:
         concepts: |
           Concepts are named requirements for template parameters.
           Instead of cryptic SFINAE, write:
-            template<std::integral T>
+
+          ```cpp
+          template<std::integral T>
+          T absolute(T value) {
+            return value < 0 ? -value : value;
+          }
+          ```
+
           Clear intent, better error messages!
         metaprogramming: |
           Compile-time computation through templates.
           Type traits, constexpr functions, template recursion...
           We can compute almost anything before runtime!
+        lambdas: |
+          Lambdas are one of C++'s most powerful features!
+          They evolved from simple closures in C++11 to template-capable
+          constructs in C++20 and beyond.
+
+          ```cpp
+          // Generic lambda (C++14)
+          auto add = [](auto a, auto b) { return a + b; };
+
+          // Template lambda (C++20)
+          auto print_size = []<typename T>(std::vector<T> const& v) {
+            return v.size();
+          };
+          ```
+
+          📺 Master lambdas with the
+          [C++ Weekly Lambda Playlist](https://www.youtube.com/playlist?list=PLs3KjaCtOwSaJfzcaQ5RpcDIx9PTe2bBP)!
 
     quests:
       - template_basics_quest
       - concepts_journey
+      - lambda_evolution
 
     trades:
       - sfinae_scroll

@@ -1,0 +1,50 @@
+# Constexpr Chronicles Quiz
+# Final quiz testing knowledge of constexpr evolution across C++ standards
+
+puzzles:
+  - id: constexpr_mastery_quiz
+    type: quiz
+    location: dcl.constexpr
+    difficulty: hard
+    minLevel: 3
+
+    question: |
+      Test your mastery of constexpr evolution (True or False):
+
+      1. In C++11, constexpr functions could contain loops
+      2. C++14 allowed variable declarations in constexpr functions
+      3. `if constexpr` was introduced in C++17
+      4. C++20's `consteval` ensures a function is ALWAYS evaluated at compile-time
+      5. Dynamic memory allocation in constexpr requires deallocation within the same evaluation
+
+    answers: [F, T, T, T, T]
+
+    explanation: |
+      1. FALSE - C++11 constexpr was very restrictive: only a single return statement
+         was allowed. No loops, no variable declarations, no if/else. You had to use
+         recursion and the ternary operator for anything complex.
+
+      2. TRUE - C++14 was the "great liberation" - loops, variables, multiple
+         statements, and control flow all became legal in constexpr functions.
+         This made constexpr functions look like normal code!
+
+      3. TRUE - `if constexpr` arrived in C++17, enabling compile-time conditional
+         compilation where the non-taken branch isn't even instantiated. This
+         replaced many SFINAE tricks.
+
+      4. TRUE - `consteval` (C++20) creates an "immediate function" that MUST be
+         evaluated at compile-time. Unlike `constexpr`, it cannot run at runtime.
+         If you pass a runtime value, it's a compile error!
+
+      5. TRUE - You can use `new` in constexpr (C++20+), but the memory must be
+         `delete`d within the same constant evaluation. The allocation cannot
+         "leak" to runtime - all memory must be freed before the evaluation ends.
+
+    hints:
+      - "Think about what C++11 constexpr functions looked like - very mathematical"
+      - "C++14 was a major turning point for constexpr usability"
+      - "consteval is stricter than constexpr - no runtime fallback"
+
+    rewards:
+      xp: 100
+      item: constexpr_mastery_crystal

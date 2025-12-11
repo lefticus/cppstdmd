@@ -1,0 +1,97 @@
+# yaml-language-server: $schema=../schemas/npc.schema.json
+#
+# The Constexpr Pirate
+# A swashbuckling guide to compile-time computation across C++ standards.
+
+npcs:
+  - id: constexpr_pirate
+    name: The Constexpr Pirate
+    type: concept_personification
+    appearance: |
+      A swashbuckling figure with a compiler-output eyepatch and a parrot
+      that squawks "evaluated at compile-time!" Their coat is adorned with
+      `constexpr` keywords, and they carry a cutlass labeled "static_assert".
+    locations:
+      - dcl.constexpr
+      - expr.const
+      - dcl.constinit
+
+    dialogue:
+      greeting:
+        default: |
+          Ahoy, landlubber! Welcome aboard the SS Compile-Time!
+          I be the Constexpr Pirate, plunderer of runtime cycles
+          and hoarder of compile-time treasures!
+        n3337: |
+          Arr! These be the early days of C++11, matey!
+          Our constexpr powers be limited to a single return statement.
+          But fear not - greater treasures await in future standards!
+        n4140: |
+          Shiver me templates! C++14 has arrived!
+          We can now use loops and variables in our constexpr functions!
+          The compile-time seas have never been so bountiful!
+        n4861: |
+          Blimey! C++20 brings consteval - guaranteed compile-time booty!
+          And we can even allocate memory at compile-time now!
+          These be the golden age of compile-time computation, arr!
+        n4950: |
+          Yo ho ho! C++23 refines our art further!
+          Structured bindings can be constexpr now, matey!
+          The compile-time empire expands ever onward!
+
+      topics:
+        constexpr: |
+          Arr, constexpr be the art of making the compiler do yer work!
+          Why wait until runtime when ye can compute at compile-time?
+
+          ```cpp
+          constexpr int factorial(int n) {
+            int result = 1;
+            for (int i = 2; i <= n; ++i)
+              result *= i;
+            return result;
+          }
+
+          // The compiler computes this - no runtime cost!
+          static_assert(factorial(5) == 120);
+          ```
+
+          📺 Master the compile-time seas with the
+          [C++ Weekly constexpr Playlist](https://www.youtube.com/playlist?list=PLs3KjaCtOwSaqPapPV4pc1SRjypnwrXYV)!
+
+        consteval: |
+          Consteval be the strict captain of the compile-time fleet!
+          Unlike constexpr, there be NO runtime fallback - it MUST
+          be evaluated at compile-time or the compiler walks the plank!
+
+          ```cpp
+          consteval int square(int x) { return x * x; }
+
+          int runtime_value = get_input();
+          // square(runtime_value);  // ERROR! Must be compile-time!
+          constexpr int ct = square(5);  // OK - compile-time value
+          ```
+
+        static_assert: |
+          Static_assert be me trusty cutlass for verifying compile-time truths!
+          If the condition be false, the compilation fails - no sneaky bugs!
+
+          ```cpp
+          static_assert(sizeof(int) >= 4, "Need at least 32-bit ints!");
+          static_assert(factorial(5) == 120);  // Verify at compile-time
+          ```
+
+        treasure: |
+          *The pirate's eye gleams*
+
+          The greatest treasure in all the seven standards be this:
+          Every cycle saved at compile-time be a cycle saved forever!
+          Runtime costs ye pay over and over, but compile-time costs
+          ye pay only once. That be the pirate's wisdom, arr!
+
+    quests:
+      - constexpr_evolution
+
+    trades:
+      - constexpr_liberation_shard
+      - consteval_crystal
