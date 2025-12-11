@@ -104,9 +104,9 @@ AUTHOR_INFO = {
     "tagline": "Professional C++ training and code review services",
     "links": {
         "twitter": "https://twitter.com/lefticus",
-        "mastodon": "https://mastodon.social/@lefticus",  # UPDATE WITH YOUR HANDLE
-        "bluesky": "https://bsky.app/profile/lefticus.bsky.social",  # UPDATE WITH YOUR HANDLE
-        "linkedin": "https://linkedin.com/in/jasonturner",  # UPDATE WITH YOUR PROFILE
+        "mastodon": "https://mas.to/@lefticus",
+        "bluesky": "https://bsky.app/profile/lefticus.bsky.social",
+        "linkedin": "https://www.linkedin.com/in/lefticus/",
         "youtube": "https://youtube.com/@cppweekly",
         "github": "https://github.com/lefticus",
         "project_github": "https://github.com/lefticus/cppstdmd",

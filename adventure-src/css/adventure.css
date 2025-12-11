@@ -69,6 +69,30 @@ body.adventure-page {
     color: var(--text-primary);
 }
 
+/* Author links in header */
+.author-links {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-left: auto;
+    margin-right: 1rem;
+}
+
+.author-links .author-name {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+.author-links a {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    transition: color 0.2s;
+}
+
+.author-links a:hover {
+    color: var(--accent-blue);
+}
+
 .player-status {
     display: flex;
     gap: 0.5rem;
