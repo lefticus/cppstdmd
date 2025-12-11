@@ -1,0 +1,86 @@
+# yaml-language-server: $schema=../schemas/quest.schema.json
+#
+# The Truth About std::endl
+# A mini-quest that reveals what endl actually does
+
+quests:
+  - id: endl_truth
+    title: The Truth About std::endl
+    description: |
+      Many programmers use std::endl without knowing what it actually does.
+      Journey to the Standard Manipulators to discover the truth!
+    type: learning
+    difficulty: easy
+    minLevel: 2
+    giver: standard_guardian
+    giverLocation: intro
+    prerequisites:
+      - chrono_compass_unlock
+
+    steps:
+      - instruction: Travel to the Standard Manipulators section (ostream.manip)
+        target:
+          section: ostream.manip
+        onComplete:
+          dialogue: |
+            *The Standard Guardian appears with a knowing smile*
+
+            Ah, you've found the Standard Manipulators! Many programmers
+            write `std::endl` thousands of times without ever reading this.
+
+            Look closely at the definition:
+
+            ```cpp
+            template<class charT, class traits>
+              basic_ostream<charT, traits>& endl(basic_ostream<charT, traits>& os);
+            ```
+
+            **Effects:** Calls `os.put(os.widen('\n'))`, then `os.flush()`.
+
+            That's it! `std::endl` is just `'\n'` followed by `flush()`!
+          xp: 25
+
+      - instruction: Read the section to fully understand what endl does
+        target:
+          section: ostream.manip
+          read: true
+        onComplete:
+          dialogue: |
+            Now you know the truth that many programmers never learn:
+
+            ```cpp
+            std::cout << "Hello" << std::endl;
+            // is equivalent to:
+            std::cout << "Hello" << '\n' << std::flush;
+            ```
+
+            **The performance impact:**
+            - `'\n'` just adds a newline character to the buffer
+            - `std::flush` forces the buffer to be written immediately
+            - In loops, `std::endl` can be **significantly slower**!
+
+            ```cpp
+            // Slow - flushes after every line!
+            for (int i = 0; i < 1000; ++i)
+              std::cout << i << std::endl;
+
+            // Fast - lets the buffer work efficiently
+            for (int i = 0; i < 1000; ++i)
+              std::cout << i << '\n';
+            ```
+
+            When do you actually need `std::endl`?
+            - When you need output to appear immediately (debugging)
+            - Before waiting for user input
+            - When interleaving with C I/O functions
+
+            Most of the time, just use `'\n'`!
+
+            📺 [Ep 7: Stop Using std::endl](https://www.youtube.com/watch?v=GMqQOEZYVJQ)
+          xp: 50
+
+    rewards:
+      experience: 75
+      title: endl Enlightened
+      statBoost:
+        library: 2
