@@ -1727,6 +1727,24 @@ Sitemap: {base_url}/sitemap.xml
                     }
                 )
 
+    # Add episode pages (if generated)
+    episodes_dir = output_path / "episodes"
+    if episodes_dir.exists():
+        # Add episode index
+        sitemap_urls.append(
+            {"loc": f"{base_url}/episodes/index.html", "priority": "0.8", "changefreq": "weekly"}
+        )
+        # Add individual episode pages
+        for ep_file in sorted(episodes_dir.glob("*.html")):
+            if ep_file.name != "index.html":
+                sitemap_urls.append(
+                    {
+                        "loc": f"{base_url}/episodes/{ep_file.name}",
+                        "priority": "0.6",
+                        "changefreq": "monthly",
+                    }
+                )
+
     # Build XML
     xml_lines = ['<?xml version="1.0" encoding="UTF-8"?>']
     xml_lines.append('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">')

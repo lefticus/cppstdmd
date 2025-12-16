@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Browse all {{ total_episodes }} C++ Weekly episodes by Jason Turner - searchable database with links to C++ standard sections">
+    <meta name="theme-color" content="#00a500">
+    <title>C++ Weekly Episodes - C++ Standard Evolution Viewer</title>
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://cppstdmd.com/episodes/index.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="C++ Weekly Episodes - C++ Standard Evolution Viewer">
+    <meta property="og:description" content="Browse {{ total_episodes }} C++ Weekly episodes with links to related C++ standard sections">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://cppstdmd.com/episodes/index.html">
+    <meta property="og:site_name" content="C++ Standard Evolution Viewer">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="C++ Weekly Episodes">
+    <meta name="twitter:description" content="Browse {{ total_episodes }} C++ Weekly episodes with links to the C++ standard">
+    <meta name="twitter:creator" content="@lefticus">
+
+    <!-- Font Awesome 7 Free -->
+    <link rel="stylesheet" href="../css/fontawesome.min.css">
+    <link rel="stylesheet" href="../css/solid.min.css">
+    <link rel="stylesheet" href="../css/brands.min.css">
+    <link rel="stylesheet" href="../css/custom.css">
+    <style>
+        /* Episode-specific styles */
+        .episodes-list {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .episode-item {
+            background-color: white;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem 1.5rem;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .episode-item:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .episode-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .episode-header h3 {
+            margin: 0;
+            font-size: 1.1rem;
+        }
+
+        .episode-header h3 a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .episode-header h3 a:hover {
+            text-decoration: underline;
+        }
+
+        .episode-badges {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .episode-summary {
+            color: var(--text-muted);
+            margin: 0.5rem 0;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .episode-tags {
+            display: flex;
+            gap: 0.25rem;
+            flex-wrap: wrap;
+            margin-top: 0.5rem;
+        }
+
+        .tag {
+            background-color: var(--light-bg);
+            padding: 0.125rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.85em;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .tag:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .tag.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .filter-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 0.75rem;
+        }
+
+        .filter-tag {
+            background-color: var(--light-bg);
+            border: 1px solid var(--border-color);
+            padding: 0.25rem 0.75rem;
+            border-radius: 16px;
+            font-size: 0.85em;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .filter-tag:hover {
+            border-color: var(--primary-color);
+        }
+
+        .filter-tag.active {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .clear-filters {
+            background: none;
+            border: 1px dashed var(--border-color);
+            padding: 0.25rem 0.75rem;
+            border-radius: 16px;
+            font-size: 0.85em;
+            cursor: pointer;
+            color: var(--text-muted);
+        }
+
+        .clear-filters:hover {
+            border-color: var(--danger-color);
+            color: var(--danger-color);
+        }
+
+        .badge.views-badge {
+            background-color: #e3f2fd;
+            color: #1565c0;
+        }
+
+        .badge.sections-badge {
+            background-color: #e8f5e9;
+            color: var(--primary-color);
+        }
+
+        .episode-meta {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .episode-number {
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        @media (max-width: 768px) {
+            .episode-header {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    {% include '_author_banner.html' %}
+
+    <header class="page-header">
+        <nav class="breadcrumb">
+            <a href="../index.html"><i class="fa-solid fa-house"></i> Home</a> &gt;
+            <span class="current">C++ Weekly Episodes</span>
+        </nav>
+
+        <h1><i class="fa-brands fa-youtube"></i> C++ Weekly Episodes</h1>
+        <p class="subtitle">{{ total_episodes }} episodes exploring modern C++ - linked to the standard</p>
+    </header>
+
+    <main class="overview-main" id="main-content">
+        <div class="controls">
+            <input type="text" id="search-input" placeholder="Search by episode number, title, or tag..." autocomplete="off" aria-label="Search episodes" />
+            <div class="filter-buttons" role="group" aria-label="Filter episodes">
+                <button class="filter-btn active" data-filter="all" aria-pressed="true">All</button>
+                <button class="filter-btn" data-filter="recent" aria-pressed="false">2024+</button>
+                <button class="filter-btn" data-filter="linked" aria-pressed="false">With Std Links</button>
+            </div>
+        </div>
+
+        {% if top_tags %}
+        <div class="filter-tags" id="tag-filters">
+            <span style="color: var(--text-muted); font-size: 0.9em;">Tags:</span>
+            {% for tag, count in top_tags %}
+            <button class="filter-tag" data-tag="{{ tag }}">{{ tag }} ({{ count }})</button>
+            {% endfor %}
+            <button class="clear-filters" id="clear-tags" style="display: none;">Clear</button>
+        </div>
+        {% endif %}
+
+        <div class="episodes-list" id="episodes-list">
+            {% for ep in episodes | sort(attribute='number', reverse=true) %}
+            <div class="episode-item"
+                 data-number="{{ ep.number }}"
+                 data-title="{{ ep.title | lower }}"
+                 data-tags="{{ ep.all_tags | join(',') | lower }}"
+                 data-date="{{ ep.date }}"
+                 data-sections="{{ ep.related_sections | length if ep.related_sections else 0 }}">
+                <div class="episode-header">
+                    <h3>
+                        <a href="{{ ep.number }}.html">
+                            <span class="episode-number">Ep {{ ep.number }}:</span>
+                            {{ ep.title | replace("C++ Weekly - Ep " ~ ep.number ~ " - ", "") | replace("C++ Weekly - Ep " ~ ep.number ~ " ", "") }}
+                        </a>
+                    </h3>
+                    <div class="episode-badges">
+                        <span class="badge date-badge">{{ ep.date }}</span>
+                        <span class="badge duration-badge"><i class="fa-solid fa-clock"></i> {{ ep.duration_formatted }}</span>
+                        <span class="badge views-badge"><i class="fa-solid fa-eye"></i> {{ ep.view_count | format_number }}</span>
+                        {% if ep.related_sections %}
+                        <span class="badge sections-badge"><i class="fa-solid fa-book"></i> {{ ep.related_sections | length }} std links</span>
+                        {% endif %}
+                    </div>
+                </div>
+                {% if ep.summary_excerpt %}
+                <p class="episode-summary">{{ ep.summary_excerpt }}</p>
+                {% endif %}
+                {% if ep.all_tags %}
+                <div class="episode-tags">
+                    {% for tag in ep.all_tags[:6] %}
+                    <span class="tag" data-tag="{{ tag | lower }}">{{ tag }}</span>
+                    {% endfor %}
+                    {% if ep.all_tags | length > 6 %}
+                    <span class="tag">+{{ ep.all_tags | length - 6 }} more</span>
+                    {% endif %}
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+
+        <div id="no-results" class="no-results" style="display: none;">
+            <p>No episodes match your search.</p>
+        </div>
+    </main>
+
+    {% set back_link = "../index.html" %}
+    {% include '_footer.html' %}
+
+    <script>
+        // Search and filter functionality
+        const searchInput = document.getElementById('search-input');
+        const episodesList = document.getElementById('episodes-list');
+        const noResults = document.getElementById('no-results');
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const tagButtons = document.querySelectorAll('.filter-tag');
+        const clearTagsBtn = document.getElementById('clear-tags');
+        const allTags = document.querySelectorAll('.episode-tags .tag');
+
+        let currentFilter = 'all';
+        let activeTags = new Set();
+
+        function filterEpisodes() {
+            const searchTerm = searchInput.value.toLowerCase().trim();
+            const items = episodesList.querySelectorAll('.episode-item');
+            let visibleCount = 0;
+
+            items.forEach(item => {
+                const number = item.dataset.number;
+                const title = item.dataset.title;
+                const tags = item.dataset.tags;
+                const date = item.dataset.date;
+                const sections = parseInt(item.dataset.sections) || 0;
+                const year = date ? parseInt(date.split('-')[0]) : 0;
+
+                // Search match
+                let matchesSearch = !searchTerm ||
+                    number.includes(searchTerm) ||
+                    title.includes(searchTerm) ||
+                    tags.includes(searchTerm);
+
+                // Filter match
+                let matchesFilter = true;
+                if (currentFilter === 'recent') {
+                    matchesFilter = year >= 2024;
+                } else if (currentFilter === 'linked') {
+                    matchesFilter = sections > 0;
+                }
+
+                // Tag match
+                let matchesTags = activeTags.size === 0;
+                if (!matchesTags) {
+                    const itemTags = tags.split(',').filter(t => t);
+                    matchesTags = [...activeTags].some(t => itemTags.includes(t));
+                }
+
+                if (matchesSearch && matchesFilter && matchesTags) {
+                    item.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+
+            // Show/hide no results
+            if (visibleCount === 0) {
+                noResults.style.display = 'block';
+                episodesList.style.display = 'none';
+            } else {
+                noResults.style.display = 'none';
+                episodesList.style.display = 'grid';
+            }
+        }
+
+        // Search input
+        searchInput.addEventListener('input', filterEpisodes);
+
+        // Filter buttons
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                filterButtons.forEach(btn => {
+                    btn.classList.remove('active');
+                    btn.setAttribute('aria-pressed', 'false');
+                });
+                button.classList.add('active');
+                button.setAttribute('aria-pressed', 'true');
+                currentFilter = button.dataset.filter;
+                filterEpisodes();
+            });
+        });
+
+        // Tag filter buttons
+        tagButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const tag = button.dataset.tag;
+                if (activeTags.has(tag)) {
+                    activeTags.delete(tag);
+                    button.classList.remove('active');
+                } else {
+                    activeTags.add(tag);
+                    button.classList.add('active');
+                }
+                clearTagsBtn.style.display = activeTags.size > 0 ? 'inline-block' : 'none';
+                filterEpisodes();
+            });
+        });
+
+        // Clear tags button
+        if (clearTagsBtn) {
+            clearTagsBtn.addEventListener('click', () => {
+                activeTags.clear();
+                tagButtons.forEach(btn => btn.classList.remove('active'));
+                clearTagsBtn.style.display = 'none';
+                filterEpisodes();
+            });
+        }
+
+        // Clickable tags in episode cards
+        allTags.forEach(tag => {
+            tag.addEventListener('click', (e) => {
+                const tagValue = tag.dataset.tag;
+                if (!tagValue) return;
+
+                // Find matching filter button
+                const matchingBtn = document.querySelector(`.filter-tag[data-tag="${tagValue}"]`);
+                if (matchingBtn) {
+                    if (!activeTags.has(tagValue)) {
+                        activeTags.add(tagValue);
+                        matchingBtn.classList.add('active');
+                    }
+                } else {
+                    // Add to search
+                    searchInput.value = tagValue;
+                }
+                clearTagsBtn.style.display = activeTags.size > 0 ? 'inline-block' : 'none';
+                filterEpisodes();
+            });
+        });
+
+        // Check URL for tag parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const tagParam = urlParams.get('tag');
+        if (tagParam) {
+            const matchingBtn = document.querySelector(`.filter-tag[data-tag="${tagParam.toLowerCase()}"]`);
+            if (matchingBtn) {
+                activeTags.add(tagParam.toLowerCase());
+                matchingBtn.classList.add('active');
+                clearTagsBtn.style.display = 'inline-block';
+                filterEpisodes();
+            } else {
+                searchInput.value = tagParam;
+                filterEpisodes();
+            }
+        }
+    </script>
+
+    <script src="../js/navigation.js"></script>
+</body>
+</html>

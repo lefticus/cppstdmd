@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{{ episode.summary_excerpt if episode.summary else episode.title }}">
+    <meta name="theme-color" content="#00a500">
+    <title>Ep {{ episode.number }}: {{ episode.title | replace("C++ Weekly - Ep " ~ episode.number ~ " - ", "") | replace("C++ Weekly - Ep " ~ episode.number ~ " ", "") }} - C++ Weekly</title>
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://cppstdmd.com/episodes/{{ episode.number }}.html">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Ep {{ episode.number }}: {{ episode.title | replace('C++ Weekly - Ep ' ~ episode.number ~ ' - ', '') }}">
+    <meta property="og:description" content="{{ episode.summary_excerpt if episode.summary else 'C++ Weekly episode by Jason Turner' }}">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://cppstdmd.com/episodes/{{ episode.number }}.html">
+    <meta property="og:site_name" content="C++ Standard Evolution Viewer">
+    <meta property="og:video" content="https://www.youtube.com/watch?v={{ episode.youtube_id }}">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="C++ Weekly Ep {{ episode.number }}">
+    <meta name="twitter:description" content="{{ episode.summary_excerpt if episode.summary else episode.title }}">
+    <meta name="twitter:creator" content="@lefticus">
+
+    <!-- Font Awesome 7 Free -->
+    <link rel="stylesheet" href="../css/fontawesome.min.css">
+    <link rel="stylesheet" href="../css/solid.min.css">
+    <link rel="stylesheet" href="../css/brands.min.css">
+    <link rel="stylesheet" href="../css/custom.css">
+    <style>
+        /* Episode detail styles */
+        .episode-main {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .episode-meta {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin: 1rem 0;
+            color: var(--text-muted);
+        }
+
+        .episode-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .episode-nav {
+            display: flex;
+            justify-content: space-between;
+            margin: 1.5rem 0;
+            padding: 1rem 0;
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .episode-nav a {
+            color: var(--primary-color);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+        }
+
+        .episode-nav a:hover {
+            background-color: var(--light-bg);
+        }
+
+        .video-section {
+            margin: 2rem 0;
+        }
+
+        .btn-youtube {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background-color: #ff0000;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.2s;
+        }
+
+        .btn-youtube:hover {
+            background-color: #cc0000;
+        }
+
+        .summary-section,
+        .crosslinks-section,
+        .resources-section,
+        .tags-section {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background-color: white;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+        }
+
+        .summary-section h2,
+        .crosslinks-section h2,
+        .resources-section h2,
+        .tags-section h2 {
+            margin-top: 0;
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .section-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .section-links li {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .section-links li:last-child {
+            border-bottom: none;
+        }
+
+        .section-links code {
+            font-family: 'Source Code Pro', monospace;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .confidence {
+            color: var(--text-muted);
+            font-size: 0.85em;
+        }
+
+        .section-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .section-actions a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-size: 0.9em;
+        }
+
+        .section-actions a:hover {
+            text-decoration: underline;
+        }
+
+        .resources-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .resources-section li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--light-bg);
+        }
+
+        .resources-section li:last-child {
+            border-bottom: none;
+        }
+
+        .resources-section a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .resources-section a:hover {
+            text-decoration: underline;
+        }
+
+        .tag-cloud {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .tag-cloud .tag {
+            background-color: var(--light-bg);
+            padding: 0.25rem 0.75rem;
+            border-radius: 16px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9em;
+            transition: all 0.2s;
+        }
+
+        .tag-cloud .tag:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .episode-main {
+                padding: 1rem;
+            }
+
+            .episode-meta {
+                gap: 1rem;
+            }
+
+            .section-actions {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    {% include '_author_banner.html' %}
+
+    <header class="page-header">
+        <nav class="breadcrumb">
+            <a href="../index.html"><i class="fa-solid fa-house"></i> Home</a> &gt;
+            <a href="index.html">Episodes</a> &gt;
+            <span class="current">Ep {{ episode.number }}</span>
+        </nav>
+
+        <h1>Ep {{ episode.number }}: {{ episode.title | replace("C++ Weekly - Ep " ~ episode.number ~ " - ", "") | replace("C++ Weekly - Ep " ~ episode.number ~ " ", "") }}</h1>
+
+        <div class="episode-meta">
+            <span><i class="fa-solid fa-calendar"></i> {{ episode.date }}</span>
+            <span><i class="fa-solid fa-clock"></i> {{ episode.duration_formatted }}</span>
+            <span><i class="fa-solid fa-eye"></i> {{ episode.view_count | format_number }} views</span>
+            <span><i class="fa-solid fa-thumbs-up"></i> {{ episode.like_count | format_number }} likes</span>
+        </div>
+
+        <!-- Prev/Next navigation -->
+        <nav class="episode-nav">
+            {% if prev_episode %}
+            <a href="{{ prev_episode }}.html"><i class="fa-solid fa-arrow-left"></i> Ep {{ prev_episode }}</a>
+            {% else %}
+            <span></span>
+            {% endif %}
+            {% if next_episode %}
+            <a href="{{ next_episode }}.html">Ep {{ next_episode }} <i class="fa-solid fa-arrow-right"></i></a>
+            {% else %}
+            <span></span>
+            {% endif %}
+        </nav>
+    </header>
+
+    <main class="episode-main" id="main-content">
+        <!-- YouTube Link -->
+        <section class="video-section">
+            <a href="{{ episode.youtube_url }}" target="_blank" rel="noopener noreferrer" class="btn-youtube">
+                <i class="fa-brands fa-youtube"></i> Watch on YouTube
+            </a>
+        </section>
+
+        <!-- Summary -->
+        {% if episode.summary %}
+        <section class="summary-section">
+            <h2><i class="fa-solid fa-file-lines"></i> Summary</h2>
+            <p>{{ episode.summary }}</p>
+        </section>
+        {% endif %}
+
+        <!-- Related Standard Sections (bidirectional crosslinks) -->
+        {% if episode.related_sections %}
+        <section class="crosslinks-section">
+            <h2><i class="fa-solid fa-book"></i> Related C++ Standard Sections</h2>
+            <p>This episode covers topics found in these sections of the C++ standard:</p>
+            <ul class="section-links">
+                {% for section in episode.related_sections[:10] %}
+                <li>
+                    <div>
+                        <code>[{{ section.stable_name }}]</code>
+                        <span class="confidence">{{ (section.confidence * 100) | int }}% match</span>
+                    </div>
+                    <div class="section-actions">
+                        <a href="../diffs/cpp23-to-trunk/{{ section.stable_name }}.html">
+                            <i class="fa-solid fa-code-compare"></i> View Diff
+                        </a>
+                        <a href="../adventure/?section={{ section.stable_name }}">
+                            <i class="fa-solid fa-gamepad"></i> Adventure
+                        </a>
+                        <a href="https://eel.is/c++draft/{{ section.stable_name }}" target="_blank" rel="noopener noreferrer">
+                            <i class="fa-solid fa-book-open"></i> Current Draft
+                        </a>
+                    </div>
+                </li>
+                {% endfor %}
+                {% if episode.related_sections | length > 10 %}
+                <li style="color: var(--text-muted); font-style: italic;">
+                    + {{ episode.related_sections | length - 10 }} more related sections
+                </li>
+                {% endif %}
+            </ul>
+        </section>
+        {% endif %}
+
+        <!-- Resources -->
+        {% if episode.resources %}
+        <section class="resources-section">
+            <h2><i class="fa-solid fa-link"></i> Resources</h2>
+            <ul>
+                {% for res in episode.resources %}
+                <li>
+                    {% if res.type == 'video' %}
+                    <i class="fa-solid fa-video"></i>
+                    {% elif res.type == 'github' %}
+                    <i class="fa-brands fa-github"></i>
+                    {% elif res.type == 'documentation' %}
+                    <i class="fa-solid fa-book"></i>
+                    {% else %}
+                    <i class="fa-solid fa-link"></i>
+                    {% endif %}
+                    <a href="{{ res.url }}" target="_blank" rel="noopener noreferrer">{{ res.title }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </section>
+        {% endif %}
+
+        <!-- Tags -->
+        {% if episode.all_tags %}
+        <section class="tags-section">
+            <h2><i class="fa-solid fa-tags"></i> Tags</h2>
+            <div class="tag-cloud">
+                {% for tag in episode.all_tags %}
+                <a href="index.html?tag={{ tag }}" class="tag">{{ tag }}</a>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+    </main>
+
+    {% set back_link = "index.html" %}
+    {% include '_footer.html' %}
+
+    <script src="../js/navigation.js"></script>
+</body>
+</html>

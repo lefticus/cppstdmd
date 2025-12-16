@@ -234,6 +234,31 @@ code {
     font-size: 0.9rem;
 }
 
+.episodes-promo {
+    margin: 3rem 0;
+    padding: 2rem;
+    background: linear-gradient(135deg, #fee2e2 0%, #fef3c7 100%);
+    border-radius: 12px;
+    text-align: center;
+}
+
+.episodes-promo h2 {
+    color: #dc2626;
+    margin-bottom: 1rem;
+}
+
+.episodes-promo p {
+    margin: 0.5rem 0;
+}
+
+body.dark-theme .episodes-promo {
+    background: linear-gradient(135deg, #7f1d1d 0%, #78350f 100%);
+}
+
+body.dark-theme .episodes-promo h2 {
+    color: #fca5a5;
+}
+
 .statistics {
     margin: 3rem 0;
 }
