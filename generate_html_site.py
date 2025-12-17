@@ -1208,11 +1208,13 @@ def generate_single_diff(args: tuple) -> tuple[bool, str, str]:
     force = context.get("force", False)
 
     try:
-        # Skip if output HTML exists and is newer than input diff (unless forced)
+        # Skip if output HTML exists and is newer than all inputs (unless forced)
         if not force and output_file.exists() and input_diff.exists():
             output_mtime = output_file.stat().st_mtime
             input_mtime = input_diff.stat().st_mtime
-            if output_mtime > input_mtime:
+            correlations_mtime = context.get("correlations_mtime", 0)
+            # Regenerate if diff OR correlations file is newer than output
+            if output_mtime > input_mtime and output_mtime > correlations_mtime:
                 return (True, stable_name, "skipped (unchanged)")
 
         # Create Jinja2 environment for this worker
@@ -1286,6 +1288,10 @@ def generate_version_pair(config: VersionPairConfig) -> dict:
     # Load episode correlations (do this once for all pages)
     episode_correlations = load_episode_correlations(config.output_path)
 
+    # Get correlations file mtime for cache invalidation
+    correlations_file = config.output_path / "data" / "game" / "episode-correlations.json"
+    correlations_mtime = correlations_file.stat().st_mtime if correlations_file.exists() else 0
+
     # Generate overview page
     template = config.env.get_template("version_overview.html")
     generated_date = datetime.now().strftime("%Y-%m-%d")
@@ -1343,6 +1349,7 @@ def generate_version_pair(config: VersionPairConfig) -> dict:
             "cppstdmd_sha": sha_info["sha"],
             "cppstdmd_short_sha": sha_info["short_sha"],
             "episode_correlations": episode_correlations.get(item["name"], []),
+            "correlations_mtime": correlations_mtime,
             "force": config.force,
         }
         # Get templates directory from config.env.loader
