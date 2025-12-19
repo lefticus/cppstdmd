@@ -130,8 +130,6 @@ quests:
 
     rewards:
       experience: 200
-      items:
-        - foundations_stone
       statBoost:
         fundamentals: 3
 
