@@ -231,7 +231,7 @@ class Terminal {
                 source: code,
                 compilers: [{
                     id: 'clang_trunk',
-                    options: '-std=c++26'
+                    options: '-std=c++26 -O3'
                 }]
             }]
         };

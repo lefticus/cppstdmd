@@ -1,0 +1,68 @@
+# Trivial Trials Quiz
+# Quiz testing knowledge of type triviality in C++
+# Based on concepts from Jason Turner's "Great C++ is_trivial" CppCon 2019 talk
+
+puzzles:
+  - id: trivial_mastery_quiz
+    type: quiz
+    location: meta.unary.prop
+    difficulty: medium
+    minLevel: 2
+
+    question: |
+      Test your understanding of triviality in C++ (True or False):
+
+      1. A class with a virtual destructor is trivially destructible
+      2. An empty class with no user-declared special members is trivial
+      3. A class with `=default` destructor is always trivially destructible
+      4. The "Rule of Zero" means you should always define all 5 special members
+      5. In C++17, RVO is guaranteed when returning a named local variable by value
+
+    answers: [F, T, F, F, F]
+
+    explanation: |
+      1. FALSE - A virtual destructor makes the class non-trivially destructible.
+         Virtual functions require a vtable pointer and runtime dispatch,
+         which prevents trivial destruction. The compiler must potentially
+         call a derived class destructor through the vtable.
+
+      2. TRUE - An empty class with no user-declared special members is trivial.
+         The compiler-generated defaults are all trivial operations.
+
+         ```cpp
+         struct Empty {};
+         static_assert(std::is_trivial_v<Empty>);  // OK!
+         ```
+
+      3. FALSE - `=default` doesn't guarantee triviality! If any non-static
+         data member has a non-trivial destructor, the class won't be trivially
+         destructible even with `=default`.
+
+         ```cpp
+         struct HasString {
+           std::string s;
+           ~HasString() = default;  // Still not trivially destructible!
+         };
+         static_assert(!std::is_trivially_destructible_v<HasString>);
+         ```
+
+      4. FALSE - The Rule of Zero is the opposite! It says: if you don't need
+         custom behavior, define NONE of the special members. Let the compiler
+         generate them all. This keeps your types trivial when possible.
+
+      5. FALSE - C++17 only guarantees copy elision for prvalues (unnamed objects):
+         `return Widget{1,2,3};` or `return make_widget();`. Named Return Value
+         Optimization (NRVO) - returning a named local like `return x;` - is
+         NEVER guaranteed, even in C++17. Compilers usually do it, but it's
+         optional. This is why triviality matters: when NRVO fails, trivial
+         types can still be returned efficiently (often in registers).
+
+    hints:
+      - "Virtual functions have runtime overhead - they can't be trivial"
+      - "The Rule of Zero is about NOT defining things"
+      - "=default still respects member triviality"
+      - "C++17 guarantees elision for prvalues, not named variables"
+
+    rewards:
+      xp: 50
+      item: triviality_seal

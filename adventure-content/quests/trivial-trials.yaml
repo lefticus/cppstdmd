@@ -1,0 +1,190 @@
+# yaml-language-server: $schema=../schemas/quest.schema.json
+#
+# The Trivial Trials
+# A quest about understanding type triviality in C++
+# Based on Jason Turner's CppCon 2019 talk "Great C++ is_trivial"
+
+id: trivial_trials
+title: The Trivial Trials
+description: |
+  Learn what makes a type trivial in C++ and why it matters for performance.
+  Discover how the compiler can optimize trivial types with memcpy,
+  and what operations break this optimization.
+type: learning
+difficulty: medium
+prerequisites: []
+
+giver: lefticus
+giverLocation: meta.unary.prop
+
+steps:
+  - instruction: Visit meta.unary.prop to learn about type property traits
+    target:
+      section: meta.unary.prop
+    onComplete:
+      dialogue: |
+        *lefticus gestures at the glowing text*
+
+        Welcome to the realm of type traits! This is where the compiler
+        reveals the hidden properties of your types.
+
+        The key traits for triviality are:
+        - `is_trivial` - Trivially copyable AND trivially default constructible
+        - `is_trivially_copyable` - Can be safely memcpy'd
+        - `is_trivially_destructible` - No destructor code needed
+
+        ```cpp
+        #include <type_traits>
+
+        struct Simple { int x; };
+
+        static_assert(std::is_trivial_v<Simple>);
+        static_assert(std::is_trivially_copyable_v<Simple>);
+        static_assert(std::is_trivially_destructible_v<Simple>);
+        ```
+
+        When all three are true, the compiler can generate NO code
+        for construction, copying, or destruction. Pure efficiency!
+
+        Let's explore what makes destructors trivial...
+      xp: 25
+
+  - instruction: Visit class.dtor to understand trivial destructors
+    target:
+      section: class.dtor
+    onComplete:
+      dialogue: |
+        A destructor is trivial when the compiler doesn't need to
+        generate any cleanup code. This happens when:
+
+        1. It's not user-provided (compiler-generated or `=default`)
+        2. All base classes have trivial destructors
+        3. All non-static data members have trivial destructors
+
+        ```cpp
+        struct Trivial { int x; };
+        static_assert(std::is_trivially_destructible_v<Trivial>);
+
+        // DANGER: Even an empty user-provided destructor breaks triviality!
+        struct Broken {
+          int x;
+          ~Broken() {}  // Looks harmless, but...
+        };
+        static_assert(!std::is_trivially_destructible_v<Broken>);
+        ```
+
+        *lefticus shakes his head*
+
+        That empty destructor costs you! It prevents optimizations
+        and forces the compiler to generate destruction code.
+
+        Also beware of virtual destructors - they're never trivial!
+      xp: 25
+      item: rule_of_zero_scroll
+
+  - instruction: Visit class.copy.ctor to understand trivial copy operations
+    target:
+      section: class.copy.ctor
+    onComplete:
+      dialogue: |
+        Copy constructors and copy assignment operators are trivial
+        when the compiler can just memcpy the bytes.
+
+        Requirements for trivial copy:
+        - Not user-provided
+        - No virtual functions in the class
+        - No virtual base classes
+        - All bases and members are trivially copyable
+
+        ```cpp
+        struct TrivialCopy { int x; double y; };
+        static_assert(std::is_trivially_copy_constructible_v<TrivialCopy>);
+
+        struct NonTrivialCopy {
+          int x;
+          NonTrivialCopy(const NonTrivialCopy& other) : x(other.x) {}
+        };
+        static_assert(!std::is_trivially_copy_constructible_v<NonTrivialCopy>);
+        ```
+
+        The second struct does the EXACT same thing as the first,
+        but the compiler can't prove it - so no memcpy optimization!
+
+        This is the Rule of Zero in action: let the compiler do its job.
+      xp: 25
+
+  - instruction: Visit class.copy.elision to learn about RVO and triviality
+    target:
+      section: class.copy.elision
+    onComplete:
+      dialogue: |
+        *lefticus's orb pulses rapidly*
+
+        Now we connect triviality to Return Value Optimization!
+
+        When RVO works, there's no copy or move at all. C++17 guarantees
+        copy elision for prvalues (`return Widget{1,2};`), but NRVO
+        (returning a named local `return x;`) is NEVER guaranteed.
+        When elision fails, triviality is crucial:
+
+        ```cpp
+        // Trivial: can return in CPU registers!
+        struct Point { int x, y; };
+
+        Point make_point() { return Point{1, 2}; }
+
+        // Non-trivial: must use memory, even for this simple case
+        struct Widget {
+          int x, y;
+          ~Widget() {}  // This one line forces memory usage!
+        };
+        ```
+
+        Cases where copy elision is NOT guaranteed:
+        - Returning a named local variable (NRVO - compilers usually do it, but optional)
+        - Returning a function parameter
+        - Multiple return paths with different local variables
+        - Returning a member variable
+
+        In these cases, trivial types can be returned in registers,
+        while non-trivial types require the full move/destroy dance.
+
+        See it in action:
+        [Ep 456: RVO + Trivial Types = Faster Code](https://www.youtube.com/watch?v=DzUAqXMUjtc)
+        [Ep 434: GCC's Amazing NEW (2024) -Wnrvo](https://www.youtube.com/watch?v=PTCFddZfnXc)
+      xp: 30
+
+  - instruction: Complete the triviality mastery quiz
+    target:
+      section: meta.unary.prop
+      puzzle: trivial_mastery_quiz
+    onComplete:
+      dialogue: |
+        *lefticus nods approvingly as his orb glows bright green*
+
+        Excellent! You've mastered the fundamentals of type triviality!
+
+        Remember the key lessons:
+        1. **Don't define special members you don't need** - Rule of Zero
+        2. **User-provided operations break triviality** - Even empty ones!
+        3. **Virtual functions prevent triviality** - Always
+        4. **Triviality is contagious** - Non-trivial members = non-trivial class
+        5. **RVO is great, but triviality is your safety net**
+
+        Take this Seal of Triviality. May it remind you to always ask:
+        "Is this operation truly necessary, or can the compiler handle it?"
+
+        For more learning:
+        [Ep 456: RVO + Trivial Types = Faster Code](https://www.youtube.com/watch?v=DzUAqXMUjtc)
+        [Ep 404: How (and Why) To Write Code That Avoids std::move](https://www.youtube.com/watch?v=6SaUwqw4ueE)
+        [Ep 107: The Power of =delete](https://www.youtube.com/watch?v=aAvjUU0m6AU)
+      xp: 45
+
+rewards:
+  experience: 150
+  items:
+    - triviality_seal
+  title: Triviality Expert
+  statBoost:
+    performance: 3
+    coreLanguage: 2

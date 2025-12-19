@@ -1,0 +1,151 @@
+# yaml-language-server: $schema=../schemas/npc.schema.json
+#
+# lefticus
+# A guide to understanding type triviality and the Rule of Zero
+
+npcs:
+  - id: lefticus
+    name: lefticus
+    type: concept_personification
+    appearance: |
+      A performance-focused C++ developer who seems to know exactly when
+      your types are trivial - and when they're not. He carries a glowing
+      orb that pulses whenever a non-trivial operation is detected.
+    locations:
+      - meta.unary.prop
+      - class.dtor
+      - class.copy.ctor
+      - class.copy.elision
+
+    dialogue:
+      greeting:
+        default: |
+          *The orb in his hand glows steadily*
+
+          Welcome, traveler! I see you're interested in understanding
+          what makes a type trivial in C++. It's one of the most
+          overlooked optimization opportunities in the language.
+
+          A trivial type is one where the compiler can use memcpy
+          for copies - no constructor or destructor code needed at all!
+
+      topics:
+        is_trivial: |
+          The `is_trivial` type trait tells you if a type is trivially
+          copyable AND trivially default constructible.
+
+          ```cpp
+          #include <type_traits>
+
+          struct Empty {};
+          static_assert(std::is_trivial_v<Empty>);  // trivial!
+
+          struct HasString { std::string s; };
+          static_assert(!std::is_trivial_v<HasString>);  // NOT trivial
+          ```
+
+          For a type to be trivial:
+          - It must be trivially copyable
+          - It must have a trivial default constructor
+
+        is_trivially_copyable: |
+          A trivially copyable type can be safely copied byte-by-byte
+          using `memcpy`. This is a huge optimization opportunity!
+
+          For a type to be trivially copyable:
+          - No non-trivial copy/move constructors or assignment operators
+          - No non-trivial destructor
+          - No virtual functions or virtual base classes
+
+          ```cpp
+          struct Trivial { int x; double y; };
+          static_assert(std::is_trivially_copyable_v<Trivial>);
+
+          struct NonTrivial {
+            NonTrivial(const NonTrivial&) {}  // user-provided!
+          };
+          static_assert(!std::is_trivially_copyable_v<NonTrivial>);
+          ```
+
+        rule_of_zero: |
+          *His eyes light up*
+
+          The Rule of Zero is perhaps the most important rule for
+          maintaining triviality!
+
+          **If you can avoid defining default operations, DO.**
+
+          When you define a destructor, copy constructor, or assignment
+          operator, you're telling the compiler "I know better" - and
+          often breaking triviality in the process.
+
+          ```cpp
+          // BAD: Breaks triviality for no reason
+          struct Bad {
+            int x;
+            ~Bad() {}  // Empty but user-provided!
+          };
+          static_assert(!std::is_trivially_destructible_v<Bad>);
+
+          // GOOD: Let the compiler handle it
+          struct Good {
+            int x;
+          };
+          static_assert(std::is_trivially_destructible_v<Good>);
+          ```
+
+        what_breaks_triviality: |
+          Several things can break triviality:
+
+          1. **User-provided special members** - Even empty ones!
+             ```cpp
+             struct S { ~S() {} };  // NOT trivially destructible
+             ```
+
+          2. **Virtual functions** - Require vtable pointer
+             ```cpp
+             struct V { virtual void f(); };  // NOT trivial
+             ```
+
+          3. **Non-trivial members** - Triviality is contagious
+             ```cpp
+             struct HasString { std::string s; };  // NOT trivial
+             ```
+
+          4. **Virtual base classes** - Complex layout requirements
+
+          The key insight: `=default` preserves triviality, but only
+          if all members are also trivial!
+
+        rvo: |
+          When RVO (Return Value Optimization) works, there's no copy
+          or move at all - the object is constructed directly in the
+          caller's storage.
+
+          But when RVO fails (named return value with multiple paths,
+          returning a parameter, etc.), triviality matters:
+
+          - **Trivial types**: Can be returned in registers!
+          - **Non-trivial types**: Must go through memory
+
+          ```cpp
+          // Trivial: can return in a register pair
+          struct Point { int x, y; };
+
+          // Non-trivial: must use memory
+          struct Widget {
+            int x, y;
+            ~Widget() {}  // This one line costs performance!
+          };
+          ```
+
+          C++17 guarantees copy elision for prvalues (`return Widget{};`),
+          but NRVO (returning a named local) is never guaranteed.
+          Keeping types trivial is your safety net when elision fails.
+
+    quests:
+      - trivial_trials
+
+    trades:
+      - rule_of_zero_scroll
+      - triviality_seal

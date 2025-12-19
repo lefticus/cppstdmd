@@ -1,0 +1,46 @@
+# yaml-language-server: $schema=../schemas/item.schema.json
+#
+# Trivial Trials Items
+# Items related to the triviality quest based on Jason Turner's CppCon 2019 talk
+
+items:
+  - id: rule_of_zero_scroll
+    name: Rule of Zero Scroll
+    category: knowledge_fragment
+    rarity: uncommon
+    description: Ancient wisdom about when NOT to define special members
+    lore: |
+      The Rule of Zero states: if you can avoid defining default operations, do.
+      When a class needs no custom destructor, copy/move constructors, or
+      copy/move assignment operators, it should define none of them.
+
+      Classes that have custom destructors, copy/move constructors or
+      copy/move assignment operators should deal exclusively with ownership.
+      Other classes should not have custom destructors, copy/move constructors
+      or copy/move assignment operators.
+    effects:
+      statBoost:
+        coreLanguage: 1
+
+  - id: triviality_seal
+    name: Seal of Triviality
+    category: pattern_crystal
+    rarity: rare
+    description: A seal that marks types optimized for memcpy
+    lore: |
+      A trivially copyable type can be safely copied byte-by-byte using memcpy.
+      The compiler can generate no code for construction, destruction, or copying -
+      the most efficient possible implementation.
+
+      This seal glows brighter when near types that:
+      - Have no user-provided special member functions
+      - Have no virtual functions or virtual base classes
+      - Have only trivially copyable non-static data members
+
+      "Every cycle saved at compile-time is a cycle saved forever,
+       and every operation the compiler can elide is code that never runs."
+    sourceQuest: trivial_trials
+    effects:
+      statBoost:
+        performance: 3
+        coreLanguage: 2
