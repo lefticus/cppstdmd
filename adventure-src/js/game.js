@@ -1515,7 +1515,8 @@ class AdventureGame {
         this.terminal.print('');
         this.terminal.print(`${this.player.state.name} - Level ${this.player.level} ${this.player.title}`);
         this.terminal.printSeparator();
-        this.terminal.print(`XP: ${this.player.experience}/${this.player.experienceToNext}`);
+        this.terminal.print(`Total XP earned: ${this.player.totalExperience}`);
+        this.terminal.print(`Progress to level ${this.player.level + 1}: ${this.player.experience}/${this.player.experienceToNext}`);
         this.terminal.print('');
         this.terminal.print('Stats:');
 

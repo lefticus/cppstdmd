@@ -31,6 +31,7 @@ class Player {
             level: 1,
             experience: 0,
             experienceToNext: 100,
+            totalExperience: 0,
 
             // Stats (0-100 scale)
             stats: {
@@ -250,6 +251,14 @@ class Player {
     }
 
     /**
+     * Get total lifetime experience earned
+     * @returns {number}
+     */
+    get totalExperience() {
+        return this.state.totalExperience;
+    }
+
+    /**
      * Get current title
      * @returns {string}
      */
@@ -264,6 +273,7 @@ class Player {
      */
     gainExperience(amount) {
         this.state.experience += amount;
+        this.state.totalExperience += amount;
         const result = { leveledUp: false, amount };
 
         // Check for level up
