@@ -50,6 +50,10 @@ puzzles:
          custom behavior, define NONE of the special members. Let the compiler
          generate them all. This keeps your types trivial when possible.
 
+         Note: even `~S() = default;` violates Rule of Zero! While it preserves
+         triviality, you're still declaring something you don't need. This can
+         suppress implicit move operations and cause other subtle issues.
+
       5. FALSE - C++17 only guarantees copy elision for prvalues (unnamed objects):
          `return Widget{1,2,3};` or `return make_widget();`. Named Return Value
          Optimization (NRVO) - returning a named local like `return x;` - is

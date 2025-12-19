@@ -87,12 +87,25 @@ npcs:
           };
           static_assert(!std::is_trivially_destructible_v<Bad>);
 
+          // STILL BAD: Trivial, but violates Rule of Zero!
+          struct StillBad {
+            int x;
+            ~StillBad() = default;  // Why declare this at all?
+          };
+          static_assert(std::is_trivially_destructible_v<StillBad>);  // Still trivial...
+          // ...but you've told the compiler you might add something later.
+          // This can suppress move operations and cause other surprises!
+
           // GOOD: Let the compiler handle it
           struct Good {
             int x;
           };
           static_assert(std::is_trivially_destructible_v<Good>);
           ```
+
+          Remember: `=default` preserves triviality, but declaring special
+          members you don't need still violates Rule of Zero. If you don't
+          need it, don't declare it at all!
 
         what_breaks_triviality: |
           Several things can break triviality:
