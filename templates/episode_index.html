@@ -173,9 +173,60 @@
             color: var(--primary-color);
         }
 
+        .results-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            background-color: var(--light-bg);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        #results-count {
+            color: var(--text-muted);
+            font-size: 0.95em;
+        }
+
+        #results-count strong {
+            color: var(--primary-color);
+        }
+
+        .sort-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .sort-controls label {
+            font-size: 0.9em;
+            color: var(--text-muted);
+        }
+
+        .sort-controls select {
+            padding: 0.375rem 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background-color: white;
+            font-size: 0.9em;
+            cursor: pointer;
+        }
+
+        .sort-controls select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
         @media (max-width: 768px) {
             .episode-header {
                 flex-direction: column;
+            }
+
+            .results-bar {
+                flex-direction: column;
+                align-items: flex-start;
             }
         }
     </style>
@@ -204,6 +255,23 @@
             </div>
         </div>
 
+        <div class="results-bar">
+            <span id="results-count">Showing <strong>{{ total_episodes }}</strong> of {{ total_episodes }} episodes</span>
+            <div class="sort-controls">
+                <label for="sort-select">Sort by:</label>
+                <select id="sort-select" aria-label="Sort episodes">
+                    <option value="number-desc" selected>Episode (newest)</option>
+                    <option value="number-asc">Episode (oldest)</option>
+                    <option value="date-desc">Date (newest)</option>
+                    <option value="date-asc">Date (oldest)</option>
+                    <option value="views-desc">Views (highest)</option>
+                    <option value="views-asc">Views (lowest)</option>
+                    <option value="duration-desc">Duration (longest)</option>
+                    <option value="duration-asc">Duration (shortest)</option>
+                </select>
+            </div>
+        </div>
+
         {% if top_tags %}
         <div class="filter-tags" id="tag-filters">
             <span style="color: var(--text-muted); font-size: 0.9em;">Tags:</span>
@@ -221,6 +289,8 @@
                  data-title="{{ ep.title | lower }}"
                  data-tags="{{ ep.all_tags | join(',') | lower }}"
                  data-date="{{ ep.date }}"
+                 data-views="{{ ep.view_count }}"
+                 data-duration="{{ ep.duration }}"
                  data-sections="{{ ep.related_sections | length if ep.related_sections else 0 }}">
                 <div class="episode-header">
                     <h3>
@@ -264,17 +334,71 @@
     {% include '_footer.html' %}
 
     <script>
-        // Search and filter functionality
+        // Search, filter, and sort functionality
         const searchInput = document.getElementById('search-input');
         const episodesList = document.getElementById('episodes-list');
         const noResults = document.getElementById('no-results');
+        const resultsCount = document.getElementById('results-count');
+        const sortSelect = document.getElementById('sort-select');
         const filterButtons = document.querySelectorAll('.filter-btn');
         const tagButtons = document.querySelectorAll('.filter-tag');
         const clearTagsBtn = document.getElementById('clear-tags');
         const allTags = document.querySelectorAll('.episode-tags .tag');
 
+        const totalEpisodes = {{ total_episodes }};
         let currentFilter = 'all';
         let activeTags = new Set();
+
+        // Parse ISO 8601 duration to seconds
+        function parseDuration(iso) {
+            if (!iso) return 0;
+            const match = iso.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/);
+            if (!match) return 0;
+            const hours = parseInt(match[1] || 0);
+            const minutes = parseInt(match[2] || 0);
+            const seconds = parseInt(match[3] || 0);
+            return hours * 3600 + minutes * 60 + seconds;
+        }
+
+        function sortEpisodes() {
+            const sortValue = sortSelect.value;
+            const [field, direction] = sortValue.split('-');
+            const items = Array.from(episodesList.querySelectorAll('.episode-item'));
+
+            items.sort((a, b) => {
+                let aVal, bVal;
+
+                switch (field) {
+                    case 'number':
+                        aVal = parseInt(a.dataset.number) || 0;
+                        bVal = parseInt(b.dataset.number) || 0;
+                        break;
+                    case 'date':
+                        aVal = a.dataset.date || '';
+                        bVal = b.dataset.date || '';
+                        break;
+                    case 'views':
+                        aVal = parseInt(a.dataset.views) || 0;
+                        bVal = parseInt(b.dataset.views) || 0;
+                        break;
+                    case 'duration':
+                        aVal = parseDuration(a.dataset.duration);
+                        bVal = parseDuration(b.dataset.duration);
+                        break;
+                    default:
+                        return 0;
+                }
+
+                if (direction === 'asc') {
+                    return aVal > bVal ? 1 : aVal < bVal ? -1 : 0;
+                } else {
+                    return aVal < bVal ? 1 : aVal > bVal ? -1 : 0;
+                }
+            });
+
+            // Re-append in sorted order
+            items.forEach(item => episodesList.appendChild(item));
+        }
 
         function filterEpisodes() {
             const searchTerm = searchInput.value.toLowerCase().trim();
@@ -318,6 +442,9 @@
                 }
             });
 
+            // Update results count
+            resultsCount.innerHTML = `Showing <strong>${visibleCount}</strong> of ${totalEpisodes} episodes`;
+
             // Show/hide no results
             if (visibleCount === 0) {
                 noResults.style.display = 'block';
@@ -330,6 +457,12 @@
 
         // Search input
         searchInput.addEventListener('input', filterEpisodes);
+
+        // Sort select
+        sortSelect.addEventListener('change', () => {
+            sortEpisodes();
+            filterEpisodes();
+        });
 
         // Filter buttons
         filterButtons.forEach(button => {
