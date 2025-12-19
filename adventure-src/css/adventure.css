@@ -284,7 +284,7 @@ body.resizing * {
 .terminal-markdown ul,
 .terminal-markdown ol {
     margin: 0.3em 0;
-    padding-left: 1.5em;
+    padding-left: 2em;
 }
 
 .terminal-markdown li {
@@ -414,7 +414,7 @@ body.resizing * {
 .adventure-content ul,
 .adventure-content ol {
     margin: 0 0 1rem;
-    padding-left: 1.5rem;
+    padding-left: 2rem;
 }
 
 .adventure-content li {
