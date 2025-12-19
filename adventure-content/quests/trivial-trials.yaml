@@ -12,7 +12,8 @@ description: |
   and what operations break this optimization.
 type: learning
 difficulty: medium
-prerequisites: []
+prerequisites:
+  - welcome_to_the_standard
 
 giver: lefticus
 giverLocation: meta.unary.prop
