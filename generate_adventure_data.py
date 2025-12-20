@@ -395,7 +395,6 @@ def generate_display_name(title: str, stable_name: str) -> str:
     """Generate a thematic display name for a section."""
     # Map common terms to thematic alternatives
     theme_map = {
-        "general": "Main Hall",
         "overview": "Observation Deck",
         "introduction": "Welcome Chamber",
         "preamble": "Entry Hall",
@@ -419,6 +418,15 @@ def generate_display_name(title: str, stable_name: str) -> str:
         "concepts": "Concept Shrine",
         "constraints": "Constraint Chamber",
     }
+
+    # Special handling for .general sections - include parent context
+    if stable_name.endswith(".general"):
+        # Extract parent from stable name (e.g., "alg.sorting" from "alg.sorting.general")
+        parent_parts = stable_name.rsplit(".", 2)
+        if len(parent_parts) >= 2:
+            parent = parent_parts[-2].replace(".", " ").title()
+            return f"{parent} Main Hall"
+        return "Main Hall"
 
     title_lower = title.lower()
     for key, value in theme_map.items():
