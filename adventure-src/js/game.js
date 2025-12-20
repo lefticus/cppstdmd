@@ -537,6 +537,66 @@ class AdventureGame {
 
         // Load content into side panel
         await this.loadContentPanel(section, scrollToTop);
+
+        // Check for easter eggs
+        this.checkEasterEggs();
+    }
+
+    /**
+     * Check for context-sensitive easter eggs (10% chance)
+     */
+    checkEasterEggs() {
+        const location = this.player.currentLocation;
+
+        // Only 10% chance to trigger
+        if (Math.random() > 0.1) return;
+
+        // Grue in undefined behavior sections
+        const grueLocations = ['defns.undefined', 'basic.indet', 'expr.context'];
+        if (grueLocations.includes(location)) {
+            this.terminal.print('');
+            this.terminal.print('*It is undefined here. You are likely to be eaten by a grue.*');
+            this.terminal.print('*The compiler makes no guarantees about your continued existence.*');
+            this.awardEasterEggXP('grue');
+            return;
+        }
+
+        // Template nightmare
+        if (location.startsWith('temp.')) {
+            this.terminal.print('');
+            this.terminal.print('*You hear distant screaming...*');
+            this.terminal.print('*"fatal error: template instantiation depth exceeds maximum of 900"*');
+            this.awardEasterEggXP('template_nightmare');
+            return;
+        }
+
+        // Strict aliasing
+        if (['basic.lval', 'basic.types'].includes(location)) {
+            this.terminal.print('');
+            this.terminal.print('*A chill runs down your spine...*');
+            this.terminal.print('*"warning: dereferencing type-punned pointer will break strict-aliasing rules"*');
+            this.awardEasterEggXP('strict_aliasing');
+            return;
+        }
+    }
+
+    /**
+     * Award XP for discovering an easter egg (first time only)
+     */
+    awardEasterEggXP(eggId) {
+        if (!this.player.state.easterEggsFound) {
+            this.player.state.easterEggsFound = [];
+        }
+        if (!this.player.state.easterEggsFound.includes(eggId)) {
+            this.player.state.easterEggsFound.push(eggId);
+            const result = this.player.gainExperience(25);
+            this.terminal.print('');
+            this.terminal.print('+25 XP (Easter egg discovered!)');
+            if (result.leveledUp) {
+                this.terminal.print(`Level up! You are now level ${result.newLevel}!`);
+            }
+            this.player.save();
+        }
     }
 
     /**
