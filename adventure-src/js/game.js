@@ -237,8 +237,8 @@ class AdventureGame {
     buildCommandRegistry() {
         return {
             // Navigation
-            'look': () => this.cmdLook(),
-            'l': () => this.cmdLook(),
+            'look': (args) => this.cmdLook(args),
+            'l': (args) => this.cmdLook(args),
             'go': (args) => this.cmdGo(args),
             'n': () => this.cmdGo(['north']),
             's': () => this.cmdGo(['south']),
@@ -316,6 +316,12 @@ class AdventureGame {
      * Handle a command input
      */
     async handleCommand(input) {
+        // Handle "look at <thing>" before parser (ISHML treats "at" as filler)
+        const lookAtMatch = input.trim().match(/^look\s+at\s+(.+)$/i);
+        if (lookAtMatch) {
+            return this.cmdLookAt([lookAtMatch[1]]);
+        }
+
         // Use ISHML parser to interpret the command
         const parsed = this.parser.parse(input);
 
@@ -710,13 +716,69 @@ class AdventureGame {
 
     // --- Command implementations ---
 
-    cmdLook() {
+    cmdLook(args = []) {
+        // If args provided, treat as "look at <thing>"
+        if (args.length > 0) {
+            return this.cmdLookAt(args);
+        }
+        // Show current location
         this.showLocation();
         // Check quest progress for reading the current location
         this.checkQuestProgress({
             section: this.player.currentLocation,
             read: true
         });
+    }
+
+    cmdLookAt(args) {
+        if (args.length === 0) {
+            this.terminal.print('Look at what?');
+            return;
+        }
+
+        const targetName = args.join(' ').toLowerCase();
+
+        // Check NPCs at location
+        const npcsHere = this.getNPCsAtLocation(this.player.currentLocation);
+        for (const npc of npcsHere) {
+            if (npc.name.toLowerCase().includes(targetName) || npc.id.toLowerCase().includes(targetName)) {
+                this.terminal.print('');
+                this.terminal.print(npc.name);
+                this.terminal.printSeparator();
+                if (npc.appearance) {
+                    this.terminal.printMarkdown(npc.appearance.trim());
+                } else {
+                    this.terminal.print(`You see ${npc.name}.`);
+                }
+                return;
+            }
+        }
+
+        // Check items in inventory
+        for (const itemId of this.player.inventory) {
+            const item = this.items.find(i => i.id === itemId);
+            if (item && (item.name.toLowerCase().includes(targetName) || item.id.includes(targetName))) {
+                this.terminal.print('');
+                this.terminal.print(item.name);
+                this.terminal.printSeparator();
+                this.terminal.printMarkdown(item.description);
+                return;
+            }
+        }
+
+        // Check items at location
+        const itemsHere = this.getItemsAtLocation(this.player.currentLocation);
+        for (const item of itemsHere) {
+            if (item.name.toLowerCase().includes(targetName) || item.id.includes(targetName)) {
+                this.terminal.print('');
+                this.terminal.print(item.name);
+                this.terminal.printSeparator();
+                this.terminal.printMarkdown(item.description);
+                return;
+            }
+        }
+
+        this.terminal.print(`You don't see "${args.join(' ')}" here.`);
     }
 
     cmdGo(args) {
@@ -1446,12 +1508,33 @@ class AdventureGame {
             return;
         }
 
-        const itemName = args.join(' ').toLowerCase();
+        const targetName = args.join(' ').toLowerCase();
 
-        // Check inventory first
+        // Check NPCs at location
+        const npcsHere = this.getNPCsAtLocation(this.player.currentLocation);
+        for (const npc of npcsHere) {
+            if (npc.name.toLowerCase().includes(targetName) || npc.id.toLowerCase().includes(targetName)) {
+                this.terminal.print('');
+                this.terminal.print(npc.name);
+                this.terminal.printSeparator();
+                if (npc.appearance) {
+                    this.terminal.printMarkdown(npc.appearance.trim());
+                } else {
+                    this.terminal.print(`You see ${npc.name}.`);
+                }
+                // Show available topics if any
+                if (npc.dialogue?.topics && Object.keys(npc.dialogue.topics).length > 0) {
+                    this.terminal.print('');
+                    this.terminal.print('You can ask about: ' + Object.keys(npc.dialogue.topics).join(', '));
+                }
+                return;
+            }
+        }
+
+        // Check inventory
         for (const itemId of this.player.inventory) {
             const item = this.items.find(i => i.id === itemId);
-            if (item && (item.name.toLowerCase().includes(itemName) || item.id.includes(itemName))) {
+            if (item && (item.name.toLowerCase().includes(targetName) || item.id.includes(targetName))) {
                 this.terminal.print('');
                 this.terminal.print(`${item.name} (${item.rarity})`);
                 this.terminal.printSeparator();
@@ -1467,18 +1550,23 @@ class AdventureGame {
         // Check items in location
         const itemsHere = this.getItemsAtLocation(this.player.currentLocation);
         for (const item of itemsHere) {
-            if (item.name.toLowerCase().includes(itemName) || item.id.includes(itemName)) {
+            if (item.name.toLowerCase().includes(targetName) || item.id.includes(targetName)) {
                 this.terminal.print('');
                 this.terminal.print(`${item.name} (${item.rarity})`);
                 this.terminal.printSeparator();
                 this.terminal.printMarkdown(item.description);
+                if (item.lore) {
+                    this.terminal.print('');
+                    this.terminal.printMarkdown(item.lore);
+                }
                 this.terminal.print('');
                 this.terminal.print('Use "take" to pick it up.');
                 return;
             }
         }
 
-        this.terminal.print(`Cannot find "${args.join(' ')}" to examine.`);
+        // Fall back to look behavior
+        this.cmdLookAt(args);
     }
 
     cmdTake(args) {
@@ -1534,6 +1622,7 @@ class AdventureGame {
         this.terminal.print(`
 NAVIGATION
   look (l)           - View current location
+  look at <thing>    - Brief description of item/NPC
   go <direction>     - Move north/south/east/west (or n/s/e/w)
   enter <area>       - Enter a sub-section
   exit               - Return to parent section
@@ -1565,7 +1654,7 @@ PUZZLES (in quests)
 
 ITEMS
   inventory (i)      - View your items
-  examine <item>     - Look at an item
+  examine <thing>    - Detailed description of item/NPC
   take <item>        - Pick up an item
 
 PLAYER
